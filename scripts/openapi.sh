@@ -22,4 +22,9 @@ docker run --rm \
   -g php \
   --http-user-agent="openfga-sdk php/0.1" \
 
-cp .openapi/build/lib/* src/
+# Copy the contents of .openapi/build/lib into src/API
+cp -r .openapi/build/lib/* src/API
+
+# Run PHP CS Fixer on the generated code
+export PHP_CS_FIXER_IGNORE_ENV=1
+vendor/bin/php-cs-fixer fix src/API --quiet
