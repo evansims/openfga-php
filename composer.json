@@ -1,0 +1,113 @@
+{
+  "name": "evansims/openfga-php",
+  "description": "PHP SDK for OpenFGA.",
+  "license": "Apache 2.0",
+  "type": "library",
+  "keywords": [
+    "openfga",
+    "authorization"
+  ],
+  "authors": [
+    {
+      "name": "Evan Sims",
+      "email": "hello@evansims.com",
+      "homepage": "https://evansims.com/"
+    }
+  ],
+  "homepage": "https://github.com/evanisms/openfga-php",
+  "require": {
+    "php": "^8.4",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-openssl": "*",
+    "psr-discovery/all": "^1",
+    "psr/http-client-implementation": "^1",
+    "psr/http-factory-implementation": "^1",
+    "psr/http-message-implementation": "^1"
+  },
+  "require-dev": {
+    "ergebnis/composer-normalize": "^2.44",
+    "friendsofphp/php-cs-fixer": "^3.65",
+    "mockery/mockery": "^1.6",
+    "pestphp/pest": "^3",
+    "phpstan/phpstan": "^2",
+    "phpstan/phpstan-strict-rules": "^2",
+    "psr-mock/http": "^1",
+    "rector/rector": "^2.0@RC",
+    "symfony/cache": "^4 || ^5 || ^6 || 7",
+    "symfony/event-dispatcher": "^4 || ^5 || ^6 || ^7",
+    "wikimedia/composer-merge-plugin": "^2.1"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "OpenFGA\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OpenFGA\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "ergebnis/composer-normalize": true,
+      "pestphp/pest-plugin": true,
+      "php-http/discovery": false,
+      "wikimedia/composer-merge-plugin": true
+    },
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "process-timeout": 0,
+    "sort-packages": true
+  },
+  "extra": {
+    "merge-plugin": {
+      "ignore-duplicates": false,
+      "include": [
+        "composer.json.local"
+      ],
+      "merge-dev": true,
+      "merge-extra": false,
+      "merge-extra-deep": false,
+      "merge-scripts": false,
+      "recurse": true,
+      "replace": true
+    }
+  },
+  "scripts": {
+    "pest:unit": [
+      "@putenv XDEBUG_MODE=coverage",
+      "herd coverage vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
+    ],
+    "phpcs": [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+      "@php vendor/bin/php-cs-fixer fix --dry-run --diff"
+    ],
+    "phpcs:apply": [
+      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
+      "@php vendor/bin/php-cs-fixer fix"
+    ],
+    "phpstan": "@php vendor/bin/phpstan analyze",
+    "rector": "@php vendor/bin/rector process src --dry-run",
+    "rector:apply": "@php vendor/bin/rector process src",
+    "lint": [
+      "@phpstan",
+      "@rector",
+      "@phpcs"
+    ],
+    "test:integration": [
+      "@lint",
+      "@pest:integration"
+    ],
+    "test:unit": [
+      "@lint",
+      "@pest:unit"
+    ],
+    "test": [
+      "@test:unit"
+    ],
+    "openapi": "scripts/openapi.sh"
+  }
+}
