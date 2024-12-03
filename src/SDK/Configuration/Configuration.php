@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\SDK\Configuration;
 
-abstract class Configuration extends ConfigurationInterface
+abstract class Configuration implements ConfigurationInterface
 {
-    abstract public function __construct(
-        private array $configuration,
-    );
+    public function __construct(
+        private array $configuration = [],
+    ) {
+    }
 
     abstract public function validate(): void;
 

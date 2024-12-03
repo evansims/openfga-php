@@ -11,7 +11,7 @@ use OpenFGA\SDK\Utilities\Assert;
 final class ClientConfiguration extends Configuration implements ClientConfigurationInterface
 {
     public function __construct(
-        private array $configuration,
+        private array $configuration = [],
         public ?string $apiUrl = null,
         public ?string $storeId = null,
         public ?string $authorizationModelId = null,

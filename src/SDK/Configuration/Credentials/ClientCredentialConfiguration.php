@@ -7,10 +7,10 @@ namespace OpenFGA\SDK\Configuration\Credentials;
 use InvalidArgumentException;
 use OpenFGA\SDK\Utilities\Assert;
 
-final class ClientCredentialConfiguration extends CredentialConfiguration
+final class ClientCredentialConfiguration extends CredentialConfiguration implements ClientCredentialConfigurationInterface
 {
     public function __construct(
-        private array $configuration,
+        private array $configuration = [],
         public ?string $apiIssuer = null,
         public ?string $apiAudience = null,
         public ?string $clientId = null,

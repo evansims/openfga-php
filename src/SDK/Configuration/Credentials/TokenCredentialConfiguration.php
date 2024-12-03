@@ -6,10 +6,10 @@ namespace OpenFGA\SDK\Configuration\Credentials;
 
 use InvalidArgumentException;
 
-final class TokenCredentialConfiguration extends CredentialConfiguration
+final class TokenCredentialConfiguration extends CredentialConfiguration implements TokenCredentialConfigurationInterface
 {
     public function __construct(
-        private array $configuration,
+        private array $configuration = [],
         public ?string $apiToken = null,
     ) {
     }
