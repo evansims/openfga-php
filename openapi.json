@@ -1,6 +1,6 @@
 {
   "invokerPackage": "OpenFGA\\API",
-  "modelPackage": "OpenFGA\\API\\Models",
+  "modelPackage": "Models",
   "library": "psr-18",
   "variableNamingConvention": "camelCase"
 }

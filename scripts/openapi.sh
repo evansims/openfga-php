@@ -27,8 +27,8 @@ rm -rf src/API/Models
 mkdir src/API/Models
 
 # Copy the contents of .openapi/build/lib/Model into src/API/Models
-cp -r .openapi/build/lib/Model/* src/API/Models
+cp -r .openapi/build/lib/Models/* src/API/Models
 
 # Run PHP CS Fixer on the generated code
 export PHP_CS_FIXER_IGNORE_ENV=1
-vendor/bin/php-cs-fixer fix src/API --quiet
+vendor/bin/php-cs-fixer fix src/API/Models --quiet

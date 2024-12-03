@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-use OpenFGA\API\Model\CreateStoreRequest;
+use OpenFGA\API\Models\CreateStoreRequest;
 use OpenFGA\Client;
 use OpenFGA\SDK\Configuration\ClientConfiguration;
 use OpenFGA\SDK\Configuration\Credentials\ClientCredentialConfiguration;
