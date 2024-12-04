@@ -6,6 +6,7 @@ namespace OpenFGA;
 
 use OpenFGA\API\Endpoints\{StoresEndpoint};
 use OpenFGA\SDK\Configuration\ClientConfigurationInterface;
+use OpenFGA\SDK\Utilities\Container;
 
 final class Client extends StoresEndpoint
 {

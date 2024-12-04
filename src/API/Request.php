@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace OpenFGA\API;
 
 use Exception;
-use OpenFGA\Client;
 use OpenFGA\SDK\Configuration\ClientConfigurationInterface;
-
-use PsrDiscovery\Discover;
-
-use function sprintf;
+use OpenFGA\SDK\Utilities\Network;
 
 enum RequestMethod: string
 {
@@ -36,8 +32,6 @@ enum RequestEndpoint: string
 
 final class Request
 {
-    public string $user_agent = sprintf('openfga-sdk php/%s', Client::VERSION);
-
     public function __construct(
         public ClientConfigurationInterface $configuration,
         public RequestOptions $options,
@@ -46,26 +40,17 @@ final class Request
         public array $headers = ['Accept' => 'application/json', 'Content-Type' => 'application/json'],
         public array $body = [],
     ) {
-        $requestFactory = Discover::httpRequestFactory();
-        $httpClient = Discover::httpClient();
+        $network = new Network();
 
-        if (null === $requestFactory || null === $httpClient) {
-            throw new Exception('HTTP client not found');
-        }
-
-        try {
-            $request = $requestFactory->createRequest(
-                $method->value,
-                $configuration->apiUrl . $endpoint,
-                $headers,
-                json_encode($body),
-            );
-        } catch (Exception $e) {
-            throw new Exception('HTTP request creation failed');
-        }
+        $request = $network->getHttpRequestFactory()->createRequest(
+            $method->value,
+            $configuration->apiUrl . $endpoint,
+            $headers,
+            json_encode($body),
+        );
 
         try {
-            $response = $httpClient->sendRequest($request);
+            $response = $$network->getHttpClient()->sendRequest($request);
         } catch (Exception $e) {
             throw new Exception('API request issuance failed');
         }
