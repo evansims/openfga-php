@@ -1,7 +1,7 @@
 <?php
 namespace OpenFGA\SDK\Utilities;
 
-use OpenFGA\SDK\Exceptions\ContainerEntryNotFoundException;
+use OpenFGA\SDK\Exceptions\Containers\ServiceNotFoundException;
 use Psr\Container\ContainerInterface;
 
 final class Container implements ContainerInterface
@@ -21,7 +21,7 @@ final class Container implements ContainerInterface
             return $this->services[$id];
         }
 
-        throw new ContainerEntryNotFoundException();
+        throw new ServiceNotFoundException();
     }
 
     public function set(string $id, mixed $data): void

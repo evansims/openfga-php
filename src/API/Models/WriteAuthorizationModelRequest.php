@@ -78,8 +78,8 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $attributeMap = [
-        'typeDefinitions' => 'type_definitions',
-        'schemaVersion' => 'schema_version',
+        'type_definitions' => 'type_definitions',
+        'schema_version' => 'schema_version',
         'conditions' => 'conditions',
     ];
 
@@ -89,8 +89,8 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $getters = [
-        'typeDefinitions' => 'getTypeDefinitions',
-        'schemaVersion' => 'getSchemaVersion',
+        'type_definitions' => 'getTypeDefinitions',
+        'schema_version' => 'getSchemaVersion',
         'conditions' => 'getConditions',
     ];
 
@@ -104,8 +104,8 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'typeDefinitions' => null,
-        'schemaVersion' => null,
+        'type_definitions' => null,
+        'schema_version' => null,
         'conditions' => null,
     ];
 
@@ -122,8 +122,8 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'typeDefinitions' => false,
-        'schemaVersion' => false,
+        'type_definitions' => false,
+        'schema_version' => false,
         'conditions' => false,
     ];
 
@@ -133,8 +133,8 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $openAPITypes = [
-        'typeDefinitions' => '\OpenFGA\API\Models\TypeDefinition[]',
-        'schemaVersion' => 'string',
+        'type_definitions' => '\OpenFGA\API\Models\TypeDefinition[]',
+        'schema_version' => 'string',
         'conditions' => 'array<string,\OpenFGA\API\Models\Condition>',
     ];
 
@@ -144,8 +144,8 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $setters = [
-        'typeDefinitions' => 'setTypeDefinitions',
-        'schemaVersion' => 'setSchemaVersion',
+        'type_definitions' => 'setTypeDefinitions',
+        'schema_version' => 'setSchemaVersion',
         'conditions' => 'setConditions',
     ];
 
@@ -157,8 +157,8 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('typeDefinitions', $data ?? [], null);
-        $this->setIfExists('schemaVersion', $data ?? [], null);
+        $this->setIfExists('type_definitions', $data ?? [], null);
+        $this->setIfExists('schema_version', $data ?? [], null);
         $this->setIfExists('conditions', $data ?? [], null);
     }
 
@@ -196,23 +196,23 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
     }
 
     /**
-     * Gets schemaVersion.
+     * Gets schema_version.
      *
      * @return string
      */
     public function getSchemaVersion()
     {
-        return $this->container['schemaVersion'];
+        return $this->container['schema_version'];
     }
 
     /**
-     * Gets typeDefinitions.
+     * Gets type_definitions.
      *
      * @return TypeDefinition[]
      */
     public function getTypeDefinitions()
     {
-        return $this->container['typeDefinitions'];
+        return $this->container['type_definitions'];
     }
 
     /**
@@ -250,15 +250,15 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
     {
         $invalidProperties = [];
 
-        if (null === $this->container['typeDefinitions']) {
-            $invalidProperties[] = "'typeDefinitions' can't be null";
+        if (null === $this->container['type_definitions']) {
+            $invalidProperties[] = "'type_definitions' can't be null";
         }
-        if ((count($this->container['typeDefinitions']) < 1)) {
-            $invalidProperties[] = "invalid value for 'typeDefinitions', number of items must be greater than or equal to 1.";
+        if ((count($this->container['type_definitions']) < 1)) {
+            $invalidProperties[] = "invalid value for 'type_definitions', number of items must be greater than or equal to 1.";
         }
 
-        if (null === $this->container['schemaVersion']) {
-            $invalidProperties[] = "'schemaVersion' can't be null";
+        if (null === $this->container['schema_version']) {
+            $invalidProperties[] = "'schema_version' can't be null";
         }
 
         return $invalidProperties;
@@ -332,39 +332,39 @@ final class WriteAuthorizationModelRequest implements ArrayAccess, JsonSerializa
     }
 
     /**
-     * Sets schemaVersion.
+     * Sets schema_version.
      *
-     * @param string $schemaVersion schemaVersion
+     * @param string $schema_version schema_version
      *
      * @return self
      */
-    public function setSchemaVersion($schemaVersion)
+    public function setSchemaVersion($schema_version)
     {
-        if (null === $schemaVersion) {
-            throw new InvalidArgumentException('non-nullable schemaVersion cannot be null');
+        if (null === $schema_version) {
+            throw new InvalidArgumentException('non-nullable schema_version cannot be null');
         }
-        $this->container['schemaVersion'] = $schemaVersion;
+        $this->container['schema_version'] = $schema_version;
 
         return $this;
     }
 
     /**
-     * Sets typeDefinitions.
+     * Sets type_definitions.
      *
-     * @param TypeDefinition[] $typeDefinitions typeDefinitions
+     * @param TypeDefinition[] $type_definitions type_definitions
      *
      * @return self
      */
-    public function setTypeDefinitions($typeDefinitions)
+    public function setTypeDefinitions($type_definitions)
     {
-        if (null === $typeDefinitions) {
-            throw new InvalidArgumentException('non-nullable typeDefinitions cannot be null');
+        if (null === $type_definitions) {
+            throw new InvalidArgumentException('non-nullable type_definitions cannot be null');
         }
 
-        if ((count($typeDefinitions) < 1)) {
-            throw new InvalidArgumentException('invalid length for $typeDefinitions when calling WriteAuthorizationModelRequest., number of items must be greater than or equal to 1.');
+        if ((count($type_definitions) < 1)) {
+            throw new InvalidArgumentException('invalid length for $type_definitions when calling WriteAuthorizationModelRequest., number of items must be greater than or equal to 1.');
         }
-        $this->container['typeDefinitions'] = $typeDefinitions;
+        $this->container['type_definitions'] = $type_definitions;
 
         return $this;
     }

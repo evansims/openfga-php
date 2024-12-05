@@ -78,9 +78,9 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $attributeMap = [
-        'tupleKey' => 'tuple_key',
+        'tuple_key' => 'tuple_key',
         'expectation' => 'expectation',
-        'contextualTuples' => 'contextual_tuples',
+        'contextual_tuples' => 'contextual_tuples',
         'context' => 'context',
     ];
 
@@ -90,9 +90,9 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $getters = [
-        'tupleKey' => 'getTupleKey',
+        'tuple_key' => 'getTupleKey',
         'expectation' => 'getExpectation',
-        'contextualTuples' => 'getContextualTuples',
+        'contextual_tuples' => 'getContextualTuples',
         'context' => 'getContext',
     ];
 
@@ -106,9 +106,9 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'tupleKey' => null,
+        'tuple_key' => null,
         'expectation' => null,
-        'contextualTuples' => null,
+        'contextual_tuples' => null,
         'context' => null,
     ];
 
@@ -125,9 +125,9 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'tupleKey' => false,
+        'tuple_key' => false,
         'expectation' => false,
-        'contextualTuples' => false,
+        'contextual_tuples' => false,
         'context' => false,
     ];
 
@@ -137,9 +137,9 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $openAPITypes = [
-        'tupleKey' => '\OpenFGA\API\Models\AssertionTupleKey',
+        'tuple_key' => '\OpenFGA\API\Models\AssertionTupleKey',
         'expectation' => 'bool',
-        'contextualTuples' => '\OpenFGA\API\Models\TupleKey[]',
+        'contextual_tuples' => '\OpenFGA\API\Models\TupleKey[]',
         'context' => 'object',
     ];
 
@@ -149,9 +149,9 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $setters = [
-        'tupleKey' => 'setTupleKey',
+        'tuple_key' => 'setTupleKey',
         'expectation' => 'setExpectation',
-        'contextualTuples' => 'setContextualTuples',
+        'contextual_tuples' => 'setContextualTuples',
         'context' => 'setContext',
     ];
 
@@ -163,9 +163,9 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('tupleKey', $data ?? [], null);
+        $this->setIfExists('tuple_key', $data ?? [], null);
         $this->setIfExists('expectation', $data ?? [], null);
-        $this->setIfExists('contextualTuples', $data ?? [], null);
+        $this->setIfExists('contextual_tuples', $data ?? [], null);
         $this->setIfExists('context', $data ?? [], null);
     }
 
@@ -193,13 +193,13 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets contextualTuples.
+     * Gets contextual_tuples.
      *
      * @return null|TupleKey[]
      */
     public function getContextualTuples()
     {
-        return $this->container['contextualTuples'];
+        return $this->container['contextual_tuples'];
     }
 
     /**
@@ -223,13 +223,13 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets tupleKey.
+     * Gets tuple_key.
      *
      * @return AssertionTupleKey
      */
     public function getTupleKey()
     {
-        return $this->container['tupleKey'];
+        return $this->container['tuple_key'];
     }
 
     /**
@@ -267,14 +267,14 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
     {
         $invalidProperties = [];
 
-        if (null === $this->container['tupleKey']) {
-            $invalidProperties[] = "'tupleKey' can't be null";
+        if (null === $this->container['tuple_key']) {
+            $invalidProperties[] = "'tuple_key' can't be null";
         }
         if (null === $this->container['expectation']) {
             $invalidProperties[] = "'expectation' can't be null";
         }
-        if (null !== $this->container['contextualTuples'] && (count($this->container['contextualTuples']) > 20)) {
-            $invalidProperties[] = "invalid value for 'contextualTuples', number of items must be less than or equal to 20.";
+        if (null !== $this->container['contextual_tuples'] && (count($this->container['contextual_tuples']) > 20)) {
+            $invalidProperties[] = "invalid value for 'contextual_tuples', number of items must be less than or equal to 20.";
         }
 
         return $invalidProperties;
@@ -348,22 +348,22 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets contextualTuples.
+     * Sets contextual_tuples.
      *
-     * @param null|TupleKey[] $contextualTuples contextualTuples
+     * @param null|TupleKey[] $contextual_tuples contextual_tuples
      *
      * @return self
      */
-    public function setContextualTuples($contextualTuples)
+    public function setContextualTuples($contextual_tuples)
     {
-        if (null === $contextualTuples) {
-            throw new InvalidArgumentException('non-nullable contextualTuples cannot be null');
+        if (null === $contextual_tuples) {
+            throw new InvalidArgumentException('non-nullable contextual_tuples cannot be null');
         }
 
-        if ((count($contextualTuples) > 20)) {
-            throw new InvalidArgumentException('invalid value for $contextualTuples when calling Assertion., number of items must be less than or equal to 20.');
+        if ((count($contextual_tuples) > 20)) {
+            throw new InvalidArgumentException('invalid value for $contextual_tuples when calling Assertion., number of items must be less than or equal to 20.');
         }
-        $this->container['contextualTuples'] = $contextualTuples;
+        $this->container['contextual_tuples'] = $contextual_tuples;
 
         return $this;
     }
@@ -386,18 +386,18 @@ final class Assertion implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets tupleKey.
+     * Sets tuple_key.
      *
-     * @param AssertionTupleKey $tupleKey tupleKey
+     * @param AssertionTupleKey $tuple_key tuple_key
      *
      * @return self
      */
-    public function setTupleKey($tupleKey)
+    public function setTupleKey($tuple_key)
     {
-        if (null === $tupleKey) {
-            throw new InvalidArgumentException('non-nullable tupleKey cannot be null');
+        if (null === $tuple_key) {
+            throw new InvalidArgumentException('non-nullable tuple_key cannot be null');
         }
-        $this->container['tupleKey'] = $tupleKey;
+        $this->container['tuple_key'] = $tuple_key;
 
         return $this;
     }

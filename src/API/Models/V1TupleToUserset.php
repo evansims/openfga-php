@@ -79,7 +79,7 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
      */
     private static $attributeMap = [
         'tupleset' => 'tupleset',
-        'computedUserset' => 'computedUserset',
+        'computed_userset' => 'computedUserset',
     ];
 
     /**
@@ -89,7 +89,7 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
      */
     private static $getters = [
         'tupleset' => 'getTupleset',
-        'computedUserset' => 'getComputedUserset',
+        'computed_userset' => 'getComputedUserset',
     ];
 
     /**
@@ -103,7 +103,7 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
      */
     private static $openAPIFormats = [
         'tupleset' => null,
-        'computedUserset' => null,
+        'computed_userset' => null,
     ];
 
     /**
@@ -120,7 +120,7 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
      */
     private static array $openAPINullables = [
         'tupleset' => false,
-        'computedUserset' => false,
+        'computed_userset' => false,
     ];
 
     /**
@@ -130,7 +130,7 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
      */
     private static $openAPITypes = [
         'tupleset' => '\OpenFGA\API\Models\ObjectRelation',
-        'computedUserset' => '\OpenFGA\API\Models\ObjectRelation',
+        'computed_userset' => '\OpenFGA\API\Models\ObjectRelation',
     ];
 
     /**
@@ -140,7 +140,7 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
      */
     private static $setters = [
         'tupleset' => 'setTupleset',
-        'computedUserset' => 'setComputedUserset',
+        'computed_userset' => 'setComputedUserset',
     ];
 
     /**
@@ -152,7 +152,7 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
     public function __construct(?array $data = null)
     {
         $this->setIfExists('tupleset', $data ?? [], null);
-        $this->setIfExists('computedUserset', $data ?? [], null);
+        $this->setIfExists('computed_userset', $data ?? [], null);
     }
 
     /**
@@ -169,13 +169,13 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Gets computedUserset.
+     * Gets computed_userset.
      *
      * @return ObjectRelation
      */
     public function getComputedUserset()
     {
-        return $this->container['computedUserset'];
+        return $this->container['computed_userset'];
     }
 
     /**
@@ -236,8 +236,8 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
         if (null === $this->container['tupleset']) {
             $invalidProperties[] = "'tupleset' can't be null";
         }
-        if (null === $this->container['computedUserset']) {
-            $invalidProperties[] = "'computedUserset' can't be null";
+        if (null === $this->container['computed_userset']) {
+            $invalidProperties[] = "'computed_userset' can't be null";
         }
 
         return $invalidProperties;
@@ -294,18 +294,18 @@ final class V1TupleToUserset implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Sets computedUserset.
+     * Sets computed_userset.
      *
-     * @param ObjectRelation $computedUserset computedUserset
+     * @param ObjectRelation $computed_userset computed_userset
      *
      * @return self
      */
-    public function setComputedUserset($computedUserset)
+    public function setComputedUserset($computed_userset)
     {
-        if (null === $computedUserset) {
-            throw new InvalidArgumentException('non-nullable computedUserset cannot be null');
+        if (null === $computed_userset) {
+            throw new InvalidArgumentException('non-nullable computed_userset cannot be null');
         }
-        $this->container['computedUserset'] = $computedUserset;
+        $this->container['computed_userset'] = $computed_userset;
 
         return $this;
     }

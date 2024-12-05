@@ -78,7 +78,7 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
      * @var string[]
      */
     private static $attributeMap = [
-        'tupleKeys' => 'tuple_keys',
+        'tuple_keys' => 'tuple_keys',
     ];
 
     /**
@@ -87,7 +87,7 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
      * @var string[]
      */
     private static $getters = [
-        'tupleKeys' => 'getTupleKeys',
+        'tuple_keys' => 'getTupleKeys',
     ];
 
     /**
@@ -100,7 +100,7 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'tupleKeys' => null,
+        'tuple_keys' => null,
     ];
 
     /**
@@ -116,7 +116,7 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'tupleKeys' => false,
+        'tuple_keys' => false,
     ];
 
     /**
@@ -125,7 +125,7 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
      * @var string[]
      */
     private static $openAPITypes = [
-        'tupleKeys' => '\OpenFGA\API\Models\TupleKeyWithoutCondition[]',
+        'tuple_keys' => '\OpenFGA\API\Models\TupleKeyWithoutCondition[]',
     ];
 
     /**
@@ -134,7 +134,7 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
      * @var string[]
      */
     private static $setters = [
-        'tupleKeys' => 'setTupleKeys',
+        'tuple_keys' => 'setTupleKeys',
     ];
 
     /**
@@ -145,7 +145,7 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('tupleKeys', $data ?? [], null);
+        $this->setIfExists('tuple_keys', $data ?? [], null);
     }
 
     /**
@@ -172,13 +172,13 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
     }
 
     /**
-     * Gets tupleKeys.
+     * Gets tuple_keys.
      *
      * @return TupleKeyWithoutCondition[]
      */
     public function getTupleKeys()
     {
-        return $this->container['tupleKeys'];
+        return $this->container['tuple_keys'];
     }
 
     /**
@@ -216,11 +216,11 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
     {
         $invalidProperties = [];
 
-        if (null === $this->container['tupleKeys']) {
-            $invalidProperties[] = "'tupleKeys' can't be null";
+        if (null === $this->container['tuple_keys']) {
+            $invalidProperties[] = "'tuple_keys' can't be null";
         }
-        if ((count($this->container['tupleKeys']) < 1)) {
-            $invalidProperties[] = "invalid value for 'tupleKeys', number of items must be greater than or equal to 1.";
+        if ((count($this->container['tuple_keys']) < 1)) {
+            $invalidProperties[] = "invalid value for 'tuple_keys', number of items must be greater than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -277,22 +277,22 @@ final class WriteRequestDeletes implements ArrayAccess, JsonSerializable, ModelI
     }
 
     /**
-     * Sets tupleKeys.
+     * Sets tuple_keys.
      *
-     * @param TupleKeyWithoutCondition[] $tupleKeys tupleKeys
+     * @param TupleKeyWithoutCondition[] $tuple_keys tuple_keys
      *
      * @return self
      */
-    public function setTupleKeys($tupleKeys)
+    public function setTupleKeys($tuple_keys)
     {
-        if (null === $tupleKeys) {
-            throw new InvalidArgumentException('non-nullable tupleKeys cannot be null');
+        if (null === $tuple_keys) {
+            throw new InvalidArgumentException('non-nullable tuple_keys cannot be null');
         }
 
-        if ((count($tupleKeys) < 1)) {
-            throw new InvalidArgumentException('invalid length for $tupleKeys when calling WriteRequestDeletes., number of items must be greater than or equal to 1.');
+        if ((count($tuple_keys) < 1)) {
+            throw new InvalidArgumentException('invalid length for $tuple_keys when calling WriteRequestDeletes., number of items must be greater than or equal to 1.');
         }
-        $this->container['tupleKeys'] = $tupleKeys;
+        $this->container['tuple_keys'] = $tuple_keys;
 
         return $this;
     }

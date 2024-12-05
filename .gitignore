@@ -4,5 +4,6 @@
 .php-cs-fixer.cache
 .phpunit.result.cache
 composer.lock
+composer.local.json
 coverage
 vendor

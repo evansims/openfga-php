@@ -6,9 +6,9 @@ namespace OpenFGA\API\Endpoints;
 
 use OpenFGA\API\Models\{CreateStoreRequest, CreateStoreResponse, GetStoreResponse, ListStoresResponse};
 use OpenFGA\API\Options\{CreateStoreRequestOptions, DeleteStoreRequestOptions, GetStoreRequestOptions, ListStoresRequestOptions};
-use OpenFGA\API\{Request, RequestEndpoint, RequestMethod};
+use OpenFGA\API\Request;
 
-abstract class StoresEndpoint extends Endpoint
+trait StoresEndpoint
 {
     final public function createStore(CreateStoreRequest $request, ?CreateStoreRequestOptions $options = null): CreateStoreResponse
     {
@@ -30,11 +30,19 @@ abstract class StoresEndpoint extends Endpoint
 
     }
 
-    final public function getStore(?string $storeId, ?GetStoreRequestOptions $options = null): GetStoreResponse
+    final public function getStore(?string $storeId = null, ?GetStoreRequestOptions $options = null): GetStoreResponse
     {
+        $storeId ??= $this->getConfiguration()->getStoreId();
+
         if (null === $options) {
             $options = new GetStoreRequestOptions();
         }
+
+        $response = (new Request(
+            client: $this,
+            options: $options,
+            endpoint: '/stores/' . $storeId,
+        ))->get();
 
         return new GetStoreResponse([
             'id' => uniqid(),
@@ -48,12 +56,11 @@ abstract class StoresEndpoint extends Endpoint
             $options = new ListStoresRequestOptions();
         }
 
-        $call = new Request(
-            configuration: $this->configuration,
+        $response = (new Request(
+            client: $this,
             options: $options,
-            method: RequestMethod::GET,
-            endpoint: RequestEndpoint::LIST_STORES,
-        );
+            endpoint: '/stores',
+        ))->get();
 
         return new ListStoresResponse([
             [

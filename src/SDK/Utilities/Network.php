@@ -6,6 +6,7 @@ namespace OpenFGA\SDK\Utilities;
 
 use Exception;
 use OpenFGA\Client;
+use OpenFGA\ClientInterface as OpenFGAClientInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
@@ -25,7 +26,13 @@ enum RequestBodyFormat: int
 
 final class Network
 {
-    // TODO: Accept a container/DI object as a parameter to allow for singletons of PSR-17 and PSR-18 factories
+    public function __construct(
+        private OpenFGAClientInterface $client,
+        private ?ClientInterface $httpClient = null,
+        private ?RequestFactoryInterface $httpRequestFactory = null,
+        private ?StreamFactoryInterface $httpStreamFactory = null,
+    ) {
+    }
 
     public function getUserAgent(): string
     {
@@ -34,35 +41,47 @@ final class Network
 
     public function getHttpRequestFactory(): RequestFactoryInterface
     {
-        $httpRequestFactory = Discover::httpRequestFactory();
+        if ($this->httpRequestFactory === null) {
+            $httpRequestFactory = Discover::httpRequestFactory();
 
-        if (null === $httpRequestFactory) {
-            throw new Exception('An available PSR-17 HTTP Request factory could not be discovered.');
+            if (null === $httpRequestFactory) {
+                throw new Exception('An available PSR-17 HTTP Request factory could not be discovered.');
+            }
+
+            $this->httpRequestFactory = $httpRequestFactory;
         }
 
-        return $httpRequestFactory;
+        return $this->httpRequestFactory;
     }
 
     public function getHttpStreamFactory(): StreamFactoryInterface
     {
-        $httpStreamFactory = Discover::httpStreamFactory();
+        if ($this->httpStreamFactory === null) {
+            $httpStreamFactory = Discover::httpStreamFactory();
 
-        if (null === $httpStreamFactory) {
-            throw new Exception('An available PSR-17 Stream factory could not be discovered.');
+            if (null === $httpStreamFactory) {
+                throw new Exception('An available PSR-17 Stream factory could not be discovered.');
+            }
+
+            $this->httpStreamFactory = $httpStreamFactory;
         }
 
-        return $httpStreamFactory;
+        return $this->httpStreamFactory;
     }
 
     public function getHttpClient(): ClientInterface
     {
-        $httpClient = Discover::httpClient();
+        if ($this->httpClient === null) {
+            $httpClient = Discover::httpClient();
 
-        if (null === $httpClient) {
-            throw new Exception('An available PSR-18 HTTP Client factory could not be discovered.');
+            if (null === $httpClient) {
+                throw new Exception('An available PSR-18 HTTP Client factory could not be discovered.');
+            }
+
+            $this->httpClient = $httpClient;
         }
 
-        return $httpClient;
+        return $this->httpClient;
     }
 
     public function createRequestBody(array $body, RequestBodyFormat $format): StreamInterface
@@ -73,7 +92,7 @@ final class Network
             case RequestBodyFormat::JSON:
                 return $factory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
             case RequestBodyFormat::POST:
-                return $factory->createStream(http_build_query($body));
+                return $factory->createStream(http_build_query($body, '', '&'));
         }
     }
 

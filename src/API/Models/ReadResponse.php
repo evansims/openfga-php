@@ -79,7 +79,7 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
      */
     private static $attributeMap = [
         'tuples' => 'tuples',
-        'continuationToken' => 'continuation_token',
+        'continuation_token' => 'continuation_token',
     ];
 
     /**
@@ -89,7 +89,7 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
      */
     private static $getters = [
         'tuples' => 'getTuples',
-        'continuationToken' => 'getContinuationToken',
+        'continuation_token' => 'getContinuationToken',
     ];
 
     /**
@@ -103,7 +103,7 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
      */
     private static $openAPIFormats = [
         'tuples' => null,
-        'continuationToken' => null,
+        'continuation_token' => null,
     ];
 
     /**
@@ -120,7 +120,7 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
      */
     private static array $openAPINullables = [
         'tuples' => false,
-        'continuationToken' => false,
+        'continuation_token' => false,
     ];
 
     /**
@@ -130,7 +130,7 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
      */
     private static $openAPITypes = [
         'tuples' => '\OpenFGA\API\Models\Tuple[]',
-        'continuationToken' => 'string',
+        'continuation_token' => 'string',
     ];
 
     /**
@@ -140,7 +140,7 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
      */
     private static $setters = [
         'tuples' => 'setTuples',
-        'continuationToken' => 'setContinuationToken',
+        'continuation_token' => 'setContinuationToken',
     ];
 
     /**
@@ -152,7 +152,7 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
     public function __construct(?array $data = null)
     {
         $this->setIfExists('tuples', $data ?? [], null);
-        $this->setIfExists('continuationToken', $data ?? [], null);
+        $this->setIfExists('continuation_token', $data ?? [], null);
     }
 
     /**
@@ -169,13 +169,13 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Gets continuationToken.
+     * Gets continuation_token.
      *
      * @return string
      */
     public function getContinuationToken()
     {
-        return $this->container['continuationToken'];
+        return $this->container['continuation_token'];
     }
 
     /**
@@ -236,8 +236,8 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
         if (null === $this->container['tuples']) {
             $invalidProperties[] = "'tuples' can't be null";
         }
-        if (null === $this->container['continuationToken']) {
-            $invalidProperties[] = "'continuationToken' can't be null";
+        if (null === $this->container['continuation_token']) {
+            $invalidProperties[] = "'continuation_token' can't be null";
         }
 
         return $invalidProperties;
@@ -294,18 +294,18 @@ final class ReadResponse implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Sets continuationToken.
+     * Sets continuation_token.
      *
-     * @param string $continuationToken The continuation token will be empty if there are no more tuples.
+     * @param string $continuation_token The continuation token will be empty if there are no more tuples.
      *
      * @return self
      */
-    public function setContinuationToken($continuationToken)
+    public function setContinuationToken($continuation_token)
     {
-        if (null === $continuationToken) {
-            throw new InvalidArgumentException('non-nullable continuationToken cannot be null');
+        if (null === $continuation_token) {
+            throw new InvalidArgumentException('non-nullable continuation_token cannot be null');
         }
-        $this->container['continuationToken'] = $continuationToken;
+        $this->container['continuation_token'] = $continuation_token;
 
         return $this;
     }

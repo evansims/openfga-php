@@ -79,7 +79,7 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
      */
     private static $attributeMap = [
         'changes' => 'changes',
-        'continuationToken' => 'continuation_token',
+        'continuation_token' => 'continuation_token',
     ];
 
     /**
@@ -89,7 +89,7 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
      */
     private static $getters = [
         'changes' => 'getChanges',
-        'continuationToken' => 'getContinuationToken',
+        'continuation_token' => 'getContinuationToken',
     ];
 
     /**
@@ -103,7 +103,7 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
      */
     private static $openAPIFormats = [
         'changes' => null,
-        'continuationToken' => null,
+        'continuation_token' => null,
     ];
 
     /**
@@ -120,7 +120,7 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
      */
     private static array $openAPINullables = [
         'changes' => false,
-        'continuationToken' => false,
+        'continuation_token' => false,
     ];
 
     /**
@@ -130,7 +130,7 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
      */
     private static $openAPITypes = [
         'changes' => '\OpenFGA\API\Models\TupleChange[]',
-        'continuationToken' => 'string',
+        'continuation_token' => 'string',
     ];
 
     /**
@@ -140,7 +140,7 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
      */
     private static $setters = [
         'changes' => 'setChanges',
-        'continuationToken' => 'setContinuationToken',
+        'continuation_token' => 'setContinuationToken',
     ];
 
     /**
@@ -152,7 +152,7 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
     public function __construct(?array $data = null)
     {
         $this->setIfExists('changes', $data ?? [], null);
-        $this->setIfExists('continuationToken', $data ?? [], null);
+        $this->setIfExists('continuation_token', $data ?? [], null);
     }
 
     /**
@@ -179,13 +179,13 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
     }
 
     /**
-     * Gets continuationToken.
+     * Gets continuation_token.
      *
      * @return null|string
      */
     public function getContinuationToken()
     {
-        return $this->container['continuationToken'];
+        return $this->container['continuation_token'];
     }
 
     /**
@@ -308,18 +308,18 @@ final class ReadChangesResponse implements ArrayAccess, JsonSerializable, ModelI
     }
 
     /**
-     * Sets continuationToken.
+     * Sets continuation_token.
      *
-     * @param null|string $continuationToken The continuation token will be identical if there are no new changes.
+     * @param null|string $continuation_token The continuation token will be identical if there are no new changes.
      *
      * @return self
      */
-    public function setContinuationToken($continuationToken)
+    public function setContinuationToken($continuation_token)
     {
-        if (null === $continuationToken) {
-            throw new InvalidArgumentException('non-nullable continuationToken cannot be null');
+        if (null === $continuation_token) {
+            throw new InvalidArgumentException('non-nullable continuation_token cannot be null');
         }
-        $this->container['continuationToken'] = $continuationToken;
+        $this->container['continuation_token'] = $continuation_token;
 
         return $this;
     }

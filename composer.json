@@ -21,10 +21,10 @@
     "ext-mbstring": "*",
     "ext-openssl": "*",
     "psr-discovery/all": "^1",
+    "psr/container": "^2",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
-    "psr/http-message-implementation": "^1",
-    "psr/container": "^2"
+    "psr/http-message-implementation": "^1"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2.44",
@@ -33,7 +33,6 @@
     "pestphp/pest": "^3",
     "phpstan/phpstan": "^2",
     "phpstan/phpstan-strict-rules": "^2",
-    "psr-mock/http": "^1",
     "rector/rector": "^2.0@RC",
     "symfony/cache": "^4 || ^5 || ^6 || 7",
     "symfony/event-dispatcher": "^4 || ^5 || ^6 || ^7",

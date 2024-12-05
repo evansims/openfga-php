@@ -78,11 +78,11 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
      * @var string[]
      */
     private static $attributeMap = [
-        'authorizationModelId' => 'authorization_model_id',
+        'authorization_model_id' => 'authorization_model_id',
         'type' => 'type',
         'relation' => 'relation',
         'user' => 'user',
-        'contextualTuples' => 'contextual_tuples',
+        'contextual_tuples' => 'contextual_tuples',
         'context' => 'context',
         'consistency' => 'consistency',
     ];
@@ -93,11 +93,11 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
      * @var string[]
      */
     private static $getters = [
-        'authorizationModelId' => 'getAuthorizationModelId',
+        'authorization_model_id' => 'getAuthorizationModelId',
         'type' => 'getType',
         'relation' => 'getRelation',
         'user' => 'getUser',
-        'contextualTuples' => 'getContextualTuples',
+        'contextual_tuples' => 'getContextualTuples',
         'context' => 'getContext',
         'consistency' => 'getConsistency',
     ];
@@ -112,11 +112,11 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'authorizationModelId' => null,
+        'authorization_model_id' => null,
         'type' => null,
         'relation' => null,
         'user' => null,
-        'contextualTuples' => null,
+        'contextual_tuples' => null,
         'context' => null,
         'consistency' => null,
     ];
@@ -134,11 +134,11 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'authorizationModelId' => false,
+        'authorization_model_id' => false,
         'type' => false,
         'relation' => false,
         'user' => false,
-        'contextualTuples' => false,
+        'contextual_tuples' => false,
         'context' => false,
         'consistency' => false,
     ];
@@ -149,11 +149,11 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
      * @var string[]
      */
     private static $openAPITypes = [
-        'authorizationModelId' => 'string',
+        'authorization_model_id' => 'string',
         'type' => 'string',
         'relation' => 'string',
         'user' => 'string',
-        'contextualTuples' => '\OpenFGA\API\Models\ContextualTupleKeys',
+        'contextual_tuples' => '\OpenFGA\API\Models\ContextualTupleKeys',
         'context' => 'object',
         'consistency' => '\OpenFGA\API\Models\ConsistencyPreference',
     ];
@@ -164,11 +164,11 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
      * @var string[]
      */
     private static $setters = [
-        'authorizationModelId' => 'setAuthorizationModelId',
+        'authorization_model_id' => 'setAuthorizationModelId',
         'type' => 'setType',
         'relation' => 'setRelation',
         'user' => 'setUser',
-        'contextualTuples' => 'setContextualTuples',
+        'contextual_tuples' => 'setContextualTuples',
         'context' => 'setContext',
         'consistency' => 'setConsistency',
     ];
@@ -181,11 +181,11 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('authorizationModelId', $data ?? [], null);
+        $this->setIfExists('authorization_model_id', $data ?? [], null);
         $this->setIfExists('type', $data ?? [], null);
         $this->setIfExists('relation', $data ?? [], null);
         $this->setIfExists('user', $data ?? [], null);
-        $this->setIfExists('contextualTuples', $data ?? [], null);
+        $this->setIfExists('contextual_tuples', $data ?? [], null);
         $this->setIfExists('context', $data ?? [], null);
         $this->setIfExists('consistency', $data ?? [], null);
     }
@@ -204,13 +204,13 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
     }
 
     /**
-     * Gets authorizationModelId.
+     * Gets authorization_model_id.
      *
      * @return null|string
      */
     public function getAuthorizationModelId()
     {
-        return $this->container['authorizationModelId'];
+        return $this->container['authorization_model_id'];
     }
 
     /**
@@ -234,13 +234,13 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
     }
 
     /**
-     * Gets contextualTuples.
+     * Gets contextual_tuples.
      *
      * @return null|ContextualTupleKeys
      */
     public function getContextualTuples()
     {
-        return $this->container['contextualTuples'];
+        return $this->container['contextual_tuples'];
     }
 
     /**
@@ -389,18 +389,18 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
     }
 
     /**
-     * Sets authorizationModelId.
+     * Sets authorization_model_id.
      *
-     * @param null|string $authorizationModelId authorizationModelId
+     * @param null|string $authorization_model_id authorization_model_id
      *
      * @return self
      */
-    public function setAuthorizationModelId($authorizationModelId)
+    public function setAuthorizationModelId($authorization_model_id)
     {
-        if (null === $authorizationModelId) {
-            throw new InvalidArgumentException('non-nullable authorizationModelId cannot be null');
+        if (null === $authorization_model_id) {
+            throw new InvalidArgumentException('non-nullable authorization_model_id cannot be null');
         }
-        $this->container['authorizationModelId'] = $authorizationModelId;
+        $this->container['authorization_model_id'] = $authorization_model_id;
 
         return $this;
     }
@@ -440,18 +440,18 @@ final class ListObjectsRequest implements ArrayAccess, JsonSerializable, ModelIn
     }
 
     /**
-     * Sets contextualTuples.
+     * Sets contextual_tuples.
      *
-     * @param null|ContextualTupleKeys $contextualTuples contextualTuples
+     * @param null|ContextualTupleKeys $contextual_tuples contextual_tuples
      *
      * @return self
      */
-    public function setContextualTuples($contextualTuples)
+    public function setContextualTuples($contextual_tuples)
     {
-        if (null === $contextualTuples) {
-            throw new InvalidArgumentException('non-nullable contextualTuples cannot be null');
+        if (null === $contextual_tuples) {
+            throw new InvalidArgumentException('non-nullable contextual_tuples cannot be null');
         }
-        $this->container['contextualTuples'] = $contextualTuples;
+        $this->container['contextual_tuples'] = $contextual_tuples;
 
         return $this;
     }

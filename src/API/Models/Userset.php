@@ -79,8 +79,8 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
      */
     private static $attributeMap = [
         'this' => 'this',
-        'computedUserset' => 'computedUserset',
-        'tupleToUserset' => 'tupleToUserset',
+        'computed_userset' => 'computedUserset',
+        'tuple_to_userset' => 'tupleToUserset',
         'union' => 'union',
         'intersection' => 'intersection',
         'difference' => 'difference',
@@ -93,8 +93,8 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
      */
     private static $getters = [
         'this' => 'getThis',
-        'computedUserset' => 'getComputedUserset',
-        'tupleToUserset' => 'getTupleToUserset',
+        'computed_userset' => 'getComputedUserset',
+        'tuple_to_userset' => 'getTupleToUserset',
         'union' => 'getUnion',
         'intersection' => 'getIntersection',
         'difference' => 'getDifference',
@@ -111,8 +111,8 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
      */
     private static $openAPIFormats = [
         'this' => null,
-        'computedUserset' => null,
-        'tupleToUserset' => null,
+        'computed_userset' => null,
+        'tuple_to_userset' => null,
         'union' => null,
         'intersection' => null,
         'difference' => null,
@@ -132,8 +132,8 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
      */
     private static array $openAPINullables = [
         'this' => false,
-        'computedUserset' => false,
-        'tupleToUserset' => false,
+        'computed_userset' => false,
+        'tuple_to_userset' => false,
         'union' => false,
         'intersection' => false,
         'difference' => false,
@@ -146,8 +146,8 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
      */
     private static $openAPITypes = [
         'this' => 'object',
-        'computedUserset' => '\OpenFGA\API\Models\ObjectRelation',
-        'tupleToUserset' => '\OpenFGA\API\Models\V1TupleToUserset',
+        'computed_userset' => '\OpenFGA\API\Models\ObjectRelation',
+        'tuple_to_userset' => '\OpenFGA\API\Models\V1TupleToUserset',
         'union' => '\OpenFGA\API\Models\Usersets',
         'intersection' => '\OpenFGA\API\Models\Usersets',
         'difference' => '\OpenFGA\API\Models\V1Difference',
@@ -160,8 +160,8 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
      */
     private static $setters = [
         'this' => 'setThis',
-        'computedUserset' => 'setComputedUserset',
-        'tupleToUserset' => 'setTupleToUserset',
+        'computed_userset' => 'setComputedUserset',
+        'tuple_to_userset' => 'setTupleToUserset',
         'union' => 'setUnion',
         'intersection' => 'setIntersection',
         'difference' => 'setDifference',
@@ -176,8 +176,8 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
     public function __construct(?array $data = null)
     {
         $this->setIfExists('this', $data ?? [], null);
-        $this->setIfExists('computedUserset', $data ?? [], null);
-        $this->setIfExists('tupleToUserset', $data ?? [], null);
+        $this->setIfExists('computed_userset', $data ?? [], null);
+        $this->setIfExists('tuple_to_userset', $data ?? [], null);
         $this->setIfExists('union', $data ?? [], null);
         $this->setIfExists('intersection', $data ?? [], null);
         $this->setIfExists('difference', $data ?? [], null);
@@ -197,13 +197,13 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets computedUserset.
+     * Gets computed_userset.
      *
      * @return null|ObjectRelation
      */
     public function getComputedUserset()
     {
-        return $this->container['computedUserset'];
+        return $this->container['computed_userset'];
     }
 
     /**
@@ -247,13 +247,13 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets tupleToUserset.
+     * Gets tuple_to_userset.
      *
      * @return null|V1TupleToUserset
      */
     public function getTupleToUserset()
     {
-        return $this->container['tupleToUserset'];
+        return $this->container['tuple_to_userset'];
     }
 
     /**
@@ -353,18 +353,18 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets computedUserset.
+     * Sets computed_userset.
      *
-     * @param null|ObjectRelation $computedUserset computedUserset
+     * @param null|ObjectRelation $computed_userset computed_userset
      *
      * @return self
      */
-    public function setComputedUserset($computedUserset)
+    public function setComputedUserset($computed_userset)
     {
-        if (null === $computedUserset) {
-            throw new InvalidArgumentException('non-nullable computedUserset cannot be null');
+        if (null === $computed_userset) {
+            throw new InvalidArgumentException('non-nullable computed_userset cannot be null');
         }
-        $this->container['computedUserset'] = $computedUserset;
+        $this->container['computed_userset'] = $computed_userset;
 
         return $this;
     }
@@ -421,18 +421,18 @@ final class Userset implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets tupleToUserset.
+     * Sets tuple_to_userset.
      *
-     * @param null|V1TupleToUserset $tupleToUserset tupleToUserset
+     * @param null|V1TupleToUserset $tuple_to_userset tuple_to_userset
      *
      * @return self
      */
-    public function setTupleToUserset($tupleToUserset)
+    public function setTupleToUserset($tuple_to_userset)
     {
-        if (null === $tupleToUserset) {
-            throw new InvalidArgumentException('non-nullable tupleToUserset cannot be null');
+        if (null === $tuple_to_userset) {
+            throw new InvalidArgumentException('non-nullable tuple_to_userset cannot be null');
         }
-        $this->container['tupleToUserset'] = $tupleToUserset;
+        $this->container['tuple_to_userset'] = $tuple_to_userset;
 
         return $this;
     }

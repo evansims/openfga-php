@@ -78,7 +78,7 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $attributeMap = [
-        'authorizationModel' => 'authorization_model',
+        'authorization_model' => 'authorization_model',
     ];
 
     /**
@@ -87,7 +87,7 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $getters = [
-        'authorizationModel' => 'getAuthorizationModel',
+        'authorization_model' => 'getAuthorizationModel',
     ];
 
     /**
@@ -100,7 +100,7 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'authorizationModel' => null,
+        'authorization_model' => null,
     ];
 
     /**
@@ -116,7 +116,7 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'authorizationModel' => false,
+        'authorization_model' => false,
     ];
 
     /**
@@ -125,7 +125,7 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $openAPITypes = [
-        'authorizationModel' => '\OpenFGA\API\Models\AuthorizationModel',
+        'authorization_model' => '\OpenFGA\API\Models\AuthorizationModel',
     ];
 
     /**
@@ -134,7 +134,7 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
      * @var string[]
      */
     private static $setters = [
-        'authorizationModel' => 'setAuthorizationModel',
+        'authorization_model' => 'setAuthorizationModel',
     ];
 
     /**
@@ -145,7 +145,7 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('authorizationModel', $data ?? [], null);
+        $this->setIfExists('authorization_model', $data ?? [], null);
     }
 
     /**
@@ -162,13 +162,13 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
     }
 
     /**
-     * Gets authorizationModel.
+     * Gets authorization_model.
      *
      * @return null|AuthorizationModel
      */
     public function getAuthorizationModel()
     {
-        return $this->container['authorizationModel'];
+        return $this->container['authorization_model'];
     }
 
     /**
@@ -268,18 +268,18 @@ final class ReadAuthorizationModelResponse implements ArrayAccess, JsonSerializa
     }
 
     /**
-     * Sets authorizationModel.
+     * Sets authorization_model.
      *
-     * @param null|AuthorizationModel $authorizationModel authorizationModel
+     * @param null|AuthorizationModel $authorization_model authorization_model
      *
      * @return self
      */
-    public function setAuthorizationModel($authorizationModel)
+    public function setAuthorizationModel($authorization_model)
     {
-        if (null === $authorizationModel) {
-            throw new InvalidArgumentException('non-nullable authorizationModel cannot be null');
+        if (null === $authorization_model) {
+            throw new InvalidArgumentException('non-nullable authorization_model cannot be null');
         }
-        $this->container['authorizationModel'] = $authorizationModel;
+        $this->container['authorization_model'] = $authorization_model;
 
         return $this;
     }

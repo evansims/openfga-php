@@ -78,9 +78,9 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $attributeMap = [
-        'directlyRelatedUserTypes' => 'directly_related_user_types',
+        'directly_related_user_types' => 'directly_related_user_types',
         'module' => 'module',
-        'sourceInfo' => 'source_info',
+        'source_info' => 'source_info',
     ];
 
     /**
@@ -89,9 +89,9 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $getters = [
-        'directlyRelatedUserTypes' => 'getDirectlyRelatedUserTypes',
+        'directly_related_user_types' => 'getDirectlyRelatedUserTypes',
         'module' => 'getModule',
-        'sourceInfo' => 'getSourceInfo',
+        'source_info' => 'getSourceInfo',
     ];
 
     /**
@@ -104,9 +104,9 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'directlyRelatedUserTypes' => null,
+        'directly_related_user_types' => null,
         'module' => null,
-        'sourceInfo' => null,
+        'source_info' => null,
     ];
 
     /**
@@ -122,9 +122,9 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'directlyRelatedUserTypes' => false,
+        'directly_related_user_types' => false,
         'module' => false,
-        'sourceInfo' => false,
+        'source_info' => false,
     ];
 
     /**
@@ -133,9 +133,9 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $openAPITypes = [
-        'directlyRelatedUserTypes' => '\OpenFGA\API\Models\RelationReference[]',
+        'directly_related_user_types' => '\OpenFGA\API\Models\RelationReference[]',
         'module' => 'string',
-        'sourceInfo' => '\OpenFGA\API\Models\SourceInfo',
+        'source_info' => '\OpenFGA\API\Models\SourceInfo',
     ];
 
     /**
@@ -144,9 +144,9 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $setters = [
-        'directlyRelatedUserTypes' => 'setDirectlyRelatedUserTypes',
+        'directly_related_user_types' => 'setDirectlyRelatedUserTypes',
         'module' => 'setModule',
-        'sourceInfo' => 'setSourceInfo',
+        'source_info' => 'setSourceInfo',
     ];
 
     /**
@@ -157,9 +157,9 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('directlyRelatedUserTypes', $data ?? [], null);
+        $this->setIfExists('directly_related_user_types', $data ?? [], null);
         $this->setIfExists('module', $data ?? [], null);
-        $this->setIfExists('sourceInfo', $data ?? [], null);
+        $this->setIfExists('source_info', $data ?? [], null);
     }
 
     /**
@@ -176,13 +176,13 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Gets directlyRelatedUserTypes.
+     * Gets directly_related_user_types.
      *
      * @return null|RelationReference[]
      */
     public function getDirectlyRelatedUserTypes()
     {
-        return $this->container['directlyRelatedUserTypes'];
+        return $this->container['directly_related_user_types'];
     }
 
     /**
@@ -206,13 +206,13 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Gets sourceInfo.
+     * Gets source_info.
      *
      * @return null|SourceInfo
      */
     public function getSourceInfo()
     {
-        return $this->container['sourceInfo'];
+        return $this->container['source_info'];
     }
 
     /**
@@ -302,18 +302,18 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Sets directlyRelatedUserTypes.
+     * Sets directly_related_user_types.
      *
-     * @param null|RelationReference[] $directlyRelatedUserTypes directlyRelatedUserTypes
+     * @param null|RelationReference[] $directly_related_user_types directly_related_user_types
      *
      * @return self
      */
-    public function setDirectlyRelatedUserTypes($directlyRelatedUserTypes)
+    public function setDirectlyRelatedUserTypes($directly_related_user_types)
     {
-        if (null === $directlyRelatedUserTypes) {
-            throw new InvalidArgumentException('non-nullable directlyRelatedUserTypes cannot be null');
+        if (null === $directly_related_user_types) {
+            throw new InvalidArgumentException('non-nullable directly_related_user_types cannot be null');
         }
-        $this->container['directlyRelatedUserTypes'] = $directlyRelatedUserTypes;
+        $this->container['directly_related_user_types'] = $directly_related_user_types;
 
         return $this;
     }
@@ -336,18 +336,18 @@ final class RelationMetadata implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Sets sourceInfo.
+     * Sets source_info.
      *
-     * @param null|SourceInfo $sourceInfo sourceInfo
+     * @param null|SourceInfo $source_info source_info
      *
      * @return self
      */
-    public function setSourceInfo($sourceInfo)
+    public function setSourceInfo($source_info)
     {
-        if (null === $sourceInfo) {
-            throw new InvalidArgumentException('non-nullable sourceInfo cannot be null');
+        if (null === $source_info) {
+            throw new InvalidArgumentException('non-nullable source_info cannot be null');
         }
-        $this->container['sourceInfo'] = $sourceInfo;
+        $this->container['source_info'] = $source_info;
 
         return $this;
     }

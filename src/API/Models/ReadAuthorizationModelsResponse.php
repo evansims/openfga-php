@@ -78,8 +78,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
      * @var string[]
      */
     private static $attributeMap = [
-        'authorizationModels' => 'authorization_models',
-        'continuationToken' => 'continuation_token',
+        'authorization_models' => 'authorization_models',
+        'continuation_token' => 'continuation_token',
     ];
 
     /**
@@ -88,8 +88,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
      * @var string[]
      */
     private static $getters = [
-        'authorizationModels' => 'getAuthorizationModels',
-        'continuationToken' => 'getContinuationToken',
+        'authorization_models' => 'getAuthorizationModels',
+        'continuation_token' => 'getContinuationToken',
     ];
 
     /**
@@ -102,8 +102,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'authorizationModels' => null,
-        'continuationToken' => null,
+        'authorization_models' => null,
+        'continuation_token' => null,
     ];
 
     /**
@@ -119,8 +119,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'authorizationModels' => false,
-        'continuationToken' => false,
+        'authorization_models' => false,
+        'continuation_token' => false,
     ];
 
     /**
@@ -129,8 +129,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
      * @var string[]
      */
     private static $openAPITypes = [
-        'authorizationModels' => '\OpenFGA\API\Models\AuthorizationModel[]',
-        'continuationToken' => 'string',
+        'authorization_models' => '\OpenFGA\API\Models\AuthorizationModel[]',
+        'continuation_token' => 'string',
     ];
 
     /**
@@ -139,8 +139,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
      * @var string[]
      */
     private static $setters = [
-        'authorizationModels' => 'setAuthorizationModels',
-        'continuationToken' => 'setContinuationToken',
+        'authorization_models' => 'setAuthorizationModels',
+        'continuation_token' => 'setContinuationToken',
     ];
 
     /**
@@ -151,8 +151,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('authorizationModels', $data ?? [], null);
-        $this->setIfExists('continuationToken', $data ?? [], null);
+        $this->setIfExists('authorization_models', $data ?? [], null);
+        $this->setIfExists('continuation_token', $data ?? [], null);
     }
 
     /**
@@ -169,23 +169,23 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
     }
 
     /**
-     * Gets authorizationModels.
+     * Gets authorization_models.
      *
      * @return AuthorizationModel[]
      */
     public function getAuthorizationModels()
     {
-        return $this->container['authorizationModels'];
+        return $this->container['authorization_models'];
     }
 
     /**
-     * Gets continuationToken.
+     * Gets continuation_token.
      *
      * @return null|string
      */
     public function getContinuationToken()
     {
-        return $this->container['continuationToken'];
+        return $this->container['continuation_token'];
     }
 
     /**
@@ -233,8 +233,8 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
     {
         $invalidProperties = [];
 
-        if (null === $this->container['authorizationModels']) {
-            $invalidProperties[] = "'authorizationModels' can't be null";
+        if (null === $this->container['authorization_models']) {
+            $invalidProperties[] = "'authorization_models' can't be null";
         }
 
         return $invalidProperties;
@@ -291,35 +291,35 @@ final class ReadAuthorizationModelsResponse implements ArrayAccess, JsonSerializ
     }
 
     /**
-     * Sets authorizationModels.
+     * Sets authorization_models.
      *
-     * @param AuthorizationModel[] $authorizationModels authorizationModels
+     * @param AuthorizationModel[] $authorization_models authorization_models
      *
      * @return self
      */
-    public function setAuthorizationModels($authorizationModels)
+    public function setAuthorizationModels($authorization_models)
     {
-        if (null === $authorizationModels) {
-            throw new InvalidArgumentException('non-nullable authorizationModels cannot be null');
+        if (null === $authorization_models) {
+            throw new InvalidArgumentException('non-nullable authorization_models cannot be null');
         }
-        $this->container['authorizationModels'] = $authorizationModels;
+        $this->container['authorization_models'] = $authorization_models;
 
         return $this;
     }
 
     /**
-     * Sets continuationToken.
+     * Sets continuation_token.
      *
-     * @param null|string $continuationToken The continuation token will be empty if there are no more models.
+     * @param null|string $continuation_token The continuation token will be empty if there are no more models.
      *
      * @return self
      */
-    public function setContinuationToken($continuationToken)
+    public function setContinuationToken($continuation_token)
     {
-        if (null === $continuationToken) {
-            throw new InvalidArgumentException('non-nullable continuationToken cannot be null');
+        if (null === $continuation_token) {
+            throw new InvalidArgumentException('non-nullable continuation_token cannot be null');
         }
-        $this->container['continuationToken'] = $continuationToken;
+        $this->container['continuation_token'] = $continuation_token;
 
         return $this;
     }

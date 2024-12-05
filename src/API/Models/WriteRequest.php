@@ -80,7 +80,7 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     private static $attributeMap = [
         'writes' => 'writes',
         'deletes' => 'deletes',
-        'authorizationModelId' => 'authorization_model_id',
+        'authorization_model_id' => 'authorization_model_id',
     ];
 
     /**
@@ -91,7 +91,7 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     private static $getters = [
         'writes' => 'getWrites',
         'deletes' => 'getDeletes',
-        'authorizationModelId' => 'getAuthorizationModelId',
+        'authorization_model_id' => 'getAuthorizationModelId',
     ];
 
     /**
@@ -106,7 +106,7 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     private static $openAPIFormats = [
         'writes' => null,
         'deletes' => null,
-        'authorizationModelId' => null,
+        'authorization_model_id' => null,
     ];
 
     /**
@@ -124,7 +124,7 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     private static array $openAPINullables = [
         'writes' => false,
         'deletes' => false,
-        'authorizationModelId' => false,
+        'authorization_model_id' => false,
     ];
 
     /**
@@ -135,7 +135,7 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     private static $openAPITypes = [
         'writes' => '\OpenFGA\API\Models\WriteRequestWrites',
         'deletes' => '\OpenFGA\API\Models\WriteRequestDeletes',
-        'authorizationModelId' => 'string',
+        'authorization_model_id' => 'string',
     ];
 
     /**
@@ -146,7 +146,7 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     private static $setters = [
         'writes' => 'setWrites',
         'deletes' => 'setDeletes',
-        'authorizationModelId' => 'setAuthorizationModelId',
+        'authorization_model_id' => 'setAuthorizationModelId',
     ];
 
     /**
@@ -159,7 +159,7 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     {
         $this->setIfExists('writes', $data ?? [], null);
         $this->setIfExists('deletes', $data ?? [], null);
-        $this->setIfExists('authorizationModelId', $data ?? [], null);
+        $this->setIfExists('authorization_model_id', $data ?? [], null);
     }
 
     /**
@@ -176,13 +176,13 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Gets authorizationModelId.
+     * Gets authorization_model_id.
      *
      * @return null|string
      */
     public function getAuthorizationModelId()
     {
-        return $this->container['authorizationModelId'];
+        return $this->container['authorization_model_id'];
     }
 
     /**
@@ -302,18 +302,18 @@ final class WriteRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Sets authorizationModelId.
+     * Sets authorization_model_id.
      *
-     * @param null|string $authorizationModelId authorizationModelId
+     * @param null|string $authorization_model_id authorization_model_id
      *
      * @return self
      */
-    public function setAuthorizationModelId($authorizationModelId)
+    public function setAuthorizationModelId($authorization_model_id)
     {
-        if (null === $authorizationModelId) {
-            throw new InvalidArgumentException('non-nullable authorizationModelId cannot be null');
+        if (null === $authorization_model_id) {
+            throw new InvalidArgumentException('non-nullable authorization_model_id cannot be null');
         }
-        $this->container['authorizationModelId'] = $authorizationModelId;
+        $this->container['authorization_model_id'] = $authorization_model_id;
 
         return $this;
     }

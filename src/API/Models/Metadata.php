@@ -80,7 +80,7 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     private static $attributeMap = [
         'relations' => 'relations',
         'module' => 'module',
-        'sourceInfo' => 'source_info',
+        'source_info' => 'source_info',
     ];
 
     /**
@@ -91,7 +91,7 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     private static $getters = [
         'relations' => 'getRelations',
         'module' => 'getModule',
-        'sourceInfo' => 'getSourceInfo',
+        'source_info' => 'getSourceInfo',
     ];
 
     /**
@@ -106,7 +106,7 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     private static $openAPIFormats = [
         'relations' => null,
         'module' => null,
-        'sourceInfo' => null,
+        'source_info' => null,
     ];
 
     /**
@@ -124,7 +124,7 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     private static array $openAPINullables = [
         'relations' => false,
         'module' => false,
-        'sourceInfo' => false,
+        'source_info' => false,
     ];
 
     /**
@@ -135,7 +135,7 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     private static $openAPITypes = [
         'relations' => 'array<string,\OpenFGA\API\Models\RelationMetadata>',
         'module' => 'string',
-        'sourceInfo' => '\OpenFGA\API\Models\SourceInfo',
+        'source_info' => '\OpenFGA\API\Models\SourceInfo',
     ];
 
     /**
@@ -146,7 +146,7 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     private static $setters = [
         'relations' => 'setRelations',
         'module' => 'setModule',
-        'sourceInfo' => 'setSourceInfo',
+        'source_info' => 'setSourceInfo',
     ];
 
     /**
@@ -159,7 +159,7 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     {
         $this->setIfExists('relations', $data ?? [], null);
         $this->setIfExists('module', $data ?? [], null);
-        $this->setIfExists('sourceInfo', $data ?? [], null);
+        $this->setIfExists('source_info', $data ?? [], null);
     }
 
     /**
@@ -206,13 +206,13 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets sourceInfo.
+     * Gets source_info.
      *
      * @return null|SourceInfo
      */
     public function getSourceInfo()
     {
-        return $this->container['sourceInfo'];
+        return $this->container['source_info'];
     }
 
     /**
@@ -336,18 +336,18 @@ final class Metadata implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets sourceInfo.
+     * Sets source_info.
      *
-     * @param null|SourceInfo $sourceInfo sourceInfo
+     * @param null|SourceInfo $source_info source_info
      *
      * @return self
      */
-    public function setSourceInfo($sourceInfo)
+    public function setSourceInfo($source_info)
     {
-        if (null === $sourceInfo) {
-            throw new InvalidArgumentException('non-nullable sourceInfo cannot be null');
+        if (null === $source_info) {
+            throw new InvalidArgumentException('non-nullable source_info cannot be null');
         }
-        $this->container['sourceInfo'] = $sourceInfo;
+        $this->container['source_info'] = $source_info;
 
         return $this;
     }

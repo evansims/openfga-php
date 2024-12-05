@@ -78,11 +78,11 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $attributeMap = [
-        'authorizationModelId' => 'authorization_model_id',
+        'authorization_model_id' => 'authorization_model_id',
         'object' => 'object',
         'relation' => 'relation',
-        'userFilters' => 'user_filters',
-        'contextualTuples' => 'contextual_tuples',
+        'user_filters' => 'user_filters',
+        'contextual_tuples' => 'contextual_tuples',
         'context' => 'context',
         'consistency' => 'consistency',
     ];
@@ -93,11 +93,11 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $getters = [
-        'authorizationModelId' => 'getAuthorizationModelId',
+        'authorization_model_id' => 'getAuthorizationModelId',
         'object' => 'getObject',
         'relation' => 'getRelation',
-        'userFilters' => 'getUserFilters',
-        'contextualTuples' => 'getContextualTuples',
+        'user_filters' => 'getUserFilters',
+        'contextual_tuples' => 'getContextualTuples',
         'context' => 'getContext',
         'consistency' => 'getConsistency',
     ];
@@ -112,11 +112,11 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'authorizationModelId' => null,
+        'authorization_model_id' => null,
         'object' => null,
         'relation' => null,
-        'userFilters' => null,
-        'contextualTuples' => null,
+        'user_filters' => null,
+        'contextual_tuples' => null,
         'context' => null,
         'consistency' => null,
     ];
@@ -134,11 +134,11 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'authorizationModelId' => false,
+        'authorization_model_id' => false,
         'object' => false,
         'relation' => false,
-        'userFilters' => false,
-        'contextualTuples' => false,
+        'user_filters' => false,
+        'contextual_tuples' => false,
         'context' => false,
         'consistency' => false,
     ];
@@ -149,11 +149,11 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $openAPITypes = [
-        'authorizationModelId' => 'string',
+        'authorization_model_id' => 'string',
         'object' => '\OpenFGA\API\Models\Object',
         'relation' => 'string',
-        'userFilters' => '\OpenFGA\API\Models\UserTypeFilter[]',
-        'contextualTuples' => '\OpenFGA\API\Models\TupleKey[]',
+        'user_filters' => '\OpenFGA\API\Models\UserTypeFilter[]',
+        'contextual_tuples' => '\OpenFGA\API\Models\TupleKey[]',
         'context' => 'object',
         'consistency' => '\OpenFGA\API\Models\ConsistencyPreference',
     ];
@@ -164,11 +164,11 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
      * @var string[]
      */
     private static $setters = [
-        'authorizationModelId' => 'setAuthorizationModelId',
+        'authorization_model_id' => 'setAuthorizationModelId',
         'object' => 'setObject',
         'relation' => 'setRelation',
-        'userFilters' => 'setUserFilters',
-        'contextualTuples' => 'setContextualTuples',
+        'user_filters' => 'setUserFilters',
+        'contextual_tuples' => 'setContextualTuples',
         'context' => 'setContext',
         'consistency' => 'setConsistency',
     ];
@@ -181,11 +181,11 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('authorizationModelId', $data ?? [], null);
+        $this->setIfExists('authorization_model_id', $data ?? [], null);
         $this->setIfExists('object', $data ?? [], null);
         $this->setIfExists('relation', $data ?? [], null);
-        $this->setIfExists('userFilters', $data ?? [], null);
-        $this->setIfExists('contextualTuples', $data ?? [], null);
+        $this->setIfExists('user_filters', $data ?? [], null);
+        $this->setIfExists('contextual_tuples', $data ?? [], null);
         $this->setIfExists('context', $data ?? [], null);
         $this->setIfExists('consistency', $data ?? [], null);
     }
@@ -204,13 +204,13 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Gets authorizationModelId.
+     * Gets authorization_model_id.
      *
      * @return null|string
      */
     public function getAuthorizationModelId()
     {
-        return $this->container['authorizationModelId'];
+        return $this->container['authorization_model_id'];
     }
 
     /**
@@ -234,13 +234,13 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Gets contextualTuples.
+     * Gets contextual_tuples.
      *
      * @return null|TupleKey[]
      */
     public function getContextualTuples()
     {
-        return $this->container['contextualTuples'];
+        return $this->container['contextual_tuples'];
     }
 
     /**
@@ -274,13 +274,13 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Gets userFilters.
+     * Gets user_filters.
      *
      * @return UserTypeFilter[]
      */
     public function getUserFilters()
     {
-        return $this->container['userFilters'];
+        return $this->container['user_filters'];
     }
 
     /**
@@ -324,19 +324,19 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
         if (null === $this->container['relation']) {
             $invalidProperties[] = "'relation' can't be null";
         }
-        if (null === $this->container['userFilters']) {
-            $invalidProperties[] = "'userFilters' can't be null";
+        if (null === $this->container['user_filters']) {
+            $invalidProperties[] = "'user_filters' can't be null";
         }
-        if ((count($this->container['userFilters']) > 1)) {
-            $invalidProperties[] = "invalid value for 'userFilters', number of items must be less than or equal to 1.";
-        }
-
-        if ((count($this->container['userFilters']) < 1)) {
-            $invalidProperties[] = "invalid value for 'userFilters', number of items must be greater than or equal to 1.";
+        if ((count($this->container['user_filters']) > 1)) {
+            $invalidProperties[] = "invalid value for 'user_filters', number of items must be less than or equal to 1.";
         }
 
-        if (null !== $this->container['contextualTuples'] && (count($this->container['contextualTuples']) > 100)) {
-            $invalidProperties[] = "invalid value for 'contextualTuples', number of items must be less than or equal to 100.";
+        if ((count($this->container['user_filters']) < 1)) {
+            $invalidProperties[] = "invalid value for 'user_filters', number of items must be greater than or equal to 1.";
+        }
+
+        if (null !== $this->container['contextual_tuples'] && (count($this->container['contextual_tuples']) > 100)) {
+            $invalidProperties[] = "invalid value for 'contextual_tuples', number of items must be less than or equal to 100.";
         }
 
         return $invalidProperties;
@@ -393,18 +393,18 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Sets authorizationModelId.
+     * Sets authorization_model_id.
      *
-     * @param null|string $authorizationModelId authorizationModelId
+     * @param null|string $authorization_model_id authorization_model_id
      *
      * @return self
      */
-    public function setAuthorizationModelId($authorizationModelId)
+    public function setAuthorizationModelId($authorization_model_id)
     {
-        if (null === $authorizationModelId) {
-            throw new InvalidArgumentException('non-nullable authorizationModelId cannot be null');
+        if (null === $authorization_model_id) {
+            throw new InvalidArgumentException('non-nullable authorization_model_id cannot be null');
         }
-        $this->container['authorizationModelId'] = $authorizationModelId;
+        $this->container['authorization_model_id'] = $authorization_model_id;
 
         return $this;
     }
@@ -444,22 +444,22 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Sets contextualTuples.
+     * Sets contextual_tuples.
      *
-     * @param null|TupleKey[] $contextualTuples contextualTuples
+     * @param null|TupleKey[] $contextual_tuples contextual_tuples
      *
      * @return self
      */
-    public function setContextualTuples($contextualTuples)
+    public function setContextualTuples($contextual_tuples)
     {
-        if (null === $contextualTuples) {
-            throw new InvalidArgumentException('non-nullable contextualTuples cannot be null');
+        if (null === $contextual_tuples) {
+            throw new InvalidArgumentException('non-nullable contextual_tuples cannot be null');
         }
 
-        if ((count($contextualTuples) > 100)) {
-            throw new InvalidArgumentException('invalid value for $contextualTuples when calling ListUsersRequest., number of items must be less than or equal to 100.');
+        if ((count($contextual_tuples) > 100)) {
+            throw new InvalidArgumentException('invalid value for $contextual_tuples when calling ListUsersRequest., number of items must be less than or equal to 100.');
         }
-        $this->container['contextualTuples'] = $contextualTuples;
+        $this->container['contextual_tuples'] = $contextual_tuples;
 
         return $this;
     }
@@ -499,25 +499,25 @@ final class ListUsersRequest implements ArrayAccess, JsonSerializable, ModelInte
     }
 
     /**
-     * Sets userFilters.
+     * Sets user_filters.
      *
-     * @param UserTypeFilter[] $userFilters The type of results returned. Only accepts exactly one value.
+     * @param UserTypeFilter[] $user_filters The type of results returned. Only accepts exactly one value.
      *
      * @return self
      */
-    public function setUserFilters($userFilters)
+    public function setUserFilters($user_filters)
     {
-        if (null === $userFilters) {
-            throw new InvalidArgumentException('non-nullable userFilters cannot be null');
+        if (null === $user_filters) {
+            throw new InvalidArgumentException('non-nullable user_filters cannot be null');
         }
 
-        if ((count($userFilters) > 1)) {
-            throw new InvalidArgumentException('invalid value for $userFilters when calling ListUsersRequest., number of items must be less than or equal to 1.');
+        if ((count($user_filters) > 1)) {
+            throw new InvalidArgumentException('invalid value for $user_filters when calling ListUsersRequest., number of items must be less than or equal to 1.');
         }
-        if ((count($userFilters) < 1)) {
-            throw new InvalidArgumentException('invalid length for $userFilters when calling ListUsersRequest., number of items must be greater than or equal to 1.');
+        if ((count($user_filters) < 1)) {
+            throw new InvalidArgumentException('invalid length for $user_filters when calling ListUsersRequest., number of items must be greater than or equal to 1.');
         }
-        $this->container['userFilters'] = $userFilters;
+        $this->container['user_filters'] = $user_filters;
 
         return $this;
     }

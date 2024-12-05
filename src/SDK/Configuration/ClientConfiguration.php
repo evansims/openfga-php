@@ -19,6 +19,26 @@ final class ClientConfiguration extends Configuration implements ClientConfigura
     ) {
     }
 
+    public function getApiUrl(): ?string
+    {
+        return $this->apiUrl;
+    }
+
+    public function getStoreId(): ?string
+    {
+        return $this->storeId;
+    }
+
+    public function getAuthorizationModelId(): ?string
+    {
+        return $this->authorizationModelId;
+    }
+
+    public function getCredentialConfiguration(): ?CredentialConfigurationInterface
+    {
+        return $this->credentialConfiguration;
+    }
+
     public function validate(): void
     {
         if (null === $this->apiUrl || ! Assert::Url($this->apiUrl)) {

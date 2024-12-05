@@ -81,9 +81,9 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     private static $attributeMap = [
         'id' => 'id',
         'name' => 'name',
-        'createdAt' => 'created_at',
-        'updatedAt' => 'updated_at',
-        'deletedAt' => 'deleted_at',
+        'created_at' => 'created_at',
+        'updated_at' => 'updated_at',
+        'deleted_at' => 'deleted_at',
     ];
 
     /**
@@ -94,9 +94,9 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     private static $getters = [
         'id' => 'getId',
         'name' => 'getName',
-        'createdAt' => 'getCreatedAt',
-        'updatedAt' => 'getUpdatedAt',
-        'deletedAt' => 'getDeletedAt',
+        'created_at' => 'getCreatedAt',
+        'updated_at' => 'getUpdatedAt',
+        'deleted_at' => 'getDeletedAt',
     ];
 
     /**
@@ -111,9 +111,9 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     private static $openAPIFormats = [
         'id' => null,
         'name' => null,
-        'createdAt' => 'date-time',
-        'updatedAt' => 'date-time',
-        'deletedAt' => 'date-time',
+        'created_at' => 'date-time',
+        'updated_at' => 'date-time',
+        'deleted_at' => 'date-time',
     ];
 
     /**
@@ -131,9 +131,9 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     private static array $openAPINullables = [
         'id' => false,
         'name' => false,
-        'createdAt' => false,
-        'updatedAt' => false,
-        'deletedAt' => false,
+        'created_at' => false,
+        'updated_at' => false,
+        'deleted_at' => false,
     ];
 
     /**
@@ -144,9 +144,9 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     private static $openAPITypes = [
         'id' => 'string',
         'name' => 'string',
-        'createdAt' => '\DateTime',
-        'updatedAt' => '\DateTime',
-        'deletedAt' => '\DateTime',
+        'created_at' => '\DateTime',
+        'updated_at' => '\DateTime',
+        'deleted_at' => '\DateTime',
     ];
 
     /**
@@ -157,9 +157,9 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     private static $setters = [
         'id' => 'setId',
         'name' => 'setName',
-        'createdAt' => 'setCreatedAt',
-        'updatedAt' => 'setUpdatedAt',
-        'deletedAt' => 'setDeletedAt',
+        'created_at' => 'setCreatedAt',
+        'updated_at' => 'setUpdatedAt',
+        'deleted_at' => 'setDeletedAt',
     ];
 
     /**
@@ -172,9 +172,9 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     {
         $this->setIfExists('id', $data ?? [], null);
         $this->setIfExists('name', $data ?? [], null);
-        $this->setIfExists('createdAt', $data ?? [], null);
-        $this->setIfExists('updatedAt', $data ?? [], null);
-        $this->setIfExists('deletedAt', $data ?? [], null);
+        $this->setIfExists('created_at', $data ?? [], null);
+        $this->setIfExists('updated_at', $data ?? [], null);
+        $this->setIfExists('deleted_at', $data ?? [], null);
     }
 
     /**
@@ -191,23 +191,23 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets createdAt.
+     * Gets created_at.
      *
      * @return DateTime
      */
     public function getCreatedAt()
     {
-        return $this->container['createdAt'];
+        return $this->container['created_at'];
     }
 
     /**
-     * Gets deletedAt.
+     * Gets deleted_at.
      *
      * @return null|DateTime
      */
     public function getDeletedAt()
     {
-        return $this->container['deletedAt'];
+        return $this->container['deleted_at'];
     }
 
     /**
@@ -241,13 +241,13 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets updatedAt.
+     * Gets updated_at.
      *
      * @return DateTime
      */
     public function getUpdatedAt()
     {
-        return $this->container['updatedAt'];
+        return $this->container['updated_at'];
     }
 
     /**
@@ -291,11 +291,11 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
         if (null === $this->container['name']) {
             $invalidProperties[] = "'name' can't be null";
         }
-        if (null === $this->container['createdAt']) {
-            $invalidProperties[] = "'createdAt' can't be null";
+        if (null === $this->container['created_at']) {
+            $invalidProperties[] = "'created_at' can't be null";
         }
-        if (null === $this->container['updatedAt']) {
-            $invalidProperties[] = "'updatedAt' can't be null";
+        if (null === $this->container['updated_at']) {
+            $invalidProperties[] = "'updated_at' can't be null";
         }
 
         return $invalidProperties;
@@ -352,35 +352,35 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets createdAt.
+     * Sets created_at.
      *
-     * @param DateTime $createdAt createdAt
+     * @param DateTime $created_at created_at
      *
      * @return self
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($created_at)
     {
-        if (null === $createdAt) {
-            throw new InvalidArgumentException('non-nullable createdAt cannot be null');
+        if (null === $created_at) {
+            throw new InvalidArgumentException('non-nullable created_at cannot be null');
         }
-        $this->container['createdAt'] = $createdAt;
+        $this->container['created_at'] = $created_at;
 
         return $this;
     }
 
     /**
-     * Sets deletedAt.
+     * Sets deleted_at.
      *
-     * @param null|DateTime $deletedAt deletedAt
+     * @param null|DateTime $deleted_at deleted_at
      *
      * @return self
      */
-    public function setDeletedAt($deletedAt)
+    public function setDeletedAt($deleted_at)
     {
-        if (null === $deletedAt) {
-            throw new InvalidArgumentException('non-nullable deletedAt cannot be null');
+        if (null === $deleted_at) {
+            throw new InvalidArgumentException('non-nullable deleted_at cannot be null');
         }
-        $this->container['deletedAt'] = $deletedAt;
+        $this->container['deleted_at'] = $deleted_at;
 
         return $this;
     }
@@ -420,18 +420,18 @@ final class Store implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets updatedAt.
+     * Sets updated_at.
      *
-     * @param DateTime $updatedAt updatedAt
+     * @param DateTime $updated_at updated_at
      *
      * @return self
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt($updated_at)
     {
-        if (null === $updatedAt) {
-            throw new InvalidArgumentException('non-nullable updatedAt cannot be null');
+        if (null === $updated_at) {
+            throw new InvalidArgumentException('non-nullable updated_at cannot be null');
         }
-        $this->container['updatedAt'] = $updatedAt;
+        $this->container['updated_at'] = $updated_at;
 
         return $this;
     }

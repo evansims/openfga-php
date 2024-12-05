@@ -78,8 +78,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
      * @var string[]
      */
     private static $attributeMap = [
-        'tupleKey' => 'tuple_key',
-        'authorizationModelId' => 'authorization_model_id',
+        'tuple_key' => 'tuple_key',
+        'authorization_model_id' => 'authorization_model_id',
         'consistency' => 'consistency',
     ];
 
@@ -89,8 +89,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
      * @var string[]
      */
     private static $getters = [
-        'tupleKey' => 'getTupleKey',
-        'authorizationModelId' => 'getAuthorizationModelId',
+        'tuple_key' => 'getTupleKey',
+        'authorization_model_id' => 'getAuthorizationModelId',
         'consistency' => 'getConsistency',
     ];
 
@@ -104,8 +104,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'tupleKey' => null,
-        'authorizationModelId' => null,
+        'tuple_key' => null,
+        'authorization_model_id' => null,
         'consistency' => null,
     ];
 
@@ -122,8 +122,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'tupleKey' => false,
-        'authorizationModelId' => false,
+        'tuple_key' => false,
+        'authorization_model_id' => false,
         'consistency' => false,
     ];
 
@@ -133,8 +133,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
      * @var string[]
      */
     private static $openAPITypes = [
-        'tupleKey' => '\OpenFGA\API\Models\ExpandRequestTupleKey',
-        'authorizationModelId' => 'string',
+        'tuple_key' => '\OpenFGA\API\Models\ExpandRequestTupleKey',
+        'authorization_model_id' => 'string',
         'consistency' => '\OpenFGA\API\Models\ConsistencyPreference',
     ];
 
@@ -144,8 +144,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
      * @var string[]
      */
     private static $setters = [
-        'tupleKey' => 'setTupleKey',
-        'authorizationModelId' => 'setAuthorizationModelId',
+        'tuple_key' => 'setTupleKey',
+        'authorization_model_id' => 'setAuthorizationModelId',
         'consistency' => 'setConsistency',
     ];
 
@@ -157,8 +157,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('tupleKey', $data ?? [], null);
-        $this->setIfExists('authorizationModelId', $data ?? [], null);
+        $this->setIfExists('tuple_key', $data ?? [], null);
+        $this->setIfExists('authorization_model_id', $data ?? [], null);
         $this->setIfExists('consistency', $data ?? [], null);
     }
 
@@ -176,13 +176,13 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
     }
 
     /**
-     * Gets authorizationModelId.
+     * Gets authorization_model_id.
      *
      * @return null|string
      */
     public function getAuthorizationModelId()
     {
-        return $this->container['authorizationModelId'];
+        return $this->container['authorization_model_id'];
     }
 
     /**
@@ -206,13 +206,13 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
     }
 
     /**
-     * Gets tupleKey.
+     * Gets tuple_key.
      *
      * @return ExpandRequestTupleKey
      */
     public function getTupleKey()
     {
-        return $this->container['tupleKey'];
+        return $this->container['tuple_key'];
     }
 
     /**
@@ -250,8 +250,8 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
     {
         $invalidProperties = [];
 
-        if (null === $this->container['tupleKey']) {
-            $invalidProperties[] = "'tupleKey' can't be null";
+        if (null === $this->container['tuple_key']) {
+            $invalidProperties[] = "'tuple_key' can't be null";
         }
 
         return $invalidProperties;
@@ -308,18 +308,18 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
     }
 
     /**
-     * Sets authorizationModelId.
+     * Sets authorization_model_id.
      *
-     * @param null|string $authorizationModelId authorizationModelId
+     * @param null|string $authorization_model_id authorization_model_id
      *
      * @return self
      */
-    public function setAuthorizationModelId($authorizationModelId)
+    public function setAuthorizationModelId($authorization_model_id)
     {
-        if (null === $authorizationModelId) {
-            throw new InvalidArgumentException('non-nullable authorizationModelId cannot be null');
+        if (null === $authorization_model_id) {
+            throw new InvalidArgumentException('non-nullable authorization_model_id cannot be null');
         }
-        $this->container['authorizationModelId'] = $authorizationModelId;
+        $this->container['authorization_model_id'] = $authorization_model_id;
 
         return $this;
     }
@@ -342,18 +342,18 @@ final class ExpandRequest implements ArrayAccess, JsonSerializable, ModelInterfa
     }
 
     /**
-     * Sets tupleKey.
+     * Sets tuple_key.
      *
-     * @param ExpandRequestTupleKey $tupleKey tupleKey
+     * @param ExpandRequestTupleKey $tuple_key tuple_key
      *
      * @return self
      */
-    public function setTupleKey($tupleKey)
+    public function setTupleKey($tuple_key)
     {
-        if (null === $tupleKey) {
-            throw new InvalidArgumentException('non-nullable tupleKey cannot be null');
+        if (null === $tuple_key) {
+            throw new InvalidArgumentException('non-nullable tuple_key cannot be null');
         }
-        $this->container['tupleKey'] = $tupleKey;
+        $this->container['tuple_key'] = $tuple_key;
 
         return $this;
     }

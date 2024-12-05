@@ -78,8 +78,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
      * @var string[]
      */
     private static $attributeMap = [
-        'typeName' => 'type_name',
-        'genericTypes' => 'generic_types',
+        'type_name' => 'type_name',
+        'generic_types' => 'generic_types',
     ];
 
     /**
@@ -88,8 +88,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
      * @var string[]
      */
     private static $getters = [
-        'typeName' => 'getTypeName',
-        'genericTypes' => 'getGenericTypes',
+        'type_name' => 'getTypeName',
+        'generic_types' => 'getGenericTypes',
     ];
 
     /**
@@ -102,8 +102,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'typeName' => null,
-        'genericTypes' => null,
+        'type_name' => null,
+        'generic_types' => null,
     ];
 
     /**
@@ -119,8 +119,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'typeName' => false,
-        'genericTypes' => false,
+        'type_name' => false,
+        'generic_types' => false,
     ];
 
     /**
@@ -129,8 +129,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
      * @var string[]
      */
     private static $openAPITypes = [
-        'typeName' => '\OpenFGA\API\Models\TypeName',
-        'genericTypes' => '\OpenFGA\API\Models\ConditionParamTypeRef[]',
+        'type_name' => '\OpenFGA\API\Models\TypeName',
+        'generic_types' => '\OpenFGA\API\Models\ConditionParamTypeRef[]',
     ];
 
     /**
@@ -139,8 +139,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
      * @var string[]
      */
     private static $setters = [
-        'typeName' => 'setTypeName',
-        'genericTypes' => 'setGenericTypes',
+        'type_name' => 'setTypeName',
+        'generic_types' => 'setGenericTypes',
     ];
 
     /**
@@ -151,8 +151,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('typeName', $data ?? [], null);
-        $this->setIfExists('genericTypes', $data ?? [], null);
+        $this->setIfExists('type_name', $data ?? [], null);
+        $this->setIfExists('generic_types', $data ?? [], null);
     }
 
     /**
@@ -169,13 +169,13 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
     }
 
     /**
-     * Gets genericTypes.
+     * Gets generic_types.
      *
      * @return null|ConditionParamTypeRef[]
      */
     public function getGenericTypes()
     {
-        return $this->container['genericTypes'];
+        return $this->container['generic_types'];
     }
 
     /**
@@ -189,13 +189,13 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
     }
 
     /**
-     * Gets typeName.
+     * Gets type_name.
      *
      * @return TypeName
      */
     public function getTypeName()
     {
-        return $this->container['typeName'];
+        return $this->container['type_name'];
     }
 
     /**
@@ -233,8 +233,8 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
     {
         $invalidProperties = [];
 
-        if (null === $this->container['typeName']) {
-            $invalidProperties[] = "'typeName' can't be null";
+        if (null === $this->container['type_name']) {
+            $invalidProperties[] = "'type_name' can't be null";
         }
 
         return $invalidProperties;
@@ -291,35 +291,35 @@ final class ConditionParamTypeRef implements ArrayAccess, JsonSerializable, Mode
     }
 
     /**
-     * Sets genericTypes.
+     * Sets generic_types.
      *
-     * @param null|ConditionParamTypeRef[] $genericTypes genericTypes
+     * @param null|ConditionParamTypeRef[] $generic_types generic_types
      *
      * @return self
      */
-    public function setGenericTypes($genericTypes)
+    public function setGenericTypes($generic_types)
     {
-        if (null === $genericTypes) {
-            throw new InvalidArgumentException('non-nullable genericTypes cannot be null');
+        if (null === $generic_types) {
+            throw new InvalidArgumentException('non-nullable generic_types cannot be null');
         }
-        $this->container['genericTypes'] = $genericTypes;
+        $this->container['generic_types'] = $generic_types;
 
         return $this;
     }
 
     /**
-     * Sets typeName.
+     * Sets type_name.
      *
-     * @param TypeName $typeName typeName
+     * @param TypeName $type_name type_name
      *
      * @return self
      */
-    public function setTypeName($typeName)
+    public function setTypeName($type_name)
     {
-        if (null === $typeName) {
-            throw new InvalidArgumentException('non-nullable typeName cannot be null');
+        if (null === $type_name) {
+            throw new InvalidArgumentException('non-nullable type_name cannot be null');
         }
-        $this->container['typeName'] = $typeName;
+        $this->container['type_name'] = $type_name;
 
         return $this;
     }

@@ -79,8 +79,8 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
      */
     private static $attributeMap = [
         'id' => 'id',
-        'schemaVersion' => 'schema_version',
-        'typeDefinitions' => 'type_definitions',
+        'schema_version' => 'schema_version',
+        'type_definitions' => 'type_definitions',
         'conditions' => 'conditions',
     ];
 
@@ -91,8 +91,8 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
      */
     private static $getters = [
         'id' => 'getId',
-        'schemaVersion' => 'getSchemaVersion',
-        'typeDefinitions' => 'getTypeDefinitions',
+        'schema_version' => 'getSchemaVersion',
+        'type_definitions' => 'getTypeDefinitions',
         'conditions' => 'getConditions',
     ];
 
@@ -107,8 +107,8 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
      */
     private static $openAPIFormats = [
         'id' => null,
-        'schemaVersion' => null,
-        'typeDefinitions' => null,
+        'schema_version' => null,
+        'type_definitions' => null,
         'conditions' => null,
     ];
 
@@ -126,8 +126,8 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
      */
     private static array $openAPINullables = [
         'id' => false,
-        'schemaVersion' => false,
-        'typeDefinitions' => false,
+        'schema_version' => false,
+        'type_definitions' => false,
         'conditions' => false,
     ];
 
@@ -138,8 +138,8 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
      */
     private static $openAPITypes = [
         'id' => 'string',
-        'schemaVersion' => 'string',
-        'typeDefinitions' => '\OpenFGA\API\Models\TypeDefinition[]',
+        'schema_version' => 'string',
+        'type_definitions' => '\OpenFGA\API\Models\TypeDefinition[]',
         'conditions' => 'array<string,\OpenFGA\API\Models\Condition>',
     ];
 
@@ -150,8 +150,8 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
      */
     private static $setters = [
         'id' => 'setId',
-        'schemaVersion' => 'setSchemaVersion',
-        'typeDefinitions' => 'setTypeDefinitions',
+        'schema_version' => 'setSchemaVersion',
+        'type_definitions' => 'setTypeDefinitions',
         'conditions' => 'setConditions',
     ];
 
@@ -164,8 +164,8 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
     public function __construct(?array $data = null)
     {
         $this->setIfExists('id', $data ?? [], null);
-        $this->setIfExists('schemaVersion', $data ?? [], null);
-        $this->setIfExists('typeDefinitions', $data ?? [], null);
+        $this->setIfExists('schema_version', $data ?? [], null);
+        $this->setIfExists('type_definitions', $data ?? [], null);
         $this->setIfExists('conditions', $data ?? [], null);
     }
 
@@ -213,23 +213,23 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
     }
 
     /**
-     * Gets schemaVersion.
+     * Gets schema_version.
      *
      * @return string
      */
     public function getSchemaVersion()
     {
-        return $this->container['schemaVersion'];
+        return $this->container['schema_version'];
     }
 
     /**
-     * Gets typeDefinitions.
+     * Gets type_definitions.
      *
      * @return TypeDefinition[]
      */
     public function getTypeDefinitions()
     {
-        return $this->container['typeDefinitions'];
+        return $this->container['type_definitions'];
     }
 
     /**
@@ -270,11 +270,11 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
         if (null === $this->container['id']) {
             $invalidProperties[] = "'id' can't be null";
         }
-        if (null === $this->container['schemaVersion']) {
-            $invalidProperties[] = "'schemaVersion' can't be null";
+        if (null === $this->container['schema_version']) {
+            $invalidProperties[] = "'schema_version' can't be null";
         }
-        if (null === $this->container['typeDefinitions']) {
-            $invalidProperties[] = "'typeDefinitions' can't be null";
+        if (null === $this->container['type_definitions']) {
+            $invalidProperties[] = "'type_definitions' can't be null";
         }
 
         return $invalidProperties;
@@ -365,35 +365,35 @@ final class AuthorizationModel implements ArrayAccess, JsonSerializable, ModelIn
     }
 
     /**
-     * Sets schemaVersion.
+     * Sets schema_version.
      *
-     * @param string $schemaVersion schemaVersion
+     * @param string $schema_version schema_version
      *
      * @return self
      */
-    public function setSchemaVersion($schemaVersion)
+    public function setSchemaVersion($schema_version)
     {
-        if (null === $schemaVersion) {
-            throw new InvalidArgumentException('non-nullable schemaVersion cannot be null');
+        if (null === $schema_version) {
+            throw new InvalidArgumentException('non-nullable schema_version cannot be null');
         }
-        $this->container['schemaVersion'] = $schemaVersion;
+        $this->container['schema_version'] = $schema_version;
 
         return $this;
     }
 
     /**
-     * Sets typeDefinitions.
+     * Sets type_definitions.
      *
-     * @param TypeDefinition[] $typeDefinitions typeDefinitions
+     * @param TypeDefinition[] $type_definitions type_definitions
      *
      * @return self
      */
-    public function setTypeDefinitions($typeDefinitions)
+    public function setTypeDefinitions($type_definitions)
     {
-        if (null === $typeDefinitions) {
-            throw new InvalidArgumentException('non-nullable typeDefinitions cannot be null');
+        if (null === $type_definitions) {
+            throw new InvalidArgumentException('non-nullable type_definitions cannot be null');
         }
-        $this->container['typeDefinitions'] = $typeDefinitions;
+        $this->container['type_definitions'] = $type_definitions;
 
         return $this;
     }

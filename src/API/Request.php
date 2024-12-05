@@ -5,60 +5,115 @@ declare(strict_types=1);
 namespace OpenFGA\API;
 
 use Exception;
-use OpenFGA\SDK\Configuration\ClientConfigurationInterface;
+use OpenFGA\ClientInterface;
 use OpenFGA\SDK\Utilities\Network;
-
-enum RequestMethod: string
-{
-    case DELETE = 'DELETE';
-
-    case GET = 'GET';
-
-    case POST = 'POST';
-
-    case PUT = 'PUT';
-}
-
-enum RequestEndpoint: string
-{
-    case CREATE_STORE = '/stores';
-
-    case DELETE_STORE = '/stores/%storeId';
-
-    case GET_STORE = '/stores/%storeId';
-
-    case LIST_STORES = '/stores';
-}
+use OpenFGA\SDK\Utilities\RequestBodyFormat;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 final class Request
 {
     public function __construct(
-        public ClientConfigurationInterface $configuration,
-        public RequestOptions $options,
-        public RequestMethod $method,
-        public RequestEndpoint $endpoint,
-        public array $headers = ['Accept' => 'application/json', 'Content-Type' => 'application/json'],
-        public array $body = [],
+        private ClientInterface $client,
+        private RequestOptions $options,
+        private string $endpoint,
+        private array $headers = ['Accept' => 'application/json', 'Content-Type' => 'application/json'],
+        private array $body = [],
+        private ?Network $network = null,
+        private ?ResponseInterface $response = null,
     ) {
-        $network = new Network();
-
-        $request = $network->getHttpRequestFactory()->createRequest(
-            $method->value,
-            $configuration->apiUrl . $endpoint,
-            $headers,
-            json_encode($body),
+        $this->network ??= new Network(
+            client: $client
         );
+    }
 
-        try {
-            $response = $$network->getHttpClient()->sendRequest($request);
-        } catch (Exception $e) {
-            throw new Exception('API request issuance failed');
-        }
+    public function getRequestOptions(): RequestOptions
+    {
+        return $this->options;
+    }
+
+    public function getRequestEndpoint(): string
+    {
+        return $this->endpoint;
+    }
+
+    public function getRequestHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    public function getRequestBody(): array
+    {
+        return $this->body;
+    }
+
+    public function getResponse(): ResponseInterface
+    {
+        return $this->response;
+    }
+
+    public function getResponseBody(): StreamInterface
+    {
+        return $this->response->getBody();
+    }
+
+    public function getResponseBodyJson(): array
+    {
+        return json_decode($this->getResponseBody()->getContents(), true);
+    }
+
+    public function get(): ResponseInterface
+    {
+        $request = $this->buildRequest('GET');
+
+        // TODO: Support auto-retry w/ jitter for throttled requests
+
+        $response = $this->network->getHttpClient()->sendRequest($request);
+
+        return $this->response = $response;
+    }
+
+    public function post(): ResponseInterface
+    {
+        $request = $this->buildRequest('POST');
+        $response = $this->network->getHttpClient()->sendRequest($request);
+
+        var_dump($response);
+        var_dump($response->getBody()->getContents());
+        var_dump($response->getHeaders());
+        exit;
 
         if (200 !== $response->getStatusCode()) {
             throw new Exception('API request failed');
         }
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $this->response = $response;
+    }
+
+    private function buildRequest(
+        string $method
+    ): RequestInterface {
+        $headers = $this->getRequestHeaders();
+        $body = null;
+
+        if (! isset($headers['Authorization'])) {
+            $auth = $this->client->getCredentialManager()->getAuthorizationHeader();
+
+            if ($auth) {
+                $headers['Authorization'] = $auth;
+            }
+        }
+
+        if ($this->getRequestBody()) {
+            $body = $this->network->createRequestBody($this->getRequestBody(), RequestBodyFormat::JSON);
+        }
+
+        return $this->network->createRequest(
+            $method,
+            $this->client->getConfiguration()->getApiUrl() . $this->getRequestEndpoint(),
+            $headers,
+            $body,
+        );
     }
 }

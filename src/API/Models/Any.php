@@ -78,7 +78,7 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $attributeMap = [
-        'atType' => '@type',
+        'at_type' => '@type',
     ];
 
     /**
@@ -87,7 +87,7 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $getters = [
-        'atType' => 'getAtType',
+        'at_type' => 'getAtType',
     ];
 
     /**
@@ -100,7 +100,7 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'atType' => null,
+        'at_type' => null,
     ];
 
     /**
@@ -116,7 +116,7 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'atType' => false,
+        'at_type' => false,
     ];
 
     /**
@@ -125,7 +125,7 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $openAPITypes = [
-        'atType' => 'string',
+        'at_type' => 'string',
     ];
 
     /**
@@ -134,7 +134,7 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $setters = [
-        'atType' => 'setAtType',
+        'at_type' => 'setAtType',
     ];
 
     /**
@@ -145,7 +145,7 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('atType', $data ?? [], null);
+        $this->setIfExists('at_type', $data ?? [], null);
     }
 
     /**
@@ -162,13 +162,13 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets atType.
+     * Gets at_type.
      *
      * @return null|string
      */
     public function getAtType()
     {
-        return $this->container['atType'];
+        return $this->container['at_type'];
     }
 
     /**
@@ -268,18 +268,18 @@ final class Any implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets atType.
+     * Sets at_type.
      *
-     * @param null|string $atType atType
+     * @param null|string $at_type at_type
      *
      * @return self
      */
-    public function setAtType($atType)
+    public function setAtType($at_type)
     {
-        if (null === $atType) {
-            throw new InvalidArgumentException('non-nullable atType cannot be null');
+        if (null === $at_type) {
+            throw new InvalidArgumentException('non-nullable at_type cannot be null');
         }
-        $this->container['atType'] = $atType;
+        $this->container['at_type'] = $at_type;
 
         return $this;
     }

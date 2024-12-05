@@ -78,7 +78,7 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
      * @var string[]
      */
     private static $attributeMap = [
-        'authorizationModelId' => 'authorization_model_id',
+        'authorization_model_id' => 'authorization_model_id',
         'assertions' => 'assertions',
     ];
 
@@ -88,7 +88,7 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
      * @var string[]
      */
     private static $getters = [
-        'authorizationModelId' => 'getAuthorizationModelId',
+        'authorization_model_id' => 'getAuthorizationModelId',
         'assertions' => 'getAssertions',
     ];
 
@@ -102,7 +102,7 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'authorizationModelId' => null,
+        'authorization_model_id' => null,
         'assertions' => null,
     ];
 
@@ -119,7 +119,7 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'authorizationModelId' => false,
+        'authorization_model_id' => false,
         'assertions' => false,
     ];
 
@@ -129,7 +129,7 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
      * @var string[]
      */
     private static $openAPITypes = [
-        'authorizationModelId' => 'string',
+        'authorization_model_id' => 'string',
         'assertions' => '\OpenFGA\API\Models\Assertion[]',
     ];
 
@@ -139,7 +139,7 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
      * @var string[]
      */
     private static $setters = [
-        'authorizationModelId' => 'setAuthorizationModelId',
+        'authorization_model_id' => 'setAuthorizationModelId',
         'assertions' => 'setAssertions',
     ];
 
@@ -151,7 +151,7 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('authorizationModelId', $data ?? [], null);
+        $this->setIfExists('authorization_model_id', $data ?? [], null);
         $this->setIfExists('assertions', $data ?? [], null);
     }
 
@@ -179,13 +179,13 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
     }
 
     /**
-     * Gets authorizationModelId.
+     * Gets authorization_model_id.
      *
      * @return string
      */
     public function getAuthorizationModelId()
     {
-        return $this->container['authorizationModelId'];
+        return $this->container['authorization_model_id'];
     }
 
     /**
@@ -233,8 +233,8 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
     {
         $invalidProperties = [];
 
-        if (null === $this->container['authorizationModelId']) {
-            $invalidProperties[] = "'authorizationModelId' can't be null";
+        if (null === $this->container['authorization_model_id']) {
+            $invalidProperties[] = "'authorization_model_id' can't be null";
         }
 
         return $invalidProperties;
@@ -308,18 +308,18 @@ final class ReadAssertionsResponse implements ArrayAccess, JsonSerializable, Mod
     }
 
     /**
-     * Sets authorizationModelId.
+     * Sets authorization_model_id.
      *
-     * @param string $authorizationModelId authorizationModelId
+     * @param string $authorization_model_id authorization_model_id
      *
      * @return self
      */
-    public function setAuthorizationModelId($authorizationModelId)
+    public function setAuthorizationModelId($authorization_model_id)
     {
-        if (null === $authorizationModelId) {
-            throw new InvalidArgumentException('non-nullable authorizationModelId cannot be null');
+        if (null === $authorization_model_id) {
+            throw new InvalidArgumentException('non-nullable authorization_model_id cannot be null');
         }
-        $this->container['authorizationModelId'] = $authorizationModelId;
+        $this->container['authorization_model_id'] = $authorization_model_id;
 
         return $this;
     }

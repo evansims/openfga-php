@@ -78,9 +78,9 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
      * @var string[]
      */
     private static $attributeMap = [
-        'tupleKey' => 'tuple_key',
-        'contextualTuples' => 'contextual_tuples',
-        'authorizationModelId' => 'authorization_model_id',
+        'tuple_key' => 'tuple_key',
+        'contextual_tuples' => 'contextual_tuples',
+        'authorization_model_id' => 'authorization_model_id',
         'trace' => 'trace',
         'context' => 'context',
         'consistency' => 'consistency',
@@ -92,9 +92,9 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
      * @var string[]
      */
     private static $getters = [
-        'tupleKey' => 'getTupleKey',
-        'contextualTuples' => 'getContextualTuples',
-        'authorizationModelId' => 'getAuthorizationModelId',
+        'tuple_key' => 'getTupleKey',
+        'contextual_tuples' => 'getContextualTuples',
+        'authorization_model_id' => 'getAuthorizationModelId',
         'trace' => 'getTrace',
         'context' => 'getContext',
         'consistency' => 'getConsistency',
@@ -110,9 +110,9 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'tupleKey' => null,
-        'contextualTuples' => null,
-        'authorizationModelId' => null,
+        'tuple_key' => null,
+        'contextual_tuples' => null,
+        'authorization_model_id' => null,
         'trace' => null,
         'context' => null,
         'consistency' => null,
@@ -131,9 +131,9 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'tupleKey' => false,
-        'contextualTuples' => false,
-        'authorizationModelId' => false,
+        'tuple_key' => false,
+        'contextual_tuples' => false,
+        'authorization_model_id' => false,
         'trace' => false,
         'context' => false,
         'consistency' => false,
@@ -145,9 +145,9 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
      * @var string[]
      */
     private static $openAPITypes = [
-        'tupleKey' => '\OpenFGA\API\Models\CheckRequestTupleKey',
-        'contextualTuples' => '\OpenFGA\API\Models\ContextualTupleKeys',
-        'authorizationModelId' => 'string',
+        'tuple_key' => '\OpenFGA\API\Models\CheckRequestTupleKey',
+        'contextual_tuples' => '\OpenFGA\API\Models\ContextualTupleKeys',
+        'authorization_model_id' => 'string',
         'trace' => 'bool',
         'context' => 'object',
         'consistency' => '\OpenFGA\API\Models\ConsistencyPreference',
@@ -159,9 +159,9 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
      * @var string[]
      */
     private static $setters = [
-        'tupleKey' => 'setTupleKey',
-        'contextualTuples' => 'setContextualTuples',
-        'authorizationModelId' => 'setAuthorizationModelId',
+        'tuple_key' => 'setTupleKey',
+        'contextual_tuples' => 'setContextualTuples',
+        'authorization_model_id' => 'setAuthorizationModelId',
         'trace' => 'setTrace',
         'context' => 'setContext',
         'consistency' => 'setConsistency',
@@ -175,9 +175,9 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('tupleKey', $data ?? [], null);
-        $this->setIfExists('contextualTuples', $data ?? [], null);
-        $this->setIfExists('authorizationModelId', $data ?? [], null);
+        $this->setIfExists('tuple_key', $data ?? [], null);
+        $this->setIfExists('contextual_tuples', $data ?? [], null);
+        $this->setIfExists('authorization_model_id', $data ?? [], null);
         $this->setIfExists('trace', $data ?? [], null);
         $this->setIfExists('context', $data ?? [], null);
         $this->setIfExists('consistency', $data ?? [], null);
@@ -197,13 +197,13 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Gets authorizationModelId.
+     * Gets authorization_model_id.
      *
      * @return null|string
      */
     public function getAuthorizationModelId()
     {
-        return $this->container['authorizationModelId'];
+        return $this->container['authorization_model_id'];
     }
 
     /**
@@ -227,13 +227,13 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Gets contextualTuples.
+     * Gets contextual_tuples.
      *
      * @return null|ContextualTupleKeys
      */
     public function getContextualTuples()
     {
-        return $this->container['contextualTuples'];
+        return $this->container['contextual_tuples'];
     }
 
     /**
@@ -257,13 +257,13 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Gets tupleKey.
+     * Gets tuple_key.
      *
      * @return CheckRequestTupleKey
      */
     public function getTupleKey()
     {
-        return $this->container['tupleKey'];
+        return $this->container['tuple_key'];
     }
 
     /**
@@ -301,8 +301,8 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     {
         $invalidProperties = [];
 
-        if (null === $this->container['tupleKey']) {
-            $invalidProperties[] = "'tupleKey' can't be null";
+        if (null === $this->container['tuple_key']) {
+            $invalidProperties[] = "'tuple_key' can't be null";
         }
 
         return $invalidProperties;
@@ -359,18 +359,18 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Sets authorizationModelId.
+     * Sets authorization_model_id.
      *
-     * @param null|string $authorizationModelId authorizationModelId
+     * @param null|string $authorization_model_id authorization_model_id
      *
      * @return self
      */
-    public function setAuthorizationModelId($authorizationModelId)
+    public function setAuthorizationModelId($authorization_model_id)
     {
-        if (null === $authorizationModelId) {
-            throw new InvalidArgumentException('non-nullable authorizationModelId cannot be null');
+        if (null === $authorization_model_id) {
+            throw new InvalidArgumentException('non-nullable authorization_model_id cannot be null');
         }
-        $this->container['authorizationModelId'] = $authorizationModelId;
+        $this->container['authorization_model_id'] = $authorization_model_id;
 
         return $this;
     }
@@ -410,18 +410,18 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Sets contextualTuples.
+     * Sets contextual_tuples.
      *
-     * @param null|ContextualTupleKeys $contextualTuples contextualTuples
+     * @param null|ContextualTupleKeys $contextual_tuples contextual_tuples
      *
      * @return self
      */
-    public function setContextualTuples($contextualTuples)
+    public function setContextualTuples($contextual_tuples)
     {
-        if (null === $contextualTuples) {
-            throw new InvalidArgumentException('non-nullable contextualTuples cannot be null');
+        if (null === $contextual_tuples) {
+            throw new InvalidArgumentException('non-nullable contextual_tuples cannot be null');
         }
-        $this->container['contextualTuples'] = $contextualTuples;
+        $this->container['contextual_tuples'] = $contextual_tuples;
 
         return $this;
     }
@@ -444,18 +444,18 @@ final class CheckRequest implements ArrayAccess, JsonSerializable, ModelInterfac
     }
 
     /**
-     * Sets tupleKey.
+     * Sets tuple_key.
      *
-     * @param CheckRequestTupleKey $tupleKey tupleKey
+     * @param CheckRequestTupleKey $tuple_key tuple_key
      *
      * @return self
      */
-    public function setTupleKey($tupleKey)
+    public function setTupleKey($tuple_key)
     {
-        if (null === $tupleKey) {
-            throw new InvalidArgumentException('non-nullable tupleKey cannot be null');
+        if (null === $tuple_key) {
+            throw new InvalidArgumentException('non-nullable tuple_key cannot be null');
         }
-        $this->container['tupleKey'] = $tupleKey;
+        $this->container['tuple_key'] = $tuple_key;
 
         return $this;
     }

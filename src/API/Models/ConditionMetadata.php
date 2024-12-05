@@ -79,7 +79,7 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
      */
     private static $attributeMap = [
         'module' => 'module',
-        'sourceInfo' => 'source_info',
+        'source_info' => 'source_info',
     ];
 
     /**
@@ -89,7 +89,7 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
      */
     private static $getters = [
         'module' => 'getModule',
-        'sourceInfo' => 'getSourceInfo',
+        'source_info' => 'getSourceInfo',
     ];
 
     /**
@@ -103,7 +103,7 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
      */
     private static $openAPIFormats = [
         'module' => null,
-        'sourceInfo' => null,
+        'source_info' => null,
     ];
 
     /**
@@ -120,7 +120,7 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
      */
     private static array $openAPINullables = [
         'module' => false,
-        'sourceInfo' => false,
+        'source_info' => false,
     ];
 
     /**
@@ -130,7 +130,7 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
      */
     private static $openAPITypes = [
         'module' => 'string',
-        'sourceInfo' => '\OpenFGA\API\Models\SourceInfo',
+        'source_info' => '\OpenFGA\API\Models\SourceInfo',
     ];
 
     /**
@@ -140,7 +140,7 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
      */
     private static $setters = [
         'module' => 'setModule',
-        'sourceInfo' => 'setSourceInfo',
+        'source_info' => 'setSourceInfo',
     ];
 
     /**
@@ -152,7 +152,7 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
     public function __construct(?array $data = null)
     {
         $this->setIfExists('module', $data ?? [], null);
-        $this->setIfExists('sourceInfo', $data ?? [], null);
+        $this->setIfExists('source_info', $data ?? [], null);
     }
 
     /**
@@ -189,13 +189,13 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
     }
 
     /**
-     * Gets sourceInfo.
+     * Gets source_info.
      *
      * @return null|SourceInfo
      */
     public function getSourceInfo()
     {
-        return $this->container['sourceInfo'];
+        return $this->container['source_info'];
     }
 
     /**
@@ -302,18 +302,18 @@ final class ConditionMetadata implements ArrayAccess, JsonSerializable, ModelInt
     }
 
     /**
-     * Sets sourceInfo.
+     * Sets source_info.
      *
-     * @param null|SourceInfo $sourceInfo sourceInfo
+     * @param null|SourceInfo $source_info source_info
      *
      * @return self
      */
-    public function setSourceInfo($sourceInfo)
+    public function setSourceInfo($source_info)
     {
-        if (null === $sourceInfo) {
-            throw new InvalidArgumentException('non-nullable sourceInfo cannot be null');
+        if (null === $source_info) {
+            throw new InvalidArgumentException('non-nullable source_info cannot be null');
         }
-        $this->container['sourceInfo'] = $sourceInfo;
+        $this->container['source_info'] = $source_info;
 
         return $this;
     }

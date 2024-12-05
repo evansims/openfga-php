@@ -78,9 +78,9 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $attributeMap = [
-        'tupleKey' => 'tuple_key',
-        'pageSize' => 'page_size',
-        'continuationToken' => 'continuation_token',
+        'tuple_key' => 'tuple_key',
+        'page_size' => 'page_size',
+        'continuation_token' => 'continuation_token',
         'consistency' => 'consistency',
     ];
 
@@ -90,9 +90,9 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $getters = [
-        'tupleKey' => 'getTupleKey',
-        'pageSize' => 'getPageSize',
-        'continuationToken' => 'getContinuationToken',
+        'tuple_key' => 'getTupleKey',
+        'page_size' => 'getPageSize',
+        'continuation_token' => 'getContinuationToken',
         'consistency' => 'getConsistency',
     ];
 
@@ -106,9 +106,9 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
      * @psalm-var array<string, string|null>
      */
     private static $openAPIFormats = [
-        'tupleKey' => null,
-        'pageSize' => 'int32',
-        'continuationToken' => null,
+        'tuple_key' => null,
+        'page_size' => 'int32',
+        'continuation_token' => null,
         'consistency' => null,
     ];
 
@@ -125,9 +125,9 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
      * @var bool[]
      */
     private static array $openAPINullables = [
-        'tupleKey' => false,
-        'pageSize' => false,
-        'continuationToken' => false,
+        'tuple_key' => false,
+        'page_size' => false,
+        'continuation_token' => false,
         'consistency' => false,
     ];
 
@@ -137,9 +137,9 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $openAPITypes = [
-        'tupleKey' => '\OpenFGA\API\Models\ReadRequestTupleKey',
-        'pageSize' => 'int',
-        'continuationToken' => 'string',
+        'tuple_key' => '\OpenFGA\API\Models\ReadRequestTupleKey',
+        'page_size' => 'int',
+        'continuation_token' => 'string',
         'consistency' => '\OpenFGA\API\Models\ConsistencyPreference',
     ];
 
@@ -149,9 +149,9 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
      * @var string[]
      */
     private static $setters = [
-        'tupleKey' => 'setTupleKey',
-        'pageSize' => 'setPageSize',
-        'continuationToken' => 'setContinuationToken',
+        'tuple_key' => 'setTupleKey',
+        'page_size' => 'setPageSize',
+        'continuation_token' => 'setContinuationToken',
         'consistency' => 'setConsistency',
     ];
 
@@ -163,9 +163,9 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('tupleKey', $data ?? [], null);
-        $this->setIfExists('pageSize', $data ?? [], null);
-        $this->setIfExists('continuationToken', $data ?? [], null);
+        $this->setIfExists('tuple_key', $data ?? [], null);
+        $this->setIfExists('page_size', $data ?? [], null);
+        $this->setIfExists('continuation_token', $data ?? [], null);
         $this->setIfExists('consistency', $data ?? [], null);
     }
 
@@ -193,13 +193,13 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets continuationToken.
+     * Gets continuation_token.
      *
      * @return null|string
      */
     public function getContinuationToken()
     {
-        return $this->container['continuationToken'];
+        return $this->container['continuation_token'];
     }
 
     /**
@@ -213,23 +213,23 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets pageSize.
+     * Gets page_size.
      *
      * @return null|int
      */
     public function getPageSize()
     {
-        return $this->container['pageSize'];
+        return $this->container['page_size'];
     }
 
     /**
-     * Gets tupleKey.
+     * Gets tuple_key.
      *
      * @return null|ReadRequestTupleKey
      */
     public function getTupleKey()
     {
-        return $this->container['tupleKey'];
+        return $this->container['tuple_key'];
     }
 
     /**
@@ -267,12 +267,12 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
     {
         $invalidProperties = [];
 
-        if (null !== $this->container['pageSize'] && ($this->container['pageSize'] > 100)) {
-            $invalidProperties[] = "invalid value for 'pageSize', must be smaller than or equal to 100.";
+        if (null !== $this->container['page_size'] && ($this->container['page_size'] > 100)) {
+            $invalidProperties[] = "invalid value for 'page_size', must be smaller than or equal to 100.";
         }
 
-        if (null !== $this->container['pageSize'] && ($this->container['pageSize'] < 1)) {
-            $invalidProperties[] = "invalid value for 'pageSize', must be bigger than or equal to 1.";
+        if (null !== $this->container['page_size'] && ($this->container['page_size'] < 1)) {
+            $invalidProperties[] = "invalid value for 'page_size', must be bigger than or equal to 1.";
         }
 
         return $invalidProperties;
@@ -346,60 +346,60 @@ final class ReadRequest implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets continuationToken.
+     * Sets continuation_token.
      *
-     * @param null|string $continuationToken continuationToken
+     * @param null|string $continuation_token continuation_token
      *
      * @return self
      */
-    public function setContinuationToken($continuationToken)
+    public function setContinuationToken($continuation_token)
     {
-        if (null === $continuationToken) {
-            throw new InvalidArgumentException('non-nullable continuationToken cannot be null');
+        if (null === $continuation_token) {
+            throw new InvalidArgumentException('non-nullable continuation_token cannot be null');
         }
-        $this->container['continuationToken'] = $continuationToken;
+        $this->container['continuation_token'] = $continuation_token;
 
         return $this;
     }
 
     /**
-     * Sets pageSize.
+     * Sets page_size.
      *
-     * @param null|int $pageSize pageSize
+     * @param null|int $page_size page_size
      *
      * @return self
      */
-    public function setPageSize($pageSize)
+    public function setPageSize($page_size)
     {
-        if (null === $pageSize) {
-            throw new InvalidArgumentException('non-nullable pageSize cannot be null');
+        if (null === $page_size) {
+            throw new InvalidArgumentException('non-nullable page_size cannot be null');
         }
 
-        if (($pageSize > 100)) {
-            throw new InvalidArgumentException('invalid value for $pageSize when calling ReadRequest., must be smaller than or equal to 100.');
+        if (($page_size > 100)) {
+            throw new InvalidArgumentException('invalid value for $page_size when calling ReadRequest., must be smaller than or equal to 100.');
         }
-        if (($pageSize < 1)) {
-            throw new InvalidArgumentException('invalid value for $pageSize when calling ReadRequest., must be bigger than or equal to 1.');
+        if (($page_size < 1)) {
+            throw new InvalidArgumentException('invalid value for $page_size when calling ReadRequest., must be bigger than or equal to 1.');
         }
 
-        $this->container['pageSize'] = $pageSize;
+        $this->container['page_size'] = $page_size;
 
         return $this;
     }
 
     /**
-     * Sets tupleKey.
+     * Sets tuple_key.
      *
-     * @param null|ReadRequestTupleKey $tupleKey tupleKey
+     * @param null|ReadRequestTupleKey $tuple_key tuple_key
      *
      * @return self
      */
-    public function setTupleKey($tupleKey)
+    public function setTupleKey($tuple_key)
     {
-        if (null === $tupleKey) {
-            throw new InvalidArgumentException('non-nullable tupleKey cannot be null');
+        if (null === $tuple_key) {
+            throw new InvalidArgumentException('non-nullable tuple_key cannot be null');
         }
-        $this->container['tupleKey'] = $tupleKey;
+        $this->container['tuple_key'] = $tuple_key;
 
         return $this;
     }

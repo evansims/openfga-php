@@ -82,7 +82,7 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     private static $attributeMap = [
         'users' => 'users',
         'computed' => 'computed',
-        'tupleToUserset' => 'tupleToUserset',
+        'tuple_to_userset' => 'tupleToUserset',
     ];
 
     /**
@@ -93,7 +93,7 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     private static $getters = [
         'users' => 'getUsers',
         'computed' => 'getComputed',
-        'tupleToUserset' => 'getTupleToUserset',
+        'tuple_to_userset' => 'getTupleToUserset',
     ];
 
     /**
@@ -108,7 +108,7 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     private static $openAPIFormats = [
         'users' => null,
         'computed' => null,
-        'tupleToUserset' => null,
+        'tuple_to_userset' => null,
     ];
 
     /**
@@ -126,7 +126,7 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     private static array $openAPINullables = [
         'users' => false,
         'computed' => false,
-        'tupleToUserset' => false,
+        'tuple_to_userset' => false,
     ];
 
     /**
@@ -137,7 +137,7 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     private static $openAPITypes = [
         'users' => '\OpenFGA\API\Models\Users',
         'computed' => '\OpenFGA\API\Models\Computed',
-        'tupleToUserset' => '\OpenFGA\API\Models\UsersetTreeTupleToUserset',
+        'tuple_to_userset' => '\OpenFGA\API\Models\UsersetTreeTupleToUserset',
     ];
 
     /**
@@ -148,7 +148,7 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     private static $setters = [
         'users' => 'setUsers',
         'computed' => 'setComputed',
-        'tupleToUserset' => 'setTupleToUserset',
+        'tuple_to_userset' => 'setTupleToUserset',
     ];
 
     /**
@@ -161,7 +161,7 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     {
         $this->setIfExists('users', $data ?? [], null);
         $this->setIfExists('computed', $data ?? [], null);
-        $this->setIfExists('tupleToUserset', $data ?? [], null);
+        $this->setIfExists('tuple_to_userset', $data ?? [], null);
     }
 
     /**
@@ -198,13 +198,13 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Gets tupleToUserset.
+     * Gets tuple_to_userset.
      *
      * @return null|UsersetTreeTupleToUserset
      */
     public function getTupleToUserset()
     {
-        return $this->container['tupleToUserset'];
+        return $this->container['tuple_to_userset'];
     }
 
     /**
@@ -321,18 +321,18 @@ final class Leaf implements ArrayAccess, JsonSerializable, ModelInterface
     }
 
     /**
-     * Sets tupleToUserset.
+     * Sets tuple_to_userset.
      *
-     * @param null|UsersetTreeTupleToUserset $tupleToUserset tupleToUserset
+     * @param null|UsersetTreeTupleToUserset $tuple_to_userset tuple_to_userset
      *
      * @return self
      */
-    public function setTupleToUserset($tupleToUserset)
+    public function setTupleToUserset($tuple_to_userset)
     {
-        if (null === $tupleToUserset) {
-            throw new InvalidArgumentException('non-nullable tupleToUserset cannot be null');
+        if (null === $tuple_to_userset) {
+            throw new InvalidArgumentException('non-nullable tuple_to_userset cannot be null');
         }
-        $this->container['tupleToUserset'] = $tupleToUserset;
+        $this->container['tuple_to_userset'] = $tuple_to_userset;
 
         return $this;
     }
