@@ -1,7 +1,7 @@
 {
   "name": "evansims/openfga-php-example",
   "description": "A demonstration app for experimenting with the OpenFGA PHP SDK.",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "type": "project",
   "repositories": [
     {
