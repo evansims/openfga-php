@@ -30,9 +30,11 @@ composer require evansims/openfga-php
 > [!NOTE]
 > If you're [not using authentication](https://openfga.dev/docs/getting-started/setup-sdk-client#using-no-authentication), you can ignore this step.
 
-The SDK supports three types of credentials: ODIC and shared key. ODIC credentials are used to authenticate with an Okta FGA instance, while shared key credentials can be used to authenticate with an OpenFGA instance. To configure the SDK with your credentials, create an appropriate `Credentials` object. You'll ultimately pass it to the `ClientConfiguration` constructor as the `credentialConfiguration` parameter.
+The SDK supports two types of credentials: [ODIC](https://openfga.dev/docs/getting-started/setup-sdk-client#using-client-credentials-flow) and [shared key](https://openfga.dev/docs/getting-started/setup-sdk-client#using-shared-key-authentication). ODIC ("client credentials flow") credentials are used to authenticate with an Okta FGA instance, while shared key credentials can be used to authenticate with an OpenFGA instance.
 
-For ODIC credentials:
+To configure the SDK with your credentials, create an appropriate `Credentials` class instance for your authentication type. Later on, you'll pass this instance to the `ClientConfiguration` constructor as the `credentialConfiguration` parameter.
+
+For ODIC ("Client Credentials flow") credentials:
 
 ```php
 $credential = new ClientCredentialConfiguration(
@@ -60,7 +62,7 @@ $configuration = new ClientConfiguration(
     apiUrl: $_ENV['FGA_API_URL'] ?? null,
     storeId: $_ENV['FGA_STORE_ID'] ?? null,
     authorizationModelId: $_ENV['FGA_MODEL_ID'] ?? null,
-    credentialConfiguration: $credential,
+    credentialConfiguration: $credential, // Pass the credential object you created in the previous step
 );
 ```
 
