@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA;
 
-use OpenFGA\API\Endpoints\{AuthorizationModelsEndpoint, StoresEndpoint};
+use OpenFGA\API\Endpoints\{AuthorizationModelsEndpoint, RelationshipQueriesEndpoint, RelationshipTuplesEndpoint, StoresEndpoint, AssertionsEndpoint};
 use OpenFGA\SDK\Configuration\ClientConfigurationInterface;
 use OpenFGA\SDK\Configuration\Credentials\ClientCredentialConfiguration;
 use OpenFGA\SDK\Credentials\{ClientCredentialManager, CredentialManagerInterface, NullCredentialManager};
 
 final class Client implements ClientInterface
 {
-    use StoresEndpoint, AuthorizationModelsEndpoint;
+    use StoresEndpoint, AuthorizationModelsEndpoint, RelationshipTuplesEndpoint, RelationshipQueriesEndpoint, AssertionsEndpoint;
 
     public const string VERSION = '0.1.0';
 

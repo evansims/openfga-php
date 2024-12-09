@@ -91,6 +91,23 @@ final class Request
         return $this->response = $response;
     }
 
+    public function put(): ResponseInterface
+    {
+        $request = $this->buildRequest('PUT');
+        $response = $this->network->getHttpClient()->sendRequest($request);
+
+        // var_dump($response);
+        // var_dump($response->getBody()->getContents());
+        // var_dump($response->getHeaders());
+        // exit;
+
+        // TODO: Support auto-retry w/ jitter for throttled requests
+
+        $response = $this->network->getHttpClient()->sendRequest($request);
+
+        return $this->response = $response;
+    }
+
     public function delete(): ResponseInterface
     {
         $request = $this->buildRequest('DELETE');
