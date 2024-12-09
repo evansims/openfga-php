@@ -79,11 +79,29 @@ Finally, create a `OpenFGA\Client` instance using the configuration you've set u
 ```php
 use OpenFGA\Client;
 
-$client = new Client($configuration);
+$client = new Client(
+  configuration: $configuration
+);
 ```
 
 All set! You're now ready to start making requests to the OpenFGA API.
 
 ### Making Requests
 
-TODO: Add examples of making requests
+#### Listing Stores
+
+```php
+$stores = $client->stores()->list();
+```
+
+#### Creating a Store
+
+```php
+$request = new CreateStoreRequest([
+    'name' => 'my-store-name',
+]);
+
+$store = $client->stores()->create(
+  request: $request
+);
+```
