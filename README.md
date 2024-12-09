@@ -88,9 +88,15 @@ All set! You're now ready to start making requests to the OpenFGA API.
 
 ### Making Requests
 
+- [Store Management](#store-management)
+  - [Creating a Store](#creating-a-store)
+  - [Listing Stores](#listing-stores)
+  - [Getting a Store](#getting-a-store)
+  - [Deleting a Store](#deleting-a-store)
+
 #### Store Management
 
-#### Listing Stores
+##### Listing Stores
 
 This will return a list of all stores. The method returns a `ListStoresResponse` object.
 
