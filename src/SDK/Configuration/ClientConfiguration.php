@@ -15,6 +15,7 @@ final class ClientConfiguration extends Configuration implements ClientConfigura
         public ?string $apiUrl = null,
         public ?string $storeId = null,
         public ?string $authorizationModelId = null,
+        public ?bool $useOkta = false,
         public ?CredentialConfigurationInterface $credentialConfiguration = null,
     ) {
     }
@@ -32,6 +33,11 @@ final class ClientConfiguration extends Configuration implements ClientConfigura
     public function getAuthorizationModelId(): ?string
     {
         return $this->authorizationModelId;
+    }
+
+    public function getUseOkta(): ?bool
+    {
+        return $this->useOkta;
     }
 
     public function getCredentialConfiguration(): ?CredentialConfigurationInterface

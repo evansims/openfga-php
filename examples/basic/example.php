@@ -31,9 +31,7 @@ $client = new Client($configuration);
 // ]);
 
 // $response = $client->getAuthorizationModels();
-$response = $client->getAuthorizationModel(
-    id: '01JE9Z636YG52WQFR64FRVBDJ8'
-);
+$response = $client->getAuthorizationModel();
 
 var_dump($response);
 exit;

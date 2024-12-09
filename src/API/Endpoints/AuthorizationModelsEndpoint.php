@@ -18,19 +18,19 @@ trait AuthorizationModelsEndpoint
             $options = new GetAuthorizationModelsOptions();
         }
 
-        $request = new Request(
+        $api = new Request(
             client: $this,
             options: $options,
             endpoint: '/stores/' . $storeId . '/authorization-models',
         );
 
-        $response = $request->get();
+        $response = $api->get();
 
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Failed to get authorization models');
         }
 
-        $json = $request->getResponseBodyJson();
+        $json = $api->getResponseBodyJson();
 
         return new ReadAuthorizationModelsResponse($json);
     }
@@ -44,19 +44,19 @@ trait AuthorizationModelsEndpoint
             $options = new GetAuthorizationModelOptions();
         }
 
-        $request = new Request(
+        $api = new Request(
             client: $this,
             options: $options,
             endpoint: '/stores/' . $storeId . '/authorization-models/' . $id,
         );
 
-        $response = $request->get();
+        $response = $api->get();
 
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Failed to get authorization models');
         }
 
-        $json = $request->getResponseBodyJson();
+        $json = $api->getResponseBodyJson();
 
         return new ReadAuthorizationModelResponse($json);
     }
@@ -69,19 +69,19 @@ trait AuthorizationModelsEndpoint
             $options = new CreateAuthorizationModelOptions();
         }
 
-        $request = new Request(
+        $api = new Request(
             client: $this,
             options: $options,
             endpoint: '/stores/' . $storeId . '/authorization-models',
         );
 
-        $response = $request->post();
+        $response = $api->post();
 
         if ($response->getStatusCode() !== 200) {
             throw new \Exception('Failed to get authorization models');
         }
 
-        $json = $request->getResponseBodyJson();
+        $json = $api->getResponseBodyJson();
 
         return new WriteAuthorizationModelResponse($json);
     }
