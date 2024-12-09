@@ -88,6 +88,8 @@ All set! You're now ready to start making requests to the OpenFGA API.
 
 ### Making Requests
 
+#### Store Management
+
 #### Listing Stores
 
 This will return a list of all stores. The method returns a `ListStoresResponse` object.
@@ -96,7 +98,7 @@ This will return a list of all stores. The method returns a `ListStoresResponse`
 $stores = $client->stores()->list();
 ```
 
-#### Creating a Store
+##### Creating a Store
 
 This will create a store with the name `my-store-name`. The method returns a `CreateStoreResponse` object.
 
@@ -113,7 +115,7 @@ echo $response->getId();
 echo $response->getName();
 ```
 
-#### Getting a Store
+##### Getting a Store
 
 This will return the store with the ID `store-id`. The method returns a `GetStoreResponse` object.
 
@@ -124,7 +126,7 @@ echo $store->getId();
 echo $store->getName();
 ```
 
-#### Deleting a Store
+##### Deleting a Store
 
 This will delete the store with the ID `store-id`. The method does not return a response, but will throw an exception if the request fails.
 
