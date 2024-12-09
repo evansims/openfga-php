@@ -37,6 +37,8 @@ To configure the SDK with your credentials, create an appropriate `Credentials` 
 For ODIC ("Client Credentials flow") credentials:
 
 ```php
+use OpenFGA\SDK\Configuration\Credentials\ClientCredentialConfiguration;
+
 $credential = new ClientCredentialConfiguration(
     apiIssuer: $_ENV['FGA_API_TOKEN_ISSUER'] ?? null,
     apiAudience: $_ENV['FGA_API_AUDIENCE'] ?? null,
@@ -48,6 +50,8 @@ $credential = new ClientCredentialConfiguration(
 Or, when using a shared key:
 
 ```php
+use OpenFGA\SDK\Configuration\Credentials\SharedKeyCredentialConfiguration;
+
 $credential = new SharedKeyCredentialConfiguration(
     sharedKey: $_ENV['FGA_SHARED_KEY'] ?? null,
 );
@@ -55,9 +59,11 @@ $credential = new SharedKeyCredentialConfiguration(
 
 ### Client Configuration
 
-Next, create a `ClientConfiguration` object. This object is used to configure the SDK client, including the base URL of the FGA instance you're connecting to, the credentials you've configured, and any other options you'd like to set. For example:
+Next, create a `ClientConfiguration` instance. This will be used to configure the SDK client, including the base URL of the FGA instance you're connecting to, the credentials you've configured, and any other options you'd like to set. For example:
 
 ```php
+use OpenFGA\SDK\Configuration\ClientConfiguration;
+
 $configuration = new ClientConfiguration(
     apiUrl: $_ENV['FGA_API_URL'] ?? null,
     storeId: $_ENV['FGA_STORE_ID'] ?? null,
@@ -68,11 +74,15 @@ $configuration = new ClientConfiguration(
 
 ### Client Initialization
 
-Finally, create a `Client` object using the configuration you've set up:
+Finally, create a `OpenFGA\Client` instance using the configuration you've set up:
 
 ```php
+use OpenFGA\Client;
+
 $client = new Client($configuration);
 ```
+
+All set! You're now ready to start making requests to the OpenFGA API.
 
 ### Making Requests
 
