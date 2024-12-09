@@ -20,11 +20,8 @@ Features:
 composer require evansims/openfga-php
 ```
 
-Note that your application may require additional dependencies that fulfill the PSR-7, PSR-17, and PSR-18 implementations the SDK expects. If your application lacks compatible libraries you'll receive an error when you attempt to `require` the SDK. To resolve this error and allow the SDK to be installed, first install libraries of your preference that implement these interfaces. For example:
-
-```bash
-composer require kriswallsmith/buzz nyholm/psr7 evansims/openfga-php
-```
+> [!IMPORTANT]
+> Your application must already fulfill (or have dependencies installed that fulfill) the PSR-7, PSR-17, and PSR-18 implementations. You can install any libraries of your preference that implement these interfaces; for example: `composer require kriswallsmith/buzz nyholm/psr7 evansims/openfga-php`.
 
 ## Usage
 
