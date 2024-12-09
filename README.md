@@ -18,8 +18,9 @@ The `evansims/openfga-php` package is an unofficial/experimental PHP SDK for [Op
 
 ## Features
 
+- [OpenFGA](https://openfga.dev/) and [Okta FGA](https://www.okta.com/products/fine-grained-authorization/) are supported
+- OIDC (Client Credentials flow) and shared key authentication are supported
 - All OpenFGA API endpoints are supported
-- Okta FGA and OpenFGA authentication support, including ODIC client credentials and shared key authentication
 - Uses PHP-FIG interoperability standards for network requests (PSR-7, PSR-17, and PSR-18)
 
 ## Requirements
@@ -46,11 +47,11 @@ composer require evansims/openfga-php
 > [!NOTE]
 > If you're [not using authentication](https://openfga.dev/docs/getting-started/setup-sdk-client#using-no-authentication), you can ignore this step.
 
-The SDK supports two types of credentials: [ODIC](https://openfga.dev/docs/getting-started/setup-sdk-client#using-client-credentials-flow) and [shared key](https://openfga.dev/docs/getting-started/setup-sdk-client#using-shared-key-authentication). ODIC ("client credentials flow") credentials are used to authenticate with an Okta FGA instance, while shared key credentials can be used to authenticate with an OpenFGA instance.
+The SDK supports two types of credentials: [OIDC](https://openfga.dev/docs/getting-started/setup-sdk-client#using-client-credentials-flow) and [shared key](https://openfga.dev/docs/getting-started/setup-sdk-client#using-shared-key-authentication). OIDC ("client credentials flow") credentials are used to authenticate with an Okta FGA instance, while shared key credentials can be used to authenticate with an OpenFGA instance.
 
 To configure the SDK with your credentials, create an appropriate `Credentials` class instance for your authentication type. Later on, you'll pass this instance to the `ClientConfiguration` constructor as the `credentialConfiguration` parameter.
 
-For ODIC ("Client Credentials flow") credentials:
+For OIDC ("Client Credentials flow") credentials:
 
 ```php
 use OpenFGA\SDK\Configuration\Credentials\ClientCredentialConfiguration;
