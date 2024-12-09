@@ -101,7 +101,10 @@ $request = new CreateStoreRequest([
     'name' => 'my-store-name',
 ]);
 
-$store = $client->stores()->create(
+$response = $client->stores()->create(
   request: $request
-);
+); // Returns a CreateStoreResponse
+
+echo $response->getId();
+echo $response->getName();
 ```
