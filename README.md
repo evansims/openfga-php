@@ -2,14 +2,7 @@
 
 The `evansims/openfga-php` package is an unofficial/experimental PHP SDK for [OpenFGA](https://openfga.dev/) and [Okta FGA](https://www.okta.com/products/fine-grained-authorization/). It's fast, lightweight, and easy to use.
 
-Features:
-
-- All OpenFGA API endpoints are supported
-- Okta FGA and OpenFGA authentication support, including ODIC client credentials and shared key authentication
-- Uses PHP-FIG interoperability standards for network requests (PSR-7, PSR-17, and PSR-18)
-
----
-
+- [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
@@ -22,6 +15,12 @@ Features:
     - [Listing Stores](#listing-stores)
     - [Getting a Store](#getting-a-store)
     - [Deleting a Store](#deleting-a-store)
+
+## Features
+
+- All OpenFGA API endpoints are supported
+- Okta FGA and OpenFGA authentication support, including ODIC client credentials and shared key authentication
+- Uses PHP-FIG interoperability standards for network requests (PSR-7, PSR-17, and PSR-18)
 
 ## Requirements
 
