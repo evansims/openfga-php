@@ -8,6 +8,19 @@ Features:
 - Okta FGA and OpenFGA authentication support, including ODIC client credentials and shared key authentication
 - Uses PHP-FIG interoperability standards for network requests (PSR-7, PSR-17, and PSR-18)
 
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+  - [Credential Configuration](#credential-configuration)
+  - [Client Configuration](#client-configuration)
+  - [Client Initialization](#client-initialization)
+- [Making Requests](#making-requests)
+  - [Store Management](#store-management)
+    - [Creating a Store](#creating-a-store)
+    - [Listing Stores](#listing-stores)
+    - [Getting a Store](#getting-a-store)
+    - [Deleting a Store](#deleting-a-store)
+
 ## Requirements
 
 - [PHP 8.4+](https://www.php.net/)
@@ -24,17 +37,6 @@ composer require evansims/openfga-php
 > Your application must fulfill the PSR-7, PSR-17, and PSR-18 implementations. If you're unable to install the SDK due to a missing implementation, first install any libraries of your preference that implement those interfaces, and then retry. For example: `composer require kriswallsmith/buzz nyholm/psr7`.
 
 ## Usage
-
-- [Getting Started](#getting-started)
-  - [Credential Configuration](#credential-configuration)
-  - [Client Configuration](#client-configuration)
-  - [Client Initialization](#client-initialization)
-- [Making Requests](#making-requests)
-  - [Store Management](#store-management)
-    - [Creating a Store](#creating-a-store)
-    - [Listing Stores](#listing-stores)
-    - [Getting a Store](#getting-a-store)
-    - [Deleting a Store](#deleting-a-store)
 
 ### Getting Started
 
