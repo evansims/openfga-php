@@ -8,6 +8,8 @@ Features:
 - Okta FGA and OpenFGA authentication support, including ODIC client credentials and shared key authentication
 - Uses PHP-FIG interoperability standards for network requests (PSR-7, PSR-17, and PSR-18)
 
+---
+
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Getting Started](#getting-started)
