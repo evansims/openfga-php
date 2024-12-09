@@ -25,7 +25,20 @@ composer require evansims/openfga-php
 
 ## Usage
 
-### Credential Configuration
+- [Getting Started](#getting-started)
+  - [Credential Configuration](#credential-configuration)
+  - [Client Configuration](#client-configuration)
+  - [Client Initialization](#client-initialization)
+- [Making Requests](#making-requests)
+  - [Store Management](#store-management)
+    - [Creating a Store](#creating-a-store)
+    - [Listing Stores](#listing-stores)
+    - [Getting a Store](#getting-a-store)
+    - [Deleting a Store](#deleting-a-store)
+
+### Getting Started
+
+#### Credential Configuration
 
 > [!NOTE]
 > If you're [not using authentication](https://openfga.dev/docs/getting-started/setup-sdk-client#using-no-authentication), you can ignore this step.
@@ -57,7 +70,7 @@ $credential = new SharedKeyCredentialConfiguration(
 );
 ```
 
-### Client Configuration
+#### Client Configuration
 
 Next, create a `ClientConfiguration` instance. This will be used to configure the SDK client, including the base URL of the FGA instance you're connecting to, the credentials you've configured, and any other options you'd like to set. For example:
 
@@ -72,7 +85,7 @@ $configuration = new ClientConfiguration(
 );
 ```
 
-### Client Initialization
+#### Client Initialization
 
 Finally, create a `OpenFGA\Client` instance using the configuration you've set up:
 
@@ -86,13 +99,9 @@ $client = new Client(
 
 All set! You're now ready to start making requests to the OpenFGA API.
 
-### Making Requests
+---
 
-- [Store Management](#store-management)
-  - [Creating a Store](#creating-a-store)
-  - [Listing Stores](#listing-stores)
-  - [Getting a Store](#getting-a-store)
-  - [Deleting a Store](#deleting-a-store)
+### Making Requests
 
 #### Store Management
 
