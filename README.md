@@ -68,7 +68,7 @@ $configuration = new ClientConfiguration(
     apiUrl: $_ENV['FGA_API_URL'] ?? null,
     storeId: $_ENV['FGA_STORE_ID'] ?? null,
     authorizationModelId: $_ENV['FGA_MODEL_ID'] ?? null,
-    credentialConfiguration: $credential, // Pass the credential object you created in the previous step
+    credentialConfiguration: $credential, // Use the credential instance you previously created
 );
 ```
 
