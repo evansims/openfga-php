@@ -231,8 +231,7 @@ $store->tuples()->delete([
 
 ##### Querying Relationship Tuples
 
-**Getting all `object`s with a `relation`ship to a particular `document`.**
-To query for all objects that `user:bob` has a `reader` relationship with for the `document` type definition:
+To query for all `objects` that `user:bob` has a `reader` relationship with for the `document` type definition:
 
 ```php
 $store = $client->store(storeId: 'store-id');
@@ -252,8 +251,7 @@ foreach ($tuples as $tuple->getKey()) {
 }
 ```
 
-**Getting all `relation`ships for a particular `object`.**
-To query for all users that have `reader` relationship with `document:2021-budget`:
+To query for all `users` that have `reader` relationship with `document:2021-budget`:
 
 ```php
 $store = $client->store(storeId: 'store-id');
@@ -272,8 +270,7 @@ foreach ($tuples as $tuple->getKey()) {
 }
 ```
 
-**Getting all `user`s with `relation`ships to a particular `document`.**
-To query for all users that have `reader` relationship with `document:2021-budget`:
+To query for all `users` that have `reader` relationship with `document:2021-budget`:
 
 ```php
 $store = $client->store(storeId: 'store-id');
