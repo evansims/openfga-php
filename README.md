@@ -287,3 +287,41 @@ foreach ($tuples as $tuple->getKey()) {
     echo $tuple->getObject();
 }
 ```
+
+#### Relationship Queries
+
+##### Checking for Authorization
+
+In order to check if `user:anne` has a `reader` relationship with `document:2021-budget`:
+
+```php
+$store = $client->store(storeId: 'store-id');
+
+$authorized = $store->query()->check(
+  tuple: new TupleKey(
+    user: 'user:anne',
+    relation: 'reader',
+    object: 'document:2021-budget',
+  ),
+  context: [
+    new TupleKey(
+      user: 'user:anne',
+      relation: 'member',
+      object: 'time_slot:office_hours',
+    )
+  ]
+)
+```
+
+> [!NOTE]
+> The Check API caches results for a short time to optimize performance. You can request higher consistency (at the expense of increase latency) using the optional optional `consistency` parameter of the `check()` method. This parameter supports a CONSISTENCY enum value.
+
+##### Batching Authorization Checks
+
+##### Expanding Relationship Checks
+
+##### Listing User-Type Relationships
+
+##### Listing User-Object Relationships
+
+##### Streaming User-Object Relationships
