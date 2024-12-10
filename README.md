@@ -318,10 +318,24 @@ $authorized = $store->query()->check(
 
 ##### Batching Authorization Checks
 
+TODO
+
 ##### Expanding Relationship Checks
+
+TODO
 
 ##### Listing User-Type Relationships
 
+TODO
+
 ##### Listing User-Object Relationships
 
+TODO
+
 ##### Streaming User-Object Relationships
+
+TODO
+
+#### Assertions
+
+TODO
