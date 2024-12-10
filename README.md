@@ -156,7 +156,8 @@ $client->store(storeId: 'store-id')->delete();
 This will return a list of all authorization models for the store with the ID `store-id`.
 
 ```php
-$models = $client->store(storeId: 'store-id')->models()->list();
+$store = $client->store(storeId: 'store-id');
+$models = $store->models()->list();
 ```
 
 ##### Creating a new Authorization Model
@@ -170,7 +171,8 @@ $request = new WriteAuthorizationModelRequest([
   'conditions' => [ /* ... */ ],
 ]);
 
-$response = $client->store(storeId: 'store-id')->models()->create(
+$store = $client->store(storeId: 'store-id');
+$response = $store->models()->create(
   name: $request
 );
 
@@ -182,9 +184,9 @@ echo $response->getId();
 This will return the authorization model with the ID `model-id` for the store with the ID `store-id`.
 
 ```php
-$model = $client->store(storeId: 'store-id')->model(modelId: 'model-id')->get();
+$store = $client->store(storeId: 'store-id');
+$model = $store->model(modelId: 'model-id')->get();
 
-// $model is an instance of `GetAuthorizationModelResponse`
 echo $model->getId();
 ```
 
@@ -193,13 +195,16 @@ echo $model->getId();
 ##### Listing Tuple Changes
 
 ```php
-$changes = $client->store(storeId: 'store-id')->tuples()->changes();
+$store = $client->store(storeId: 'store-id');
+$tuples = $store->tuples()->changes();
 ```
 
 ##### Creating a Relationship Tuple
 
 ```php
-$client->store(storeId: 'store-id')->tuples()->create([
+$store = $client->store(storeId: 'store-id');
+
+$store->tuples()->create([
   new TupleKey(
     user: 'user:anne',
     relation: 'writer',
@@ -213,7 +218,9 @@ $client->store(storeId: 'store-id')->tuples()->create([
 To remove `user:bob` as a `reader` for `document:2021-budget`, call `write()` with the following:
 
 ```php
-$client->store(storeId: 'store-id')->tuples()->delete([
+$store = $client->store(storeId: 'store-id');
+
+$store->tuples()->delete([
   new TupleKey(
     user: 'user:bob',
     relation: 'reader',
@@ -229,7 +236,9 @@ $client->store(storeId: 'store-id')->tuples()->delete([
 To query for all objects that `user:bob` has a `reader` relationship with for the `document` type definition:
 
 ```php
-$tuples = $client->store(storeId: 'store-id')->tuples()->query([
+$store = $client->store(storeId: 'store-id');
+
+$tuples = $store->tuples()->query([
   new TupleKey(
     user: 'user:bob',
     relation: 'reader',
@@ -249,7 +258,9 @@ foreach ($tuples as $tuple->getKey()) {
 To query for all users that have `reader` relationship with `document:2021-budget`:
 
 ```php
-$users = $client->store(storeId: 'store-id')->tuples()->query([
+$store = $client->store(storeId: 'store-id');
+
+$tuples = $store->tuples()->query([
   new TupleKey(
     object: 'document:2021-budget:',
     relation: 'reader'
@@ -268,7 +279,9 @@ foreach ($tuples as $tuple->getKey()) {
 To query for all users that have `reader` relationship with `document:2021-budget`:
 
 ```php
-$users = $client->store(storeId: 'store-id')->tuples()->query([
+$store = $client->store(storeId: 'store-id');
+
+$tuples = $store->tuples()->query([
   new TupleKey(
     object: 'document:2021-budget:'
   )
