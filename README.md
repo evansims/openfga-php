@@ -124,7 +124,7 @@ This will create a store with the name `my-store-name`. The method returns a `Cr
 ```php
 $response = $client->stores()->create(
   name: 'my-store-name'
-); // Returns a CreateStoreResponse
+);
 
 echo $response->getId();
 echo $response->getName();
@@ -135,7 +135,7 @@ echo $response->getName();
 This will return the store with the ID `store-id`. The method returns a `GetStoreResponse` object.
 
 ```php
-$store = $client->store(storeId: 'store-id')->get(); // Returns a GetStoreResponse
+$store = $client->store(storeId: 'store-id')->get();
 
 echo $store->getId();
 echo $store->getName();
@@ -156,7 +156,7 @@ $client->store(storeId: 'store-id')->delete();
 This will return a list of all authorization models for the store with the ID `store-id`.
 
 ```php
-$models = $client->store(storeId: 'store-id')->authorizationModels()->list();
+$models = $client->store(storeId: 'store-id')->models()->list();
 ```
 
 ##### Creating a new Authorization Model
@@ -170,20 +170,19 @@ $request = new WriteAuthorizationModelRequest([
   'conditions' => [ /* ... */ ],
 ]);
 
-$response = $client->store(storeId: 'store-id')->authorizationModels()->create(
+$response = $client->store(storeId: 'store-id')->models()->create(
   name: $request
 );
 
-// $response is an instance of `CreateAuthorizationModelResponse`
 echo $response->getId();
 ```
 
 ##### Getting an Authorization Model
 
-This will return the authorization model with the ID `model-id` for the store with the ID `store-id`. The method returns a `GetAuthorizationModelResponse` object.
+This will return the authorization model with the ID `model-id` for the store with the ID `store-id`.
 
 ```php
-$model = $client->store(storeId: 'store-id')->authorizationModel(modelId: 'model-id')->get();
+$model = $client->store(storeId: 'store-id')->model(modelId: 'model-id')->get();
 
 // $model is an instance of `GetAuthorizationModelResponse`
 echo $model->getId();
