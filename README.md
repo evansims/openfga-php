@@ -165,18 +165,13 @@ $models = $store->models()->list();
 This will create a new authorization model for the store with the ID `store-id`:
 
 ```php
-$request = new WriteAuthorizationModelRequest([
-  'type_definitions' => [ /* ... */ ],
-  'schema_version' => [ /* ... */ ],
-  'conditions' => [ /* ... */ ],
-]);
-
 $store = $client->store(storeId: 'store-id');
-$response = $store->models()->create(
-  name: $request
-);
 
-echo $response->getId();
+$response = $store->models()->create(
+  typeDefinitions: ...,
+  schemaVersion: ...,
+  conditions: ...
+);
 ```
 
 ##### Getting an Authorization Model
@@ -197,6 +192,12 @@ echo $model->getId();
 ```php
 $store = $client->store(storeId: 'store-id');
 $tuples = $store->tuples()->changes();
+
+foreach ($tuples as $tuple->getKey()) {
+    echo $tuple->getUser();
+    echo $tuple->getRelation();
+    echo $tuple->getObject();
+}
 ```
 
 ##### Creating a Relationship Tuple
@@ -204,34 +205,64 @@ $tuples = $store->tuples()->changes();
 ```php
 $store = $client->store(storeId: 'store-id');
 
-$store->tuples()->create([
-  new TupleKey(
+// Prepare a write operation object.
+$op = $store->tuples()->write();
+
+// Ex: create a relationship tuple.
+$op->write(
+  tuple: new Tuple(
     user: 'user:anne',
     relation: 'writer',
     object: 'document:2021-budget'
   )
-]);
-```
+);
 
-##### Removing a Relationship Tuple
+// Ex: create multiple relationship tuples.
+$op->writes(
+  tuples: [
+    new Tuple(
+      user: 'user:anne',
+      relation: 'writer',
+      object: 'document:2021-budget'
+    ),
+    new Tuple(
+      user: 'user:bob',
+      relation: 'reader',
+      object: 'document:2021-budget'
+    )
+  ]
+);
 
-To remove `user:bob` as a `reader` for `document:2021-budget`, call `write()` with the following:
+// Ex: remove a relationship tuple.
+$op->delete(
+  tuple: new Tuple(
+    user: 'user:anne',
+    relation: 'writer',
+    object: 'document:2021-budget'
+  ),
+);
 
-```php
-$store = $client->store(storeId: 'store-id');
-
-$store->tuples()->delete([
-  new TupleKey(
+// Ex: remove multiple relationship tuples.
+$op->deletes([
+  tuples: new Tuple(
     user: 'user:bob',
     relation: 'reader',
     object: 'document:2021-budget'
   )
 ]);
+
+/*
+Execute the operation.
+This method will not return a response, but will throw an exception if the request fails.
+*/
+$op->execute();
 ```
 
 ##### Querying Relationship Tuples
 
-To query for all `objects` that `user:bob` has a `reader` relationship with for the `document` type definition:
+The `query()` method allows you to query for tuples that match a query, without following userset rewrite rules.
+
+For example, to query for all `objects` that `user:bob` has a `reader` relationship with for the `document` type definition:
 
 ```php
 $store = $client->store(storeId: 'store-id');
@@ -251,7 +282,7 @@ foreach ($tuples as $tuple->getKey()) {
 }
 ```
 
-To query for all `users` that have `reader` relationship with `document:2021-budget`:
+Or, to query for all `users` that have `reader` relationship with `document:2021-budget`:
 
 ```php
 $store = $client->store(storeId: 'store-id');
@@ -270,7 +301,7 @@ foreach ($tuples as $tuple->getKey()) {
 }
 ```
 
-To query for all `users` that have `reader` relationship with `document:2021-budget`:
+Or, to query for all `users` that have `reader` relationship with `document:2021-budget`:
 
 ```php
 $store = $client->store(storeId: 'store-id');
