@@ -122,12 +122,8 @@ $stores = $client->stores()->list();
 This will create a store with the name `my-store-name`. The method returns a `CreateStoreResponse` object.
 
 ```php
-$request = new CreateStoreRequest([
-    'name' => 'my-store-name',
-]);
-
 $response = $client->stores()->create(
-  request: $request
+  name: 'my-store-name'
 ); // Returns a CreateStoreResponse
 
 echo $response->getId();
@@ -157,7 +153,7 @@ $client->store(storeId: 'store-id')->delete();
 
 ##### Listing Authorization Models for a Store
 
-This will return a list of all authorization models for the store with the ID `store-id`. The method returns a `ListAuthorizationModelsResponse` object.
+This will return a list of all authorization models for the store with the ID `store-id`.
 
 ```php
 $models = $client->store(storeId: 'store-id')->authorizationModels()->list();
@@ -165,17 +161,20 @@ $models = $client->store(storeId: 'store-id')->authorizationModels()->list();
 
 ##### Creating a new Authorization Model
 
-This will create a new authorization model for the store with the ID `store-id`. The method returns a `CreateAuthorizationModelResponse` object.
+This will create a new authorization model for the store with the ID `store-id`:
 
 ```php
-$request = new CreateAuthorizationModelRequest([
-    'name' => 'my-model-name',
+$request = new WriteAuthorizationModelRequest([
+  'type_definitions' => [ /* ... */ ],
+  'schema_version' => [ /* ... */ ],
+  'conditions' => [ /* ... */ ],
 ]);
 
 $response = $client->store(storeId: 'store-id')->authorizationModels()->create(
-  request: $request
-); // Returns a CreateAuthorizationModelResponse
+  name: $request
+);
 
+// $response is an instance of `CreateAuthorizationModelResponse`
 echo $response->getId();
 ```
 
@@ -184,8 +183,9 @@ echo $response->getId();
 This will return the authorization model with the ID `model-id` for the store with the ID `store-id`. The method returns a `GetAuthorizationModelResponse` object.
 
 ```php
-$model = $client->store(storeId: 'store-id')->authorizationModel(modelId: 'model-id')->get(); // Returns a GetAuthorizationModelResponse
+$model = $client->store(storeId: 'store-id')->authorizationModel(modelId: 'model-id')->get();
 
+// $model is an instance of `GetAuthorizationModelResponse`
 echo $model->getId();
 ```
 
