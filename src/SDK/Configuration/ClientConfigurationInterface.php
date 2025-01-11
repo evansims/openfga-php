@@ -14,5 +14,7 @@ interface ClientConfigurationInterface extends ConfigurationInterface
 
     public function getAuthorizationModelId(): ?string;
 
+    public function getUseOkta(): ?bool;
+
     public function getCredentialConfiguration(): ?CredentialConfigurationInterface;
 }

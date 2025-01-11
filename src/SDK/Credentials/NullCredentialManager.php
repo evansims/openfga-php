@@ -10,7 +10,6 @@ final class NullCredentialManager implements CredentialManagerInterface
 {
     public function __construct(
         public ClientInterface $client,
-        public ?AccessToken $accessToken = null,
     ) {
     }
 

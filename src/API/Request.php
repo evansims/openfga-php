@@ -19,7 +19,7 @@ final class Request
         private RequestOptions $options,
         private string $endpoint,
         private array $headers = ['Accept' => 'application/json', 'Content-Type' => 'application/json'],
-        private array $body = [],
+        private string|array|null $body = null,
         private ?Network $network = null,
         private ?ResponseInterface $response = null,
     ) {
@@ -43,7 +43,7 @@ final class Request
         return $this->headers;
     }
 
-    public function getRequestBody(): array
+    public function getRequestBody(): string|array|null
     {
         return $this->body;
     }

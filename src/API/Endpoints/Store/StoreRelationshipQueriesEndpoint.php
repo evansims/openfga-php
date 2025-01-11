@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\API\Endpoints;
+namespace OpenFGA\API\Endpoints\Store;
 
 use OpenFGA\API\Models\{CheckResponse, CheckRequest, ExpandRequest, ExpandResponse, ListObjectsRequest, ListObjectsResponse, ListUsersRequest, ListUsersResponse, StreamedListObjectsResponse};
 use OpenFGA\API\Options\{CheckOptions, ExpandOptions, ListObjectsOptions, ListUsersOptions, StreamedListObjectsOptions};
 use OpenFGA\API\Request;
 
-trait RelationshipQueriesEndpoint
+trait StoreRelationshipQueriesEndpoint
 {
     final public function check(CheckRequest $request, ?string $storeId = null, ?CheckOptions $options = null): CheckResponse
     {

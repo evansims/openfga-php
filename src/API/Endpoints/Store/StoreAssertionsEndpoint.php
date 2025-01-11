@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\API\Endpoints;
+namespace OpenFGA\API\Endpoints\Store;
 
 use OpenFGA\API\Models\{ReadAssertionsResponse, WriteAssertionsRequest};
 use OpenFGA\API\Options\{ReadAssertionsOptions};
 use OpenFGA\API\Request;
 
-trait AssertionsEndpoint
+trait StoreAssertionsEndpoint
 {
     final public function readAssertions(?string $authorizationModelId = null, ?string $storeId = null, ?ReadAssertionsOptions $options = null): ReadAssertionsResponse
     {

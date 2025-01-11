@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\API\Endpoints;
+namespace OpenFGA\API\Endpoints\Store;
 
 use OpenFGA\API\Models\{ReadChangesResponse, ReadRequest, ReadResponse, WriteRequest};
 use OpenFGA\API\Options\{ReadChangesOptions, ReadOptions, WriteOptions};
 use OpenFGA\API\Request;
 
-trait RelationshipTuplesEndpoint
+trait StoreRelationshipTuplesEndpoint
 {
     final public function read(ReadRequest $request, ?string $storeId = null,?ReadOptions $options = null): ReadResponse
     {

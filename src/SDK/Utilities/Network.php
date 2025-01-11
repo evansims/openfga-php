@@ -84,14 +84,22 @@ final class Network
         return $this->httpClient;
     }
 
-    public function createRequestBody(array $body, RequestBodyFormat $format): StreamInterface
+    public function createRequestBody(array|string $body, RequestBodyFormat $format): StreamInterface
     {
         $factory = $this->getHttpStreamFactory();
 
         switch ($format) {
             case RequestBodyFormat::JSON:
+                if (is_string($body)) {
+                    return $factory->createStream($body);
+                }
+
                 return $factory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
             case RequestBodyFormat::POST:
+                if (is_string($body)) {
+                    return $factory->createStream($body);
+                }
+
                 return $factory->createStream(http_build_query($body, '', '&'));
         }
     }

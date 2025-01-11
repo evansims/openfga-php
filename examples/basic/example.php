@@ -30,7 +30,6 @@ $client = new Client($configuration);
 //     'name' => 'FGA Demo Store'
 // ]);
 
-// $response = $client->getAuthorizationModels();
 $response = $client->getAuthorizationModel();
 
 var_dump($response);

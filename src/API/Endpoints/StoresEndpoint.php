@@ -4,23 +4,34 @@ declare(strict_types=1);
 
 namespace OpenFGA\API\Endpoints;
 
-use OpenFGA\API\Models\{CreateStoreRequest, CreateStoreResponse, GetStoreResponse, ListStoresResponse};
-use OpenFGA\API\Options\{CreateStoreRequestOptions, DeleteStoreRequestOptions, GetStoreRequestOptions, ListStoresRequestOptions};
+use OpenFGA\API\Models\{CreateStoreRequest, CreateStoreResponse, ListStoresResponse};
+use OpenFGA\API\Options\{CreateStoreRequestOptions, ListStoresRequestOptions};
 use OpenFGA\API\Request;
+use OpenFGA\ClientInterface;
 use OpenFGA\SDK\Exceptions\Endpoints\OktaUnsupportedEndpoint;
 
-trait StoresEndpoint
+final class StoresEndpoint
 {
-    final public function createStore(CreateStoreRequest $request, ?CreateStoreRequestOptions $options = null): CreateStoreResponse
+    public function __construct(
+        private ClientInterface $client,
+    ) {
+    }
+
+    public function create(string $name, ?CreateStoreRequestOptions $options = null): CreateStoreResponse
     {
         if (null === $options) {
             $options = new CreateStoreRequestOptions();
         }
 
+        $body = new CreateStoreRequest([
+            'name' => $name,
+        ]);
+
         $api = new Request(
-            client: $this,
+        client: $this->client,
             options: $options,
             endpoint: '/stores',
+            body: (array)$body
         );
 
         $response = $api->post();
@@ -34,57 +45,9 @@ trait StoresEndpoint
         return new CreateStoreResponse($json);
     }
 
-    final public function deleteStore(?string $storeId, ?DeleteStoreRequestOptions $options = null): void
+    public function list(?ListStoresRequestOptions $options = null): ListStoresResponse
     {
-        $storeId ??= $this->getConfiguration()->getStoreId();
-
-        if (null === $options) {
-            $options = new DeleteStoreRequestOptions();
-        }
-
-        $api = new Request(
-            client: $this,
-            options: $options,
-            endpoint: '/stores/' . $storeId,
-        );
-
-        $response = $api->delete();
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("DELETE /store/{$storeId} failed");
-        }
-
-        return;
-    }
-
-    final public function getStore(?string $storeId = null, ?GetStoreRequestOptions $options = null): GetStoreResponse
-    {
-        $storeId ??= $this->getConfiguration()->getStoreId();
-
-        if (null === $options) {
-            $options = new GetStoreRequestOptions();
-        }
-
-        $api = new Request(
-            client: $this,
-            options: $options,
-            endpoint: '/stores/' . $storeId,
-        );
-
-        $response = $api->get();
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("GET /store/{$storeId} failed");
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new GetStoreResponse($json);
-    }
-
-    final public function listStores(?ListStoresRequestOptions $options = null): ListStoresResponse
-    {
-        if ($this->getConfiguration()->useOkta()) {
+        if ($this->client->getConfiguration()->getUseOkta()) {
             throw new OktaUnsupportedEndpoint();
         }
 
@@ -93,7 +56,7 @@ trait StoresEndpoint
         }
 
         $api = new Request(
-            client: $this,
+            client: $this->client,
             options: $options,
             endpoint: '/stores',
         );
