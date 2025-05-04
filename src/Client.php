@@ -4,40 +4,83 @@ declare(strict_types=1);
 
 namespace OpenFGA;
 
-use OpenFGA\API\Endpoints\{AuthorizationModelsEndpoint, RelationshipQueriesEndpoint, RelationshipTuplesEndpoint, StoresEndpoint, AssertionsEndpoint};
-use OpenFGA\SDK\Configuration\ClientConfigurationInterface;
-use OpenFGA\SDK\Configuration\Credentials\ClientCredentialConfiguration;
-use OpenFGA\SDK\Credentials\{ClientCredentialManager, CredentialManagerInterface, NullCredentialManager};
+use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthentication, NullCredentialAuthentication};
+use OpenFGA\ConfigurationInterface;
+use OpenFGA\Credentials\ClientCredentialInterface;
+use OpenFGA\Endpoints\{AuthorizationModelsEndpoint, RelationshipQueriesEndpoint, RelationshipTuplesEndpoint, StoresEndpoint, AssertionsEndpoint};
+use OpenFGA\Requests\RequestFactory;
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 final class Client implements ClientInterface
 {
     use StoresEndpoint, AuthorizationModelsEndpoint, RelationshipTuplesEndpoint, RelationshipQueriesEndpoint, AssertionsEndpoint;
 
-    public const string VERSION = '0.1.0';
+    public const string VERSION = '0.2.0';
+
+    public ?RequestInterface $lastRequest = null;
+    public ?ResponseInterface $lastResponse = null;
 
     public function __construct(
-        private ClientConfigurationInterface $configuration,
-        private ?CredentialManagerInterface $credentialManager = null,
+        private ConfigurationInterface $configuration,
+        private ?AuthenticationInterface $authentication = null,
+        private ?RequestFactory $requestFactory = null,
     ) {
     }
 
-    public function getConfiguration(): ClientConfigurationInterface
+    public function getConfiguration(): ConfigurationInterface
     {
         return $this->configuration;
     }
 
-    public function getCredentialManager(): CredentialManagerInterface
+    public function getAuthentication(): AuthenticationInterface
     {
-        if ($this->credentialManager === null) {
-            $credential = $this->getConfiguration()->getCredentialConfiguration();
+        if ($this->authentication === null) {
+            $credential = $this->getConfiguration()->credential;
 
-            if ($credential instanceof ClientCredentialConfiguration) {
-                $this->credentialManager = new ClientCredentialManager($this);
+            if ($credential instanceof ClientCredentialInterface) {
+                $this->authentication = new ClientCredentialAuthentication($this);
             } else {
-                $this->credentialManager = new NullCredentialManager($this);
+                $this->authentication = new NullCredentialAuthentication($this);
             }
         }
 
-        return $this->credentialManager;
+        return $this->authentication;
+    }
+
+    public function getRequestFactory(): RequestFactory
+    {
+        if ($this->requestFactory === null) {
+            $this->requestFactory = new RequestFactory(
+                apiUrl: $this->getConfiguration()->apiUrl,
+                authorizationHeader: $this->getAuthentication()->getAuthorizationHeader(),
+                httpClient: $this->getConfiguration()->httpClient,
+                httpStreamFactory: $this->getConfiguration()->httpStreamFactory,
+                httpRequestFactory: $this->getConfiguration()->httpRequestFactory,
+            );
+        }
+
+        return $this->requestFactory;
+    }
+
+    public function getStoreId(?string $storeId = null): ?string
+    {
+        $storeId ??= $this->getConfiguration()->storeId;
+
+        if (null === $storeId) {
+            throw new \Exception('Store ID is required');
+        }
+
+        return trim($storeId);
+    }
+
+    public function getAuthorizationModelId(?string $modelId = null): ?string
+    {
+        $modelId ??= $this->getConfiguration()->authorizationModelId;
+
+        if (null === $modelId) {
+            throw new \Exception('Authorization model ID is required');
+        }
+
+        return trim($modelId);
     }
 }

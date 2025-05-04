@@ -4,24 +4,25 @@ require __DIR__ . '/vendor/autoload.php';
 
 use OpenFGA\API\Models\CreateStoreRequest;
 use OpenFGA\Client;
-use OpenFGA\SDK\Configuration\ClientConfiguration;
-use OpenFGA\SDK\Configuration\Credentials\ClientCredentialConfiguration;
+use OpenFGA\Configuration;
+use OpenFGA\Credentials\ClientCredential;
+use Dotenv\Dotenv;
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$credential = new ClientCredentialConfiguration(
+$credential = new ClientCredential(
     apiIssuer: $_ENV['FGA_API_TOKEN_ISSUER'] ?? null,
     apiAudience: $_ENV['FGA_API_AUDIENCE'] ?? null,
     clientId: $_ENV['FGA_CLIENT_ID'] ?? null,
     clientSecret: $_ENV['FGA_CLIENT_SECRET'] ?? null,
 );
 
-$configuration = new ClientConfiguration(
+$configuration = new Configuration(
     apiUrl: $_ENV['FGA_API_URL'] ?? null,
     storeId: $_ENV['FGA_STORE_ID'] ?? null,
     authorizationModelId: $_ENV['FGA_MODEL_ID'] ?? null,
-    credentialConfiguration: $credential,
+    // credential: $credential,
 );
 
 $client = new Client($configuration);
@@ -31,7 +32,7 @@ $client = new Client($configuration);
 // ]);
 
 // $response = $client->getAuthorizationModels();
-$response = $client->getAuthorizationModel();
+$response = $client->listStores();
 
 var_dump($response);
 exit;

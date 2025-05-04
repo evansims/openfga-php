@@ -16,7 +16,7 @@
   ],
   "homepage": "https://github.com/evanisms/openfga-php",
   "require": {
-    "php": "^8.4",
+    "php": "^8.3",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-openssl": "*",
@@ -27,6 +27,9 @@
     "psr/http-message-implementation": "^1"
   },
   "require-dev": {
+    "psr-mock/http-client-implementation": "^1",
+    "psr-mock/http-factory-implementation": "^1",
+    "psr-mock/http-message-implementation": "^1",
     "ergebnis/composer-normalize": "^2.44",
     "friendsofphp/php-cs-fixer": "^3.65",
     "mockery/mockery": "^1.6",
@@ -80,6 +83,9 @@
     "pest:unit": [
       "@putenv XDEBUG_MODE=coverage",
       "herd coverage vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
+    ],
+    "pest:debug": [
+      "herd coverage vendor/bin/pest --debug"
     ],
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",

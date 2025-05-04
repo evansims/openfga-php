@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA;
 
-use OpenFGA\SDK\Configuration\ClientConfigurationInterface;
-use OpenFGA\SDK\Credentials\CredentialManagerInterface;
+use OpenFGA\Authentication\AuthenticationInterface;
+use OpenFGA\Requests\RequestFactory;
 
 interface ClientInterface
 {
-    public function getConfiguration(): ClientConfigurationInterface;
+    public function getConfiguration(): ConfigurationInterface;
 
-    public function getCredentialManager(): CredentialManagerInterface;
+    public function getAuthentication(): AuthenticationInterface;
+
+    public function getRequestFactory(): RequestFactory;
 }
