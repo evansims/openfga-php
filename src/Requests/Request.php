@@ -1,0 +1,151 @@
+<?php
+
+declare(strict_types=1);
+
+namespace OpenFGA\Requests;
+
+use OpenFGA\RequestOptions\RequestOptionsInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
+
+enum RequestMethod: string {
+    case GET = 'GET';
+    case POST = 'POST';
+    case PUT = 'PUT';
+    case DELETE = 'DELETE';
+}
+
+final class Request
+{
+    private ?RequestInterface $request = null;
+    private ?ResponseInterface $response = null;
+
+    public function __construct(
+        private RequestFactory $factory,
+        private RequestOptionsInterface $options,
+        private RequestMethod $method,
+        private string $url,
+        private ?StreamInterface $body = null,
+        private array $headers = [],
+    ) {
+    }
+
+    public function getRequest(): RequestInterface
+    {
+        if ($this->request === null) {
+            $this->request = $this->build();
+        }
+
+        return $this->request;
+    }
+
+    public function getRequestOptions(): RequestOptionsInterface
+    {
+        return $this->options;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
+    }
+
+    public function getRequestHeaders(): array
+    {
+        return $this->headers;
+    }
+
+    public function getRequestBody(): ?StreamInterface
+    {
+        return $this->body;
+    }
+
+    public function getResponse(): ResponseInterface
+    {
+        return $this->response;
+    }
+
+    public function getResponseBody(): StreamInterface
+    {
+        return $this->response->getBody();
+    }
+
+    public function getResponseBodyJson(): array
+    {
+        return json_decode($this->getResponseBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+    }
+
+    public function get(): ResponseInterface
+    {
+        $this->send();
+
+        // TODO: Support auto-retry w/ jitter for throttled requests
+
+        return $this->response;
+    }
+
+    public function post(): ResponseInterface
+    {
+        $this->send();
+
+        // TODO: Support auto-retry w/ jitter for throttled requests
+
+        return $this->response;
+    }
+
+    public function put(): ResponseInterface
+    {
+        $this->send();
+
+        // TODO: Support auto-retry w/ jitter for throttled requests
+
+        return $this->response;
+    }
+
+    public function delete(): ResponseInterface
+    {
+        $this->send();
+
+        return $this->response;
+    }
+
+    public function build(): RequestInterface {
+        $requestFactory = $this->factory->getHttpRequestFactory();
+        $body = $this->getRequestBody();
+        $headers = $this->headers;
+        $url = $this->url;
+
+        $queryParameters = $this->options->getQueryParameters();
+
+        if (!empty($queryParameters)) {
+            $url = $url . '?' . http_build_query($queryParameters);
+        }
+
+        $request = $requestFactory->createRequest(
+            method: $this->method->value,
+            uri: $url,
+        );
+
+        foreach ($headers as $name => $value) {
+            $request = $request->withHeader($name, $value);
+        }
+
+        if ($body) {
+            $request = $request->withBody($body);
+        }
+
+        $this->request = $request;
+
+        return $request;
+    }
+
+    public function send(): ResponseInterface {
+        $this->request = $this->build();
+
+        $response = $this->factory->send($this->request);
+
+        $this->response = $response;
+
+        return $response;
+    }
+}

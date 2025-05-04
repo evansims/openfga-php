@@ -1,0 +1,29 @@
+<?php
+
+namespace OpenFGA\Models;
+
+interface TupleKeysInterface extends ModelCollectionInterface
+{
+    /**
+     * Add a tuple key to the collection.
+     *
+     * @param TupleKeyInterface $tupleKey
+     */
+    public function add(TupleKeyInterface $tupleKey): void;
+
+    /**
+     * Get the current tuple key in the collection.
+     *
+     * @return TupleKeyInterface
+     */
+    public function current(): TupleKeyInterface;
+
+    /**
+     * Get a tuple key by offset.
+     *
+     * @param mixed $offset
+     *
+     * @return TupleKeyInterface|null
+     */
+    public function offsetGet(mixed $offset): ?TupleKeyInterface;
+}
