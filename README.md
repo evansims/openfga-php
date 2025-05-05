@@ -1,6 +1,6 @@
 # OpenFGA PHP SDK
 
-An unofficial PHP SDK for [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https://auth0.com/fine-grained-authorization) built for high performance, strict typing, and wide interoperability.
+An unofficial PHP SDK for [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https://auth0.com/fine-grained-authorization), making high performance authorization in PHP applications easy.
 
 - [Requirements](#requirements)
 - [Installation](#installation)
