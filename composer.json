@@ -16,7 +16,7 @@
   ],
   "homepage": "https://github.com/evanisms/openfga-php",
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-openssl": "*",
