@@ -40,7 +40,11 @@ jobs:
       - if: matrix.php == '8.4' && !cancelled()
         name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - if: matrix.php == '8.4' && !cancelled()
         name: Upload test results to Codecov
         uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
