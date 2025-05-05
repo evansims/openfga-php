@@ -5,83 +5,8 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use InvalidArgumentException;
-use OpenFGA\Models\Model;
-use OpenFGA\Models\ModelCollection;
-use OpenFGA\Models\ModelInterface;
-
-class TestModel extends Model implements ModelInterface
-{
-    public function __construct(
-        public string $property1 = 'test1',
-        public int $property2 = 123
-    ) {}
-
-    public function toArray(): array
-    {
-        return [
-            'property1' => $this->property1,
-            'property2' => $this->property2,
-        ];
-    }
-
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            property1: $data['property1'] ?? 'default1',
-            property2: $data['property2'] ?? 0
-        );
-    }
-}
-
-class AnotherTestModel extends Model implements ModelInterface
-{
-    public function __construct(
-        public string $name = 'test'
-    ) {}
-
-    public function toArray(): array
-    {
-        return [
-            'name' => $this->name,
-        ];
-    }
-
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            name: $data['name'] ?? 'default'
-        );
-    }
-}
-
-class TestModelCollection extends ModelCollection
-{
-    public function add(ModelInterface $model): void
-    {
-        $this->models[] = $model;
-    }
-
-    public function current(): ModelInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function offsetGet(mixed $offset): ?ModelInterface
-    {
-        return $this->models[$offset] ?? null;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $collection = new self();
-
-        foreach ($data as $item) {
-            $collection->add(TestModel::fromArray($item));
-        }
-
-        return $collection;
-    }
-}
+use OpenFGA\Models\{Model, ModelCollection, ModelInterface};
+use OpenFGA\Tests\Models\{TestModel, TestModelCollection, AnotherTestModel};
 
 it('can create a concrete Model implementation', function () {
     $model = new TestModel('value1', 456);
