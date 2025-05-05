@@ -59,16 +59,13 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
-      - name: Install Psalm security plugin
-        run: composer require --dev vimeo/psalm-security-scanner:^1
+      - name: Psalm Security Scan
+        uses: psalm/psalm-github-security-scan@f3e6fd9432bc3e44aec078572677ce9d2ef9c287
 
-      - name: Run Psalm Security Scanner
-        run: vendor/bin/psalm-security-scanner --output=security-results.sarif
-
-      - name: Upload SARIF file
+      - name: Upload Security Analysis results to GitHub
         uses: github/codeql-action/upload-sarif@60168efe1c415ce0f5521ea06d5c2062adbeed1b # v3.28.17
         with:
-          sarif_file: security-results.sarif
+          sarif_file: results.sarif
           category: psalm-security
 
   php-security-checker:
