@@ -13,11 +13,18 @@ final class WriteAssertionsResponse extends Response
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
         return new self();

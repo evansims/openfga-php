@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use Exception;
-use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnauthenticatedException, ApiValidationException};
+use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnuthenticatedException, ApiValidationException};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 abstract class Response implements ResponseInterface
 {
+    /**
+     * @return array<string, mixed>
+     */
     final public function jsonSerialize(): array
     {
         return $this->toArray();
@@ -41,7 +44,7 @@ abstract class Response implements ResponseInterface
         }
 
         if (401 === $response->getStatusCode()) {
-            throw new ApiUnauthenticatedException($error);
+            throw new ApiUnuthenticatedException($error);
         }
 
         if (403 === $response->getStatusCode()) {
