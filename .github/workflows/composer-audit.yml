@@ -1,0 +1,36 @@
+name: Composer Security Audit
+
+on:
+  push:
+    paths:
+      - 'composer.lock'
+      - '.github/workflows/composer-audit.yml'
+  pull_request:
+    paths:
+      - 'composer.lock'
+  schedule:
+    - cron: '0 9 * * 3'  # Run weekly on Wednesdays at 9 AM UTC
+
+jobs:
+  audit:
+    name: Composer Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run security audit
+        run: composer audit

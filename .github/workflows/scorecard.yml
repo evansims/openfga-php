@@ -1,0 +1,49 @@
+name: Scorecard Analysis
+on:
+  # For Branch-Protection check. Only the default branch is supported.
+  branch_protection_rule:
+  # To guarantee Maintained check is occasionally run.
+  schedule:
+    - cron: '20 7 * * 2'
+  push:
+    branches: [ "main" ]
+
+# Declare permissions for all security tools
+permissions:
+  contents: read
+  security-events: write
+  id-token: write # Required for GitHub OIDC Token **
+
+jobs:
+  analysis:
+    name: Scorecard
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: "Run analysis"
+        uses: ossf/scorecard-action@v2.3.1
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          # (Optional) Read-only PAT token. Uncomment to upload results to the Security tab.
+          # repo_token: ${{ secrets.SCORECARD_TOKEN }}
+          # Publish the results to enable scorecard badges. For more details, see
+          # https://github.com/ossf/scorecard-action#publishing-results.
+          publish_results: true
+
+      - name: "Upload artifact"
+        uses: actions/upload-artifact@v4
+        with:
+          name: SARIF file
+          path: results.sarif
+          retention-days: 5
+          
+      - name: "Upload to code-scanning"
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: results.sarif
