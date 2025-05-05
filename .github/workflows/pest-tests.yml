@@ -1,0 +1,42 @@
+name: PEST Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  tests:
+    name: Run PEST Unit Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ["8.1", "8.2", "8.3", "8.4"]
+        dependency-version: [prefer-stable]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, fileinfo
+          ini-values: error_reporting=E_ALL
+          coverage: xdebug
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
+
+      - name: Execute PEST tests
+        run: vendor/bin/pest --coverage --colors=always --strict-global-state --fail-on-risky --fail-on-warning
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
+          verbose: true
