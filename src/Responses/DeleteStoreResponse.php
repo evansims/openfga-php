@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 final class DeleteStoreResponse extends Response
@@ -30,6 +31,6 @@ final class DeleteStoreResponse extends Response
 
         Response::handleResponseException($response);
 
-        throw new \Exception('DELETE /stores failed');
+        throw new ApiUnexpectedResponseException('');
     }
 }

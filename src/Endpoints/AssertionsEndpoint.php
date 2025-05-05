@@ -15,7 +15,7 @@ trait AssertionsEndpoint
     public ?ResponseInterface $lastResponse = null;
 
     /**
-     * Read assertions for the specified authorization model.
+     * Retrieves assertions for the specified authorization model.
      *
      * This function sends a GET request to the /stores/{store_id}/assertions/{authorization_model_id} endpoint
      * to retrieve assertions for a given authorization model ID. It returns a ReadAssertionsResponse object.
@@ -49,7 +49,7 @@ trait AssertionsEndpoint
     }
 
     /**
-     * Write assertions for the specified authorization model.
+     * Upserts assertions for the specified authorization model.
      *
      * This function sends a PUT request to the /stores/{store_id}/assertions/{authorization_model_id} endpoint
      * to upsert assertions for a given authorization model ID. It returns a WriteAssertionsResponse object.

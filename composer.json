@@ -85,7 +85,8 @@
       "herd coverage vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
     ],
     "pest:debug": [
-      "herd coverage vendor/bin/pest --debug"
+      "@putenv XDEBUG_MODE=coverage",
+      "herd coverage vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage"
     ],
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",

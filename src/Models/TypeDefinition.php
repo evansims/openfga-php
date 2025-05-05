@@ -46,7 +46,7 @@ final class TypeDefinition extends Model implements TypeDefinitionInterface
         return new self(
             type: $data['type'],
             relations: $relations ?? null,
-            metadata: $data['metadata'] ? Metadata::fromArray($data['metadata']) : null,
+            metadata: isset($data['metadata']) ? Metadata::fromArray($data['metadata']) : null,
         );
     }
 }

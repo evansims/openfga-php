@@ -4,27 +4,28 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\Store;
 use Exception;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 
-final class GetStoreResponse extends Response implements ResponseInterface
+final class CreateAuthorizationModelResponse extends Response
 {
     public function __construct(
-        public Store $store,
+        public string $authorizationModelId,
     ) {
     }
 
     public function toArray(): array
     {
-        return $this->store->toArray();
+        return [
+            'authorization_model_id' => $this->authorizationModelId,
+        ];
     }
 
     public static function fromArray(array $data): static
     {
         return new static(
-            store: Store::fromArray($data),
+            authorizationModelId: $data['authorization_model_id'],
         );
     }
 
@@ -38,9 +39,9 @@ final class GetStoreResponse extends Response implements ResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if ($response->getStatusCode() === 200) {
+        if ($response->getStatusCode() === 201) {
             return new static(
-                store: Store::fromArray($data),
+                authorizationModelId: $data['authorization_model_id'],
             );
         }
 

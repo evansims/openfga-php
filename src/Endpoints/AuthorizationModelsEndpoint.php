@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Endpoints;
 
-use OpenFGA\RequestOptions\{GetAuthorizationModelsOptions, GetAuthorizationModelOptions, CreateAuthorizationModelOptions};
-use OpenFGA\Requests\Request;
+use OpenFGA\RequestOptions\{ListAuthorizationModelsOptions, GetAuthorizationModelOptions, CreateAuthorizationModelOptions};
+use OpenFGA\Responses\{ListAuthorizationModelsResponse, GetAuthorizationModelResponse, CreateAuthorizationModelResponse};
+use OpenFGA\Models\{TypeDefinitionsInterface, ConditionsInterface};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 trait AuthorizationModelsEndpoint
@@ -13,12 +14,12 @@ trait AuthorizationModelsEndpoint
     public ?RequestInterface $lastRequest = null;
     public ?ResponseInterface $lastResponse = null;
 
-    final public function getAuthorizationModels(
+    final public function listAuthorizationModels(
         ?string $storeId = null,
-        ?GetAuthorizationModelsOptions $options = null,
-    ): ReadAuthorizationModelsResponse
+        ?ListAuthorizationModelsOptions $options = null,
+    ): ListAuthorizationModelsResponse
     {
-        $options ??= new GetAuthorizationModelsOptions();
+        $options ??= new ListAuthorizationModelsOptions();
         $storeId = $this->getStoreId($storeId);
 
         $request = $this->getRequestFactory()->get(
@@ -30,70 +31,58 @@ trait AuthorizationModelsEndpoint
         $this->lastRequest = $request->getRequest();
         $this->lastResponse = $request->send();
 
-        return ReadAuthorizationModelsResponse::fromResponse($this->lastResponse);
+        return ListAuthorizationModelsResponse::fromResponse($this->lastResponse);
     }
 
     final public function getAuthorizationModel(
         ?string $storeId = null,
         ?string $id = null,
         ?GetAuthorizationModelOptions $options = null,
-    ): ReadAuthorizationModelResponse
+    ): GetAuthorizationModelResponse
     {
         $options ??= new GetAuthorizationModelOptions();
         $storeId = $this->getStoreId($storeId);
         $id = $this->getAuthorizationModelId($id);
 
-        $api = new Request(
-            client: $this,
+        $request = $this->getRequestFactory()->get(
+            url: $this->getRequestFactory()->getEndpointUrl('/stores/' . $storeId . '/authorization-models/' . $id),
             options: $options,
-            endpoint: '/stores/' . $storeId . '/authorization-models/' . $id,
+            headers: $this->getRequestFactory()->getEndpointHeaders(),
         );
 
-        $this->lastRequest = $api->getRequest();
+        $this->lastRequest = $request->getRequest();
+        $this->lastResponse = $request->send();
 
-        $response = $api->get();
-
-        $this->lastResponse = $response;
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception('Failed to get authorization model');
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new ReadAuthorizationModelResponse($json);
+        return GetAuthorizationModelResponse::fromResponse($this->lastResponse);
     }
 
     final public function createAuthorizationModel(
-        WriteAuthorizationModelRequest $request,
+        TypeDefinitionsInterface $typeDefinitions,
+        ConditionsInterface $conditions,
+        string $schemaVersion = '1.1',
         ?string $storeId = null,
         ?CreateAuthorizationModelOptions $options = null,
-    ): WriteAuthorizationModelResponse
+    ): CreateAuthorizationModelResponse
     {
+        $options ??= new CreateAuthorizationModelOptions();
         $storeId = $this->getStoreId($storeId);
 
-        if (null === $options) {
-            $options = new CreateAuthorizationModelOptions();
-        }
+        $body = $this->getRequestFactory()->getHttpStreamFactory()->createStream(json_encode([
+            'type_definitions' => $typeDefinitions->toArray(),
+            'conditions' => $conditions->toArray(),
+            'schema_version' => $schemaVersion,
+        ]));
 
-        $api = new Request(
-            client: $this,
+        $request = $this->getRequestFactory()->post(
+            url: $this->getRequestFactory()->getEndpointUrl('/stores/' . $storeId . '/authorization-models'),
             options: $options,
-            endpoint: '/stores/' . $storeId . '/authorization-models',
+            body: $body,
+            headers: $this->getRequestFactory()->getEndpointHeaders(),
         );
 
-        $this->lastRequest = $api->getRequest();
+        $this->lastRequest = $request->getRequest();
+        $this->lastResponse = $request->send();
 
-        $response = $api->post();
-
-        $this->lastResponse = $response;
-
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception('Failed to get authorization models');
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new WriteAuthorizationModelResponse($json);
+        return CreateAuthorizationModelResponse::fromResponse($this->lastResponse);
     }
 }

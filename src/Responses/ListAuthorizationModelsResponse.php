@@ -6,30 +6,30 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\Assertions;
+use OpenFGA\Models\AuthorizationModels;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-final class ReadAuthorizationModelResponse extends Response
+final class ListAuthorizationModelsResponse extends Response
 {
     public function __construct(
-        public Assertions $assertions,
-        public string $authorizationModelId,
+        public AuthorizationModels $authorizationModels,
+        public ?string $continuationToken = null,
     ) {
     }
 
     public function toArray(): array
     {
         return [
-            'assertions' => $this->assertions->toArray(),
-            'authorization_model_id' => $this->authorizationModelId,
+            'authorization_models' => $this->authorizationModels->toArray(),
+            'continuation_token' => $this->continuationToken,
         ];
     }
 
     public static function fromArray(array $data): static
     {
         return new static(
-            assertions: Assertions::fromArray($data['assertions']),
-            authorizationModelId: $data['authorization_model_id'],
+            authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
+            continuationToken: $data['continuation_token'] ?? null,
         );
     }
 
@@ -45,13 +45,13 @@ final class ReadAuthorizationModelResponse extends Response
 
         if ($response->getStatusCode() === 200) {
             return new static(
-                assertions: Assertions::fromArray($data['assertions']),
-                authorizationModelId: $data['authorization_model_id'],
+                authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
+                continuationToken: $data['continuation_token'] ?? null,
             );
         }
 
         Response::handleResponseException($response);
 
-        throw new Exception("GET /stores failed");
+        throw new ApiUnexpectedResponseException($json);
     }
 }

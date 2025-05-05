@@ -64,6 +64,6 @@ final class CreateStoreResponse extends Response
 
         Response::handleResponseException($response);
 
-        throw new \Exception('POST /stores failed');
+        throw new ApiUnexpectedResponseException($json);
     }
 }

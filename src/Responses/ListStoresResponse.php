@@ -52,6 +52,6 @@ final class ListStoresResponse extends Response
 
         Response::handleResponseException($response);
 
-        throw new Exception("GET /stores failed");
+        throw new ApiUnexpectedResponseException($json);
     }
 }
