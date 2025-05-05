@@ -37,7 +37,7 @@
     "phpstan/phpstan": "^2",
     "phpstan/phpstan-strict-rules": "^2",
     "rector/rector": "^2.0@RC",
-    "symfony/cache": "^4 || ^5 || ^6 || 7",
+    "symfony/cache": "^4 || ^5 || ^6 || ^7",
     "symfony/event-dispatcher": "^4 || ^5 || ^6 || ^7",
     "wikimedia/composer-merge-plugin": "^2.1"
   },
