@@ -1,0 +1,75 @@
+grumphp:
+  tasks:
+    # ant: ~
+    # atoum: ~
+    # behat: ~
+    # brunch: ~
+    # clover_coverage: ~
+    # codeception: ~
+    # composer: ~
+    # composer_normalize: ~
+    # composer_require_checker: ~
+    # composer_script: ~
+    # deptrac: ~
+    # doctrine_orm: ~
+    # ecs: ~
+    # eslint: ~
+    # file_size: ~
+    # gherkin: ~
+    # git_blacklist: ~
+    # git_branch_name: ~
+    git_commit_message:
+      allow_empty_message: false
+      enforce_capitalized_subject: false
+      enforce_no_subject_punctuations: false
+      enforce_no_subject_trailing_period: true
+      enforce_single_lined_subject: true
+      type_scope_conventions: []
+      skip_on_merge_commit: true
+      max_body_width: 72
+      max_subject_width: 60
+      case_insensitive: true
+      multiline: true
+      additional_modifiers: ""
+    # grunt: ~
+    # gulp: ~
+    # infection: ~
+    # jsonlint: ~
+    # kahlan: ~
+    # make: ~
+    # npm_script: ~
+    # paratest: ~
+    pest:
+      testsuite: Unit
+    # phan: ~
+    # phing: ~
+    # php7cc: ~
+    # phpcpd: ~
+    # phpcs: ~
+    phpcsfixer: ~
+    # phplint: ~
+    # phpmd: ~
+    # phpmnd: ~
+    # phpparser: ~
+    # phpspec: ~
+    # phpstan: ~
+    # phpunit: ~
+    # phpunitbridge: ~
+    phpversion: ~
+    # progpilot: ~
+    psalm: ~
+    rector: ~
+    # robo: ~
+    # securitychecker_composeraudit: ~
+    # securitychecker_enlightn: ~
+    # securitychecker_local: ~
+    # securitychecker_roave: ~
+    # securitychecker_symfony: ~
+    # shell: ~
+    # stylelint: ~
+    # symfony_console: ~
+    # tester: ~
+    # twigcs: ~
+    # twigcsfixer: ~
+    xmllint: ~
+    yamllint: ~
