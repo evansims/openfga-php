@@ -1,0 +1,38 @@
+name: Pin GitHub Actions
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+  schedule:
+    - cron: '0 0 * * 0'  # Run weekly on Sundays at midnight UTC
+  workflow_dispatch:
+
+jobs:
+  pin-actions:
+    name: Pin GitHub Actions to Commit Hash
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          fetch-depth: 0
+
+      - name: Pin GitHub Action versions
+        uses: mheap/pin-github-action@958c7aff79dd9a0939688017a04e405bf86c2a7a # v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: pin GitHub Action dependencies to commit hashes"
+          # Create a PR rather than pushing directly to the branch
+          create-pull-request: ${{ github.event_name != 'pull_request' }}
+          # Only commit when there are changes to make
+          commit-if-changed: true
