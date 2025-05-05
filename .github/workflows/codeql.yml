@@ -2,11 +2,11 @@ name: "CodeQL Security Analysis"
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
-    - cron: '0 9 * * 1'  # Run weekly on Mondays at 9 AM UTC
+    - cron: "0 9 * * 1" # Run weekly on Mondays at 9 AM UTC
 
 jobs:
   analyze:
@@ -20,28 +20,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'php' ]
+        language: ["php"]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: ${{ matrix.language }}
-        queries: security-extended
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
 
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3'
-        coverage: none
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
 
-    - name: Install Dependencies
-      run: composer install --no-dev --no-interaction --prefer-dist
+      - name: Install Dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
-      with:
-        category: "/language:${{matrix.language}}"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{matrix.language}}"
