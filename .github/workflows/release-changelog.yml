@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
 
       - name: Generate changelog
-        uses: metcalfc/changelog-generator@v4.1.0
+        uses: metcalfc/changelog-generator@v4.6.2
         with:
           mytoken: ${{ secrets.GITHUB_TOKEN }}
 
