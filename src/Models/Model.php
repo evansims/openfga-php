@@ -6,12 +6,12 @@ namespace OpenFGA\Models;
 
 abstract class Model implements ModelInterface
 {
-    abstract public function toArray(): array;
-
-    abstract public static function fromArray(array $data): self;
-
-    public function jsonSerialize(): array
+    final public function jsonSerialize(): array
     {
         return $this->toArray();
     }
+
+    abstract public function toArray(): array;
+
+    abstract public static function fromArray(array $data): self;
 }

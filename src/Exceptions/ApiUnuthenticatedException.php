@@ -1,9 +1,14 @@
 <?php
+
+declare(strict_types=1);
+
 namespace OpenFGA\Exceptions;
 
 use Exception;
 
-final class ApiUnauthenticatedException extends Exception
+use function sprintf;
+
+final class ApiUnuthenticatedException extends Exception
 {
     public const string EXCEPTION_MESSAGE = 'API request failed (unauthenticated): %s';
 

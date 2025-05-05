@@ -6,16 +6,27 @@ namespace OpenFGA\Models;
 
 enum TypeName: string
 {
-    case UNSPECIFIED = 'TYPE_NAME_UNSPECIFIED';
     case ANY = 'TYPE_NAME_ANY';
+
     case BOOL = 'TYPE_NAME_BOOL';
-    case STRING = 'TYPE_NAME_STRING';
-    case INT = 'TYPE_NAME_INT';
-    case UINT = 'TYPE_NAME_UINT';
+
     case DOUBLE = 'TYPE_NAME_DOUBLE';
+
     case DURATION = 'TYPE_NAME_DURATION';
-    case TIMESTAMP = 'TYPE_NAME_TIMESTAMP';
-    case MAP = 'TYPE_NAME_MAP';
-    case LIST = 'TYPE_NAME_LIST';
+
+    case INT = 'TYPE_NAME_INT';
+
     case IPADDRESS = 'TYPE_NAME_IPADDRESS';
+
+    case LIST = 'TYPE_NAME_LIST';
+
+    case MAP = 'TYPE_NAME_MAP';
+
+    case STRING = 'TYPE_NAME_STRING';
+
+    case TIMESTAMP = 'TYPE_NAME_TIMESTAMP';
+
+    case UINT = 'TYPE_NAME_UINT';
+
+    case UNSPECIFIED = 'TYPE_NAME_UNSPECIFIED';
 }

@@ -17,11 +17,8 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
     ) {
     }
 
-    public function getAuthorizationHeader(): ?string {
-        return 'Bearer ' . (string)$this->getAccessToken();
-    }
-
-    public function getAccessToken(): AccessToken {
+    public function getAccessToken(): AccessToken
+    {
         if ($this->accessToken && ! $this->accessToken->isExpired()) {
             return $this->accessToken;
         }
@@ -68,7 +65,7 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
             throw new Exception('API response parsing failed');
         }
 
-        if (!isset($response['access_token']) || !isset($response['expires_in'])) {
+        if (! isset($response['access_token']) || ! isset($response['expires_in'])) {
             throw new Exception('API response missing expected fields');
         }
 
@@ -79,5 +76,10 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
             expires: time() + $response['expires_in'],
             scope: $response['scope'] ?? null,
         );
+    }
+
+    public function getAuthorizationHeader(): ?string
+    {
+        return 'Bearer ' . (string) $this->getAccessToken();
     }
 }

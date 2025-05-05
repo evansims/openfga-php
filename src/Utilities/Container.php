@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace OpenFGA\Utilities;
 
 use OpenFGA\Exceptions\Containers\ServiceNotFoundException;
@@ -10,7 +13,7 @@ final class Container implements ContainerInterface
      * @param array<string,mixed> $services
      */
     public function __construct(
-        private array $services = []
+        private array $services = [],
     ) {
     }
 
@@ -23,17 +26,13 @@ final class Container implements ContainerInterface
         throw new ServiceNotFoundException();
     }
 
+    public function has(string $id): bool
+    {
+        return (bool) (isset($this->services[$id]));
+    }
+
     public function set(string $id, mixed $data): void
     {
         $this->services[$id] = $data;
-    }
-
-    public function has(string $id): bool
-    {
-        if (isset($this->services[$id])) {
-            return true;
-        }
-
-        return false;
     }
 }

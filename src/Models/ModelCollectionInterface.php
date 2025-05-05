@@ -1,18 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
-use Iterator;
 use ArrayAccess;
 use Countable;
+use Iterator;
 
-interface ModelCollectionInterface extends ModelInterface, Iterator, ArrayAccess, Countable
+interface ModelCollectionInterface extends ArrayAccess, Countable, Iterator, ModelInterface
 {
-    public function rewind(): void;
+    public function count(): int;
 
-    public function valid(): bool;
-
-    public function key(): string|int;
+    public function key(): string | int;
 
     public function next(): void;
 
@@ -22,5 +22,7 @@ interface ModelCollectionInterface extends ModelInterface, Iterator, ArrayAccess
 
     public function offsetUnset(mixed $offset): void;
 
-    public function count(): int;
+    public function rewind(): void;
+
+    public function valid(): bool;
 }

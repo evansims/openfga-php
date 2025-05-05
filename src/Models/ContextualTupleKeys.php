@@ -6,19 +6,23 @@ namespace OpenFGA\Models;
 
 final class ContextualTupleKeys extends ModelCollection implements ContextualTupleKeysInterface
 {
-    public function add(ContextualTupleKeyInterface $tupleKey): void {
+    public function add(ContextualTupleKeyInterface $tupleKey): void
+    {
         $this->models[] = $tupleKey;
     }
 
-    public function current(): ContextualTupleKeyInterface {
+    public function current(): ContextualTupleKeyInterface
+    {
         return $this->models[$this->key()];
     }
 
-    public function offsetGet(mixed $offset): ?ContextualTupleKeyInterface {
+    public function offsetGet(mixed $offset): ?ContextualTupleKeyInterface
+    {
         return $this->models[$offset] ?? null;
     }
 
-    public static function fromArray(array $data): self {
+    public static function fromArray(array $data): self
+    {
         $collection = new self();
 
         foreach ($data as $model) {

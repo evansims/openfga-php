@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface TupleKeysInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface TupleKeysInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return TupleKeyInterface|null
+     * @return null|TupleKeyInterface
      */
     public function offsetGet(mixed $offset): ?TupleKeyInterface;
 }

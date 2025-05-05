@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\Store;
 use Exception;
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
+use OpenFGA\Models\Store;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 final class GetStoreResponse extends Response implements ResponseInterface
 {
@@ -23,7 +23,7 @@ final class GetStoreResponse extends Response implements ResponseInterface
 
     public static function fromArray(array $data): static
     {
-        return new static(
+        return new self(
             store: Store::fromArray($data),
         );
     }
@@ -38,7 +38,7 @@ final class GetStoreResponse extends Response implements ResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if ($response->getStatusCode() === 200) {
+        if (200 === $response->getStatusCode()) {
             return new static(
                 store: Store::fromArray($data),
             );

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface AssertionsInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface AssertionsInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return AssertionInterface|null
+     * @return null|AssertionInterface
      */
     public function offsetGet(mixed $offset): ?AssertionInterface;
 }

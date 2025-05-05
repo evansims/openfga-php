@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface TypeDefinitionsInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface TypeDefinitionsInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return TypeDefinitionInterface|null
+     * @return null|TypeDefinitionInterface
      */
     public function offsetGet(mixed $offset): ?TypeDefinitionInterface;
 }

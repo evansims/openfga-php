@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace OpenFGA\Endpoints;
 
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
+use OpenFGA\Models\{Assertions};
 use OpenFGA\RequestOptions\{ReadAssertionsOptions, WriteAssertionsOptions};
 use OpenFGA\Responses\{ReadAssertionsResponse, WriteAssertionsResponse};
-use OpenFGA\Models\{Assertions};
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 trait AssertionsEndpoint
 {
     public ?RequestInterface $lastRequest = null;
+
     public ?ResponseInterface $lastResponse = null;
 
     /**
@@ -20,9 +21,9 @@ trait AssertionsEndpoint
      * This function sends a GET request to the /stores/{store_id}/assertions/{authorization_model_id} endpoint
      * to retrieve assertions for a given authorization model ID. It returns a ReadAssertionsResponse object.
      *
-     * @param string|null $authorizationModelId The authorization model ID. Uses the default authorization model ID if null.
-     * @param string|null $storeId The store ID. Uses the default store ID if null.
-     * @param ReadAssertionsOptions|null $options Optional request options such as page size and continuation token.
+     * @param null|string                $authorizationModelId The authorization model ID. Uses the default authorization model ID if null.
+     * @param null|string                $storeId              The store ID. Uses the default store ID if null.
+     * @param null|ReadAssertionsOptions $options              Optional request options such as page size and continuation token.
      *
      * @return ReadAssertionsResponse The response containing the assertions.
      */
@@ -30,8 +31,7 @@ trait AssertionsEndpoint
         ?string $authorizationModelId = null,
         ?string $storeId = null,
         ?ReadAssertionsOptions $options = null,
-    ): ReadAssertionsResponse
-    {
+    ): ReadAssertionsResponse {
         $options ??= new ReadAssertionsOptions();
         $storeId = $this->getStoreId($storeId);
         $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
@@ -54,10 +54,10 @@ trait AssertionsEndpoint
      * This function sends a PUT request to the /stores/{store_id}/assertions/{authorization_model_id} endpoint
      * to upsert assertions for a given authorization model ID. It returns a WriteAssertionsResponse object.
      *
-     * @param Assertions $assertions The assertions to write.
-     * @param string|null $authorizationModelId The authorization model ID. Uses the default authorization model ID if null.
-     * @param string|null $storeId The store ID. Uses the default store ID if null.
-     * @param WriteAssertionsOptions|null $options Optional request options.
+     * @param Assertions                  $assertions           The assertions to write.
+     * @param null|string                 $authorizationModelId The authorization model ID. Uses the default authorization model ID if null.
+     * @param null|string                 $storeId              The store ID. Uses the default store ID if null.
+     * @param null|WriteAssertionsOptions $options              Optional request options.
      *
      * @return WriteAssertionsResponse The response indicating the write outcome.
      */
@@ -66,8 +66,7 @@ trait AssertionsEndpoint
         ?string $authorizationModelId = null,
         ?string $storeId = null,
         ?WriteAssertionsOptions $options = null,
-    ): WriteAssertionsResponse
-    {
+    ): WriteAssertionsResponse {
         $options ??= new WriteAssertionsOptions();
         $storeId = $this->getStoreId($storeId);
         $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);

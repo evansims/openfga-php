@@ -23,7 +23,7 @@ final class ConditionMetadata extends Model implements ConditionMetadataInterfac
     public static function fromArray(array $data): self
     {
         $module = $data['module'] ?? null;
-        $module = $module ? (string)$module : null;
+        $module = $module ? (string) $module : null;
 
         $sourceInfo = $data['source_info'] ?? null;
         $sourceInfo = $sourceInfo ? SourceInfo::fromArray($sourceInfo) : null;

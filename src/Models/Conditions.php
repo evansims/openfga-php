@@ -6,19 +6,23 @@ namespace OpenFGA\Models;
 
 final class Conditions extends ModelCollection implements ConditionsInterface
 {
-    public function add(ConditionInterface $condition): void {
+    public function add(ConditionInterface $condition): void
+    {
         $this->models[] = $condition;
     }
 
-    public function current(): ConditionInterface {
+    public function current(): ConditionInterface
+    {
         return $this->models[$this->key()];
     }
 
-    public function offsetGet(mixed $offset): ?ConditionInterface {
+    public function offsetGet(mixed $offset): ?ConditionInterface
+    {
         return $this->models[$offset] ?? null;
     }
 
-    public static function fromArray(array $data): self {
+    public static function fromArray(array $data): self
+    {
         $collection = new self();
 
         foreach ($data as $model) {

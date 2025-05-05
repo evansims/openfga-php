@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface StoresInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface StoresInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return StoreInterface|null
+     * @return null|StoreInterface
      */
     public function offsetGet(mixed $offset): ?StoreInterface;
 }

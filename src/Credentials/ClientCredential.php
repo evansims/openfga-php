@@ -18,14 +18,14 @@ final class ClientCredential extends Credential implements ClientCredentialInter
     ) {
     }
 
-    public function getApiIssuer(): ?string
-    {
-        return $this->apiIssuer;
-    }
-
     public function getApiAudience(): ?string
     {
         return $this->apiAudience;
+    }
+
+    public function getApiIssuer(): ?string
+    {
+        return $this->apiIssuer;
     }
 
     public function getClientId(): ?string

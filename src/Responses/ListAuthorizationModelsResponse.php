@@ -27,7 +27,7 @@ final class ListAuthorizationModelsResponse extends Response
 
     public static function fromArray(array $data): static
     {
-        return new static(
+        return new self(
             authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
             continuationToken: $data['continuation_token'] ?? null,
         );
@@ -43,7 +43,7 @@ final class ListAuthorizationModelsResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if ($response->getStatusCode() === 200) {
+        if (200 === $response->getStatusCode()) {
             return new static(
                 authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
                 continuationToken: $data['continuation_token'] ?? null,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Endpoints;
 
+use Exception;
 use OpenFGA\API\Models\{ReadChangesResponse, ReadRequest, ReadResponse, WriteRequest};
 use OpenFGA\API\Options\{ReadChangesOptions, ReadOptions, WriteOptions};
 use OpenFGA\API\Request;
@@ -12,9 +13,10 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 trait RelationshipTuplesEndpoint
 {
     public ?RequestInterface $lastRequest = null;
+
     public ?ResponseInterface $lastResponse = null;
 
-    final public function read(ReadRequest $request, ?string $storeId = null,?ReadOptions $options = null): ReadResponse
+    final public function read(ReadRequest $request, ?string $storeId = null, ?ReadOptions $options = null): ReadResponse
     {
         $storeId ??= $this->getConfiguration()->getStoreId();
 
@@ -34,8 +36,8 @@ trait RelationshipTuplesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("POST /stores/{$storeId}/read failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("POST /stores/{$storeId}/read failed");
         }
 
         $json = $api->getResponseBodyJson();
@@ -43,7 +45,7 @@ trait RelationshipTuplesEndpoint
         return new ReadResponse($json);
     }
 
-    final public function readChanges(?string $storeId = null,?ReadChangesOptions $options = null): ReadChangesResponse
+    final public function readChanges(?string $storeId = null, ?ReadChangesOptions $options = null): ReadChangesResponse
     {
         $storeId ??= $this->getConfiguration()->getStoreId();
 
@@ -63,8 +65,8 @@ trait RelationshipTuplesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("GET /stores/{$storeId}/changes failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("GET /stores/{$storeId}/changes failed");
         }
 
         $json = $api->getResponseBodyJson();
@@ -72,7 +74,7 @@ trait RelationshipTuplesEndpoint
         return new ReadChangesResponse($json);
     }
 
-    final public function write(WriteRequest $request, ?string $storeId = null,?WriteOptions $options = null): void
+    final public function write(WriteRequest $request, ?string $storeId = null, ?WriteOptions $options = null): void
     {
         $storeId ??= $this->getConfiguration()->getStoreId();
 
@@ -92,10 +94,9 @@ trait RelationshipTuplesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("POST /stores/{$storeId}/write failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("POST /stores/{$storeId}/write failed");
         }
 
-        return;
     }
 }

@@ -4,24 +4,24 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use Exception;
 use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnauthenticatedException, ApiValidationException};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
-use Exception;
 
 abstract class Response implements ResponseInterface
 {
+    final public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
     abstract public function toArray(): array;
 
     abstract public static function fromArray(array $data): static;
 
     abstract public static function fromResponse(HttpResponseInterface $response): static;
 
-    public function jsonSerialize(): array
-    {
-        return $this->toArray();
-    }
-
-    public static function handleResponseException(HttpResponseInterface $response): void
+    final public static function handleResponseException(HttpResponseInterface $response): void
     {
         $error = '';
 
@@ -30,37 +30,37 @@ abstract class Response implements ResponseInterface
         } catch (Exception) {
         }
 
-        if ($error === '') {
+        if ('' === $error) {
             $error = 'Unknown error';
         }
 
         $error = json_encode($error, JSON_THROW_ON_ERROR);
 
-        if ($response->getStatusCode() === 400) {
+        if (400 === $response->getStatusCode()) {
             throw new ApiValidationException($error);
         }
 
-        if ($response->getStatusCode() === 401) {
+        if (401 === $response->getStatusCode()) {
             throw new ApiUnauthenticatedException($error);
         }
 
-        if ($response->getStatusCode() === 403) {
+        if (403 === $response->getStatusCode()) {
             throw new ApiForbiddenException($error);
         }
 
-        if ($response->getStatusCode() === 404) {
+        if (404 === $response->getStatusCode()) {
             throw new ApiEndpointException($error);
         }
 
-        if ($response->getStatusCode() === 409) {
+        if (409 === $response->getStatusCode()) {
             throw new ApiTransactionException($error);
         }
 
-        if ($response->getStatusCode() === 422) {
+        if (422 === $response->getStatusCode()) {
             throw new ApiTimeoutException($error);
         }
 
-        if ($response->getStatusCode() === 500) {
+        if (500 === $response->getStatusCode()) {
             throw new ApiInternalServerException($error);
         }
     }

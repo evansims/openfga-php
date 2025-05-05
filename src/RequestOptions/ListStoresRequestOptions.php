@@ -16,11 +16,11 @@ final class ListStoresRequestOptions extends RequestOptions
     {
         $params = [];
 
-        if ($this->continuationToken !== null) {
+        if (null !== $this->continuationToken) {
             $params['continuation_token'] = $this->continuationToken;
         }
 
-        if ($this->pageSize !== null) {
+        if (null !== $this->pageSize) {
             $params['page_size'] = $this->pageSize;
         }
 

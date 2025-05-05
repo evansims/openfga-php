@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface AuthorizationModelsInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface AuthorizationModelsInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return AuthorizationModelInterface|null
+     * @return null|AuthorizationModelInterface
      */
     public function offsetGet(mixed $offset): ?AuthorizationModelInterface;
 }

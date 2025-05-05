@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use Exception;
+use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\AuthorizationModel;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
-use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 
 final class GetAuthorizationModelResponse extends Response implements ResponseInterface
 {
@@ -23,7 +23,7 @@ final class GetAuthorizationModelResponse extends Response implements ResponseIn
 
     public static function fromArray(array $data): static
     {
-        return new static(
+        return new self(
             authorizationModel: AuthorizationModel::fromArray($data),
         );
     }
@@ -38,7 +38,7 @@ final class GetAuthorizationModelResponse extends Response implements ResponseIn
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if ($response->getStatusCode() === 200 && isset($data['authorization_model'])) {
+        if (200 === $response->getStatusCode() && isset($data['authorization_model'])) {
             return new static(
                 authorizationModel: AuthorizationModel::fromArray($data['authorization_model']),
             );

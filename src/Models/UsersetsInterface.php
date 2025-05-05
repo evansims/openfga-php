@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface UsersetsInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface UsersetsInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return UsersetInterface|null
+     * @return null|UsersetInterface
      */
     public function offsetGet(mixed $offset): ?UsersetInterface;
 }

@@ -20,12 +20,12 @@ final class WriteAssertionsResponse extends Response
 
     public static function fromArray(array $data): static
     {
-        return new static();
+        return new self();
     }
 
     public static function fromResponse(HttpResponseInterface $response): static
     {
-        if ($response->getStatusCode() === 204) {
+        if (204 === $response->getStatusCode()) {
             return new static();
         }
 

@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use DateTime;
+use DateTimeImmutable;
 use Exception;
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
+use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 final class CreateStoreResponse extends Response
 {
     public function __construct(
         public string $id,
         public string $name,
-        public DateTime $createdAt,
-        public DateTime $updatedAt,
+        public DateTimeImmutable $createdAt,
+        public DateTimeImmutable $updatedAt,
     ) {
     }
 
@@ -31,11 +31,11 @@ final class CreateStoreResponse extends Response
 
     public static function fromArray(array $data): static
     {
-        return new static(
+        return new self(
             id: $data['id'],
             name: $data['name'],
-            createdAt: new DateTime($data['created_at']),
-            updatedAt: new DateTime($data['updated_at']),
+            createdAt: new DateTimeImmutable($data['created_at']),
+            updatedAt: new DateTimeImmutable($data['updated_at']),
         );
     }
 
@@ -49,16 +49,16 @@ final class CreateStoreResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if ($response->getStatusCode() === 201) {
-            if (!isset($data['id'], $data['name'], $data['created_at'], $data['updated_at'])) {
-                throw new \Exception('POST /stores failed');
+        if (201 === $response->getStatusCode()) {
+            if (! isset($data['id'], $data['name'], $data['created_at'], $data['updated_at'])) {
+                throw new Exception('POST /stores failed');
             }
 
             return new static(
                 id: $data['id'],
                 name: $data['name'],
-                createdAt: new DateTime($data['created_at']),
-                updatedAt: new DateTime($data['updated_at']),
+                createdAt: new DateTimeImmutable($data['created_at']),
+                updatedAt: new DateTimeImmutable($data['updated_at']),
             );
         }
 

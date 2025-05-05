@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models;
 
-use DateTime;
+use DateTimeImmutable;
 use OpenFGA\Models\{Store, Stores, StoreInterface, StoresInterface};
 
 it('can create a Store instance with constructor', function () {
     $id = 'store123';
     $name = 'Test Store';
-    $createdAt = new DateTime('2023-01-01T12:00:00+00:00');
-    $updatedAt = new DateTime('2023-01-02T12:00:00+00:00');
+    $createdAt = new DateTimeImmutable('2023-01-01T12:00:00+00:00');
+    $updatedAt = new DateTimeImmutable('2023-01-02T12:00:00+00:00');
 
     $store = new Store($id, $name, $createdAt, $updatedAt);
 
@@ -26,9 +26,9 @@ it('can create a Store instance with constructor', function () {
 it('can create a Store instance with optional deletedAt', function () {
     $id = 'store123';
     $name = 'Test Store';
-    $createdAt = new DateTime('2023-01-01T12:00:00+00:00');
-    $updatedAt = new DateTime('2023-01-02T12:00:00+00:00');
-    $deletedAt = new DateTime('2023-01-03T12:00:00+00:00');
+    $createdAt = new DateTimeImmutable('2023-01-01T12:00:00+00:00');
+    $updatedAt = new DateTimeImmutable('2023-01-02T12:00:00+00:00');
+    $deletedAt = new DateTimeImmutable('2023-01-03T12:00:00+00:00');
 
     $store = new Store($id, $name, $createdAt, $updatedAt, $deletedAt);
 
@@ -38,8 +38,8 @@ it('can create a Store instance with optional deletedAt', function () {
 it('can convert Store to array', function () {
     $id = 'store123';
     $name = 'Test Store';
-    $createdAt = new DateTime('2023-01-01T12:00:00+00:00');
-    $updatedAt = new DateTime('2023-01-02T12:00:00+00:00');
+    $createdAt = new DateTimeImmutable('2023-01-01T12:00:00+00:00');
+    $updatedAt = new DateTimeImmutable('2023-01-02T12:00:00+00:00');
 
     $store = new Store($id, $name, $createdAt, $updatedAt);
     $array = $store->toArray();
@@ -55,9 +55,9 @@ it('can convert Store to array', function () {
 it('can convert Store with deletedAt to array', function () {
     $id = 'store123';
     $name = 'Test Store';
-    $createdAt = new DateTime('2023-01-01T12:00:00+00:00');
-    $updatedAt = new DateTime('2023-01-02T12:00:00+00:00');
-    $deletedAt = new DateTime('2023-01-03T12:00:00+00:00');
+    $createdAt = new DateTimeImmutable('2023-01-01T12:00:00+00:00');
+    $updatedAt = new DateTimeImmutable('2023-01-02T12:00:00+00:00');
+    $deletedAt = new DateTimeImmutable('2023-01-03T12:00:00+00:00');
 
     $store = new Store($id, $name, $createdAt, $updatedAt, $deletedAt);
     $array = $store->toArray();
@@ -108,15 +108,15 @@ it('can add Store to Stores collection', function () {
     $store1 = new Store(
         'store1',
         'Test Store 1',
-        new DateTime('2023-01-01T12:00:00+00:00'),
-        new DateTime('2023-01-02T12:00:00+00:00')
+        new DateTimeImmutable('2023-01-01T12:00:00+00:00'),
+        new DateTimeImmutable('2023-01-02T12:00:00+00:00')
     );
 
     $store2 = new Store(
         'store2',
         'Test Store 2',
-        new DateTime('2023-01-01T12:00:00+00:00'),
-        new DateTime('2023-01-02T12:00:00+00:00')
+        new DateTimeImmutable('2023-01-01T12:00:00+00:00'),
+        new DateTimeImmutable('2023-01-02T12:00:00+00:00')
     );
 
     $stores = new Stores();
@@ -130,8 +130,8 @@ it('can get current Store from Stores collection', function () {
     $store = new Store(
         'store1',
         'Test Store 1',
-        new DateTime('2023-01-01T12:00:00+00:00'),
-        new DateTime('2023-01-02T12:00:00+00:00')
+        new DateTimeImmutable('2023-01-01T12:00:00+00:00'),
+        new DateTimeImmutable('2023-01-02T12:00:00+00:00')
     );
 
     $stores = new Stores();
@@ -144,15 +144,15 @@ it('can get Store by offset from Stores collection', function () {
     $store1 = new Store(
         'store1',
         'Test Store 1',
-        new DateTime('2023-01-01T12:00:00+00:00'),
-        new DateTime('2023-01-02T12:00:00+00:00')
+        new DateTimeImmutable('2023-01-01T12:00:00+00:00'),
+        new DateTimeImmutable('2023-01-02T12:00:00+00:00')
     );
 
     $store2 = new Store(
         'store2',
         'Test Store 2',
-        new DateTime('2023-01-01T12:00:00+00:00'),
-        new DateTime('2023-01-02T12:00:00+00:00')
+        new DateTimeImmutable('2023-01-01T12:00:00+00:00'),
+        new DateTimeImmutable('2023-01-02T12:00:00+00:00')
     );
 
     $stores = new Stores();

@@ -9,10 +9,10 @@ final class Condition extends Model implements ConditionInterface
     /**
      * Construct a Condition object.
      *
-     * @param string $name A unique name for the condition.
-     * @param string $expression A Google CEL expression, expressed as a string.
-     * @param ConditionParametersInterface|null $parameters A collection of parameter names to the parameter's defined type reference.
-     * @param ConditionMetadataInterface|null $metadata The collection of metadata that should be associated with the condition.
+     * @param string                            $name       A unique name for the condition.
+     * @param string                            $expression A Google CEL expression, expressed as a string.
+     * @param null|ConditionParametersInterface $parameters A collection of parameter names to the parameter's defined type reference.
+     * @param null|ConditionMetadataInterface   $metadata   The collection of metadata that should be associated with the condition.
      */
     public function __construct(
         public string $name,
@@ -39,8 +39,8 @@ final class Condition extends Model implements ConditionInterface
         $parameters = $data['parameters'] ?? null;
         $metadata = $data['metadata'] ?? null;
 
-        $name = $name ? $name : null;
-        $expression = $expression ? $expression : null;
+        $name = $name ?: null;
+        $expression = $expression ?: null;
         $parameters = $parameters ? ConditionParameters::fromArray($parameters) : null;
         $metadata = $metadata ? ConditionMetadata::fromArray($metadata) : null;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface RelationReferencesInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface RelationReferencesInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return RelationReferenceInterface|null
+     * @return null|RelationReferenceInterface
      */
     public function offsetGet(mixed $offset): ?RelationReferenceInterface;
 }

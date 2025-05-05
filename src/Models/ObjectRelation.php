@@ -7,8 +7,8 @@ namespace OpenFGA\Models;
 final class ObjectRelation extends Model implements ObjectRelationInterface
 {
     /**
-     * @param string|null $object
-     * @param string|null $relation
+     * @param null|string $object
+     * @param null|string $relation
      */
     public function __construct(
         public ?string $object = null,

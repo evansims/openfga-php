@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface ConditionsInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface ConditionsInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return ConditionInterface|null
+     * @return null|ConditionInterface
      */
     public function offsetGet(mixed $offset): ?ConditionInterface;
 }

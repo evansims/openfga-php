@@ -22,7 +22,7 @@ final class SourceInfo extends Model implements SourceInfoInterface
     {
         $file = $data['file'] ?? null;
 
-        $file = $file ? (string)$file : null;
+        $file = $file ? (string) $file : null;
 
         return new self(
             file: $file,

@@ -9,10 +9,10 @@ final class Assertion extends Model implements AssertionInterface
     /**
      * Construct an Assertion object.
      *
-     * @param AssertionTupleKey $tupleKey Tuple key for assertion.
-     * @param bool $expectation Whether the assertion is expected to be true or false.
-     * @param TupleKeys|null $contextualTuples Contextual tuples for assertion.
-     * @param array|null $context Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
+     * @param AssertionTupleKey $tupleKey         Tuple key for assertion.
+     * @param bool              $expectation      Whether the assertion is expected to be true or false.
+     * @param null|TupleKeys    $contextualTuples Contextual tuples for assertion.
+     * @param null|array        $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
      */
     public function __construct(
         public AssertionTupleKey $tupleKey,
@@ -40,9 +40,9 @@ final class Assertion extends Model implements AssertionInterface
         $context = $data['context'] ?? null;
 
         $tupleKey = $tupleKey ? AssertionTupleKey::fromArray($tupleKey) : null;
-        $expectation = $expectation ? (bool)$expectation : false;
+        $expectation = $expectation ? (bool) $expectation : false;
         $contextualTuples = $contextualTuples ? TupleKeys::fromArray($contextualTuples) : null;
-        $context = $context ? (array)$context : null;
+        $context = $context ? (array) $context : null;
 
         return new self(
             tupleKey: $tupleKey,

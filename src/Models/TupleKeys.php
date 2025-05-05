@@ -6,19 +6,23 @@ namespace OpenFGA\Models;
 
 final class TupleKeys extends ModelCollection implements TupleKeysInterface
 {
-    public function add(TupleKeyInterface $tupleKey): void {
+    public function add(TupleKeyInterface $tupleKey): void
+    {
         $this->models[] = $tupleKey;
     }
 
-    public function current(): TupleKeyInterface {
+    public function current(): TupleKeyInterface
+    {
         return $this->models[$this->key()];
     }
 
-    public function offsetGet(mixed $offset): ?TupleKeyInterface {
+    public function offsetGet(mixed $offset): ?TupleKeyInterface
+    {
         return $this->models[$offset] ?? null;
     }
 
-    public static function fromArray(array $data): self {
+    public static function fromArray(array $data): self
+    {
         $collection = new self();
 
         foreach ($data as $model) {

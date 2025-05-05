@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use DateTime;
+use DateTimeImmutable;
 
 final class Store extends Model implements StoreInterface
 {
     /**
      * Constructor.
      *
-     * @param string $id The store id.
-     * @param string $name The store name.
-     * @param DateTime $createdAt The store creation date.
-     * @param DateTime $updatedAt The store update date.
-     * @param DateTime|null $deletedAt The store deletion date.
+     * @param string                 $id        The store id.
+     * @param string                 $name      The store name.
+     * @param DateTimeImmutable      $createdAt The store creation date.
+     * @param DateTimeImmutable      $updatedAt The store update date.
+     * @param null|DateTimeImmutable $deletedAt The store deletion date.
      */
     public function __construct(
         public string $id,
         public string $name,
-        public DateTime $createdAt,
-        public DateTime $updatedAt,
-        public ?DateTime $deletedAt = null,
+        public DateTimeImmutable $createdAt,
+        public DateTimeImmutable $updatedAt,
+        public ?DateTimeImmutable $deletedAt = null,
     ) {
     }
 
@@ -42,9 +42,9 @@ final class Store extends Model implements StoreInterface
         return new self(
             id: $data['id'],
             name: $data['name'],
-            createdAt: new DateTime($data['created_at']),
-            updatedAt: new DateTime($data['updated_at']),
-            deletedAt: isset($data['deleted_at']) ? new DateTime($data['deleted_at']) : null,
+            createdAt: new DateTimeImmutable($data['created_at']),
+            updatedAt: new DateTimeImmutable($data['updated_at']),
+            deletedAt: isset($data['deleted_at']) ? new DateTimeImmutable($data['deleted_at']) : null,
         );
     }
 }

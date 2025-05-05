@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Endpoints;
 
-use OpenFGA\API\Models\{CheckResponse, CheckRequest, ExpandRequest, ExpandResponse, ListObjectsRequest, ListObjectsResponse, ListUsersRequest, ListUsersResponse, StreamedListObjectsResponse};
+use Exception;
+use OpenFGA\API\Models\{CheckRequest, CheckResponse, ExpandRequest, ExpandResponse, ListObjectsRequest, ListObjectsResponse, ListUsersRequest, ListUsersResponse, StreamedListObjectsResponse};
 use OpenFGA\API\Options\{CheckOptions, ExpandOptions, ListObjectsOptions, ListUsersOptions, StreamedListObjectsOptions};
 use OpenFGA\API\Request;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
@@ -12,6 +13,7 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 trait RelationshipQueriesEndpoint
 {
     public ?RequestInterface $lastRequest = null;
+
     public ?ResponseInterface $lastResponse = null;
 
     final public function check(CheckRequest $request, ?string $storeId = null, ?CheckOptions $options = null): CheckResponse
@@ -34,8 +36,8 @@ trait RelationshipQueriesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("POST /stores/{$storeId}/check failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("POST /stores/{$storeId}/check failed");
         }
 
         $json = $api->getResponseBodyJson();
@@ -63,8 +65,8 @@ trait RelationshipQueriesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("POST /stores/{$storeId}/expand failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("POST /stores/{$storeId}/expand failed");
         }
 
         $json = $api->getResponseBodyJson();
@@ -92,8 +94,8 @@ trait RelationshipQueriesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("POST /stores/{$storeId}/list-objects failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("POST /stores/{$storeId}/list-objects failed");
         }
 
         $json = $api->getResponseBodyJson();
@@ -121,8 +123,8 @@ trait RelationshipQueriesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("POST /stores/{$storeId}/list-users failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("POST /stores/{$storeId}/list-users failed");
         }
 
         $json = $api->getResponseBodyJson();
@@ -150,8 +152,8 @@ trait RelationshipQueriesEndpoint
 
         $this->lastResponse = $response;
 
-        if ($response->getStatusCode() !== 200) {
-            throw new \Exception("POST /stores/{$storeId}/streamed-list-users failed");
+        if (200 !== $response->getStatusCode()) {
+            throw new Exception("POST /stores/{$storeId}/streamed-list-users failed");
         }
 
         $json = $api->getResponseBodyJson();

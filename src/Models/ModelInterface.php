@@ -1,11 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 use JsonSerializable;
 
 interface ModelInterface extends JsonSerializable
 {
+    /**
+     * Convert the model instance to an array representation suitable for JSON serialization.
+     *
+     * @return array The array representation of the model.
+     *
+     * @see https://www.php.net/manual/en/jsonserializable.jsonserialize.php
+     */
+    public function jsonSerialize(): array;
+
     /**
      * Convert the model instance to an array representation.
      *
@@ -21,13 +32,4 @@ interface ModelInterface extends JsonSerializable
      * @return static A new instance of the model.
      */
     public static function fromArray(array $data): self;
-
-    /**
-     * Convert the model instance to an array representation suitable for JSON serialization.
-     *
-     * @return array The array representation of the model.
-     *
-     * @see https://www.php.net/manual/en/jsonserializable.jsonserialize.php
-     */
-    public function jsonSerialize(): array;
 }

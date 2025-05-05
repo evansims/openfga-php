@@ -6,19 +6,23 @@ namespace OpenFGA\Models;
 
 final class Assertions extends ModelCollection implements AssertionsInterface
 {
-    public function add(AssertionInterface $assertion): void {
+    public function add(AssertionInterface $assertion): void
+    {
         $this->models[] = $assertion;
     }
 
-    public function current(): AssertionInterface {
+    public function current(): AssertionInterface
+    {
         return $this->models[$this->key()];
     }
 
-    public function offsetGet(mixed $offset): ?AssertionInterface {
+    public function offsetGet(mixed $offset): ?AssertionInterface
+    {
         return $this->models[$offset] ?? null;
     }
 
-    public static function fromArray(array $data): self {
+    public static function fromArray(array $data): self
+    {
         $collection = new self();
 
         foreach ($data as $model) {

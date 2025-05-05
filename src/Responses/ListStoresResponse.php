@@ -27,7 +27,7 @@ final class ListStoresResponse extends Response
 
     public static function fromArray(array $data): static
     {
-        return new static(
+        return new self(
             stores: Stores::fromArray($data['stores']),
             continuationToken: $data['continuation_token'],
         );
@@ -43,7 +43,7 @@ final class ListStoresResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if ($response->getStatusCode() === 200) {
+        if (200 === $response->getStatusCode()) {
             return new static(
                 stores: Stores::fromArray($data['stores']),
                 continuationToken: $data['continuation_token'],

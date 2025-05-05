@@ -1,7 +1,12 @@
 <?php
+
+declare(strict_types=1);
+
 namespace OpenFGA\Exceptions;
 
 use Exception;
+
+use function sprintf;
 
 final class ApiTimeoutException extends Exception
 {

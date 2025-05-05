@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Models;
 
 interface ContextualTupleKeysInterface extends ModelCollectionInterface
@@ -23,7 +25,7 @@ interface ContextualTupleKeysInterface extends ModelCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return ContextualTupleKeyInterface|null
+     * @return null|ContextualTupleKeyInterface
      */
     public function offsetGet(mixed $offset): ?ContextualTupleKeyInterface;
 }

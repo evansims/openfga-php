@@ -6,9 +6,9 @@ namespace OpenFGA\Credentials;
 
 interface ClientCredentialInterface extends CredentialInterface
 {
-    public function getApiIssuer(): ?string;
-
     public function getApiAudience(): ?string;
+
+    public function getApiIssuer(): ?string;
 
     public function getClientId(): ?string;
 

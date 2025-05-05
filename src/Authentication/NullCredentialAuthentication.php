@@ -14,7 +14,8 @@ final class NullCredentialAuthentication implements AuthenticationInterface
     ) {
     }
 
-    public function getAuthorizationHeader(): ?string {
+    public function getAuthorizationHeader(): ?string
+    {
         return null;
     }
 }

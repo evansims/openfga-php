@@ -6,7 +6,7 @@ namespace OpenFGA;
 
 use OpenFGA\Credentials\CredentialInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{ResponseFactoryInterface, StreamFactoryInterface, RequestFactoryInterface};
+use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface};
 
 final class Configuration implements ConfigurationInterface
 {

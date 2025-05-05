@@ -27,7 +27,7 @@ final class ReadAssertionsResponse extends Response
 
     public static function fromArray(array $data): static
     {
-        return new static(
+        return new self(
             assertions: Assertions::fromArray($data['assertions']),
             authorizationModelId: $data['authorization_model_id'],
         );
@@ -43,7 +43,7 @@ final class ReadAssertionsResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if ($response->getStatusCode() === 200) {
+        if (200 === $response->getStatusCode()) {
             return new static(
                 assertions: Assertions::fromArray($data['assertions']),
                 authorizationModelId: $data['authorization_model_id'],

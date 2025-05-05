@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-
 /**
  * Represents a relation of a particular object type (e.g. 'document#viewer').
  *
@@ -15,10 +14,10 @@ final class RelationReference extends Model implements RelationReferenceInterfac
     /**
      * Constructs a new RelationReference object.
      *
-     * @param string $type
-     * @param string|null $relation
-     * @param Wildcard|null $wildcard
-     * @param string|null $condition The name of a condition that is enforced over the allowed relation.
+     * @param string        $type
+     * @param null|string   $relation
+     * @param null|Wildcard $wildcard
+     * @param null|string   $condition The name of a condition that is enforced over the allowed relation.
      */
     public function __construct(
         public string $type,

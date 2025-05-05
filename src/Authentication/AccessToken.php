@@ -13,7 +13,7 @@ final class AccessToken
     ) {
     }
 
-    public function getToken(): string
+    public function __toString(): string
     {
         return $this->token;
     }
@@ -28,13 +28,13 @@ final class AccessToken
         return $this->scope;
     }
 
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
     public function isExpired(): bool
     {
         return $this->expires < time();
-    }
-
-    public function __toString(): string
-    {
-        return $this->token;
     }
 }

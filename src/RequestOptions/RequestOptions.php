@@ -8,7 +8,7 @@ use OpenFGA\Requests\RequestBodyFormat;
 
 abstract class RequestOptions implements RequestOptionsInterface
 {
-    public function getBodyFormat(): RequestBodyFormat
+    final public function getBodyFormat(): RequestBodyFormat
     {
         return RequestBodyFormat::JSON;
     }
