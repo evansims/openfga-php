@@ -6,5 +6,4 @@ namespace OpenFGA\Credentials;
 
 interface CredentialInterface
 {
-    public function validate(): void;
 }

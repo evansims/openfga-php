@@ -21,7 +21,6 @@
     "ext-mbstring": "*",
     "ext-openssl": "*",
     "psr-discovery/all": "^1",
-    "psr/container": "^2",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
     "psr/http-message-implementation": "^1"

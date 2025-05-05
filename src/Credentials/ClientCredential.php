@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Credentials;
 
-use InvalidArgumentException;
-use OpenFGA\Utilities\Assert;
-
 final class ClientCredential extends Credential implements ClientCredentialInterface
 {
     public function __construct(
@@ -36,16 +33,5 @@ final class ClientCredential extends Credential implements ClientCredentialInter
     public function getClientSecret(): ?string
     {
         return $this->clientSecret;
-    }
-
-    public function validate(): void
-    {
-        if (null === $this->apiIssuer || ! Assert::Url($this->apiIssuer)) {
-            throw new InvalidArgumentException('Invalid URL');
-        }
-
-        if (null === $this->apiAudience || ! Assert::Url($this->apiAudience)) {
-            throw new InvalidArgumentException('Invalid URL');
-        }
     }
 }

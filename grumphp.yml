@@ -39,14 +39,14 @@ grumphp:
     # make: ~
     # npm_script: ~
     # paratest: ~
-    pest:
-      testsuite: Unit
+    # pest:
+    #   testsuite: Unit
     # phan: ~
     # phing: ~
     # php7cc: ~
     # phpcpd: ~
     # phpcs: ~
-    phpcsfixer: ~
+    # phpcsfixer: ~
     # phplint: ~
     # phpmd: ~
     # phpmnd: ~
@@ -55,10 +55,10 @@ grumphp:
     # phpstan: ~
     # phpunit: ~
     # phpunitbridge: ~
-    phpversion: ~
+    # phpversion: ~
     # progpilot: ~
-    psalm: ~
-    rector: ~
+    # psalm: ~
+    # rector: ~
     # robo: ~
     # securitychecker_composeraudit: ~
     # securitychecker_enlightn: ~
@@ -71,5 +71,5 @@ grumphp:
     # tester: ~
     # twigcs: ~
     # twigcsfixer: ~
-    xmllint: ~
-    yamllint: ~
+    # xmllint: ~
+    # yamllint: ~
