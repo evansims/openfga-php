@@ -36,7 +36,7 @@ An unofficial PHP SDK for [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https:
 
 ## Requirements
 
-- [PHP 8.1+](https://www.php.net/)
+- [PHP 8.3+](https://www.php.net/)
 - [Composer](https://getcomposer.org/)
 - [PSR Implementations](#psr-implementations)
 - [OpenFGA](https://openfga.dev/docs/getting-started/setup-openfga/overview) or [Auth0 FGA](https://auth0.com/fine-grained-authorization)
