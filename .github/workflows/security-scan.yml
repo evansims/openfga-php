@@ -1,0 +1,79 @@
+name: PHP Security Scanner
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 9 * * 1" # Run weekly on Mondays at 9 AM UTC
+
+jobs:
+  phpstan-security:
+    name: PHPStan Security Rules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Install PHPStan security rules
+        run: composer require --dev phpstan/phpstan-symfony "^1.0"
+
+      - name: Run PHPStan with security rules
+        run: vendor/bin/phpstan analyse --configuration=phpstan.neon.dist --level=max src/
+
+  psalm-security:
+    name: Psalm Security Scanner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Install Psalm security plugin
+        run: composer require --dev vimeo/psalm-security-scanner:^1
+
+      - name: Run Psalm Security Scanner
+        run: vendor/bin/psalm-security-scanner --output=security-results.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: security-results.sarif
+          category: psalm-security
+
+  php-security-checker:
+    name: PHP Security Checker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          coverage: none
+          tools: composer:v2
+
+      - name: Check PHP Security
+        uses: symfonycorp/security-checker-action@v5
