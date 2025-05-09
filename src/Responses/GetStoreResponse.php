@@ -9,6 +9,8 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\Store;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function is_array;
+
 final class GetStoreResponse extends Response implements ResponseInterface
 {
     public function __construct(
@@ -16,11 +18,20 @@ final class GetStoreResponse extends Response implements ResponseInterface
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
+        /** @var array<string, mixed> */
         return $this->store->toArray();
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
         return new self(
@@ -38,9 +49,9 @@ final class GetStoreResponse extends Response implements ResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode()) {
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['store']) && is_array($data['store'])) {
             return new static(
-                store: Store::fromArray($data),
+                store: Store::fromArray($data['store']),
             );
         }
 

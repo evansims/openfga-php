@@ -71,9 +71,16 @@ trait AssertionsEndpoint
         $storeId = $this->getStoreId($storeId);
         $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
 
-        $body = $this->getRequestFactory()->getHttpStreamFactory()->createStream(json_encode([
+        $jsonBody = json_encode([
             'assertions' => $assertions->toArray(),
-        ]));
+        ]);
+
+        // Ensure we have a valid JSON string
+        if (false === $jsonBody) {
+            $jsonBody = '{"assertions": []}';
+        }
+
+        $body = $this->getRequestFactory()->getHttpStreamFactory()->createStream($jsonBody);
 
         $request = $this->getRequestFactory()->put(
             url: $this->getRequestFactory()->getEndpointUrl('/stores/' . $storeId . '/assertions/' . $authorizationModelId),

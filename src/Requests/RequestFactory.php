@@ -8,24 +8,15 @@ use Exception;
 use OpenFGA\Client;
 use OpenFGA\RequestOptions\RequestOptionsInterface;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestFactoryInterface, RequestInterface, ResponseInterface, StreamFactoryInterface, StreamInterface};
+use Psr\Http\Message\{RequestFactoryInterface as PsrRequestFactoryInterface, RequestInterface as PsrRequestInterface, ResponseInterface, StreamFactoryInterface, StreamInterface};
 
 use PsrDiscovery\Discover;
 
 use function sprintf;
 
-enum RequestBodyFormat: int
+final class RequestFactory implements RequestFactoryInterface
 {
-    case JSON = 1;
-
-    case MULTIPART = 3;
-
-    case POST = 2;
-}
-
-final class RequestFactory
-{
-    private ?RequestInterface $lastRequest = null;
+    private ?PsrRequestInterface $lastRequest = null;
 
     private ?ResponseInterface $lastResponse = null;
 
@@ -34,7 +25,7 @@ final class RequestFactory
         private ?string $authorizationHeader = null,
         private ?ClientInterface $httpClient = null,
         private ?StreamFactoryInterface $httpStreamFactory = null,
-        private ?RequestFactoryInterface $httpRequestFactory = null,
+        private ?PsrRequestFactoryInterface $httpRequestFactory = null,
     ) {
         $this->apiUrl = trim($apiUrl, '/');
     }
@@ -60,7 +51,7 @@ final class RequestFactory
         ?StreamInterface $body = null,
         array $headers = [],
         ?RequestOptionsInterface $options = null,
-    ): Request {
+    ): RequestInterface {
         $headers['User-Agent'] ??= $this->getUserAgent();
 
         return new Request(
@@ -78,7 +69,7 @@ final class RequestFactory
         ?StreamInterface $body = null,
         array $headers = [],
         ?RequestOptionsInterface $options = null,
-    ): Request {
+    ): RequestInterface {
         $headers['User-Agent'] = $this->getUserAgent();
 
         return new Request(
@@ -120,7 +111,7 @@ final class RequestFactory
         return $this->httpClient;
     }
 
-    public function getHttpRequestFactory(): RequestFactoryInterface
+    public function getHttpRequestFactory(): PsrRequestFactoryInterface
     {
         if (null === $this->httpRequestFactory) {
             $httpRequestFactory = Discover::httpRequestFactory();
@@ -150,7 +141,7 @@ final class RequestFactory
         return $this->httpStreamFactory;
     }
 
-    public function getLastRequest(): ?RequestInterface
+    public function getLastRequest(): ?PsrRequestInterface
     {
         return $this->lastRequest;
     }
@@ -170,7 +161,7 @@ final class RequestFactory
         ?StreamInterface $body = null,
         array $headers = [],
         ?RequestOptionsInterface $options = null,
-    ): Request {
+    ): RequestInterface {
         $headers['User-Agent'] ??= $this->getUserAgent();
 
         return new Request(
@@ -188,7 +179,7 @@ final class RequestFactory
         ?StreamInterface $body = null,
         array $headers = [],
         ?RequestOptionsInterface $options = null,
-    ): Request {
+    ): RequestInterface {
         $headers['User-Agent'] ??= $this->getUserAgent();
 
         return new Request(
@@ -201,7 +192,7 @@ final class RequestFactory
         );
     }
 
-    public function send(RequestInterface $request): ResponseInterface
+    public function send(PsrRequestInterface $request): ResponseInterface
     {
         $httpClient = $this->getHttpClient();
 

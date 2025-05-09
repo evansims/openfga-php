@@ -9,6 +9,8 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\AuthorizationModel;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function is_array;
+
 final class GetAuthorizationModelResponse extends Response implements ResponseInterface
 {
     public function __construct(
@@ -16,11 +18,20 @@ final class GetAuthorizationModelResponse extends Response implements ResponseIn
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
+        /** @var array<string, mixed> */
         return $this->authorizationModel->toArray();
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
         return new self(
@@ -38,7 +49,7 @@ final class GetAuthorizationModelResponse extends Response implements ResponseIn
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && isset($data['authorization_model'])) {
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['authorization_model']) && is_array($data['authorization_model'])) {
             return new static(
                 authorizationModel: AuthorizationModel::fromArray($data['authorization_model']),
             );

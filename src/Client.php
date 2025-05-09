@@ -14,9 +14,13 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 final class Client implements ClientInterface
 {
     use AssertionsEndpoint;
+
     use AuthorizationModelsEndpoint;
+
     use RelationshipQueriesEndpoint;
+
     use RelationshipTuplesEndpoint;
+
     use StoresEndpoint;
 
     public const string VERSION = '0.2.0';
@@ -35,7 +39,7 @@ final class Client implements ClientInterface
     public function getAuthentication(): AuthenticationInterface
     {
         if (null === $this->authentication) {
-            $credential = $this->getConfiguration()->credential;
+            $credential = $this->getConfiguration()->getCredential();
 
             if ($credential instanceof ClientCredentialInterface) {
                 $this->authentication = new ClientCredentialAuthentication($this);
@@ -47,9 +51,18 @@ final class Client implements ClientInterface
         return $this->authentication;
     }
 
-    public function getAuthorizationModelId(?string $modelId = null): ?string
+    /**
+     * Get the authorization model ID.
+     *
+     * @param null|string $modelId Optional model ID to override the one in configuration
+     *
+     * @throws Exception If no model ID is provided or configured
+     *
+     * @return string The authorization model ID
+     */
+    public function getAuthorizationModelId(?string $modelId = null): string
     {
-        $modelId ??= $this->getConfiguration()->authorizationModelId;
+        $modelId ??= $this->getConfiguration()->getAuthorizationModelId();
 
         if (null === $modelId) {
             throw new Exception('Authorization model ID is required');
@@ -66,21 +79,36 @@ final class Client implements ClientInterface
     public function getRequestFactory(): RequestFactory
     {
         if (null === $this->requestFactory) {
+            $apiUrl = $this->getConfiguration()->getApiUrl();
+
+            if (null === $apiUrl) {
+                throw new Exception('API URL is required');
+            }
+
             $this->requestFactory = new RequestFactory(
-                apiUrl: $this->getConfiguration()->apiUrl,
+                apiUrl: $apiUrl,
                 authorizationHeader: $this->getAuthentication()->getAuthorizationHeader(),
-                httpClient: $this->getConfiguration()->httpClient,
-                httpStreamFactory: $this->getConfiguration()->httpStreamFactory,
-                httpRequestFactory: $this->getConfiguration()->httpRequestFactory,
+                httpClient: $this->getConfiguration()->getHttpClient(),
+                httpStreamFactory: $this->getConfiguration()->getHttpStreamFactory(),
+                httpRequestFactory: $this->getConfiguration()->getHttpRequestFactory(),
             );
         }
 
         return $this->requestFactory;
     }
 
-    public function getStoreId(?string $storeId = null): ?string
+    /**
+     * Get the store ID.
+     *
+     * @param null|string $storeId Optional store ID to override the one in configuration
+     *
+     * @throws Exception If no store ID is provided or configured
+     *
+     * @return string The store ID
+     */
+    public function getStoreId(?string $storeId = null): string
     {
-        $storeId ??= $this->getConfiguration()->storeId;
+        $storeId ??= $this->getConfiguration()->getStoreId();
 
         if (null === $storeId) {
             throw new Exception('Store ID is required');

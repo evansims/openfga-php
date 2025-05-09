@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 final class TupleKey extends Model implements TupleKeyInterface
 {
     public function __construct(
-        public string $user,
-        public string $relation,
-        public string $object,
+        public ?string $user = null,
+        public ?string $relation = null,
+        public ?string $object = null,
         public ?Condition $condition = null,
     ) {
     }
@@ -17,9 +17,9 @@ final class TupleKey extends Model implements TupleKeyInterface
     public function toArray(): array
     {
         return [
-            'user' => $this->user,
-            'relation' => $this->relation,
-            'object' => $this->object,
+            'user' => $this->user ?? null,
+            'relation' => $this->relation ?? null,
+            'object' => $this->object ?? null,
             'condition' => $this->condition ? $this->condition->toArray() : null,
         ];
     }
@@ -27,9 +27,9 @@ final class TupleKey extends Model implements TupleKeyInterface
     public static function fromArray(array $data): self
     {
         return new self(
-            user: $data['user'],
-            relation: $data['relation'],
-            object: $data['object'],
+            user: $data['user'] ?? null,
+            relation: $data['relation'] ?? null,
+            object: $data['object'] ?? null,
             condition: isset($data['condition']) ? Condition::fromArray($data['condition']) : null,
         );
     }
