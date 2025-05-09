@@ -9,6 +9,9 @@ use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function is_array;
+use function is_string;
+
 final class CreateStoreResponse extends Response
 {
     public function __construct(
@@ -19,6 +22,9 @@ final class CreateStoreResponse extends Response
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -29,13 +35,29 @@ final class CreateStoreResponse extends Response
         ];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
+        $id = isset($data['id']) && is_string($data['id']) ? $data['id'] : '';
+        $name = isset($data['name']) && is_string($data['name']) ? $data['name'] : '';
+
+        $createdAtStr = isset($data['created_at']) && is_string($data['created_at'])
+            ? $data['created_at']
+            : '2023-01-01T00:00:00+00:00';
+
+        $updatedAtStr = isset($data['updated_at']) && is_string($data['updated_at'])
+            ? $data['updated_at']
+            : '2023-01-01T00:00:00+00:00';
+
         return new self(
-            id: $data['id'],
-            name: $data['name'],
-            createdAt: new DateTimeImmutable($data['created_at']),
-            updatedAt: new DateTimeImmutable($data['updated_at']),
+            id: $id,
+            name: $name,
+            createdAt: new DateTimeImmutable($createdAtStr),
+            updatedAt: new DateTimeImmutable($updatedAtStr),
         );
     }
 
@@ -49,11 +71,7 @@ final class CreateStoreResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (201 === $response->getStatusCode()) {
-            if (! isset($data['id'], $data['name'], $data['created_at'], $data['updated_at'])) {
-                throw new Exception('POST /stores failed');
-            }
-
+        if (201 === $response->getStatusCode() && is_array($data) && isset($data['id']) && is_string($data['id']) && isset($data['name']) && is_string($data['name']) && isset($data['created_at']) && is_string($data['created_at']) && isset($data['updated_at']) && is_string($data['updated_at'])) {
             return new static(
                 id: $data['id'],
                 name: $data['name'],

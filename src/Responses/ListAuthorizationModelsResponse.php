@@ -9,6 +9,10 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\AuthorizationModels;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function assert;
+use function is_array;
+use function is_string;
+
 final class ListAuthorizationModelsResponse extends Response
 {
     public function __construct(
@@ -17,6 +21,9 @@ final class ListAuthorizationModelsResponse extends Response
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -25,11 +32,22 @@ final class ListAuthorizationModelsResponse extends Response
         ];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
+        assert(isset($data['authorization_models']) && is_array($data['authorization_models']));
+
+        $continuationToken = isset($data['continuation_token']) && is_string($data['continuation_token'])
+            ? $data['continuation_token']
+            : null;
+
         return new self(
             authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
-            continuationToken: $data['continuation_token'] ?? null,
+            continuationToken: $continuationToken,
         );
     }
 
@@ -43,7 +61,7 @@ final class ListAuthorizationModelsResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode()) {
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['authorization_models']) && is_array($data['authorization_models'])) {
             return new static(
                 authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
                 continuationToken: $data['continuation_token'] ?? null,

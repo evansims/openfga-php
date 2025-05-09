@@ -9,6 +9,11 @@ use OpenFGA\ClientInterface;
 use OpenFGA\Credentials\ClientCredentialInterface;
 use OpenFGA\Requests\RequestBodyFormat;
 
+use function array_key_exists;
+use function is_array;
+use function is_int;
+use function is_string;
+
 final class ClientCredentialAuthentication implements AuthenticationInterface
 {
     public function __construct(
@@ -19,13 +24,18 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
 
     public function getAccessToken(): AccessToken
     {
-        if ($this->accessToken && ! $this->accessToken->isExpired()) {
+        if (null !== $this->accessToken && ! $this->accessToken->isExpired()) {
             return $this->accessToken;
         }
 
-        $configuration = $this->client->getConfiguration()->getCredential();
+        $config = $this->client->getConfiguration();
+        $credential = $config->getCredential();
 
-        if (! $configuration instanceof ClientCredentialInterface) {
+        if (null === $credential) {
+            throw new Exception('Credential not set in configuration');
+        }
+
+        if (! $credential instanceof ClientCredentialInterface) {
             throw new Exception('Invalid credential configuration');
         }
 
@@ -33,13 +43,13 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
 
         $body = $factory->body([
             'grant_type' => 'client_credentials',
-            'client_id' => $configuration->getClientId(),
-            'client_secret' => $configuration->getClientSecret(),
-            'audience' => $configuration->getApiAudience(),
+            'client_id' => $credential->getClientId(),
+            'client_secret' => $credential->getClientSecret(),
+            'audience' => $credential->getApiAudience(),
         ], RequestBodyFormat::POST);
 
         $request = $factory->post(
-            url: "https://{$configuration->getApiIssuer()}/oauth/token",
+            url: "https://{$credential->getApiIssuer()}/oauth/token",
             body: $body,
             headers: [
                 'Accept' => 'application/json',
@@ -60,25 +70,51 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
         }
 
         try {
-            $response = json_decode($response->getBody()->getContents(), true);
+            $responseData = json_decode($response->getBody()->getContents(), true);
+
+            // Ensure we have an array to work with
+            if (! is_array($responseData)) {
+                throw new Exception('API response parsing failed - invalid JSON structure');
+            }
         } catch (Exception $e) {
-            throw new Exception('API response parsing failed');
+            throw new Exception('API response parsing failed: ' . $e->getMessage());
         }
 
-        if (! isset($response['access_token']) || ! isset($response['expires_in'])) {
-            throw new Exception('API response missing expected fields');
+        // Check both presence and type of required fields
+        $hasAccessToken = array_key_exists('access_token', $responseData) && is_string($responseData['access_token']);
+        $hasExpiresIn = array_key_exists('expires_in', $responseData)
+            && (is_int($responseData['expires_in']) || is_numeric($responseData['expires_in']));
+
+        if (! $hasAccessToken || ! $hasExpiresIn) {
+            throw new Exception('API response missing or has invalid expected fields');
         }
 
         // TODO: Cache this response
+        $token = $responseData['access_token'];
+        $expiresIn = is_numeric($responseData['expires_in']) ? (int) $responseData['expires_in'] : 3600;
+
+        // Only use scope if it's present and a string
+        $scope = null;
+        if (array_key_exists('scope', $responseData) && is_string($responseData['scope'])) {
+            $scope = $responseData['scope'];
+        }
+
+        // Ensure token is a string as required by AccessToken constructor
+        $tokenString = is_string($token) ? $token : '';
 
         return $this->accessToken = new AccessToken(
-            token: $response['access_token'],
-            expires: time() + $response['expires_in'],
-            scope: $response['scope'] ?? null,
+            token: $tokenString,
+            expires: time() + $expiresIn,
+            scope: $scope,
         );
     }
 
-    public function getAuthorizationHeader(): ?string
+    /**
+     * Get the authorization header with bearer token.
+     *
+     * @return string The authorization header value
+     */
+    public function getAuthorizationHeader(): string
     {
         return 'Bearer ' . (string) $this->getAccessToken();
     }

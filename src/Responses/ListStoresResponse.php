@@ -9,14 +9,21 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\Stores;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function assert;
+use function is_array;
+use function is_string;
+
 final class ListStoresResponse extends Response
 {
     public function __construct(
         public Stores $stores,
-        public string $continuationToken,
+        public ?string $continuationToken = null,
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -25,11 +32,22 @@ final class ListStoresResponse extends Response
         ];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
+        assert(isset($data['stores']) && is_array($data['stores']));
+
+        $continuationToken = isset($data['continuation_token']) && is_string($data['continuation_token'])
+            ? $data['continuation_token']
+            : null;
+
         return new self(
             stores: Stores::fromArray($data['stores']),
-            continuationToken: $data['continuation_token'],
+            continuationToken: $continuationToken,
         );
     }
 
@@ -43,10 +61,14 @@ final class ListStoresResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode()) {
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['stores']) && is_array($data['stores'])) {
+            $continuationToken = isset($data['continuation_token']) && is_string($data['continuation_token'])
+                ? $data['continuation_token']
+                : null;
+
             return new static(
                 stores: Stores::fromArray($data['stores']),
-                continuationToken: $data['continuation_token'],
+                continuationToken: $continuationToken,
             );
         }
 

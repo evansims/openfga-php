@@ -4,160 +4,146 @@ declare(strict_types=1);
 
 namespace OpenFGA\Endpoints;
 
-use Exception;
-use OpenFGA\API\Models\{CheckRequest, CheckResponse, ExpandRequest, ExpandResponse, ListObjectsRequest, ListObjectsResponse, ListUsersRequest, ListUsersResponse, StreamedListObjectsResponse};
-use OpenFGA\API\Options\{CheckOptions, ExpandOptions, ListObjectsOptions, ListUsersOptions, StreamedListObjectsOptions};
-use OpenFGA\API\Request;
+use OpenFGA\Models\{AuthorizationModelIdInterface, ConsistencyPreference, ContextualTupleKeysInterface, StoreIdInterface, TupleKeyInterface, UserTypeFilters};
+use OpenFGA\RequestOptions\{CheckOptions, ExpandOptions, ListObjectsOptions, ListUsersOptions};
+use OpenFGA\Requests\{CheckRequest, ExpandRequest, ListObjectsRequest, ListUsersRequest};
+use OpenFGA\Responses\{CheckResponse, ExpandResponse, ListObjectsResponse, ListUsersResponse};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
+/**
+ * Trait containing methods for querying relationships in OpenFGA.
+ */
 trait RelationshipQueriesEndpoint
 {
     public ?RequestInterface $lastRequest = null;
 
     public ?ResponseInterface $lastResponse = null;
 
-    final public function check(CheckRequest $request, ?string $storeId = null, ?CheckOptions $options = null): CheckResponse
-    {
-        $storeId ??= $this->getConfiguration()->getStoreId();
+    final public function check(
+        TupleKeyInterface $tupleKey,
+        ?bool $trace = null,
+        ?object $context = null,
+        ?ContextualTupleKeysInterface $contextualTuples = null,
+        ?ConsistencyPreference $consistency = null,
+        ?StoreIdInterface $storeId = null,
+        ?AuthorizationModelIdInterface $authorizationModelId = null,
+        ?CheckOptions $options = null,
+    ): CheckResponse {
+        $options ??= new CheckOptions();
+        $storeId = $this->getStoreId($storeId);
+        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
 
-        if (null === $options) {
-            $options = new CheckOptions();
-        }
-
-        $api = new Request(
-            client: $this,
+        $request = (new CheckRequest(
+            requestFactory: $this->getRequestFactory(),
+            tupleKey: $tupleKey,
+            trace: $trace,
+            storeId: $storeId,
+            authorizationModelId: $authorizationModelId,
+            context: $context,
+            contextualTuples: $contextualTuples,
+            consistency: $consistency,
             options: $options,
-            endpoint: '/stores/' . $storeId . '/check',
-        );
+        ))->toRequest();
 
-        $this->lastRequest = $api->getRequest();
+        $this->lastRequest = $request->getRequest();
+        $this->lastResponse = $request->send();
 
-        $response = $api->post();
-
-        $this->lastResponse = $response;
-
-        if (200 !== $response->getStatusCode()) {
-            throw new Exception("POST /stores/{$storeId}/check failed");
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new CheckResponse($json);
+        return CheckResponse::fromResponse($this->lastResponse);
     }
 
-    final public function expand(ExpandRequest $request, ?string $storeId = null, ?ExpandOptions $options = null): ExpandResponse
-    {
-        $storeId ??= $this->getConfiguration()->getStoreId();
+    final public function expand(
+        TupleKeyInterface $tupleKey,
+        ?ContextualTupleKeysInterface $contextualTuples = null,
+        ?ConsistencyPreference $consistency = null,
+        ?StoreIdInterface $storeId = null,
+        ?AuthorizationModelIdInterface $authorizationModelId = null,
+        ?ExpandOptions $options = null,
+    ): ExpandResponse {
+        $options ??= new ExpandOptions();
+        $storeId = $this->getStoreId($storeId);
+        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
 
-        if (null === $options) {
-            $options = new ExpandOptions();
-        }
-
-        $api = new Request(
-            client: $this,
+        $request = (new ExpandRequest(
+            requestFactory: $this->getRequestFactory(),
+            tupleKey: $tupleKey,
+            contextualTuples: $contextualTuples,
+            consistency: $consistency,
+            storeId: $storeId,
+            authorizationModelId: $authorizationModelId,
             options: $options,
-            endpoint: '/stores/' . $storeId . '/expand',
-        );
+        ))->toRequest();
 
-        $this->lastRequest = $api->getRequest();
+        $this->lastRequest = $request->getRequest();
+        $this->lastResponse = $request->send();
 
-        $response = $api->post();
-
-        $this->lastResponse = $response;
-
-        if (200 !== $response->getStatusCode()) {
-            throw new Exception("POST /stores/{$storeId}/expand failed");
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new ExpandResponse($json);
+        return ExpandResponse::fromResponse($this->lastResponse);
     }
 
-    final public function listObjects(ListObjectsRequest $request, ?string $storeId = null, ?ListObjectsOptions $options = null): ListObjectsResponse
-    {
-        $storeId ??= $this->getConfiguration()->getStoreId();
+    final public function listObjects(
+        string $type,
+        string $relation,
+        string $user,
+        ?object $context = null,
+        ?ContextualTupleKeysInterface $contextualTuples = null,
+        ?ConsistencyPreference $consistency = null,
+        ?StoreIdInterface $storeId = null,
+        ?AuthorizationModelIdInterface $authorizationModelId = null,
+        ?ListObjectsOptions $options = null,
+    ): ListObjectsResponse {
+        $options ??= new ListObjectsOptions();
+        $storeId = $this->getStoreId($storeId);
+        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
 
-        if (null === $options) {
-            $options = new ListObjectsOptions();
-        }
-
-        $api = new Request(
-            client: $this,
+        $request = (new ListObjectsRequest(
+            requestFactory: $this->getRequestFactory(),
+            type: $type,
+            relation: $relation,
+            user: $user,
+            context: $context,
+            contextualTuples: $contextualTuples,
+            consistency: $consistency,
+            storeId: $storeId,
+            authorizationModelId: $authorizationModelId,
             options: $options,
-            endpoint: '/stores/' . $storeId . '/list-objects',
-        );
+        ))->toRequest();
 
-        $this->lastRequest = $api->getRequest();
+        $this->lastRequest = $request->getRequest();
+        $this->lastResponse = $request->send();
 
-        $response = $api->post();
-
-        $this->lastResponse = $response;
-
-        if (200 !== $response->getStatusCode()) {
-            throw new Exception("POST /stores/{$storeId}/list-objects failed");
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new ListObjectsResponse($json);
+        return ListObjectsResponse::fromResponse($this->lastResponse);
     }
 
-    final public function listUsers(ListUsersRequest $request, ?string $storeId = null, ?ListUsersOptions $options = null): ListUsersResponse
-    {
-        $storeId ??= $this->getConfiguration()->getStoreId();
+    final public function listUsers(
+        string $object,
+        string $relation,
+        UserTypeFilters $userFilters,
+        ?object $context = null,
+        ?ContextualTupleKeysInterface $contextualTuples = null,
+        ?ConsistencyPreference $consistency = null,
+        ?StoreIdInterface $storeId = null,
+        ?AuthorizationModelIdInterface $authorizationModelId = null,
+        ?ListUsersOptions $options = null,
+    ): ListUsersResponse {
+        $options ??= new ListUsersOptions();
+        $storeId = $this->getStoreId($storeId);
+        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
 
-        if (null === $options) {
-            $options = new ListUsersOptions();
-        }
-
-        $api = new Request(
-            client: $this,
+        $request = (new ListUsersRequest(
+            requestFactory: $this->getRequestFactory(),
+            object: $object,
+            relation: $relation,
+            userFilters: $userFilters,
+            context: $context,
+            contextualTuples: $contextualTuples,
+            consistency: $consistency,
+            storeId: $storeId,
+            authorizationModelId: $authorizationModelId,
             options: $options,
-            endpoint: '/stores/' . $storeId . '/list-users',
-        );
+        ))->toRequest();
 
-        $this->lastRequest = $api->getRequest();
+        $this->lastRequest = $request->getRequest();
+        $this->lastResponse = $request->send();
 
-        $response = $api->post();
-
-        $this->lastResponse = $response;
-
-        if (200 !== $response->getStatusCode()) {
-            throw new Exception("POST /stores/{$storeId}/list-users failed");
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new ListUsersResponse($json);
-    }
-
-    final public function streamedListObjects(?string $storeId = null, ?StreamedListObjectsOptions $options = null): StreamedListObjectsResponse
-    {
-        $storeId ??= $this->getConfiguration()->getStoreId();
-
-        if (null === $options) {
-            $options = new StreamedListObjectsOptions();
-        }
-
-        $api = new Request(
-            client: $this,
-            options: $options,
-            endpoint: '/stores/' . $storeId . '/streamed-list-users',
-        );
-
-        $this->lastRequest = $api->getRequest();
-
-        $response = $api->post();
-
-        $this->lastResponse = $response;
-
-        if (200 !== $response->getStatusCode()) {
-            throw new Exception("POST /stores/{$storeId}/streamed-list-users failed");
-        }
-
-        $json = $api->getResponseBodyJson();
-
-        return new StreamedListObjectsResponse($json);
+        return ListUsersResponse::fromResponse($this->lastResponse);
     }
 }

@@ -21,6 +21,7 @@ interface ResponseInterface extends JsonSerializable
 
     /**
      * @param array<string, mixed> $data
+     *
      * @return static
      */
     public static function fromArray(array $data): static;

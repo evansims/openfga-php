@@ -8,6 +8,9 @@ use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function is_array;
+use function is_string;
+
 final class CreateAuthorizationModelResponse extends Response
 {
     public function __construct(
@@ -15,6 +18,9 @@ final class CreateAuthorizationModelResponse extends Response
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [
@@ -22,10 +28,19 @@ final class CreateAuthorizationModelResponse extends Response
         ];
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return static
+     */
     public static function fromArray(array $data): static
     {
+        $authorizationModelId = isset($data['authorization_model_id']) && is_string($data['authorization_model_id'])
+            ? $data['authorization_model_id']
+            : '';
+
         return new self(
-            authorizationModelId: $data['authorization_model_id'],
+            authorizationModelId: $authorizationModelId,
         );
     }
 
@@ -39,7 +54,7 @@ final class CreateAuthorizationModelResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (201 === $response->getStatusCode()) {
+        if (201 === $response->getStatusCode() && is_array($data) && isset($data['authorization_model_id']) && is_string($data['authorization_model_id'])) {
             return new static(
                 authorizationModelId: $data['authorization_model_id'],
             );

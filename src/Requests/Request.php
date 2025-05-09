@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\RequestOptions\RequestOptionsInterface;
-use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
+use Psr\Http\Message\{RequestInterface as PsrRequestInterface, ResponseInterface, StreamInterface};
 
 enum RequestMethod: string
 {
@@ -18,9 +18,9 @@ enum RequestMethod: string
     case PUT = 'PUT';
 }
 
-final class Request
+final class Request implements RequestInterface
 {
-    private ?RequestInterface $request = null;
+    private ?PsrRequestInterface $request = null;
 
     private ?ResponseInterface $response = null;
 
@@ -34,7 +34,7 @@ final class Request
     ) {
     }
 
-    public function build(): RequestInterface
+    public function build(): PsrRequestInterface
     {
         $requestFactory = $this->factory->getHttpRequestFactory();
         $body = $this->getRequestBody();
@@ -81,7 +81,7 @@ final class Request
         return $this->response;
     }
 
-    public function getRequest(): RequestInterface
+    public function getRequest(): PsrRequestInterface
     {
         if (null === $this->request) {
             $this->request = $this->build();

@@ -15,6 +15,20 @@ trait AuthorizationModelsEndpoint
 
     public ?ResponseInterface $lastResponse = null;
 
+    /**
+     * Creates a new authorization model.
+     *
+     * This function sends a POST request to the /stores/{store_id}/authorization-models endpoint
+     * to create a new authorization model. It returns a CreateAuthorizationModelResponse object.
+     *
+     * @param TypeDefinitionsInterface             $typeDefinitions The type definitions for the authorization model.
+     * @param ConditionsInterface                  $conditions      The conditions for the authorization model.
+     * @param string                               $schemaVersion   The schema version of the authorization model. Defaults to "1.1".
+     * @param null|string                          $storeId         The store ID. Uses the default store ID if null.
+     * @param null|CreateAuthorizationModelOptions $options         Optional request options.
+     *
+     * @return CreateAuthorizationModelResponse The response indicating the write outcome.
+     */
     final public function createAuthorizationModel(
         TypeDefinitionsInterface $typeDefinitions,
         ConditionsInterface $conditions,
@@ -25,11 +39,18 @@ trait AuthorizationModelsEndpoint
         $options ??= new CreateAuthorizationModelOptions();
         $storeId = $this->getStoreId($storeId);
 
-        $body = $this->getRequestFactory()->getHttpStreamFactory()->createStream(json_encode([
+        $jsonBody = json_encode([
             'type_definitions' => $typeDefinitions->toArray(),
             'conditions' => $conditions->toArray(),
             'schema_version' => $schemaVersion,
-        ]));
+        ]);
+
+        // Ensure we have a valid JSON string
+        if (false === $jsonBody) {
+            $jsonBody = '{"type_definitions": [], "conditions": {}, "schema_version": "' . $schemaVersion . '"}';
+        }
+
+        $body = $this->getRequestFactory()->getHttpStreamFactory()->createStream($jsonBody);
 
         $request = $this->getRequestFactory()->post(
             url: $this->getRequestFactory()->getEndpointUrl('/stores/' . $storeId . '/authorization-models'),
@@ -44,6 +65,18 @@ trait AuthorizationModelsEndpoint
         return CreateAuthorizationModelResponse::fromResponse($this->lastResponse);
     }
 
+    /**
+     * Retrieves an authorization model.
+     *
+     * This function sends a GET request to the /stores/{store_id}/authorization-models/{authorization_model_id} endpoint
+     * to retrieve an authorization model. It returns a GetAuthorizationModelResponse object.
+     *
+     * @param null|string                       $storeId The store ID. Uses the default store ID if null.
+     * @param null|string                       $id      The authorization model ID. Uses the default authorization model ID if null.
+     * @param null|GetAuthorizationModelOptions $options Optional request options.
+     *
+     * @return GetAuthorizationModelResponse The response containing the authorization model.
+     */
     final public function getAuthorizationModel(
         ?string $storeId = null,
         ?string $id = null,
@@ -65,6 +98,17 @@ trait AuthorizationModelsEndpoint
         return GetAuthorizationModelResponse::fromResponse($this->lastResponse);
     }
 
+    /**
+     * Lists authorization models.
+     *
+     * This function sends a GET request to the /stores/{store_id}/authorization-models endpoint
+     * to retrieve authorization models. It returns a ListAuthorizationModelsResponse object.
+     *
+     * @param null|string                         $storeId The store ID. Uses the default store ID if null.
+     * @param null|ListAuthorizationModelsOptions $options Optional request options.
+     *
+     * @return ListAuthorizationModelsResponse The response containing the authorization models.
+     */
     final public function listAuthorizationModels(
         ?string $storeId = null,
         ?ListAuthorizationModelsOptions $options = null,
