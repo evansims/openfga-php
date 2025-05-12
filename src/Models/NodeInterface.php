@@ -6,11 +6,11 @@ namespace OpenFGA\Models;
 
 interface NodeInterface extends ModelInterface
 {
-    public function getDifference(): ?UsersetTreeDifference;
+    public function getDifference(): ?UsersetTreeDifferenceInterface;
 
     public function getIntersection(): ?self;
 
-    public function getLeaf(): ?Leaf;
+    public function getLeaf(): ?LeafInterface;
 
     public function getName(): string;
 

@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Endpoints;
 
+use OpenFGA\Models\{StoreId, StoreIdInterface};
+
 use OpenFGA\RequestOptions\{CreateStoreRequestOptions, DeleteStoreRequestOptions, GetStoreRequestOptions, ListStoresRequestOptions};
+use OpenFGA\Requests\{CreateStoreRequest, DeleteStoreRequest, GetStoreRequest, ListStoresRequest};
 use OpenFGA\Responses\{CreateStoreResponse, DeleteStoreResponse, GetStoreResponse, ListStoresResponse};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
+
+use function is_string;
 
 trait StoresEndpoint
 {
@@ -33,16 +38,11 @@ trait StoresEndpoint
         $options ??= new CreateStoreRequestOptions();
         $name = trim($name);
 
-        $body = $this->getRequestFactory()->getHttpStreamFactory()->createStream(json_encode([
-            'name' => $name,
-        ]));
-
-        $request = $this->getRequestFactory()->post(
-            url: $this->getRequestFactory()->getEndpointUrl('/stores'),
+        $request = (new CreateStoreRequest(
+            requestFactory: $this->getRequestFactory(),
+            name: $name,
             options: $options,
-            body: $body,
-            headers: $this->getRequestFactory()->getEndpointHeaders(),
-        );
+        ))->toRequest();
 
         $this->lastRequest = $request->getRequest();
         $this->lastResponse = $request->send();
@@ -56,23 +56,23 @@ trait StoresEndpoint
      * This function sends a DELETE request to the /stores/{store_id} endpoint
      * to delete a store. It returns a DeleteStoreResponse object.
      *
-     * @param ?string                    $storeId The ID of the store to be deleted. Uses the default store ID if null.
+     * @param StoreIdInterface|string    $storeId The ID of the store to be deleted.
      * @param ?DeleteStoreRequestOptions $options Optional request options such as page size and continuation token.
      *
      * @return DeleteStoreResponse The response indicating the deletion outcome.
      */
     final public function deleteStore(
-        ?string $storeId = null,
+        StoreIdInterface | string $storeId,
         ?DeleteStoreRequestOptions $options = null,
     ): DeleteStoreResponse {
         $options ??= new DeleteStoreRequestOptions();
-        $storeId = $this->getStoreId($storeId);
+        $storeId = is_string($storeId) ? StoreId::fromString($storeId) : $storeId;
 
-        $request = $this->getRequestFactory()->delete(
-            url: $this->getRequestFactory()->getEndpointUrl('/stores/' . $storeId),
+        $request = (new DeleteStoreRequest(
+            requestFactory: $this->getRequestFactory(),
+            storeId: $storeId,
             options: $options,
-            headers: $this->getRequestFactory()->getEndpointHeaders(),
-        );
+        ))->toRequest();
 
         $this->lastRequest = $request->getRequest();
         $this->lastResponse = $request->send();
@@ -86,23 +86,23 @@ trait StoresEndpoint
      * Sends a GET request to the /stores/{store_id} endpoint and returns a GetStoreResponse
      * object that contains the store details.
      *
-     * @param ?string                 $storeId The ID of the store to be retrieved. Uses the default store ID if null.
+     * @param StoreIdInterface|string $storeId The ID of the store to be retrieved.
      * @param ?GetStoreRequestOptions $options Optional request options such as page size and continuation token.
      *
      * @return GetStoreResponse The response containing the store details.
      */
     final public function getStore(
-        ?string $storeId = null,
+        StoreIdInterface | string $storeId,
         ?GetStoreRequestOptions $options = null,
     ): GetStoreResponse {
         $options ??= new GetStoreRequestOptions();
-        $storeId = $this->getStoreId($storeId);
+        $storeId = is_string($storeId) ? StoreId::fromString($storeId) : $storeId;
 
-        $request = $this->getRequestFactory()->get(
-            url: $this->getRequestFactory()->getEndpointUrl('/stores/' . $storeId),
+        $request = (new GetStoreRequest(
+            requestFactory: $this->getRequestFactory(),
+            storeId: $storeId,
             options: $options,
-            headers: $this->getRequestFactory()->getEndpointHeaders(),
-        );
+        ))->toRequest();
 
         $this->lastRequest = $request->getRequest();
         $this->lastResponse = $request->send();
@@ -125,11 +125,10 @@ trait StoresEndpoint
     ): ListStoresResponse {
         $options ??= new ListStoresRequestOptions();
 
-        $request = $this->getRequestFactory()->get(
-            url: $this->getRequestFactory()->getEndpointUrl('/stores'),
+        $request = (new ListStoresRequest(
+            requestFactory: $this->getRequestFactory(),
             options: $options,
-            headers: $this->getRequestFactory()->getEndpointHeaders(),
-        );
+        ))->toRequest();
 
         $this->lastRequest = $request->getRequest();
         $this->lastResponse = $request->send();

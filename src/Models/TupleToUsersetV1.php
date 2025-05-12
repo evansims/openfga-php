@@ -7,9 +7,19 @@ namespace OpenFGA\Models;
 final class TupleToUsersetV1 extends Model implements TupleToUsersetV1Interface
 {
     public function __construct(
-        public ObjectRelation $tupleset,
-        public ObjectRelation $computedUserset,
+        private ObjectRelation $tupleset,
+        private ObjectRelation $computedUserset,
     ) {
+    }
+
+    public function getComputedUserset(): ObjectRelation
+    {
+        return $this->computedUserset;
+    }
+
+    public function getTupleset(): ObjectRelation
+    {
+        return $this->tupleset;
     }
 
     public function toArray(): array

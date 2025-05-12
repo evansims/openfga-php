@@ -9,9 +9,19 @@ use InvalidArgumentException;
 final class DifferenceV1 extends Model implements DifferenceV1Interface
 {
     public function __construct(
-        public Userset $base,
-        public Userset $subtract,
+        private UsersetInterface $base,
+        private UsersetInterface $subtract,
     ) {
+    }
+
+    public function getBase(): UsersetInterface
+    {
+        return $this->base;
+    }
+
+    public function getSubtract(): UsersetInterface
+    {
+        return $this->subtract;
     }
 
     public function toArray(): array

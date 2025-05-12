@@ -7,10 +7,25 @@ namespace OpenFGA\Models;
 final class AssertionTupleKey extends Model implements AssertionTupleKeyInterface
 {
     public function __construct(
-        public string $user,
-        public string $relation,
-        public string $object,
+        private string $user,
+        private string $relation,
+        private string $object,
     ) {
+    }
+
+    public function getObject(): string
+    {
+        return $this->object;
+    }
+
+    public function getRelation(): string
+    {
+        return $this->relation;
+    }
+
+    public function getUser(): string
+    {
+        return $this->user;
     }
 
     public function toArray(): array

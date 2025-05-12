@@ -10,14 +10,14 @@ final class Node extends Model implements NodeInterface
 {
     public function __construct(
         private string $name,
-        private ?Leaf $leaf,
-        private ?UsersetTreeDifference $difference,
+        private ?LeafInterface $leaf,
+        private ?UsersetTreeDifferenceInterface $difference,
         private ?NodeInterface $union,
         private ?NodeInterface $intersection,
     ) {
     }
 
-    public function getDifference(): ?UsersetTreeDifference
+    public function getDifference(): ?UsersetTreeDifferenceInterface
     {
         return $this->difference;
     }
@@ -27,7 +27,7 @@ final class Node extends Model implements NodeInterface
         return $this->intersection;
     }
 
-    public function getLeaf(): ?Leaf
+    public function getLeaf(): ?LeafInterface
     {
         return $this->leaf;
     }

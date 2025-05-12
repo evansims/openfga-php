@@ -11,28 +11,20 @@ use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 use function assert;
 use function is_array;
 
-final class ListObjectsResponse extends Response
+final class ListObjectsResponse implements ListObjectsResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public array $objects,
+        private array $objects,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getObjects(): array
     {
-        return [
-            'objects' => $this->objects,
-        ];
+        return $this->objects;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
     public static function fromArray(array $data): static
     {
         assert(isset($data['objects']) && is_array($data['objects']));
@@ -52,11 +44,11 @@ final class ListObjectsResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && isset($data['objects']) && is_array($data['objects'])) {
+        if (200 === $response->getStatusCode() && is_array($data)) {
             return static::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

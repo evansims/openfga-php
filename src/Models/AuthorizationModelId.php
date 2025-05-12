@@ -41,4 +41,11 @@ final class AuthorizationModelId extends Model implements AuthorizationModelIdIn
             id: $authorizationModel->id,
         );
     }
+
+    public static function fromString(string $id): self
+    {
+        return new self(
+            id: $id,
+        );
+    }
 }

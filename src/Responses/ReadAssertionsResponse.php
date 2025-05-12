@@ -13,37 +13,32 @@ use function assert;
 use function is_array;
 use function is_string;
 
-final class ReadAssertionsResponse extends Response
+final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public Assertions $assertions,
-        public string $authorizationModelId,
+        private ?Assertions $assertions,
+        private string $authorizationModelId,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getAssertions(): ?Assertions
     {
-        return [
-            'assertions' => $this->assertions->toArray(),
-            'authorization_model_id' => $this->authorizationModelId,
-        ];
+        return $this->assertions;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
+    public function getAuthorizationModelId(): string
+    {
+        return $this->authorizationModelId;
+    }
+
     public static function fromArray(array $data): static
     {
-        assert(isset($data['assertions']) && is_array($data['assertions']));
         assert(isset($data['authorization_model_id']) && is_string($data['authorization_model_id']));
 
         return new self(
-            assertions: Assertions::fromArray($data['assertions']),
+            assertions: isset($data['assertions']) && is_array($data['assertions']) ? Assertions::fromArray($data['assertions']) : null,
             authorizationModelId: $data['authorization_model_id'],
         );
     }
@@ -58,11 +53,11 @@ final class ReadAssertionsResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['assertions']) && is_array($data['assertions']) && isset($data['authorization_model_id']) && is_string($data['authorization_model_id'])) {
+        if (200 === $response->getStatusCode() && is_array($data)) {
             return static::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

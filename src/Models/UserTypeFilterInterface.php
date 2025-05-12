@@ -6,4 +6,7 @@ namespace OpenFGA\Models;
 
 interface UserTypeFilterInterface extends ModelInterface
 {
+    public function getRelation(): string;
+
+    public function getType(): string;
 }

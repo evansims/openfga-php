@@ -6,13 +6,32 @@ namespace OpenFGA\Models;
 
 use DateTimeImmutable;
 
+use function assert;
+use function is_array;
+use function is_string;
+
 final class TupleChange extends Model implements TupleChangeInterface
 {
     public function __construct(
-        public TupleKeyInterface $tupleKey,
-        public TupleOperation $operation,
-        public DateTimeImmutable $timestamp,
+        private TupleKeyInterface $tupleKey,
+        private TupleOperation $operation,
+        private DateTimeImmutable $timestamp,
     ) {
+    }
+
+    public function getKey(): TupleKeyInterface
+    {
+        return $this->tupleKey;
+    }
+
+    public function getOperation(): TupleOperation
+    {
+        return $this->operation;
+    }
+
+    public function getTimestamp(): DateTimeImmutable
+    {
+        return $this->timestamp;
     }
 
     public function toArray(): array
@@ -20,7 +39,7 @@ final class TupleChange extends Model implements TupleChangeInterface
         return [
             'tuple_key' => $this->tupleKey->toArray(),
             'operation' => $this->operation->value,
-            'timestamp' => $this->timestamp->format('Y-m-d\TH:i:sP'),
+            'timestamp' => $this->timestamp->format('Y-m-d\TH:i:s\Z'),
         ];
     }
 

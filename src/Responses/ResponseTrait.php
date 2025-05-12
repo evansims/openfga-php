@@ -8,22 +8,8 @@ use Exception;
 use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnuthenticatedException, ApiValidationException};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-abstract class Response implements ResponseInterface
+trait ResponseTrait
 {
-    /**
-     * @return array<string, mixed>
-     */
-    final public function jsonSerialize(): array
-    {
-        return $this->toArray();
-    }
-
-    abstract public function toArray(): array;
-
-    abstract public static function fromArray(array $data): static;
-
-    abstract public static function fromResponse(HttpResponseInterface $response): static;
-
     final public static function handleResponseException(HttpResponseInterface $response): void
     {
         $error = '';

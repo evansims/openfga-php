@@ -13,33 +13,30 @@ use function assert;
 use function is_array;
 use function is_string;
 
-final class ListTuplesResponse extends Response
+final class ListTuplesResponse implements ListTuplesResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public TuplesInterface $tuples,
-        public string $continuationToken,
+        private TuplesInterface $tuples,
+        private string $continuationToken,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getContinuationToken(): string
     {
-        return [
-            'tuples' => $this->tuples,
-            'continuation_token' => $this->continuationToken,
-        ];
+        return $this->continuationToken;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
+    public function getTuples(): TuplesInterface
+    {
+        return $this->tuples;
+    }
+
     public static function fromArray(array $data): static
     {
-        assert(isset($data['tuples']) && is_array($data['tuples']) && isset($data['continuation_token']) && is_string($data['continuation_token']));
+        assert(isset($data['tuples']) && is_array($data['tuples']));
+        assert(isset($data['continuation_token']) && is_string($data['continuation_token']));
 
         return new self(
             tuples: Tuples::fromArray($data['tuples']),
@@ -61,7 +58,7 @@ final class ListTuplesResponse extends Response
             return static::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

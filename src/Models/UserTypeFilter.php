@@ -9,9 +9,19 @@ use function assert;
 final class UserTypeFilter extends Model implements UserTypeFilterInterface
 {
     public function __construct(
-        public string $type,
-        public string $relation,
+        private string $type,
+        private string $relation,
     ) {
+    }
+
+    public function getRelation(): string
+    {
+        return $this->relation;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function toArray(): array

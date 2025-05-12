@@ -4,27 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\RequestOptions;
 
+use OpenFGA\Models\ConsistencyPreference;
+
 final class ListTuplesOptions extends RequestOptions
 {
     public function __construct(
-        public ?string $continuationToken = null,
-        public ?int $pageSize = null,
+        private ?string $continuationToken = null,
+        private ?int $pageSize = null,
+        private ?ConsistencyPreference $consistency = null,
     ) {
     }
 
-    public function getQueryParameters(): array
+    public function getConsistency(): ?ConsistencyPreference
     {
-        $params = [];
-
-        if (null !== $this->continuationToken) {
-            $params['continuation_token'] = $this->continuationToken;
-        }
-
-        if (null !== $this->pageSize) {
-            $params['page_size'] = $this->pageSize;
-        }
-
-        return $params;
+        return $this->consistency;
     }
 
     public function getContinuationToken(): ?string
@@ -35,5 +28,10 @@ final class ListTuplesOptions extends RequestOptions
     public function getPageSize(): ?int
     {
         return $this->pageSize;
+    }
+
+    public function getQueryParameters(): array
+    {
+        return [];
     }
 }

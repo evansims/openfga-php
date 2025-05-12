@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeImmutable;
+
 use function assert;
 use function is_array;
 use function is_string;
@@ -12,16 +13,26 @@ use function is_string;
 final class Tuple extends Model implements TupleInterface
 {
     public function __construct(
-        private TupleKey $key,
+        private TupleKeyInterface $key,
         private DateTimeImmutable $timestamp,
     ) {
+    }
+
+    public function getKey(): TupleKeyInterface
+    {
+        return $this->key;
+    }
+
+    public function getTimestamp(): DateTimeImmutable
+    {
+        return $this->timestamp;
     }
 
     public function toArray(): array
     {
         return [
             'key' => $this->key->toArray(),
-            'timestamp' => $this->timestamp->format('Y-m-d\TH:i:sP'),
+            'timestamp' => $this->timestamp->format('Y-m-d\TH:i:s\Z'),
         ];
     }
 
@@ -34,15 +45,5 @@ final class Tuple extends Model implements TupleInterface
             key: TupleKey::fromArray($data['key']),
             timestamp: new DateTimeImmutable($data['timestamp']),
         );
-    }
-
-    public function getKey(): TupleKey
-    {
-        return $this->key;
-    }
-
-    public function getTimestamp(): DateTimeImmutable
-    {
-        return $this->timestamp;
     }
 }

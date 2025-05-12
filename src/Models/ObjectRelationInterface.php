@@ -6,4 +6,7 @@ namespace OpenFGA\Models;
 
 interface ObjectRelationInterface extends ModelInterface
 {
+    public function getObject(): ?string;
+
+    public function getRelation(): ?string;
 }

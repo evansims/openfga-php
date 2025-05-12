@@ -7,13 +7,43 @@ namespace OpenFGA\Models;
 final class Userset extends Model implements UsersetInterface
 {
     public function __construct(
-        public ?DirectUserset $direct = null,
-        public ?ObjectRelation $computedUserset = null,
-        public ?TupleToUsersetV1 $tupleToUserset = null,
-        public ?Usersets $union = null,
-        public ?Usersets $intersection = null,
-        public ?DifferenceV1 $difference = null,
+        private ?DirectUserset $direct = null,
+        private ?ObjectRelation $computedUserset = null,
+        private ?TupleToUsersetV1 $tupleToUserset = null,
+        private ?Usersets $union = null,
+        private ?Usersets $intersection = null,
+        private ?DifferenceV1 $difference = null,
     ) {
+    }
+
+    public function getComputedUserset(): ?ObjectRelation
+    {
+        return $this->computedUserset;
+    }
+
+    public function getDifference(): ?DifferenceV1
+    {
+        return $this->difference;
+    }
+
+    public function getDirect(): ?DirectUserset
+    {
+        return $this->direct;
+    }
+
+    public function getIntersection(): ?Usersets
+    {
+        return $this->intersection;
+    }
+
+    public function getTupleToUserset(): ?TupleToUsersetV1
+    {
+        return $this->tupleToUserset;
+    }
+
+    public function getUnion(): ?Usersets
+    {
+        return $this->union;
     }
 
     public function toArray(): array

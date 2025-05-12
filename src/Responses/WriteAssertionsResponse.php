@@ -7,25 +7,14 @@ namespace OpenFGA\Responses;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-final class WriteAssertionsResponse extends Response
+final class WriteAssertionsResponse implements WriteAssertionsResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
     public static function fromArray(array $data): static
     {
         return new self();
@@ -37,7 +26,7 @@ final class WriteAssertionsResponse extends Response
             return new static();
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException('');
     }

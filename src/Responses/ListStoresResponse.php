@@ -13,41 +13,34 @@ use function assert;
 use function is_array;
 use function is_string;
 
-final class ListStoresResponse extends Response
+final class ListStoresResponse implements ListStoresResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public Stores $stores,
-        public ?string $continuationToken = null,
+        private Stores $stores,
+        private string $continuationToken,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getContinuationToken(): string
     {
-        return [
-            'stores' => $this->stores->toArray(),
-            'continuation_token' => $this->continuationToken,
-        ];
+        return $this->continuationToken;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
+    public function getStores(): Stores
+    {
+        return $this->stores;
+    }
+
     public static function fromArray(array $data): static
     {
         assert(isset($data['stores']) && is_array($data['stores']));
-
-        $continuationToken = isset($data['continuation_token']) && is_string($data['continuation_token'])
-            ? $data['continuation_token']
-            : null;
+        assert(isset($data['continuation_token']) && is_string($data['continuation_token']));
 
         return new self(
             stores: Stores::fromArray($data['stores']),
-            continuationToken: $continuationToken,
+            continuationToken: $data['continuation_token'],
         );
     }
 
@@ -61,18 +54,11 @@ final class ListStoresResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['stores']) && is_array($data['stores'])) {
-            $continuationToken = isset($data['continuation_token']) && is_string($data['continuation_token'])
-                ? $data['continuation_token']
-                : null;
-
-            return new static(
-                stores: Stores::fromArray($data['stores']),
-                continuationToken: $continuationToken,
-            );
+        if (200 === $response->getStatusCode() && is_array($data)) {
+            return static::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

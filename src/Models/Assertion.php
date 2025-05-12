@@ -4,25 +4,43 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Assertion extends Model implements AssertionInterface
+final class Assertion implements AssertionInterface
 {
     /**
-     * Construct an Assertion object.
-     *
-     * @param AssertionTupleKey $tupleKey         Tuple key for assertion.
-     * @param bool              $expectation      Whether the assertion is expected to be true or false.
-     * @param null|TupleKeys    $contextualTuples Contextual tuples for assertion.
-     * @param null|array        $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
+     * @param AssertionTupleKeyInterface $tupleKey         Tuple key for assertion.
+     * @param bool                       $expectation      Whether the assertion is expected to be true or false.
+     * @param null|TupleKeysInterface    $contextualTuples Contextual tuples for assertion.
+     * @param null|array                 $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
      */
     public function __construct(
-        public AssertionTupleKey $tupleKey,
-        public bool $expectation,
-        public ?TupleKeys $contextualTuples = null,
-        public ?array $context = null,
+        private AssertionTupleKeyInterface $tupleKey,
+        private bool $expectation,
+        private ?TupleKeysInterface $contextualTuples = null,
+        private ?array $context = null,
     ) {
     }
 
-    public function toArray(): array
+    public function getContext(): ?array
+    {
+        return $this->context;
+    }
+
+    public function getContextualTuples(): ?TupleKeysInterface
+    {
+        return $this->contextualTuples;
+    }
+
+    public function getExpectation(): bool
+    {
+        return $this->expectation;
+    }
+
+    public function getTupleKey(): AssertionTupleKeyInterface
+    {
+        return $this->tupleKey;
+    }
+
+    public function jsonSerialize(): array
     {
         return [
             'tuple_key' => $this->tupleKey->toArray(),

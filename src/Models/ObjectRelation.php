@@ -11,9 +11,19 @@ final class ObjectRelation extends Model implements ObjectRelationInterface
      * @param null|string $relation
      */
     public function __construct(
-        public ?string $object = null,
-        public ?string $relation = null,
+        private ?string $object = null,
+        private ?string $relation = null,
     ) {
+    }
+
+    public function getObject(): ?string
+    {
+        return $this->object;
+    }
+
+    public function getRelation(): ?string
+    {
+        return $this->relation;
     }
 
     public function toArray(): array

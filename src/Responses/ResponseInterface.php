@@ -4,27 +4,17 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use JsonSerializable;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-interface ResponseInterface extends JsonSerializable
+interface ResponseInterface
 {
     /**
-     * @return array<string, mixed>
+     * @param HttpResponseInterface $response
      */
-    public function jsonSerialize(): array;
+    public static function handleResponseException(HttpResponseInterface $response): void;
 
     /**
-     * @return array<string, mixed>
+     * @param HttpResponseInterface $response
      */
-    public function toArray(): array;
-
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
-    public static function fromArray(array $data): static;
-
     public static function fromResponse(HttpResponseInterface $response): static;
 }

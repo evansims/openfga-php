@@ -7,21 +7,31 @@ namespace OpenFGA\RequestOptions;
 final class ListStoresRequestOptions extends RequestOptions
 {
     public function __construct(
-        public ?string $continuationToken = null,
-        public ?int $pageSize = null,
+        private ?string $continuationToken = null,
+        private ?int $pageSize = null,
     ) {
+    }
+
+    public function getContinuationToken(): ?string
+    {
+        return $this->continuationToken;
+    }
+
+    public function getPageSize(): ?int
+    {
+        return $this->pageSize;
     }
 
     public function getQueryParameters(): array
     {
         $params = [];
 
-        if (null !== $this->continuationToken) {
-            $params['continuation_token'] = $this->continuationToken;
+        if (null !== $this->getContinuationToken()) {
+            $params['continuation_token'] = $this->getContinuationToken();
         }
 
-        if (null !== $this->pageSize) {
-            $params['page_size'] = $this->pageSize;
+        if (null !== $this->getPageSize()) {
+            $params['page_size'] = $this->getPageSize();
         }
 
         return $params;

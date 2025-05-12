@@ -5,38 +5,33 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use Exception;
-use OpenFGA\Models\TupleChangesInterface;
-use OpenFGA\Models\TupleChanges;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
+use OpenFGA\Models\{TupleChanges, TupleChangesInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
 use function is_array;
 
-final class ListChangesResponse extends Response
+final class ListChangesResponse implements ListChangesResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public TupleChangesInterface $changes,
-        public ?string $continuationToken,
+        private TupleChangesInterface $changes,
+        private ?string $continuationToken,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getChanges(): TupleChangesInterface
     {
-        return [
-            'changes' => $this->changes,
-            'continuation_token' => $this->continuationToken,
-        ];
+        return $this->changes;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
+    public function getContinuationToken(): ?string
+    {
+        return $this->continuationToken;
+    }
+
     public static function fromArray(array $data): static
     {
         assert(isset($data['changes']) && is_array($data['changes']));
@@ -57,11 +52,11 @@ final class ListChangesResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && isset($data['changes']) && is_array($data['changes'])) {
+        if (200 === $response->getStatusCode() && is_array($data)) {
             return static::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

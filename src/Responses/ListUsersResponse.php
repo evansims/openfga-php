@@ -6,26 +6,24 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
+use OpenFGA\Models\{Users, UsersInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
 use function is_array;
 
-final class ListUsersResponse extends Response
+final class ListUsersResponse implements ListUsersResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public array $users,
+        private UsersInterface $users,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getUsers(): UsersInterface
     {
-        return [
-            'users' => $this->users,
-        ];
+        return $this->users;
     }
 
     /**
@@ -38,7 +36,7 @@ final class ListUsersResponse extends Response
         assert(isset($data['users']) && is_array($data['users']));
 
         return new self(
-            users: $data['users'],
+            users: Users::fromArray($data['users']),
         );
     }
 
@@ -52,11 +50,11 @@ final class ListUsersResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && isset($data['users']) && is_array($data['users'])) {
+        if (200 === $response->getStatusCode() && is_array($data)) {
             return static::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

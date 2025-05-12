@@ -7,10 +7,25 @@ namespace OpenFGA\Models;
 final class Metadata extends Model implements MetadataInterface
 {
     public function __construct(
-        public ?RelationReferences $relations = null,
-        public ?string $module = null,
-        public ?SourceInfo $sourceInfo = null,
+        private ?RelationReferencesInterface $relations = null,
+        private ?string $module = null,
+        private ?SourceInfoInterface $sourceInfo = null,
     ) {
+    }
+
+    public function getModule(): ?string
+    {
+        return $this->module;
+    }
+
+    public function getRelations(): ?RelationReferencesInterface
+    {
+        return $this->relations;
+    }
+
+    public function getSourceInfo(): ?SourceInfoInterface
+    {
+        return $this->sourceInfo;
     }
 
     public function toArray(): array

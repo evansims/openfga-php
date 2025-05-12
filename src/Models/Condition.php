@@ -15,11 +15,31 @@ final class Condition extends Model implements ConditionInterface
      * @param null|ConditionMetadataInterface   $metadata   The collection of metadata that should be associated with the condition.
      */
     public function __construct(
-        public string $name,
-        public string $expression,
-        public ?ConditionParametersInterface $parameters = null,
-        public ?ConditionMetadataInterface $metadata = null,
+        private string $name,
+        private string $expression,
+        private ?ConditionParametersInterface $parameters = null,
+        private ?ConditionMetadataInterface $metadata = null,
     ) {
+    }
+
+    public function getExpression(): string
+    {
+        return $this->expression;
+    }
+
+    public function getMetadata(): ?ConditionMetadataInterface
+    {
+        return $this->metadata;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getParameters(): ?ConditionParametersInterface
+    {
+        return $this->parameters;
     }
 
     public function toArray(): array

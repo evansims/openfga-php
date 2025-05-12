@@ -9,38 +9,32 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
-use function is_bool;
-use function is_string;
 
-final class CheckResponse extends Response
+final class CheckResponse implements CheckResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public bool $allowed,
-        public string $resolution,
+        private ?bool $allowed = null,
+        private ?string $resolution = null,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getAllowed(): ?bool
     {
-        return [
-            'allowed' => $this->allowed,
-            'resolution' => $this->resolution,
-        ];
+        return $this->allowed;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
+    public function getResolution(): ?string
+    {
+        return $this->resolution;
+    }
+
     public static function fromArray(array $data): static
     {
         return new self(
-            allowed: $data['allowed'],
-            resolution: $data['resolution'],
+            allowed: $data['allowed'] ?? null,
+            resolution: $data['resolution'] ?? null,
         );
     }
 
@@ -54,14 +48,11 @@ final class CheckResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['allowed']) && is_bool($data['allowed']) && isset($data['resolution']) && is_string($data['resolution'])) {
-            return new static(
-                allowed: $data['allowed'],
-                resolution: $data['resolution'],
-            );
+        if (200 === $response->getStatusCode() && is_array($data)) {
+            return self::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

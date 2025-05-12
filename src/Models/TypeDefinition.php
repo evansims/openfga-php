@@ -14,9 +14,9 @@ final class TypeDefinition extends Model implements TypeDefinitionInterface
      * @param null|Metadata                        $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
      */
     public function __construct(
-        public string $type,
-        public ?array $relations = null,
-        public ?Metadata $metadata = null,
+        private string $type,
+        private ?array $relations = null,
+        private ?Metadata $metadata = null,
     ) {
         foreach ($relations as $relation => $userset) {
             if (! $userset instanceof UsersetInterface) {
@@ -25,6 +25,21 @@ final class TypeDefinition extends Model implements TypeDefinitionInterface
 
             $this->relations[$relation] = $userset;
         }
+    }
+
+    public function getMetadata(): ?Metadata
+    {
+        return $this->metadata;
+    }
+
+    public function getRelations(): ?array
+    {
+        return $this->relations;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
     }
 
     public function toArray(): array

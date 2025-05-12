@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace OpenFGA\Requests;
+
+use OpenFGA\RequestOptions\ListStoresRequestOptions;
+
+final class ListStoresRequest
+{
+    public function __construct(
+        private RequestFactory $requestFactory,
+        private ?ListStoresRequestOptions $options = null,
+    ) {
+    }
+
+    public function getOptions(): ?ListStoresRequestOptions
+    {
+        return $this->options;
+    }
+
+    public function toRequest(): Request
+    {
+        return $this->requestFactory->get(
+            url: $this->requestFactory->getEndpointUrl('/stores'),
+            options: $this->getOptions(),
+            headers: $this->requestFactory->getEndpointHeaders(),
+        );
+    }
+}

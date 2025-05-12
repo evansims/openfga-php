@@ -4,33 +4,27 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelId, AuthorizationModelIdInterface, ConsistencyPreference, ContextualTupleKeys, ContextualTupleKeysInterface, StoreId, StoreIdInterface, UserTypeFilters};
+use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeysInterface, StoreIdInterface, UserTypeFiltersInterface};
 use OpenFGA\RequestOptions\ListUsersOptions;
 
 final class ListUsersRequest
 {
     public function __construct(
         private RequestFactory $requestFactory,
+        private StoreIdInterface $storeId,
+        private AuthorizationModelIdInterface $authorizationModelId,
         private string $object,
         private string $relation,
-        private UserTypeFilters $userFilters,
+        private UserTypeFiltersInterface $userFilters,
         private ?object $context = null,
         private ?ContextualTupleKeysInterface $contextualTuples = null,
-        private ?ConsistencyPreference $consistency = null,
-        private ?StoreIdInterface $storeId = null,
-        private ?AuthorizationModelIdInterface $authorizationModelId = null,
         private ?ListUsersOptions $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): ?AuthorizationModelId
+    public function getAuthorizationModelId(): ?AuthorizationModelIdInterface
     {
         return $this->authorizationModelId;
-    }
-
-    public function getConsistency(): ?ConsistencyPreference
-    {
-        return $this->consistency;
     }
 
     public function getContext(): ?object
@@ -38,7 +32,7 @@ final class ListUsersRequest
         return $this->context;
     }
 
-    public function getContextualTuples(): ?ContextualTupleKeys
+    public function getContextualTuples(): ?ContextualTupleKeysInterface
     {
         return $this->contextualTuples;
     }
@@ -48,17 +42,22 @@ final class ListUsersRequest
         return $this->object;
     }
 
+    public function getOptions(): ?ListUsersOptions
+    {
+        return $this->options;
+    }
+
     public function getRelation(): string
     {
         return $this->relation;
     }
 
-    public function getStoreId(): ?StoreId
+    public function getStoreId(): StoreIdInterface
     {
         return $this->storeId;
     }
 
-    public function getUserFilters(): UserTypeFilters
+    public function getUserFilters(): UserTypeFiltersInterface
     {
         return $this->userFilters;
     }
@@ -67,24 +66,21 @@ final class ListUsersRequest
     {
         $body = [];
 
-        $body['object'] = $this->object;
-        $body['relation'] = $this->relation;
-        $body['user_filters'] = $this->userFilters->toArray();
+        $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
+        $body['object'] = $this->getObject();
+        $body['relation'] = $this->getRelation();
+        $body['user_filters'] = $this->getUserFilters()->toArray();
 
-        if (null !== $this->context) {
-            $body['context'] = $this->context;
+        if (null !== $this->getContextualTuples()) {
+            $body['contextual_tuples'] = $this->getContextualTuples()->toArray();
         }
 
-        if (null !== $this->contextualTuples) {
-            $body['contextual_tuples'] = $this->contextualTuples->toArray();
+        if (null !== $this->getContext()) {
+            $body['context'] = $this->getContext();
         }
 
-        if (null !== $this->consistency) {
-            $body['consistency'] = $this->consistency->value;
-        }
-
-        if (null !== $this->authorizationModelId) {
-            $body['authorization_model_id'] = (string) $this->authorizationModelId;
+        if (null !== $this->getOptions()?->getConsistency()) {
+            $body['consistency'] = (string) $this->getOptions()?->getConsistency();
         }
 
         return json_encode($body, JSON_THROW_ON_ERROR);
@@ -95,8 +91,8 @@ final class ListUsersRequest
         $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
 
         return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . $this->storeId . '/list-users'),
-            options: $this->options,
+            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/list-users'),
+            options: $this->getOptions(),
             body: $body,
             headers: $this->requestFactory->getEndpointHeaders(),
         );

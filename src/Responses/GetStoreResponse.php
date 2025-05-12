@@ -9,31 +9,27 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\Store;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function assert;
 use function is_array;
 
-final class GetStoreResponse extends Response implements ResponseInterface
+final class GetStoreResponse implements GetStoreResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public Store $store,
+        private Store $store,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getStore(): Store
     {
-        /** @var array<string, mixed> */
-        return $this->store->toArray();
+        return $this->store;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
     public static function fromArray(array $data): static
     {
+        assert(isset($data['id'], $data['name'], $data['created_at'], $data['updated_at']));
+
         return new self(
             store: Store::fromArray($data),
         );
@@ -49,13 +45,13 @@ final class GetStoreResponse extends Response implements ResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['store']) && is_array($data['store'])) {
+        if (200 === $response->getStatusCode() && is_array($data)) {
             return new static(
-                store: Store::fromArray($data['store']),
+                store: Store::fromArray($data),
             );
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

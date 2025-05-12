@@ -4,29 +4,32 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelId, ConsistencyPreference, StoreId, TupleKeyInterface};
+use OpenFGA\Models\{StoreIdInterface, TupleKeyInterface};
 use OpenFGA\RequestOptions\ListTuplesOptions;
 
 final class ListTuplesRequest
 {
     public function __construct(
         private RequestFactory $requestFactory,
+        private StoreIdInterface $storeId,
         private TupleKeyInterface $tupleKey,
-        private ?ConsistencyPreference $consistency,
-        private ?StoreId $storeId,
-        private ?AuthorizationModelId $authorizationModelId,
-        private ListTuplesOptions $options,
+        private ?ListTuplesOptions $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): ?AuthorizationModelId
+    public function getOptions(): ?ListTuplesOptions
     {
-        return $this->authorizationModelId;
+        return $this->options;
     }
 
-    public function getStoreId(): ?StoreId
+    public function getStoreId(): StoreIdInterface
     {
         return $this->storeId;
+    }
+
+    public function getTupleKey(): TupleKeyInterface
+    {
+        return $this->tupleKey;
     }
 
     public function toJson(): string
@@ -35,20 +38,16 @@ final class ListTuplesRequest
 
         $body['tuple_key'] = $this->tupleKey->toArray();
 
-        if (null !== $this->consistency) {
-            $body['consistency'] = $this->consistency->value;
+        if (null !== $this->getOptions()?->getConsistency()) {
+            $body['consistency'] = $this->getOptions()?->getConsistency()->value;
         }
 
-        if (null !== $this->authorizationModelId) {
-            $body['authorization_model_id'] = (string) $this->authorizationModelId;
+        if (null !== $this->getOptions()?->getPageSize()) {
+            $body['page_size'] = $this->getOptions()?->getPageSize();
         }
 
-        if (null !== $this->options->getPageSize()) {
-            $body['page_size'] = $this->options->getPageSize();
-        }
-
-        if (null !== $this->options->getContinuationToken()) {
-            $body['continuation_token'] = $this->options->getContinuationToken();
+        if (null !== $this->getOptions()?->getContinuationToken()) {
+            $body['continuation_token'] = $this->getOptions()?->getContinuationToken();
         }
 
         return json_encode($body, JSON_THROW_ON_ERROR);
@@ -59,8 +58,8 @@ final class ListTuplesRequest
         $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
 
         return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . $this->storeId . '/read'),
-            options: $this->options,
+            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/read'),
+            options: $this->getOptions(),
             body: $body,
             headers: $this->requestFactory->getEndpointHeaders(),
         );

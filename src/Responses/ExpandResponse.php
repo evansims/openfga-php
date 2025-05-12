@@ -11,33 +11,29 @@ use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
-final class ExpandResponse extends Response
+final class ExpandResponse implements ExpandResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public UsersetTree $tree,
+        private ?UsersetTree $tree = null,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getTree(): ?UsersetTree
     {
-        return [
-            'tree' => $this->tree->toArray(),
-        ];
+        return $this->tree;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
     public static function fromArray(array $data): static
     {
-        return new self(
-            tree: UsersetTree::fromArray($data['tree']),
-        );
+        if (isset($data['tree']) && is_array($data['tree'])) {
+            return new self(
+                tree: UsersetTree::fromArray($data['tree']),
+            );
+        }
+
+        return new self();
     }
 
     public static function fromResponse(HttpResponseInterface $response): static
@@ -50,13 +46,11 @@ final class ExpandResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['tree']) && is_array($data['tree'])) {
-            return new static(
-                tree: UsersetTree::fromArray($data['tree']),
-            );
+        if (200 === $response->getStatusCode() && is_array($data)) {
+            return self::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

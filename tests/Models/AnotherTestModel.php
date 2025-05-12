@@ -10,13 +10,18 @@ use OpenFGA\Models\ModelInterface;
 class AnotherTestModel extends Model implements ModelInterface
 {
     public function __construct(
-        public string $name = 'test'
+        private string $name = 'test'
     ) {}
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
     public function toArray(): array
     {
         return [
-            'name' => $this->name,
+            'name' => $this->getName(),
         ];
     }
 

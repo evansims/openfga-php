@@ -9,7 +9,7 @@ use OutOfBoundsException;
 
 use function count;
 
-abstract class ModelCollection extends Model implements ModelCollectionInterface
+abstract class ModelCollection implements ModelCollectionInterface
 {
     /**
      * Array of ModelInterface objects.

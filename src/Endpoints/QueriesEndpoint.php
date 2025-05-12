@@ -4,44 +4,46 @@ declare(strict_types=1);
 
 namespace OpenFGA\Endpoints;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, ConsistencyPreference, ContextualTupleKeysInterface, StoreIdInterface, TupleKeyInterface, UserTypeFilters};
+use OpenFGA\Models\{AuthorizationModelId, StoreId};
+
+use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeysInterface, StoreIdInterface, TupleKeyInterface, UserTypeFilters};
 use OpenFGA\RequestOptions\{CheckOptions, ExpandOptions, ListObjectsOptions, ListUsersOptions};
 use OpenFGA\Requests\{CheckRequest, ExpandRequest, ListObjectsRequest, ListUsersRequest};
 use OpenFGA\Responses\{CheckResponse, ExpandResponse, ListObjectsResponse, ListUsersResponse};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
+use function is_string;
+
 /**
  * Trait containing methods for querying relationships in OpenFGA.
  */
-trait RelationshipQueriesEndpoint
+trait QueriesEndpoint
 {
     public ?RequestInterface $lastRequest = null;
 
     public ?ResponseInterface $lastResponse = null;
 
     final public function check(
+        StoreIdInterface | string $storeId,
+        AuthorizationModelIdInterface | string $authorizationModelId,
         TupleKeyInterface $tupleKey,
         ?bool $trace = null,
         ?object $context = null,
         ?ContextualTupleKeysInterface $contextualTuples = null,
-        ?ConsistencyPreference $consistency = null,
-        ?StoreIdInterface $storeId = null,
-        ?AuthorizationModelIdInterface $authorizationModelId = null,
         ?CheckOptions $options = null,
     ): CheckResponse {
         $options ??= new CheckOptions();
-        $storeId = $this->getStoreId($storeId);
-        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
+        $storeId = is_string($storeId) ? StoreId::fromString($storeId) : $storeId;
+        $authorizationModelId = is_string($authorizationModelId) ? AuthorizationModelId::fromString($authorizationModelId) : $authorizationModelId;
 
         $request = (new CheckRequest(
             requestFactory: $this->getRequestFactory(),
-            tupleKey: $tupleKey,
-            trace: $trace,
             storeId: $storeId,
             authorizationModelId: $authorizationModelId,
+            tupleKey: $tupleKey,
+            trace: $trace,
             context: $context,
             contextualTuples: $contextualTuples,
-            consistency: $consistency,
             options: $options,
         ))->toRequest();
 
@@ -52,22 +54,23 @@ trait RelationshipQueriesEndpoint
     }
 
     final public function expand(
+        StoreIdInterface | string $storeId,
         TupleKeyInterface $tupleKey,
+        AuthorizationModelIdInterface | string | null $authorizationModelId = null,
         ?ContextualTupleKeysInterface $contextualTuples = null,
-        ?ConsistencyPreference $consistency = null,
-        ?StoreIdInterface $storeId = null,
-        ?AuthorizationModelIdInterface $authorizationModelId = null,
         ?ExpandOptions $options = null,
     ): ExpandResponse {
         $options ??= new ExpandOptions();
-        $storeId = $this->getStoreId($storeId);
-        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
+        $storeId = is_string($storeId) ? StoreId::fromString($storeId) : $storeId;
+
+        if (null !== $authorizationModelId) {
+            $authorizationModelId = is_string($authorizationModelId) ? AuthorizationModelId::fromString($authorizationModelId) : $authorizationModelId;
+        }
 
         $request = (new ExpandRequest(
             requestFactory: $this->getRequestFactory(),
             tupleKey: $tupleKey,
             contextualTuples: $contextualTuples,
-            consistency: $consistency,
             storeId: $storeId,
             authorizationModelId: $authorizationModelId,
             options: $options,
@@ -80,19 +83,21 @@ trait RelationshipQueriesEndpoint
     }
 
     final public function listObjects(
+        StoreIdInterface | string $storeId,
         string $type,
         string $relation,
         string $user,
+        AuthorizationModelIdInterface | string | null $authorizationModelId = null,
         ?object $context = null,
         ?ContextualTupleKeysInterface $contextualTuples = null,
-        ?ConsistencyPreference $consistency = null,
-        ?StoreIdInterface $storeId = null,
-        ?AuthorizationModelIdInterface $authorizationModelId = null,
         ?ListObjectsOptions $options = null,
     ): ListObjectsResponse {
         $options ??= new ListObjectsOptions();
-        $storeId = $this->getStoreId($storeId);
-        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
+        $storeId = is_string($storeId) ? StoreId::fromString($storeId) : $storeId;
+
+        if (null !== $authorizationModelId) {
+            $authorizationModelId = is_string($authorizationModelId) ? AuthorizationModelId::fromString($authorizationModelId) : $authorizationModelId;
+        }
 
         $request = (new ListObjectsRequest(
             requestFactory: $this->getRequestFactory(),
@@ -101,7 +106,6 @@ trait RelationshipQueriesEndpoint
             user: $user,
             context: $context,
             contextualTuples: $contextualTuples,
-            consistency: $consistency,
             storeId: $storeId,
             authorizationModelId: $authorizationModelId,
             options: $options,
@@ -114,19 +118,18 @@ trait RelationshipQueriesEndpoint
     }
 
     final public function listUsers(
+        StoreIdInterface | string $storeId,
+        AuthorizationModelIdInterface | string $authorizationModelId,
         string $object,
         string $relation,
         UserTypeFilters $userFilters,
         ?object $context = null,
         ?ContextualTupleKeysInterface $contextualTuples = null,
-        ?ConsistencyPreference $consistency = null,
-        ?StoreIdInterface $storeId = null,
-        ?AuthorizationModelIdInterface $authorizationModelId = null,
         ?ListUsersOptions $options = null,
     ): ListUsersResponse {
         $options ??= new ListUsersOptions();
-        $storeId = $this->getStoreId($storeId);
-        $authorizationModelId = $this->getAuthorizationModelId($authorizationModelId);
+        $storeId = is_string($storeId) ? StoreId::fromString($storeId) : $storeId;
+        $authorizationModelId = is_string($authorizationModelId) ? AuthorizationModelId::fromString($authorizationModelId) : $authorizationModelId;
 
         $request = (new ListUsersRequest(
             requestFactory: $this->getRequestFactory(),
@@ -135,7 +138,6 @@ trait RelationshipQueriesEndpoint
             userFilters: $userFilters,
             context: $context,
             contextualTuples: $contextualTuples,
-            consistency: $consistency,
             storeId: $storeId,
             authorizationModelId: $authorizationModelId,
             options: $options,

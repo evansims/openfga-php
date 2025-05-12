@@ -12,11 +12,16 @@ final class StoreId extends Model implements StoreIdInterface
      * @param string $id The store ID.
      */
     public function __construct(
-        public string $id,
+        private string $id,
     ) {
     }
 
     public function __toString(): string
+    {
+        return $this->id;
+    }
+
+    public function getId(): string
     {
         return $this->id;
     }
@@ -39,6 +44,13 @@ final class StoreId extends Model implements StoreIdInterface
     {
         return new self(
             id: $store->id,
+        );
+    }
+
+    public static function fromString(string $id): self
+    {
+        return new self(
+            id: $id,
         );
     }
 }

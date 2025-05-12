@@ -7,9 +7,19 @@ namespace OpenFGA\Models;
 final class ConditionParameter extends Model implements ConditionParameterInterface
 {
     public function __construct(
-        public TypeName $typeName,
-        public ?ConditionParametersInterface $genericTypes = null,
+        private TypeName $typeName,
+        private ?ConditionParametersInterface $genericTypes = null,
     ) {
+    }
+
+    public function getGenericTypes(): ?ConditionParametersInterface
+    {
+        return $this->genericTypes;
+    }
+
+    public function getTypeName(): TypeName
+    {
+        return $this->typeName;
     }
 
     public function toArray(): array

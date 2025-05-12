@@ -14,17 +14,37 @@ final class RelationReference extends Model implements RelationReferenceInterfac
     /**
      * Constructs a new RelationReference object.
      *
-     * @param string        $type
-     * @param null|string   $relation
-     * @param null|Wildcard $wildcard
-     * @param null|string   $condition The name of a condition that is enforced over the allowed relation.
+     * @param string                 $type
+     * @param null|string            $relation
+     * @param null|WildcardInterface $wildcard
+     * @param null|string            $condition The name of a condition that is enforced over the allowed relation.
      */
     public function __construct(
-        public string $type,
-        public ?string $relation = null,
-        public ?Wildcard $wildcard = null,
-        public ?string $condition = null,
+        private string $type,
+        private ?string $relation = null,
+        private ?WildcardInterface $wildcard = null,
+        private ?string $condition = null,
     ) {
+    }
+
+    public function getCondition(): ?string
+    {
+        return $this->condition;
+    }
+
+    public function getRelation(): ?string
+    {
+        return $this->relation;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function getWildcard(): ?WildcardInterface
+    {
+        return $this->wildcard;
     }
 
     public function toArray(): array
@@ -41,9 +61,9 @@ final class RelationReference extends Model implements RelationReferenceInterfac
     {
         return new self(
             type: $data['type'],
-            relation: $data['relation'],
+            relation: $data['relation'] ?? null,
             wildcard: $data['wildcard'] ? Wildcard::fromArray($data['wildcard']) : null,
-            condition: $data['condition'],
+            condition: $data['condition'] ?? null,
         );
     }
 }

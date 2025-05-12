@@ -7,11 +7,31 @@ namespace OpenFGA\Models;
 final class AuthorizationModel extends Model implements AuthorizationModelInterface
 {
     public function __construct(
-        public string $id,
-        public string $schemaVersion,
-        public TypeDefinitions $typeDefinitions,
-        public ?Conditions $conditions = null,
+        private string $id,
+        private string $schemaVersion,
+        private TypeDefinitionsInterface $typeDefinitions,
+        private ?ConditionsInterface $conditions = null,
     ) {
+    }
+
+    public function getConditions(): ?ConditionsInterface
+    {
+        return $this->conditions;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getSchemaVersion(): string
+    {
+        return $this->schemaVersion;
+    }
+
+    public function getTypeDefinitions(): TypeDefinitionsInterface
+    {
+        return $this->typeDefinitions;
     }
 
     public function toArray(): array

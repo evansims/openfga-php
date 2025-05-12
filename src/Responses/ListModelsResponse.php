@@ -11,43 +11,34 @@ use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
 use function is_array;
-use function is_string;
 
-final class ListAuthorizationModelsResponse extends Response
+final class ListModelsResponse implements ListModelsResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public AuthorizationModels $authorizationModels,
-        public ?string $continuationToken = null,
+        private AuthorizationModels $authorizationModels,
+        private ?string $continuationToken = null,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getAuthorizationModels(): AuthorizationModels
     {
-        return [
-            'authorization_models' => $this->authorizationModels->toArray(),
-            'continuation_token' => $this->continuationToken,
-        ];
+        return $this->authorizationModels;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
+    public function getContinuationToken(): ?string
+    {
+        return $this->continuationToken;
+    }
+
     public static function fromArray(array $data): static
     {
         assert(isset($data['authorization_models']) && is_array($data['authorization_models']));
 
-        $continuationToken = isset($data['continuation_token']) && is_string($data['continuation_token'])
-            ? $data['continuation_token']
-            : null;
-
         return new self(
             authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
-            continuationToken: $continuationToken,
+            continuationToken: $data['continuation_token'] ?? null,
         );
     }
 
@@ -68,7 +59,7 @@ final class ListAuthorizationModelsResponse extends Response
             );
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

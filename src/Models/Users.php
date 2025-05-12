@@ -4,29 +4,31 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Users extends Model implements UsersInterface
+final class Users extends ModelCollection implements UsersInterface
 {
-    public function __construct(
-        private array $users,
-    ) {
+    public function add(UserInterface $user): void
+    {
+        $this->models[] = $user;
     }
 
-    public function getUsers(): array
+    public function current(): UserInterface
     {
-        return $this->users;
+        return $this->models[$this->key()];
     }
 
-    public function toArray(): array
+    public function offsetGet(mixed $offset): ?UserInterface
     {
-        return [
-            'users' => $this->users,
-        ];
+        return $this->models[$offset] ?? null;
     }
 
     public static function fromArray(array $data): self
     {
-        return new self(
-            users: $data['users'],
-        );
+        $collection = new self();
+
+        foreach ($data as $model) {
+            $collection->add(User::fromArray($model));
+        }
+
+        return $collection;
     }
 }

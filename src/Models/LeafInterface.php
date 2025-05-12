@@ -6,9 +6,9 @@ namespace OpenFGA\Models;
 
 interface LeafInterface extends ModelInterface
 {
-    public function getComputed(): ?Computed;
+    public function getComputed(): ?ComputedInterface;
 
-    public function getTupleToUserset(): ?UsersetTreeTupleToUserset;
+    public function getTupleToUserset(): ?UsersetTreeTupleToUsersetInterface;
 
-    public function getUsers(): ?Users;
+    public function getUsers(): ?UsersetInterface;
 }

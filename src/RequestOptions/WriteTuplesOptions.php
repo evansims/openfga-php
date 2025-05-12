@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\RequestOptions;
 
-final class GetAuthorizationModelOptions extends RequestOptions
+final class WriteTuplesOptions extends RequestOptions
 {
     public function getQueryParameters(): array
     {

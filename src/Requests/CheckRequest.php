@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, ConsistencyPreference, ContextualTupleKeysInterface, StoreIdInterface, TupleKeyInterface};
+use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeysInterface, StoreIdInterface, TupleKeyInterface};
 use OpenFGA\RequestOptions\CheckOptions;
 
 use function assert;
@@ -13,25 +13,19 @@ final class CheckRequest
 {
     public function __construct(
         private RequestFactoryInterface $requestFactory,
+        private StoreIdInterface $storeId,
+        private AuthorizationModelIdInterface $authorizationModelId,
         private TupleKeyInterface $tupleKey,
-        private ?bool $trace,
-        private ?object $context,
-        private ?ContextualTupleKeysInterface $contextualTuples,
-        private ?ConsistencyPreference $consistency,
-        private ?StoreIdInterface $storeId,
-        private ?AuthorizationModelIdInterface $authorizationModelId,
-        private CheckOptions $options,
+        private ?bool $trace = null,
+        private ?object $context = null,
+        private ?ContextualTupleKeysInterface $contextualTuples = null,
+        private ?CheckOptions $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): ?AuthorizationModelIdInterface
+    public function getAuthorizationModelId(): AuthorizationModelIdInterface
     {
         return $this->authorizationModelId;
-    }
-
-    public function getConsistency(): ?ConsistencyPreference
-    {
-        return $this->consistency;
     }
 
     public function getContext(): ?object
@@ -44,7 +38,12 @@ final class CheckRequest
         return $this->contextualTuples;
     }
 
-    public function getStoreId(): ?StoreIdInterface
+    public function getOptions(): ?CheckOptions
+    {
+        return $this->options;
+    }
+
+    public function getStoreId(): StoreIdInterface
     {
         return $this->storeId;
     }
@@ -62,7 +61,7 @@ final class CheckRequest
     public function toJson(): string
     {
         $body = [];
-        $tupleKey = $this->tupleKey->toArray();
+        $tupleKey = $this->getTupleKey()->toArray();
 
         assert(isset($tupleKey['user'], $tupleKey['relation'], $tupleKey['object']));
 
@@ -72,24 +71,24 @@ final class CheckRequest
             'object' => $tupleKey['object'],
         ];
 
-        if (null !== $this->trace) {
-            $body['trace'] = $this->trace;
+        if (null !== $this->getContextualTuples()) {
+            $body['contextual_tuples'] = $this->getContextualTuples()->toArray();
         }
 
-        if (null !== $this->context) {
-            $body['context'] = $this->context;
+        if (null !== $this->getAuthorizationModelId()) {
+            $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
         }
 
-        if (null !== $this->contextualTuples) {
-            $body['contextual_tuples'] = $this->contextualTuples->toArray();
+        if (null !== $this->getTrace()) {
+            $body['trace'] = $this->getTrace();
         }
 
-        if (null !== $this->consistency) {
-            $body['consistency_preference'] = $this->consistency->value;
+        if (null !== $this->getContext()) {
+            $body['context'] = $this->getContext();
         }
 
-        if (null !== $this->authorizationModelId) {
-            $body['authorization_model_id'] = (string) $this->authorizationModelId;
+        if (null !== $this->getOptions()?->getConsistency()) {
+            $body['consistency'] = (string) $this->getOptions()?->getConsistency();
         }
 
         return json_encode($body, JSON_THROW_ON_ERROR);
@@ -100,8 +99,8 @@ final class CheckRequest
         $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
 
         return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . $this->storeId . '/check'),
-            options: $this->options,
+            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->storeId . '/check'),
+            options: $this->getOptions(),
             body: $body,
             headers: $this->requestFactory->getEndpointHeaders(),
         );

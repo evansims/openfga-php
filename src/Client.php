@@ -7,7 +7,7 @@ namespace OpenFGA;
 use Exception;
 use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthentication, NullCredentialAuthentication};
 use OpenFGA\Credentials\ClientCredentialInterface;
-use OpenFGA\Endpoints\{AssertionsEndpoint, AuthorizationModelsEndpoint, RelationshipQueriesEndpoint, RelationshipTuplesEndpoint, StoresEndpoint};
+use OpenFGA\Endpoints\{AssertionsEndpoint, ModelsEndpoint, QueriesEndpoint, StoresEndpoint, TuplesEndpoint};
 use OpenFGA\Requests\RequestFactory;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
@@ -15,13 +15,13 @@ final class Client implements ClientInterface
 {
     use AssertionsEndpoint;
 
-    use AuthorizationModelsEndpoint;
+    use ModelsEndpoint;
 
-    use RelationshipQueriesEndpoint;
-
-    use RelationshipTuplesEndpoint;
+    use QueriesEndpoint;
 
     use StoresEndpoint;
+
+    use TuplesEndpoint;
 
     public const string VERSION = '0.2.0';
 

@@ -10,15 +10,25 @@ use OpenFGA\Models\ModelInterface;
 class TestModel extends Model implements ModelInterface
 {
     public function __construct(
-        public string $property1 = 'test1',
-        public int $property2 = 123
+        private string $property1 = 'test1',
+        private int $property2 = 123
     ) {}
+
+    public function getProperty1(): string
+    {
+        return $this->property1;
+    }
+
+    public function getProperty2(): int
+    {
+        return $this->property2;
+    }
 
     public function toArray(): array
     {
         return [
-            'property1' => $this->property1,
-            'property2' => $this->property2,
+            'property1' => $this->getProperty1(),
+            'property2' => $this->getProperty2(),
         ];
     }
 

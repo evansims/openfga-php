@@ -6,4 +6,7 @@ namespace OpenFGA\Models;
 
 interface ConditionParameterInterface extends ModelInterface
 {
+    public function getGenericTypes(): ?ConditionParametersInterface;
+
+    public function getTypeName(): TypeName;
 }

@@ -9,55 +9,54 @@ use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+use function assert;
 use function is_array;
 use function is_string;
 
-final class CreateStoreResponse extends Response
+final class CreateStoreResponse implements CreateStoreResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
-        public string $id,
-        public string $name,
-        public DateTimeImmutable $createdAt,
-        public DateTimeImmutable $updatedAt,
+        private string $id,
+        private string $name,
+        private DateTimeImmutable $createdAt,
+        private DateTimeImmutable $updatedAt,
     ) {
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function toArray(): array
+    public function getCreatedAt(): DateTimeImmutable
     {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'created_at' => $this->createdAt->format('Y-m-d\TH:i:sP'),
-            'updated_at' => $this->updatedAt->format('Y-m-d\TH:i:sP'),
-        ];
+        return $this->createdAt;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getUpdatedAt(): DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
     public static function fromArray(array $data): static
     {
-        $id = isset($data['id']) && is_string($data['id']) ? $data['id'] : '';
-        $name = isset($data['name']) && is_string($data['name']) ? $data['name'] : '';
-
-        $createdAtStr = isset($data['created_at']) && is_string($data['created_at'])
-            ? $data['created_at']
-            : '2023-01-01T00:00:00+00:00';
-
-        $updatedAtStr = isset($data['updated_at']) && is_string($data['updated_at'])
-            ? $data['updated_at']
-            : '2023-01-01T00:00:00+00:00';
+        assert(isset($data['id']) && is_string($data['id']));
+        assert(isset($data['name']) && is_string($data['name']));
+        assert(isset($data['created_at']) && is_string($data['created_at']));
+        assert(isset($data['updated_at']) && is_string($data['updated_at']));
 
         return new self(
-            id: $id,
-            name: $name,
-            createdAt: new DateTimeImmutable($createdAtStr),
-            updatedAt: new DateTimeImmutable($updatedAtStr),
+            id: $data['id'],
+            name: $data['name'],
+            createdAt: new DateTimeImmutable($data['created_at']),
+            updatedAt: new DateTimeImmutable($data['updated_at']),
         );
     }
 
@@ -71,16 +70,11 @@ final class CreateStoreResponse extends Response
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (201 === $response->getStatusCode() && is_array($data) && isset($data['id']) && is_string($data['id']) && isset($data['name']) && is_string($data['name']) && isset($data['created_at']) && is_string($data['created_at']) && isset($data['updated_at']) && is_string($data['updated_at'])) {
-            return new static(
-                id: $data['id'],
-                name: $data['name'],
-                createdAt: new DateTimeImmutable($data['created_at']),
-                updatedAt: new DateTimeImmutable($data['updated_at']),
-            );
+        if (201 === $response->getStatusCode() && is_array($data)) {
+            return self::fromArray($data);
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

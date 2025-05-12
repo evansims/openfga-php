@@ -7,11 +7,31 @@ namespace OpenFGA\Models;
 final class ContextualTupleKey extends Model implements ContextualTupleKeyInterface
 {
     public function __construct(
-        public string $user,
-        public string $relation,
-        public string $object,
-        public string $condition,
+        private string $user,
+        private string $relation,
+        private string $object,
+        private string $condition,
     ) {
+    }
+
+    public function getCondition(): string
+    {
+        return $this->condition;
+    }
+
+    public function getObject(): string
+    {
+        return $this->object;
+    }
+
+    public function getRelation(): string
+    {
+        return $this->relation;
+    }
+
+    public function getUser(): string
+    {
+        return $this->user;
     }
 
     public function toArray(): array

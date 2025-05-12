@@ -6,4 +6,5 @@ namespace OpenFGA\Models;
 
 interface SourceInfoInterface extends ModelInterface
 {
+    public function getFile(): string;
 }

@@ -7,23 +7,23 @@ namespace OpenFGA\Models;
 final class Leaf extends Model implements LeafInterface
 {
     public function __construct(
-        private ?Users $users,
-        private ?Computed $computed,
-        private ?UsersetTreeTupleToUserset $tupleToUserset,
+        private ?UsersetInterface $users,
+        private ?ComputedInterface $computed,
+        private ?UsersetTreeTupleToUsersetInterface $tupleToUserset,
     ) {
     }
 
-    public function getComputed(): ?Computed
+    public function getComputed(): ?ComputedInterface
     {
         return $this->computed;
     }
 
-    public function getTupleToUserset(): ?UsersetTreeTupleToUserset
+    public function getTupleToUserset(): ?UsersetTreeTupleToUsersetInterface
     {
         return $this->tupleToUserset;
     }
 
-    public function getUsers(): ?Users
+    public function getUsers(): ?UsersetInterface
     {
         return $this->users;
     }

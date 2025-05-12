@@ -4,33 +4,27 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelId, ConsistencyPreference, ContextualTupleKeys, StoreId};
+use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeysInterface, StoreIdInterface};
 use OpenFGA\RequestOptions\ListObjectsOptions;
 
 final class ListObjectsRequest
 {
     public function __construct(
         private RequestFactory $requestFactory,
+        private StoreIdInterface $storeId,
         private string $type,
         private string $relation,
         private string $user,
-        private ?object $context,
-        private ?ContextualTupleKeys $contextualTuples,
-        private ?ConsistencyPreference $consistency,
-        private ?StoreId $storeId,
-        private ?AuthorizationModelId $authorizationModelId,
-        private ListObjectsOptions $options,
+        private ?AuthorizationModelIdInterface $authorizationModelId = null,
+        private ?object $context = null,
+        private ?ContextualTupleKeysInterface $contextualTuples = null,
+        private ?ListObjectsOptions $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): ?AuthorizationModelId
+    public function getAuthorizationModelId(): ?AuthorizationModelIdInterface
     {
         return $this->authorizationModelId;
-    }
-
-    public function getConsistency(): ?ConsistencyPreference
-    {
-        return $this->consistency;
     }
 
     public function getContext(): ?object
@@ -38,9 +32,14 @@ final class ListObjectsRequest
         return $this->context;
     }
 
-    public function getContextualTuples(): ?ContextualTupleKeys
+    public function getContextualTuples(): ?ContextualTupleKeysInterface
     {
         return $this->contextualTuples;
+    }
+
+    public function getOptions(): ?ListObjectsOptions
+    {
+        return $this->options;
     }
 
     public function getRelation(): string
@@ -48,7 +47,7 @@ final class ListObjectsRequest
         return $this->relation;
     }
 
-    public function getStoreId(): ?StoreId
+    public function getStoreId(): StoreIdInterface
     {
         return $this->storeId;
     }
@@ -67,24 +66,24 @@ final class ListObjectsRequest
     {
         $body = [];
 
-        $body['type'] = $this->type;
-        $body['relation'] = $this->relation;
-        $body['user'] = $this->user;
+        $body['type'] = $this->getType();
+        $body['relation'] = $this->getRelation();
+        $body['user'] = $this->getUser();
 
-        if (null !== $this->context) {
-            $body['context'] = $this->context;
+        if (null !== $this->getAuthorizationModelId()) {
+            $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
         }
 
-        if (null !== $this->contextualTuples) {
-            $body['contextual_tuples'] = $this->contextualTuples->toArray();
+        if (null !== $this->getContextualTuples()) {
+            $body['contextual_tuples'] = $this->getContextualTuples()->toArray();
         }
 
-        if (null !== $this->consistency) {
-            $body['consistency'] = $this->consistency->value;
+        if (null !== $this->getContext()) {
+            $body['context'] = $this->getContext();
         }
 
-        if (null !== $this->authorizationModelId) {
-            $body['authorization_model_id'] = (string) $this->authorizationModelId;
+        if (null !== $this->getOptions()?->getConsistency()) {
+            $body['consistency'] = (string) $this->getOptions()?->getConsistency();
         }
 
         return json_encode($body, JSON_THROW_ON_ERROR);
@@ -95,8 +94,8 @@ final class ListObjectsRequest
         $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
 
         return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . $this->storeId . '/list-objects'),
-            options: $this->options,
+            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/list-objects'),
+            options: $this->getOptions(),
             body: $body,
             headers: $this->requestFactory->getEndpointHeaders(),
         );

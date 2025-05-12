@@ -7,8 +7,13 @@ namespace OpenFGA\Models;
 final class SourceInfo extends Model implements SourceInfoInterface
 {
     public function __construct(
-        public string $file,
+        private string $file,
     ) {
+    }
+
+    public function getFile(): string
+    {
+        return $this->file;
     }
 
     public function toArray(): array

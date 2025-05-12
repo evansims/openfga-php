@@ -7,9 +7,19 @@ namespace OpenFGA\Models;
 final class ConditionMetadata extends Model implements ConditionMetadataInterface
 {
     public function __construct(
-        public string $module,
-        public SourceInfoInterface $sourceInfo,
+        private string $module,
+        private SourceInfoInterface $sourceInfo,
     ) {
+    }
+
+    public function getModule(): string
+    {
+        return $this->module;
+    }
+
+    public function getSourceInfo(): SourceInfoInterface
+    {
+        return $this->sourceInfo;
     }
 
     public function toArray(): array

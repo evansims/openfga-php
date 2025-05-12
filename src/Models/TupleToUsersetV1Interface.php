@@ -6,4 +6,7 @@ namespace OpenFGA\Models;
 
 interface TupleToUsersetV1Interface extends ModelInterface
 {
+    public function getComputedUserset(): ObjectRelation;
+
+    public function getTupleset(): ObjectRelation;
 }

@@ -7,15 +7,12 @@ namespace OpenFGA\Responses;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-final class DeleteStoreResponse extends Response
+final class DeleteStoreResponse implements DeleteStoreResponseInterface
 {
+    use ResponseTrait;
+
     public function __construct(
     ) {
-    }
-
-    public function toArray(): array
-    {
-        return [];
     }
 
     public static function fromArray(array $data): static
@@ -29,7 +26,7 @@ final class DeleteStoreResponse extends Response
             return new static();
         }
 
-        Response::handleResponseException($response);
+        self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException('');
     }

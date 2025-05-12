@@ -78,8 +78,8 @@ it('can create Store from array', function () {
     expect($store)->toBeInstanceOf(StoreInterface::class)
         ->and($store->id)->toBe($data['id'])
         ->and($store->name)->toBe($data['name'])
-        ->and($store->createdAt->format('Y-m-d\TH:i:sP'))->toBe($data['created_at'])
-        ->and($store->updatedAt->format('Y-m-d\TH:i:sP'))->toBe($data['updated_at'])
+        ->and($store->createdAt->format('Y-m-d\TH:i:s\Z'))->toBe($data['created_at'])
+        ->and($store->updatedAt->format('Y-m-d\TH:i:s\Z'))->toBe($data['updated_at'])
         ->and($store->deletedAt)->toBeNull();
 });
 
@@ -94,7 +94,7 @@ it('can create Store from array with deletedAt', function () {
 
     $store = Store::fromArray($data);
 
-    expect($store->deletedAt->format('Y-m-d\TH:i:sP'))->toBe($data['deleted_at']);
+    expect($store->deletedAt->format('Y-m-d\TH:i:s\Z'))->toBe($data['deleted_at']);
 });
 
 it('can create an empty Stores collection', function () {
