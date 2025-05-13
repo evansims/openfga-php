@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface ConditionParametersInterface extends ModelCollectionInterface
+use JsonSerializable;
+
+interface ConditionParametersInterface extends ModelCollectionInterface, JsonSerializable
 {
     /**
      * Add a condition to the collection.
@@ -28,4 +30,14 @@ interface ConditionParametersInterface extends ModelCollectionInterface
      * @return null|ConditionParameterInterface
      */
     public function offsetGet(mixed $offset): ?ConditionParameterInterface;
+
+    /**
+     * @return array<int, array{type_name: string, generic_types?: array{module: string, source_info: array{file: string}}}
+     */
+    public function jsonSerialize(): array;
+
+    /**
+     * @param array<int, array{type_name: string, generic_types?: array{module: string, source_info: array{file: string}}}> $data
+     */
+    public static function fromArray(array $data): static;
 }

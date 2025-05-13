@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class TupleKeys extends ModelCollection implements TupleKeysInterface
+final class TupleKeys implements TupleKeysInterface
 {
+    use CollectionTrait;
+
     public function add(TupleKeyInterface $tupleKey): void
     {
         $this->models[] = $tupleKey;
@@ -21,12 +23,12 @@ final class TupleKeys extends ModelCollection implements TupleKeysInterface
         return $this->models[$offset] ?? null;
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(TupleKeyType $type, array $data): self
     {
         $collection = new self();
 
         foreach ($data as $model) {
-            $collection->add(TupleKey::fromArray($model));
+            $collection->add(TupleKey::fromArray($type, $model));
         }
 
         return $collection;

@@ -9,4 +9,8 @@ interface DifferenceV1Interface extends ModelInterface
     public function getBase(): UsersetInterface;
 
     public function getSubtract(): UsersetInterface;
+
+    public function jsonSerialize(): array;
+
+    public static function fromArray(array $data): self;
 }

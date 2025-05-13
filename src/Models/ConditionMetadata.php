@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class ConditionMetadata extends Model implements ConditionMetadataInterface
+final class ConditionMetadata implements ConditionMetadataInterface
 {
+    use ModelTrait;
+
     public function __construct(
         private string $module,
         private SourceInfoInterface $sourceInfo,
@@ -22,11 +24,11 @@ final class ConditionMetadata extends Model implements ConditionMetadataInterfac
         return $this->sourceInfo;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'module' => $this->module,
-            'source_info' => $this->sourceInfo->toArray(),
+            'source_info' => $this->sourceInfo->jsonSerialize(),
         ];
     }
 

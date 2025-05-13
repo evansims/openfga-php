@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Condition extends Model implements ConditionInterface
+final class Condition implements ConditionInterface
 {
     /**
      * Construct a Condition object.
@@ -42,13 +42,13 @@ final class Condition extends Model implements ConditionInterface
         return $this->parameters;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'name' => $this->name,
             'expression' => $this->expression,
-            'parameters' => $this->parameters?->toArray(),
-            'metadata' => $this->metadata?->toArray(),
+            'parameters' => $this->parameters?->jsonSerialize(),
+            'metadata' => $this->metadata?->jsonSerialize(),
         ];
     }
 

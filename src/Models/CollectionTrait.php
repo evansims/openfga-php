@@ -9,7 +9,7 @@ use OutOfBoundsException;
 
 use function count;
 
-abstract class ModelCollection implements ModelCollectionInterface
+trait CollectionTrait
 {
     /**
      * Array of ModelInterface objects.
@@ -73,15 +73,15 @@ abstract class ModelCollection implements ModelCollectionInterface
         $this->position = 0;
     }
 
-    final public function toArray(): array
-    {
-        return array_map(static fn ($model) => $model->toArray(), $this->models);
-    }
-
     final public function valid(): bool
     {
         $keys = array_keys($this->models);
 
         return isset($keys[$this->position]);
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_map(static fn ($model) => $model->jsonSerialize(), $this->models);
     }
 }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class AuthorizationModels extends ModelCollection implements AuthorizationModelsInterface
+final class AuthorizationModels implements AuthorizationModelsInterface
 {
+    use CollectionTrait;
+
     public function add(AuthorizationModelInterface $authorizationModel): void
     {
         $this->models[] = $authorizationModel;

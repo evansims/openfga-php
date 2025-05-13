@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Computed extends Model implements ComputedInterface
+final class Computed implements ComputedInterface
 {
+    use ModelTrait;
+
     public function __construct(
         private string $userset,
     ) {
@@ -16,7 +18,7 @@ final class Computed extends Model implements ComputedInterface
         return $this->userset;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'userset' => $this->userset,

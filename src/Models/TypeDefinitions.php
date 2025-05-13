@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class TypeDefinitions extends ModelCollection implements TypeDefinitionsInterface
+final class TypeDefinitions implements TypeDefinitionsInterface
 {
+    use CollectionTrait;
+
     public function add(TypeDefinitionInterface $typeDefinition): void
     {
         $this->models[] = $typeDefinition;

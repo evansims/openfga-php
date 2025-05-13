@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Conditions extends ModelCollection implements ConditionsInterface
+final class Conditions implements ConditionsInterface
 {
+    use CollectionTrait;
+
     public function add(ConditionInterface $condition): void
     {
         $this->models[] = $condition;

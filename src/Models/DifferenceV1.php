@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
-
-final class DifferenceV1 extends Model implements DifferenceV1Interface
+final class DifferenceV1 implements DifferenceV1Interface
 {
+    use ModelTrait;
+
     public function __construct(
         private UsersetInterface $base,
         private UsersetInterface $subtract,
@@ -24,18 +24,20 @@ final class DifferenceV1 extends Model implements DifferenceV1Interface
         return $this->subtract;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
-            'base' => $this->base->toArray(),
-            'subtract' => $this->subtract->toArray(),
+            'base' => $this->base->jsonSerialize(),
+            'subtract' => $this->subtract->jsonSerialize(),
         ];
     }
 
     public static function fromArray(array $data): self
     {
-        $base = $data['base'] ?? throw new InvalidArgumentException('Missing base');
-        $subtract = $data['subtract'] ?? throw new InvalidArgumentException('Missing subtract');
+        assert(isset($data['base']) && isset($data['subtract']));
+
+        $base = $data['base'];
+        $subtract = $data['subtract'];
 
         return new self(
             base: Userset::fromArray($base),

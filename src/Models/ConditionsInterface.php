@@ -28,4 +28,14 @@ interface ConditionsInterface extends ModelCollectionInterface
      * @return null|ConditionInterface
      */
     public function offsetGet(mixed $offset): ?ConditionInterface;
+
+    /**
+     * @return array<int, array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}>}
+     */
+    public function jsonSerialize(): array;
+
+    /**
+     * @param array<int, array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}> $data
+     */
+    public static function fromArray(array $data): static;
 }

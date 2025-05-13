@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class ConditionParameter extends Model implements ConditionParameterInterface
+final class ConditionParameter implements ConditionParameterInterface
 {
     public function __construct(
         private TypeName $typeName,
@@ -22,11 +22,11 @@ final class ConditionParameter extends Model implements ConditionParameterInterf
         return $this->typeName;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
-            'type_name' => $this->typeName->value,
-            'generic_types' => $this->genericTypes?->toArray(),
+            'type_name' => (string) $this->typeName,
+            'generic_types' => $this->genericTypes?->jsonSerialize(),
         ];
     }
 

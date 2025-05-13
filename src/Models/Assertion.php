@@ -6,14 +6,16 @@ namespace OpenFGA\Models;
 
 final class Assertion implements AssertionInterface
 {
+    use ModelTrait;
+
     /**
-     * @param AssertionTupleKeyInterface $tupleKey         Tuple key for assertion.
-     * @param bool                       $expectation      Whether the assertion is expected to be true or false.
-     * @param null|TupleKeysInterface    $contextualTuples Contextual tuples for assertion.
-     * @param null|array                 $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
+     * @param TupleKeyInterface       $tupleKey         Tuple key for assertion.
+     * @param bool                    $expectation      Whether the assertion is expected to be true or false.
+     * @param null|TupleKeysInterface $contextualTuples Contextual tuples for assertion.
+     * @param null|array              $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
      */
     public function __construct(
-        private AssertionTupleKeyInterface $tupleKey,
+        private TupleKeyInterface $tupleKey,
         private bool $expectation,
         private ?TupleKeysInterface $contextualTuples = null,
         private ?array $context = null,
@@ -35,19 +37,27 @@ final class Assertion implements AssertionInterface
         return $this->expectation;
     }
 
-    public function getTupleKey(): AssertionTupleKeyInterface
+    public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;
     }
 
     public function jsonSerialize(): array
     {
-        return [
-            'tuple_key' => $this->tupleKey->toArray(),
-            'expectation' => $this->expectation,
-            'contextual_tuples' => $this->contextualTuples?->toArray(),
-            'context' => $this->context,
-        ];
+        $response = [];
+
+        $response['tuple_key'] = $this->getTupleKey()->jsonSerialize();
+        $response['expectation'] = $this->getExpectation();
+
+        if (null !== $this->getContextualTuples()) {
+            $response['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
+        }
+
+        if (null !== $this->getContext()) {
+            $response['context'] = $this->getContext();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
@@ -57,7 +67,7 @@ final class Assertion implements AssertionInterface
         $contextualTuples = $data['contextual_tuples'] ?? null;
         $context = $data['context'] ?? null;
 
-        $tupleKey = $tupleKey ? AssertionTupleKey::fromArray($tupleKey) : null;
+        $tupleKey = $tupleKey ? TupleKey::fromArray(TupleKeyType::ASSERTION_TUPLE_KEY, $tupleKey) : null;
         $expectation = $expectation ? (bool) $expectation : false;
         $contextualTuples = $contextualTuples ? TupleKeys::fromArray($contextualTuples) : null;
         $context = $context ? (array) $context : null;

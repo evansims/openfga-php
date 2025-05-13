@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class AuthorizationModelId extends Model implements AuthorizationModelIdInterface
+final class AuthorizationModelId implements AuthorizationModelIdInterface
 {
+    use ModelTrait;
+
     /**
-     * Constructor.
-     *
      * @param string $id The Authorization Model ID.
      */
     public function __construct(
@@ -21,7 +21,7 @@ final class AuthorizationModelId extends Model implements AuthorizationModelIdIn
         return $this->id;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'id' => $this->id,
@@ -30,6 +30,8 @@ final class AuthorizationModelId extends Model implements AuthorizationModelIdIn
 
     public static function fromArray(array $data): self
     {
+        assert(isset($data['id']), 'Missing id');
+
         return new self(
             id: $data['id'],
         );
@@ -38,7 +40,7 @@ final class AuthorizationModelId extends Model implements AuthorizationModelIdIn
     public static function fromAuthorizationModel(AuthorizationModel $authorizationModel): self
     {
         return new self(
-            id: $authorizationModel->id,
+            id: $authorizationModel->getId(),
         );
     }
 

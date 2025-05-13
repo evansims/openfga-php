@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class AuthorizationModel extends Model implements AuthorizationModelInterface
+final class AuthorizationModel implements AuthorizationModelInterface
 {
+    use ModelTrait;
+
     public function __construct(
         private string $id,
         private string $schemaVersion,
@@ -34,18 +36,27 @@ final class AuthorizationModel extends Model implements AuthorizationModelInterf
         return $this->typeDefinitions;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
-        return [
+        $response = [
             'id' => $this->id,
             'schema_version' => $this->schemaVersion,
-            'type_definitions' => $this->typeDefinitions->toArray(),
-            'conditions' => $this->conditions?->toArray(),
+            'type_definitions' => $this->typeDefinitions->jsonSerialize(),
         ];
+
+        if ($this->conditions) {
+            $response['conditions'] = $this->conditions->jsonSerialize();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
     {
+        assert(isset($data['id']), 'Missing id');
+        assert(isset($data['schema_version']), 'Missing schema_version');
+        assert(isset($data['type_definitions']), 'Missing type_definitions');
+
         return new self(
             id: $data['id'],
             schemaVersion: $data['schema_version'],

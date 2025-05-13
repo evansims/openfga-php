@@ -6,15 +6,19 @@ namespace OpenFGA\Models;
 
 interface UsersetInterface extends ModelInterface
 {
-    public function getComputedUserset(): ?ObjectRelation;
+    public function getComputedUserset(): ?ObjectRelationInterface;
 
-    public function getDifference(): ?DifferenceV1;
+    public function getDifference(): ?DifferenceV1Interface;
 
-    public function getDirect(): ?DirectUserset;
+    public function getDirect(): ?DirectUsersetInterface;
 
-    public function getIntersection(): ?Usersets;
+    public function getIntersection(): ?UsersetsInterface;
 
-    public function getTupleToUserset(): ?TupleToUsersetV1;
+    public function getTupleToUserset(): ?TupleToUsersetV1Interface;
 
-    public function getUnion(): ?Usersets;
+    public function getUnion(): ?UsersetsInterface;
+
+    public function jsonSerialize(): array;
+
+    public static function fromArray(array $data): self;
 }

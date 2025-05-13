@@ -8,7 +8,7 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
-interface ModelCollectionInterface extends ArrayAccess, Countable, Iterator, ModelInterface
+interface CollectionInterface extends ArrayAccess, Countable, Iterator, ModelInterface
 {
     public function count(): int;
 

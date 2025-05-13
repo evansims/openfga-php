@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Assertions extends ModelCollection implements AssertionsInterface
+final class Assertions implements AssertionsInterface
 {
+    use CollectionTrait;
+
     public function add(AssertionInterface $assertion): void
     {
         $this->models[] = $assertion;

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class ConditionParameters extends ModelCollection implements ConditionParametersInterface
+final class ConditionParameters implements ConditionParametersInterface
 {
+    use CollectionTrait;
+
     public function add(ConditionParameterInterface $store): void
     {
         $this->models[] = $store;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface ModelInterface
+use JsonSerializable;
+
+interface ModelInterface extends JsonSerializable
 {
 }

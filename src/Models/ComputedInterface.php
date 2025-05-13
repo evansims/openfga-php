@@ -7,4 +7,18 @@ namespace OpenFGA\Models;
 interface ComputedInterface extends ModelInterface
 {
     public function getUserset(): string;
+
+    /**
+     * @return array{
+     *     userset: string,
+     * }
+     */
+    public function jsonSerialize(): array;
+
+    /**
+     * @param array{
+     *     userset: string,
+     * } $data
+     */
+    public static function fromArray(array $data): static;
 }

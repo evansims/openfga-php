@@ -6,17 +6,19 @@ namespace OpenFGA\Models;
 
 use InvalidArgumentException;
 
-final class TypeDefinition extends Model implements TypeDefinitionInterface
+final class TypeDefinition implements TypeDefinitionInterface
 {
+    use CollectionTrait;
+
     /**
      * @param string                               $type      The type of the object that this definition is for.
      * @param null|array<string, UsersetInterface> $relations An array of relation names to Userset definitions.
-     * @param null|Metadata                        $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
+     * @param null|MetadataInterface               $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
      */
     public function __construct(
         private string $type,
         private ?array $relations = null,
-        private ?Metadata $metadata = null,
+        private ?MetadataInterface $metadata = null,
     ) {
         foreach ($relations as $relation => $userset) {
             if (! $userset instanceof UsersetInterface) {
@@ -27,7 +29,7 @@ final class TypeDefinition extends Model implements TypeDefinitionInterface
         }
     }
 
-    public function getMetadata(): ?Metadata
+    public function getMetadata(): ?MetadataInterface
     {
         return $this->metadata;
     }
@@ -42,25 +44,34 @@ final class TypeDefinition extends Model implements TypeDefinitionInterface
         return $this->type;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
-        return [
+        $response = [
             'type' => $this->type,
-            'relations' => $this->relations ? array_map(static fn (UsersetInterface $userset): array => $userset->toArray(), $this->relations) : null,
-            'metadata' => $this->metadata ? $this->metadata->toArray() : null,
         ];
+
+        if ($this->getRelations()) {
+            $response['relations'] = array_map(static fn (UsersetInterface $userset): array => $userset->jsonSerialize(), $this->getRelations());
+        }
+
+        if ($this->getMetadata()) {
+            $response['metadata'] = $this->getMetadata()->jsonSerialize();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
     {
         $relations = [];
+
         foreach ($data['relations'] as $relation => $userset) {
             $relations[$relation] = Userset::fromArray($userset);
         }
 
         return new self(
             type: $data['type'],
-            relations: $relations ?? null,
+            relations: $relations !== [] ? $relations : null,
             metadata: isset($data['metadata']) ? Metadata::fromArray($data['metadata']) : null,
         );
     }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class SourceInfo extends Model implements SourceInfoInterface
+final class SourceInfo implements SourceInfoInterface
 {
+    use ModelTrait;
+
     public function __construct(
         private string $file,
     ) {
@@ -16,7 +18,7 @@ final class SourceInfo extends Model implements SourceInfoInterface
         return $this->file;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
             'file' => $this->file,

@@ -4,58 +4,79 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Userset extends Model implements UsersetInterface
+final class Userset implements UsersetInterface
 {
+    use ModelTrait;
+
     public function __construct(
-        private ?DirectUserset $direct = null,
-        private ?ObjectRelation $computedUserset = null,
-        private ?TupleToUsersetV1 $tupleToUserset = null,
-        private ?Usersets $union = null,
-        private ?Usersets $intersection = null,
-        private ?DifferenceV1 $difference = null,
+        private ?DirectUsersetInterface $direct = null,
+        private ?ObjectRelationInterface $computedUserset = null,
+        private ?TupleToUsersetV1Interface $tupleToUserset = null,
+        private ?UsersetsInterface $union = null,
+        private ?UsersetsInterface $intersection = null,
+        private ?DifferenceV1Interface $difference = null,
     ) {
     }
 
-    public function getComputedUserset(): ?ObjectRelation
+    public function getComputedUserset(): ?ObjectRelationInterface
     {
         return $this->computedUserset;
     }
 
-    public function getDifference(): ?DifferenceV1
+    public function getDifference(): ?DifferenceV1Interface
     {
         return $this->difference;
     }
 
-    public function getDirect(): ?DirectUserset
+    public function getDirect(): ?DirectUsersetInterface
     {
         return $this->direct;
     }
 
-    public function getIntersection(): ?Usersets
+    public function getIntersection(): ?UsersetsInterface
     {
         return $this->intersection;
     }
 
-    public function getTupleToUserset(): ?TupleToUsersetV1
+    public function getTupleToUserset(): ?TupleToUsersetV1Interface
     {
         return $this->tupleToUserset;
     }
 
-    public function getUnion(): ?Usersets
+    public function getUnion(): ?UsersetsInterface
     {
         return $this->union;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
-        return [
-            'direct' => $this->direct?->toArray(),
-            'computed_userset' => $this->computedUserset?->toArray(),
-            'tuple_to_userset' => $this->tupleToUserset?->toArray(),
-            'union' => $this->union?->toArray(),
-            'intersection' => $this->intersection?->toArray(),
-            'difference' => $this->difference?->toArray(),
-        ];
+        $response = [];
+
+        if ($this->direct !== null) {
+            $response['direct'] = $this->direct->jsonSerialize();
+        }
+
+        if ($this->computedUserset !== null) {
+            $response['computed_userset'] = $this->computedUserset->jsonSerialize();
+        }
+
+        if ($this->tupleToUserset !== null) {
+            $response['tuple_to_userset'] = $this->tupleToUserset->jsonSerialize();
+        }
+
+        if ($this->union !== null) {
+            $response['union'] = $this->union->jsonSerialize();
+        }
+
+        if ($this->intersection !== null) {
+            $response['intersection'] = $this->intersection->jsonSerialize();
+        }
+
+        if ($this->difference !== null) {
+            $response['difference'] = $this->difference->jsonSerialize();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
