@@ -14,13 +14,6 @@ interface ConfigurationInterface
     public function getApiUrl(): ?string;
 
     /**
-     * Get the authorization model ID.
-     *
-     * @return null|string
-     */
-    public function getAuthorizationModelId(): ?string;
-
-    /**
      * Get the credential.
      *
      * @return null|Credentials\CredentialInterface
@@ -54,11 +47,4 @@ interface ConfigurationInterface
      * @return null|\Psr\Http\Message\StreamFactoryInterface
      */
     public function getHttpStreamFactory(): ?\Psr\Http\Message\StreamFactoryInterface;
-
-    /**
-     * Get the store ID.
-     *
-     * @return null|string
-     */
-    public function getStoreId(): ?string;
 }

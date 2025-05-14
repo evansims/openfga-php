@@ -12,9 +12,6 @@ final class Configuration implements ConfigurationInterface
 {
     public function __construct(
         public ?string $apiUrl = null,
-        public ?string $storeId = null,
-        public ?string $authorizationModelId = null,
-        public ?bool $useOkta = false,
         public ?CredentialInterface $credential = null,
         public ?ClientInterface $httpClient = null,
         public ?ResponseFactoryInterface $httpFactory = null,
@@ -31,16 +28,6 @@ final class Configuration implements ConfigurationInterface
     public function getApiUrl(): ?string
     {
         return $this->apiUrl;
-    }
-
-    /**
-     * Get the authorization model ID.
-     *
-     * @return null|string
-     */
-    public function getAuthorizationModelId(): ?string
-    {
-        return $this->authorizationModelId;
     }
 
     /**
@@ -91,15 +78,5 @@ final class Configuration implements ConfigurationInterface
     public function getHttpStreamFactory(): ?StreamFactoryInterface
     {
         return $this->httpStreamFactory;
-    }
-
-    /**
-     * Get the store ID.
-     *
-     * @return null|string
-     */
-    public function getStoreId(): ?string
-    {
-        return $this->storeId;
     }
 }
