@@ -49,7 +49,7 @@ final class CreateModelRequest
         $body = [];
 
         $body['type_definitions'] = $this->getTypeDefinitions()->jsonSerialize();
-        $body['schema_version'] = (string) $this->getSchemaVersion();
+        $body['schema_version'] = (string) $this->getSchemaVersion()->value;
 
         if (null !== $this->getConditions()) {
             $body['conditions'] = $this->getConditions()->jsonSerialize();
@@ -58,7 +58,7 @@ final class CreateModelRequest
         return json_encode($body, JSON_THROW_ON_ERROR);
     }
 
-    public function toRequest(): Request
+    public function toRequest(): RequestInterface
     {
         $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
 

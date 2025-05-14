@@ -33,17 +33,6 @@ final class ListStoresResponse implements ListStoresResponseInterface
         return $this->stores;
     }
 
-    public static function fromArray(array $data): static
-    {
-        assert(isset($data['stores']) && is_array($data['stores']));
-        assert(isset($data['continuation_token']) && is_string($data['continuation_token']));
-
-        return new self(
-            stores: Stores::fromArray($data['stores']),
-            continuationToken: $data['continuation_token'],
-        );
-    }
-
     public static function fromResponse(HttpResponseInterface $response): static
     {
         $json = (string) $response->getBody();
@@ -54,8 +43,17 @@ final class ListStoresResponse implements ListStoresResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data)) {
-            return static::fromArray($data);
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['stores']) && isset($data['continuation_token'])) {
+            // @phpstan-ignore-next-line
+            $stores = Stores::fromArray($data['stores']);
+
+            // @phpstan-ignore-next-line
+            $continuationToken = (string) $data['continuation_token'];
+
+            return new self(
+                stores: $stores,
+                continuationToken: $continuationToken,
+            );
         }
 
         self::handleResponseException($response);

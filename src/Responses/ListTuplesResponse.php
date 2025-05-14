@@ -33,17 +33,6 @@ final class ListTuplesResponse implements ListTuplesResponseInterface
         return $this->tuples;
     }
 
-    public static function fromArray(array $data): static
-    {
-        assert(isset($data['tuples']) && is_array($data['tuples']));
-        assert(isset($data['continuation_token']) && is_string($data['continuation_token']));
-
-        return new self(
-            tuples: Tuples::fromArray($data['tuples']),
-            continuationToken: $data['continuation_token'],
-        );
-    }
-
     public static function fromResponse(HttpResponseInterface $response): static
     {
         $json = (string) $response->getBody();
@@ -54,8 +43,17 @@ final class ListTuplesResponse implements ListTuplesResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode()) {
-            return static::fromArray($data);
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['tuples']) && isset($data['continuation_token'])) {
+            // @phpstan-ignore-next-line
+            $tuples = Tuples::fromArray($data['tuples']);
+
+            // @phpstan-ignore-next-line
+            $continuationToken = (string) $data['continuation_token'];
+
+            return new self(
+                tuples: $tuples,
+                continuationToken: $continuationToken,
+            );
         }
 
         self::handleResponseException($response);

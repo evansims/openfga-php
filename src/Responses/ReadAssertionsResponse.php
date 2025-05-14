@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Assertions, AssertionsInterface, AuthorizationModelId, AuthorizationModelIdInterface};
+use OpenFGA\Models\{Assertion, Assertions, AssertionsInterface, AuthorizationModelId, AuthorizationModelIdInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
@@ -42,8 +42,12 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data)) {
-            [$authorizationModelId, $assertions] = self::validatedReadAssertionsResponseShape($data);
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['authorization_model_id'])) {
+            // @phpstan-ignore-next-line
+            $authorizationModelId = new AuthorizationModelId(id: $data['authorization_model_id']);
+
+            // @phpstan-ignore-next-line
+            $assertions = isset($data['assertions']) ? Assertions::fromArray($data['assertions']) : null;
 
             return new self(
                 assertions: $assertions,
@@ -54,28 +58,5 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
-    }
-
-    /**
-     * @param array<mixed> $data
-     *
-     * @return array{AuthorizationModelIdInterface, null|AssertionsInterface}
-     */
-    public static function validatedReadAssertionsResponseShape(array $data): array
-    {
-        $assertions = null;
-        $authorizationModelId = null;
-
-        if (! isset($data['authorization_model_id']) || ! is_string($data['authorization_model_id'])) {
-            throw new ApiUnexpectedResponseException('Missing authorization_model_id');
-        }
-
-        $authorizationModelId = new AuthorizationModelId(id: $data['authorization_model_id']);
-
-        if (isset($data['assertions'])) {
-            $assertions = Assertions::fromArray($data['assertions']);
-        }
-
-        return [$authorizationModelId, $assertions];
     }
 }

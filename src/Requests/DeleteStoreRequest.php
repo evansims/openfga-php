@@ -26,7 +26,7 @@ final class DeleteStoreRequest
         return $this->storeId;
     }
 
-    public function toRequest(): Request
+    public function toRequest(): RequestInterface
     {
         return $this->requestFactory->delete(
             url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId()),

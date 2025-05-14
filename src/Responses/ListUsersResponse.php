@@ -26,15 +26,6 @@ final class ListUsersResponse implements ListUsersResponseInterface
         return $this->users;
     }
 
-    public static function fromArray(array $data): static
-    {
-        $data = self::validatedUsersResponse($data);
-
-        return new self(
-            users: Users::fromArray($data['users']),
-        );
-    }
-
     public static function fromResponse(HttpResponseInterface $response): static
     {
         $json = (string) $response->getBody();
@@ -45,21 +36,17 @@ final class ListUsersResponse implements ListUsersResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data)) {
-            return static::fromArray($data);
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['users'])) {
+            // @phpstan-ignore-next-line
+            $users = new Users(users: $data['users']);
+
+            return new self(
+                users: $users,
+            );
         }
 
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
-    }
-
-    public static function validatedUsersResponse(array $data): array
-    {
-        if (! isset($data['users']) || ! is_array($data['users'])) {
-            throw new InvalidArgumentException('Users must be an array');
-        }
-
-        return $data;
     }
 }

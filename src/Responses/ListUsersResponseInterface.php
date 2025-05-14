@@ -9,6 +9,4 @@ use OpenFGA\Models\UsersInterface;
 interface ListUsersResponseInterface extends ResponseInterface
 {
     public function getUsers(): UsersInterface;
-
-    public static function fromArray(array $data): static;
 }

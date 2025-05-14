@@ -15,23 +15,20 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
 {
     use ResponseTrait;
 
+    /**
+     * @param array<int, string> $objects
+     */
     public function __construct(
         private array $objects,
     ) {
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function getObjects(): array
     {
         return $this->objects;
-    }
-
-    public static function fromArray(array $data): static
-    {
-        assert(isset($data['objects']) && is_array($data['objects']));
-
-        return new self(
-            objects: $data['objects'],
-        );
     }
 
     public static function fromResponse(HttpResponseInterface $response): static
@@ -44,8 +41,13 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data)) {
-            return static::fromArray($data);
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['objects']) && is_array($data['objects'])) {
+            /** @var array<int, string> $objects */
+            $objects = $data['objects'];
+
+            return new self(
+                objects: $objects,
+            );
         }
 
         self::handleResponseException($response);

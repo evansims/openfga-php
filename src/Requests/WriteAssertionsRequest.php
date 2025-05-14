@@ -47,7 +47,7 @@ final class WriteAssertionsRequest
         return json_encode($body, JSON_THROW_ON_ERROR);
     }
 
-    public function toRequest(): Request
+    public function toRequest(): RequestInterface
     {
         $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
 

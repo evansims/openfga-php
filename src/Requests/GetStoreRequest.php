@@ -26,7 +26,7 @@ final class GetStoreRequest
         return $this->storeId;
     }
 
-    public function toRequest(): Request
+    public function toRequest(): RequestInterface
     {
         return $this->requestFactory->get(
             url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId()),

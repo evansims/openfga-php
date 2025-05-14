@@ -26,7 +26,7 @@ final class ListModelsRequest
         return $this->storeId;
     }
 
-    public function toRequest(): Request
+    public function toRequest(): RequestInterface
     {
         return $this->requestFactory->get(
             url: $this->requestFactory->getEndpointUrl('/stores/' . $this->getStoreId() . '/authorization-models'),

@@ -11,9 +11,4 @@ interface ListTuplesResponseInterface extends ResponseInterface
     public function getContinuationToken(): string;
 
     public function getTuples(): TuplesInterface;
-
-    /**
-     * @param array<string, null|string> $data
-     */
-    public static function fromArray(array $data): static;
 }
