@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use Exception;
+use InvalidArgumentException;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\{Users, UsersInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-use function assert;
 use function is_array;
 
 final class ListUsersResponse implements ListUsersResponseInterface
@@ -26,14 +26,9 @@ final class ListUsersResponse implements ListUsersResponseInterface
         return $this->users;
     }
 
-    /**
-     * @param array<string, mixed> $data
-     *
-     * @return static
-     */
     public static function fromArray(array $data): static
     {
-        assert(isset($data['users']) && is_array($data['users']));
+        $data = self::validatedUsersResponse($data);
 
         return new self(
             users: Users::fromArray($data['users']),
@@ -57,5 +52,14 @@ final class ListUsersResponse implements ListUsersResponseInterface
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
+    }
+
+    public static function validatedUsersResponse(array $data): array
+    {
+        if (! isset($data['users']) || ! is_array($data['users'])) {
+            throw new InvalidArgumentException('Users must be an array');
+        }
+
+        return $data;
     }
 }

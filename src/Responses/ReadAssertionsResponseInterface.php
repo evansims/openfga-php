@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\AssertionsInterface;
+use OpenFGA\Models\{AssertionsInterface, AuthorizationModelIdInterface};
 
+/**
+ * @psalm-type ReadAssertionsResponseShape = array{authorization_model_id: string, assertions?: AssertionsInterface}
+ */
 interface ReadAssertionsResponseInterface extends ResponseInterface
 {
     public function getAssertions(): ?AssertionsInterface;
 
-    public function getAuthorizationModelId(): string;
-
-    /**
-     * @param array<string> $data
-     */
-    public static function fromArray(array $data): static;
+    public function getAuthorizationModelId(): AuthorizationModelIdInterface;
 }

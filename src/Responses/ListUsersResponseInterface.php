@@ -10,8 +10,5 @@ interface ListUsersResponseInterface extends ResponseInterface
 {
     public function getUsers(): UsersInterface;
 
-    /**
-     * @param array<string, null|string> $data
-     */
     public static function fromArray(array $data): static;
 }

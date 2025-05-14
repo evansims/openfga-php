@@ -6,10 +6,9 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Assertions, AssertionsInterface};
+use OpenFGA\Models\{Assertions, AssertionsInterface, AuthorizationModelId, AuthorizationModelIdInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-use function assert;
 use function is_array;
 use function is_string;
 
@@ -19,7 +18,7 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
 
     public function __construct(
         private ?AssertionsInterface $assertions,
-        private string $authorizationModelId,
+        private AuthorizationModelIdInterface $authorizationModelId,
     ) {
     }
 
@@ -28,19 +27,9 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
         return $this->assertions;
     }
 
-    public function getAuthorizationModelId(): string
+    public function getAuthorizationModelId(): AuthorizationModelIdInterface
     {
         return $this->authorizationModelId;
-    }
-
-    public static function fromArray(array $data): static
-    {
-        assert(isset($data['authorization_model_id']) && is_string($data['authorization_model_id']));
-
-        return new self(
-            assertions: isset($data['assertions']) && is_array($data['assertions']) ? Assertions::fromArray($data['assertions']) : null,
-            authorizationModelId: $data['authorization_model_id'],
-        );
     }
 
     public static function fromResponse(HttpResponseInterface $response): static
@@ -54,11 +43,39 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
         }
 
         if (200 === $response->getStatusCode() && is_array($data)) {
-            return static::fromArray($data);
+            [$authorizationModelId, $assertions] = self::validatedReadAssertionsResponseShape($data);
+
+            return new self(
+                assertions: $assertions,
+                authorizationModelId: $authorizationModelId,
+            );
         }
 
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
+    }
+
+    /**
+     * @param array<mixed> $data
+     *
+     * @return array{AuthorizationModelIdInterface, null|AssertionsInterface}
+     */
+    public static function validatedReadAssertionsResponseShape(array $data): array
+    {
+        $assertions = null;
+        $authorizationModelId = null;
+
+        if (! isset($data['authorization_model_id']) || ! is_string($data['authorization_model_id'])) {
+            throw new ApiUnexpectedResponseException('Missing authorization_model_id');
+        }
+
+        $authorizationModelId = new AuthorizationModelId(id: $data['authorization_model_id']);
+
+        if (isset($data['assertions'])) {
+            $assertions = Assertions::fromArray($data['assertions']);
+        }
+
+        return [$authorizationModelId, $assertions];
     }
 }
