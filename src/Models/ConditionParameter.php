@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+
 final class ConditionParameter implements ConditionParameterInterface
 {
     public function __construct(
@@ -24,23 +26,42 @@ final class ConditionParameter implements ConditionParameterInterface
 
     public function jsonSerialize(): array
     {
-        return [
-            'type_name' => (string) $this->typeName,
-            'generic_types' => $this->genericTypes?->jsonSerialize(),
+        $response = [
+            'type_name' => (string) $this->getTypeName(),
         ];
+
+        if (null !== $this->getGenericTypes()) {
+            $response['generic_types'] = $this->getGenericTypes()->jsonSerialize();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
     {
-        $typeName = $data['type_name'] ?? null;
-        $genericTypes = $data['generic_types'] ?? null;
-
-        $typeName = $typeName ? TypeName::from($typeName) : null;
-        $genericTypes = $genericTypes ? ConditionParameters::fromArray($genericTypes) : null;
+        $data = self::validatedConditionParameterShape($data);
 
         return new self(
-            typeName: $typeName,
-            genericTypes: $genericTypes,
+            typeName: TypeName::from($data['type_name']),
+            genericTypes: isset($data['generic_types']) ? ConditionParameters::fromArray($data['generic_types']) : null,
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as condition parameter data. Throws an exception if the data is invalid.
+     *
+     * @param array{type_name: string, generic_types?: ConditionParametersShape} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return ConditionParameterShape
+     */
+    public static function validatedConditionParameterShape(array $data): array
+    {
+        if (! isset($data['type_name'])) {
+            throw new InvalidArgumentException('Missing required condition parameter property `type_name`');
+        }
+
+        return $data;
     }
 }

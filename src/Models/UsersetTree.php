@@ -4,29 +4,47 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class UsersetTree extends Model implements UsersetTreeInterface
+use InvalidArgumentException;
+
+final class UsersetTree implements UsersetTreeInterface
 {
     public function __construct(
-        private Node $node,
+        private NodeInterface $root,
     ) {
     }
 
-    public function getNode(): Node
+    public function getRoot(): NodeInterface
     {
-        return $this->node;
+        return $this->root;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
-            'node' => $this->node->toArray(),
+            'root' => $this->getRoot()->jsonSerialize(),
         ];
     }
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedUsersetTreeShape($data);
+
         return new self(
-            node: Node::fromArray($data['node']),
+            root: Node::fromArray($data['root']),
         );
+    }
+
+    /**
+     * @param array{root: NodeShape} $data
+     *
+     * @return UsersetTreeShape
+     */
+    public static function validatedUsersetTreeShape(array $data): array
+    {
+        if (! isset($data['root'])) {
+            throw new InvalidArgumentException('UsersetTree must have a root');
+        }
+
+        return $data;
     }
 }

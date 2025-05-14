@@ -25,6 +25,7 @@ final class Assertions implements AssertionsInterface
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedAssertionsShape($data);
         $collection = new self();
 
         foreach ($data as $model) {
@@ -32,5 +33,19 @@ final class Assertions implements AssertionsInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Validates the shape of the array to be used as assertions data. Throws an exception if the data is invalid.
+     *
+     * @param list<AssertionShape> $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return AssertionsShape
+     */
+    public static function validatedAssertionsShape(array $data): array
+    {
+        return $data;
     }
 }

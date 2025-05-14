@@ -6,8 +6,6 @@ namespace OpenFGA\Models;
 
 final class SourceInfo implements SourceInfoInterface
 {
-    use ModelTrait;
-
     public function __construct(
         private string $file,
     ) {
@@ -27,12 +25,24 @@ final class SourceInfo implements SourceInfoInterface
 
     public static function fromArray(array $data): self
     {
-        $file = $data['file'] ?? null;
-
-        $file = $file ? (string) $file : null;
+        $data = self::validatedSourceInfoShape($data);
 
         return new self(
-            file: $file,
+            file: $data['file'],
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as source info data. Throws an exception if the data is invalid.
+     *
+     * @param array{file: string} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return SourceInfoShape
+     */
+    public static function validatedSourceInfoShape(array $data): array
+    {
+        return $data;
     }
 }

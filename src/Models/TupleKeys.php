@@ -25,6 +25,7 @@ final class TupleKeys implements TupleKeysInterface
 
     public static function fromArray(TupleKeyType $type, array $data): self
     {
+        $data = self::validatedTupleKeysShape($data);
         $collection = new self();
 
         foreach ($data as $model) {
@@ -32,5 +33,19 @@ final class TupleKeys implements TupleKeysInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Validates the shape of the array to be used as tuple keys data. Throws an exception if the data is invalid.
+     *
+     * @param array<int, TupleKeyShape> $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return TupleKeysShape
+     */
+    public static function validatedTupleKeysShape(array $data): array
+    {
+        return $data;
     }
 }

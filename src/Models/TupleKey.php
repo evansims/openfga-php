@@ -8,8 +8,6 @@ use InvalidArgumentException;
 
 final class TupleKey implements TupleKeyInterface
 {
-    use ModelTrait;
-
     public function __construct(
         private TupleKeyType $type,
         private ?string $user = null,
@@ -18,11 +16,6 @@ final class TupleKey implements TupleKeyInterface
         private ?ConditionInterface $condition = null,
     ) {
         $this->validateProperties();
-    }
-
-    public function getType(): TupleKeyType
-    {
-        return $this->type;
     }
 
     public function getCondition(): ?ConditionInterface
@@ -38,6 +31,11 @@ final class TupleKey implements TupleKeyInterface
     public function getRelation(): ?string
     {
         return $this->relation;
+    }
+
+    public function getType(): TupleKeyType
+    {
+        return $this->type;
     }
 
     public function getUser(): ?string
@@ -70,38 +68,30 @@ final class TupleKey implements TupleKeyInterface
 
     public static function fromArray(TupleKeyType $type, array $data): self
     {
-        $user = $data['user'] ?? null;
-        $relation = $data['relation'] ?? null;
-        $object = $data['object'] ?? null;
-        $condition = isset($data['condition']) ? Condition::fromArray($data['condition']) : null;
+        $data = self::validatedTupleKeyShape($type, $data);
 
         return new self(
             type: $type,
-            user: $user,
-            relation: $relation,
-            object: $object,
-            condition: $condition,
+            user: $data['user'] ?? null,
+            relation: $data['relation'] ?? null,
+            object: $data['object'] ?? null,
+            condition: isset($data['condition']) ? Condition::fromArray($data['condition']) : null,
         );
     }
 
-    private static function supported(TupleKeyType $type): array
+    /**
+     * Validates the shape of the array to be used as tuple key data. Throws an exception if the data is invalid.
+     *
+     * @param array{user?: string, relation?: string, object?: string, condition?: ConditionShape} $data
+     * @param TupleKeyType                                                                         $type
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return TupleKeyShape
+     */
+    public static function validatedTupleKeyShape(TupleKeyType $type, array $data): array
     {
-        switch ($type) {
-            case TupleKeyType::ASSERTION_TUPLE_KEY:
-                return ['user', 'relation', 'object'];
-            default:
-                return ['user', 'relation', 'object', 'condition'];
-        }
-    }
-
-    private static function required(TupleKeyType $type): array
-    {
-        switch ($type) {
-            case TupleKeyType::ASSERTION_TUPLE_KEY:
-                return ['user', 'relation', 'object'];
-            default:
-                return [];
-        }
+        return $data;
     }
 
     private function validateProperties(): void
@@ -127,8 +117,28 @@ final class TupleKey implements TupleKeyInterface
 
         foreach ($required as $key) {
             if (null === $this->{$key}) {
-                throw new InvalidArgumentException("Missing required tuple key property `$key`");
+                throw new InvalidArgumentException("Missing required tuple key property `{$key}`");
             }
+        }
+    }
+
+    private static function required(TupleKeyType $type): array
+    {
+        switch ($type) {
+            case TupleKeyType::ASSERTION_TUPLE_KEY:
+                return ['user', 'relation', 'object'];
+            default:
+                return [];
+        }
+    }
+
+    private static function supported(TupleKeyType $type): array
+    {
+        switch ($type) {
+            case TupleKeyType::ASSERTION_TUPLE_KEY:
+                return ['user', 'relation', 'object'];
+            default:
+                return ['user', 'relation', 'object', 'condition'];
         }
     }
 }

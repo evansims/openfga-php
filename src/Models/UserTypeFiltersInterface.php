@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface UserTypeFiltersInterface extends ModelCollectionInterface
+/**
+ * @psalm-type UserTypeFiltersShape = list<UserTypeFilterShape>
+ */
+interface UserTypeFiltersInterface extends CollectionInterface
 {
     /**
      * Add a user type filter to the collection.
@@ -21,6 +24,11 @@ interface UserTypeFiltersInterface extends ModelCollectionInterface
     public function current(): UserTypeFilterInterface;
 
     /**
+     * @return UserTypeFiltersShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
      * Get a user type filter by offset.
      *
      * @param mixed $offset
@@ -28,4 +36,9 @@ interface UserTypeFiltersInterface extends ModelCollectionInterface
      * @return null|UserTypeFilterInterface
      */
     public function offsetGet(mixed $offset): ?UserTypeFilterInterface;
+
+    /**
+     * @param UserTypeFiltersShape $data
+     */
+    public static function fromArray(array $data): static;
 }

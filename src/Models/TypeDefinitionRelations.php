@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class RelationReferences implements RelationReferencesInterface
+final class TypeDefinitionRelations implements TypeDefinitionRelationsInterface
 {
     use CollectionTrait;
 
-    public function add(RelationReferenceInterface $relationReference): void
+    public function add(UsersetInterface $userset): void
     {
-        $this->models[] = $relationReference;
+        $this->models[] = $userset;
     }
 
-    public function current(): RelationReferenceInterface
+    public function current(): UsersetInterface
     {
         return $this->models[$this->key()];
     }
@@ -29,7 +29,7 @@ final class RelationReferences implements RelationReferencesInterface
         return $response;
     }
 
-    public function offsetGet(mixed $offset): ?RelationReferenceInterface
+    public function offsetGet(mixed $offset): ?UsersetInterface
     {
         return $this->models[$offset] ?? null;
     }
@@ -40,16 +40,18 @@ final class RelationReferences implements RelationReferencesInterface
         $collection = new self();
 
         foreach ($data as $key => $model) {
-            $collection->offsetSet($key, RelationReference::fromArray($model));
+            $collection->offsetSet($key, Userset::fromArray($model));
         }
 
         return $collection;
     }
 
     /**
-     * @param array<string, RelationReferenceShape> $data
+     * Validate the shape of the relation references array.
      *
-     * @return RelationReferencesShape
+     * @param array<string, UsersetShape> $data
+     *
+     * @return TypeDefinitionRelationsShape
      */
     public static function validatedRelationReferencesShape(array $data): array
     {

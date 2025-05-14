@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface TypeDefinitionsInterface extends ModelCollectionInterface
+/**
+ * @psalm-type TypeDefinitionsShape = list<TypeDefinitionShape>
+ */
+interface TypeDefinitionsInterface extends CollectionInterface
 {
     /**
      * Add a type definition to the collection.
@@ -21,6 +24,11 @@ interface TypeDefinitionsInterface extends ModelCollectionInterface
     public function current(): TypeDefinitionInterface;
 
     /**
+     * @return TypeDefinitionsShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
      * Get a type definition by offset.
      *
      * @param mixed $offset
@@ -30,20 +38,7 @@ interface TypeDefinitionsInterface extends ModelCollectionInterface
     public function offsetGet(mixed $offset): ?TypeDefinitionInterface;
 
     /**
-     * @return array<int, array{
-     *     type: string,
-     *     relations?: array<string, array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}>},
-     *     metadata?: array{module: string, source_info: array{file: string}}}
-     * }>
-     */
-    public function jsonSerialize(): array;
-
-    /**
-     * @param array<int, array{
-     *     type: string,
-     *     relations?: array<string, array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}>},
-     *     metadata?: array{module: string, source_info: array{file: string}}}
-     * }> $data
+     * @param TypeDefinitionsShape $data
      */
     public static function fromArray(array $data): static;
 }

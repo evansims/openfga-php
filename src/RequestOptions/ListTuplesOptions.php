@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\RequestOptions;
 
-use OpenFGA\Models\ConsistencyPreference;
+use OpenFGA\Models\Consistency;
 
 final class ListTuplesOptions extends RequestOptions
 {
     public function __construct(
         private ?string $continuationToken = null,
         private ?int $pageSize = null,
-        private ?ConsistencyPreference $consistency = null,
+        private ?Consistency $consistency = null,
     ) {
     }
 
-    public function getConsistency(): ?ConsistencyPreference
+    public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }

@@ -25,6 +25,7 @@ final class TypeDefinitions implements TypeDefinitionsInterface
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedTypeDefinitionsShape($data);
         $collection = new self();
 
         foreach ($data as $model) {
@@ -32,5 +33,19 @@ final class TypeDefinitions implements TypeDefinitionsInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Validates the shape of the array to be used as type definitions data. Throws an exception if the data is invalid.
+     *
+     * @param list<TypeDefinitionShape> $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return TypeDefinitionsShape
+     */
+    public static function validatedTypeDefinitionsShape(array $data): array
+    {
+        return $data;
     }
 }

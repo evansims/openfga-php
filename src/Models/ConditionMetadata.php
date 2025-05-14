@@ -6,8 +6,6 @@ namespace OpenFGA\Models;
 
 final class ConditionMetadata implements ConditionMetadataInterface
 {
-    use ModelTrait;
-
     public function __construct(
         private string $module,
         private SourceInfoInterface $sourceInfo,
@@ -34,15 +32,25 @@ final class ConditionMetadata implements ConditionMetadataInterface
 
     public static function fromArray(array $data): self
     {
-        $module = $data['module'] ?? null;
-        $module = $module ? (string) $module : null;
-
-        $sourceInfo = $data['source_info'] ?? null;
-        $sourceInfo = $sourceInfo ? SourceInfo::fromArray($sourceInfo) : null;
+        $data = self::validatedConditionMetadataShape($data);
 
         return new self(
-            module: $module,
-            sourceInfo: $sourceInfo,
+            module: $data['module'],
+            sourceInfo: SourceInfo::fromArray($data['source_info']),
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as condition metadata data. Throws an exception if the data is invalid.
+     *
+     * @param array{module: string, source_info: SourceInfoShape} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return ConditionMetadataShape
+     */
+    public static function validatedConditionMetadataShape(array $data): array
+    {
+        return $data;
     }
 }

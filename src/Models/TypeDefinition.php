@@ -4,29 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
-
 final class TypeDefinition implements TypeDefinitionInterface
 {
-    use CollectionTrait;
-
     /**
-     * @param string                               $type      The type of the object that this definition is for.
-     * @param null|array<string, UsersetInterface> $relations An array of relation names to Userset definitions.
-     * @param null|MetadataInterface               $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
+     * @param string                                $type      The type of the object that this definition is for.
+     * @param null|TypeDefinitionRelationsInterface $relations An array of relation names to Userset definitions.
+     * @param null|MetadataInterface                $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
      */
     public function __construct(
         private string $type,
-        private ?array $relations = null,
+        private ?TypeDefinitionRelationsInterface $relations = null,
         private ?MetadataInterface $metadata = null,
     ) {
-        foreach ($relations as $relation => $userset) {
-            if (! $userset instanceof UsersetInterface) {
-                throw new InvalidArgumentException('Userset must implement UsersetInterface');
-            }
-
-            $this->relations[$relation] = $userset;
-        }
     }
 
     public function getMetadata(): ?MetadataInterface
@@ -34,7 +23,7 @@ final class TypeDefinition implements TypeDefinitionInterface
         return $this->metadata;
     }
 
-    public function getRelations(): ?array
+    public function getRelations(): ?TypeDefinitionRelationsInterface
     {
         return $this->relations;
     }
@@ -51,7 +40,7 @@ final class TypeDefinition implements TypeDefinitionInterface
         ];
 
         if ($this->getRelations()) {
-            $response['relations'] = array_map(static fn (UsersetInterface $userset): array => $userset->jsonSerialize(), $this->getRelations());
+            $response['relations'] = $this->getRelations()->jsonSerialize();
         }
 
         if ($this->getMetadata()) {
@@ -63,16 +52,24 @@ final class TypeDefinition implements TypeDefinitionInterface
 
     public static function fromArray(array $data): self
     {
-        $relations = [];
-
-        foreach ($data['relations'] as $relation => $userset) {
-            $relations[$relation] = Userset::fromArray($userset);
-        }
+        $data = self::validatedTypeDefinitionShape($data);
 
         return new self(
             type: $data['type'],
-            relations: $relations !== [] ? $relations : null,
+            relations: isset($data['relations']) ? TypeDefinitionRelations::fromArray($data['relations']) : null,
             metadata: isset($data['metadata']) ? Metadata::fromArray($data['metadata']) : null,
         );
+    }
+
+    /**
+     * Validate the shape of the type definition array.
+     *
+     * @param array{type: string, relations?: TypeDefinitionRelationsShape, metadata?: MetadataShape} $data
+     *
+     * @return TypeDefinitionShape
+     */
+    public static function validatedTypeDefinitionShape(array $data): array
+    {
+        return $data;
     }
 }

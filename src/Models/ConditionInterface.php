@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+/**
+ * @psalm-type ConditionShape = array{name: string, expression: string, parameters?: ConditionParametersShape, metadata?: ConditionMetadataShape}
+ */
 interface ConditionInterface extends ModelInterface
 {
     public function getExpression(): string;
@@ -15,12 +18,12 @@ interface ConditionInterface extends ModelInterface
     public function getParameters(): ?ConditionParametersInterface;
 
     /**
-     * @return array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}
+     * @return ConditionShape
      */
     public function jsonSerialize(): array;
 
     /**
-     * @param array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}} $data
+     * @param ConditionShape $data
      */
     public static function fromArray(array $data): static;
 }

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\RequestOptions;
 
-use OpenFGA\Models\ConsistencyPreference;
+use OpenFGA\Models\Consistency;
 
 final class ListUsersOptions extends RequestOptions
 {
     public function __construct(
-        private ?ConsistencyPreference $consistency = null,
+        private ?Consistency $consistency = null,
     ) {
     }
 
-    public function getConsistency(): ?ConsistencyPreference
+    public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }

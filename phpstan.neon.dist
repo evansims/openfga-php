@@ -4,6 +4,7 @@ includes:
 parameters:
     level: max
     treatPhpDocTypesAsCertain: false
+    inferPrivatePropertyTypeFromConstructor: true
 
     paths:
         - src

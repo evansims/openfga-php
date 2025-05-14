@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+
+use function is_array;
+
 final class DifferenceV1 implements DifferenceV1Interface
 {
-    use ModelTrait;
+    public const string OPENAPI_TYPE = 'v1.Difference';
 
     public function __construct(
         private UsersetInterface $base,
@@ -34,14 +38,34 @@ final class DifferenceV1 implements DifferenceV1Interface
 
     public static function fromArray(array $data): self
     {
-        assert(isset($data['base']) && isset($data['subtract']));
-
-        $base = $data['base'];
-        $subtract = $data['subtract'];
+        $data = self::validatedDifferenceShape($data);
 
         return new self(
-            base: Userset::fromArray($base),
-            subtract: Userset::fromArray($subtract),
+            base: Userset::fromArray($data['base']),
+            subtract: Userset::fromArray($data['subtract']),
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as difference data. Throws an exception if the data is invalid.
+
+     *
+     * @param array{base: UsersetShape, subtract: UsersetShape} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return DifferenceShape
+     */
+    public static function validatedDifferenceShape(array $data): array
+    {
+        if (! is_array($data)
+            || ! isset($data['base'], $data['subtract'])
+            || ! is_array($data['base'])
+            || ! is_array($data['subtract'])
+        ) {
+            throw new InvalidArgumentException('Invalid difference data structure');
+        }
+
+        return $data;
     }
 }

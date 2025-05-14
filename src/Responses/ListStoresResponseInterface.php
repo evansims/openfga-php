@@ -9,17 +9,17 @@ use OpenFGA\Models\Stores;
 interface ListStoresResponseInterface extends ResponseInterface
 {
     /**
-     * @return Stores
-     */
-    public function getStores(): Stores;
-
-    /**
      * @return string
      */
     public function getContinuationToken(): string;
 
     /**
-     * @param array<string, string|null> $data
+     * @return Stores
+     */
+    public function getStores(): Stores;
+
+    /**
+     * @param array<string, null|string> $data
      */
     public static function fromArray(array $data): static;
 }

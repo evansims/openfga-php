@@ -7,7 +7,6 @@ namespace OpenFGA\Responses;
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\AuthorizationModel;
-use OpenFGA\Responses\GetModelResponseInterface;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;

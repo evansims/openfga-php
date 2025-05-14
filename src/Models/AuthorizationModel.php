@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+
 final class AuthorizationModel implements AuthorizationModelInterface
 {
-    use ModelTrait;
-
     public function __construct(
         private string $id,
         private string $schemaVersion,
@@ -53,9 +53,7 @@ final class AuthorizationModel implements AuthorizationModelInterface
 
     public static function fromArray(array $data): self
     {
-        assert(isset($data['id']), 'Missing id');
-        assert(isset($data['schema_version']), 'Missing schema_version');
-        assert(isset($data['type_definitions']), 'Missing type_definitions');
+        $data = self::validatedAuthorizationModelShape($data);
 
         return new self(
             id: $data['id'],
@@ -63,5 +61,27 @@ final class AuthorizationModel implements AuthorizationModelInterface
             typeDefinitions: TypeDefinitions::fromArray($data['type_definitions']),
             conditions: isset($data['conditions']) ? Conditions::fromArray($data['conditions']) : null,
         );
+    }
+
+    /**
+     * @param array{id: string, schema_version: string, type_definitions: TypeDefinitionRelationsShape, conditions?: ConditionsShape} $data
+     *
+     * @return AuthorizationModelShape
+     */
+    public static function validatedAuthorizationModelShape(array $data): array
+    {
+        if (! isset($data['id'])) {
+            throw new InvalidArgumentException('Missing id');
+        }
+
+        if (! isset($data['schema_version'])) {
+            throw new InvalidArgumentException('Missing schema_version');
+        }
+
+        if (! isset($data['type_definitions'])) {
+            throw new InvalidArgumentException('Missing type_definitions');
+        }
+
+        return $data;
     }
 }

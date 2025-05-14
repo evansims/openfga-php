@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface AssertionsInterface extends ModelCollectionInterface
+/**
+ * @psalm-type AssertionsShape = list<AssertionShape>
+ */
+interface AssertionsInterface extends CollectionInterface
 {
     /**
      * Add an assertion to the collection.
@@ -21,6 +24,11 @@ interface AssertionsInterface extends ModelCollectionInterface
     public function current(): AssertionInterface;
 
     /**
+     * @return AssertionsShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
      * Get an assertion by offset.
      *
      * @param mixed $offset
@@ -30,12 +38,7 @@ interface AssertionsInterface extends ModelCollectionInterface
     public function offsetGet(mixed $offset): ?AssertionInterface;
 
     /**
-     * @return array<int, array{tuple_key: array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, expectation: bool, contextual_tuples?: array<int, array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, context?: array}>
-     */
-    public function jsonSerialize(): array;
-
-    /**
-     * @param array<int, array{tuple_key: array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, expectation: bool, contextual_tuples?: array<int, array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, context?: array}> $data
+     * @param AssertionsShape $data
      */
     public static function fromArray(array $data): static;
 }

@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Users extends ModelCollection implements UsersInterface
+final class Users implements UsersInterface
 {
+    use CollectionTrait;
+
     public function add(UserInterface $user): void
     {
         $this->models[] = $user;

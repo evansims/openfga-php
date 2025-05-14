@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+
 final class Condition implements ConditionInterface
 {
     /**
@@ -54,21 +56,35 @@ final class Condition implements ConditionInterface
 
     public static function fromArray(array $data): self
     {
-        $name = $data['name'] ?? null;
-        $expression = $data['expression'] ?? null;
-        $parameters = $data['parameters'] ?? null;
-        $metadata = $data['metadata'] ?? null;
-
-        $name = $name ?: null;
-        $expression = $expression ?: null;
-        $parameters = $parameters ? ConditionParameters::fromArray($parameters) : null;
-        $metadata = $metadata ? ConditionMetadata::fromArray($metadata) : null;
+        $data = self::validatedConditionShape($data);
 
         return new self(
-            name: $name,
-            expression: $expression,
-            parameters: $parameters,
-            metadata: $metadata,
+            name: $data['name'],
+            expression: $data['expression'],
+            parameters: isset($data['parameters']) ? ConditionParameters::fromArray($data['parameters']) : null,
+            metadata: isset($data['metadata']) ? ConditionMetadata::fromArray($data['metadata']) : null,
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as condition data. Throws an exception if the data is invalid.
+     *
+     * @param array{name: string, expression: string, parameters?: ConditionParametersShape, metadata?: ConditionMetadataShape} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return ConditionShape
+     */
+    public static function validatedConditionShape(array $data): array
+    {
+        if (! isset($data['name'])) {
+            throw new InvalidArgumentException('Missing required condition property `name`');
+        }
+
+        if (! isset($data['expression'])) {
+            throw new InvalidArgumentException('Missing required condition property `expression`');
+        }
+
+        return $data;
     }
 }

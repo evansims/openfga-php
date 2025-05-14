@@ -6,8 +6,6 @@ namespace OpenFGA\Models;
 
 final class Assertion implements AssertionInterface
 {
-    use ModelTrait;
-
     /**
      * @param TupleKeyInterface       $tupleKey         Tuple key for assertion.
      * @param bool                    $expectation      Whether the assertion is expected to be true or false.
@@ -62,21 +60,27 @@ final class Assertion implements AssertionInterface
 
     public static function fromArray(array $data): self
     {
-        $tupleKey = $data['tuple_key'] ?? null;
-        $expectation = $data['expectation'] ?? null;
-        $contextualTuples = $data['contextual_tuples'] ?? null;
-        $context = $data['context'] ?? null;
-
-        $tupleKey = $tupleKey ? TupleKey::fromArray(TupleKeyType::ASSERTION_TUPLE_KEY, $tupleKey) : null;
-        $expectation = $expectation ? (bool) $expectation : false;
-        $contextualTuples = $contextualTuples ? TupleKeys::fromArray($contextualTuples) : null;
-        $context = $context ? (array) $context : null;
+        $data = self::validatedAssertionShape($data);
 
         return new self(
-            tupleKey: $tupleKey,
-            expectation: $expectation,
-            contextualTuples: $contextualTuples,
-            context: $context,
+            tupleKey: TupleKey::fromArray(TupleKeyType::ASSERTION_TUPLE_KEY, $data['tuple_key']),
+            expectation: $data['expectation'],
+            contextualTuples: isset($data['contextual_tuples']) ? TupleKeys::fromArray(TupleKeyType::ASSERTION_TUPLE_KEY, $data['contextual_tuples']) : null,
+            context: isset($data['context']) ? (array) $data['context'] : null,
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as assertion data. Throws an exception if the data is invalid.
+     *
+     * @param array{tuple_key: TupleKeyShape, expectation: bool, contextual_tuples?: TupleKeysShape, context?: array} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return AssertionShape
+     */
+    public static function validatedAssertionShape(array $data): array
+    {
+        return $data;
     }
 }

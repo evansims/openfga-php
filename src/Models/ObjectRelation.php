@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class ObjectRelation extends Model implements ObjectRelationInterface
+final class ObjectRelation implements ObjectRelationInterface
 {
-    /**
-     * @param null|string $object
-     * @param null|string $relation
-     */
     public function __construct(
         private ?string $object = null,
         private ?string $relation = null,
@@ -26,19 +22,42 @@ final class ObjectRelation extends Model implements ObjectRelationInterface
         return $this->relation;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
-        return [
-            'object' => $this->object,
-            'relation' => $this->relation,
-        ];
+        $response = [];
+
+        if (null !== $this->getObject()) {
+            $response['object'] = $this->getObject();
+        }
+
+        if (null !== $this->getRelation()) {
+            $response['relation'] = $this->getRelation();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedObjectRelationShape($data);
+
         return new self(
-            object: $data['object'],
-            relation: $data['relation'],
+            object: $data['object'] ?? null,
+            relation: $data['relation'] ?? null,
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as object relation data. Throws an exception if the data is invalid.
+     *
+     * @param array{object?: string, relation?: string} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return ObjectRelationShape
+     */
+    public static function validatedObjectRelationShape(array $data): array
+    {
+        return $data;
     }
 }

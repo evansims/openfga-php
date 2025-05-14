@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use function assert;
+use InvalidArgumentException;
 
-final class UsersetTreeDifference extends Model implements UsersetTreeDifferenceInterface
+final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
 {
     public function __construct(
         private NodeInterface $base,
@@ -24,21 +24,37 @@ final class UsersetTreeDifference extends Model implements UsersetTreeDifference
         return $this->subtract;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         return [
-            'base' => $this->base->toArray(),
-            'subtract' => $this->subtract->toArray(),
+            'base' => $this->getBase()->jsonSerialize(),
+            'subtract' => $this->getSubtract()->jsonSerialize(),
         ];
     }
 
     public static function fromArray(array $data): self
     {
-        assert(isset($data['base'], $data['subtract']));
+        $data = self::validatedUsersetTreeDifferenceShape($data);
 
         return new self(
             base: Node::fromArray($data['base']),
             subtract: Node::fromArray($data['subtract']),
         );
+    }
+
+    /**
+     * @param array{base: NodeShape, subtract: NodeShape} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return UsersetTreeDifferenceShape
+     */
+    public static function validatedUsersetTreeDifferenceShape(array $data): array
+    {
+        if (! isset($data['base'], $data['subtract'])) {
+            throw new InvalidArgumentException('Missing required fields in UsersetTreeDifferenceShape');
+        }
+
+        return $data;
     }
 }

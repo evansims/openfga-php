@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class StoreId extends Model implements StoreIdInterface
+final class StoreId implements StoreIdInterface
 {
-    /**
-     * Constructor.
-     *
-     * @param string $id The store ID.
-     */
     public function __construct(
         private string $id,
     ) {
@@ -18,7 +13,7 @@ final class StoreId extends Model implements StoreIdInterface
 
     public function __toString(): string
     {
-        return $this->id;
+        return $this->getId();
     }
 
     public function getId(): string
@@ -26,31 +21,15 @@ final class StoreId extends Model implements StoreIdInterface
         return $this->id;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): string
     {
-        return [
-            'id' => $this->id,
-        ];
-    }
-
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            id: $data['id'],
-        );
+        return $this->getId();
     }
 
     public static function fromStore(Store $store): self
     {
         return new self(
-            id: $store->id,
-        );
-    }
-
-    public static function fromString(string $id): self
-    {
-        return new self(
-            id: $id,
+            id: $store->getId(),
         );
     }
 }

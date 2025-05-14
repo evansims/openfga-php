@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-enum ConsistencyPreference: string
+enum Consistency: string
 {
     case HIGHER_CONSISTENCY = 'HIGHER_CONSISTENCY';
 

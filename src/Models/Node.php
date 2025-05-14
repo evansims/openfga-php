@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use function assert;
+use InvalidArgumentException;
 
-final class Node extends Model implements NodeInterface
+final class Node implements NodeInterface
 {
     public function __construct(
         private string $name,
@@ -42,35 +42,34 @@ final class Node extends Model implements NodeInterface
         return $this->union;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
-        $arr = [];
-
-        if ($this->leaf) {
-            $arr['leaf'] = $this->leaf->toArray();
-        }
-
-        if ($this->difference) {
-            $arr['difference'] = $this->difference->toArray();
-        }
-
-        if ($this->union) {
-            $arr['union'] = $this->union->toArray();
-        }
-
-        if ($this->intersection) {
-            $arr['intersection'] = $this->intersection->toArray();
-        }
-
-        return [
-            'name' => $this->name,
-            ...$arr,
+        $response = [
+            'name' => $this->getName(),
         ];
+
+        if ($this->getLeaf()) {
+            $response['leaf'] = $this->getLeaf()->jsonSerialize();
+        }
+
+        if ($this->getDifference()) {
+            $response['difference'] = $this->getDifference()->jsonSerialize();
+        }
+
+        if ($this->getUnion()) {
+            $response['union'] = $this->getUnion()->jsonSerialize();
+        }
+
+        if ($this->getIntersection()) {
+            $response['intersection'] = $this->getIntersection()->jsonSerialize();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
     {
-        assert(isset($data['name']));
+        $data = self::validatedNodeShape($data);
 
         return new self(
             name: $data['name'],
@@ -79,5 +78,23 @@ final class Node extends Model implements NodeInterface
             union: isset($data['union']) ? self::fromArray($data['union']) : null,
             intersection: isset($data['intersection']) ? self::fromArray($data['intersection']) : null,
         );
+    }
+
+    /**
+     * Validates the shape of the array to be used as node data. Throws an exception if the data is invalid.
+     *
+     * @param array{name: string, leaf?: LeafShape, difference?: UsersetTreeDifferenceShape, union?: NodeShape, intersection?: NodeShape} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return NodeShape
+     */
+    public static function validatedNodeShape(array $data): array
+    {
+        if (! isset($data['name'])) {
+            throw new InvalidArgumentException('Node must have a name');
+        }
+
+        return $data;
     }
 }

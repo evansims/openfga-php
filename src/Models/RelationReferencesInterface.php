@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface RelationReferencesInterface extends ModelCollectionInterface
+/**
+ * @psalm-type RelationReferencesShape = array<string, RelationReferenceShape>
+ */
+interface RelationReferencesInterface extends CollectionInterface
 {
     /**
      * Add a relation reference to the collection.
@@ -21,6 +24,13 @@ interface RelationReferencesInterface extends ModelCollectionInterface
     public function current(): RelationReferenceInterface;
 
     /**
+     * Serialize the collection to an array.
+     *
+     * @return RelationReferencesShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
      * Get a relation reference by offset.
      *
      * @param mixed $offset
@@ -28,4 +38,13 @@ interface RelationReferencesInterface extends ModelCollectionInterface
      * @return null|RelationReferenceInterface
      */
     public function offsetGet(mixed $offset): ?RelationReferenceInterface;
+
+    /**
+     * Create a collection from an array.
+     *
+     * @param RelationReferencesShape $data
+     *
+     * @return self
+     */
+    public static function fromArray(array $data): self;
 }

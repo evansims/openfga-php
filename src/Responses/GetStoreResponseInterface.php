@@ -14,7 +14,7 @@ interface GetStoreResponseInterface extends ResponseInterface
     public function getStore(): Store;
 
     /**
-     * @param array<string, string|null> $data
+     * @param array<string, null|string> $data
      */
     public static function fromArray(array $data): static;
 }

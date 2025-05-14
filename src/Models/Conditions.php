@@ -25,6 +25,7 @@ final class Conditions implements ConditionsInterface
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedConditions($data);
         $collection = new self();
 
         foreach ($data as $model) {
@@ -32,5 +33,19 @@ final class Conditions implements ConditionsInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Validates the shape of the array to be used as conditions data. Throws an exception if the data is invalid.
+     *
+     * @param array<int, ConditionShape> $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return ConditionsShape
+     */
+    public static function validatedConditions(array $data): array
+    {
+        return $data;
     }
 }

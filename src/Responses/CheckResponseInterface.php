@@ -7,17 +7,17 @@ namespace OpenFGA\Responses;
 interface CheckResponseInterface extends ResponseInterface
 {
     /**
-     * @return bool|null
+     * @return null|bool
      */
     public function getAllowed(): ?bool;
 
     /**
-     * @return string|null
+     * @return null|string
      */
     public function getResolution(): ?string;
 
     /**
-     * @param array<string, bool|string|null> $data
+     * @param array<string, null|bool|string> $data
      */
     public static function fromArray(array $data): static;
 }

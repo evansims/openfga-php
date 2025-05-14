@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface ConditionsInterface extends ModelCollectionInterface
+/**
+ * @psalm-type ConditionsShape = list<ConditionShape>
+ */
+interface ConditionsInterface extends CollectionInterface
 {
     /**
      * Add a condition to the collection.
@@ -21,6 +24,11 @@ interface ConditionsInterface extends ModelCollectionInterface
     public function current(): ConditionInterface;
 
     /**
+     * @return ConditionsShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
      * Get a condition by offset.
      *
      * @param mixed $offset
@@ -30,12 +38,7 @@ interface ConditionsInterface extends ModelCollectionInterface
     public function offsetGet(mixed $offset): ?ConditionInterface;
 
     /**
-     * @return array<int, array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}>}
-     */
-    public function jsonSerialize(): array;
-
-    /**
-     * @param array<int, array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}> $data
+     * @param ConditionsShape $data
      */
     public static function fromArray(array $data): static;
 }

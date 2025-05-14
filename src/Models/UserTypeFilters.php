@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class UserTypeFilters extends ModelCollection implements UserTypeFiltersInterface
+final class UserTypeFilters implements UserTypeFiltersInterface
 {
+    use CollectionTrait;
+
     public function add(UserTypeFilterInterface $userTypeFilter): void
     {
         $this->models[] = $userTypeFilter;
@@ -23,6 +25,7 @@ final class UserTypeFilters extends ModelCollection implements UserTypeFiltersIn
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedUserTypeFiltersShape($data);
         $collection = new self();
 
         foreach ($data as $model) {
@@ -30,5 +33,15 @@ final class UserTypeFilters extends ModelCollection implements UserTypeFiltersIn
         }
 
         return $collection;
+    }
+
+    /**
+     * @param list<UserTypeFilterShape> $data
+     *
+     * @return UserTypeFiltersShape
+     */
+    public static function validatedUserTypeFiltersShape(array $data): array
+    {
+        return $data;
     }
 }

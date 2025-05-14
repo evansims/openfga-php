@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+
 final class Computed implements ComputedInterface
 {
-    use ModelTrait;
-
     public function __construct(
         private string $userset,
     ) {
@@ -21,14 +21,32 @@ final class Computed implements ComputedInterface
     public function jsonSerialize(): array
     {
         return [
-            'userset' => $this->userset,
+            'userset' => $this->getUserset(),
         ];
     }
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedComputedShape($data);
+
         return new self(
             userset: $data['userset'],
         );
+    }
+
+    /**
+     * @param array{userset: string} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return ComputedShape
+     */
+    public static function validatedComputedShape(array $data): array
+    {
+        if (! isset($data['userset'])) {
+            throw new InvalidArgumentException('Missing required field: userset');
+        }
+
+        return $data;
     }
 }

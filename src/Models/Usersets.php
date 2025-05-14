@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Usersets extends ModelCollection implements UsersetsInterface
+final class Usersets implements UsersetsInterface
 {
+    use CollectionTrait;
+
     public function add(UsersetInterface $userset): void
     {
         $this->models[] = $userset;
@@ -23,6 +25,8 @@ final class Usersets extends ModelCollection implements UsersetsInterface
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedUsersetsShape($data);
+
         $collection = new self();
 
         foreach ($data as $model) {
@@ -30,5 +34,19 @@ final class Usersets extends ModelCollection implements UsersetsInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Validates the shape of the array to be used as usersets data. Throws an exception if the data is invalid.
+     *
+     * @param array<int,UsersetShape> $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return UsersetsShape
+     */
+    public static function validatedUsersetsShape(array $data): array
+    {
+        return $data;
     }
 }

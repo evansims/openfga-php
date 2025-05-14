@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface StoreIdInterface extends ModelInterface
+/**
+ * @psalm-type UsersListUserShape = string
+ */
+interface UsersListUserInterface extends ModelInterface
 {
     public function __toString(): string;
 
-    public function getId(): string;
+    public function getUser(): string;
 
     public function jsonSerialize(): string;
-
-    public static function fromStore(Store $store): self;
 }

@@ -9,12 +9,12 @@ use OpenFGA\Models\AuthorizationModel;
 interface GetModelResponseInterface extends ResponseInterface
 {
     /**
-     * @return AuthorizationModel|null
+     * @return null|AuthorizationModel
      */
     public function getAuthorizationModel(): ?AuthorizationModel;
 
     /**
-     * @param array<string, string|null> $data
+     * @param array<string, null|string> $data
      */
     public static function fromArray(array $data): static;
 }

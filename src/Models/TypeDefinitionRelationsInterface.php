@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @psalm-type UsersetsShape = list<UsersetShape>
+ * @psalm-type TypeDefinitionRelationsShape = array<string, UsersetShape>
  */
-interface UsersetsInterface extends CollectionInterface
+interface TypeDefinitionRelationsInterface extends CollectionInterface
 {
     /**
      * Add a userset to the collection.
@@ -24,7 +24,9 @@ interface UsersetsInterface extends CollectionInterface
     public function current(): UsersetInterface;
 
     /**
-     * @return UsersetsShape
+     * Serialize the collection to an array.
+     *
+     * @return TypeDefinitionRelationsShape
      */
     public function jsonSerialize(): array;
 
@@ -38,7 +40,11 @@ interface UsersetsInterface extends CollectionInterface
     public function offsetGet(mixed $offset): ?UsersetInterface;
 
     /**
-     * @param UsersetsShape $data
+     * Create a collection from an array.
+     *
+     * @param TypeDefinitionRelationsShape $data
+     *
+     * @return self
      */
-    public static function fromArray(array $data): static;
+    public static function fromArray(array $data): self;
 }

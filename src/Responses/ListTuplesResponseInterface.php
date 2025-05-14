@@ -9,17 +9,17 @@ use OpenFGA\Models\TuplesInterface;
 interface ListTuplesResponseInterface extends ResponseInterface
 {
     /**
-     * @return TuplesInterface
-     */
-    public function getTuples(): TuplesInterface;
-
-    /**
      * @return string
      */
     public function getContinuationToken(): string;
 
     /**
-     * @param array<string, string|null> $data
+     * @return TuplesInterface
+     */
+    public function getTuples(): TuplesInterface;
+
+    /**
+     * @param array<string, null|string> $data
      */
     public static function fromArray(array $data): static;
 }

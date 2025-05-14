@@ -31,6 +31,11 @@ trait CollectionTrait
         return count($this->models);
     }
 
+    public function jsonSerialize(): array
+    {
+        return array_map(static fn ($model) => $model->jsonSerialize(), $this->models);
+    }
+
     final public function key(): string | int
     {
         $keys = array_keys($this->models);
@@ -78,10 +83,5 @@ trait CollectionTrait
         $keys = array_keys($this->models);
 
         return isset($keys[$this->position]);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return array_map(static fn ($model) => $model->jsonSerialize(), $this->models);
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface UsersInterface extends ModelCollectionInterface
+interface UsersInterface extends CollectionInterface
 {
     /**
      * Add a user to the collection.

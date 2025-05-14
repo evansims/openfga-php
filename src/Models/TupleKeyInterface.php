@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+/**
+ * @psalm-type TupleKeyShape = array{user?: string, relation?: string, object?: string, condition?: ConditionShape}
+ */
 interface TupleKeyInterface extends ModelInterface
 {
     public function getCondition(): ?ConditionInterface;
@@ -15,12 +18,13 @@ interface TupleKeyInterface extends ModelInterface
     public function getUser(): ?string;
 
     /**
-     * @return array{user?: string, relation?: string, object?: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}
+     * @return TupleKeyShape
      */
     public function jsonSerialize(): array;
 
     /**
-     * @param array{user?: string, relation?: string, object?: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}} $data
+     * @param TupleKeyType  $type
+     * @param TupleKeyShape $data
      */
     public static function fromArray(TupleKeyType $type, array $data): static;
 }

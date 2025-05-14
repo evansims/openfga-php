@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+/**
+ * @psalm-type UsersetUserShape = array{type: string, id: string, relation: string}
+ */
 interface UsersetUserInterface extends ModelInterface
 {
     public function getId(): string;
@@ -11,4 +14,14 @@ interface UsersetUserInterface extends ModelInterface
     public function getRelation(): string;
 
     public function getType(): string;
+
+    /**
+     * @return UsersetUserShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
+     * @param UsersetUserShape $data
+     */
+    public static function fromArray(array $data): static;
 }

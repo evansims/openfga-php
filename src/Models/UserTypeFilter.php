@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use function assert;
+use InvalidArgumentException;
 
-final class UserTypeFilter extends Model implements UserTypeFilterInterface
+final class UserTypeFilter implements UserTypeFilterInterface
 {
     public function __construct(
         private string $type,
-        private string $relation,
+        private ?string $relation = null,
     ) {
     }
 
-    public function getRelation(): string
+    public function getRelation(): ?string
     {
         return $this->relation;
     }
@@ -24,21 +24,40 @@ final class UserTypeFilter extends Model implements UserTypeFilterInterface
         return $this->type;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
-        return [
+        $response = [
             'type' => $this->type,
-            'relation' => $this->relation,
         ];
+
+        if (null !== $this->relation) {
+            $response['relation'] = $this->relation;
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self
     {
-        assert(isset($data['type'], $data['relation']));
+        $data = self::validatedUserTypeFilterShape($data);
 
         return new self(
             type: $data['type'],
-            relation: $data['relation'],
+            relation: $data['relation'] ?? null,
         );
+    }
+
+    /**
+     * @param array{type: string, relation?: string} $data
+     *
+     * @return UserTypeFilterShape
+     */
+    public static function validatedUserTypeFilterShape(array $data): array
+    {
+        if (! isset($data['type'])) {
+            throw new InvalidArgumentException('UserTypeFilterShape must have a type');
+        }
+
+        return $data;
     }
 }

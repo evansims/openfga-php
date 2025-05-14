@@ -9,7 +9,7 @@ use OpenFGA\Models\UsersetTree;
 interface ExpandResponseInterface extends ResponseInterface
 {
     /**
-     * @return UsersetTree|null
+     * @return null|UsersetTree
      */
     public function getTree(): ?UsersetTree;
 

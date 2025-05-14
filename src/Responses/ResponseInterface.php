@@ -11,10 +11,10 @@ interface ResponseInterface
     /**
      * @param HttpResponseInterface $response
      */
-    public static function handleResponseException(HttpResponseInterface $response): void;
+    public static function fromResponse(HttpResponseInterface $response): static;
 
     /**
      * @param HttpResponseInterface $response
      */
-    public static function fromResponse(HttpResponseInterface $response): static;
+    public static function handleResponseException(HttpResponseInterface $response): void;
 }

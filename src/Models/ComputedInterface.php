@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+/**
+ * @psalm-type ComputedShape = array{userset: string}
+ */
 interface ComputedInterface extends ModelInterface
 {
     public function getUserset(): string;
 
     /**
-     * @return array{
-     *     userset: string,
-     * }
+     * @return ComputedShape
      */
     public function jsonSerialize(): array;
 
     /**
-     * @param array{
-     *     userset: string,
-     * } $data
+     * @param ComputedShape $data
      */
     public static function fromArray(array $data): static;
 }

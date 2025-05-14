@@ -6,7 +6,10 @@ namespace OpenFGA\Models;
 
 use JsonSerializable;
 
-interface AssertionInterface extends ModelInterface, JsonSerializable
+/**
+ * @psalm-type AssertionShape = array{tuple_key: TupleKeyShape, expectation: bool, contextual_tuples?: TupleKeysShape, context?: array}
+ */
+interface AssertionInterface extends JsonSerializable, ModelInterface
 {
     public function getContext(): ?array;
 
@@ -17,12 +20,12 @@ interface AssertionInterface extends ModelInterface, JsonSerializable
     public function getTupleKey(): TupleKeyInterface;
 
     /**
-     * @return array{tuple_key: array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, expectation: bool, contextual_tuples?: array<int, array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, context?: array}
+     * @return AssertionShape
      */
     public function jsonSerialize(): array;
 
     /**
-     * @param array{tuple_key: array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, expectation: bool, contextual_tuples?: array<int, array{user: string, relation: string, object: string, condition?: array{name: string, expression: string, parameters?: array{module: string, source_info: array{file: string}}, metadata?: array{module: string, source_info: array{file: string}}}}, context?: array} $data
+     * @param AssertionShape $data
      */
     public static function fromArray(array $data): self;
 }

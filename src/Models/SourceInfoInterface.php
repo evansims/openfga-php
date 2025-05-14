@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use JsonSerializable;
-
-interface SourceInfoInterface extends ModelInterface, JsonSerializable
+/**
+ * @psalm-type SourceInfoShape = array{file: string}
+ */
+interface SourceInfoInterface extends ModelInterface
 {
     public function getFile(): string;
 
     /**
-     * @return array{file: string}
+     * @return SourceInfoShape
      */
     public function jsonSerialize(): array;
 
     /**
-     * @param array{file: string} $data
+     * @param SourceInfoShape $data
      */
     public static function fromArray(array $data): static;
 }

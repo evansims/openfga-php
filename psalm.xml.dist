@@ -8,6 +8,9 @@
     findUnusedBaselineEntry="true"
     findUnusedCode="false"
 >
+    <issueHandlers>
+        <LessSpecificReturnType occurrences="1"/>
+    </issueHandlers>
     <projectFiles>
         <directory name="src" />
     </projectFiles>

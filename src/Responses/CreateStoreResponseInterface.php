@@ -9,6 +9,11 @@ use DateTimeImmutable;
 interface CreateStoreResponseInterface extends ResponseInterface
 {
     /**
+     * @return DateTimeImmutable
+     */
+    public function getCreatedAt(): DateTimeImmutable;
+
+    /**
      * @return string
      */
     public function getId(): string;
@@ -17,11 +22,6 @@ interface CreateStoreResponseInterface extends ResponseInterface
      * @return string
      */
     public function getName(): string;
-
-    /**
-     * @return DateTimeImmutable
-     */
-    public function getCreatedAt(): DateTimeImmutable;
 
     /**
      * @return DateTimeImmutable

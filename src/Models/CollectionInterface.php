@@ -7,8 +7,9 @@ namespace OpenFGA\Models;
 use ArrayAccess;
 use Countable;
 use Iterator;
+use JsonSerializable;
 
-interface CollectionInterface extends ArrayAccess, Countable, Iterator, ModelInterface
+interface CollectionInterface extends ArrayAccess, Countable, Iterator, JsonSerializable
 {
     public function count(): int;
 
