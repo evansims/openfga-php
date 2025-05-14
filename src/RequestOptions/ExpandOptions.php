@@ -8,6 +8,8 @@ use OpenFGA\Models\Consistency;
 
 final class ExpandOptions extends RequestOptions
 {
+    use RequestOptionsTrait;
+
     public function __construct(
         private ?Consistency $consistency = null,
     ) {
@@ -16,10 +18,5 @@ final class ExpandOptions extends RequestOptions
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
-    }
-
-    public function getQueryParameters(): array
-    {
-        return [];
     }
 }

@@ -6,6 +6,8 @@ namespace OpenFGA\RequestOptions;
 
 final class ListStoresRequestOptions extends RequestOptions
 {
+    use RequestOptionsTrait;
+
     public function __construct(
         private ?string $continuationToken = null,
         private ?int $pageSize = null,

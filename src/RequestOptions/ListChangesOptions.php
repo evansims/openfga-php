@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 final class ListChangesOptions extends RequestOptions
 {
+    use RequestOptionsTrait;
+
     public function __construct(
         private ?string $continuationToken = null,
         private ?int $pageSize = null,

@@ -6,8 +6,5 @@ namespace OpenFGA\RequestOptions;
 
 final class DeleteStoreRequestOptions extends RequestOptions
 {
-    public function getQueryParameters(): array
-    {
-        return [];
-    }
+    use RequestOptionsTrait;
 }

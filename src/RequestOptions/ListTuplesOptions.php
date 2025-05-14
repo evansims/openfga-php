@@ -8,6 +8,8 @@ use OpenFGA\Models\Consistency;
 
 final class ListTuplesOptions extends RequestOptions
 {
+    use RequestOptionsTrait;
+
     public function __construct(
         private ?string $continuationToken = null,
         private ?int $pageSize = null,
@@ -28,10 +30,5 @@ final class ListTuplesOptions extends RequestOptions
     public function getPageSize(): ?int
     {
         return $this->pageSize;
-    }
-
-    public function getQueryParameters(): array
-    {
-        return [];
     }
 }
