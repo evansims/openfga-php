@@ -6,6 +6,9 @@ namespace OpenFGA\Models;
 
 use DateTimeImmutable;
 
+/**
+ * @psalm-type StoreShape = array{id: string, name: string, created_at: string, updated_at: string, deleted_at?: string}
+ */
 interface StoreInterface extends ModelInterface
 {
     public function getCreatedAt(): DateTimeImmutable;
@@ -17,4 +20,14 @@ interface StoreInterface extends ModelInterface
     public function getName(): string;
 
     public function getUpdatedAt(): DateTimeImmutable;
+
+    /**
+     * @return StoreShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
+     * @param StoreShape $data
+     */
+    public static function fromArray(array $data): self;
 }

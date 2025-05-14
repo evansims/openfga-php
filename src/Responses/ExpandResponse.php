@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\UsersetTree;
+use OpenFGA\Models\{UsersetTree, UsersetTreeInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
@@ -16,11 +16,11 @@ final class ExpandResponse implements ExpandResponseInterface
     use ResponseTrait;
 
     public function __construct(
-        private ?UsersetTree $tree = null,
+        private ?UsersetTreeInterface $tree = null,
     ) {
     }
 
-    public function getTree(): ?UsersetTree
+    public function getTree(): ?UsersetTreeInterface
     {
         return $this->tree;
     }

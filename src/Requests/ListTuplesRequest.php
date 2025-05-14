@@ -10,7 +10,7 @@ use OpenFGA\RequestOptions\ListTuplesOptions;
 final class ListTuplesRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private TupleKeyInterface $tupleKey,
         private ?ListTuplesOptions $options = null,
@@ -36,7 +36,7 @@ final class ListTuplesRequest
     {
         $body = [];
 
-        $body['tuple_key'] = $this->tupleKey->toArray();
+        $body['tuple_key'] = $this->tupleKey->jsonSerialize();
 
         if (null !== $this->getOptions()?->getConsistency()) {
             $body['consistency'] = $this->getOptions()?->getConsistency()->value;

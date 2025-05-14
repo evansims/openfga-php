@@ -99,19 +99,19 @@ final class TupleKey implements TupleKeyInterface
         $supported = self::supported($this->getType());
         $required = self::required($this->getType());
 
-        if (! isset($supported['user']) && null !== $this->user) {
+        if (! isset($supported['user']) && null !== $this->getUser()) {
             throw new InvalidArgumentException('User is not supported for this tuple key type');
         }
 
-        if (! isset($supported['relation']) && null !== $this->relation) {
+        if (! isset($supported['relation']) && null !== $this->getRelation()) {
             throw new InvalidArgumentException('Relation is not supported for this tuple key type');
         }
 
-        if (! isset($supported['object']) && null !== $this->object) {
+        if (! isset($supported['object']) && null !== $this->getObject()) {
             throw new InvalidArgumentException('Object is not supported for this tuple key type');
         }
 
-        if (! isset($supported['condition']) && null !== $this->condition) {
+        if (! isset($supported['condition']) && null !== $this->getCondition()) {
             throw new InvalidArgumentException('Condition is not supported for this tuple key type');
         }
 

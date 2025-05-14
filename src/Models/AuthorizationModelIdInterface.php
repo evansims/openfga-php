@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+/**
+ * @psalm-type AuthorizationModelIdShape = string
+ */
 interface AuthorizationModelIdInterface extends ModelInterface
 {
     public function __toString(): string;

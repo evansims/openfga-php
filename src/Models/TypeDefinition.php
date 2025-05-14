@@ -62,9 +62,11 @@ final class TypeDefinition implements TypeDefinitionInterface
     }
 
     /**
-     * Validate the shape of the type definition array.
+     * Validate the shape of the type definition array. Throws an exception if the data is invalid.
      *
      * @param array{type: string, relations?: TypeDefinitionRelationsShape, metadata?: MetadataShape} $data
+     *
+     * @throws InvalidArgumentException
      *
      * @return TypeDefinitionShape
      */

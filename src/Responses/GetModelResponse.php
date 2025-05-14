@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\AuthorizationModel;
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
@@ -16,11 +16,11 @@ final class GetModelResponse implements GetModelResponseInterface
     use ResponseTrait;
 
     public function __construct(
-        private ?AuthorizationModel $authorizationModel = null,
+        private ?AuthorizationModelInterface $authorizationModel = null,
     ) {
     }
 
-    public function getAuthorizationModel(): ?AuthorizationModel
+    public function getAuthorizationModel(): ?AuthorizationModelInterface
     {
         return $this->authorizationModel;
     }

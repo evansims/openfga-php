@@ -10,7 +10,7 @@ use OpenFGA\RequestOptions\CreateModelOptions;
 final class CreateModelRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private TypeDefinitionsInterface $typeDefinitions,
         private SchemaVersion $schemaVersion = SchemaVersion::V1_1,
@@ -48,11 +48,11 @@ final class CreateModelRequest
     {
         $body = [];
 
-        $body['type_definitions'] = $this->getTypeDefinitions()->toArray();
+        $body['type_definitions'] = $this->getTypeDefinitions()->jsonSerialize();
         $body['schema_version'] = (string) $this->getSchemaVersion();
 
         if (null !== $this->getConditions()) {
-            $body['conditions'] = $this->getConditions()->toArray();
+            $body['conditions'] = $this->getConditions()->jsonSerialize();
         }
 
         return json_encode($body, JSON_THROW_ON_ERROR);

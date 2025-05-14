@@ -46,12 +46,20 @@ final class Condition implements ConditionInterface
 
     public function jsonSerialize(): array
     {
-        return [
-            'name' => $this->name,
-            'expression' => $this->expression,
-            'parameters' => $this->parameters?->jsonSerialize(),
-            'metadata' => $this->metadata?->jsonSerialize(),
+        $response = [
+            'name' => $this->getName(),
+            'expression' => $this->getExpression(),
         ];
+
+        if ($this->getParameters()) {
+            $response['parameters'] = $this->getParameters()->jsonSerialize();
+        }
+
+        if ($this->getMetadata()) {
+            $response['metadata'] = $this->getMetadata()->jsonSerialize();
+        }
+
+        return $response;
     }
 
     public static function fromArray(array $data): self

@@ -13,7 +13,7 @@ final class AuthorizationModelId implements AuthorizationModelIdInterface
 
     public function __toString(): string
     {
-        return $this->id;
+        return $this->getId();
     }
 
     public function getId(): string
@@ -23,7 +23,7 @@ final class AuthorizationModelId implements AuthorizationModelIdInterface
 
     public function jsonSerialize(): string
     {
-        return $this->id;
+        return $this->getId();
     }
 
     public static function fromAuthorizationModel(AuthorizationModel $authorizationModel): self

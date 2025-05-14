@@ -25,8 +25,8 @@ final class ConditionMetadata implements ConditionMetadataInterface
     public function jsonSerialize(): array
     {
         return [
-            'module' => $this->module,
-            'source_info' => $this->sourceInfo->jsonSerialize(),
+            'module' => $this->getModule(),
+            'source_info' => $this->getSourceInfo()->jsonSerialize(),
         ];
     }
 

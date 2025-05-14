@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\Assertions;
+use OpenFGA\Models\{Assertions, AssertionsInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
@@ -18,12 +18,12 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
     use ResponseTrait;
 
     public function __construct(
-        private ?Assertions $assertions,
+        private ?AssertionsInterface $assertions,
         private string $authorizationModelId,
     ) {
     }
 
-    public function getAssertions(): ?Assertions
+    public function getAssertions(): ?AssertionsInterface
     {
         return $this->assertions;
     }

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\UsersetTree;
+use OpenFGA\Models\UsersetTreeInterface;
 
 interface ExpandResponseInterface extends ResponseInterface
 {
     /**
-     * @return null|UsersetTree
+     * @return null|UsersetTreeInterface
      */
-    public function getTree(): ?UsersetTree;
+    public function getTree(): ?UsersetTreeInterface;
 
     /**
      * @param array<string, string> $data

@@ -8,9 +8,6 @@ use OpenFGA\Models\UsersInterface;
 
 interface ListUsersResponseInterface extends ResponseInterface
 {
-    /**
-     * @return UsersInterface
-     */
     public function getUsers(): UsersInterface;
 
     /**

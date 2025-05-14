@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Stores extends ModelCollection implements StoresInterface
+final class Stores implements StoresInterface
 {
+    use CollectionTrait;
+
     public function add(StoreInterface $store): void
     {
         $this->models[] = $store;
@@ -23,6 +25,7 @@ final class Stores extends ModelCollection implements StoresInterface
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedStoresShape($data);
         $collection = new self();
 
         foreach ($data as $model) {
@@ -30,5 +33,17 @@ final class Stores extends ModelCollection implements StoresInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Validate the shape of the stores array.
+     *
+     * @param list<StoreShape> $data
+     *
+     * @return StoresShape
+     */
+    public static function validatedStoresShape(array $data): array
+    {
+        return $data;
     }
 }

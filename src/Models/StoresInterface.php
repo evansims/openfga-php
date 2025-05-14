@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface StoresInterface extends ModelCollectionInterface
+/**
+ * @psalm-type StoresShape = list<StoreShape>
+ */
+interface StoresInterface extends CollectionInterface
 {
     /**
      * Add a store to the collection.
@@ -28,4 +31,11 @@ interface StoresInterface extends ModelCollectionInterface
      * @return null|StoreInterface
      */
     public function offsetGet(mixed $offset): ?StoreInterface;
+
+    /**
+     * Create a collection from an array.
+     *
+     * @param StoresShape $data
+     */
+    public static function fromArray(array $data): self;
 }

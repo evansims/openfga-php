@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeysInterface, StoreIdInterface};
+use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeysInterface};
 use OpenFGA\RequestOptions\ListObjectsOptions;
 
 final class ListObjectsRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private string $type,
         private string $relation,
         private string $user,
         private ?AuthorizationModelIdInterface $authorizationModelId = null,
         private ?object $context = null,
-        private ?ContextualTupleKeysInterface $contextualTuples = null,
+        private ?TupleKeysInterface $contextualTuples = null,
         private ?ListObjectsOptions $options = null,
     ) {
     }
@@ -32,7 +32,7 @@ final class ListObjectsRequest
         return $this->context;
     }
 
-    public function getContextualTuples(): ?ContextualTupleKeysInterface
+    public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
@@ -75,7 +75,7 @@ final class ListObjectsRequest
         }
 
         if (null !== $this->getContextualTuples()) {
-            $body['contextual_tuples'] = $this->getContextualTuples()->toArray();
+            $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
         }
 
         if (null !== $this->getContext()) {

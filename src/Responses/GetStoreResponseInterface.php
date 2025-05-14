@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\Store;
+use OpenFGA\Models\StoreInterface;
 
 interface GetStoreResponseInterface extends ResponseInterface
 {
     /**
-     * @return Store
+     * @return StoreInterface
      */
-    public function getStore(): Store;
+    public function getStore(): StoreInterface;
 
     /**
      * @param array<string, null|string> $data

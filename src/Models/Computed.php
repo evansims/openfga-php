@@ -35,6 +35,8 @@ final class Computed implements ComputedInterface
     }
 
     /**
+     * Validates the shape of the array to be used as computed data. Throws an exception if the data is invalid.
+     *
      * @param array{userset: string} $data
      *
      * @throws InvalidArgumentException

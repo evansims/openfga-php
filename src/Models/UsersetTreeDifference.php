@@ -43,6 +43,8 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
     }
 
     /**
+     * Validates the shape of the array to be used as userset tree difference data. Throws an exception if the data is invalid.
+     *
      * @param array{base: NodeShape, subtract: NodeShape} $data
      *
      * @throws InvalidArgumentException

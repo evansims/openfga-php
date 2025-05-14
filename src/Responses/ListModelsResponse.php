@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\AuthorizationModels;
+use OpenFGA\Models\{AuthorizationModels, AuthorizationModelsInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
@@ -17,12 +17,12 @@ final class ListModelsResponse implements ListModelsResponseInterface
     use ResponseTrait;
 
     public function __construct(
-        private AuthorizationModels $authorizationModels,
+        private AuthorizationModelsInterface $authorizationModels,
         private ?string $continuationToken = null,
     ) {
     }
 
-    public function getAuthorizationModels(): AuthorizationModels
+    public function getAuthorizationModels(): AuthorizationModelsInterface
     {
         return $this->authorizationModels;
     }

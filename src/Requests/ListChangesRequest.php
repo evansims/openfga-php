@@ -10,7 +10,7 @@ use OpenFGA\RequestOptions\ListChangesOptions;
 final class ListChangesRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private ?ListChangesOptions $options = null,
     ) {

@@ -25,9 +25,11 @@ final class TypedWildcard implements TypedWildcardInterface
         return $this->type;
     }
 
-    public function jsonSerialize(): string
+    public function jsonSerialize(): array
     {
-        return $this->getType();
+        return [
+            'type' => $this->getType(),
+        ];
     }
 
     public static function fromArray(array $data): self

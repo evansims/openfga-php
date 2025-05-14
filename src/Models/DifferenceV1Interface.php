@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @psalm-type DifferenceShape = array{
- *     base: UsersetShape,
- *     subtract: UsersetShape,
- * }
+ * @psalm-type DifferenceShape = array{base: UsersetShape, subtract: UsersetShape}
  */
 interface DifferenceV1Interface extends ModelInterface
 {

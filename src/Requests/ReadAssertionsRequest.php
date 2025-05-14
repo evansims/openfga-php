@@ -10,7 +10,7 @@ use OpenFGA\RequestOptions\ReadAssertionsOptions;
 final class ReadAssertionsRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private AuthorizationModelIdInterface $authorizationModelId,
         private ?ReadAssertionsOptions $options = null,

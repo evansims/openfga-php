@@ -51,6 +51,9 @@ final class UsersList implements UsersListInterface
     }
 
     /**
+     * Validates the shape of the array to be used as users list data. Throws an exception if the data is invalid.
+
+     *
      * @param list<string> $data
      *
      * @return UsersListShape

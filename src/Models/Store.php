@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeImmutable;
+use InvalidArgumentException;
 
-use function assert;
-
-final class Store extends Model implements StoreInterface
+final class Store implements StoreInterface
 {
     /**
      * Constructor.
@@ -53,17 +52,17 @@ final class Store extends Model implements StoreInterface
         return $this->updatedAt;
     }
 
-    public function toArray(): array
+    public function jsonSerialize(): array
     {
         $response = [
-            'id' => $this->id,
-            'name' => $this->name,
-            'created_at' => $this->createdAt->format('Y-m-d\TH:i:s\Z'),
-            'updated_at' => $this->updatedAt->format('Y-m-d\TH:i:s\Z'),
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'created_at' => $this->getCreatedAt()->format('Y-m-d\TH:i:s\Z'),
+            'updated_at' => $this->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'),
         ];
 
-        if (null !== $this->deletedAt) {
-            $response['deleted_at'] = $this->deletedAt->format('Y-m-d\TH:i:s\Z');
+        if (null !== $this->getDeletedAt()) {
+            $response['deleted_at'] = $this->getDeletedAt()->format('Y-m-d\TH:i:s\Z');
         }
 
         return $response;
@@ -71,7 +70,7 @@ final class Store extends Model implements StoreInterface
 
     public static function fromArray(array $data): self
     {
-        assert(isset($data['id'], $data['name'], $data['created_at'], $data['updated_at']));
+        $data = self::validatedStoreShape($data);
 
         return new self(
             id: $data['id'],
@@ -80,5 +79,21 @@ final class Store extends Model implements StoreInterface
             updatedAt: new DateTimeImmutable($data['updated_at']),
             deletedAt: isset($data['deleted_at']) ? new DateTimeImmutable($data['deleted_at']) : null,
         );
+    }
+
+    /**
+     * @param array{id: string, name: string, created_at: string, updated_at: string, deleted_at?: string} $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return StoreShape
+     */
+    public static function validatedStoreShape(array $data): array
+    {
+        if (! isset($data['id'], $data['name'], $data['created_at'], $data['updated_at'])) {
+            throw new InvalidArgumentException('Invalid store data');
+        }
+
+        return $data;
     }
 }

@@ -8,14 +8,8 @@ use OpenFGA\Models\TuplesInterface;
 
 interface ListTuplesResponseInterface extends ResponseInterface
 {
-    /**
-     * @return string
-     */
     public function getContinuationToken(): string;
 
-    /**
-     * @return TuplesInterface
-     */
     public function getTuples(): TuplesInterface;
 
     /**

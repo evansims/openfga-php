@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\Stores;
+use OpenFGA\Models\{Stores, StoresInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
@@ -18,7 +18,7 @@ final class ListStoresResponse implements ListStoresResponseInterface
     use ResponseTrait;
 
     public function __construct(
-        private Stores $stores,
+        private StoresInterface $stores,
         private string $continuationToken,
     ) {
     }
@@ -28,7 +28,7 @@ final class ListStoresResponse implements ListStoresResponseInterface
         return $this->continuationToken;
     }
 
-    public function getStores(): Stores
+    public function getStores(): StoresInterface
     {
         return $this->stores;
     }

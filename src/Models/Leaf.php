@@ -59,6 +59,9 @@ final class Leaf implements LeafInterface
     }
 
     /**
+     * Validates the shape of the array to be used as leaf data. Throws an exception if the data is invalid.
+
+     *
      * @param array{users?: UsersListShape, computed?: ComputedShape, tupleToUserset?: UsersetTreeTupleToUsersetShape} $data
      *
      * @return LeafShape

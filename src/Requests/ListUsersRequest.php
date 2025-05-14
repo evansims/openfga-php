@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeysInterface, StoreIdInterface, UserTypeFiltersInterface};
+use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeysInterface, UserTypeFiltersInterface};
 use OpenFGA\RequestOptions\ListUsersOptions;
 
 final class ListUsersRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private AuthorizationModelIdInterface $authorizationModelId,
         private string $object,
         private string $relation,
         private UserTypeFiltersInterface $userFilters,
         private ?object $context = null,
-        private ?ContextualTupleKeysInterface $contextualTuples = null,
+        private ?TupleKeysInterface $contextualTuples = null,
         private ?ListUsersOptions $options = null,
     ) {
     }
@@ -32,7 +32,7 @@ final class ListUsersRequest
         return $this->context;
     }
 
-    public function getContextualTuples(): ?ContextualTupleKeysInterface
+    public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
@@ -69,10 +69,10 @@ final class ListUsersRequest
         $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
         $body['object'] = $this->getObject();
         $body['relation'] = $this->getRelation();
-        $body['user_filters'] = $this->getUserFilters()->toArray();
+        $body['user_filters'] = $this->getUserFilters()->jsonSerialize();
 
         if (null !== $this->getContextualTuples()) {
-            $body['contextual_tuples'] = $this->getContextualTuples()->toArray();
+            $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
         }
 
         if (null !== $this->getContext()) {

@@ -10,7 +10,7 @@ use OpenFGA\RequestOptions\DeleteStoreRequestOptions;
 final class DeleteStoreRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private ?DeleteStoreRequestOptions $options = null,
     ) {

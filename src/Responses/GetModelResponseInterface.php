@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\AuthorizationModel;
+use OpenFGA\Models\AuthorizationModelInterface;
 
 interface GetModelResponseInterface extends ResponseInterface
 {
     /**
-     * @return null|AuthorizationModel
+     * @return null|AuthorizationModelInterface
      */
-    public function getAuthorizationModel(): ?AuthorizationModel;
+    public function getAuthorizationModel(): ?AuthorizationModelInterface;
 
     /**
      * @param array<string, null|string> $data

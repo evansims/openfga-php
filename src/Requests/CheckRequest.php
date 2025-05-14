@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeysInterface, StoreIdInterface, TupleKeyInterface};
+use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeyInterface, TupleKeysInterface};
 use OpenFGA\RequestOptions\CheckOptions;
 
 use function assert;
@@ -18,7 +18,7 @@ final class CheckRequest
         private TupleKeyInterface $tupleKey,
         private ?bool $trace = null,
         private ?object $context = null,
-        private ?ContextualTupleKeysInterface $contextualTuples = null,
+        private ?TupleKeysInterface $contextualTuples = null,
         private ?CheckOptions $options = null,
     ) {
     }
@@ -33,7 +33,7 @@ final class CheckRequest
         return $this->context;
     }
 
-    public function getContextualTuples(): ?ContextualTupleKeysInterface
+    public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
@@ -61,7 +61,7 @@ final class CheckRequest
     public function toJson(): string
     {
         $body = [];
-        $tupleKey = $this->getTupleKey()->toArray();
+        $tupleKey = $this->getTupleKey()->jsonSerialize();
 
         assert(isset($tupleKey['user'], $tupleKey['relation'], $tupleKey['object']));
 
@@ -72,7 +72,7 @@ final class CheckRequest
         ];
 
         if (null !== $this->getContextualTuples()) {
-            $body['contextual_tuples'] = $this->getContextualTuples()->toArray();
+            $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
         }
 
         if (null !== $this->getAuthorizationModelId()) {

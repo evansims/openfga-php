@@ -4,19 +4,13 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\Stores;
+use OpenFGA\Models\StoresInterface;
 
 interface ListStoresResponseInterface extends ResponseInterface
 {
-    /**
-     * @return string
-     */
     public function getContinuationToken(): string;
 
-    /**
-     * @return Stores
-     */
-    public function getStores(): Stores;
+    public function getStores(): StoresInterface;
 
     /**
      * @param array<string, null|string> $data

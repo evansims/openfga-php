@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class Objects extends ModelCollection implements ObjectsInterface
+final class FgaObjects implements FgaObjectsInterface
 {
-    public function add(ObjectInterface $object): void
+    use CollectionTrait;
+
+    public function add(FgaObjectInterface $object): void
     {
         $this->models[] = $object;
     }
 
-    public function current(): ObjectInterface
+    public function current(): FgaObjectInterface
     {
         return $this->models[$this->key()];
     }
 
-    public function offsetGet(mixed $offset): ?ObjectInterface
+    public function offsetGet(mixed $offset): ?FgaObjectInterface
     {
         return $this->models[$offset] ?? null;
     }
@@ -26,7 +28,7 @@ final class Objects extends ModelCollection implements ObjectsInterface
         $collection = new self();
 
         foreach ($data as $model) {
-            $collection->add(Object::fromArray($model));
+            $collection->add(FgaObject::fromArray($model));
         }
 
         return $collection;

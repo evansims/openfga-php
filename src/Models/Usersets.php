@@ -26,7 +26,6 @@ final class Usersets implements UsersetsInterface
     public static function fromArray(array $data): self
     {
         $data = self::validatedUsersetsShape($data);
-
         $collection = new self();
 
         foreach ($data as $model) {

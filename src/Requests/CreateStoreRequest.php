@@ -9,7 +9,7 @@ use OpenFGA\RequestOptions\CreateStoreRequestOptions;
 final class CreateStoreRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private string $name,
         private ?CreateStoreRequestOptions $options = null,
     ) {

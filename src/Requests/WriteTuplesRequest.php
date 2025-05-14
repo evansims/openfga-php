@@ -10,7 +10,7 @@ use OpenFGA\RequestOptions\WriteTuplesOptions;
 final class WriteTuplesRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private AuthorizationModelIdInterface $authorizationModelId,
         private ?TupleKeysInterface $writes = null,
@@ -49,11 +49,11 @@ final class WriteTuplesRequest
         $body = [];
 
         if (null !== $this->getWrites()) {
-            $body['writes'] = $this->getWrites()->toArray();
+            $body['writes'] = $this->getWrites()->jsonSerialize();
         }
 
         if (null !== $this->getDeletes()) {
-            $body['deletes'] = $this->getDeletes()->toArray();
+            $body['deletes'] = $this->getDeletes()->jsonSerialize();
         }
 
         $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();

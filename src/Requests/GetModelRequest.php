@@ -10,7 +10,7 @@ use OpenFGA\RequestOptions\GetModelOptions;
 final class GetModelRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
         private AuthorizationModelIdInterface $authorizationModelId,
         private ?GetModelOptions $options = null,

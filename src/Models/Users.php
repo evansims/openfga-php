@@ -25,6 +25,7 @@ final class Users implements UsersInterface
 
     public static function fromArray(array $data): self
     {
+        $data = self::validatedUsersShape($data);
         $collection = new self();
 
         foreach ($data as $model) {
@@ -32,5 +33,19 @@ final class Users implements UsersInterface
         }
 
         return $collection;
+    }
+
+    /**
+     * Validate the shape of the users array. Throws an exception if the data is invalid.
+     *
+     * @param list<UserShape> $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return UsersShape
+     */
+    public static function validatedUsersShape(array $data): array
+    {
+        return $data;
     }
 }

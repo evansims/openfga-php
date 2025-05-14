@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface TuplesInterface extends ModelCollectionInterface
+/**
+ * @psalm-type TuplesShape = list<TupleShape>
+ */
+interface TuplesInterface extends CollectionInterface
 {
     /**
      * Add a tuple to the collection.
@@ -21,6 +24,11 @@ interface TuplesInterface extends ModelCollectionInterface
     public function current(): TupleInterface;
 
     /**
+     * @return TuplesShape
+     */
+    public function jsonSerialize(): array;
+
+    /**
      * Get a tuple by offset.
      *
      * @param mixed $offset
@@ -28,4 +36,9 @@ interface TuplesInterface extends ModelCollectionInterface
      * @return null|TupleInterface
      */
     public function offsetGet(mixed $offset): ?TupleInterface;
+
+    /**
+     * @param TuplesShape $data
+     */
+    public static function fromArray(array $data): self;
 }

@@ -5,10 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @psalm-type TupleToUsersetShape = array{
- *     tupleset: ObjectRelationShape,
- *     computed_userset: ObjectRelationShape
- * }
+ * @psalm-type TupleToUsersetShape = array{tupleset: ObjectRelationShape, computed_userset: ObjectRelationShape}
  */
 interface TupleToUsersetV1Interface extends ModelInterface
 {

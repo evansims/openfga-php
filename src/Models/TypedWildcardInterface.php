@@ -13,12 +13,13 @@ interface TypedWildcardInterface extends ModelInterface
 
     public function getType(): string;
 
-    public function jsonSerialize(): string;
+    /**
+     * @return TypedWildcardShape
+     */
+    public function jsonSerialize(): array;
 
     /**
-     * @psalm-param TypedWildcardShape $data
-     *
-     * @param array $data
+     * @param TypedWildcardShape $data
      */
     public static function fromArray(array $data): self;
 }

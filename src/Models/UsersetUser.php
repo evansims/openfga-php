@@ -51,6 +51,9 @@ final class UsersetUser implements UsersetUserInterface
     }
 
     /**
+     * Validates the shape of the array to be used as userset user data. Throws an exception if the data is invalid.
+
+     *
      * @param array{type: string, id: string, relation: string} $data
      *
      * @return UsersetUserShape

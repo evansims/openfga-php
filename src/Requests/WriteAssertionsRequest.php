@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{Assertions, AuthorizationModelIdInterface, StoreIdInterface};
+use OpenFGA\Models\{AssertionsInterface, AuthorizationModelIdInterface, StoreIdInterface};
 use OpenFGA\RequestOptions\WriteAssertionsOptions;
 
 final class WriteAssertionsRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
-        private Assertions $assertions,
+        private RequestFactoryInterface $requestFactory,
+        private AssertionsInterface $assertions,
         private StoreIdInterface $storeId,
         private AuthorizationModelIdInterface $authorizationModelId,
         private ?WriteAssertionsOptions $options = null,
     ) {
     }
 
-    public function getAssertions(): Assertions
+    public function getAssertions(): AssertionsInterface
     {
         return $this->assertions;
     }
@@ -42,7 +42,7 @@ final class WriteAssertionsRequest
     {
         $body = [];
 
-        $body['assertions'] = $this->assertions->toArray();
+        $body['assertions'] = $this->assertions->jsonSerialize();
 
         return json_encode($body, JSON_THROW_ON_ERROR);
     }

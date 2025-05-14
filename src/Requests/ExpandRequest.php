@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, ContextualTupleKeys, StoreIdInterface, TupleKey};
+use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeyInterface, TupleKeysInterface};
 use OpenFGA\RequestOptions\ExpandOptions;
 
 use function assert;
@@ -12,11 +12,11 @@ use function assert;
 final class ExpandRequest
 {
     public function __construct(
-        private RequestFactory $requestFactory,
+        private RequestFactoryInterface $requestFactory,
         private StoreIdInterface $storeId,
-        private TupleKey $tupleKey,
+        private TupleKeyInterface $tupleKey,
         private ?AuthorizationModelIdInterface $authorizationModelId = null,
-        private ?ContextualTupleKeys $contextualTuples = null,
+        private ?TupleKeysInterface $contextualTuples = null,
         private ?ExpandOptions $options = null,
     ) {
     }
@@ -26,7 +26,7 @@ final class ExpandRequest
         return $this->authorizationModelId;
     }
 
-    public function getContextualTuples(): ?ContextualTupleKeys
+    public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
@@ -41,7 +41,7 @@ final class ExpandRequest
         return $this->storeId;
     }
 
-    public function getTupleKey(): TupleKey
+    public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;
     }
@@ -49,7 +49,7 @@ final class ExpandRequest
     public function toJson(): string
     {
         $body = [];
-        $tupleKey = $this->getTupleKey()->toArray();
+        $tupleKey = $this->getTupleKey()->jsonSerialize();
 
         assert(isset($tupleKey['relation'], $tupleKey['object']));
 
@@ -67,7 +67,7 @@ final class ExpandRequest
         }
 
         if (null !== $this->getContextualTuples()) {
-            $body['contextual_tuples'] = $this->getContextualTuples()->toArray();
+            $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
         }
 
         return json_encode($body, JSON_THROW_ON_ERROR);

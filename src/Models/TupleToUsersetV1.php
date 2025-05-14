@@ -31,8 +31,8 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
     public function jsonSerialize(): array
     {
         return [
-            'tupleset' => $this->tupleset->jsonSerialize(),
-            'computed_userset' => $this->computedUserset->jsonSerialize(),
+            'tupleset' => $this->getTupleset()->jsonSerialize(),
+            'computed_userset' => $this->getComputedUserset()->jsonSerialize(),
         ];
     }
 

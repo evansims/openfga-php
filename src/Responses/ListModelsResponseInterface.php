@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\AuthorizationModels;
+use OpenFGA\Models\AuthorizationModelsInterface;
 
 interface ListModelsResponseInterface extends ResponseInterface
 {
     /**
-     * @return AuthorizationModels
+     * @return AuthorizationModelsInterface
      */
-    public function getAuthorizationModels(): AuthorizationModels;
+    public function getAuthorizationModels(): AuthorizationModelsInterface;
 
     /**
      * @return ?string
