@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\AuthorizationModelsInterface;
+use OpenFGA\Models\{AuthorizationModelsInterface, ContinuationTokenInterface};
 
 interface ListModelsResponseInterface extends ResponseInterface
 {
@@ -14,12 +14,7 @@ interface ListModelsResponseInterface extends ResponseInterface
     public function getAuthorizationModels(): AuthorizationModelsInterface;
 
     /**
-     * @return ?string
+     * @return ?ContinuationTokenInterface
      */
-    public function getContinuationToken(): ?string;
-
-    /**
-     * @param array<string, null|string> $data
-     */
-    public static function fromArray(array $data): static;
+    public function getContinuationToken(): ?ContinuationTokenInterface;
 }

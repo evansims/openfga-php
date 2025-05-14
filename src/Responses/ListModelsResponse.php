@@ -6,10 +6,9 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{AuthorizationModels, AuthorizationModelsInterface};
+use OpenFGA\Models\{AuthorizationModels, AuthorizationModelsInterface, ContinuationToken, ContinuationTokenInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-use function assert;
 use function is_array;
 
 final class ListModelsResponse implements ListModelsResponseInterface
@@ -18,7 +17,7 @@ final class ListModelsResponse implements ListModelsResponseInterface
 
     public function __construct(
         private AuthorizationModelsInterface $authorizationModels,
-        private ?string $continuationToken = null,
+        private ?ContinuationTokenInterface $continuationToken = null,
     ) {
     }
 
@@ -27,19 +26,9 @@ final class ListModelsResponse implements ListModelsResponseInterface
         return $this->authorizationModels;
     }
 
-    public function getContinuationToken(): ?string
+    public function getContinuationToken(): ?ContinuationTokenInterface
     {
         return $this->continuationToken;
-    }
-
-    public static function fromArray(array $data): static
-    {
-        assert(isset($data['authorization_models']) && is_array($data['authorization_models']));
-
-        return new self(
-            authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
-            continuationToken: $data['continuation_token'] ?? null,
-        );
     }
 
     public static function fromResponse(HttpResponseInterface $response): static
@@ -52,10 +41,16 @@ final class ListModelsResponse implements ListModelsResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['authorization_models']) && is_array($data['authorization_models'])) {
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['authorization_models'])) {
+            // @phpstan-ignore-next-line
+            $authorizationModels = AuthorizationModels::fromArray($data['authorization_models']);
+
+            // @phpstan-ignore-next-line
+            $continuationToken = $data['continuation_token'] ? new ContinuationToken($data['continuation_token']) : null;
+
             return new static(
-                authorizationModels: AuthorizationModels::fromArray($data['authorization_models']),
-                continuationToken: $data['continuation_token'] ?? null,
+                authorizationModels: $authorizationModels,
+                continuationToken: $continuationToken,
             );
         }
 

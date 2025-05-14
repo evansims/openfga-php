@@ -6,10 +6,9 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{TupleChanges, TupleChangesInterface};
+use OpenFGA\Models\{ContinuationToken, ContinuationTokenInterface, TupleChanges, TupleChangesInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-use function assert;
 use function is_array;
 
 final class ListChangesResponse implements ListChangesResponseInterface
@@ -18,7 +17,7 @@ final class ListChangesResponse implements ListChangesResponseInterface
 
     public function __construct(
         private TupleChangesInterface $changes,
-        private ?string $continuationToken,
+        private ?ContinuationTokenInterface $continuationToken,
     ) {
     }
 
@@ -27,19 +26,9 @@ final class ListChangesResponse implements ListChangesResponseInterface
         return $this->changes;
     }
 
-    public function getContinuationToken(): ?string
+    public function getContinuationToken(): ?ContinuationTokenInterface
     {
         return $this->continuationToken;
-    }
-
-    public static function fromArray(array $data): static
-    {
-        assert(isset($data['changes']) && is_array($data['changes']));
-
-        return new self(
-            changes: TupleChanges::fromArray($data['changes']),
-            continuationToken: $data['continuation_token'] ?? null,
-        );
     }
 
     public static function fromResponse(HttpResponseInterface $response): static
@@ -52,8 +41,16 @@ final class ListChangesResponse implements ListChangesResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data)) {
-            return static::fromArray($data);
+        if (200 === $response->getStatusCode() && is_array($data) && isset($data['changes']) && is_array($data['changes'])) {
+            // @phpstan-ignore-next-line
+            $changes = TupleChanges::fromArray($data['changes']);
+            // @phpstan-ignore-next-line
+            $continuationToken = $data['continuation_token'] ? new ContinuationToken($data['continuation_token']) : null;
+
+            return new self(
+                changes: $changes,
+                continuationToken: $continuationToken,
+            );
         }
 
         self::handleResponseException($response);

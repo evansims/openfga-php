@@ -47,7 +47,7 @@ final class ListTuplesRequest
         }
 
         if (null !== $this->getOptions()?->getContinuationToken()) {
-            $body['continuation_token'] = $this->getOptions()?->getContinuationToken();
+            $body['continuation_token'] = (string) $this->getOptions()?->getContinuationToken();
         }
 
         return json_encode($body, JSON_THROW_ON_ERROR);

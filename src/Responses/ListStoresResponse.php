@@ -6,12 +6,11 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Stores, StoresInterface};
+use OpenFGA\Models\{ContinuationToken, ContinuationTokenInterface, Stores, StoresInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
 use function is_array;
-use function is_string;
 
 final class ListStoresResponse implements ListStoresResponseInterface
 {
@@ -19,11 +18,11 @@ final class ListStoresResponse implements ListStoresResponseInterface
 
     public function __construct(
         private StoresInterface $stores,
-        private string $continuationToken,
+        private ?ContinuationTokenInterface $continuationToken = null,
     ) {
     }
 
-    public function getContinuationToken(): string
+    public function getContinuationToken(): ?ContinuationTokenInterface
     {
         return $this->continuationToken;
     }
@@ -48,7 +47,7 @@ final class ListStoresResponse implements ListStoresResponseInterface
             $stores = Stores::fromArray($data['stores']);
 
             // @phpstan-ignore-next-line
-            $continuationToken = (string) $data['continuation_token'];
+            $continuationToken = $data['continuation_token'] ? new ContinuationToken($data['continuation_token']) : null;
 
             return new self(
                 stores: $stores,

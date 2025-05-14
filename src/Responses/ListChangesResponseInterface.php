@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\TupleChangesInterface;
+use OpenFGA\Models\{ContinuationTokenInterface, TupleChangesInterface};
 
 interface ListChangesResponseInterface extends ResponseInterface
 {
@@ -14,12 +14,7 @@ interface ListChangesResponseInterface extends ResponseInterface
     public function getChanges(): TupleChangesInterface;
 
     /**
-     * @return ?string
+     * @return ?ContinuationTokenInterface
      */
-    public function getContinuationToken(): ?string;
-
-    /**
-     * @param array<string, null|string> $data
-     */
-    public static function fromArray(array $data): static;
+    public function getContinuationToken(): ?ContinuationTokenInterface;
 }

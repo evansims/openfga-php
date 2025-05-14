@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace OpenFGA\RequestOptions;
 
 use DateTimeImmutable;
+use OpenFGA\Models\ContinuationTokenInterface;
 
 final class ListChangesOptions extends RequestOptions
 {
     use RequestOptionsTrait;
 
     public function __construct(
-        private ?string $continuationToken = null,
+        private ?ContinuationTokenInterface $continuationToken = null,
         private ?int $pageSize = null,
         private ?string $type = null,
         private ?DateTimeImmutable $startTime = null,
     ) {
     }
 
-    public function getContinuationToken(): ?string
+    public function getContinuationToken(): ?ContinuationTokenInterface
     {
         return $this->continuationToken;
     }
@@ -33,7 +34,7 @@ final class ListChangesOptions extends RequestOptions
         $params = [];
 
         if (null !== $this->getContinuationToken()) {
-            $params['continuation_token'] = $this->getContinuationToken();
+            $params['continuation_token'] = (string) $this->getContinuationToken();
         }
 
         if (null !== $this->getPageSize()) {

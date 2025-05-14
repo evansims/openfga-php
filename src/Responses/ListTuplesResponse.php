@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Tuples, TuplesInterface};
+use OpenFGA\Models\{ContinuationToken, ContinuationTokenInterface, Tuples, TuplesInterface};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function assert;
@@ -19,11 +19,11 @@ final class ListTuplesResponse implements ListTuplesResponseInterface
 
     public function __construct(
         private TuplesInterface $tuples,
-        private string $continuationToken,
+        private ?ContinuationTokenInterface $continuationToken = null,
     ) {
     }
 
-    public function getContinuationToken(): string
+    public function getContinuationToken(): ?ContinuationTokenInterface
     {
         return $this->continuationToken;
     }
@@ -48,7 +48,7 @@ final class ListTuplesResponse implements ListTuplesResponseInterface
             $tuples = Tuples::fromArray($data['tuples']);
 
             // @phpstan-ignore-next-line
-            $continuationToken = (string) $data['continuation_token'];
+            $continuationToken = $data['continuation_token'] ? new ContinuationToken($data['continuation_token']) : null;
 
             return new self(
                 tuples: $tuples,
