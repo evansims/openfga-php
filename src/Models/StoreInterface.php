@@ -25,9 +25,4 @@ interface StoreInterface extends ModelInterface
      * @return StoreShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param StoreShape $data
-     */
-    public static function fromArray(array $data): self;
 }

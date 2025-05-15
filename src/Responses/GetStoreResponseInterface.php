@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use DateTimeImmutable;
 use OpenFGA\Models\StoreInterface;
+use OpenFGA\Schema\SchemaInterface;
 
 interface GetStoreResponseInterface extends ResponseInterface
 {
-    /**
-     * @return StoreInterface
-     */
+    public function getCreatedAt(): DateTimeImmutable;
+
+    public function getDeletedAt(): ?DateTimeImmutable;
+
+    public function getId(): string;
+
+    public function getName(): string;
+
     public function getStore(): StoreInterface;
 
-    /**
-     * @param array<string, null|string> $data
-     */
-    public static function fromArray(array $data): static;
+    public function getUpdatedAt(): DateTimeImmutable;
+
+    public static function Schema(): SchemaInterface;
 }

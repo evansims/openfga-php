@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use OpenFGA\Schema\{SchemaValidator};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 interface ResponseInterface
 {
-    /**
-     * @param HttpResponseInterface $response
-     */
-    public static function fromResponse(HttpResponseInterface $response): static;
+    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static;
 
-    /**
-     * @param HttpResponseInterface $response
-     */
     public static function handleResponseException(HttpResponseInterface $response): void;
 }

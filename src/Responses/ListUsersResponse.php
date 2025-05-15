@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use Exception;
-use InvalidArgumentException;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\{Users, UsersInterface};
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
@@ -26,7 +26,7 @@ final class ListUsersResponse implements ListUsersResponseInterface
         return $this->users;
     }
 
-    public static function fromResponse(HttpResponseInterface $response): static
+    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -36,17 +36,25 @@ final class ListUsersResponse implements ListUsersResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['users'])) {
-            // @phpstan-ignore-next-line
-            $users = new Users(users: $data['users']);
+        if (200 === $response->getStatusCode() && is_array($data)) {
+            $validator->registerSchema(Users::Schema());
+            $validator->registerSchema(self::Schema());
 
-            return new self(
-                users: $users,
-            );
+            return $validator->validateAndTransform($data, self::class);
         }
 
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
+    }
+
+    public static function Schema(): SchemaInterface
+    {
+        return new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'users', type: Users::class, required: true),
+            ],
+        );
     }
 }

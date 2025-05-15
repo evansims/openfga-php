@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\RequestOptions\CreateStoreRequestOptions;
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\CreateStoreOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class CreateStoreRequest
+final class CreateStoreRequest implements CreateStoreRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
         private string $name,
-        private ?CreateStoreRequestOptions $options = null,
+        private ?CreateStoreOptionsInterface $options = null,
     ) {
     }
 
@@ -20,29 +21,23 @@ final class CreateStoreRequest
         return $this->name;
     }
 
-    public function getOptions(): ?CreateStoreRequestOptions
+    public function getOptions(): ?CreateStoreOptionsInterface
     {
         return $this->options;
     }
 
-    public function toJson(): string
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        $body = [];
+        $body = [
+            'name' => $this->getName(),
+        ];
 
-        $body['name'] = $this->name;
+        $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
-        return json_encode($body, JSON_THROW_ON_ERROR);
-    }
-
-    public function toRequest(): RequestInterface
-    {
-        $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
-
-        return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores'),
-            options: $this->getOptions(),
-            body: $body,
-            headers: $this->requestFactory->getEndpointHeaders(),
+        return new RequestContext(
+            method: NetworkRequestMethod::POST,
+            url: '/stores/',
+            body: $stream,
         );
     }
 }

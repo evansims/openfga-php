@@ -4,34 +4,33 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\StoreIdInterface;
-use OpenFGA\RequestOptions\DeleteStoreRequestOptions;
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\DeleteStoreOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class DeleteStoreRequest
+final class DeleteStoreRequest implements DeleteStoreRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private StoreIdInterface $storeId,
-        private ?DeleteStoreRequestOptions $options = null,
+        private string $store,
+        private ?DeleteStoreOptionsInterface $options = null,
     ) {
     }
 
-    public function getOptions(): ?DeleteStoreRequestOptions
+    public function getOptions(): ?DeleteStoreOptionsInterface
     {
         return $this->options;
     }
 
-    public function getStoreId(): StoreIdInterface
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        return $this->storeId;
+        return new RequestContext(
+            method: NetworkRequestMethod::DELETE,
+            url: '/stores/' . $this->getStore(),
+        );
     }
 
-    public function toRequest(): RequestInterface
+    public function getStore(): string
     {
-        return $this->requestFactory->delete(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId()),
-            options: $this->getOptions(),
-            headers: $this->requestFactory->getEndpointHeaders(),
-        );
+        return $this->store;
     }
 }

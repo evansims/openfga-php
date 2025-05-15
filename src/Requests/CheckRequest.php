@@ -4,28 +4,27 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeyInterface, TupleKeysInterface};
-use OpenFGA\RequestOptions\CheckOptions;
+use OpenFGA\Models\{TupleKeyInterface, TupleKeysInterface};
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\CheckOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
-final class CheckRequest
+final class CheckRequest implements CheckRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private StoreIdInterface $storeId,
-        private AuthorizationModelIdInterface $authorizationModelId,
+        private string $store,
+        private string $authorizationModel,
         private TupleKeyInterface $tupleKey,
         private ?bool $trace = null,
         private ?object $context = null,
         private ?TupleKeysInterface $contextualTuples = null,
-        private ?CheckOptions $options = null,
+        private ?CheckOptionsInterface $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): AuthorizationModelIdInterface
+    public function getAuthorizationModel(): string
     {
-        return $this->authorizationModelId;
+        return $this->authorizationModel;
     }
 
     public function getContext(): ?object
@@ -38,32 +37,15 @@ final class CheckRequest
         return $this->contextualTuples;
     }
 
-    public function getOptions(): ?CheckOptions
+    public function getOptions(): ?CheckOptionsInterface
     {
         return $this->options;
     }
 
-    public function getStoreId(): StoreIdInterface
-    {
-        return $this->storeId;
-    }
-
-    public function getTrace(): ?bool
-    {
-        return $this->trace;
-    }
-
-    public function getTupleKey(): TupleKeyInterface
-    {
-        return $this->tupleKey;
-    }
-
-    public function toJson(): string
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = [];
         $tupleKey = $this->getTupleKey()->jsonSerialize();
-
-        assert(isset($tupleKey['user'], $tupleKey['relation'], $tupleKey['object']));
 
         $body['tuple_key'] = [
             'user' => $tupleKey['user'],
@@ -75,8 +57,8 @@ final class CheckRequest
             $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
         }
 
-        if (null !== $this->getAuthorizationModelId()) {
-            $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
+        if (null !== $this->getAuthorizationModel()) {
+            $body['authorization_model_id'] = $this->getAuthorizationModel();
         }
 
         if (null !== $this->getTrace()) {
@@ -88,21 +70,30 @@ final class CheckRequest
         }
 
         if (null !== $this->getOptions()?->getConsistency()) {
-            $body['consistency'] = (string) $this->getOptions()?->getConsistency();
+            $body['consistency'] = (string) $this->getOptions()->getConsistency()->value;
         }
 
-        return json_encode($body, JSON_THROW_ON_ERROR);
+        $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
+
+        return new RequestContext(
+            method: NetworkRequestMethod::POST,
+            url: '/stores/' . $this->getStore() . '/check',
+            body: $stream,
+        );
     }
 
-    public function toRequest(): RequestInterface
+    public function getStore(): string
     {
-        $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
+        return $this->store;
+    }
 
-        return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->storeId . '/check'),
-            options: $this->getOptions(),
-            body: $body,
-            headers: $this->requestFactory->getEndpointHeaders(),
-        );
+    public function getTrace(): ?bool
+    {
+        return $this->trace;
+    }
+
+    public function getTupleKey(): TupleKeyInterface
+    {
+        return $this->tupleKey;
     }
 }

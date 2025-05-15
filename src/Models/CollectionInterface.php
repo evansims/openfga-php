@@ -8,6 +8,7 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 use JsonSerializable;
+use OpenFGA\Schema\SchemaInterface;
 
 interface CollectionInterface extends ArrayAccess, Countable, Iterator, JsonSerializable
 {
@@ -26,4 +27,6 @@ interface CollectionInterface extends ArrayAccess, Countable, Iterator, JsonSeri
     public function rewind(): void;
 
     public function valid(): bool;
+
+    public static function Schema(): SchemaInterface;
 }

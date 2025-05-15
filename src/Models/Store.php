@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeImmutable;
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Store implements StoreInterface
 {
@@ -68,32 +68,17 @@ final class Store implements StoreInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function Schema(): SchemaInterface
     {
-        $data = self::validatedStoreShape($data);
-
-        return new self(
-            id: $data['id'],
-            name: $data['name'],
-            createdAt: new DateTimeImmutable($data['created_at']),
-            updatedAt: new DateTimeImmutable($data['updated_at']),
-            deletedAt: isset($data['deleted_at']) ? new DateTimeImmutable($data['deleted_at']) : null,
+        return new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'id', type: 'string', required: true),
+                new SchemaProperty(name: 'name', type: 'string', required: true),
+                new SchemaProperty(name: 'created_at', type: 'datetime', required: true),
+                new SchemaProperty(name: 'updated_at', type: 'datetime', required: true),
+                new SchemaProperty(name: 'deleted_at', type: 'datetime'),
+            ],
         );
-    }
-
-    /**
-     * @param array{id: string, name: string, created_at: string, updated_at: string, deleted_at?: string} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return StoreShape
-     */
-    public static function validatedStoreShape(array $data): array
-    {
-        if (! isset($data['id'], $data['name'], $data['created_at'], $data['updated_at'])) {
-            throw new InvalidArgumentException('Invalid store data');
-        }
-
-        return $data;
     }
 }

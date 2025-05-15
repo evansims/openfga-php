@@ -36,9 +36,4 @@ interface AssertionsInterface extends CollectionInterface
      * @return null|AssertionInterface
      */
     public function offsetGet(mixed $offset): ?AssertionInterface;
-
-    /**
-     * @param AssertionsShape $data
-     */
-    public static function fromArray(array $data): static;
 }

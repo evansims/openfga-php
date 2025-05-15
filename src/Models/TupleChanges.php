@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class TupleChanges extends ModelCollection implements TupleChangesInterface
+final class TupleChanges implements TupleChangesInterface
 {
+    use CollectionTrait;
+
     public function add(TupleChangeInterface $tupleChange): void
     {
         $this->models[] = $tupleChange;

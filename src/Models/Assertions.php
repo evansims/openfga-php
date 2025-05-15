@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class Assertions implements AssertionsInterface
 {
     use CollectionTrait;
@@ -21,31 +23,5 @@ final class Assertions implements AssertionsInterface
     public function offsetGet(mixed $offset): ?AssertionInterface
     {
         return $this->models[$offset] ?? null;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedAssertionsShape($data);
-        $collection = new self();
-
-        foreach ($data as $model) {
-            $collection->add(Assertion::fromArray($model));
-        }
-
-        return $collection;
-    }
-
-    /**
-     * Validates the shape of the array to be used as assertions data. Throws an exception if the data is invalid.
-     *
-     * @param list<AssertionShape> $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return AssertionsShape
-     */
-    public static function validatedAssertionsShape(array $data): array
-    {
-        return $data;
     }
 }

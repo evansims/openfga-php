@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
+use OpenFGA\Schema\SchemaValidator;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 final class DeleteStoreResponse implements DeleteStoreResponseInterface
@@ -15,15 +16,10 @@ final class DeleteStoreResponse implements DeleteStoreResponseInterface
     ) {
     }
 
-    public static function fromArray(array $data): static
-    {
-        return new self();
-    }
-
-    public static function fromResponse(HttpResponseInterface $response): static
+    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
     {
         if (204 === $response->getStatusCode()) {
-            return new static();
+            return new self();
         }
 
         self::handleResponseException($response);

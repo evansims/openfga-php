@@ -4,26 +4,25 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeyInterface, TupleKeysInterface};
-use OpenFGA\RequestOptions\ExpandOptions;
+use OpenFGA\Models\{TupleKeyInterface, TupleKeysInterface};
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\ExpandOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
-final class ExpandRequest
+final class ExpandRequest implements ExpandRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private StoreIdInterface $storeId,
+        private string $store,
         private TupleKeyInterface $tupleKey,
-        private ?AuthorizationModelIdInterface $authorizationModelId = null,
+        private ?string $authorizationModel = null,
         private ?TupleKeysInterface $contextualTuples = null,
-        private ?ExpandOptions $options = null,
+        private ?ExpandOptionsInterface $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): ?AuthorizationModelIdInterface
+    public function getAuthorizationModel(): ?string
     {
-        return $this->authorizationModelId;
+        return $this->authorizationModel;
     }
 
     public function getContextualTuples(): ?TupleKeysInterface
@@ -31,57 +30,49 @@ final class ExpandRequest
         return $this->contextualTuples;
     }
 
-    public function getOptions(): ?ExpandOptions
+    public function getOptions(): ?ExpandOptionsInterface
     {
         return $this->options;
     }
 
-    public function getStoreId(): StoreIdInterface
-    {
-        return $this->storeId;
-    }
-
-    public function getTupleKey(): TupleKeyInterface
-    {
-        return $this->tupleKey;
-    }
-
-    public function toJson(): string
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = [];
         $tupleKey = $this->getTupleKey()->jsonSerialize();
-
-        assert(isset($tupleKey['relation'], $tupleKey['object']));
 
         $body['tuple_key'] = [
             'relation' => $tupleKey['relation'],
             'object' => $tupleKey['object'],
         ];
 
-        if (null !== $this->getAuthorizationModelId()) {
-            $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
+        if (null !== $this->getAuthorizationModel()) {
+            $body['authorization_model_id'] = $this->getAuthorizationModel();
         }
 
         if (null !== $this->getOptions()?->getConsistency()) {
-            $body['consistency'] = (string) $this->getOptions()?->getConsistency();
+            $body['consistency'] = (string) $this->getOptions()->getConsistency()->value;
         }
 
         if (null !== $this->getContextualTuples()) {
             $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
         }
 
-        return json_encode($body, JSON_THROW_ON_ERROR);
+        $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
+
+        return new RequestContext(
+            method: NetworkRequestMethod::POST,
+            url: '/stores/' . $this->getStore() . '/expand',
+            body: $stream,
+        );
     }
 
-    public function toRequest(): RequestInterface
+    public function getStore(): string
     {
-        $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
+        return $this->store;
+    }
 
-        return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/expand'),
-            options: $this->getOptions(),
-            body: $body,
-            headers: $this->requestFactory->getEndpointHeaders(),
-        );
+    public function getTupleKey(): TupleKeyInterface
+    {
+        return $this->tupleKey;
     }
 }

@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\RequestOptions\ListStoresRequestOptions;
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\ListStoresOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class ListStoresRequest
+final class ListStoresRequest implements ListStoresRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private ?ListStoresRequestOptions $options = null,
+        private ?ListStoresOptionsInterface $options = null,
     ) {
     }
 
-    public function getOptions(): ?ListStoresRequestOptions
+    public function getOptions(): ?ListStoresOptionsInterface
     {
         return $this->options;
     }
 
-    public function toRequest(): RequestInterface
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        return $this->requestFactory->get(
-            url: $this->requestFactory->getEndpointUrl('/stores'),
-            options: $this->getOptions(),
-            headers: $this->requestFactory->getEndpointHeaders(),
+        return new RequestContext(
+            method: NetworkRequestMethod::GET,
+            url: '/stores',
         );
     }
 }

@@ -46,7 +46,7 @@ abstract class TestCase extends BaseTestCase
         $this->assertEquals($expectedMethod, $request->getMethod());
 
         $uri = $request->getUri();
-        $this->assertEquals($this->client->getConfiguration()->apiUrl, $uri->getScheme() . '://' . $uri->getHost());
+        $this->assertEquals($this->client->configuration()->apiUrl, $uri->getScheme() . '://' . $uri->getHost());
         $this->assertStringStartsWith($expectedPath, $uri->getPath(), "Request path mismatch.");
 
         if ($expectedBody !== null) {

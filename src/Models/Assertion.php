@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Models\{TupleKey, TupleKeys, TupleKeyInterface, TupleKeysInterface};
+
 final class Assertion implements AssertionInterface
 {
     /**
@@ -18,6 +21,19 @@ final class Assertion implements AssertionInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?array $context = null,
     ) {
+    }
+
+    public static function Schema(): SchemaInterface
+    {
+        return new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'tuple_key', type: TupleKey::class, required: true),
+                new SchemaProperty(name: 'expectation', type: 'boolean', required: true),
+                new SchemaProperty(name: 'contextual_tuples', type: TupleKeys::class, required: false),
+                new SchemaProperty(name: 'context', type: 'array', required: false),
+            ],
+        );
     }
 
     public function getContext(): ?array
@@ -56,31 +72,5 @@ final class Assertion implements AssertionInterface
         }
 
         return $response;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedAssertionShape($data);
-
-        return new self(
-            tupleKey: TupleKey::fromArray(TupleKeyType::ASSERTION_TUPLE_KEY, $data['tuple_key']),
-            expectation: $data['expectation'],
-            contextualTuples: isset($data['contextual_tuples']) ? TupleKeys::fromArray(TupleKeyType::ASSERTION_TUPLE_KEY, $data['contextual_tuples']) : null,
-            context: isset($data['context']) ? (array) $data['context'] : null,
-        );
-    }
-
-    /**
-     * Validates the shape of the array to be used as assertion data. Throws an exception if the data is invalid.
-     *
-     * @param array{tuple_key: TupleKeyShape, expectation: bool, contextual_tuples?: TupleKeysShape, context?: array} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return AssertionShape
-     */
-    public static function validatedAssertionShape(array $data): array
-    {
-        return $data;
     }
 }

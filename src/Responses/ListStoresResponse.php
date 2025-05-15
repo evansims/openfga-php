@@ -6,10 +6,10 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{ContinuationToken, ContinuationTokenInterface, Stores, StoresInterface};
+use OpenFGA\Models\{Stores, StoresInterface};
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-use function assert;
 use function is_array;
 
 final class ListStoresResponse implements ListStoresResponseInterface
@@ -18,11 +18,11 @@ final class ListStoresResponse implements ListStoresResponseInterface
 
     public function __construct(
         private StoresInterface $stores,
-        private ?ContinuationTokenInterface $continuationToken = null,
+        private ?string $continuationToken = null,
     ) {
     }
 
-    public function getContinuationToken(): ?ContinuationTokenInterface
+    public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
@@ -32,7 +32,7 @@ final class ListStoresResponse implements ListStoresResponseInterface
         return $this->stores;
     }
 
-    public static function fromResponse(HttpResponseInterface $response): static
+    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -42,21 +42,26 @@ final class ListStoresResponse implements ListStoresResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['stores']) && isset($data['continuation_token'])) {
-            // @phpstan-ignore-next-line
-            $stores = Stores::fromArray($data['stores']);
+        if (200 === $response->getStatusCode() && is_array($data)) {
+            $validator->registerSchema(Stores::Schema());
+            $validator->registerSchema(self::Schema());
 
-            // @phpstan-ignore-next-line
-            $continuationToken = $data['continuation_token'] ? new ContinuationToken($data['continuation_token']) : null;
-
-            return new self(
-                stores: $stores,
-                continuationToken: $continuationToken,
-            );
+            return $validator->validateAndTransform($data, self::class);
         }
 
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
+    }
+
+    public static function Schema(): SchemaInterface
+    {
+        return new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'stores', type: Stores::class, required: true),
+                new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
+            ],
+        );
     }
 }

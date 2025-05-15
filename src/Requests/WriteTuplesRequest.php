@@ -4,24 +4,25 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeysInterface};
-use OpenFGA\RequestOptions\WriteTuplesOptions;
+use OpenFGA\Models\TupleKeysInterface;
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\WriteTuplesOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class WriteTuplesRequest
+final class WriteTuplesRequest implements WriteTuplesRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private StoreIdInterface $storeId,
-        private AuthorizationModelIdInterface $authorizationModelId,
+        private string $store,
+        private string $authorizationModel,
         private ?TupleKeysInterface $writes = null,
         private ?TupleKeysInterface $deletes = null,
-        private ?WriteTuplesOptions $options = null,
+        private ?WriteTuplesOptionsInterface $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): AuthorizationModelIdInterface
+    public function getAuthorizationModel(): string
     {
-        return $this->authorizationModelId;
+        return $this->authorizationModel;
     }
 
     public function getDeletes(): ?TupleKeysInterface
@@ -29,24 +30,16 @@ final class WriteTuplesRequest
         return $this->deletes;
     }
 
-    public function getOptions(): ?WriteTuplesOptions
+    public function getOptions(): ?WriteTuplesOptionsInterface
     {
         return $this->options;
     }
 
-    public function getStoreId(): StoreIdInterface
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        return $this->storeId;
-    }
-
-    public function getWrites(): ?TupleKeysInterface
-    {
-        return $this->writes;
-    }
-
-    public function toJson(): string
-    {
-        $body = [];
+        $body = [
+            'authorization_model_id' => $this->getAuthorizationModel(),
+        ];
 
         if (null !== $this->getWrites()) {
             $body['writes'] = $this->getWrites()->jsonSerialize();
@@ -56,20 +49,22 @@ final class WriteTuplesRequest
             $body['deletes'] = $this->getDeletes()->jsonSerialize();
         }
 
-        $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
+        $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
-        return json_encode($body, JSON_THROW_ON_ERROR);
+        return new RequestContext(
+            method: NetworkRequestMethod::POST,
+            url: '/stores/' . $this->getStore() . '/write',
+            body: $stream,
+        );
     }
 
-    public function toRequest(): RequestInterface
+    public function getStore(): string
     {
-        $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
+        return $this->store;
+    }
 
-        return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/write'),
-            options: $this->getOptions(),
-            body: $body,
-            headers: $this->requestFactory->getEndpointHeaders(),
-        );
+    public function getWrites(): ?TupleKeysInterface
+    {
+        return $this->writes;
     }
 }

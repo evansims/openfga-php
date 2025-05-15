@@ -7,6 +7,7 @@ namespace OpenFGA\Responses;
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\{UsersetTree, UsersetTreeInterface};
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
@@ -25,18 +26,7 @@ final class ExpandResponse implements ExpandResponseInterface
         return $this->tree;
     }
 
-    public static function fromArray(array $data): static
-    {
-        if (isset($data['tree']) && is_array($data['tree'])) {
-            return new self(
-                tree: UsersetTree::fromArray($data['tree']),
-            );
-        }
-
-        return new self();
-    }
-
-    public static function fromResponse(HttpResponseInterface $response): static
+    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -47,11 +37,24 @@ final class ExpandResponse implements ExpandResponseInterface
         }
 
         if (200 === $response->getStatusCode() && is_array($data)) {
-            return self::fromArray($data);
+            $validator->registerSchema(UsersetTree::Schema());
+            $validator->registerSchema(self::Schema());
+
+            return $validator->validateAndTransform($data, self::class);
         }
 
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
+    }
+
+    public static function Schema(): SchemaInterface
+    {
+        return new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'tree', type: UsersetTree::class, required: false),
+            ],
+        );
     }
 }

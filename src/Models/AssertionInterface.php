@@ -23,9 +23,4 @@ interface AssertionInterface extends JsonSerializable, ModelInterface
      * @return AssertionShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param AssertionShape $data
-     */
-    public static function fromArray(array $data): self;
 }

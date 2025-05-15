@@ -4,27 +4,28 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface, TupleKeysInterface, UserTypeFiltersInterface};
-use OpenFGA\RequestOptions\ListUsersOptions;
+use OpenFGA\Models\{TupleKeysInterface, UserTypeFiltersInterface};
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\ListUsersOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class ListUsersRequest
+final class ListUsersRequest implements ListUsersRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private StoreIdInterface $storeId,
-        private AuthorizationModelIdInterface $authorizationModelId,
+        private string $store,
+        private string $authorizationModel,
         private string $object,
         private string $relation,
         private UserTypeFiltersInterface $userFilters,
         private ?object $context = null,
         private ?TupleKeysInterface $contextualTuples = null,
-        private ?ListUsersOptions $options = null,
+        private ?ListUsersOptionsInterface $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): ?AuthorizationModelIdInterface
+    public function getAuthorizationModel(): string
     {
-        return $this->authorizationModelId;
+        return $this->authorizationModel;
     }
 
     public function getContext(): ?object
@@ -42,7 +43,7 @@ final class ListUsersRequest
         return $this->object;
     }
 
-    public function getOptions(): ?ListUsersOptions
+    public function getOptions(): ?ListUsersOptionsInterface
     {
         return $this->options;
     }
@@ -52,21 +53,11 @@ final class ListUsersRequest
         return $this->relation;
     }
 
-    public function getStoreId(): StoreIdInterface
-    {
-        return $this->storeId;
-    }
-
-    public function getUserFilters(): UserTypeFiltersInterface
-    {
-        return $this->userFilters;
-    }
-
-    public function toJson(): string
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = [];
 
-        $body['authorization_model_id'] = (string) $this->getAuthorizationModelId();
+        $body['authorization_model_id'] = $this->getAuthorizationModel();
         $body['object'] = $this->getObject();
         $body['relation'] = $this->getRelation();
         $body['user_filters'] = $this->getUserFilters()->jsonSerialize();
@@ -83,18 +74,22 @@ final class ListUsersRequest
             $body['consistency'] = (string) $this->getOptions()?->getConsistency();
         }
 
-        return json_encode($body, JSON_THROW_ON_ERROR);
+        $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
+
+        return new RequestContext(
+            method: NetworkRequestMethod::POST,
+            url: '/stores/' . $this->getStore() . '/list-users',
+            body: $stream,
+        );
     }
 
-    public function toRequest(): RequestInterface
+    public function getStore(): string
     {
-        $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
+        return $this->store;
+    }
 
-        return $this->requestFactory->post(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/list-users'),
-            options: $this->getOptions(),
-            body: $body,
-            headers: $this->requestFactory->getEndpointHeaders(),
-        );
+    public function getUserFilters(): UserTypeFiltersInterface
+    {
+        return $this->userFilters;
     }
 }

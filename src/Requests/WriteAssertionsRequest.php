@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AssertionsInterface, AuthorizationModelIdInterface, StoreIdInterface};
-use OpenFGA\RequestOptions\WriteAssertionsOptions;
+use OpenFGA\Models\AssertionsInterface;
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\WriteAssertionsOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class WriteAssertionsRequest
+final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
         private AssertionsInterface $assertions,
-        private StoreIdInterface $storeId,
-        private AuthorizationModelIdInterface $authorizationModelId,
-        private ?WriteAssertionsOptions $options = null,
+        private string $store,
+        private string $authorizationModel,
+        private ?WriteAssertionsOptionsInterface $options = null,
     ) {
     }
 
@@ -23,39 +24,31 @@ final class WriteAssertionsRequest
         return $this->assertions;
     }
 
-    public function getAuthorizationModelId(): AuthorizationModelIdInterface
+    public function getAuthorizationModel(): string
     {
-        return $this->authorizationModelId;
+        return $this->authorizationModel;
     }
 
-    public function getOptions(): ?WriteAssertionsOptions
+    public function getOptions(): ?WriteAssertionsOptionsInterface
     {
         return $this->options;
     }
 
-    public function getStoreId(): StoreIdInterface
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        return $this->storeId;
-    }
+        $body = ['assertions' => $this->assertions->jsonSerialize()];
 
-    public function toJson(): string
-    {
-        $body = [];
+        $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
-        $body['assertions'] = $this->assertions->jsonSerialize();
-
-        return json_encode($body, JSON_THROW_ON_ERROR);
-    }
-
-    public function toRequest(): RequestInterface
-    {
-        $body = $this->requestFactory->getHttpStreamFactory()->createStream($this->toJson());
-
-        return $this->requestFactory->put(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/assertions/' . (string) $this->getAuthorizationModelId()),
-            options: $this->getOptions(),
-            body: $body,
-            headers: $this->requestFactory->getEndpointHeaders(),
+        return new RequestContext(
+            method: NetworkRequestMethod::PUT,
+            url: '/stores/' . $this->getStore() . '/assertions/' . $this->getAuthorizationModel(),
+            body: $stream,
         );
+    }
+
+    public function getStore(): string
+    {
+        return $this->store;
     }
 }

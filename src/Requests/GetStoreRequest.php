@@ -4,34 +4,33 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\StoreIdInterface;
-use OpenFGA\RequestOptions\GetStoreRequestOptions;
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\GetStoreOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class GetStoreRequest
+final class GetStoreRequest implements GetStoreRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private StoreIdInterface $storeId,
-        private ?GetStoreRequestOptions $options = null,
+        private string $store,
+        private ?GetStoreOptionsInterface $options = null,
     ) {
     }
 
-    public function getOptions(): ?GetStoreRequestOptions
+    public function getOptions(): ?GetStoreOptionsInterface
     {
         return $this->options;
     }
 
-    public function getStoreId(): StoreIdInterface
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        return $this->storeId;
+        return new RequestContext(
+            method: NetworkRequestMethod::GET,
+            url: '/stores/' . (string) $this->getStore(),
+        );
     }
 
-    public function toRequest(): RequestInterface
+    public function getStore(): string
     {
-        return $this->requestFactory->get(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId()),
-            options: $this->getOptions(),
-            headers: $this->requestFactory->getEndpointHeaders(),
-        );
+        return $this->store;
     }
 }

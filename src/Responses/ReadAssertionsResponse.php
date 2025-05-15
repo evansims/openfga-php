@@ -6,11 +6,11 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Assertion, Assertions, AssertionsInterface, AuthorizationModelId, AuthorizationModelIdInterface};
+use OpenFGA\Models\{Assertions, AssertionsInterface};
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
-use function is_string;
 
 final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
 {
@@ -18,7 +18,7 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
 
     public function __construct(
         private ?AssertionsInterface $assertions,
-        private AuthorizationModelIdInterface $authorizationModelId,
+        private string $authorizationModelId,
     ) {
     }
 
@@ -27,12 +27,12 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
         return $this->assertions;
     }
 
-    public function getAuthorizationModelId(): AuthorizationModelIdInterface
+    public function getAuthorizationModelId(): string
     {
         return $this->authorizationModelId;
     }
 
-    public static function fromResponse(HttpResponseInterface $response): static
+    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -42,21 +42,26 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['authorization_model_id'])) {
-            // @phpstan-ignore-next-line
-            $authorizationModelId = new AuthorizationModelId(id: $data['authorization_model_id']);
+        if (200 === $response->getStatusCode() && is_array($data)) {
+            $validator->registerSchema(Assertions::Schema());
+            $validator->registerSchema(self::Schema());
 
-            // @phpstan-ignore-next-line
-            $assertions = isset($data['assertions']) ? Assertions::fromArray($data['assertions']) : null;
-
-            return new self(
-                assertions: $assertions,
-                authorizationModelId: $authorizationModelId,
-            );
+            return $validator->validateAndTransform($data, self::class);
         }
 
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
+    }
+
+    public static function Schema(): SchemaInterface
+    {
+        return new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'assertions', type: Assertions::class, required: false),
+                new SchemaProperty(name: 'authorization_model_id', type: 'string', required: true),
+            ],
+        );
     }
 }

@@ -1,5 +1,0 @@
-{
-  "invokerPackage": "OpenFGA\\API",
-  "modelPackage": "Models",
-  "library": "psr-18"
-}

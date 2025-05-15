@@ -6,9 +6,9 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
-use function assert;
 use function is_array;
 
 final class ListObjectsResponse implements ListObjectsResponseInterface
@@ -31,7 +31,7 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
         return $this->objects;
     }
 
-    public static function fromResponse(HttpResponseInterface $response): static
+    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -41,17 +41,24 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
             throw new ApiUnexpectedResponseException($e->getMessage());
         }
 
-        if (200 === $response->getStatusCode() && is_array($data) && isset($data['objects']) && is_array($data['objects'])) {
-            /** @var array<int, string> $objects */
-            $objects = $data['objects'];
+        if (200 === $response->getStatusCode() && is_array($data)) {
+            $validator->registerSchema(self::Schema());
 
-            return new self(
-                objects: $objects,
-            );
+            return $validator->validateAndTransform($data, self::class);
         }
 
         self::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
+    }
+
+    public static function Schema(): SchemaInterface
+    {
+        return new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'objects', type: 'array', items: ['type' => 'string'], required: true),
+            ],
+        );
     }
 }

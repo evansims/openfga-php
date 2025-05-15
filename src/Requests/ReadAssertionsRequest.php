@@ -4,40 +4,39 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{AuthorizationModelIdInterface, StoreIdInterface};
-use OpenFGA\RequestOptions\ReadAssertionsOptions;
+use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Options\ReadAssertionsOptionsInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 
-final class ReadAssertionsRequest
+final class ReadAssertionsRequest implements ReadAssertionsRequestInterface
 {
     public function __construct(
-        private RequestFactoryInterface $requestFactory,
-        private StoreIdInterface $storeId,
-        private AuthorizationModelIdInterface $authorizationModelId,
-        private ?ReadAssertionsOptions $options = null,
+        private string $store,
+        private string $authorizationModel,
+        private ?ReadAssertionsOptionsInterface $options = null,
     ) {
     }
 
-    public function getAuthorizationModelId(): AuthorizationModelIdInterface
+    public function getAuthorizationModel(): string
     {
-        return $this->authorizationModelId;
+        return $this->authorizationModel;
     }
 
-    public function getOptions(): ?ReadAssertionsOptions
+    public function getOptions(): ?ReadAssertionsOptionsInterface
     {
         return $this->options;
     }
 
-    public function getStoreId(): StoreIdInterface
+    public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        return $this->storeId;
+        return new RequestContext(
+            method: NetworkRequestMethod::GET,
+            url: '/stores/' . $this->getStore() . '/assertions/' . $this->getAuthorizationModel(),
+        );
     }
 
-    public function toRequest(): RequestInterface
+    public function getStore(): string
     {
-        return $this->requestFactory->get(
-            url: $this->requestFactory->getEndpointUrl('/stores/' . (string) $this->getStoreId() . '/assertions/' . (string) $this->getAuthorizationModelId()),
-            options: $this->getOptions(),
-            headers: $this->requestFactory->getEndpointHeaders(),
-        );
+        return $this->store;
     }
 }
