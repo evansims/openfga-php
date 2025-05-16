@@ -170,11 +170,11 @@ final class SchemaBuilder
     /**
      * Add a string property.
      *
-     * @param string     $name
-     * @param bool       $required
-     * @param ?string    $format
-     * @param ?array     $enum
-     * @param null|mixed $default
+     * @param string $name
+     * @param bool $required
+     * @param string|null $format
+     * @param array<string>|null $enum
+     * @param mixed $default
      */
     public function string(string $name, bool $required = false, ?string $format = null, ?array $enum = null, mixed $default = null): self
     {

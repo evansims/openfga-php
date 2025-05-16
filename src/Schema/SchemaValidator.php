@@ -21,7 +21,7 @@ use function is_string;
 final class SchemaValidator
 {
     /**
-     * @var array<string, SchemaInterface>
+     * @var array<class-string, SchemaInterface>
      */
     private array $schemas = [];
 
@@ -46,6 +46,8 @@ final class SchemaValidator
      * @param class-string<T>     $className Target data class
      *
      * @throws SchemaValidationException If validation fails
+     * @throws InvalidArgumentException If no schema is registered for the class
+     * @throws RuntimeException If there's an error creating the instance
      *
      * @return T
      */
@@ -94,6 +96,10 @@ final class SchemaValidator
 
             // Handle nested objects and arrays
             if ('object' === $type && null !== $propClassName) {
+                if (!is_array($value)) {
+                    $errors[] = "Property '{$name}' must be an object";
+                    continue;
+                }
                 try {
                     $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
                 } catch (SchemaValidationException $e) {
@@ -148,8 +154,7 @@ final class SchemaValidator
      * Create a data class instance.
      *
      * @template T of object
-     *
-     * @param class-string<T>      $className
+     * @param class-string<T> $className
      * @param array<string, mixed> $data
      *
      * @return T
@@ -190,20 +195,20 @@ final class SchemaValidator
     /**
      * Transform a value to the correct type.
      *
-     * @param mixed  $value
-     * @param string $type
+     * @param mixed $value
+     * @param 'string'|'integer'|'number'|'boolean'|'array'|'object'|'null' $type
      *
-     * @return mixed
+     * @return string|int|float|bool|array<mixed>|object|null
      */
     private function transformValue(mixed $value, string $type): mixed
     {
         switch ($type) {
             case 'integer':
-                return (int) $value;
+                return is_int($value) ? $value : (int)$value;
             case 'number':
-                return (float) $value;
+                return is_float($value) ? $value : (float)$value;
             case 'boolean':
-                return (bool) $value;
+                return is_bool($value) ? $value : (bool)$value;
             default:
                 return $value;
         }
@@ -212,12 +217,10 @@ final class SchemaValidator
     /**
      * Validate a value against a type.
      *
-     * @param mixed       $value
-     * @param string      $type
-     * @param null|string $format
-     * @param null|array  $enum
-     *
-     * @return bool
+     * @param mixed $value
+     * @param string $type
+     * @param string|null $format
+     * @param array<string>|null $enum
      */
     private function validateType(mixed $value, string $type, ?string $format = null, ?array $enum = null): bool
     {
@@ -242,10 +245,10 @@ final class SchemaValidator
                 return true;
 
             case 'integer':
-                return is_int($value);
+                return is_int($value) || (is_string($value) && ctype_digit($value) && $value === (string)(int)$value);
 
             case 'number':
-                return is_numeric($value);
+                return is_float($value) || is_int($value) || (is_string($value) && is_numeric($value));
 
             case 'boolean':
                 return is_bool($value);
@@ -254,7 +257,9 @@ final class SchemaValidator
                 return is_array($value);
 
             case 'object':
-                return is_array($value) && array_keys($value) !== range(0, count($value) - 1);
+                return is_array($value) && 
+                       !empty($value) && 
+                       array_keys($value) !== range(0, count($value) - 1);
 
             case 'null':
                 return null === $value;

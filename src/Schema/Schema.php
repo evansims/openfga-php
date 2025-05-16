@@ -11,6 +11,9 @@ final class Schema implements SchemaInterface
      */
     private array $properties = [];
 
+    /**
+     * @param array<SchemaProperty> $properties
+     */
     public function __construct(
         public readonly string $className,
         array $properties = [],
