@@ -15,13 +15,16 @@ use function count;
 use function in_array;
 use function is_array;
 use function is_bool;
+use function is_float;
 use function is_int;
+use function is_object;
+use function is_scalar;
 use function is_string;
 
 final class SchemaValidator
 {
     /**
-     * @var array<class-string, SchemaInterface>
+     * @var array<string, SchemaInterface>
      */
     private array $schemas = [];
 
@@ -32,7 +35,7 @@ final class SchemaValidator
      */
     public function registerSchema(SchemaInterface $schema): self
     {
-        $this->schemas[$schema->className] = $schema;
+        $this->schemas[$schema->getClassName()] = $schema;
 
         return $this;
     }
@@ -42,17 +45,21 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param array<mixed, mixed> $data      JSON data (decoded)
-     * @param class-string<T>     $className Target data class
+     * @param mixed           $data      JSON data (decoded)
+     * @param class-string<T> $className Target data class
      *
      * @throws SchemaValidationException If validation fails
-     * @throws InvalidArgumentException If no schema is registered for the class
-     * @throws RuntimeException If there's an error creating the instance
+     * @throws InvalidArgumentException  If no schema is registered for the class or invalid data type
+     * @throws RuntimeException          If there's an error creating the instance
      *
      * @return T
      */
-    public function validateAndTransform(array $data, string $className): object
+    public function validateAndTransform(mixed $data, string $className): object
     {
+        if (! is_array($data)) {
+            throw new InvalidArgumentException('Data must be an array');
+        }
+
         if (! isset($this->schemas[$className])) {
             throw new InvalidArgumentException("No schema registered for class: {$className}");
         }
@@ -96,10 +103,12 @@ final class SchemaValidator
 
             // Handle nested objects and arrays
             if ('object' === $type && null !== $propClassName) {
-                if (!is_array($value)) {
+                if (! is_array($value)) {
                     $errors[] = "Property '{$name}' must be an object";
+
                     continue;
                 }
+
                 try {
                     $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
                 } catch (SchemaValidationException $e) {
@@ -138,11 +147,16 @@ final class SchemaValidator
                 }
                 $transformedData[$name] = $transformedArray;
             } else {
+                // Ensure the type is one of the expected values
+                $validTypes = ['string', 'integer', 'number', 'boolean', 'array', 'object', 'null'];
+                if (! in_array($type, $validTypes, true)) {
+                    $type = 'string'; // Default to string for unknown types
+                }
                 $transformedData[$name] = $this->transformValue($value, $type);
             }
         }
 
-        if (! empty($errors)) {
+        if (count($errors) > 0) {
             throw new SchemaValidationException($errors);
         }
 
@@ -154,7 +168,8 @@ final class SchemaValidator
      * Create a data class instance.
      *
      * @template T of object
-     * @param class-string<T> $className
+     *
+     * @param class-string<T>      $className
      * @param array<string, mixed> $data
      *
      * @return T
@@ -195,32 +210,53 @@ final class SchemaValidator
     /**
      * Transform a value to the correct type.
      *
-     * @param mixed $value
-     * @param 'string'|'integer'|'number'|'boolean'|'array'|'object'|'null' $type
+     * @param mixed                                                         $value
+     * @param 'array'|'boolean'|'integer'|'null'|'number'|'object'|'string' $type
      *
-     * @return string|int|float|bool|array<mixed>|object|null
+     * @return null|array<mixed>|bool|float|int|object|string
      */
     private function transformValue(mixed $value, string $type): mixed
     {
         switch ($type) {
             case 'integer':
-                return is_int($value) ? $value : (int)$value;
+                if (is_int($value)) {
+                    return $value;
+                }
+                if (is_numeric($value)) {
+                    return (int) $value;
+                }
+
+                return 0;
             case 'number':
-                return is_float($value) ? $value : (float)$value;
+                return is_float($value) ? $value : (is_int($value) ? (float) $value : (float) 0);
             case 'boolean':
-                return is_bool($value) ? $value : (bool)$value;
+                return is_bool($value) ? $value : (bool) $value;
+            case 'array':
+                return is_array($value) ? $value : [];
+            case 'object':
+                return is_object($value) ? $value : (object) (is_array($value) ? $value : []);
+            case 'null':
+                return null;
+            case 'string':
             default:
-                return $value;
+                if (is_string($value)) {
+                    return $value;
+                }
+                if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
+                    return (string) $value;
+                }
+
+                return '';
         }
     }
 
     /**
      * Validate a value against a type.
      *
-     * @param mixed $value
-     * @param string $type
-     * @param string|null $format
-     * @param array<string>|null $enum
+     * @param mixed              $value
+     * @param string             $type
+     * @param null|string        $format
+     * @param null|array<string> $enum
      */
     private function validateType(mixed $value, string $type, ?string $format = null, ?array $enum = null): bool
     {
@@ -245,7 +281,7 @@ final class SchemaValidator
                 return true;
 
             case 'integer':
-                return is_int($value) || (is_string($value) && ctype_digit($value) && $value === (string)(int)$value);
+                return is_int($value) || (is_string($value) && ctype_digit($value) && $value === (string) (int) $value);
 
             case 'number':
                 return is_float($value) || is_int($value) || (is_string($value) && is_numeric($value));
@@ -257,9 +293,16 @@ final class SchemaValidator
                 return is_array($value);
 
             case 'object':
-                return is_array($value) && 
-                       !empty($value) && 
-                       array_keys($value) !== range(0, count($value) - 1);
+                if (! is_array($value)) {
+                    return false;
+                }
+                if (0 === count($value)) {
+                    return false;
+                }
+                $keys = array_keys($value);
+
+                // Check if array is not a list (0-based sequential numeric keys)
+                return array_keys($keys) !== range(0, count($keys) - 1);
 
             case 'null':
                 return null === $value;

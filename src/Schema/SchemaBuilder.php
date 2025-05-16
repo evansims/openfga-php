@@ -22,10 +22,10 @@ final class SchemaBuilder
     /**
      * Add an array property.
      *
-     * @param array{type: string, className?: string} $items
-     * @param string                                  $name
-     * @param bool                                    $required
-     * @param null|mixed                              $default
+     * @param array{type: string, className?: class-string} $items
+     * @param string                                        $name
+     * @param bool                                          $required
+     * @param mixed                                         $default
      */
     public function array(string $name, array $items, bool $required = false, mixed $default = null): self
     {
@@ -170,11 +170,11 @@ final class SchemaBuilder
     /**
      * Add a string property.
      *
-     * @param string $name
-     * @param bool $required
-     * @param string|null $format
-     * @param array<string>|null $enum
-     * @param mixed $default
+     * @param string             $name
+     * @param bool               $required
+     * @param null|string        $format
+     * @param null|array<string> $enum
+     * @param mixed              $default
      */
     public function string(string $name, bool $required = false, ?string $format = null, ?array $enum = null, mixed $default = null): self
     {

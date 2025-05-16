@@ -13,6 +13,7 @@ final class Schema implements SchemaInterface
 
     /**
      * @param array<SchemaProperty> $properties
+     * @param string                $className
      */
     public function __construct(
         public readonly string $className,
