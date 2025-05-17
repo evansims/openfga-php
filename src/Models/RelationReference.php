@@ -11,10 +11,10 @@ final class RelationReference implements RelationReferenceInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $type,
-        private ?string $relation = null,
-        private ?object $wildcard = null,
-        private ?string $condition = null,
+        private readonly string $type,
+        private readonly ?string $relation = null,
+        private readonly ?object $wildcard = null,
+        private readonly ?string $condition = null,
     ) {
     }
 

@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 /**
  * @extends AbstractIndexedCollection<UsersListUser>
+ *
+ * @implements UsersListInterface<UsersListUser>
  */
 final class UsersList extends AbstractIndexedCollection implements UsersListInterface
 {
@@ -28,8 +30,6 @@ final class UsersList extends AbstractIndexedCollection implements UsersListInte
     public function offsetGet(mixed $offset): ?UsersListUserInterface
     {
         /** @var null|UsersListUserInterface $result */
-        $result = parent::offsetGet($offset);
-
-        return $result instanceof UsersListUserInterface ? $result : null;
+        return parent::offsetGet($offset);
     }
 }

@@ -11,7 +11,7 @@ final class UsersetTree implements UsersetTreeInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private NodeInterface $root,
+        private readonly NodeInterface $root,
     ) {
     }
 

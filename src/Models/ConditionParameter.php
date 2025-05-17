@@ -11,8 +11,8 @@ final class ConditionParameter implements ConditionParameterInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private TypeName $typeName,
-        private ?ConditionParametersInterface $genericTypes = null,
+        private readonly TypeName $typeName,
+        private readonly ?ConditionParametersInterface $genericTypes = null,
     ) {
     }
 

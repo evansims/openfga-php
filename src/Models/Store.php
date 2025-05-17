@@ -22,11 +22,11 @@ final class Store implements StoreInterface
      * @param null|DateTimeImmutable $deletedAt The store deletion date.
      */
     public function __construct(
-        private string $id,
-        private string $name,
-        private DateTimeImmutable $createdAt,
-        private DateTimeImmutable $updatedAt,
-        private ?DateTimeImmutable $deletedAt = null,
+        private readonly string $id,
+        private readonly string $name,
+        private readonly DateTimeImmutable $createdAt,
+        private readonly DateTimeImmutable $updatedAt,
+        private readonly ?DateTimeImmutable $deletedAt = null,
     ) {
     }
 

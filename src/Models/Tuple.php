@@ -12,8 +12,8 @@ final class Tuple implements TupleInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private TupleKeyInterface $key,
-        private DateTimeImmutable $timestamp,
+        private readonly TupleKeyInterface $key,
+        private readonly DateTimeImmutable $timestamp,
     ) {
     }
 

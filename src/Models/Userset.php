@@ -13,12 +13,12 @@ final class Userset implements UsersetInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private ?object $direct = null,
-        private ?ObjectRelationInterface $computedUserset = null,
-        private ?TupleToUsersetV1Interface $tupleToUserset = null,
-        private ?UsersetsInterface $union = null,
-        private ?UsersetsInterface $intersection = null,
-        private ?DifferenceV1Interface $difference = null,
+        private readonly ?object $direct = null,
+        private readonly ?ObjectRelationInterface $computedUserset = null,
+        private readonly ?TupleToUsersetV1Interface $tupleToUserset = null,
+        private readonly ?UsersetsInterface $union = null,
+        private readonly ?UsersetsInterface $intersection = null,
+        private readonly ?DifferenceV1Interface $difference = null,
     ) {
     }
 

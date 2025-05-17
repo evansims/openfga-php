@@ -13,8 +13,8 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private ObjectRelationInterface $tupleset,
-        private ObjectRelationInterface $computedUserset,
+        private readonly ObjectRelationInterface $tupleset,
+        private readonly ObjectRelationInterface $computedUserset,
     ) {
     }
 

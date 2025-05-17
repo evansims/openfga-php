@@ -11,8 +11,8 @@ final class UserTypeFilter implements UserTypeFilterInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $type,
-        private ?string $relation = null,
+        private readonly string $type,
+        private readonly ?string $relation = null,
     ) {
     }
 

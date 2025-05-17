@@ -11,7 +11,7 @@ final class UsersListUser implements UsersListUserInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $user,
+        private readonly string $user,
     ) {
     }
 

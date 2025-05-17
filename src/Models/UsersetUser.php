@@ -11,9 +11,9 @@ final class UsersetUser implements UsersetUserInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $type,
-        private string $id,
-        private string $relation,
+        private readonly string $type,
+        private readonly string $id,
+        private readonly string $relation,
     ) {
     }
 

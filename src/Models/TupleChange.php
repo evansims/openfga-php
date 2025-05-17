@@ -14,7 +14,7 @@ final class TupleChange implements TupleChangeInterface
 
     public function __construct(
         private TupleKeyInterface $tupleKey,
-        private TupleOperation $operation,
+        private readonly TupleOperation $operation,
         private DateTimeImmutable $timestamp,
     ) {
     }

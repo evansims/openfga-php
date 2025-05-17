@@ -11,9 +11,9 @@ final class Metadata implements MetadataInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private ?string $module = null,
-        private ?RelationMetadataInterface $relations = null,
-        private ?SourceInfoInterface $sourceInfo = null,
+        private readonly ?string $module = null,
+        private readonly ?RelationMetadataInterface $relations = null,
+        private readonly ?SourceInfoInterface $sourceInfo = null,
     ) {
     }
 

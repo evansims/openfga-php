@@ -13,8 +13,8 @@ final class DifferenceV1 implements DifferenceV1Interface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private UsersetInterface $base,
-        private UsersetInterface $subtract,
+        private readonly UsersetInterface $base,
+        private readonly UsersetInterface $subtract,
     ) {
     }
 

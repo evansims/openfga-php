@@ -12,9 +12,9 @@ final class Leaf implements LeafInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private ?UsersListInterface $users = null,
-        private ?ComputedInterface $computed = null,
-        private ?UsersetTreeTupleToUsersetInterface $tupleToUserset = null,
+        private readonly ?UsersListInterface $users = null,
+        private readonly ?ComputedInterface $computed = null,
+        private readonly ?UsersetTreeTupleToUsersetInterface $tupleToUserset = null,
     ) {
         if (null === $users && null === $computed && null === $tupleToUserset) {
             throw new InvalidArgumentException('Leaf must contain at least one of users, computed or tupleToUserset');

@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 /**
  * @extends AbstractIndexedCollection<UserTypeFilter>
+ *
+ * @implements UserTypeFiltersInterface<UserTypeFilter>
  */
 final class UserTypeFilters extends AbstractIndexedCollection implements UserTypeFiltersInterface
 {
@@ -28,8 +30,6 @@ final class UserTypeFilters extends AbstractIndexedCollection implements UserTyp
     public function offsetGet(mixed $offset): ?UserTypeFilterInterface
     {
         /** @var null|UserTypeFilterInterface $result */
-        $result = parent::offsetGet($offset);
-
-        return $result instanceof UserTypeFilterInterface ? $result : null;
+        return parent::offsetGet($offset);
     }
 }

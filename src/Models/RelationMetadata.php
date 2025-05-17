@@ -16,9 +16,9 @@ final class RelationMetadata implements RelationMetadataInterface
      * @param null|SourceInfoInterface         $sourceInfo
      */
     public function __construct(
-        private ?string $module = null,
-        private ?RelationReferencesInterface $directlyRelatedUserTypes = null,
-        private ?SourceInfoInterface $sourceInfo = null,
+        private readonly ?string $module = null,
+        private readonly ?RelationReferencesInterface $directlyRelatedUserTypes = null,
+        private readonly ?SourceInfoInterface $sourceInfo = null,
     ) {
     }
 

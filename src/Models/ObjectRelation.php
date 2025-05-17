@@ -11,8 +11,8 @@ final class ObjectRelation implements ObjectRelationInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private ?string $object = null,
-        private ?string $relation = null,
+        private readonly ?string $object = null,
+        private readonly ?string $relation = null,
     ) {
     }
 

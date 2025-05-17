@@ -11,8 +11,8 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private NodeInterface $base,
-        private NodeInterface $subtract,
+        private readonly NodeInterface $base,
+        private readonly NodeInterface $subtract,
     ) {
     }
 

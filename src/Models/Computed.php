@@ -11,7 +11,7 @@ final class Computed implements ComputedInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $userset,
+        private readonly string $userset,
     ) {
     }
 

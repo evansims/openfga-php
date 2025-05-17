@@ -11,10 +11,10 @@ final class TupleKey implements TupleKeyInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $user,
-        private string $relation,
-        private string $object,
-        private ?ConditionInterface $condition = null,
+        private readonly string $user,
+        private readonly string $relation,
+        private readonly string $object,
+        private readonly ?ConditionInterface $condition = null,
     ) {
     }
 

@@ -11,8 +11,8 @@ final class ConditionMetadata implements ConditionMetadataInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $module,
-        private SourceInfoInterface $sourceInfo,
+        private readonly string $module,
+        private readonly SourceInfoInterface $sourceInfo,
     ) {
     }
 
