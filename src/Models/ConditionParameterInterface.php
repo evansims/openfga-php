@@ -17,9 +17,4 @@ interface ConditionParameterInterface extends ModelInterface
      * @return ConditionParameterShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param ConditionParameterShape $data
-     */
-    public static function fromArray(array $data): static;
 }

@@ -4,11 +4,19 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class SourceInfo implements SourceInfoInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
-        private string $file,
+        private readonly string $file,
     ) {
+        if ('' === $this->file) {
+            throw new InvalidArgumentException('SourceInfo::$file cannot be empty.');
+        }
     }
 
     public function getFile(): string
@@ -23,26 +31,13 @@ final class SourceInfo implements SourceInfoInterface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedSourceInfoShape($data);
-
-        return new self(
-            file: $data['file'],
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'file', type: 'string', required: true),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as source info data. Throws an exception if the data is invalid.
-     *
-     * @param array{file: string} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return SourceInfoShape
-     */
-    public static function validatedSourceInfoShape(array $data): array
-    {
-        return $data;
     }
 }

@@ -9,5 +9,5 @@ use OpenFGA\Schema\SchemaInterface;
 
 interface ModelInterface extends JsonSerializable
 {
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

@@ -17,9 +17,4 @@ interface UsersetTreeTupleToUsersetInterface extends ModelInterface
      * @return UsersetTreeTupleToUsersetShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param UsersetTreeTupleToUsersetShape $data
-     */
-    public static function fromArray(array $data): self;
 }

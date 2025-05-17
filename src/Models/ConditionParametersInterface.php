@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use JsonSerializable;
-
 /**
  * @psalm-type ConditionParametersShape = list<ConditionParameterShape>
  */
-interface ConditionParametersInterface extends CollectionInterface, JsonSerializable
+interface ConditionParametersInterface extends IndexedCollectionInterface
 {
     /**
      * Add a condition to the collection.
@@ -21,9 +19,9 @@ interface ConditionParametersInterface extends CollectionInterface, JsonSerializ
     /**
      * Get the current condition in the collection.
      *
-     * @return ConditionParameterInterface
+     * @return null|ConditionParameterInterface
      */
-    public function current(): ConditionParameterInterface;
+    public function current(): ?ConditionParameterInterface;
 
     /**
      * @return ConditionParametersShape
@@ -38,9 +36,4 @@ interface ConditionParametersInterface extends CollectionInterface, JsonSerializ
      * @return null|ConditionParameterInterface
      */
     public function offsetGet(mixed $offset): ?ConditionParameterInterface;
-
-    /**
-     * @param ConditionParametersShape $data
-     */
-    public static function fromArray(array $data): static;
 }

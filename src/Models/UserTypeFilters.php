@@ -4,44 +4,22 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class UserTypeFilters implements UserTypeFiltersInterface
+/**
+ * @implements \ArrayAccess<int, UserTypeFilterInterface>
+ * @implements \Iterator<int, UserTypeFilterInterface>
+ */
+final class UserTypeFilters extends AbstractIndexedCollection implements UserTypeFiltersInterface
 {
-    use CollectionTrait;
-
-    public function add(UserTypeFilterInterface $userTypeFilter): void
-    {
-        $this->models[] = $userTypeFilter;
-    }
-
-    public function current(): UserTypeFilterInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function offsetGet(mixed $offset): ?UserTypeFilterInterface
-    {
-        return $this->models[$offset] ?? null;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedUserTypeFiltersShape($data);
-        $collection = new self();
-
-        foreach ($data as $model) {
-            $collection->add(UserTypeFilter::fromArray($model));
-        }
-
-        return $collection;
-    }
+    /**
+     * @var class-string<UserTypeFilterInterface>
+     */
+    protected static string $itemType = UserTypeFilter::class;
 
     /**
-     * @param list<UserTypeFilterShape> $data
-     *
-     * @return UserTypeFiltersShape
+     * @param iterable<UserTypeFilterInterface>|UserTypeFilterInterface ...$userTypeFilters
      */
-    public static function validatedUserTypeFiltersShape(array $data): array
+    public function __construct(iterable | UserTypeFilterInterface ...$userTypeFilters)
     {
-        return $data;
+        parent::__construct(...$userTypeFilters);
     }
 }

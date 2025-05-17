@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Models\{TupleKeysInterface, UserTypeFiltersInterface};
-use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Network\{RequestMethod, RequestContext};
 use OpenFGA\Options\ListUsersOptionsInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -77,7 +77,7 @@ final class ListUsersRequest implements ListUsersRequestInterface
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
         return new RequestContext(
-            method: NetworkRequestMethod::POST,
+            method: RequestMethod::POST,
             url: '/stores/' . $this->getStore() . '/list-users',
             body: $stream,
         );

@@ -13,6 +13,8 @@ use function is_array;
 
 final class ListObjectsResponse implements ListObjectsResponseInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     use ResponseTrait;
 
     /**
@@ -42,7 +44,7 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
         }
 
         if (200 === $response->getStatusCode() && is_array($data)) {
-            $validator->registerSchema(self::Schema());
+            $validator->registerSchema(self::schema());
 
             return $validator->validateAndTransform($data, self::class);
         }
@@ -52,9 +54,9 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
-    public static function Schema(): SchemaInterface
+    public static function schema(): SchemaInterface
     {
-        return new Schema(
+        return self::$schema ??= new Schema(
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'objects', type: 'array', items: ['type' => 'string'], required: true),

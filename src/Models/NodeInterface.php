@@ -23,9 +23,4 @@ interface NodeInterface extends ModelInterface
      * @return NodeShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param NodeShape $data
-     */
-    public static function fromArray(array $data): self;
 }

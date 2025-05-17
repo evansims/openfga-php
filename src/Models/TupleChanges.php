@@ -4,33 +4,22 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class TupleChanges implements TupleChangesInterface
+/**
+ * @implements \ArrayAccess<int, TupleChangeInterface>
+ * @implements \Iterator<int, TupleChangeInterface>
+ */
+final class TupleChanges extends AbstractIndexedCollection implements TupleChangesInterface
 {
-    use CollectionTrait;
+    /**
+     * @var class-string<TupleChangeInterface>
+     */
+    protected static string $itemType = TupleChange::class;
 
-    public function add(TupleChangeInterface $tupleChange): void
+    /**
+     * @param iterable<TupleChangeInterface>|TupleChangeInterface ...$changes
+     */
+    public function __construct(iterable | TupleChangeInterface ...$changes)
     {
-        $this->models[] = $tupleChange;
-    }
-
-    public function current(): TupleChangeInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function offsetGet(mixed $offset): ?TupleChangeInterface
-    {
-        return $this->models[$offset] ?? null;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $collection = new self();
-
-        foreach ($data as $model) {
-            $collection->add(TupleChange::fromArray($model));
-        }
-
-        return $collection;
+        parent::__construct(...$changes);
     }
 }

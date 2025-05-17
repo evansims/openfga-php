@@ -15,9 +15,4 @@ interface ComputedInterface extends ModelInterface
      * @return ComputedShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param ComputedShape $data
-     */
-    public static function fromArray(array $data): static;
 }

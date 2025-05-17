@@ -4,48 +4,22 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-final class TypeDefinitions implements TypeDefinitionsInterface
+/**
+ * @implements \ArrayAccess<int, TypeDefinitionInterface>
+ * @implements \Iterator<int, TypeDefinitionInterface>
+ */
+final class TypeDefinitions extends AbstractIndexedCollection implements TypeDefinitionsInterface
 {
-    use CollectionTrait;
-
-    public function add(TypeDefinitionInterface $typeDefinition): void
-    {
-        $this->models[] = $typeDefinition;
-    }
-
-    public function current(): TypeDefinitionInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function offsetGet(mixed $offset): ?TypeDefinitionInterface
-    {
-        return $this->models[$offset] ?? null;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedTypeDefinitionsShape($data);
-        $collection = new self();
-
-        foreach ($data as $model) {
-            $collection->add(TypeDefinition::fromArray($model));
-        }
-
-        return $collection;
-    }
+    /**
+     * @var class-string<TypeDefinitionInterface>
+     */
+    protected static string $itemType = TypeDefinition::class;
 
     /**
-     * Validates the shape of the array to be used as type definitions data. Throws an exception if the data is invalid.
-     *
-     * @param list<TypeDefinitionShape> $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return TypeDefinitionsShape
+     * @param iterable<TypeDefinitionInterface>|TypeDefinitionInterface ...$typeDefinitions
      */
-    public static function validatedTypeDefinitionsShape(array $data): array
+    public function __construct(iterable | TypeDefinitionInterface ...$typeDefinitions)
     {
-        return $data;
+        parent::__construct(...$typeDefinitions);
     }
 }

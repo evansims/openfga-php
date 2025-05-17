@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Models\TupleKeysInterface;
-use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Network\{RequestMethod, RequestContext};
 use OpenFGA\Options\ListObjectsOptionsInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -75,7 +75,7 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
         return new RequestContext(
-            method: NetworkRequestMethod::POST,
+            method: RequestMethod::POST,
             url: '/stores/' . (string) $this->getStore() . '/list-objects',
             body: $stream,
         );

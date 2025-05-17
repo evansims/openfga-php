@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class RelationMetadata implements RelationMetadataInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     /**
      * @param null|string                      $module
      * @param null|RelationReferencesInterface $directlyRelatedUserTypes
@@ -54,32 +56,15 @@ final class RelationMetadata implements RelationMetadataInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedRelationMetadataShape($data);
-
-        return new self(
-            module: $data['module'] ?? null,
-            directlyRelatedUserTypes: isset($data['directly_related_user_types']) ? RelationReferences::fromArray($data['directly_related_user_types']) : null,
-            sourceInfo: isset($data['source_info']) ? SourceInfo::fromArray($data['source_info']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'module', type: 'string', required: false),
+                new SchemaProperty(name: 'directly_related_user_types', type: RelationReferences::class, required: false),
+                new SchemaProperty(name: 'source_info', type: SourceInfo::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the relation metadata data.
-     *
-     * @param array{module?: string, directly_related_user_types?: RelationReferencesShape, source_info?: SourceInfoShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return RelationMetadataShape
-     */
-    public static function validatedRelationMetadataShape(array $data): array
-    {
-        if (! isset($data['module'])) {
-            throw new InvalidArgumentException('Missing module');
-        }
-
-        return $data;
     }
 }

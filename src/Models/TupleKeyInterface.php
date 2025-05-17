@@ -21,10 +21,4 @@ interface TupleKeyInterface extends ModelInterface
      * @return TupleKeyShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param TupleKeyType  $type
-     * @param TupleKeyShape $data
-     */
-    public static function fromArray(TupleKeyType $type, array $data): static;
 }

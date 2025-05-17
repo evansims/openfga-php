@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Network\{RequestMethod, RequestContext};
 use OpenFGA\Options\GetStoreOptionsInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -24,7 +24,7 @@ final class GetStoreRequest implements GetStoreRequestInterface
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(
-            method: NetworkRequestMethod::GET,
+            method: RequestMethod::GET,
             url: '/stores/' . (string) $this->getStore(),
         );
     }

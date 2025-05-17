@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Models\AssertionsInterface;
-use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Network\{RequestMethod, RequestContext};
 use OpenFGA\Options\WriteAssertionsOptionsInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -41,7 +41,7 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
         return new RequestContext(
-            method: NetworkRequestMethod::PUT,
+            method: RequestMethod::PUT,
             url: '/stores/' . $this->getStore() . '/assertions/' . $this->getAuthorizationModel(),
             body: $stream,
         );

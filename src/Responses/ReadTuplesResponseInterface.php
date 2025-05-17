@@ -13,5 +13,5 @@ interface ReadTuplesResponseInterface extends ResponseInterface
 
     public function getTuples(): TuplesInterface;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UserTypeFilter implements UserTypeFilterInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $type,
         private ?string $relation = null,
@@ -37,27 +39,14 @@ final class UserTypeFilter implements UserTypeFilterInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedUserTypeFilterShape($data);
-
-        return new self(
-            type: $data['type'],
-            relation: $data['relation'] ?? null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type', type: 'string', required: true),
+                new SchemaProperty(name: 'relation', type: 'string', required: false),
+            ],
         );
-    }
-
-    /**
-     * @param array{type: string, relation?: string} $data
-     *
-     * @return UserTypeFilterShape
-     */
-    public static function validatedUserTypeFilterShape(array $data): array
-    {
-        if (! isset($data['type'])) {
-            throw new InvalidArgumentException('UserTypeFilterShape must have a type');
-        }
-
-        return $data;
     }
 }

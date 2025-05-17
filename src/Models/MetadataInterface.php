@@ -19,9 +19,4 @@ interface MetadataInterface extends ModelInterface
      * @return MetadataShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param MetadataShape $data
-     */
-    public static function fromArray(array $data): static;
 }

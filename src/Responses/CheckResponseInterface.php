@@ -12,5 +12,5 @@ interface CheckResponseInterface extends ResponseInterface
 
     public function getResolution(): ?string;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

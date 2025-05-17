@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-interface TupleChangesInterface extends CollectionInterface
+interface TupleChangesInterface extends IndexedCollectionInterface
 {
     /**
      * Add a tuple change to the collection.

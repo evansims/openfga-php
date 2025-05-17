@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class RelationReference implements RelationReferenceInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     /**
      * Constructs a new RelationReference object.
      *
@@ -46,52 +48,32 @@ final class RelationReference implements RelationReferenceInterface
 
     public function jsonSerialize(): array
     {
-        $response = [
-            'type' => $this->type,
-        ];
-
-        if (null !== $this->getRelation()) {
-            $response['relation'] = $this->getRelation();
-        }
-
-        if (null !== $this->getWildcard()) {
-            $response['wildcard'] = $this->getWildcard();
-        }
-
-        if (null !== $this->getCondition()) {
-            $response['condition'] = $this->getCondition();
-        }
-
-        return $response;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedRelationReferenceShape($data);
-
-        return new self(
-            type: $data['type'],
-            relation: $data['relation'] ?? null,
-            wildcard: $data['wildcard'] ?? null,
-            condition: $data['condition'] ?? null,
+        return array_filter(
+            [
+                'type' => $this->type,
+                'relation' => $this->relation,
+                'wildcard' => $this->wildcard,
+                'condition' => $this->condition,
+            ],
+            [self::class, 'filterNulls'],
         );
     }
 
-    /**
-     * Validates the shape of the relation reference data.
-     *
-     * @param array{type: string, relation?: string, wildcard?: object, condition?: string} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return RelationReferenceShape
-     */
-    public static function validatedRelationReferenceShape(array $data): array
+    public static function schema(): SchemaInterface
     {
-        if (! isset($data['type'])) {
-            throw new InvalidArgumentException('Missing type');
-        }
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type', type: 'string', required: true),
+                new SchemaProperty(name: 'relation', type: 'string', required: false),
+                new SchemaProperty(name: 'wildcard', type: 'object', required: false),
+                new SchemaProperty(name: 'condition', type: 'string', required: false),
+            ],
+        );
+    }
 
-        return $data;
+    private static function filterNulls(mixed $v): bool
+    {
+        return null !== $v;
     }
 }

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Userset implements UsersetInterface
 {
-    public const string OPENAPI_TYPE = 'Userset';
+    public const OPENAPI_TYPE = 'Userset';
+
+    private static ?SchemaInterface $schema = null;
 
     public function __construct(
         private ?object $direct = null,
@@ -81,31 +83,18 @@ final class Userset implements UsersetInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedUsersetShape($data);
-
-        return new self(
-            direct: $data['direct'] ?? null,
-            computedUserset: isset($data['computed_userset']) ? ObjectRelation::fromArray($data['computed_userset']) : null,
-            tupleToUserset: isset($data['tuple_to_userset']) ? TupleToUsersetV1::fromArray($data['tuple_to_userset']) : null,
-            union: isset($data['union']) ? Usersets::fromArray($data['union']) : null,
-            intersection: isset($data['intersection']) ? Usersets::fromArray($data['intersection']) : null,
-            difference: isset($data['difference']) ? DifferenceV1::fromArray($data['difference']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'direct', type: 'object', required: false),
+                new SchemaProperty(name: 'computed_userset', type: ObjectRelation::class, required: false),
+                new SchemaProperty(name: 'tuple_to_userset', type: TupleToUsersetV1::class, required: false),
+                new SchemaProperty(name: 'union', type: Usersets::class, required: false),
+                new SchemaProperty(name: 'intersection', type: Usersets::class, required: false),
+                new SchemaProperty(name: 'difference', type: DifferenceV1::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as userset data. Throws an exception if the data is invalid.
-     *
-     * @param array{computed_userset?: ObjectRelationShape, tuple_to_userset?: TupleToUsersetShape, union?: list<UsersetShape>, intersection?: list<UsersetShape>, difference?: DifferenceShape, direct?: object} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return UsersetShape
-     */
-    public static function validatedUsersetShape(array $data): array
-    {
-        return $data;
     }
 }

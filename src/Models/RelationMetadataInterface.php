@@ -19,9 +19,4 @@ interface RelationMetadataInterface extends ModelInterface
      * @return RelationMetadataShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param RelationMetadataShape $data
-     */
-    public static function fromArray(array $data): static;
 }

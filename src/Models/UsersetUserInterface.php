@@ -19,9 +19,4 @@ interface UsersetUserInterface extends ModelInterface
      * @return UsersetUserShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param UsersetUserShape $data
-     */
-    public static function fromArray(array $data): static;
 }

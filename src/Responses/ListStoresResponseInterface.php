@@ -13,5 +13,5 @@ interface ListStoresResponseInterface extends ResponseInterface
 
     public function getStores(): StoresInterface;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

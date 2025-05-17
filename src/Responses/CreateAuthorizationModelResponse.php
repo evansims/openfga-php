@@ -13,6 +13,8 @@ use function is_array;
 
 final class CreateAuthorizationModelResponse implements CreateAuthorizationModelResponseInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     use ResponseTrait;
 
     public function __construct(
@@ -36,7 +38,7 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
         }
 
         if (201 === $response->getStatusCode() && is_array($data)) {
-            $validator->registerSchema(self::Schema());
+            $validator->registerSchema(self::schema());
 
             return $validator->validateAndTransform($data, self::class);
         }
@@ -46,9 +48,9 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
         throw new ApiUnexpectedResponseException($json);
     }
 
-    public static function Schema(): SchemaInterface
+    public static function schema(): SchemaInterface
     {
-        return new Schema(
+        return self::$schema ??= new Schema(
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'authorization_model_id', type: 'string', required: true),

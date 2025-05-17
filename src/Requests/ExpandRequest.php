@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Models\{TupleKeyInterface, TupleKeysInterface};
-use OpenFGA\Network\{NetworkRequestMethod, RequestContext};
+use OpenFGA\Network\{RequestMethod, RequestContext};
 use OpenFGA\Options\ExpandOptionsInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -60,7 +60,7 @@ final class ExpandRequest implements ExpandRequestInterface
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
         return new RequestContext(
-            method: NetworkRequestMethod::POST,
+            method: RequestMethod::POST,
             url: '/stores/' . $this->getStore() . '/expand',
             body: $stream,
         );

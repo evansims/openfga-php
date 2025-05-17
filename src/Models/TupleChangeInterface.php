@@ -8,9 +8,9 @@ use DateTimeImmutable;
 
 interface TupleChangeInterface extends ModelInterface
 {
-    public function getKey(): TupleKeyInterface;
-
     public function getOperation(): TupleOperation;
 
     public function getTimestamp(): DateTimeImmutable;
+
+    public function getTupleKey(): TupleKeyInterface;
 }

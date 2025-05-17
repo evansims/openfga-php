@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class AuthorizationModel implements AuthorizationModelInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $id,
         private string $schemaVersion,
@@ -51,37 +53,16 @@ final class AuthorizationModel implements AuthorizationModelInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedAuthorizationModelShape($data);
-
-        return new self(
-            id: $data['id'],
-            schemaVersion: $data['schema_version'],
-            typeDefinitions: TypeDefinitions::fromArray($data['type_definitions']),
-            conditions: isset($data['conditions']) ? Conditions::fromArray($data['conditions']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'id', type: 'string', required: true),
+                new SchemaProperty(name: 'schema_version', type: 'string', required: true),
+                new SchemaProperty(name: 'type_definitions', type: TypeDefinitions::class, required: true),
+                new SchemaProperty(name: 'conditions', type: Conditions::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * @param array{id: string, schema_version: string, type_definitions: TypeDefinitionRelationsShape, conditions?: ConditionsShape} $data
-     *
-     * @return AuthorizationModelShape
-     */
-    public static function validatedAuthorizationModelShape(array $data): array
-    {
-        if (! isset($data['id'])) {
-            throw new InvalidArgumentException('Missing id');
-        }
-
-        if (! isset($data['schema_version'])) {
-            throw new InvalidArgumentException('Missing schema_version');
-        }
-
-        if (! isset($data['type_definitions'])) {
-            throw new InvalidArgumentException('Missing type_definitions');
-        }
-
-        return $data;
     }
 }

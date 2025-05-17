@@ -9,7 +9,7 @@ use Psr\Http\Message\StreamInterface;
 final class RequestContext
 {
     public function __construct(
-        private NetworkRequestMethod $method,
+        private RequestMethod $method,
         private string $url,
         private ?StreamInterface $body = null,
         private array $headers = [],
@@ -27,7 +27,7 @@ final class RequestContext
         return $this->headers;
     }
 
-    public function getMethod(): NetworkRequestMethod
+    public function getMethod(): RequestMethod
     {
         return $this->method;
     }

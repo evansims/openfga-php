@@ -21,9 +21,4 @@ interface AuthorizationModelInterface extends ModelInterface
      * @return AuthorizationModelShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param AuthorizationModelShape $data
-     */
-    public static function fromArray(array $data): static;
 }

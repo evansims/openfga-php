@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersetTree implements UsersetTreeInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private NodeInterface $root,
     ) {
@@ -25,26 +27,13 @@ final class UsersetTree implements UsersetTreeInterface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedUsersetTreeShape($data);
-
-        return new self(
-            root: Node::fromArray($data['root']),
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'root', type: Node::class, required: true),
+            ],
         );
-    }
-
-    /**
-     * @param array{root: NodeShape} $data
-     *
-     * @return UsersetTreeShape
-     */
-    public static function validatedUsersetTreeShape(array $data): array
-    {
-        if (! isset($data['root'])) {
-            throw new InvalidArgumentException('UsersetTree must have a root');
-        }
-
-        return $data;
     }
 }

@@ -17,9 +17,4 @@ interface TypedWildcardInterface extends ModelInterface
      * @return TypedWildcardShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param TypedWildcardShape $data
-     */
-    public static function fromArray(array $data): self;
 }

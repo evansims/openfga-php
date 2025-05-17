@@ -17,9 +17,4 @@ interface UserTypeFilterInterface extends ModelInterface
      * @return UserTypeFilterShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param UserTypeFilterShape $data
-     */
-    public static function fromArray(array $data): static;
 }

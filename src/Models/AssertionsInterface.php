@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 /**
  * @psalm-type AssertionsShape = list<AssertionShape>
  */
-interface AssertionsInterface extends CollectionInterface
+interface AssertionsInterface extends IndexedCollectionInterface
 {
     /**
      * Add an assertion to the collection.

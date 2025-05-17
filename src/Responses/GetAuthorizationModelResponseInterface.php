@@ -11,5 +11,5 @@ interface GetAuthorizationModelResponseInterface extends ResponseInterface
 {
     public function getAuthorizationModel(): ?AuthorizationModelInterface;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

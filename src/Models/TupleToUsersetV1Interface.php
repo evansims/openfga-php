@@ -17,9 +17,4 @@ interface TupleToUsersetV1Interface extends ModelInterface
      * @return TupleToUsersetShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param TupleToUsersetShape $data
-     */
-    public static function fromArray(array $data): self;
 }

@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Node implements NodeInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $name,
-        private ?LeafInterface $leaf,
-        private ?UsersetTreeDifferenceInterface $difference,
-        private ?NodeInterface $union,
-        private ?NodeInterface $intersection,
+        private ?LeafInterface $leaf = null,
+        private ?UsersetTreeDifferenceInterface $difference = null,
+        private ?NodeInterface $union = null,
+        private ?NodeInterface $intersection = null,
     ) {
     }
 
@@ -67,34 +69,17 @@ final class Node implements NodeInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedNodeShape($data);
-
-        return new self(
-            name: $data['name'],
-            leaf: isset($data['leaf']) ? Leaf::fromArray($data['leaf']) : null,
-            difference: isset($data['difference']) ? UsersetTreeDifference::fromArray($data['difference']) : null,
-            union: isset($data['union']) ? self::fromArray($data['union']) : null,
-            intersection: isset($data['intersection']) ? self::fromArray($data['intersection']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'name', type: 'string', required: true),
+                new SchemaProperty(name: 'leaf', type: Leaf::class, required: false),
+                new SchemaProperty(name: 'difference', type: UsersetTreeDifference::class, required: false),
+                new SchemaProperty(name: 'union', type: self::class, required: false),
+                new SchemaProperty(name: 'intersection', type: self::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as node data. Throws an exception if the data is invalid.
-     *
-     * @param array{name: string, leaf?: LeafShape, difference?: UsersetTreeDifferenceShape, union?: NodeShape, intersection?: NodeShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return NodeShape
-     */
-    public static function validatedNodeShape(array $data): array
-    {
-        if (! isset($data['name'])) {
-            throw new InvalidArgumentException('Node must have a name');
-        }
-
-        return $data;
     }
 }

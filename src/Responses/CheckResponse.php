@@ -15,6 +15,8 @@ final class CheckResponse implements CheckResponseInterface
 {
     use ResponseTrait;
 
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private ?bool $allowed = null,
         private ?string $resolution = null,
@@ -42,7 +44,7 @@ final class CheckResponse implements CheckResponseInterface
         }
 
         if (200 === $response->getStatusCode() && is_array($data)) {
-            $validator->registerSchema(self::Schema());
+            $validator->registerSchema(self::schema());
 
             return $validator->validateAndTransform($data, self::class);
         }
@@ -52,9 +54,9 @@ final class CheckResponse implements CheckResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
-    public static function Schema(): SchemaInterface
+    public static function schema(): SchemaInterface
     {
-        return new Schema(
+        return self::$schema ??= new Schema(
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'allowed', type: 'boolean', required: false),

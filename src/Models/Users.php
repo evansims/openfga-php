@@ -4,9 +4,23 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+
 final class Users implements UsersInterface
 {
-    use CollectionTrait;
+    use IndexedCollectionTrait;
+
+    private static ?CollectionSchemaInterface $schema = null;
+
+    /**
+     * @param iterable<UserInterface>|UserInterface ...$users
+     */
+    public function __construct(iterable | UserInterface ...$users)
+    {
+        foreach ($users as $user) {
+            $this->add($user);
+        }
+    }
 
     public function add(UserInterface $user): void
     {
@@ -23,29 +37,12 @@ final class Users implements UsersInterface
         return $this->models[$offset] ?? null;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): CollectionSchemaInterface
     {
-        $data = self::validatedUsersShape($data);
-        $collection = new self();
-
-        foreach ($data as $model) {
-            $collection->add(User::fromArray($model));
-        }
-
-        return $collection;
-    }
-
-    /**
-     * Validate the shape of the users array. Throws an exception if the data is invalid.
-     *
-     * @param list<UserShape> $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return UsersShape
-     */
-    public static function validatedUsersShape(array $data): array
-    {
-        return $data;
+        return self::$schema ??= new CollectionSchema(
+            className: self::class,
+            itemType: User::class,
+            requireItems: false,
+        );
     }
 }

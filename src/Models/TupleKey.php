@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class TupleKey implements TupleKeyInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
-        private TupleKeyType $type,
-        private ?string $user = null,
-        private ?string $relation = null,
-        private ?string $object = null,
+        private string $user,
+        private string $relation,
+        private string $object,
         private ?ConditionInterface $condition = null,
     ) {
-        $this->validateProperties();
     }
 
     public function getCondition(): ?ConditionInterface
@@ -23,22 +23,17 @@ final class TupleKey implements TupleKeyInterface
         return $this->condition;
     }
 
-    public function getObject(): ?string
+    public function getObject(): string
     {
         return $this->object;
     }
 
-    public function getRelation(): ?string
+    public function getRelation(): string
     {
         return $this->relation;
     }
 
-    public function getType(): TupleKeyType
-    {
-        return $this->type;
-    }
-
-    public function getUser(): ?string
+    public function getUser(): string
     {
         return $this->user;
     }
@@ -47,17 +42,9 @@ final class TupleKey implements TupleKeyInterface
     {
         $response = [];
 
-        if (null !== $this->getUser()) {
-            $response['user'] = $this->getUser();
-        }
-
-        if (null !== $this->getRelation()) {
-            $response['relation'] = $this->getRelation();
-        }
-
-        if (null !== $this->getObject()) {
-            $response['object'] = $this->getObject();
-        }
+        $response['user'] = $this->getUser();
+        $response['relation'] = $this->getRelation();
+        $response['object'] = $this->getObject();
 
         if ($this->getCondition()) {
             $response['condition'] = $this->getCondition()->jsonSerialize();
@@ -66,79 +53,16 @@ final class TupleKey implements TupleKeyInterface
         return $response;
     }
 
-    public static function fromArray(TupleKeyType $type, array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedTupleKeyShape($type, $data);
-
-        return new self(
-            type: $type,
-            user: $data['user'] ?? null,
-            relation: $data['relation'] ?? null,
-            object: $data['object'] ?? null,
-            condition: isset($data['condition']) ? Condition::fromArray($data['condition']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'user', type: 'string', required: true),
+                new SchemaProperty(name: 'relation', type: 'string', required: true),
+                new SchemaProperty(name: 'object', type: 'string', required: true),
+                new SchemaProperty(name: 'condition', type: Condition::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as tuple key data. Throws an exception if the data is invalid.
-     *
-     * @param array{user?: string, relation?: string, object?: string, condition?: ConditionShape} $data
-     * @param TupleKeyType                                                                         $type
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return TupleKeyShape
-     */
-    public static function validatedTupleKeyShape(TupleKeyType $type, array $data): array
-    {
-        return $data;
-    }
-
-    private function validateProperties(): void
-    {
-        $supported = self::supported($this->getType());
-        $required = self::required($this->getType());
-
-        if (! isset($supported['user']) && null !== $this->getUser()) {
-            throw new InvalidArgumentException('User is not supported for this tuple key type');
-        }
-
-        if (! isset($supported['relation']) && null !== $this->getRelation()) {
-            throw new InvalidArgumentException('Relation is not supported for this tuple key type');
-        }
-
-        if (! isset($supported['object']) && null !== $this->getObject()) {
-            throw new InvalidArgumentException('Object is not supported for this tuple key type');
-        }
-
-        if (! isset($supported['condition']) && null !== $this->getCondition()) {
-            throw new InvalidArgumentException('Condition is not supported for this tuple key type');
-        }
-
-        foreach ($required as $key) {
-            if (null === $this->{$key}) {
-                throw new InvalidArgumentException("Missing required tuple key property `{$key}`");
-            }
-        }
-    }
-
-    private static function required(TupleKeyType $type): array
-    {
-        switch ($type) {
-            case TupleKeyType::ASSERTION_TUPLE_KEY:
-                return ['user', 'relation', 'object'];
-            default:
-                return [];
-        }
-    }
-
-    private static function supported(TupleKeyType $type): array
-    {
-        switch ($type) {
-            case TupleKeyType::ASSERTION_TUPLE_KEY:
-                return ['user', 'relation', 'object'];
-            default:
-                return ['user', 'relation', 'object', 'condition'];
-        }
     }
 }

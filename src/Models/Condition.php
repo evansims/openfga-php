@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Condition implements ConditionInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     /**
      * Construct a Condition object.
      *
@@ -46,53 +48,27 @@ final class Condition implements ConditionInterface
 
     public function jsonSerialize(): array
     {
-        $response = [
-            'name' => $this->getName(),
-            'expression' => $this->getExpression(),
-        ];
-
-        if ($this->getParameters()) {
-            $response['parameters'] = $this->getParameters()->jsonSerialize();
-        }
-
-        if ($this->getMetadata()) {
-            $response['metadata'] = $this->getMetadata()->jsonSerialize();
-        }
-
-        return $response;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedConditionShape($data);
-
-        return new self(
-            name: $data['name'],
-            expression: $data['expression'],
-            parameters: isset($data['parameters']) ? ConditionParameters::fromArray($data['parameters']) : null,
-            metadata: isset($data['metadata']) ? ConditionMetadata::fromArray($data['metadata']) : null,
+        return array_filter(
+            [
+                'name' => $this->name,
+                'expression' => $this->expression,
+                'parameters' => $this->parameters?->jsonSerialize(),
+                'metadata' => $this->metadata?->jsonSerialize(),
+            ],
+            static fn ($v) => null !== $v,
         );
     }
 
-    /**
-     * Validates the shape of the array to be used as condition data. Throws an exception if the data is invalid.
-     *
-     * @param array{name: string, expression: string, parameters?: ConditionParametersShape, metadata?: ConditionMetadataShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return ConditionShape
-     */
-    public static function validatedConditionShape(array $data): array
+    public static function schema(): SchemaInterface
     {
-        if (! isset($data['name'])) {
-            throw new InvalidArgumentException('Missing required condition property `name`');
-        }
-
-        if (! isset($data['expression'])) {
-            throw new InvalidArgumentException('Missing required condition property `expression`');
-        }
-
-        return $data;
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'name', type: 'string', required: true),
+                new SchemaProperty(name: 'expression', type: 'string', required: true),
+                new SchemaProperty(name: 'parameters', type: ConditionParameters::class, required: false),
+                new SchemaProperty(name: 'metadata', type: ConditionMetadata::class, required: false),
+            ],
+        );
     }
 }

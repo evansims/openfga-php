@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class Metadata implements MetadataInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private ?string $module = null,
         private ?RelationMetadataInterface $relations = null,
@@ -47,28 +51,15 @@ final class Metadata implements MetadataInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedMetadataShape($data);
-
-        return new self(
-            module: $data['module'],
-            relations: isset($data['relations']) ? RelationMetadata::fromArray($data['relations']) : null,
-            sourceInfo: isset($data['source_info']) ? SourceInfo::fromArray($data['source_info']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'module', type: 'string', required: false),
+                new SchemaProperty(name: 'relations', type: RelationMetadata::class, required: false),
+                new SchemaProperty(name: 'source_info', type: SourceInfo::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the metadata data.
-     *
-     * @param array{module?: string, relations?: RelationMetadataShape, source_info?: SourceInfoShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return MetadataShape
-     */
-    public static function validatedMetadataShape(array $data): array
-    {
-        return $data;
     }
 }

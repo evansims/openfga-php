@@ -21,9 +21,4 @@ interface UserInterface extends ModelInterface
      * @return UserShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param UserShape $data
-     */
-    public static function fromArray(array $data): self;
 }

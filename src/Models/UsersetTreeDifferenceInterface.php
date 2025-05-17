@@ -17,9 +17,4 @@ interface UsersetTreeDifferenceInterface extends ModelInterface
      * @return UsersetTreeDifferenceShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param UsersetTreeDifferenceShape $data
-     */
-    public static function fromArray(array $data): self;
 }

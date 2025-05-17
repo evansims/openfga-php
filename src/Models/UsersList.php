@@ -4,68 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
-
-use function is_string;
-
-final class UsersList implements UsersListInterface
+final class UsersList extends AbstractIndexedCollection implements UsersListInterface
 {
-    use CollectionTrait;
-
-    public function add(UsersListUserInterface $user): void
-    {
-        $this->models[] = $user;
-    }
-
-    public function current(): UsersListUserInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function jsonSerialize(): array
-    {
-        $response = [];
-
-        foreach ($this->models as $model) {
-            $response[] = (string) $model;
-        }
-
-        return $response;
-    }
-
-    public function offsetGet(mixed $offset): ?UsersListUserInterface
-    {
-        return $this->models[$offset] ?? null;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedUsersListShape($data);
-        $collection = new self();
-
-        foreach ($data as $model) {
-            $collection->add(new UsersListUser($model));
-        }
-
-        return $collection;
-    }
+    /**
+     * @var class-string<UsersListUserInterface>
+     */
+    protected static string $itemType = UsersListUser::class;
 
     /**
-     * Validates the shape of the array to be used as users list data. Throws an exception if the data is invalid.
-
-     *
-     * @param list<string> $data
-     *
-     * @return UsersListShape
+     * @param iterable<UsersListUserInterface>|UsersListUserInterface ...$users
      */
-    public static function validatedUsersListShape(array $data): array
+    public function __construct(iterable | UsersListUserInterface ...$users)
     {
-        foreach ($data as $model) {
-            if (! is_string($model)) {
-                throw new InvalidArgumentException('UsersList must be a list of strings');
-            }
-        }
-
-        return $data;
+        parent::__construct(...$users);
     }
 }

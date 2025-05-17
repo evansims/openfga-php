@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
-
-use function is_array;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class TupleToUsersetV1 implements TupleToUsersetV1Interface
 {
-    public const string OPENAPI_TYPE = 'v1.TupleToUserset';
+    public const OPENAPI_TYPE = 'v1.TupleToUserset';
+
+    private static ?SchemaInterface $schema = null;
 
     public function __construct(
         private ObjectRelationInterface $tupleset,
@@ -36,31 +36,14 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedTupleToUsersetShape($data);
-
-        return new self(
-            tupleset: ObjectRelation::fromArray($data['tupleset']),
-            computedUserset: ObjectRelation::fromArray($data['computed_userset']),
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'tupleset', type: ObjectRelation::class, required: true),
+                new SchemaProperty(name: 'computed_userset', type: ObjectRelation::class, required: true),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as tuple to userset data. Throws an exception if the data is invalid.
-     *
-     * @param array{tupleset: ObjectRelationShape, computed_userset: ObjectRelationShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return TupleToUsersetShape
-     */
-    public static function validatedTupleToUsersetShape(array $data): array
-    {
-        if (! isset($data['tupleset'], $data['computed_userset']) || ! is_array($data['tupleset']) || ! is_array($data['computed_userset'])) {
-            throw new InvalidArgumentException('Invalid tuple to userset data structure');
-        }
-
-        return $data;
     }
 }

@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 /**
  * @psalm-type AuthorizationModelsShape = list<AuthorizationModelShape>
  */
-interface AuthorizationModelsInterface extends CollectionInterface
+interface AuthorizationModelsInterface extends IndexedCollectionInterface
 {
     /**
      * Add an authorization model to the collection.
@@ -19,9 +19,9 @@ interface AuthorizationModelsInterface extends CollectionInterface
     /**
      * Get the current authorization model in the collection.
      *
-     * @return AuthorizationModelInterface
+     * @return null|AuthorizationModelInterface
      */
-    public function current(): AuthorizationModelInterface;
+    public function current(): ?AuthorizationModelInterface;
 
     /**
      * @return AuthorizationModelsShape
@@ -36,9 +36,4 @@ interface AuthorizationModelsInterface extends CollectionInterface
      * @return null|AuthorizationModelInterface
      */
     public function offsetGet(mixed $offset): ?AuthorizationModelInterface;
-
-    /**
-     * @param AuthorizationModelsShape $data
-     */
-    public static function fromArray(array $data): static;
 }

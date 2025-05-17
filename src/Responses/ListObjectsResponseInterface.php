@@ -13,5 +13,5 @@ interface ListObjectsResponseInterface extends ResponseInterface
      */
     public function getObjects(): array;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

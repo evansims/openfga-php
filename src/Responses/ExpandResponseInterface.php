@@ -11,5 +11,5 @@ interface ExpandResponseInterface extends ResponseInterface
 {
     public function getTree(): ?UsersetTreeInterface;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

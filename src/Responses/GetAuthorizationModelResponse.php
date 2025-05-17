@@ -14,6 +14,8 @@ use function is_array;
 
 final class GetAuthorizationModelResponse implements GetAuthorizationModelResponseInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     use ResponseTrait;
 
     public function __construct(
@@ -24,17 +26,6 @@ final class GetAuthorizationModelResponse implements GetAuthorizationModelRespon
     public function getAuthorizationModel(): ?AuthorizationModelInterface
     {
         return $this->authorizationModel;
-    }
-
-    public static function fromArray(array $data): static
-    {
-        if (isset($data['authorization_model']) && is_array($data['authorization_model'])) {
-            return new self(
-                authorizationModel: AuthorizationModel::fromArray($data['authorization_model']),
-            );
-        }
-
-        return new self();
     }
 
     public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
@@ -48,8 +39,8 @@ final class GetAuthorizationModelResponse implements GetAuthorizationModelRespon
         }
 
         if (200 === $response->getStatusCode() && is_array($data)) {
-            $validator->registerSchema(AuthorizationModel::Schema());
-            $validator->registerSchema(self::Schema());
+            $validator->registerSchema(AuthorizationModel::schema());
+            $validator->registerSchema(self::schema());
 
             return $validator->validateAndTransform($data, self::class);
         }
@@ -59,9 +50,9 @@ final class GetAuthorizationModelResponse implements GetAuthorizationModelRespon
         throw new ApiUnexpectedResponseException($json);
     }
 
-    public static function Schema(): SchemaInterface
+    public static function schema(): SchemaInterface
     {
-        return new Schema(
+        return self::$schema ??= new Schema(
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'authorization_model', type: AuthorizationModel::class, required: false),

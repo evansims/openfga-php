@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private NodeInterface $base,
         private NodeInterface $subtract,
@@ -32,31 +34,14 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedUsersetTreeDifferenceShape($data);
-
-        return new self(
-            base: Node::fromArray($data['base']),
-            subtract: Node::fromArray($data['subtract']),
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'base', type: Node::class, required: true),
+                new SchemaProperty(name: 'subtract', type: Node::class, required: true),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as userset tree difference data. Throws an exception if the data is invalid.
-     *
-     * @param array{base: NodeShape, subtract: NodeShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return UsersetTreeDifferenceShape
-     */
-    public static function validatedUsersetTreeDifferenceShape(array $data): array
-    {
-        if (! isset($data['base'], $data['subtract'])) {
-            throw new InvalidArgumentException('Missing required fields in UsersetTreeDifferenceShape');
-        }
-
-        return $data;
     }
 }

@@ -21,9 +21,4 @@ interface RelationReferenceInterface extends ModelInterface
      * @return RelationReferenceShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param RelationReferenceShape $data
-     */
-    public static function fromArray(array $data): static;
 }

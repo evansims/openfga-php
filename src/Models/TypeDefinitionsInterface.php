@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 /**
  * @psalm-type TypeDefinitionsShape = list<TypeDefinitionShape>
  */
-interface TypeDefinitionsInterface extends CollectionInterface
+interface TypeDefinitionsInterface extends IndexedCollectionInterface
 {
     /**
      * Add a type definition to the collection.
@@ -36,9 +36,4 @@ interface TypeDefinitionsInterface extends CollectionInterface
      * @return null|TypeDefinitionInterface
      */
     public function offsetGet(mixed $offset): ?TypeDefinitionInterface;
-
-    /**
-     * @param TypeDefinitionsShape $data
-     */
-    public static function fromArray(array $data): static;
 }

@@ -13,5 +13,5 @@ interface ListTupleChangesResponseInterface extends ResponseInterface
 
     public function getContinuationToken(): ?string;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

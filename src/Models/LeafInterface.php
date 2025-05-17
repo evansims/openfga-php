@@ -19,9 +19,4 @@ interface LeafInterface extends ModelInterface
      * @return LeafShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param LeafShape $data
-     */
-    public static function fromArray(array $data): self;
 }

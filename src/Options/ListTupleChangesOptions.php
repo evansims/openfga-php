@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Options;
 
 use DateTimeImmutable;
+use DateTimeZone;
 
 final class ListTupleChangesOptions implements ListTupleChangesOptionsInterface
 {
@@ -45,7 +46,9 @@ final class ListTupleChangesOptions implements ListTupleChangesOptionsInterface
         }
 
         if (null !== $this->getStartTime()) {
-            $params['start_time'] = $this->getStartTime()->format('Y-m-d\TH:i:s\Z');
+            $params['start_time'] = $this->getStartTime()
+                ->setTimezone(new DateTimeZone('UTC'))
+                ->format(DATE_ATOM);
         }
 
         return $params;

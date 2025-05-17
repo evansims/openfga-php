@@ -17,7 +17,7 @@ interface AssertionInterface extends JsonSerializable, ModelInterface
 
     public function getExpectation(): bool;
 
-    public function getTupleKey(): TupleKeyInterface;
+    public function getTupleKey(): AssertionTupleKeyInterface;
 
     /**
      * @return AssertionShape

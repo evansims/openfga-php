@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class ConditionMetadata implements ConditionMetadataInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $module,
         private SourceInfoInterface $sourceInfo,
@@ -30,27 +34,14 @@ final class ConditionMetadata implements ConditionMetadataInterface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedConditionMetadataShape($data);
-
-        return new self(
-            module: $data['module'],
-            sourceInfo: SourceInfo::fromArray($data['source_info']),
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'module', type: 'string', required: true),
+                new SchemaProperty(name: 'source_info', type: SourceInfo::class, required: true),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as condition metadata data. Throws an exception if the data is invalid.
-     *
-     * @param array{module: string, source_info: SourceInfoShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return ConditionMetadataShape
-     */
-    public static function validatedConditionMetadataShape(array $data): array
-    {
-        return $data;
     }
 }

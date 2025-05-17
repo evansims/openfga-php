@@ -17,9 +17,4 @@ interface ObjectRelationInterface extends ModelInterface
      * @return ObjectRelationShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param ObjectRelationShape $data
-     */
-    public static function fromArray(array $data): self;
 }

@@ -7,14 +7,15 @@ namespace OpenFGA\Models;
 /**
  * @psalm-type TypeDefinitionRelationsShape = array<string, UsersetShape>
  */
-interface TypeDefinitionRelationsInterface extends CollectionInterface
+interface TypeDefinitionRelationsInterface extends KeyedCollectionInterface
 {
     /**
      * Add a userset to the collection.
      *
+     * @param string           $key
      * @param UsersetInterface $userset
      */
-    public function add(UsersetInterface $userset): void;
+    public function add(string $key, UsersetInterface $userset): void;
 
     /**
      * Get the current userset in the collection.
@@ -38,13 +39,4 @@ interface TypeDefinitionRelationsInterface extends CollectionInterface
      * @return null|UsersetInterface
      */
     public function offsetGet(mixed $offset): ?UsersetInterface;
-
-    /**
-     * Create a collection from an array.
-     *
-     * @param TypeDefinitionRelationsShape $data
-     *
-     * @return self
-     */
-    public static function fromArray(array $data): self;
 }

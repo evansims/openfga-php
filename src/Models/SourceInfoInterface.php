@@ -15,9 +15,4 @@ interface SourceInfoInterface extends ModelInterface
      * @return SourceInfoShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param SourceInfoShape $data
-     */
-    public static function fromArray(array $data): static;
 }

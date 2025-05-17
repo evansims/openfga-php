@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 /**
  * @psalm-type UsersListShape = list<UserListUserShape>
  */
-interface UsersListInterface extends CollectionInterface
+interface UsersListInterface extends IndexedCollectionInterface
 {
     /**
      * Add a user to the collection.
@@ -36,9 +36,4 @@ interface UsersListInterface extends CollectionInterface
      * @return null|UsersListUserInterface
      */
     public function offsetGet(mixed $offset): ?UsersListUserInterface;
-
-    /**
-     * @param UsersListShape $data
-     */
-    public static function fromArray(array $data): self;
 }

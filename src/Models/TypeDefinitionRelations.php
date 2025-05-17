@@ -4,57 +4,94 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use RuntimeException;
+
+use function array_key_exists;
+use function sprintf;
+
 final class TypeDefinitionRelations implements TypeDefinitionRelationsInterface
 {
-    use CollectionTrait;
+    use KeyedCollectionTrait;
 
-    public function add(UsersetInterface $userset): void
-    {
-        $this->models[] = $userset;
-    }
+    private static ?CollectionSchemaInterface $schema = null;
 
-    public function current(): UsersetInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function jsonSerialize(): array
-    {
-        $response = [];
-
-        foreach ($this->models as $key => $model) {
-            $response[$key] = $model->jsonSerialize();
+    /**
+     * @param array<string, UsersetInterface> $usersets
+     */
+    public function __construct(
+        array $usersets = [],
+    ) {
+        foreach ($usersets as $key => $userset) {
+            $this->add($key, $userset);
         }
-
-        return $response;
-    }
-
-    public function offsetGet(mixed $offset): ?UsersetInterface
-    {
-        return $this->models[$offset] ?? null;
-    }
-
-    public static function fromArray(array $data): self
-    {
-        $data = self::validatedRelationReferencesShape($data);
-        $collection = new self();
-
-        foreach ($data as $key => $model) {
-            $collection->offsetSet($key, Userset::fromArray($model));
-        }
-
-        return $collection;
     }
 
     /**
-     * Validate the shape of the relation references array.
+     * Add a userset to the collection.
+
      *
-     * @param array<string, UsersetShape> $data
+     * @param string           $key
+     * @param UsersetInterface $userset
      *
-     * @return TypeDefinitionRelationsShape
+     * @throws InvalidArgumentException If the key is empty, already exists, or contains invalid characters
      */
-    public static function validatedRelationReferencesShape(array $data): array
+    public function add(string $key, UsersetInterface $userset): void
     {
-        return $data;
+        $key = strtolower(trim($key));
+
+        if ('' === $key) {
+            throw new InvalidArgumentException('Key cannot be empty');
+        }
+
+        if (array_key_exists($key, $this->models)) {
+            throw new InvalidArgumentException(sprintf('Key "%s" already exists in the collection', $key));
+        }
+
+        if (! preg_match('/^[a-zA-Z0-9_-]+$/', $key)) {
+            throw new InvalidArgumentException('Key can only contain alphanumeric characters, underscores, and hyphens');
+        }
+
+        $this->models[$key] = $userset;
+    }
+
+    /**
+     * Get the current userset in the collection.
+     *
+     * @return UsersetInterface
+     */
+    public function current(): UsersetInterface
+    {
+        $key = $this->key();
+
+        if (null === $key) {
+            throw new RuntimeException('No current item in TypeDefinitionRelations collection');
+        }
+
+        return $this->models[$key];
+    }
+
+    /**
+     * Get a userset by offset.
+     *
+     * @param mixed $offset
+     *
+     * @return null|UsersetInterface
+     */
+    public function offsetGet(mixed $offset): ?UsersetInterface
+    {
+        $key = strtolower(trim($offset));
+
+        return $this->models[$key] ?? null;
+    }
+
+    public static function schema(): CollectionSchemaInterface
+    {
+        return self::$schema ??= new CollectionSchema(
+            className: self::class,
+            itemType: Userset::class,
+            requireItems: false,
+        );
     }
 }

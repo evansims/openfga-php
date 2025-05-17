@@ -14,6 +14,8 @@ use function is_array;
 
 final class ListStoresResponse implements ListStoresResponseInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     use ResponseTrait;
 
     public function __construct(
@@ -43,8 +45,8 @@ final class ListStoresResponse implements ListStoresResponseInterface
         }
 
         if (200 === $response->getStatusCode() && is_array($data)) {
-            $validator->registerSchema(Stores::Schema());
-            $validator->registerSchema(self::Schema());
+            $validator->registerSchema(Stores::schema());
+            $validator->registerSchema(self::schema());
 
             return $validator->validateAndTransform($data, self::class);
         }
@@ -54,9 +56,9 @@ final class ListStoresResponse implements ListStoresResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
-    public static function Schema(): SchemaInterface
+    public static function schema(): SchemaInterface
     {
-        return new Schema(
+        return self::$schema ??= new Schema(
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'stores', type: Stores::class, required: true),

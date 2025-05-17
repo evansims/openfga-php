@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
-        private NodeInterface $base,
-        private NodeInterface $subtract,
+        private readonly NodeInterface $base,
+        private readonly NodeInterface $subtract,
     ) {
     }
 
@@ -32,29 +34,14 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedUsersetTreeTupleToUsersetShape($data);
-
-        return new self(
-            base: Node::fromArray($data['base']),
-            subtract: Node::fromArray($data['subtract']),
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'base', type: Node::class, required: true),
+                new SchemaProperty(name: 'subtract', type: Node::class, required: true),
+            ],
         );
-    }
-
-    /**
-     * @param array{base: NodeShape, subtract: NodeShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return UsersetTreeTupleToUsersetShape
-     */
-    public static function validatedUsersetTreeTupleToUsersetShape(array $data): array
-    {
-        if (! isset($data['base'], $data['subtract'])) {
-            throw new InvalidArgumentException('Missing required fields in UsersetTreeTupleToUserset');
-        }
-
-        return $data;
     }
 }

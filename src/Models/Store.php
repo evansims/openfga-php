@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Store implements StoreInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     /**
      * Constructor.
      *
@@ -54,23 +57,40 @@ final class Store implements StoreInterface
 
     public function jsonSerialize(): array
     {
+        $createdTimestamp = $this->getCreatedAt();
+        $updatedTimestamp = $this->getUpdatedAt();
+
+        $utcCreatedTimestamp = 0 === $createdTimestamp->getOffset()
+            ? $createdTimestamp
+            : $createdTimestamp->setTimezone(new DateTimeZone('UTC'));
+
+        $utcUpdatedTimestamp = 0 === $updatedTimestamp->getOffset()
+            ? $updatedTimestamp
+            : $updatedTimestamp->setTimezone(new DateTimeZone('UTC'));
+
         $response = [
             'id' => $this->getId(),
             'name' => $this->getName(),
-            'created_at' => $this->getCreatedAt()->format('Y-m-d\TH:i:s\Z'),
-            'updated_at' => $this->getUpdatedAt()->format('Y-m-d\TH:i:s\Z'),
+            'created_at' => $utcCreatedTimestamp->format(DATE_ATOM),
+            'updated_at' => $utcUpdatedTimestamp->format(DATE_ATOM),
         ];
 
         if (null !== $this->getDeletedAt()) {
-            $response['deleted_at'] = $this->getDeletedAt()->format('Y-m-d\TH:i:s\Z');
+            $deletedTimestamp = $this->getDeletedAt();
+
+            $utcDeletedTimestamp = 0 === $deletedTimestamp->getOffset()
+                ? $deletedTimestamp
+                : $deletedTimestamp->setTimezone(new DateTimeZone('UTC'));
+
+            $response['deleted_at'] = $utcDeletedTimestamp->format(DATE_ATOM);
         }
 
         return $response;
     }
 
-    public static function Schema(): SchemaInterface
+    public static function schema(): SchemaInterface
     {
-        return new Schema(
+        return self::$schema ??= new Schema(
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'id', type: 'string', required: true),

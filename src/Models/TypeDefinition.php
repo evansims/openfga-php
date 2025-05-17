@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class TypeDefinition implements TypeDefinitionInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     /**
      * @param string                                $type      The type of the object that this definition is for.
      * @param null|TypeDefinitionRelationsInterface $relations An array of relation names to Userset definitions.
@@ -50,28 +54,15 @@ final class TypeDefinition implements TypeDefinitionInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedTypeDefinitionShape($data);
-
-        return new self(
-            type: $data['type'],
-            relations: isset($data['relations']) ? TypeDefinitionRelations::fromArray($data['relations']) : null,
-            metadata: isset($data['metadata']) ? Metadata::fromArray($data['metadata']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type', type: 'string', required: true),
+                new SchemaProperty(name: 'relations', type: TypeDefinitionRelations::class, required: false),
+                new SchemaProperty(name: 'metadata', type: Metadata::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validate the shape of the type definition array. Throws an exception if the data is invalid.
-     *
-     * @param array{type: string, relations?: TypeDefinitionRelationsShape, metadata?: MetadataShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return TypeDefinitionShape
-     */
-    public static function validatedTypeDefinitionShape(array $data): array
-    {
-        return $data;
     }
 }

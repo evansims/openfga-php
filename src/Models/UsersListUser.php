@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class UsersListUser implements UsersListUserInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $user,
     ) {
@@ -24,5 +28,15 @@ final class UsersListUser implements UsersListUserInterface
     public function jsonSerialize(): string
     {
         return $this->getUser();
+    }
+
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'user', type: 'string', required: true),
+            ],
+        );
     }
 }

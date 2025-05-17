@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 /**
  * @psalm-type TupleKeysShape = list<TupleKeyShape>
  */
-interface TupleKeysInterface extends CollectionInterface
+interface TupleKeysInterface extends IndexedCollectionInterface
 {
     /**
      * Add a tuple key to the collection.
@@ -36,10 +36,4 @@ interface TupleKeysInterface extends CollectionInterface
      * @return null|TupleKeyInterface
      */
     public function offsetGet(mixed $offset): ?TupleKeyInterface;
-
-    /**
-     * @param TupleKeyType   $type
-     * @param TupleKeysShape $data
-     */
-    public static function fromArray(TupleKeyType $type, array $data): static;
 }

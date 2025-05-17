@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Computed implements ComputedInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $userset,
     ) {
@@ -25,30 +27,13 @@ final class Computed implements ComputedInterface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedComputedShape($data);
-
-        return new self(
-            userset: $data['userset'],
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'userset', type: 'string', required: true),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as computed data. Throws an exception if the data is invalid.
-     *
-     * @param array{userset: string} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return ComputedShape
-     */
-    public static function validatedComputedShape(array $data): array
-    {
-        if (! isset($data['userset'])) {
-            throw new InvalidArgumentException('Missing required field: userset');
-        }
-
-        return $data;
     }
 }

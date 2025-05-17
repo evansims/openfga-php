@@ -21,9 +21,4 @@ interface ConditionInterface extends ModelInterface
      * @return ConditionShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param ConditionShape $data
-     */
-    public static function fromArray(array $data): static;
 }

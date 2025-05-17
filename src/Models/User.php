@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use JsonSerializable;
+
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class User implements UserInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private ?object $object = null,
         private ?UsersetUserInterface $userset = null,
@@ -38,8 +44,10 @@ final class User implements UserInterface
     {
         $response = [];
 
-        if (null !== $this->getObject()) {
-            $response['object'] = $this->getObject();
+        if (null !== $obj = $this->getObject()) {
+            $response['object'] = $obj instanceof JsonSerializable
+                ? $obj->jsonSerialize()
+                : (method_exists($obj, '__toString') ? (string) $obj : get_object_vars($obj));
         }
 
         if (null !== $this->getUserset()) {
@@ -57,24 +65,16 @@ final class User implements UserInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedUserShape($data);
-
-        return new self(
-            object: isset($data['object']) ? Object::fromArray($data['object']) : null,
-            userset: isset($data['userset']) ? Userset::fromArray($data['userset']) : null,
-            wildcard: isset($data['wildcard']) ? TypedWildcard::fromArray($data['wildcard']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'object', type: 'object', required: false),
+                new SchemaProperty(name: 'userset', type: UsersetUser::class, required: false),
+                new SchemaProperty(name: 'wildcard', type: TypedWildcard::class, required: false),
+                new SchemaProperty(name: 'difference', type: DifferenceV1::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * @param array{object?: object, userset?: UsersetUserShape, wildcard?: TypedWildcardShape, difference?: DifferenceV1Shape} $data
-     *
-     * @return UserShape
-     */
-    public static function validatedUserShape(array $data): array
-    {
-        return $data;
     }
 }

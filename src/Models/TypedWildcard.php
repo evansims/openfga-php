@@ -5,14 +5,22 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use InvalidArgumentException;
-
-use function is_string;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class TypedWildcard implements TypedWildcardInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $type,
     ) {
+        $type = strtolower(trim($type));
+
+        if ('' === $type) {
+            throw new InvalidArgumentException('TypedWildcard::$type cannot be empty.');
+        }
+
+        $this->type = $type;
     }
 
     public function __toString(): string
@@ -32,34 +40,13 @@ final class TypedWildcard implements TypedWildcardInterface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedTypedWildcardShape($data);
-
-        return new self(
-            type: $data['type'],
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type', type: 'string', required: true),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as typed wildcard data. Throws an exception if the data is invalid.
-     *
-     * @param array{type: string} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return TypedWildcardShape
-     */
-    public static function validatedTypedWildcardShape(array $data): array
-    {
-        if (! isset($data['type'])) {
-            throw new InvalidArgumentException('Missing required field "type"');
-        }
-
-        if (! is_string($data['type'])) {
-            throw new InvalidArgumentException('Field "type" must be a string');
-        }
-
-        return $data;
     }
 }

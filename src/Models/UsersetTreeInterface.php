@@ -15,9 +15,4 @@ interface UsersetTreeInterface extends ModelInterface
      * @return UsersetTreeShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param UsersetTreeShape $data
-     */
-    public static function fromArray(array $data): static;
 }

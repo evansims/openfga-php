@@ -5,23 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeImmutable;
+use DateTimeZone;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
-use function assert;
-use function is_array;
-use function is_string;
-
-final class TupleChange extends Model implements TupleChangeInterface
+final class TupleChange implements TupleChangeInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private TupleKeyInterface $tupleKey,
         private TupleOperation $operation,
         private DateTimeImmutable $timestamp,
     ) {
-    }
-
-    public function getKey(): TupleKeyInterface
-    {
-        return $this->tupleKey;
     }
 
     public function getOperation(): TupleOperation
@@ -34,25 +29,35 @@ final class TupleChange extends Model implements TupleChangeInterface
         return $this->timestamp;
     }
 
-    public function toArray(): array
+    public function getTupleKey(): TupleKeyInterface
     {
+        return $this->tupleKey;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $timestamp = $this->getTimestamp();
+
+        $utcTimestamp = 0 === $timestamp->getOffset()
+            ? $timestamp
+            : $timestamp->setTimezone(new DateTimeZone('UTC'));
+
         return [
-            'tuple_key' => $this->tupleKey->toArray(),
-            'operation' => $this->operation->value,
-            'timestamp' => $this->timestamp->format('Y-m-d\TH:i:s\Z'),
+            'tuple_key' => $this->getTupleKey()->jsonSerialize(),
+            'operation' => $this->getOperation()->value,
+            'timestamp' => $utcTimestamp->format(DATE_ATOM),
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        assert(isset($data['tuple_key']) && is_array($data['tuple_key']));
-        assert(isset($data['operation']) && is_string($data['operation']));
-        assert(isset($data['timestamp']) && is_string($data['timestamp']));
-
-        return new self(
-            tupleKey: TupleKey::fromArray($data['tuple_key']),
-            operation: TupleOperation::from($data['operation']),
-            timestamp: new DateTimeImmutable($data['timestamp']),
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'tuple_key', type: TupleKey::class, required: true),
+                new SchemaProperty(name: 'operation', type: TupleOperation::class, required: true),
+                new SchemaProperty(name: 'timestamp', type: 'string', format: 'date-time', required: true),
+            ],
         );
     }
 }

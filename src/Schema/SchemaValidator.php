@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Schema;
 
+use ArrayAccess;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\SchemaValidationException;
 use ReflectionClass;
+
 use RuntimeException;
 
 use function array_key_exists;
@@ -65,6 +67,11 @@ final class SchemaValidator
         }
 
         $schema = $this->schemas[$className];
+
+        if ($schema instanceof CollectionSchemaInterface) {
+            return $this->validateAndTransformCollection($data, $schema);
+        }
+
         $errors = [];
         $transformedData = [];
 
@@ -133,7 +140,7 @@ final class SchemaValidator
                             $transformedArray[] = $this->validateAndTransform($item, $itemClassName);
                         } catch (SchemaValidationException $e) {
                             foreach ($e->getErrors() as $error) {
-                                $errors[] = "{$name[$i]}.{$error}";
+                                $errors[] = "{$name}[{$i}].{$error}";
                             }
                         }
                     } else {
@@ -162,6 +169,55 @@ final class SchemaValidator
 
         // Create data class instance using reflection
         return $this->createInstance($className, $transformedData);
+    }
+
+    /**
+     * Create a collection instance with the given items.
+     *
+     * @template T of object
+     *
+     * @param class-string<T>    $collectionClass
+     * @param array<int, object> $items
+     *
+     * @return T
+     */
+    private function createCollectionInstance(string $collectionClass, array $items): object
+    {
+        $reflection = new ReflectionClass($collectionClass);
+
+        $constructor = $reflection->getConstructor();
+        if ($constructor && 1 === $constructor->getNumberOfParameters()) {
+            $param = $constructor->getParameters()[0];
+            if ($param->getType() && 'array' === $param->getType()->getName()) {
+                return $reflection->newInstance($items);
+            }
+        }
+
+        $collection = $reflection->newInstance();
+
+        if ($reflection->implementsInterface(ArrayAccess::class)) {
+            foreach ($items as $key => $item) {
+                $collection->offsetSet($key, $item);
+            }
+        } elseif ($reflection->hasMethod('add')) {
+            $addMethod = $reflection->getMethod('add');
+            $params = $addMethod->getParameters();
+            $paramCount = count($params);
+
+            foreach ($items as $key => $item) {
+                if (2 === $paramCount) {
+                    // If add() accepts two parameters, pass both key and item
+                    $addMethod->invoke($collection, $key, $item);
+                } else {
+                    // Otherwise, just pass the item
+                    $addMethod->invoke($collection, $item);
+                }
+            }
+        } else {
+            throw new RuntimeException("Could not add items to collection: {$collectionClass}");
+        }
+
+        return $collection;
     }
 
     /**
@@ -251,6 +307,48 @@ final class SchemaValidator
     }
 
     /**
+     * Validate and transform a collection (direct array).
+     *
+     * @param array<int, mixed>         $data   Array of items
+     * @param CollectionSchemaInterface $schema Collection schema
+     *
+     * @throws SchemaValidationException If validation fails
+     *
+     * @return object
+     */
+    private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema): object
+    {
+        $errors = [];
+        $transformedItems = [];
+        $itemType = $schema->getItemType();
+
+        // Check if collection requires items
+        if ($schema->requiresItems() && empty($data)) {
+            throw new SchemaValidationException(['Collection requires at least one item']);
+        }
+
+        // Validate each item in the array
+        foreach ($data as $index => $item) {
+            try {
+                $transformedItems[] = $this->validateAndTransform($item, $itemType);
+            } catch (SchemaValidationException $e) {
+                foreach ($e->getErrors() as $error) {
+                    $errors[] = "[{$index}].{$error}";
+                }
+            }
+        }
+
+        if (! empty($errors)) {
+            throw new SchemaValidationException($errors);
+        }
+
+        // Create collection instance with transformed items
+        $collectionClass = $schema->getClassName();
+
+        return $this->createCollectionInstance($collectionClass, $transformedItems);
+    }
+
+    /**
      * Validate a value against a type.
      *
      * @param mixed              $value
@@ -299,10 +397,14 @@ final class SchemaValidator
                 if (0 === count($value)) {
                     return false;
                 }
-                $keys = array_keys($value);
+                // Accept associative arrays (at least one non-numeric key)
+                foreach (array_keys($value) as $k) {
+                    if (! is_int($k)) {
+                        return true;
+                    }
+                }
 
-                // Check if array is not a list (0-based sequential numeric keys)
-                return array_keys($keys) !== range(0, count($keys) - 1);
+                return false;
 
             case 'null':
                 return null === $value;

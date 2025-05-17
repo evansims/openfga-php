@@ -17,5 +17,5 @@ interface CreateStoreResponseInterface extends ResponseInterface
 
     public function getUpdatedAt(): DateTimeImmutable;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

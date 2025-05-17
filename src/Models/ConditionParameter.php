@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class ConditionParameter implements ConditionParameterInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private TypeName $typeName,
         private ?ConditionParametersInterface $genericTypes = null,
@@ -37,31 +39,14 @@ final class ConditionParameter implements ConditionParameterInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedConditionParameterShape($data);
-
-        return new self(
-            typeName: TypeName::from($data['type_name']),
-            genericTypes: isset($data['generic_types']) ? ConditionParameters::fromArray($data['generic_types']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type_name', type: TypeName::class, required: true),
+                new SchemaProperty(name: 'generic_types', type: ConditionParameters::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as condition parameter data. Throws an exception if the data is invalid.
-     *
-     * @param array{type_name: string, generic_types?: ConditionParametersShape} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return ConditionParameterShape
-     */
-    public static function validatedConditionParameterShape(array $data): array
-    {
-        if (! isset($data['type_name'])) {
-            throw new InvalidArgumentException('Missing required condition parameter property `type_name`');
-        }
-
-        return $data;
     }
 }

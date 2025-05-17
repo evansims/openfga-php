@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class Leaf implements LeafInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
-        private ?UsersListInterface $users,
-        private ?ComputedInterface $computed,
-        private ?UsersetTreeTupleToUsersetInterface $tupleToUserset,
+        private ?UsersListInterface $users = null,
+        private ?ComputedInterface $computed = null,
+        private ?UsersetTreeTupleToUsersetInterface $tupleToUserset = null,
     ) {
+        if (null === $users && null === $computed && null === $tupleToUserset) {
+            throw new InvalidArgumentException('Leaf must contain at least one of users, computed or tupleToUserset');
+        }
     }
 
     public function getComputed(): ?ComputedInterface
@@ -47,27 +55,15 @@ final class Leaf implements LeafInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedLeafShape($data);
-
-        return new self(
-            users: isset($data['users']) ? UsersList::fromArray($data['users']) : null,
-            computed: isset($data['computed']) ? Computed::fromArray($data['computed']) : null,
-            tupleToUserset: isset($data['tupleToUserset']) ? UsersetTreeTupleToUserset::fromArray($data['tupleToUserset']) : null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'users', type: UsersList::class, required: false),
+                new SchemaProperty(name: 'computed', type: Computed::class, required: false),
+                new SchemaProperty(name: 'tupleToUserset', type: UsersetTreeTupleToUserset::class, required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as leaf data. Throws an exception if the data is invalid.
-
-     *
-     * @param array{users?: UsersListShape, computed?: ComputedShape, tupleToUserset?: UsersetTreeTupleToUsersetShape} $data
-     *
-     * @return LeafShape
-     */
-    public static function validatedLeafShape(array $data): array
-    {
-        return $data;
     }
 }

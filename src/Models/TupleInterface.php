@@ -19,9 +19,4 @@ interface TupleInterface extends ModelInterface
      * @return TupleShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param TupleShape $data
-     */
-    public static function fromArray(array $data): self;
 }

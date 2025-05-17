@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 final class ObjectRelation implements ObjectRelationInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private ?string $object = null,
         private ?string $relation = null,
@@ -37,27 +41,14 @@ final class ObjectRelation implements ObjectRelationInterface
         return $response;
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedObjectRelationShape($data);
-
-        return new self(
-            object: $data['object'] ?? null,
-            relation: $data['relation'] ?? null,
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'object', type: 'string', required: false),
+                new SchemaProperty(name: 'relation', type: 'string', required: false),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as object relation data. Throws an exception if the data is invalid.
-     *
-     * @param array{object?: string, relation?: string} $data
-     *
-     * @throws InvalidArgumentException
-     *
-     * @return ObjectRelationShape
-     */
-    public static function validatedObjectRelationShape(array $data): array
-    {
-        return $data;
     }
 }

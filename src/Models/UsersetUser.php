@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersetUser implements UsersetUserInterface
 {
+    private static ?SchemaInterface $schema = null;
+
     public function __construct(
         private string $type,
         private string $id,
@@ -39,39 +41,15 @@ final class UsersetUser implements UsersetUserInterface
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function schema(): SchemaInterface
     {
-        $data = self::validatedUsersetUserShape($data);
-
-        return new self(
-            type: $data['type'],
-            id: $data['id'],
-            relation: $data['relation'],
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type', type: 'string', required: true),
+                new SchemaProperty(name: 'id', type: 'string', required: true),
+                new SchemaProperty(name: 'relation', type: 'string', required: true),
+            ],
         );
-    }
-
-    /**
-     * Validates the shape of the array to be used as userset user data. Throws an exception if the data is invalid.
-
-     *
-     * @param array{type: string, id: string, relation: string} $data
-     *
-     * @return UsersetUserShape
-     */
-    public static function validatedUsersetUserShape(array $data): array
-    {
-        if (! isset($data['type'])) {
-            throw new InvalidArgumentException('UsersetUser must have a type');
-        }
-
-        if (! isset($data['id'])) {
-            throw new InvalidArgumentException('UsersetUser must have an id');
-        }
-
-        if (! isset($data['relation'])) {
-            throw new InvalidArgumentException('UsersetUser must have a relation');
-        }
-
-        return $data;
     }
 }

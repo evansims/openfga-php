@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 /**
  * @psalm-type ConditionsShape = list<ConditionShape>
  */
-interface ConditionsInterface extends CollectionInterface
+interface ConditionsInterface extends IndexedCollectionInterface
 {
     /**
      * Add a condition to the collection.
@@ -36,9 +36,4 @@ interface ConditionsInterface extends CollectionInterface
      * @return null|ConditionInterface
      */
     public function offsetGet(mixed $offset): ?ConditionInterface;
-
-    /**
-     * @param ConditionsShape $data
-     */
-    public static function fromArray(array $data): static;
 }

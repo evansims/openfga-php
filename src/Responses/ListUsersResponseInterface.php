@@ -11,5 +11,5 @@ interface ListUsersResponseInterface extends ResponseInterface
 {
     public function getUsers(): UsersInterface;
 
-    public static function Schema(): SchemaInterface;
+    public static function schema(): SchemaInterface;
 }

@@ -19,9 +19,4 @@ interface TypeDefinitionInterface extends ModelInterface
      * @return TypeDefinitionShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param TypeDefinitionShape $data
-     */
-    public static function fromArray(array $data): static;
 }
