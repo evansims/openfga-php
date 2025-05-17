@@ -4,24 +4,22 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
-
-final class Assertions implements AssertionsInterface
+/**
+ * @implements \ArrayAccess<int, AssertionInterface>
+ * @implements \Iterator<int, AssertionInterface>
+ */
+final class Assertions extends AbstractIndexedCollection implements AssertionsInterface
 {
-    use CollectionTrait;
+    /**
+     * @var class-string<AssertionInterface>
+     */
+    protected static string $itemType = Assertion::class;
 
-    public function add(AssertionInterface $assertion): void
+    /**
+     * @param AssertionInterface|iterable<AssertionInterface> ...$assertions
+     */
+    public function __construct(iterable | AssertionInterface ...$assertions)
     {
-        $this->models[] = $assertion;
-    }
-
-    public function current(): AssertionInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function offsetGet(mixed $offset): ?AssertionInterface
-    {
-        return $this->models[$offset] ?? null;
+        parent::__construct(...$assertions);
     }
 }
