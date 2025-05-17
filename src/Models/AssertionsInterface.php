@@ -19,9 +19,9 @@ interface AssertionsInterface extends IndexedCollectionInterface
     /**
      * Get the current assertion in the collection.
      *
-     * @return AssertionInterface
+     * @return null|AssertionInterface Returns null if the collection is empty
      */
-    public function current(): AssertionInterface;
+    public function current(): ?AssertionInterface;
 
     /**
      * @return AssertionsShape

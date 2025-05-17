@@ -10,4 +10,26 @@ namespace OpenFGA\Models;
 final class UsersList extends AbstractIndexedCollection implements UsersListInterface
 {
     protected static string $itemType = UsersListUser::class;
+
+    /**
+     * @return null|UsersListUserInterface
+     */
+    public function current(): ?UsersListUserInterface
+    {
+        /** @var null|UsersListUserInterface $result */
+        return parent::current();
+    }
+
+    /**
+     * @param mixed $offset
+     *
+     * @return null|UsersListUserInterface
+     */
+    public function offsetGet(mixed $offset): ?UsersListUserInterface
+    {
+        /** @var null|UsersListUserInterface $result */
+        $result = parent::offsetGet($offset);
+
+        return $result instanceof UsersListUserInterface ? $result : null;
+    }
 }

@@ -11,6 +11,8 @@ use JsonSerializable;
 use OpenFGA\Exceptions\ModelException;
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 
+use ReturnTypeWillChange;
+
 use function is_iterable;
 
 /**
@@ -44,9 +46,9 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
 
         $this->addItems(...$items);
 
-        /** @psalm-suppress RedundantCondition */
+        /* @psalm-suppress RedundantCondition */
         foreach ($items as $item) {
-            if (!is_iterable($item) && !($item instanceof ModelInterface)) {
+            if (! is_iterable($item) && ! ($item instanceof ModelInterface)) {
                 throw ModelException::invalidItemType(get_debug_type($item));
             }
         }
@@ -59,7 +61,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @throws ModelException When item type doesn't match the collection's item type
      */
-    final public function add(ModelInterface $item): void
+    public function add(ModelInterface $item): void
     {
         if (! $item instanceof static::$itemType) {
             throw ModelException::typeMismatch(static::$itemType, $item::class);
@@ -70,7 +72,8 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     /**
      * @return null|T
      */
-    final public function current(): ?ModelInterface
+    #[ReturnTypeWillChange]
+    public function current(): mixed
     {
         $key = $this->key();
         if (null === $key) {
@@ -85,7 +88,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @param callable(T): bool $callback
      */
-    final public function every(callable $callback): bool
+    public function every(callable $callback): bool
     {
         foreach ($this->models as $item) {
             if (! $callback($item)) {
@@ -103,7 +106,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @return static<T>
      */
-    final public function filter(callable $callback): static
+    public function filter(callable $callback): static
     {
         /** @var class-string<static> $collection */
         $collection = static::class;
@@ -125,7 +128,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @return null|T
      */
-    final public function first(?callable $callback = null): ?ModelInterface
+    public function first(?callable $callback = null): ?ModelInterface
     {
         if (null === $callback) {
             return $this->models[0] ?? null;
@@ -143,7 +146,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     /**
      * @return array<int, array<string, mixed>>
      */
-    final public function jsonSerialize(): array
+    public function jsonSerialize(): array
     {
         return array_map(
             static fn (ModelInterface $item) => $item->jsonSerialize(),
@@ -161,7 +164,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @return static<U>
      */
-    final public function map(string $targetType, callable $callback): static
+    public function map(string $targetType, callable $callback): static
     {
         if (! is_a($targetType, ModelInterface::class, true)) {
             throw ModelException::invalidItemType($targetType);
@@ -187,7 +190,8 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @return null|T
      */
-    final public function offsetGet(mixed $offset): ?ModelInterface
+    #[ReturnTypeWillChange]
+    public function offsetGet(mixed $offset): mixed
     {
         return $this->models[$offset] ?? null;
     }
@@ -202,7 +206,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @return U
      */
-    final public function reduce(mixed $initial, callable $callback): mixed
+    public function reduce(mixed $initial, callable $callback): mixed
     {
         $result = $initial;
         foreach ($this->models as $item) {
@@ -217,7 +221,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @param callable(T): bool $callback
      */
-    final public function some(callable $callback): bool
+    public function some(callable $callback): bool
     {
         foreach ($this->models as $item) {
             if ($callback($item)) {
@@ -231,7 +235,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     /**
      * @return array<int, T>
      */
-    final public function toArray(): array
+    public function toArray(): array
     {
         return $this->models;
     }
@@ -241,7 +245,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @return static<T>
      */
-    final public function withItems(iterable | ModelInterface ...$items): static
+    public function withItems(iterable | ModelInterface ...$items): static
     {
         $new = clone $this;
         $new->addItems(...$items);
@@ -249,7 +253,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
         return $new;
     }
 
-    final public static function schema(): CollectionSchemaInterface
+    public static function schema(): CollectionSchemaInterface
     {
         if (null === static::$schema) {
             if (! isset(static::$itemType)) {
