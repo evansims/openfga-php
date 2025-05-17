@@ -19,9 +19,9 @@ interface TupleKeysInterface extends IndexedCollectionInterface
     /**
      * Get the current tuple key in the collection.
      *
-     * @return TupleKeyInterface
+     * @return null|TupleKeyInterface
      */
-    public function current(): TupleKeyInterface;
+    public function current(): ?TupleKeyInterface;
 
     /**
      * @return TupleKeysShape

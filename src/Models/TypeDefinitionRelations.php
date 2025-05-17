@@ -6,7 +6,6 @@ namespace OpenFGA\Models;
 
 use InvalidArgumentException;
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
-use RuntimeException;
 
 use function array_key_exists;
 use function sprintf;
@@ -59,17 +58,13 @@ final class TypeDefinitionRelations implements TypeDefinitionRelationsInterface
     /**
      * Get the current userset in the collection.
      *
-     * @return UsersetInterface
+     * @return null|UsersetInterface
      */
-    public function current(): UsersetInterface
+    public function current(): ?UsersetInterface
     {
         $key = $this->key();
 
-        if (null === $key) {
-            throw new RuntimeException('No current item in TypeDefinitionRelations collection');
-        }
-
-        return $this->models[$key];
+        return null === $key ? null : $this->models[$key];
     }
 
     /**

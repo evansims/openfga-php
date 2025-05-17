@@ -24,9 +24,9 @@ interface ConditionsInterface extends IndexedCollectionInterface
     /**
      * Get the current condition in the collection.
      *
-     * @return ConditionInterface
+     * @return null|ConditionInterface
      */
-    public function current(): ConditionInterface;
+    public function current(): ?ConditionInterface;
 
     /**
      * @return ConditionsShape

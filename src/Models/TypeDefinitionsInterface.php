@@ -19,9 +19,9 @@ interface TypeDefinitionsInterface extends IndexedCollectionInterface
     /**
      * Get the current type definition in the collection.
      *
-     * @return TypeDefinitionInterface
+     * @return null|TypeDefinitionInterface
      */
-    public function current(): TypeDefinitionInterface;
+    public function current(): ?TypeDefinitionInterface;
 
     /**
      * @return TypeDefinitionsShape

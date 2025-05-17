@@ -12,10 +12,11 @@ final class TupleKeys extends AbstractIndexedCollection implements TupleKeysInte
     protected static string $itemType = TupleKey::class;
 
     /**
-     * @return TupleKeyInterface
+     * @return null|TupleKeyInterface
      */
-    public function current(): TupleKeyInterface
+    public function current(): ?TupleKeyInterface
     {
+        /** @var null|TupleKeyInterface $result */
         return parent::current();
     }
 
@@ -26,6 +27,7 @@ final class TupleKeys extends AbstractIndexedCollection implements TupleKeysInte
      */
     public function offsetGet(mixed $offset): ?TupleKeyInterface
     {
+        /** @var null|TupleKeyInterface $result */
         $result = parent::offsetGet($offset);
 
         return $result instanceof TupleKeyInterface ? $result : null;

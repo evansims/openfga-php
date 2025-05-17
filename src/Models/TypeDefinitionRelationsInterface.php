@@ -25,9 +25,9 @@ interface TypeDefinitionRelationsInterface extends KeyedCollectionInterface
     /**
      * Get the current userset in the collection.
      *
-     * @return UsersetInterface
+     * @return null|UsersetInterface
      */
-    public function current(): UsersetInterface;
+    public function current(): ?UsersetInterface;
 
     /**
      * Serialize the collection to an array.

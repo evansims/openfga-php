@@ -16,8 +16,17 @@ final class AuthorizationModels extends AbstractIndexedCollection implements Aut
      */
     public function current(): ?AuthorizationModelInterface
     {
+        if (! $this->valid()) {
+            return null;
+        }
+
+        $key = $this->key();
+        if (null === $key) {
+            return null;
+        }
+
         /** @var null|AuthorizationModelInterface $result */
-        return parent::current();
+        return $this->offsetGet($key);
     }
 
     /**

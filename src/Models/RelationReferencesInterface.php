@@ -22,9 +22,9 @@ interface RelationReferencesInterface extends KeyedCollectionInterface
     /**
      * Get the current relation reference in the collection.
      *
-     * @return RelationReferenceInterface
+     * @return null|RelationReferenceInterface
      */
-    public function current(): RelationReferenceInterface;
+    public function current(): ?RelationReferenceInterface;
 
     /**
      * Serialize the collection to an array.

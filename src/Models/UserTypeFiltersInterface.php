@@ -22,9 +22,9 @@ interface UserTypeFiltersInterface extends IndexedCollectionInterface
     /**
      * Get the current user type filter in the collection.
      *
-     * @return UserTypeFilterInterface
+     * @return null|UserTypeFilterInterface
      */
-    public function current(): UserTypeFilterInterface;
+    public function current(): ?UserTypeFilterInterface;
 
     /**
      * @return UserTypeFiltersShape

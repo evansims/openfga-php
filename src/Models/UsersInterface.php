@@ -19,9 +19,9 @@ interface UsersInterface extends IndexedCollectionInterface
     /**
      * Get the current user in the collection.
      *
-     * @return UserInterface
+     * @return null|UserInterface
      */
-    public function current(): UserInterface;
+    public function current(): ?UserInterface;
 
     /**
      * Get a user by offset.

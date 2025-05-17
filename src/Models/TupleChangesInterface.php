@@ -22,9 +22,9 @@ interface TupleChangesInterface extends IndexedCollectionInterface
     /**
      * Get the current tuple change in the collection.
      *
-     * @return TupleChangeInterface
+     * @return null|TupleChangeInterface
      */
-    public function current(): TupleChangeInterface;
+    public function current(): ?TupleChangeInterface;
 
     /**
      * Get a tuple change by offset.

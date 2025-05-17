@@ -19,9 +19,9 @@ interface TuplesInterface extends IndexedCollectionInterface
     /**
      * Get the current tuple in the collection.
      *
-     * @return TupleInterface
+     * @return null|TupleInterface
      */
-    public function current(): TupleInterface;
+    public function current(): ?TupleInterface;
 
     /**
      * @return TuplesShape
