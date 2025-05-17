@@ -50,19 +50,6 @@ final class User implements UserInterface
         ], static fn ($value) => null !== $value);
     }
 
-    private function serializeObject(): object|string|array|null
-    {
-        if ($this->object instanceof JsonSerializable) {
-            return $this->object->jsonSerialize();
-        }
-
-        if (method_exists($this->object, '__toString')) {
-            return (string) $this->object;
-        }
-
-        return get_object_vars($this->object);
-    }
-
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
@@ -74,5 +61,18 @@ final class User implements UserInterface
                 new SchemaProperty(name: 'difference', type: DifferenceV1::class, required: false),
             ],
         );
+    }
+
+    private function serializeObject(): object | string | array | null
+    {
+        if ($this->object instanceof JsonSerializable) {
+            return $this->object->jsonSerialize();
+        }
+
+        if (method_exists($this->object, '__toString')) {
+            return (string) $this->object;
+        }
+
+        return get_object_vars($this->object);
     }
 }

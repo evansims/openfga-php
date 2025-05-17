@@ -202,7 +202,6 @@ return (new PhpCsFixer\Config())
         'standardize_increment' => true,
         'standardize_not_equals' => true,
         'statement_indentation' => true,
-        'static_lambda' => true,
         'strict_comparison' => true,
         'strict_param' => true,
         'string_length_to_empty' => true,
@@ -226,7 +225,7 @@ return (new PhpCsFixer\Config())
     ->setFinder(
         PhpCsFixer\Finder::create()
             ->exclude('vendor')
-            ->in([__DIR__.'/src/'])
+            ->in([__DIR__.'/src/', __DIR__.'/tests/'])
             ->append([__DIR__.'/rector.php'])
     )
 ;

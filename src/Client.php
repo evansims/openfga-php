@@ -14,9 +14,13 @@ use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStore
 use OpenFGA\Responses\{CheckResponse, CheckResponseInterface, CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface, CreateStoreResponse, CreateStoreResponseInterface, DeleteStoreResponse, DeleteStoreResponseInterface, ExpandResponse, ExpandResponseInterface, GetAuthorizationModelResponse, GetAuthorizationModelResponseInterface, GetStoreResponse, GetStoreResponseInterface, ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface, ListObjectsResponse, ListObjectsResponseInterface, ListStoresResponse, ListStoresResponseInterface, ListTupleChangesResponse, ListTupleChangesResponseInterface, ListUsersResponse, ListUsersResponseInterface, ReadAssertionsResponse, ReadAssertionsResponseInterface, ReadTuplesResponse, ReadTuplesResponseInterface, WriteAssertionsResponse, WriteAssertionsResponseInterface, WriteTuplesResponse, WriteTuplesResponseInterface};
 use OpenFGA\Schema\SchemaValidator;
 
+use function sprintf;
+
 final class Client implements ClientInterface
 {
-    public const string VERSION = '0.2.0';
+    private const MAX_PAGE_SIZE = 1000;
+
+    public const VERSION = '0.2.0';
 
     private ?AuthenticationInterface $authentication = null;
 
@@ -343,23 +347,18 @@ final class Client implements ClientInterface
         return $this->lastResponse;
     }
 
-    private const int MAX_PAGE_SIZE = 1000;
-
     private function validatePageSize(?int $pageSize): void
     {
         if (null === $pageSize) {
             return;
-         }
+        }
 
-         if ($pageSize < 1) {
-             throw new InvalidArgumentException('Page size must be a positive integer');
-         }
+        if ($pageSize < 1) {
+            throw new InvalidArgumentException('Page size must be a positive integer');
+        }
 
         if ($pageSize > self::MAX_PAGE_SIZE) {
-            throw new InvalidArgumentException(sprintf(
-                'Page size must not exceed %d',
-                self::MAX_PAGE_SIZE,
-            ));
+            throw new InvalidArgumentException(sprintf('Invalid page size %d: must be between 1 and %d', $pageSize, self::MAX_PAGE_SIZE));
         }
     }
 

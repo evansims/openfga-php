@@ -33,6 +33,16 @@ final class SchemaValidator
     private array $schemas = [];
 
     /**
+     * Get all registered schemas.
+     *
+     * @return array<string, SchemaInterface>
+     */
+    public function getSchemas(): array
+    {
+        return $this->schemas;
+    }
+
+    /**
      * Register a schema.
      *
      * @param SchemaInterface $schema
