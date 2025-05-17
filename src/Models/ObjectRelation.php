@@ -26,6 +26,9 @@ final class ObjectRelation implements ObjectRelationInterface
         return $this->relation;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

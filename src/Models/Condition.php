@@ -19,10 +19,10 @@ final class Condition implements ConditionInterface
      * @param null|ConditionMetadataInterface   $metadata   The collection of metadata that should be associated with the condition.
      */
     public function __construct(
-        private string $name,
-        private string $expression,
-        private ?ConditionParametersInterface $parameters = null,
-        private ?ConditionMetadataInterface $metadata = null,
+        private readonly string $name,
+        private readonly string $expression,
+        private readonly ?ConditionParametersInterface $parameters = null,
+        private readonly ?ConditionMetadataInterface $metadata = null,
     ) {
     }
 
@@ -46,6 +46,9 @@ final class Condition implements ConditionInterface
         return $this->parameters;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter(
@@ -55,7 +58,7 @@ final class Condition implements ConditionInterface
                 'parameters' => $this->parameters?->jsonSerialize(),
                 'metadata' => $this->metadata?->jsonSerialize(),
             ],
-            static fn ($v) => null !== $v,
+            static fn ($value): bool => null !== $value,
         );
     }
 

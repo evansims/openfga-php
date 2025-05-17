@@ -11,10 +11,10 @@ final class AuthorizationModel implements AuthorizationModelInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $id,
-        private string $schemaVersion,
-        private TypeDefinitionsInterface $typeDefinitions,
-        private ?ConditionsInterface $conditions = null,
+        private readonly string $id,
+        private readonly string $schemaVersion,
+        private readonly TypeDefinitionsInterface $typeDefinitions,
+        private readonly ?ConditionsInterface $conditions = null,
     ) {
     }
 
@@ -38,6 +38,9 @@ final class AuthorizationModel implements AuthorizationModelInterface
         return $this->typeDefinitions;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

@@ -52,6 +52,9 @@ final class Userset implements UsersetInterface
         return $this->union;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

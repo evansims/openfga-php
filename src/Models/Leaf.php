@@ -36,6 +36,9 @@ final class Leaf implements LeafInterface
         return $this->users;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

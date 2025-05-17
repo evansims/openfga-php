@@ -26,6 +26,9 @@ final class UserTypeFilter implements UserTypeFilterInterface
         return $this->type;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

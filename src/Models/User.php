@@ -13,10 +13,10 @@ final class User implements UserInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private ?object $object = null,
-        private ?UsersetUserInterface $userset = null,
-        private ?TypedWildcardInterface $wildcard = null,
-        private ?DifferenceV1Interface $difference = null,
+        private readonly ?object $object = null,
+        private readonly ?UsersetUserInterface $userset = null,
+        private readonly ?TypedWildcardInterface $wildcard = null,
+        private readonly ?DifferenceV1Interface $difference = null,
     ) {
     }
 
@@ -40,6 +40,9 @@ final class User implements UserInterface
         return $this->wildcard;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

@@ -32,6 +32,9 @@ final class Metadata implements MetadataInterface
         return $this->sourceInfo;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

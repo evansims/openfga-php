@@ -11,11 +11,11 @@ final class Node implements NodeInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $name,
-        private ?LeafInterface $leaf = null,
-        private ?UsersetTreeDifferenceInterface $difference = null,
-        private ?NodeInterface $union = null,
-        private ?NodeInterface $intersection = null,
+        private readonly string $name,
+        private readonly ?LeafInterface $leaf = null,
+        private readonly ?UsersetTreeDifferenceInterface $difference = null,
+        private readonly ?NodeInterface $union = null,
+        private readonly ?NodeInterface $intersection = null,
     ) {
     }
 
@@ -44,15 +44,21 @@ final class Node implements NodeInterface
         return $this->union;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
-        return array_filter([
-            'name' => $this->name,
-            'leaf' => $this->leaf?->jsonSerialize(),
-            'difference' => $this->difference?->jsonSerialize(),
-            'union' => $this->union?->jsonSerialize(),
-            'intersection' => $this->intersection?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        return array_filter(
+            [
+                'name' => $this->name,
+                'leaf' => $this->leaf?->jsonSerialize(),
+                'difference' => $this->difference?->jsonSerialize(),
+                'union' => $this->union?->jsonSerialize(),
+                'intersection' => $this->intersection?->jsonSerialize(),
+            ],
+            static fn ($value) => null !== $value,
+        );
     }
 
     public static function schema(): SchemaInterface

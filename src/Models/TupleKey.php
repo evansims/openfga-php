@@ -38,6 +38,9 @@ final class TupleKey implements TupleKeyInterface
         return $this->user;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

@@ -17,10 +17,10 @@ final class Assertion implements AssertionInterface
      * @param null|array                 $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
      */
     public function __construct(
-        private AssertionTupleKeyInterface $tupleKey,
-        private bool $expectation,
-        private ?TupleKeysInterface $contextualTuples = null,
-        private ?array $context = null,
+        private readonly AssertionTupleKeyInterface $tupleKey,
+        private readonly bool $expectation,
+        private readonly ?TupleKeysInterface $contextualTuples = null,
+        private readonly ?array $context = null,
     ) {
     }
 
@@ -44,6 +44,9 @@ final class Assertion implements AssertionInterface
         return $this->tupleKey;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

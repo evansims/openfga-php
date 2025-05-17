@@ -26,6 +26,9 @@ final class ConditionParameter implements ConditionParameterInterface
         return $this->typeName;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

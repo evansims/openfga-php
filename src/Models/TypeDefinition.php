@@ -16,9 +16,9 @@ final class TypeDefinition implements TypeDefinitionInterface
      * @param null|MetadataInterface                $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
      */
     public function __construct(
-        private string $type,
-        private ?TypeDefinitionRelationsInterface $relations = null,
-        private ?MetadataInterface $metadata = null,
+        private readonly string $type,
+        private readonly ?TypeDefinitionRelationsInterface $relations = null,
+        private readonly ?MetadataInterface $metadata = null,
     ) {
     }
 
@@ -37,13 +37,19 @@ final class TypeDefinition implements TypeDefinitionInterface
         return $this->type;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
-        return array_filter([
-            'type' => $this->type,
-            'relations' => $this->relations?->jsonSerialize(),
-            'metadata' => $this->metadata?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        return array_filter(
+            [
+                'type' => $this->type,
+                'relations' => $this->relations?->jsonSerialize(),
+                'metadata' => $this->metadata?->jsonSerialize(),
+            ],
+            static fn ($value): bool => null !== $value,
+        );
     }
 
     public static function schema(): SchemaInterface

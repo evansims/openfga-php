@@ -27,6 +27,9 @@ final class Tuple implements TupleInterface
         return $this->timestamp;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter([

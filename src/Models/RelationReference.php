@@ -38,6 +38,9 @@ final class RelationReference implements RelationReferenceInterface
         return $this->wildcard;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_filter(
