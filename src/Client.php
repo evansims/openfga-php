@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA;
 
+use DateTimeImmutable;
+use InvalidArgumentException;
 use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthentication, NullCredentialAuthentication};
 use OpenFGA\Credentials\{ClientCredentialInterface, CredentialInterface};
-use OpenFGA\Models\{AssertionsInterface, AuthorizationModelInterface, ConditionsInterface, SchemaVersion, StoreInterface, TupleKeyInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
+use OpenFGA\Models\{AssertionsInterface, AuthorizationModelInterface, ConditionsInterface, Consistency, SchemaVersion, StoreInterface, TupleKeyInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Options\{CheckOptionsInterface, CreateAuthorizationModelOptionsInterface, CreateStoreOptionsInterface, DeleteStoreOptionsInterface, ExpandOptionsInterface, GetAuthorizationModelOptionsInterface, GetStoreOptionsInterface, ListAuthorizationModelsOptionsInterface, ListObjectsOptionsInterface, ListStoresOptionsInterface, ListTupleChangesOptionsInterface, ListUsersOptionsInterface, ReadAssertionsOptionsInterface, ReadTuplesOptionsInterface, WriteAssertionsOptionsInterface, WriteTuplesOptionsInterface};
 use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, WriteAssertionsRequest, WriteTuplesRequest};
 use OpenFGA\Responses\{CheckResponse, CheckResponseInterface, CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface, CreateStoreResponse, CreateStoreResponseInterface, DeleteStoreResponse, DeleteStoreResponseInterface, ExpandResponse, ExpandResponseInterface, GetAuthorizationModelResponse, GetAuthorizationModelResponseInterface, GetStoreResponse, GetStoreResponseInterface, ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface, ListObjectsResponse, ListObjectsResponseInterface, ListStoresResponse, ListStoresResponseInterface, ListTupleChangesResponse, ListTupleChangesResponseInterface, ListUsersResponse, ListUsersResponseInterface, ReadAssertionsResponse, ReadAssertionsResponseInterface, ReadTuplesResponse, ReadTuplesResponseInterface, WriteAssertionsResponse, WriteAssertionsResponseInterface, WriteTuplesResponse, WriteTuplesResponseInterface};
 use OpenFGA\Schema\SchemaValidator;
@@ -44,7 +45,7 @@ final class Client implements ClientInterface
         ?bool $trace = null,
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
-        ?CheckOptionsInterface $options = null,
+        ?Consistency $consistency = null,
     ): CheckResponseInterface {
         $request = new CheckRequest(
             store: self::getStoreId($store),
@@ -53,7 +54,7 @@ final class Client implements ClientInterface
             trace: $trace,
             context: $context,
             contextualTuples: $contextualTuples,
-            options: $options,
+            consistency: $consistency,
         );
 
         return CheckResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -64,14 +65,12 @@ final class Client implements ClientInterface
         TypeDefinitionsInterface $typeDefinitions,
         ConditionsInterface $conditions,
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
-        ?CreateAuthorizationModelOptionsInterface $options = null,
     ): CreateAuthorizationModelResponseInterface {
         $request = new CreateAuthorizationModelRequest(
             typeDefinitions: $typeDefinitions,
             conditions: $conditions,
             schemaVersion: $schemaVersion,
             store: self::getStoreId($store),
-            options: $options,
         );
 
         return CreateAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -79,13 +78,11 @@ final class Client implements ClientInterface
 
     public function createStore(
         string $name,
-        ?CreateStoreOptionsInterface $options = null,
     ): CreateStoreResponseInterface {
         $name = trim($name);
 
         $request = new CreateStoreRequest(
             name: $name,
-            options: $options,
         );
 
         return CreateStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -93,11 +90,9 @@ final class Client implements ClientInterface
 
     public function deleteStore(
         StoreInterface | string $store,
-        ?DeleteStoreOptionsInterface $options = null,
     ): DeleteStoreResponseInterface {
         $request = new DeleteStoreRequest(
             store: self::getStoreId($store),
-            options: $options,
         );
 
         return DeleteStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -108,14 +103,14 @@ final class Client implements ClientInterface
         TupleKeyInterface $tupleKey,
         AuthorizationModelInterface | string | null $authorizationModel = null,
         ?TupleKeysInterface $contextualTuples = null,
-        ?ExpandOptionsInterface $options = null,
+        ?Consistency $consistency = null,
     ): ExpandResponseInterface {
         $request = new ExpandRequest(
             tupleKey: $tupleKey,
             contextualTuples: $contextualTuples,
             store: self::getStoreId($store),
             authorizationModel: (null !== $authorizationModel) ? self::getAuthorizationModelId($authorizationModel) : null,
-            options: $options,
+            consistency: $consistency,
         );
 
         return ExpandResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -124,12 +119,10 @@ final class Client implements ClientInterface
     public function getAuthorizationModel(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
-        ?GetAuthorizationModelOptionsInterface $options = null,
     ): GetAuthorizationModelResponseInterface {
         $request = new GetAuthorizationModelRequest(
             store: self::getStoreId($store),
             authorizationModel: self::getAuthorizationModelId($authorizationModel),
-            options: $options,
         );
 
         return GetAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -147,11 +140,9 @@ final class Client implements ClientInterface
 
     public function getStore(
         StoreInterface | string $store,
-        ?GetStoreOptionsInterface $options = null,
     ): GetStoreResponseInterface {
         $request = new GetStoreRequest(
             store: self::getStoreId($store),
-            options: $options,
         );
 
         return GetStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -159,11 +150,15 @@ final class Client implements ClientInterface
 
     public function listAuthorizationModels(
         StoreInterface | string $store,
-        ?ListAuthorizationModelsOptionsInterface $options = null,
+        ?string $continuationToken = null,
+        ?int $pageSize = null,
     ): ListAuthorizationModelsResponseInterface {
+        $this->validatePageSize($pageSize);
+
         $request = new ListAuthorizationModelsRequest(
             store: self::getStoreId($store),
-            options: $options,
+            continuationToken: $continuationToken,
+            pageSize: $pageSize,
         );
 
         return ListAuthorizationModelsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -177,7 +172,7 @@ final class Client implements ClientInterface
         string $user,
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
-        ?ListObjectsOptionsInterface $options = null,
+        ?Consistency $consistency = null,
     ): ListObjectsResponseInterface {
         $request = new ListObjectsRequest(
             type: $type,
@@ -187,17 +182,21 @@ final class Client implements ClientInterface
             contextualTuples: $contextualTuples,
             store: self::getStoreId($store),
             authorizationModel: self::getAuthorizationModelId($authorizationModel),
-            options: $options,
+            consistency: $consistency,
         );
 
         return ListObjectsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
     public function listStores(
-        ?ListStoresOptionsInterface $options = null,
+        ?string $continuationToken = null,
+        ?int $pageSize = null,
     ): ListStoresResponseInterface {
+        $this->validatePageSize($pageSize);
+
         $request = new ListStoresRequest(
-            options: $options,
+            continuationToken: $continuationToken,
+            pageSize: $pageSize,
         );
 
         return ListStoresResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -205,11 +204,19 @@ final class Client implements ClientInterface
 
     public function listTupleChanges(
         StoreInterface | string $store,
-        ?ListTupleChangesOptionsInterface $options = null,
+        ?string $continuationToken = null,
+        ?int $pageSize = null,
+        ?string $type = null,
+        ?DateTimeImmutable $startTime = null,
     ): ListTupleChangesResponseInterface {
+        $this->validatePageSize($pageSize);
+
         $request = new ListTupleChangesRequest(
             store: self::getStoreId($store),
-            options: $options,
+            continuationToken: $continuationToken,
+            pageSize: $pageSize,
+            type: $type,
+            startTime: $startTime,
         );
 
         return ListTupleChangesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -223,7 +230,7 @@ final class Client implements ClientInterface
         UserTypeFiltersInterface $userFilters,
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
-        ?ListUsersOptionsInterface $options = null,
+        ?Consistency $consistency = null,
     ): ListUsersResponseInterface {
         $request = new ListUsersRequest(
             object: $object,
@@ -233,7 +240,7 @@ final class Client implements ClientInterface
             contextualTuples: $contextualTuples,
             store: self::getStoreId($store),
             authorizationModel: self::getAuthorizationModelId($authorizationModel),
-            options: $options,
+            consistency: $consistency,
         );
 
         return ListUsersResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -242,12 +249,10 @@ final class Client implements ClientInterface
     public function readAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
-        ?ReadAssertionsOptionsInterface $options = null,
     ): ReadAssertionsResponseInterface {
         $request = new ReadAssertionsRequest(
             store: self::getStoreId($store),
             authorizationModel: self::getAuthorizationModelId($authorizationModel),
-            options: $options,
         );
 
         return ReadAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -256,12 +261,18 @@ final class Client implements ClientInterface
     public function readTuples(
         StoreInterface | string $store,
         ?TupleKeyInterface $tupleKey = null,
-        ?ReadTuplesOptionsInterface $options = null,
+        ?string $continuationToken = null,
+        ?int $pageSize = null,
+        ?Consistency $consistency = null,
     ): ReadTuplesResponseInterface {
+        $this->validatePageSize($pageSize);
+
         $request = new ReadTuplesRequest(
             tupleKey: $tupleKey,
             store: self::getStoreId($store),
-            options: $options,
+            continuationToken: $continuationToken,
+            pageSize: $pageSize,
+            consistency: $consistency,
         );
 
         return ReadTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -271,13 +282,11 @@ final class Client implements ClientInterface
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
         AssertionsInterface $assertions,
-        ?WriteAssertionsOptionsInterface $options = null,
     ): WriteAssertionsResponseInterface {
         $request = new WriteAssertionsRequest(
             assertions: $assertions,
             store: self::getStoreId($store),
             authorizationModel: self::getAuthorizationModelId($authorizationModel),
-            options: $options,
         );
 
         return WriteAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -288,14 +297,12 @@ final class Client implements ClientInterface
         AuthorizationModelInterface | string $authorizationModel,
         ?TupleKeysInterface $writes = null,
         ?TupleKeysInterface $deletes = null,
-        ?WriteTuplesOptionsInterface $options = null,
     ): WriteTuplesResponseInterface {
         $request = new WriteTuplesRequest(
             writes: $writes,
             deletes: $deletes,
             store: self::getStoreId($store),
             authorizationModel: self::getAuthorizationModelId($authorizationModel),
-            options: $options,
         );
 
         return WriteTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -304,9 +311,7 @@ final class Client implements ClientInterface
     private function getAuthentication(): AuthenticationInterface
     {
         if (null === $this->authentication) {
-            $credential = $this->getConfiguration()->getCredential();
-
-            if ($credential instanceof ClientCredentialInterface) {
+            if ($this->credential instanceof ClientCredentialInterface) {
                 $this->authentication = new ClientCredentialAuthentication($this);
             } else {
                 $this->authentication = new NullCredentialAuthentication($this);
@@ -314,11 +319,6 @@ final class Client implements ClientInterface
         }
 
         return $this->authentication;
-    }
-
-    private function getConfiguration(): ConfigurationInterface
-    {
-        return $this->configuration;
     }
 
     private function getValidator(): SchemaValidator
@@ -341,6 +341,26 @@ final class Client implements ClientInterface
         $this->lastResponse = $this->requestManager->send($this->lastRequest);
 
         return $this->lastResponse;
+    }
+
+    private const int MAX_PAGE_SIZE = 1000;
+
+    private function validatePageSize(?int $pageSize): void
+    {
+        if (null === $pageSize) {
+            return;
+         }
+
+         if ($pageSize < 1) {
+             throw new InvalidArgumentException('Page size must be a positive integer');
+         }
+
+        if ($pageSize > self::MAX_PAGE_SIZE) {
+            throw new InvalidArgumentException(sprintf(
+                'Page size must not exceed %d',
+                self::MAX_PAGE_SIZE,
+            ));
+        }
     }
 
     private static function getAuthorizationModelId(AuthorizationModelInterface | string $authorizationModel): string

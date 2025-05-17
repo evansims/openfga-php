@@ -13,9 +13,9 @@ use function is_array;
 
 final class CreateAuthorizationModelResponse implements CreateAuthorizationModelResponseInterface
 {
-    private static ?SchemaInterface $schema = null;
-
     use ResponseTrait;
+
+    private static ?SchemaInterface $schema = null;
 
     public function __construct(
         private string $authorizationModelId,

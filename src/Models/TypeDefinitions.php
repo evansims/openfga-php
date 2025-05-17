@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, TypeDefinitionInterface>
- * @implements \Iterator<int, TypeDefinitionInterface>
+ * @template T of TypeDefinitionInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class TypeDefinitions extends AbstractIndexedCollection implements TypeDefinitionsInterface
 {
     /**
-     * @var class-string<TypeDefinitionInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = TypeDefinition::class;
 
     /**
-     * @param iterable<TypeDefinitionInterface>|TypeDefinitionInterface ...$typeDefinitions
+     * @param list<T>|T ...$typeDefinitions
      */
     public function __construct(iterable | TypeDefinitionInterface ...$typeDefinitions)
     {

@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 /**
  * @psalm-type RelationReferencesShape = array<string, RelationReferenceShape>
+ *
+ * @extends KeyedCollectionInterface<string, RelationReferenceInterface>
  */
 interface RelationReferencesInterface extends KeyedCollectionInterface
 {

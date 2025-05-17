@@ -57,30 +57,25 @@ final class Store implements StoreInterface
 
     public function jsonSerialize(): array
     {
-        $createdTimestamp = $this->getCreatedAt();
-        $updatedTimestamp = $this->getUpdatedAt();
+        $utcCreatedTimestamp = 0 === $this->createdAt->getOffset()
+            ? $this->createdAt
+            : $this->createdAt->setTimezone(new DateTimeZone('UTC'));
 
-        $utcCreatedTimestamp = 0 === $createdTimestamp->getOffset()
-            ? $createdTimestamp
-            : $createdTimestamp->setTimezone(new DateTimeZone('UTC'));
-
-        $utcUpdatedTimestamp = 0 === $updatedTimestamp->getOffset()
-            ? $updatedTimestamp
-            : $updatedTimestamp->setTimezone(new DateTimeZone('UTC'));
+        $utcUpdatedTimestamp = 0 === $this->updatedAt->getOffset()
+            ? $this->updatedAt
+            : $this->updatedAt->setTimezone(new DateTimeZone('UTC'));
 
         $response = [
-            'id' => $this->getId(),
-            'name' => $this->getName(),
+            'id' => $this->id,
+            'name' => $this->name,
             'created_at' => $utcCreatedTimestamp->format(DATE_ATOM),
             'updated_at' => $utcUpdatedTimestamp->format(DATE_ATOM),
         ];
 
-        if (null !== $this->getDeletedAt()) {
-            $deletedTimestamp = $this->getDeletedAt();
-
-            $utcDeletedTimestamp = 0 === $deletedTimestamp->getOffset()
-                ? $deletedTimestamp
-                : $deletedTimestamp->setTimezone(new DateTimeZone('UTC'));
+        if (null !== $this->deletedAt) {
+            $utcDeletedTimestamp = 0 === $this->deletedAt->getOffset()
+                ? $this->deletedAt
+                : $this->deletedAt->setTimezone(new DateTimeZone('UTC'));
 
             $response['deleted_at'] = $utcDeletedTimestamp->format(DATE_ATOM);
         }

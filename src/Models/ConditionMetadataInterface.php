@@ -17,9 +17,4 @@ interface ConditionMetadataInterface extends ModelInterface
      * @return ConditionMetadataShape
      */
     public function jsonSerialize(): array;
-
-    /**
-     * @param ConditionMetadataShape $data
-     */
-    public static function fromArray(array $data): static;
 }

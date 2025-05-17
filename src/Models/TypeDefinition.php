@@ -39,19 +39,11 @@ final class TypeDefinition implements TypeDefinitionInterface
 
     public function jsonSerialize(): array
     {
-        $response = [
+        return array_filter([
             'type' => $this->type,
-        ];
-
-        if ($this->getRelations()) {
-            $response['relations'] = $this->getRelations()->jsonSerialize();
-        }
-
-        if ($this->getMetadata()) {
-            $response['metadata'] = $this->getMetadata()->jsonSerialize();
-        }
-
-        return $response;
+            'relations' => $this->relations?->jsonSerialize(),
+            'metadata' => $this->metadata?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

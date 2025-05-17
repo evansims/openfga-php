@@ -40,17 +40,12 @@ final class TupleKey implements TupleKeyInterface
 
     public function jsonSerialize(): array
     {
-        $response = [];
-
-        $response['user'] = $this->getUser();
-        $response['relation'] = $this->getRelation();
-        $response['object'] = $this->getObject();
-
-        if ($this->getCondition()) {
-            $response['condition'] = $this->getCondition()->jsonSerialize();
-        }
-
-        return $response;
+        return array_filter([
+            'user' => $this->user,
+            'relation' => $this->relation,
+            'object' => $this->object,
+            'condition' => $this->condition?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

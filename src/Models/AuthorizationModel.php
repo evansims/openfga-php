@@ -40,17 +40,12 @@ final class AuthorizationModel implements AuthorizationModelInterface
 
     public function jsonSerialize(): array
     {
-        $response = [
-            'id' => $this->getId(),
-            'schema_version' => $this->getSchemaVersion(),
-            'type_definitions' => $this->getTypeDefinitions()->jsonSerialize(),
-        ];
-
-        if ($this->getConditions()) {
-            $response['conditions'] = $this->getConditions()->jsonSerialize();
-        }
-
-        return $response;
+        return array_filter([
+            'id' => $this->id,
+            'schema_version' => $this->schemaVersion,
+            'type_definitions' => $this->typeDefinitions->jsonSerialize(),
+            'conditions' => $this->conditions?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

@@ -6,6 +6,11 @@ namespace OpenFGA\Models;
 
 /**
  * @psalm-type StoresShape = list<StoreShape>
+ *
+ * @extends IndexedCollectionInterface<StoreInterface>
+ *
+ * @implements \ArrayAccess<int, StoreInterface>
+ * @implements \Iterator<int, StoreInterface>
  */
 interface StoresInterface extends IndexedCollectionInterface
 {

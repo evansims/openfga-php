@@ -23,7 +23,7 @@ final class UsersetTree implements UsersetTreeInterface
     public function jsonSerialize(): array
     {
         return [
-            'root' => $this->getRoot()->jsonSerialize(),
+            'root' => $this->root->jsonSerialize(),
         ];
     }
 

@@ -46,27 +46,13 @@ final class Node implements NodeInterface
 
     public function jsonSerialize(): array
     {
-        $response = [
-            'name' => $this->getName(),
-        ];
-
-        if ($this->getLeaf()) {
-            $response['leaf'] = $this->getLeaf()->jsonSerialize();
-        }
-
-        if ($this->getDifference()) {
-            $response['difference'] = $this->getDifference()->jsonSerialize();
-        }
-
-        if ($this->getUnion()) {
-            $response['union'] = $this->getUnion()->jsonSerialize();
-        }
-
-        if ($this->getIntersection()) {
-            $response['intersection'] = $this->getIntersection()->jsonSerialize();
-        }
-
-        return $response;
+        return array_filter([
+            'name' => $this->name,
+            'leaf' => $this->leaf?->jsonSerialize(),
+            'difference' => $this->difference?->jsonSerialize(),
+            'union' => $this->union?->jsonSerialize(),
+            'intersection' => $this->intersection?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

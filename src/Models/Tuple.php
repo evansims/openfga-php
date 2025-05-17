@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Tuple implements TupleInterface
@@ -30,20 +29,10 @@ final class Tuple implements TupleInterface
 
     public function jsonSerialize(): array
     {
-        $timestamp = $this->getTimestamp();
-
-        $utcTimestamp = 0 === $timestamp->getOffset()
-            ? $timestamp
-            : $timestamp->setTimezone(new DateTimeZone('UTC'));
-
-        return [
-            'key' => $this->getKey()->jsonSerialize(),
-            'timestamp' => (
-                0 === $timestamp->getOffset()
-                    ? $timestamp
-                    : $timestamp->setTimezone(new DateTimeZone('UTC'))
-            )->format(DATE_ATOM),
-        ];
+        return array_filter([
+            'key' => $this->key->jsonSerialize(),
+            'timestamp' => $this->timestamp->format(DATE_ATOM),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

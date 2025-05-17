@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, AuthorizationModelInterface>
- * @implements \Iterator<int, AuthorizationModelInterface>
+ * @template T of AuthorizationModelInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class AuthorizationModels extends AbstractIndexedCollection implements AuthorizationModelsInterface
 {
     /**
-     * @var class-string<AuthorizationModelInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = AuthorizationModel::class;
 
     /**
-     * @param AuthorizationModelInterface|iterable<AuthorizationModelInterface> ...$models
+     * @param list<T>|T ...$models
      */
     public function __construct(iterable | AuthorizationModelInterface ...$models)
     {

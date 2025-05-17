@@ -29,8 +29,8 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
     public function jsonSerialize(): array
     {
         return [
-            'base' => $this->getBase()->jsonSerialize(),
-            'subtract' => $this->getSubtract()->jsonSerialize(),
+            'base' => $this->base->jsonSerialize(),
+            'subtract' => $this->subtract->jsonSerialize(),
         ];
     }
 

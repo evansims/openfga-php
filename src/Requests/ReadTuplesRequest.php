@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\TupleKeyInterface;
-use OpenFGA\Network\{RequestMethod, RequestContext};
-use OpenFGA\Options\ReadTuplesOptionsInterface;
+use InvalidArgumentException;
+use OpenFGA\Models\{Consistency, TupleKeyInterface};
+use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ReadTuplesRequest implements ReadTuplesRequestInterface
@@ -14,32 +14,42 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
     public function __construct(
         private string $store,
         private TupleKeyInterface $tupleKey,
-        private ?ReadTuplesOptionsInterface $options = null,
+        private ?string $continuationToken = null,
+        private ?int $pageSize = null,
+        private ?Consistency $consistency = null,
     ) {
+        if (null !== $pageSize && $pageSize <= 0) {
+            throw new InvalidArgumentException('$pageSize must be a positive integer.');
+        }
+
+        if (null !== $continuationToken && '' === $continuationToken) {
+            throw new InvalidArgumentException('$continuationToken cannot be an empty string.');
+        }
     }
 
-    public function getOptions(): ?ReadTuplesOptionsInterface
+    public function getConsistency(): ?Consistency
     {
-        return $this->options;
+        return $this->consistency;
+    }
+
+    public function getContinuationToken(): ?string
+    {
+        return $this->continuationToken;
+    }
+
+    public function getPageSize(): ?int
+    {
+        return $this->pageSize;
     }
 
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        $body = [
+        $body = array_filter([
             'tuple_key' => $this->tupleKey->jsonSerialize(),
-        ];
-
-        if (null !== $this->getOptions()?->getConsistency()) {
-            $body['consistency'] = $this->getOptions()->getConsistency()->value;
-        }
-
-        if (null !== $this->getOptions()?->getPageSize()) {
-            $body['page_size'] = $this->getOptions()->getPageSize();
-        }
-
-        if (null !== $this->getOptions()?->getContinuationToken()) {
-            $body['continuation_token'] = (string) $this->getOptions()->getContinuationToken();
-        }
+            'consistency' => $this->consistency?->value,
+            'page_size' => $this->pageSize,
+            'continuation_token' => $this->continuationToken,
+        ], static fn ($value) => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 

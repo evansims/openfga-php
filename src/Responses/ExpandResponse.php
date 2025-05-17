@@ -14,9 +14,9 @@ use function is_array;
 
 final class ExpandResponse implements ExpandResponseInterface
 {
-    private static ?SchemaInterface $schema = null;
-
     use ResponseTrait;
+
+    private static ?SchemaInterface $schema = null;
 
     public function __construct(
         private ?UsersetTreeInterface $tree = null,

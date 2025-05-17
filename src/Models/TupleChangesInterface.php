@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+/**
+ * @implements \ArrayAccess<int, TupleChangeInterface>
+ * @implements \Iterator<int, TupleChangeInterface>
+ *
+ * @extends IndexedCollectionInterface<TupleChangeInterface>
+ */
 interface TupleChangesInterface extends IndexedCollectionInterface
 {
     /**

@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Models\TupleKeysInterface;
-use OpenFGA\Network\{RequestMethod, RequestContext};
-use OpenFGA\Options\WriteTuplesOptionsInterface;
+use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class WriteTuplesRequest implements WriteTuplesRequestInterface
@@ -16,7 +15,6 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
         private string $authorizationModel,
         private ?TupleKeysInterface $writes = null,
         private ?TupleKeysInterface $deletes = null,
-        private ?WriteTuplesOptionsInterface $options = null,
     ) {
     }
 
@@ -30,24 +28,13 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
         return $this->deletes;
     }
 
-    public function getOptions(): ?WriteTuplesOptionsInterface
-    {
-        return $this->options;
-    }
-
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        $body = [
+        $body = array_filter([
             'authorization_model_id' => $this->getAuthorizationModel(),
-        ];
-
-        if (null !== $this->getWrites()) {
-            $body['writes'] = $this->getWrites()->jsonSerialize();
-        }
-
-        if (null !== $this->getDeletes()) {
-            $body['deletes'] = $this->getDeletes()->jsonSerialize();
-        }
+            'writes' => $this->getWrites()?->jsonSerialize(),
+            'deletes' => $this->getDeletes()?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 

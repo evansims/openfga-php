@@ -6,6 +6,11 @@ namespace OpenFGA\Models;
 
 /**
  * @psalm-type TypeDefinitionRelationsShape = array<string, UsersetShape>
+ *
+ * @extends KeyedCollectionInterface<string, UsersetInterface>
+ *
+ * @implements \ArrayAccess<string, UsersetInterface>
+ * @implements \Iterator<string, UsersetInterface>
  */
 interface TypeDefinitionRelationsInterface extends KeyedCollectionInterface
 {

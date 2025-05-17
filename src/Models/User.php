@@ -42,27 +42,25 @@ final class User implements UserInterface
 
     public function jsonSerialize(): array
     {
-        $response = [];
+        return array_filter([
+            'object' => $this->serializeObject(),
+            'userset' => $this->userset?->jsonSerialize(),
+            'wildcard' => $this->wildcard?->jsonSerialize(),
+            'difference' => $this->difference?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
+    }
 
-        if (null !== $obj = $this->getObject()) {
-            $response['object'] = $obj instanceof JsonSerializable
-                ? $obj->jsonSerialize()
-                : (method_exists($obj, '__toString') ? (string) $obj : get_object_vars($obj));
+    private function serializeObject(): object|string|array|null
+    {
+        if ($this->object instanceof JsonSerializable) {
+            return $this->object->jsonSerialize();
         }
 
-        if (null !== $this->getUserset()) {
-            $response['userset'] = $this->getUserset()->jsonSerialize();
+        if (method_exists($this->object, '__toString')) {
+            return (string) $this->object;
         }
 
-        if (null !== $this->getWildcard()) {
-            $response['wildcard'] = $this->getWildcard()->jsonSerialize();
-        }
-
-        if (null !== $this->getDifference()) {
-            $response['difference'] = $this->getDifference()->jsonSerialize();
-        }
-
-        return $response;
+        return get_object_vars($this->object);
     }
 
     public static function schema(): SchemaInterface

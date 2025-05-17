@@ -28,15 +28,10 @@ final class UserTypeFilter implements UserTypeFilterInterface
 
     public function jsonSerialize(): array
     {
-        $response = [
+        return array_filter([
             'type' => $this->type,
-        ];
-
-        if (null !== $this->relation) {
-            $response['relation'] = $this->relation;
-        }
-
-        return $response;
+            'relation' => $this->relation,
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

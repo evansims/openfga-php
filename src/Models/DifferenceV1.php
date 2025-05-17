@@ -31,8 +31,8 @@ final class DifferenceV1 implements DifferenceV1Interface
     public function jsonSerialize(): array
     {
         return [
-            'base' => $this->getBase()->jsonSerialize(),
-            'subtract' => $this->getSubtract()->jsonSerialize(),
+            'base' => $this->base->jsonSerialize(),
+            'subtract' => $this->subtract->jsonSerialize(),
         ];
     }
 

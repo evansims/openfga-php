@@ -6,6 +6,11 @@ namespace OpenFGA\Models;
 
 /**
  * @psalm-type ConditionParametersShape = list<ConditionParameterShape>
+ *
+ * @extends IndexedCollectionInterface<ConditionParameterInterface>
+ *
+ * @implements \ArrayAccess<int, ConditionParameterInterface>
+ * @implements \Iterator<int, ConditionParameterInterface>
  */
 interface ConditionParametersInterface extends IndexedCollectionInterface
 {

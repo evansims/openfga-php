@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Models\AssertionsInterface;
-use OpenFGA\Network\{RequestMethod, RequestContext};
-use OpenFGA\Options\WriteAssertionsOptionsInterface;
+use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
@@ -15,7 +14,6 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         private AssertionsInterface $assertions,
         private string $store,
         private string $authorizationModel,
-        private ?WriteAssertionsOptionsInterface $options = null,
     ) {
     }
 
@@ -27,11 +25,6 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
     public function getAuthorizationModel(): string
     {
         return $this->authorizationModel;
-    }
-
-    public function getOptions(): ?WriteAssertionsOptionsInterface
-    {
-        return $this->options;
     }
 
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

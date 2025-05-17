@@ -35,9 +35,9 @@ final class AssertionTupleKey implements AssertionTupleKeyInterface
     public function jsonSerialize(): array
     {
         return [
-            'user' => $this->getUser(),
-            'relation' => $this->getRelation(),
-            'object' => $this->getObject(),
+            'user' => $this->user,
+            'relation' => $this->relation,
+            'object' => $this->object,
         ];
     }
 

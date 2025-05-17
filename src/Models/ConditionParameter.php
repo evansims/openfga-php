@@ -28,15 +28,10 @@ final class ConditionParameter implements ConditionParameterInterface
 
     public function jsonSerialize(): array
     {
-        $response = [
-            'type_name' => (string) $this->getTypeName(),
-        ];
-
-        if (null !== $this->getGenericTypes()) {
-            $response['generic_types'] = $this->getGenericTypes()->jsonSerialize();
-        }
-
-        return $response;
+        return array_filter([
+            'type_name' => $this->typeName->value,
+            'generic_types' => $this->genericTypes?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

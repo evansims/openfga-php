@@ -10,14 +10,6 @@ final class RelationReference implements RelationReferenceInterface
 {
     private static ?SchemaInterface $schema = null;
 
-    /**
-     * Constructs a new RelationReference object.
-     *
-     * @param string      $type
-     * @param null|string $relation
-     * @param null|object $wildcard
-     * @param null|string $condition
-     */
     public function __construct(
         private string $type,
         private ?string $relation = null,
@@ -55,7 +47,7 @@ final class RelationReference implements RelationReferenceInterface
                 'wildcard' => $this->wildcard,
                 'condition' => $this->condition,
             ],
-            [self::class, 'filterNulls'],
+            static fn ($v) => null !== $v,
         );
     }
 
@@ -70,10 +62,5 @@ final class RelationReference implements RelationReferenceInterface
                 new SchemaProperty(name: 'condition', type: 'string', required: false),
             ],
         );
-    }
-
-    private static function filterNulls(mixed $v): bool
-    {
-        return null !== $v;
     }
 }

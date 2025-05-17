@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, StoreInterface>
- * @implements \Iterator<int, StoreInterface>
+ * @template T of StoreInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class Stores extends AbstractIndexedCollection implements StoresInterface
 {
     /**
-     * @var class-string<StoreInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = Store::class;
 
     /**
-     * @param iterable<StoreInterface>|StoreInterface ...$stores
+     * @param list<T>|T ...$stores
      */
     public function __construct(iterable | StoreInterface ...$stores)
     {

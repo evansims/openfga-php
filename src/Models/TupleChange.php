@@ -36,15 +36,13 @@ final class TupleChange implements TupleChangeInterface
 
     public function jsonSerialize(): array
     {
-        $timestamp = $this->getTimestamp();
-
-        $utcTimestamp = 0 === $timestamp->getOffset()
-            ? $timestamp
-            : $timestamp->setTimezone(new DateTimeZone('UTC'));
+        $utcTimestamp = 0 === $this->timestamp->getOffset()
+            ? $this->timestamp
+            : $this->timestamp->setTimezone(new DateTimeZone('UTC'));
 
         return [
-            'tuple_key' => $this->getTupleKey()->jsonSerialize(),
-            'operation' => $this->getOperation()->value,
+            'tuple_key' => $this->tupleKey->jsonSerialize(),
+            'operation' => $this->operation->value,
             'timestamp' => $utcTimestamp->format(DATE_ATOM),
         ];
     }

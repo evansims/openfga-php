@@ -25,7 +25,7 @@ final class TypedWildcard implements TypedWildcardInterface
 
     public function __toString(): string
     {
-        return $this->getType();
+        return $this->type;
     }
 
     public function getType(): string
@@ -36,7 +36,7 @@ final class TypedWildcard implements TypedWildcardInterface
     public function jsonSerialize(): array
     {
         return [
-            'type' => $this->getType(),
+            'type' => $this->type,
         ];
     }
 

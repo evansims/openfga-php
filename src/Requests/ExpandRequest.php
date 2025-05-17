@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{TupleKeyInterface, TupleKeysInterface};
-use OpenFGA\Network\{RequestMethod, RequestContext};
-use OpenFGA\Options\ExpandOptionsInterface;
+use OpenFGA\Models\{Consistency, TupleKeyInterface, TupleKeysInterface};
+use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ExpandRequest implements ExpandRequestInterface
@@ -16,7 +15,7 @@ final class ExpandRequest implements ExpandRequestInterface
         private TupleKeyInterface $tupleKey,
         private ?string $authorizationModel = null,
         private ?TupleKeysInterface $contextualTuples = null,
-        private ?ExpandOptionsInterface $options = null,
+        private ?Consistency $consistency = null,
     ) {
     }
 
@@ -25,37 +24,24 @@ final class ExpandRequest implements ExpandRequestInterface
         return $this->authorizationModel;
     }
 
+    public function getConsistency(): ?Consistency
+    {
+        return $this->consistency;
+    }
+
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
-    public function getOptions(): ?ExpandOptionsInterface
-    {
-        return $this->options;
-    }
-
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        $body = [];
-        $tupleKey = $this->getTupleKey()->jsonSerialize();
-
-        $body['tuple_key'] = [
-            'relation' => $tupleKey['relation'],
-            'object' => $tupleKey['object'],
-        ];
-
-        if (null !== $this->getAuthorizationModel()) {
-            $body['authorization_model_id'] = $this->getAuthorizationModel();
-        }
-
-        if (null !== $this->getOptions()?->getConsistency()) {
-            $body['consistency'] = (string) $this->getOptions()->getConsistency()->value;
-        }
-
-        if (null !== $this->getContextualTuples()) {
-            $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
-        }
+        $body = array_filter([
+            'tuple_key' => $this->tupleKey->jsonSerialize(),
+            'authorization_model_id' => $this->authorizationModel,
+            'consistency' => $this->consistency?->value,
+            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 

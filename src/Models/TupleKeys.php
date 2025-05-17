@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, TupleKeyInterface>
- * @implements \Iterator<int, TupleKeyInterface>
+ * @template T of TupleKeyInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class TupleKeys extends AbstractIndexedCollection implements TupleKeysInterface
 {
     /**
-     * @var class-string<TupleKeyInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = TupleKey::class;
 
     /**
-     * @param iterable<TupleKeyInterface>|TupleKeyInterface ...$tupleKeys
+     * @param list<T>|T ...$tupleKeys
      */
     public function __construct(iterable | TupleKeyInterface ...$tupleKeys)
     {

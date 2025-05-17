@@ -35,9 +35,9 @@ final class UsersetUser implements UsersetUserInterface
     public function jsonSerialize(): array
     {
         return [
-            'type' => $this->getType(),
-            'id' => $this->getId(),
-            'relation' => $this->getRelation(),
+            'type' => $this->type,
+            'id' => $this->id,
+            'relation' => $this->relation,
         ];
     }
 

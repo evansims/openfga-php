@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, TupleChangeInterface>
- * @implements \Iterator<int, TupleChangeInterface>
+ * @template T of TupleChangeInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class TupleChanges extends AbstractIndexedCollection implements TupleChangesInterface
 {
     /**
-     * @var class-string<TupleChangeInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = TupleChange::class;
 
     /**
-     * @param iterable<TupleChangeInterface>|TupleChangeInterface ...$changes
+     * @param list<T>|T ...$changes
      */
     public function __construct(iterable | TupleChangeInterface ...$changes)
     {

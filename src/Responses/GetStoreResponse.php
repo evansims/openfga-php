@@ -15,9 +15,9 @@ use function is_array;
 
 final class GetStoreResponse implements GetStoreResponseInterface
 {
-    private static ?SchemaInterface $schema = null;
-
     use ResponseTrait;
+
+    private static ?SchemaInterface $schema = null;
 
     public function __construct(
         private string $id,

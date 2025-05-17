@@ -28,17 +28,10 @@ final class ObjectRelation implements ObjectRelationInterface
 
     public function jsonSerialize(): array
     {
-        $response = [];
-
-        if (null !== $this->getObject()) {
-            $response['object'] = $this->getObject();
-        }
-
-        if (null !== $this->getRelation()) {
-            $response['relation'] = $this->getRelation();
-        }
-
-        return $response;
+        return array_filter([
+            'object' => $this->object,
+            'relation' => $this->relation,
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

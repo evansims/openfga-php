@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{TupleKeyInterface, TupleKeysInterface};
-use OpenFGA\Options\CheckOptionsInterface;
+use OpenFGA\Models\{Consistency, TupleKeyInterface, TupleKeysInterface};
 
 interface CheckRequestInterface extends RequestInterface
 {
     public function getAuthorizationModel(): string;
 
+    public function getConsistency(): ?Consistency;
+
     public function getContext(): ?object;
 
     public function getContextualTuples(): ?TupleKeysInterface;
-
-    public function getOptions(): ?CheckOptionsInterface;
 
     public function getStore(): string;
 

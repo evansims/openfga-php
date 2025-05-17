@@ -6,6 +6,9 @@ namespace OpenFGA\Models;
 
 /**
  * @psalm-type UserTypeFiltersShape = list<UserTypeFilterShape>
+ *
+ * @implements \ArrayAccess<int, UserTypeFilterInterface>
+ * @implements \Iterator<int, UserTypeFilterInterface>
  */
 interface UserTypeFiltersInterface extends IndexedCollectionInterface
 {

@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{TupleKeysInterface, UserTypeFiltersInterface};
-use OpenFGA\Options\ListUsersOptionsInterface;
+use OpenFGA\Models\{Consistency, TupleKeysInterface, UserTypeFiltersInterface};
 
 interface ListUsersRequestInterface extends RequestInterface
 {
     public function getAuthorizationModel(): string;
 
+    public function getConsistency(): ?Consistency;
+
     public function getContext(): ?object;
 
     public function getContextualTuples(): ?TupleKeysInterface;
-
-    public function getOptions(): ?ListUsersOptionsInterface;
 
     public function getRelation(): string;
 

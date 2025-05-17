@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, ConditionParameterInterface>
- * @implements \Iterator<int, ConditionParameterInterface>
+ * @template T of ConditionParameterInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class ConditionParameters extends AbstractIndexedCollection implements ConditionParametersInterface
 {
     /**
-     * @var class-string<ConditionParameterInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = ConditionParameter::class;
 
     /**
-     * @param ConditionParameterInterface|iterable<ConditionParameterInterface> ...$parameters
+     * @param list<T>|T ...$parameters
      */
     public function __construct(iterable | ConditionParameterInterface ...$parameters)
     {

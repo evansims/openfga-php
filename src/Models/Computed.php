@@ -23,7 +23,7 @@ final class Computed implements ComputedInterface
     public function jsonSerialize(): array
     {
         return [
-            'userset' => $this->getUserset(),
+            'userset' => $this->userset,
         ];
     }
 

@@ -34,21 +34,11 @@ final class Metadata implements MetadataInterface
 
     public function jsonSerialize(): array
     {
-        $response = [];
-
-        if (null !== $this->getModule()) {
-            $response['module'] = $this->getModule();
-        }
-
-        if (null !== $this->getRelations()) {
-            $response['relations'] = $this->getRelations()->jsonSerialize();
-        }
-
-        if (null !== $this->getSourceInfo()) {
-            $response['source_info'] = $this->getSourceInfo()->jsonSerialize();
-        }
-
-        return $response;
+        return array_filter([
+            'module' => $this->module,
+            'relations' => $this->relations?->jsonSerialize(),
+            'source_info' => $this->sourceInfo?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

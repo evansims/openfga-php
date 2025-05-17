@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type UsersetsShape = list<UsersetShape>
- */
-interface UsersetsInterface extends IndexedCollectionInterface
+interface UsersetsInterface extends CollectionInterface
 {
     /**
      * Add a userset to the collection.
@@ -24,7 +21,7 @@ interface UsersetsInterface extends IndexedCollectionInterface
     public function current(): ?UsersetInterface;
 
     /**
-     * @return UsersetsShape
+     * @return array<int, array<string, mixed>>
      */
     public function jsonSerialize(): array;
 

@@ -11,17 +11,18 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as MessageRequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
 use PsrDiscovery\Discover;
 
+use function is_string;
 use function sprintf;
 
-enum RequestMethod
+enum RequestMethod: string
 {
-    case DELETE;
+    case DELETE = 'DELETE';
 
-    case GET;
+    case GET = 'GET';
 
-    case POST;
+    case POST = 'POST';
 
-    case PUT;
+    case PUT = 'PUT';
 }
 
 final class RequestManager implements RequestManagerInterface
@@ -116,15 +117,19 @@ final class RequestManager implements RequestManagerInterface
         }
 
         $request = $this->getHttpRequestFactory()->createRequest(
-            method: (string) $method->value,
+            method: $method->value,
             uri: $uri,
         );
 
         foreach ($headers as $name => $value) {
-            $request = $request->withHeader($name, $value);
+            if (! is_string($value)) {
+                throw new Exception('Header value must be a string.');
+            }
+
+            $request = $request->withHeader((string) $name, $value);
         }
 
-        if ($body) {
+        if (null !== $body) {
             $request = $request->withBody($body);
         }
 

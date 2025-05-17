@@ -13,9 +13,9 @@ use function is_array;
 
 final class ListObjectsResponse implements ListObjectsResponseInterface
 {
-    private static ?SchemaInterface $schema = null;
-
     use ResponseTrait;
+
+    private static ?SchemaInterface $schema = null;
 
     /**
      * @param array<int, string> $objects

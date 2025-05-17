@@ -4,45 +4,22 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
-
-final class Users implements UsersInterface
+/**
+ * @template T of UserInterface
+ * @extends AbstractIndexedCollection<T>
+ */
+final class Users extends AbstractIndexedCollection implements UsersInterface
 {
-    use IndexedCollectionTrait;
-
-    private static ?CollectionSchemaInterface $schema = null;
+    /**
+     * @var class-string<T>
+     */
+    protected static string $itemType = User::class;
 
     /**
-     * @param iterable<UserInterface>|UserInterface ...$users
+     * @param list<T>|T ...$users
      */
     public function __construct(iterable | UserInterface ...$users)
     {
-        foreach ($users as $user) {
-            $this->add($user);
-        }
-    }
-
-    public function add(UserInterface $user): void
-    {
-        $this->models[] = $user;
-    }
-
-    public function current(): UserInterface
-    {
-        return $this->models[$this->key()];
-    }
-
-    public function offsetGet(mixed $offset): ?UserInterface
-    {
-        return $this->models[$offset] ?? null;
-    }
-
-    public static function schema(): CollectionSchemaInterface
-    {
-        return self::$schema ??= new CollectionSchema(
-            className: self::class,
-            itemType: User::class,
-            requireItems: false,
-        );
+        parent::__construct(...$users);
     }
 }

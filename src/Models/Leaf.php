@@ -38,21 +38,11 @@ final class Leaf implements LeafInterface
 
     public function jsonSerialize(): array
     {
-        $response = [];
-
-        if (null !== $this->getUsers()) {
-            $response['users'] = $this->getUsers()->jsonSerialize();
-        }
-
-        if (null !== $this->getComputed()) {
-            $response['computed'] = $this->getComputed()->jsonSerialize();
-        }
-
-        if (null !== $this->getTupleToUserset()) {
-            $response['tupleToUserset'] = $this->getTupleToUserset()->jsonSerialize();
-        }
-
-        return $response;
+        return array_filter([
+            'users' => $this->users?->jsonSerialize(),
+            'computed' => $this->computed?->jsonSerialize(),
+            'tupleToUserset' => $this->tupleToUserset?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

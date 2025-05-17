@@ -8,6 +8,13 @@ use Psr\Http\Message\StreamInterface;
 
 final class RequestContext
 {
+    /**
+     * @param RequestMethod         $method    The HTTP method.
+     * @param string                $url       The URL.
+     * @param ?StreamInterface      $body      The request body.
+     * @param array<string, string> $headers   The request headers.
+     * @param bool                  $useApiUrl Whether to use the API URL.
+     */
     public function __construct(
         private RequestMethod $method,
         private string $url,
@@ -22,6 +29,9 @@ final class RequestContext
         return $this->body;
     }
 
+    /**
+     * @return array<string, string>
+     */
     public function getHeaders(): array
     {
         return $this->headers;

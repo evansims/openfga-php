@@ -10,6 +10,8 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\SchemaValidationException;
 use ReflectionClass;
 
+use ReflectionNamedType;
+
 use RuntimeException;
 
 use function array_key_exists;
@@ -43,8 +45,6 @@ final class SchemaValidator
     }
 
     /**
-     * Validate JSON data against a schema and transform it into a data class.
-     *
      * @template T of object
      *
      * @param mixed           $data      JSON data (decoded)
@@ -56,7 +56,7 @@ final class SchemaValidator
      *
      * @return T
      */
-    public function validateAndTransform(mixed $data, string $className): object
+    public function validateAndTransform(mixed $data, string $className)
     {
         if (! is_array($data)) {
             throw new InvalidArgumentException('Data must be an array');
@@ -179,23 +179,32 @@ final class SchemaValidator
      * @param class-string<T>    $collectionClass
      * @param array<int, object> $items
      *
+     * @throws ReflectionException
+     *
      * @return T
+     *
+     * @phpstan-return T
      */
     private function createCollectionInstance(string $collectionClass, array $items): object
     {
         $reflection = new ReflectionClass($collectionClass);
-
         $constructor = $reflection->getConstructor();
-        if ($constructor && 1 === $constructor->getNumberOfParameters()) {
+
+        if (null !== $constructor && 1 === $constructor->getNumberOfParameters()) {
             $param = $constructor->getParameters()[0];
-            if ($param->getType() && 'array' === $param->getType()->getName()) {
+            $paramType = $param->getType();
+
+            if ($paramType instanceof ReflectionNamedType && 'array' === $paramType->getName()) {
+                // @phpstan-ignore return.type
                 return $reflection->newInstance($items);
             }
         }
 
+        /** @phpstan-var T $collection */
         $collection = $reflection->newInstance();
 
         if ($reflection->implementsInterface(ArrayAccess::class)) {
+            /** @var ArrayAccess<int|string, mixed> $collection */
             foreach ($items as $key => $item) {
                 $collection->offsetSet($key, $item);
             }
@@ -228,7 +237,11 @@ final class SchemaValidator
      * @param class-string<T>      $className
      * @param array<string, mixed> $data
      *
+     * @throws ReflectionException
+     *
      * @return T
+     *
+     * @phpstan-return T
      */
     private function createInstance(string $className, array $data): object
     {
@@ -309,21 +322,25 @@ final class SchemaValidator
     /**
      * Validate and transform a collection (direct array).
      *
+     * @template T of object
+     *
      * @param array<int, mixed>         $data   Array of items
      * @param CollectionSchemaInterface $schema Collection schema
      *
      * @throws SchemaValidationException If validation fails
      *
-     * @return object
+     * @return T
+     *
+     * @phpstan-ignore return.type, method.templateTypeNotInParameter
      */
-    private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema): object
+    private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema)
     {
         $errors = [];
         $transformedItems = [];
         $itemType = $schema->getItemType();
 
         // Check if collection requires items
-        if ($schema->requiresItems() && empty($data)) {
+        if ($schema->requiresItems() && 0 === count($data)) {
             throw new SchemaValidationException(['Collection requires at least one item']);
         }
 
@@ -338,13 +355,14 @@ final class SchemaValidator
             }
         }
 
-        if (! empty($errors)) {
+        if (count($errors) > 0) {
             throw new SchemaValidationException($errors);
         }
 
         // Create collection instance with transformed items
         $collectionClass = $schema->getClassName();
 
+        // @phpstan-ignore method.templateTypeNotInParameter
         return $this->createCollectionInstance($collectionClass, $transformedItems);
     }
 

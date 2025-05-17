@@ -29,12 +29,28 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     protected static ?CollectionSchemaInterface $schema = null;
 
     /**
-     * @param T ...$items
+     * @param iterable<T>|T ...$items
+     * @phpstan-param iterable<T>|T ...$items
      */
     public function __construct(
-        ModelInterface ...$items,
+        iterable |ModelInterface ...$items,
     ) {
+        /** @var list<T> $normalizedItems */
+        $normalizedItems = [];
+
         foreach ($items as $item) {
+            if (is_iterable($item)) {
+                foreach ($item as $nestedItem) {
+                    if ($nestedItem instanceof static::$itemType) {
+                        $normalizedItems[] = $nestedItem;
+                    }
+                }
+            } elseif ($item instanceof static::$itemType) {
+                $normalizedItems[] = $item;
+            }
+        }
+
+        foreach ($normalizedItems as $item) {
             $this->add($item);
         }
     }

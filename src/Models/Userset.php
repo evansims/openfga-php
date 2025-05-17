@@ -54,33 +54,14 @@ final class Userset implements UsersetInterface
 
     public function jsonSerialize(): array
     {
-        $response = [];
-
-        if (null !== $this->getDirect()) {
-            $response['direct'] = $this->getDirect();
-        }
-
-        if (null !== $this->getComputedUserset()) {
-            $response['computed_userset'] = $this->getComputedUserset()->jsonSerialize();
-        }
-
-        if (null !== $this->getTupleToUserset()) {
-            $response['tuple_to_userset'] = $this->getTupleToUserset()->jsonSerialize();
-        }
-
-        if (null !== $this->getUnion()) {
-            $response['union'] = $this->getUnion()->jsonSerialize();
-        }
-
-        if (null !== $this->getIntersection()) {
-            $response['intersection'] = $this->getIntersection()->jsonSerialize();
-        }
-
-        if (null !== $this->getDifference()) {
-            $response['difference'] = $this->getDifference()->jsonSerialize();
-        }
-
-        return $response;
+        return array_filter([
+            'direct' => $this->direct,
+            'computed_userset' => $this->computedUserset?->jsonSerialize(),
+            'tuple_to_userset' => $this->tupleToUserset?->jsonSerialize(),
+            'union' => $this->union?->jsonSerialize(),
+            'intersection' => $this->intersection?->jsonSerialize(),
+            'difference' => $this->difference?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

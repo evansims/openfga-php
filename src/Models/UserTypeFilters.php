@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, UserTypeFilterInterface>
- * @implements \Iterator<int, UserTypeFilterInterface>
+ * @template T of UserTypeFilterInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class UserTypeFilters extends AbstractIndexedCollection implements UserTypeFiltersInterface
 {
     /**
-     * @var class-string<UserTypeFilterInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = UserTypeFilter::class;
 
     /**
-     * @param iterable<UserTypeFilterInterface>|UserTypeFilterInterface ...$userTypeFilters
+     * @param list<T>|T ...$userTypeFilters
      */
     public function __construct(iterable | UserTypeFilterInterface ...$userTypeFilters)
     {

@@ -27,7 +27,7 @@ final class SourceInfo implements SourceInfoInterface
     public function jsonSerialize(): array
     {
         return [
-            'file' => $this->getFile(),
+            'file' => $this->file,
         ];
     }
 

@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * @implements \ArrayAccess<int, AssertionInterface>
- * @implements \Iterator<int, AssertionInterface>
+ * @template T of AssertionInterface
+ * @extends AbstractIndexedCollection<T>
  */
 final class Assertions extends AbstractIndexedCollection implements AssertionsInterface
 {
     /**
-     * @var class-string<AssertionInterface>
+     * @var class-string<T>
      */
     protected static string $itemType = Assertion::class;
 
     /**
-     * @param AssertionInterface|iterable<AssertionInterface> ...$assertions
+     * @param list<T>|T ...$assertions
      */
     public function __construct(iterable | AssertionInterface ...$assertions)
     {

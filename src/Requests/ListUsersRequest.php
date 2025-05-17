@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{TupleKeysInterface, UserTypeFiltersInterface};
-use OpenFGA\Network\{RequestMethod, RequestContext};
-use OpenFGA\Options\ListUsersOptionsInterface;
+use OpenFGA\Models\{Consistency, TupleKeysInterface, UserTypeFiltersInterface};
+use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ListUsersRequest implements ListUsersRequestInterface
@@ -19,13 +18,18 @@ final class ListUsersRequest implements ListUsersRequestInterface
         private UserTypeFiltersInterface $userFilters,
         private ?object $context = null,
         private ?TupleKeysInterface $contextualTuples = null,
-        private ?ListUsersOptionsInterface $options = null,
+        private ?Consistency $consistency = null,
     ) {
     }
 
     public function getAuthorizationModel(): string
     {
         return $this->authorizationModel;
+    }
+
+    public function getConsistency(): ?Consistency
+    {
+        return $this->consistency;
     }
 
     public function getContext(): ?object
@@ -43,11 +47,6 @@ final class ListUsersRequest implements ListUsersRequestInterface
         return $this->object;
     }
 
-    public function getOptions(): ?ListUsersOptionsInterface
-    {
-        return $this->options;
-    }
-
     public function getRelation(): string
     {
         return $this->relation;
@@ -55,24 +54,15 @@ final class ListUsersRequest implements ListUsersRequestInterface
 
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        $body = [];
-
-        $body['authorization_model_id'] = $this->getAuthorizationModel();
-        $body['object'] = $this->getObject();
-        $body['relation'] = $this->getRelation();
-        $body['user_filters'] = $this->getUserFilters()->jsonSerialize();
-
-        if (null !== $this->getContextualTuples()) {
-            $body['contextual_tuples'] = $this->getContextualTuples()->jsonSerialize();
-        }
-
-        if (null !== $this->getContext()) {
-            $body['context'] = $this->getContext();
-        }
-
-        if (null !== $this->getOptions()?->getConsistency()) {
-            $body['consistency'] = (string) $this->getOptions()?->getConsistency();
-        }
+        $body = array_filter([
+            'authorization_model_id' => $this->authorizationModel,
+            'object' => $this->object,
+            'relation' => $this->relation,
+            'user_filters' => $this->userFilters->jsonSerialize(),
+            'context' => $this->context,
+            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
+            'consistency' => $this->consistency?->value,
+        ], static fn ($value) => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
