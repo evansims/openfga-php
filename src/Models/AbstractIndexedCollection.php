@@ -13,7 +13,10 @@ use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 
 use ReturnTypeWillChange;
 
+use TypeError;
+
 use function is_iterable;
+use function sprintf;
 
 /**
  * @template T of ModelInterface
@@ -32,24 +35,23 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     /**
      * @param iterable<T>|T ...$items
      *
-     * @throws ModelException When item type is not defined or invalid
+     * @throws TypeError When item type is not defined or invalid
      */
     public function __construct(iterable | ModelInterface ...$items)
     {
         if (! isset(static::$itemType)) {
-            throw ModelException::undefinedItemType(static::class);
+            throw new TypeError(sprintf('Undefined item type for %s. Define the $itemType property or override the constructor.', static::class));
         }
 
         if (! is_a(static::$itemType, ModelInterface::class, true)) {
-            throw ModelException::invalidItemType(static::$itemType);
+            throw new TypeError(sprintf('Expected item type to implement %s, %s given', ModelInterface::class, static::$itemType));
         }
 
-        $this->addItems(...$items);
-
-        /* @psalm-suppress RedundantCondition */
         foreach ($items as $item) {
-            if (! is_iterable($item) && ! ($item instanceof ModelInterface)) {
-                throw ModelException::invalidItemType(get_debug_type($item));
+            if (is_iterable($item)) {
+                $this->addItems($item);
+            } else {
+                $this->add($item);
             }
         }
     }
@@ -64,7 +66,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     public function add(ModelInterface $item): void
     {
         if (! $item instanceof static::$itemType) {
-            throw ModelException::typeMismatch(static::$itemType, $item::class);
+            throw new TypeError(sprintf('Expected instance of %s, %s given', static::$itemType, $item::class));
         }
         $this->models[] = $item;
     }

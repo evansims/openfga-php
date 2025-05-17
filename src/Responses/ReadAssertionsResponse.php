@@ -6,24 +6,34 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Assertions, AssertionsInterface};
+use OpenFGA\Models\{Assertion, Assertions, AssertionsInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
+/**
+ * @implements ReadAssertionsResponseInterface<array{authorization_model_id: string, assertions: array<array{tuple_key: array{user: string, relation: string, object: string}, expectation: bool}>}>
+ */
 final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
 {
     use ResponseTrait;
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param AssertionsInterface<Assertion> $assertions
+     * @param string                         $authorizationModelId
+     */
     public function __construct(
         private ?AssertionsInterface $assertions,
         private string $authorizationModelId,
     ) {
     }
 
+    /**
+     * @return null|AssertionsInterface<Assertion>
+     */
     public function getAssertions(): ?AssertionsInterface
     {
         return $this->assertions;
@@ -32,6 +42,44 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
     public function getAuthorizationModelId(): string
     {
         return $this->authorizationModelId;
+    }
+
+    /**
+     * @return array{authorization_model_id: string, assertions: list<array{tuple_key: array{user: string, relation: string, object: string}, expectation: bool}>}
+     */
+    public function toArray(): array
+    {
+        $result = [
+            'authorization_model_id' => $this->authorizationModelId,
+            'assertions' => [],
+        ];
+
+        if (null === $this->assertions) {
+            return $result;
+        }
+
+        $assertions = [];
+
+        foreach ($this->assertions as $assertion) {
+            if (! $assertion instanceof Assertion) {
+                continue;
+            }
+
+            $tupleKey = $assertion->getTupleKey();
+
+            $assertions[] = [
+                'tuple_key' => [
+                    'user' => $tupleKey->getUser(),
+                    'relation' => $tupleKey->getRelation(),
+                    'object' => $tupleKey->getObject(),
+                ],
+                'expectation' => $assertion->getExpectation(),
+            ];
+        }
+
+        $result['assertions'] = $assertions;
+
+        return $result;
     }
 
     public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static

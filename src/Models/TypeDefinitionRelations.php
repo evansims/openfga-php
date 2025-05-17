@@ -22,8 +22,18 @@ final class TypeDefinitionRelations implements TypeDefinitionRelationsInterface
     public function __construct(
         array $usersets = [],
     ) {
-        foreach ($usersets as $key => $userset) {
-            $this->add($key, $userset);
+        $isAssoc = ! array_is_list($usersets);
+
+        if ($isAssoc) {
+            // For associative arrays, use the provided keys
+            foreach ($usersets as $key => $userset) {
+                $this->add($key, $userset);
+            }
+        } else {
+            // For numeric arrays, use numeric indices as strings
+            foreach ($usersets as $index => $userset) {
+                $this->add((string) $index, $userset);
+            }
         }
     }
 

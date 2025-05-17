@@ -21,6 +21,19 @@ final class TupleChanges extends AbstractIndexedCollection implements TupleChang
     }
 
     /**
+     * @param null|(callable(TupleChangeInterface): bool) $callback
+     *
+     * @return null|TupleChangeInterface
+     */
+    public function first(?callable $callback = null): ?TupleChangeInterface
+    {
+        /** @var null|TupleChangeInterface $result */
+        $result = parent::first($callback);
+
+        return $result instanceof TupleChangeInterface ? $result : null;
+    }
+
+    /**
      * @param mixed $offset
      *
      * @return null|TupleChangeInterface

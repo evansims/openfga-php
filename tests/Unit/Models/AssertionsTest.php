@@ -79,13 +79,15 @@ test('valid returns false for empty collection', function (): void {
 });
 
 test('validates array item types', function (): void {
+    $this->expectException(TypeError::class);
     // @phpstan-ignore-next-line - Intentionally passing wrong type for testing
-    expect(fn () => new Assertions(['invalid']))->toThrow(TypeError::class);
+    new Assertions([new stdClass()]);
 });
 
-test('validates item types', function (): void {
+test('validates constructor argument types', function (): void {
+    $this->expectException(TypeError::class);
     // @phpstan-ignore-next-line - Intentionally passing wrong type for testing
-    expect(fn () => new Assertions('invalid'))->toThrow(TypeError::class);
+    new Assertions('invalid');
 });
 
 test('can be initialized with iterable', function (): void {

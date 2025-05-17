@@ -12,6 +12,9 @@ use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
+/**
+ * @implements ReadTuplesResponseInterface<array{tuples: array, continuation_token: string|null}>
+ */
 final class ReadTuplesResponse implements ReadTuplesResponseInterface
 {
     use ResponseTrait;
@@ -32,6 +35,45 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
     public function getTuples(): TuplesInterface
     {
         return $this->tuples;
+    }
+
+    /**
+     * @return array{tuples: array<array{key: array{user: string, relation: string, object: string}, timestamp: string}>, continuation_token: null|string}
+     */
+    public function toArray(): array
+    {
+        $tuples = [];
+
+        foreach ($this->tuples as $tuple) {
+            if (null === $tuple) {
+                continue;
+            }
+
+            $key = $tuple->getKey();
+            $timestamp = $tuple->getTimestamp();
+
+            // Get values from the key
+            $user = $key->getUser() ?? '';
+            $relation = $key->getRelation() ?? '';
+            $object = $key->getObject() ?? '';
+
+            // Format the timestamp
+            $timestampStr = $timestamp->format('Y-m-d\TH:i:s.u\Z');
+
+            $tuples[] = [
+                'key' => [
+                    'user' => $user,
+                    'relation' => $relation,
+                    'object' => $object,
+                ],
+                'timestamp' => $timestampStr,
+            ];
+        }
+
+        return [
+            'tuples' => $tuples,
+            'continuation_token' => $this->continuationToken,
+        ];
     }
 
     public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
@@ -58,12 +100,16 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
 
     public static function schema(): SchemaInterface
     {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'tuples', type: Tuples::class, required: true),
-                new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
-            ],
-        );
+        if (null === self::$schema) {
+            self::$schema = new Schema(
+                className: self::class,
+                properties: [
+                    new SchemaProperty(name: 'tuples', type: Tuples::class, required: true),
+                    new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
+                ],
+            );
+        }
+
+        return self::$schema;
     }
 }

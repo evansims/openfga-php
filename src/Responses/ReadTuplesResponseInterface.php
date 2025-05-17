@@ -7,6 +7,11 @@ namespace OpenFGA\Responses;
 use OpenFGA\Models\TuplesInterface;
 use OpenFGA\Schema\SchemaInterface;
 
+/**
+ * @template T of array
+ *
+ * @extends ResponseInterface<T>
+ */
 interface ReadTuplesResponseInterface extends ResponseInterface
 {
     public function getContinuationToken(): ?string;

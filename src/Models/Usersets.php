@@ -4,32 +4,25 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+
 /**
  * @extends AbstractIndexedCollection<Userset>
+ *
+ * @implements UsersetsInterface<Userset>
  */
 final class Usersets extends AbstractIndexedCollection implements UsersetsInterface
 {
     protected static string $itemType = Userset::class;
 
     /**
-     * @return null|UsersetInterface
+     * @param ModelInterface $userset Must be an instance of Userset
      */
-    public function current(): ?UsersetInterface
+    public function add(ModelInterface $userset): void
     {
-        /** @var null|UsersetInterface $result */
-        return parent::current();
-    }
-
-    /**
-     * @param mixed $offset
-     *
-     * @return null|UsersetInterface
-     */
-    public function offsetGet(mixed $offset): ?UsersetInterface
-    {
-        /** @var null|UsersetInterface $result */
-        $result = parent::offsetGet($offset);
-
-        return $result instanceof UsersetInterface ? $result : null;
+        if (! $userset instanceof Userset) {
+            throw new InvalidArgumentException('Expected instance of ' . Userset::class . ', got ' . get_debug_type($userset));
+        }
+        parent::add($userset);
     }
 }

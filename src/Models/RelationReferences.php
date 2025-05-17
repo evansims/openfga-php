@@ -17,13 +17,23 @@ final class RelationReferences implements RelationReferencesInterface
     private static ?CollectionSchemaInterface $schema = null;
 
     /**
-     * @param array<string, RelationReferenceInterface> $models
+     * @param array<string, RelationReferenceInterface> $relationReferences
      */
     public function __construct(
-        array $models = [],
+        array $relationReferences = [],
     ) {
-        foreach ($models as $key => $relationReference) {
-            $this->add($key, $relationReference);
+        $isAssoc = ! array_is_list($relationReferences);
+
+        if ($isAssoc) {
+            // For associative arrays, use the provided keys
+            foreach ($relationReferences as $key => $relationReference) {
+                $this->add($key, $relationReference);
+            }
+        } else {
+            // For numeric arrays, use numeric indices as strings
+            foreach ($relationReferences as $index => $relationReference) {
+                $this->add((string) $index, $relationReference);
+            }
         }
     }
 
@@ -53,7 +63,7 @@ final class RelationReferences implements RelationReferencesInterface
         $this->models[$key] = $relationReference;
     }
 
-    public function current(): RelationReferenceInterface
+    public function current(): ?RelationReferenceInterface
     {
         $key = $this->key();
 

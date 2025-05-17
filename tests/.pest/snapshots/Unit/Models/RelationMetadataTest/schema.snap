@@ -1,0 +1,20 @@
+{
+    "className": "OpenFGA\\Models\\RelationMetadata",
+    "properties": [
+        {
+            "name": "module",
+            "type": "string",
+            "required": false
+        },
+        {
+            "name": "directly_related_user_types",
+            "type": "OpenFGA\\Models\\RelationReferences",
+            "required": false
+        },
+        {
+            "name": "source_info",
+            "type": "OpenFGA\\Models\\SourceInfo",
+            "required": false
+        }
+    ]
+}

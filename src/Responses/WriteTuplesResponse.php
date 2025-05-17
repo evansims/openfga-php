@@ -8,12 +8,23 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Schema\SchemaValidator;
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
+/**
+ * @implements WriteTuplesResponseInterface<array>
+ */
 final class WriteTuplesResponse implements WriteTuplesResponseInterface
 {
     use ResponseTrait;
 
-    public function __construct(
-    ) {
+    public function __construct()
+    {
+    }
+
+    /**
+     * @return array<never, never>
+     */
+    public function toArray(): array
+    {
+        return [];
     }
 
     public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
