@@ -26,8 +26,8 @@ grumphp:
       enforce_single_lined_subject: true
       type_scope_conventions: []
       skip_on_merge_commit: true
-      max_body_width: 72
-      max_subject_width: 60
+      max_body_width: -1
+      max_subject_width: -1
       case_insensitive: true
       multiline: true
       additional_modifiers: ""

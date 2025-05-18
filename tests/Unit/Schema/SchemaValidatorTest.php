@@ -20,7 +20,6 @@ use OpenFGA\Tests\Support\Schema\{
     TreeNode,
     User,
 };
-use ReflectionClass;
 
 beforeEach(function (): void {
     $this->validator = new SchemaValidator();
@@ -168,7 +167,6 @@ test('validates date format strings', function (): void {
         Event::class,
     );
 
-    $expectedDate = new DateTimeImmutable('2023-01-01');
     expect($result)
         ->toBeInstanceOf(Event::class)
         ->dateField->format('Y-m-d')->toBe('2023-01-01');
