@@ -8,6 +8,6 @@ When releasing a new version of the SDK there are some checks and updates that n
 - Run the tests locally using: `composer test`
 - Commit the SDK file with the message: `git commit -m "release: vX.X.X"`
 - Push the changes to GitHub
-- Check that the CI is passing as expected: [github.com/evansims/openfga-php/actions](https://github.com/evanisms/openfga-php/actions)
+- Check that the CI is passing as expected: [github.com/evansims/openfga-php/actions](https://github.com/evansims/openfga-php/actions)
 - Tag and push the tag with `git tag vX.X.X && git push --tags`
 - Publish release here: [github.com/evansims/openfga-php/releases/new](https://github.com/evansims/openfga-php/releases/new).
