@@ -146,7 +146,6 @@ final class SchemaValidator
                 }
 
                 $transformedArray = [];
-                $hasErrors = false;
 
                 foreach ($value as $i => $item) {
                     if ('object' === $itemType && null !== $itemClassName) {
@@ -154,23 +153,27 @@ final class SchemaValidator
                             $transformedItem = $this->validateAndTransform($item, $itemClassName);
                             $transformedArray[] = $transformedItem;
                         } catch (SchemaValidationException $e) {
-                            $hasErrors = true;
+                            // On any error in nested validation, fail the entire array
                             foreach ($e->getErrors() as $error) {
                                 $errors[] = "{$name}[{$i}].{$error}";
                             }
+
+                            // Skip adding to transformedArray to prevent partial population
+                            continue;
                         }
                     } else {
                         if (! $this->validateType($item, $itemType)) {
-                            $hasErrors = true;
                             $errors[] = "Item {$i} in array '{$name}' has invalid type, expected {$itemType}";
 
+                            // Skip adding to transformedArray to prevent partial population
                             continue;
                         }
                         $transformedArray[] = $item;
                     }
                 }
 
-                if (! $hasErrors) {
+                // Only add the transformed array if there were no errors
+                if (0 === count($errors)) {
                     $transformedData[$name] = $transformedArray;
                 }
             } else {
@@ -445,7 +448,7 @@ final class SchemaValidator
     {
         switch ($type) {
             case 'string':
-                if (! is_string($value)) {
+                if (! is_string($value) && ! $value instanceof DateTimeImmutable) {
                     return false;
                 }
 

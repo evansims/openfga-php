@@ -15,25 +15,17 @@ use OpenFGA\Exceptions\{
 };
 use OpenFGA\Tests\Support\Responses\{DummyResponse, SimpleResponse};
 
-it('throws the appropriate exception based on HTTP status code', function (int $statusCode, string $exceptionClass): void {
-    $response = new SimpleResponse($statusCode, 'error');
+it('throws the appropriate exception with error message based on HTTP status code', function (int $statusCode, string $exceptionClass, string $errorMessage): void {
+    $response = new SimpleResponse($statusCode, $errorMessage);
 
     expect(fn () => DummyResponse::handleResponseException($response))
-        ->toThrow($exceptionClass);
+        ->toThrow($exceptionClass, $errorMessage);
 })->with([
-    [400, ApiValidationException::class],
-    [401, ApiUnauthenticatedException::class],
-    [403, ApiForbiddenException::class],
-    [404, ApiEndpointException::class],
-    [409, ApiTransactionException::class],
-    [422, ApiTimeoutException::class],
-    [500, ApiInternalServerException::class],
+    [400, ApiValidationException::class, 'Validation error occurred'],
+    [401, ApiUnauthenticatedException::class, 'Authentication required'],
+    [403, ApiForbiddenException::class, 'Access forbidden'],
+    [404, ApiEndpointException::class, 'Endpoint not found'],
+    [409, ApiTransactionException::class, 'Transaction conflict'],
+    [422, ApiTimeoutException::class, 'Request timed out'],
+    [500, ApiInternalServerException::class, 'Internal server error'],
 ]);
-
-it('includes the error message from the response body', function (): void {
-    $errorMessage = 'Custom error message';
-    $response = new SimpleResponse(400, $errorMessage);
-
-    expect(fn () => DummyResponse::handleResponseException($response))
-        ->toThrow(ApiValidationException::class, $errorMessage);
-});

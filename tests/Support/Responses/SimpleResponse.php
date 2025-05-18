@@ -123,9 +123,10 @@ final class SimpleResponse implements ResponseInterface
     public function withoutHeader($name): self
     {
         $new = clone $this;
+        $lowerName = strtolower($name);
 
         foreach ($new->headers as $header => $value) {
-            if (strtolower($header) === strtolower($name)) {
+            if (strtolower($header) === $lowerName) {
                 unset($new->headers[$header]);
             }
         }
