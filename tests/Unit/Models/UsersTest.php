@@ -12,7 +12,7 @@ test('can create empty collection', function (): void {
 
 test('can create collection with user items', function (): void {
     $user1 = new User(object: (object) ['type' => 'user', 'id' => '1']);
-    $user2 = new User(userset: new UsersetUser('document:1#writer'));
+    $user2 = new User(userset: new UsersetUser('document', '1', 'writer'));
 
     $users = new Users($user1, $user2);
 
@@ -23,7 +23,7 @@ test('can create collection with user items', function (): void {
 
 test('can create collection with iterable', function (): void {
     $user1 = new User(object: (object) ['type' => 'user', 'id' => '1']);
-    $user2 = new User(userset: new UsersetUser('document:1#writer'));
+    $user2 = new User(userset: new UsersetUser('document', '1', 'writer'));
     $userArray = [$user1, $user2];
 
     $users = new Users($userArray);
@@ -35,7 +35,7 @@ test('can create collection with iterable', function (): void {
 
 test('can iterate over collection', function (): void {
     $user1 = new User(object: (object) ['type' => 'user', 'id' => '1']);
-    $user2 = new User(userset: new UsersetUser('document:1#writer'));
+    $user2 = new User(userset: new UsersetUser('document', '1', 'writer'));
     $users = new Users($user1, $user2);
 
     $items = [];
@@ -50,7 +50,7 @@ test('can iterate over collection', function (): void {
 
 test('json serialize returns array of serialized users', function (): void {
     $user1 = new User(object: (object) ['type' => 'user', 'id' => '1']);
-    $user2 = new User(userset: new UsersetUser('document:1#writer'));
+    $user2 = new User(userset: new UsersetUser('document', '1', 'writer'));
     $users = new Users($user1, $user2);
 
     $result = $users->jsonSerialize();
@@ -63,7 +63,7 @@ test('json serialize returns array of serialized users', function (): void {
 
 test('can add users to collection', function (): void {
     $user1 = new User(object: (object) ['type' => 'user', 'id' => '1']);
-    $user2 = new User(userset: new UsersetUser('document:1#writer'));
+    $user2 = new User(userset: new UsersetUser('document', '1', 'writer'));
 
     $users = new Users();
     $users[] = $user1;
@@ -84,7 +84,7 @@ test('can check if offset exists', function (): void {
 
 test('can unset offset', function (): void {
     $user1 = new User(object: (object) ['type' => 'user', 'id' => '1']);
-    $user2 = new User(userset: new UsersetUser('document:1#writer'));
+    $user2 = new User(userset: new UsersetUser('document', '1', 'writer'));
     $users = new Users($user1, $user2);
 
     unset($users[0]);

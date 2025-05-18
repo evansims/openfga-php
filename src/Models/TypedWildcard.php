@@ -12,7 +12,7 @@ final class TypedWildcard implements TypedWildcardInterface
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private readonly string $type,
+        private string $type,
     ) {
         $type = strtolower(trim($type));
 

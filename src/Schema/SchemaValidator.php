@@ -10,6 +10,8 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\SchemaValidationException;
 use ReflectionClass;
 
+use ReflectionException;
+
 use ReflectionNamedType;
 
 use RuntimeException;
@@ -144,17 +146,22 @@ final class SchemaValidator
                 }
 
                 $transformedArray = [];
+                $hasErrors = false;
+
                 foreach ($value as $i => $item) {
                     if ('object' === $itemType && null !== $itemClassName) {
                         try {
-                            $transformedArray[] = $this->validateAndTransform($item, $itemClassName);
+                            $transformedItem = $this->validateAndTransform($item, $itemClassName);
+                            $transformedArray[] = $transformedItem;
                         } catch (SchemaValidationException $e) {
+                            $hasErrors = true;
                             foreach ($e->getErrors() as $error) {
                                 $errors[] = "{$name}[{$i}].{$error}";
                             }
                         }
                     } else {
                         if (! $this->validateType($item, $itemType)) {
+                            $hasErrors = true;
                             $errors[] = "Item {$i} in array '{$name}' has invalid type, expected {$itemType}";
 
                             continue;
@@ -162,14 +169,17 @@ final class SchemaValidator
                         $transformedArray[] = $item;
                     }
                 }
-                $transformedData[$name] = $transformedArray;
+
+                if (! $hasErrors) {
+                    $transformedData[$name] = $transformedArray;
+                }
             } else {
                 // Ensure the type is one of the expected values
                 $validTypes = ['string', 'integer', 'number', 'boolean', 'array', 'object', 'null'];
                 if (! in_array($type, $validTypes, true)) {
                     $type = 'string'; // Default to string for unknown types
                 }
-                $transformedData[$name] = $this->transformValue($value, $type);
+                $transformedData[$name] = $this->transformValue($value, $type, $format);
             }
         }
 
@@ -186,18 +196,16 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param class-string<T>    $collectionClass
-     * @param array<int, object> $items
+     * @param class-string<T>   $className
+     * @param array<int, mixed> $items
      *
      * @throws ReflectionException
      *
      * @return T
-     *
-     * @phpstan-return T
      */
-    private function createCollectionInstance(string $collectionClass, array $items): object
+    private function createCollectionInstance(string $className, array $items): object
     {
-        $reflection = new ReflectionClass($collectionClass);
+        $reflection = new ReflectionClass($className);
         $constructor = $reflection->getConstructor();
 
         if (null !== $constructor && 1 === $constructor->getNumberOfParameters()) {
@@ -210,13 +218,13 @@ final class SchemaValidator
             }
         }
 
-        /** @phpstan-var T $collection */
-        $collection = $reflection->newInstance();
+        /** @phpstan-var T $instance */
+        $instance = $reflection->newInstance();
 
         if ($reflection->implementsInterface(ArrayAccess::class)) {
-            /** @var ArrayAccess<int|string, mixed> $collection */
+            /** @var ArrayAccess<int|string, mixed> $instance */
             foreach ($items as $key => $item) {
-                $collection->offsetSet($key, $item);
+                $instance->offsetSet($key, $item);
             }
         } elseif ($reflection->hasMethod('add')) {
             $addMethod = $reflection->getMethod('add');
@@ -226,17 +234,17 @@ final class SchemaValidator
             foreach ($items as $key => $item) {
                 if (2 === $paramCount) {
                     // If add() accepts two parameters, pass both key and item
-                    $addMethod->invoke($collection, $key, $item);
+                    $addMethod->invoke($instance, $key, $item);
                 } else {
                     // Otherwise, just pass the item
-                    $addMethod->invoke($collection, $item);
+                    $addMethod->invoke($instance, $item);
                 }
             }
         } else {
-            throw new RuntimeException("Could not add items to collection: {$collectionClass}");
+            throw new RuntimeException("Could not add items to collection: {$className}");
         }
 
-        return $collection;
+        return $instance;
     }
 
     /**
@@ -244,41 +252,46 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param class-string<T>      $className
      * @param array<string, mixed> $data
+     * @param class-string<T>      $className
      *
+     * @throws SchemaValidationException
      * @throws ReflectionException
      *
      * @return T
-     *
-     * @phpstan-return T
      */
     private function createInstance(string $className, array $data): object
     {
         $reflection = new ReflectionClass($className);
         $constructor = $reflection->getConstructor();
 
+        // If there's a constructor, try to use it with named parameters
         if (null !== $constructor) {
-            // Create using constructor
             $params = [];
             foreach ($constructor->getParameters() as $param) {
                 $paramName = $param->getName();
                 if (array_key_exists($paramName, $data)) {
-                    $params[] = $data[$paramName];
+                    $params[$paramName] = $data[$paramName];
                 } elseif ($param->isDefaultValueAvailable()) {
-                    $params[] = $param->getDefaultValue();
+                    $params[$paramName] = $param->getDefaultValue();
                 } else {
                     throw new RuntimeException("Missing required constructor parameter: {$paramName}");
                 }
             }
 
-            return $reflection->newInstanceArgs($params);
+            $instance = $reflection->newInstanceArgs($params);
+        } else {
+            // Create instance without constructor
+            $instance = $reflection->newInstanceWithoutConstructor();
         }
-        // Create instance and set properties
-        $instance = $reflection->newInstance();
+
+        // Set public properties
         foreach ($data as $name => $value) {
             if ($reflection->hasProperty($name)) {
                 $property = $reflection->getProperty($name);
+                if (! $property->isPublic()) {
+                    $property->setAccessible(true);
+                }
                 $property->setValue($instance, $value);
             }
         }
@@ -291,10 +304,11 @@ final class SchemaValidator
      *
      * @param mixed                                                         $value
      * @param 'array'|'boolean'|'integer'|'null'|'number'|'object'|'string' $type
+     * @param ?string                                                       $format
      *
      * @return null|array<mixed>|bool|float|int|object|string
      */
-    private function transformValue(mixed $value, string $type): mixed
+    private function transformValue(mixed $value, string $type, ?string $format = null): mixed
     {
         switch ($type) {
             case 'integer':
@@ -306,17 +320,60 @@ final class SchemaValidator
                 }
 
                 return 0;
+
             case 'number':
                 return is_float($value) ? $value : (is_int($value) ? (float) $value : (float) 0);
+
             case 'boolean':
                 return is_bool($value) ? $value : (bool) $value;
+
             case 'array':
                 return is_array($value) ? $value : [];
+
             case 'object':
                 return is_object($value) ? $value : (object) (is_array($value) ? $value : []);
+
             case 'null':
                 return null;
+
             case 'string':
+                if ('date' === $format) {
+                    if ($value instanceof DateTimeImmutable) {
+                        return $value;
+                    }
+                    if (is_string($value)) {
+                        $date = DateTimeImmutable::createFromFormat('Y-m-d', $value);
+                        if (false !== $date) {
+                            return $date;
+                        }
+                    }
+
+                    return null;
+                }
+
+                if ('datetime' === $format) {
+                    if ($value instanceof DateTimeImmutable) {
+                        return $value;
+                    }
+                    if (is_string($value)) {
+                        $date = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value);
+                        if (false !== $date) {
+                            return $date;
+                        }
+                    }
+
+                    return null;
+                }
+
+                if (is_string($value)) {
+                    return $value;
+                }
+                if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
+                    return (string) $value;
+                }
+
+                return '';
+
             default:
                 if (is_string($value)) {
                     return $value;

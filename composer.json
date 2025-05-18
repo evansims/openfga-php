@@ -71,12 +71,12 @@
     "merge-plugin": {
       "ignore-duplicates": false,
       "include": [
-        "composer.json.local"
+        "composer.local.json"
       ],
       "merge-dev": true,
       "merge-extra": false,
       "merge-extra-deep": false,
-      "merge-scripts": false,
+      "merge-scripts": true,
       "recurse": true,
       "replace": true
     }
@@ -84,11 +84,11 @@
   "scripts": {
     "pest:unit": [
       "@putenv XDEBUG_MODE=coverage",
-      "herd coverage vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
+      "@php vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
     ],
     "pest:debug": [
       "@putenv XDEBUG_MODE=coverage",
-      "herd coverage vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage"
+      "@php vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage"
     ],
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
@@ -115,7 +115,7 @@
       "@pest:unit"
     ],
     "test": [
-      "@test:unit"
+      "@pest:unit"
     ],
     "openapi": "scripts/openapi.sh"
   }

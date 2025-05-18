@@ -4,115 +4,23 @@ declare(strict_types=1);
 
 use OpenFGA\Exceptions\SchemaValidationException;
 use OpenFGA\Schema\{SchemaBuilder, SchemaRegistry, SchemaValidator};
-
-// Test classes used across multiple tests
-final class TestObject
-{
-    public int $age;
-
-    public string $name;
-}
-
-final class Address
-{
-    public string $city;
-
-    public string $street;
-
-    public string $zip;
-}
-
-final class User
-{
-    public Address $address;
-
-    public string $name;
-}
-
-final class Tag
-{
-    public ?string $color;
-
-    public string $name;
-}
-
-final class Post
-{
-    /**
-     * @var array<Tag>
-     */
-    public array $tags = [];
-
-    public string $title;
-}
-
-final class Status
-{
-    public string $status;
-}
-
-final class Event
-{
-    public string $dateField;
-}
-
-final class TestObjectOptional
-{
-    public ?int $age = null;
-
-    public ?string $name = null;
-}
-
-final class TestArray
-{
-    /**
-     * @var array<float|int>
-     */
-    public array $numbers;
-}
-
-final class TreeNode
-{
-    /**
-     * @var array<TreeNode>
-     */
-    public array $children = [];
-
-    public string $value;
-}
-
-final class NestedChild
-{
-    public string $name;
-}
-
-final class NestedParent
-{
-    public NestedChild $child;
-}
-
-final class ArrayItem
-{
-    public int $id;
-
-    public string $name;
-}
-
-final class ArrayContainer
-{
-    /**
-     * @var ArrayItem[]
-     */
-    public array $items = [];
-
-    /**
-     * @param ArrayItem[] $items
-     */
-    public function __construct(array $items = [])
-    {
-        $this->items = $items;
-    }
-}
+use OpenFGA\Tests\Support\Schema\{
+    Address,
+    ArrayContainer,
+    ArrayItem,
+    Event,
+    NestedChild,
+    NestedParent,
+    Post,
+    Status,
+    Tag,
+    TestArray,
+    TestObject,
+    TestObjectOptional,
+    TreeNode,
+    User,
+};
+use ReflectionClass;
 
 beforeEach(function (): void {
     $this->validator = new SchemaValidator();
@@ -260,9 +168,10 @@ test('validates date format strings', function (): void {
         Event::class,
     );
 
+    $expectedDate = new DateTimeImmutable('2023-01-01');
     expect($result)
         ->toBeInstanceOf(Event::class)
-        ->dateField->toBe('2023-01-01');
+        ->dateField->format('Y-m-d')->toBe('2023-01-01');
 
     // Test invalid date format
     $this->expectException(SchemaValidationException::class);
@@ -446,13 +355,14 @@ test('validates arrays with complex object items', function (array $input, bool 
         true,
         static function ($result): void {
             expect($result)->toBeInstanceOf(ArrayContainer::class);
-            expect($result->items)->toHaveCount(2);
-            expect($result->items[0])->toBeInstanceOf(ArrayItem::class);
-            expect($result->items[0]->id)->toBe(1);
-            expect($result->items[0]->name)->toBe('Valid');
-            expect($result->items[1])->toBeInstanceOf(ArrayItem::class);
-            expect($result->items[1]->id)->toBe(2);
-            expect($result->items[1]->name)->toBe('Also Valid');
+            $items = $result->getItems();
+            expect($items)->toHaveCount(2);
+            expect($items[0])->toBeInstanceOf(ArrayItem::class);
+            expect($items[0]->id)->toBe(1);
+            expect($items[0]->name)->toBe('Valid');
+            expect($items[1])->toBeInstanceOf(ArrayItem::class);
+            expect($items[1]->id)->toBe(2);
+            expect($items[1]->name)->toBe('Also Valid');
         },
     ],
     'invalid array items' => [
@@ -471,9 +381,8 @@ test('validates arrays with complex object items', function (array $input, bool 
         ],
         true,
         static function ($result): void {
-            expect($result)
-                ->toBeInstanceOf(ArrayContainer::class)
-                ->items->toBe([]);
+            expect($result)->toBeInstanceOf(ArrayContainer::class);
+            expect($result->getItems())->toBe([]);
         },
     ],
 ]);

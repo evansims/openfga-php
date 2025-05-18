@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use OutOfBoundsException;
 
 use function count;
+use function is_int;
 
 trait CollectionTrait
 {
@@ -69,7 +70,16 @@ trait CollectionTrait
 
     final public function offsetUnset(mixed $offset): void
     {
-        unset($this->models[$offset]);
+        if (isset($this->models[$offset])) {
+            $isNumeric = is_int($offset);
+            unset($this->models[$offset]);
+            // Reindex the array to maintain sequential numeric keys if the offset was numeric
+            if ($isNumeric) {
+                $this->models = array_values($this->models);
+                // Reset the position after reindexing
+                $this->position = 0;
+            }
+        }
     }
 
     // Iterator interface methods

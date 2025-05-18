@@ -64,9 +64,15 @@ test('schema returns correct schema', function (): void {
 
     $properties = $schema->getProperties();
 
-    expect($properties)->toHaveCount(2)
-        ->and($properties[0]->getName())->toBe('type')
-        ->and($properties[0]->isRequired())->toBeTrue()
-        ->and($properties[1]->getName())->toBe('relation')
-        ->and($properties[1]->isRequired())->toBeFalse();
+    // Convert properties to an associative array for easier validation
+    $propertyMap = [];
+    foreach ($properties as $name => $property) {
+        $propertyMap[$name] = $property->required;
+    }
+
+    expect($propertyMap)->toHaveCount(2)
+        ->toHaveKey('type')
+        ->toHaveKey('relation')
+        ->and($propertyMap['type'])->toBeTrue()
+        ->and($propertyMap['relation'] ?? null)->toBeFalse();
 });

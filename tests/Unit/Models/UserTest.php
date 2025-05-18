@@ -2,16 +2,20 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{DifferenceV1, TypedWildcard, User, UsersetUser};
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TypedWildcard, User, Userset, UsersetUser};
 
 test('constructor and getters', function (): void {
     $object = new stdClass();
     $object->type = 'user';
     $object->id = '123';
 
-    $userset = new UsersetUser('document:1#writer');
+    $userset = new UsersetUser('document', '1', 'writer');
     $wildcard = new TypedWildcard('user');
-    $difference = new DifferenceV1(new UsersetUser('document:1#reader'), new UsersetUser('user:1'));
+
+    // Create a difference object with valid Userset instances
+    $base = new Userset(computedUserset: new ObjectRelation('document:1', 'reader'));
+    $subtract = new Userset(computedUserset: new ObjectRelation('user:1', ''));
+    $difference = new DifferenceV1($base, $subtract);
 
     $user = new User(
         object: $object,
@@ -31,9 +35,13 @@ test('json serialize with all properties', function (): void {
     $object->type = 'user';
     $object->id = '123';
 
-    $userset = new UsersetUser('document:1#writer');
+    $userset = new UsersetUser('document', '1', 'writer');
     $wildcard = new TypedWildcard('user');
-    $difference = new DifferenceV1(new UsersetUser('document:1#reader'), new UsersetUser('user:1'));
+
+    // Create a difference object with valid Userset instances
+    $base = new Userset(computedUserset: new ObjectRelation('document:1', 'reader'));
+    $subtract = new Userset(computedUserset: new ObjectRelation('user:1', ''));
+    $difference = new DifferenceV1($base, $subtract);
 
     $user = new User(
         object: $object,
@@ -46,7 +54,7 @@ test('json serialize with all properties', function (): void {
 
     expect($result)->toMatchArray([
         'object' => ['type' => 'user', 'id' => '123'],
-        'userset' => $userset->jsonSerialize(),
+        'userset' => ['type' => 'document', 'id' => '1', 'relation' => 'writer'],
         'wildcard' => $wildcard->jsonSerialize(),
         'difference' => $difference->jsonSerialize(),
     ]);
@@ -79,9 +87,10 @@ test('schema returns correct schema', function (): void {
 
     $properties = $schema->getProperties();
 
-    expect($properties)->toHaveCount(4)
-        ->and($properties[0]->getName())->toBe('object')
-        ->and($properties[1]->getName())->toBe('userset')
-        ->and($properties[2]->getName())->toBe('wildcard')
-        ->and($properties[3]->getName())->toBe('difference');
+    expect($properties)->toHaveCount(4);
+    $propertyNames = array_map(static fn ($prop) => $prop->name, $properties);
+    expect($propertyNames)->toContain('object')
+        ->and($propertyNames)->toContain('userset')
+        ->and($propertyNames)->toContain('wildcard')
+        ->and($propertyNames)->toContain('difference');
 });
