@@ -60,8 +60,8 @@ Your application most likely already has everything necessary, especially if you
 
 If you do encounter a dependency error, just review the message and identify which `psr/*` implementation(s) your application is missing. Then, use the Packagist links below to find appropriate libraries to install. After installing the libraries, try [installing the SDK](#installation) again.
 
-- [PSR-18 HTTP Factory](https://packagist.org/providers/psr/http-factory-implementation)
-- [PSR-17 HTTP Client](https://packagist.org/providers/psr/http-client-implementation)
+- [PSR-18 HTTP Client](https://packagist.org/providers/psr/http-client-implementation)
+- [PSR-17 HTTP Factory](https://packagist.org/providers/psr/http-factory-implementation)
 - [PSR-7 HTTP Message](https://packagist.org/providers/psr/http-message-implementation)
 
 ## Usage
