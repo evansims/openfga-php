@@ -8,4 +8,4 @@ use OpenFGA\Tests\TestCase;
 
 require_once implode(DIRECTORY_SEPARATOR, [OPENFGA_TESTS_DIR, '..', 'vendor', 'autoload.php']);
 
-pest()->extend(TestCase::class)->in('Unit');
+pest()->extend(TestCase::class)->in(__DIR__);
