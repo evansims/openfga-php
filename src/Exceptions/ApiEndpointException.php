@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ApiEndpointException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API request failed (endpoint): %s';
+    public const EXCEPTION_MESSAGE = 'API request failed (endpoint): %s';
 
     public function __construct(string $message)
     {

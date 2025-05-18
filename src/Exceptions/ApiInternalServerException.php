@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ApiInternalServerException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API request failed (internal server): %s';
+    public const EXCEPTION_MESSAGE = 'API request failed (internal server): %s';
 
     public function __construct(string $message)
     {

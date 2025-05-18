@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ApiUnexpectedResponseException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API response was unexpected and unprocessable: %s';
+    public const EXCEPTION_MESSAGE = 'API response was unexpected and unprocessable: %s';
 
     public function __construct(string $message)
     {

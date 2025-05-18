@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ApiForbiddenException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API request failed (forbidden): %s';
+    public const EXCEPTION_MESSAGE = 'API request failed (forbidden): %s';
 
     public function __construct(string $message)
     {

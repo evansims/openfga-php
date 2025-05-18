@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ApiValidationException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API request failed (invalid): %s';
+    public const EXCEPTION_MESSAGE = 'API request failed (invalid): %s';
 
     public function __construct(string $message)
     {

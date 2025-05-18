@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use Exception;
-use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnuthenticatedException, ApiValidationException};
+use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnauthenticatedException, ApiValidationException};
 use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 trait ResponseTrait
@@ -30,7 +30,7 @@ trait ResponseTrait
         }
 
         if (401 === $response->getStatusCode()) {
-            throw new ApiUnuthenticatedException($error);
+            throw new ApiUnauthenticatedException($error);
         }
 
         if (403 === $response->getStatusCode()) {

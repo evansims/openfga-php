@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ClientSerializationException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'Serialization of client request body failed: %s';
+    public const EXCEPTION_MESSAGE = 'Serialization of client request body failed: %s';
 
     public function __construct(string $message)
     {

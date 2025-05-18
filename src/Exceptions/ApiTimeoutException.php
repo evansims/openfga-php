@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ApiTimeoutException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API request failed (request throttling timeout): %s';
+    public const EXCEPTION_MESSAGE = 'API request failed (request throttling timeout): %s';
 
     public function __construct(string $message)
     {
