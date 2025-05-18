@@ -8,9 +8,9 @@ use Exception;
 
 use function sprintf;
 
-final class ApiUnuthenticatedException extends Exception
+final class ApiUnauthenticatedException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API request failed (unauthenticated): %s';
+    public const EXCEPTION_MESSAGE = 'API request failed (unauthenticated): %s';
 
     public function __construct(string $message)
     {

@@ -10,7 +10,7 @@ use function sprintf;
 
 final class ApiTransactionException extends Exception
 {
-    public const string EXCEPTION_MESSAGE = 'API request failed (transaction): %s';
+    public const EXCEPTION_MESSAGE = 'API request failed (transaction): %s';
 
     public function __construct(string $message)
     {
