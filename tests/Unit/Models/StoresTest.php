@@ -134,12 +134,23 @@ test('map stores to names', function (): void {
 
     $stores = new Stores([$store1, $store2]);
 
-    $names = $stores->reduce(
-        [],
-        fn (array $carry, Store $store) => [...$carry, $store->getName()],
+    $mapped = $stores->map(
+        Store::class,
+        fn (Store $store) => new Store(
+            id: $store->getId(),
+            name: strtoupper($store->getName()),
+            createdAt: $store->getCreatedAt(),
+            updatedAt: $store->getUpdatedAt(),
+            deletedAt: $store->getDeletedAt(),
+        ),
     );
 
-    expect($names)->toBe(['store-1', 'store-2']);
+    expect($mapped)
+        ->toBeInstanceOf(Stores::class)
+        ->toHaveCount(2)
+        ->and($mapped[0])->toBeInstanceOf(Store::class)
+        ->and($mapped[0]->getName())->toBe('STORE-1')
+        ->and($mapped[1]->getName())->toBe('STORE-2');
 });
 
 test('check if any store has name', function (): void {
