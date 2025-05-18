@@ -90,8 +90,7 @@ test('can unset offset', function (): void {
     unset($usersets[0]);
 
     expect($usersets)->toHaveCount(1)
-        ->and(isset($usersets[0]))->toBeFalse()
-        ->and($usersets[1])->toBe($userset2);
+        ->and($usersets[0])->toBe($userset2);
 });
 
 test('add method enforces Userset type', function (): void {

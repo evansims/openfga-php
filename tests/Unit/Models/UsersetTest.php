@@ -2,15 +2,21 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset, UsersetUser, Usersets};
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset, Usersets};
 
 test('constructor and getters', function (): void {
     $direct = (object) ['type' => 'user', 'id' => '123'];
-    $computedUserset = new ObjectRelation('document', 'reader');
-    $tupleToUserset = new TupleToUsersetV1('document#reader', 'user');
+    $computedUserset = new ObjectRelation('document:1', 'reader');
+    $tupleToUserset = new TupleToUsersetV1(
+        new ObjectRelation('document', 'reader'),
+        new ObjectRelation('user', ''),
+    );
     $union = new Usersets([new Userset()]);
     $intersection = new Usersets([new Userset()]);
-    $difference = new DifferenceV1(new UsersetUser('document:1#reader'), new UsersetUser('user:1'));
+
+    $baseUserset = new Userset(computedUserset: new ObjectRelation('document:1', 'reader'));
+    $subtractUserset = new Userset(computedUserset: new ObjectRelation('user:1', ''));
+    $difference = new DifferenceV1($baseUserset, $subtractUserset);
 
     $userset = new Userset(
         direct: $direct,
@@ -31,11 +37,17 @@ test('constructor and getters', function (): void {
 
 test('json serialize with all properties', function (): void {
     $direct = (object) ['type' => 'user', 'id' => '123'];
-    $computedUserset = new ObjectRelation('document', 'reader', 'reader');
-    $tupleToUserset = new TupleToUsersetV1('document#reader', 'user');
+    $computedUserset = new ObjectRelation('document:1', 'reader');
+    $tupleToUserset = new TupleToUsersetV1(
+        new ObjectRelation('document', 'reader'),
+        new ObjectRelation('user', ''),
+    );
     $union = new Usersets([new Userset()]);
     $intersection = new Usersets([new Userset()]);
-    $difference = new DifferenceV1(new UsersetUser('document:1#reader'), new UsersetUser('user:1'));
+
+    $baseUserset = new Userset(computedUserset: new ObjectRelation('document:1', 'reader'));
+    $subtractUserset = new Userset(computedUserset: new ObjectRelation('user:1', ''));
+    $difference = new DifferenceV1($baseUserset, $subtractUserset);
 
     $userset = new Userset(
         direct: $direct,
@@ -71,7 +83,7 @@ test('schema returns correct schema', function (): void {
 
     $properties = $schema->getProperties();
 
-    $propertyNames = array_map(fn ($prop) => $prop->getName(), $properties);
+    $propertyNames = array_keys($properties);
     expect($propertyNames)->toHaveCount(6)
         ->toContain('direct')
         ->toContain('computed_userset')

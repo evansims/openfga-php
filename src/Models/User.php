@@ -68,6 +68,10 @@ final class User implements UserInterface
 
     private function serializeObject(): object | string | array | null
     {
+        if (null === $this->object) {
+            return null;
+        }
+
         if ($this->object instanceof JsonSerializable) {
             return $this->object->jsonSerialize();
         }
