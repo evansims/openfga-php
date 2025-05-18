@@ -86,9 +86,17 @@
       "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
     ],
+    "integration:start": "docker compose -f docker-compose.integration.yml up -d",
+    "integration:stop": "docker compose -f docker-compose.integration.yml down -v",
     "pest:debug": [
       "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage"
+    ],
+    "pest:integration": [
+      "@integration:start",
+      "@putenv XDEBUG_MODE=coverage",
+      "@php vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --configuration phpunit.integration.xml.dist --coverage --strict-coverage --compact",
+      "@integration:stop"
     ],
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",

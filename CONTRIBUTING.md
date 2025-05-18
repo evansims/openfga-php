@@ -59,7 +59,7 @@ Unit tests:
 composer test:unit
 ```
 
-Integration tests:
+Integration tests require Docker. The container starts automatically:
 
 ```bash
 composer test:integration
