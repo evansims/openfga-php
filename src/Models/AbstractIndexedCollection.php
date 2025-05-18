@@ -30,8 +30,6 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      */
     protected static string $itemType;
 
-    protected static ?CollectionSchemaInterface $schema = null;
-
     /**
      * @param iterable<T>|T ...$items
      *

@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\CollectionSchemaInterface;
+
 /**
  * @extends AbstractIndexedCollection<TypeDefinition>
  */
 final class TypeDefinitions extends AbstractIndexedCollection implements TypeDefinitionsInterface
 {
     protected static string $itemType = TypeDefinition::class;
+
+    protected static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @return null|TypeDefinitionInterface

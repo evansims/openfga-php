@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\CollectionSchemaInterface;
+
 /**
  * @extends AbstractIndexedCollection<ConditionParameter>
  */
 final class ConditionParameters extends AbstractIndexedCollection implements ConditionParametersInterface
 {
     protected static string $itemType = ConditionParameter::class;
+
+    protected static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @return null|ConditionParameterInterface

@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\CollectionSchemaInterface;
+
 /**
  * @extends AbstractIndexedCollection<AuthorizationModel>
  */
 final class AuthorizationModels extends AbstractIndexedCollection implements AuthorizationModelsInterface
 {
     protected static string $itemType = AuthorizationModel::class;
+
+    protected static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @return null|AuthorizationModelInterface

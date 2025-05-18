@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\CollectionSchemaInterface;
+
 /**
  * @extends AbstractIndexedCollection<TupleKey>
  */
 final class TupleKeys extends AbstractIndexedCollection implements TupleKeysInterface
 {
     protected static string $itemType = TupleKey::class;
+
+    protected static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @return null|TupleKeyInterface

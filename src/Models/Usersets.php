@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use InvalidArgumentException;
+use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
  * @extends AbstractIndexedCollection<Userset>
@@ -14,6 +15,8 @@ use InvalidArgumentException;
 final class Usersets extends AbstractIndexedCollection implements UsersetsInterface
 {
     protected static string $itemType = Userset::class;
+
+    protected static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @param ModelInterface $userset Must be an instance of Userset

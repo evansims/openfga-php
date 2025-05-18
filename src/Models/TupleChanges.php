@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Schema\CollectionSchemaInterface;
+
 /**
  * @extends AbstractIndexedCollection<TupleChange>
  */
 final class TupleChanges extends AbstractIndexedCollection implements TupleChangesInterface
 {
     protected static string $itemType = TupleChange::class;
+
+    protected static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @return null|TupleChangeInterface
