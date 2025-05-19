@@ -3,12 +3,18 @@
 declare(strict_types=1);
 
 use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schema\CollectionSchemaInterface;
 
 it('validates SDK classes against the OpenAPI spec', function (): void {
     $commit = getenv('OPENFGA_API_COMMIT') ?: 'main';
     $url = sprintf('https://raw.githubusercontent.com/openfga/api/%s/docs/openapiv2/apidocs.swagger.json', $commit);
-    $json = file_get_contents($url);
-    expect($json)->not->toBeFalse();
+    $json = @file_get_contents($url);
+    
+    if ($json === false) {
+        $error = error_get_last();
+        $errorMsg = $error ? $error['message'] : 'Unknown error';
+        test()->fail(sprintf("Failed to fetch OpenAPI spec from %s: %s", $url, $errorMsg));
+    }
 
     $spec = json_decode($json, true);
     expect($spec)->not->toBeNull();
@@ -30,8 +36,14 @@ it('validates SDK classes against the OpenAPI spec', function (): void {
         if (str_contains($name, 'Interface') || str_starts_with($name, 'Abstract')) {
             continue;
         }
-        expect($definitions)->toHaveKey($name);
+        
         $class = 'OpenFGA\\Models\\' . $name;
+        
+        // Skip collection wrappers that aren't defined in the OpenAPI spec
+        if (is_subclass_of($class, CollectionSchemaInterface::class, true)) {
+            continue;
+        }
+        expect($definitions)->toHaveKey($name);
         /** @var SchemaInterface $schema */
         $schema = $class::schema();
         $schemaProps = array_map(static fn($p) => $p->name, $schema->getProperties());
