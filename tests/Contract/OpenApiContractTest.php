@@ -9,7 +9,7 @@ it('validates SDK classes against the OpenAPI spec', function (): void {
     $commit = getenv('OPENFGA_API_COMMIT') ?: 'main';
     $url = sprintf('https://raw.githubusercontent.com/openfga/api/%s/docs/openapiv2/apidocs.swagger.json', $commit);
     $json = @file_get_contents($url);
-    
+
     if ($json === false) {
         $error = error_get_last();
         $errorMsg = $error ? $error['message'] : 'Unknown error';
@@ -36,9 +36,9 @@ it('validates SDK classes against the OpenAPI spec', function (): void {
         if (str_contains($name, 'Interface') || str_starts_with($name, 'Abstract')) {
             continue;
         }
-        
+
         $class = 'OpenFGA\\Models\\' . $name;
-        
+
         // Skip collection wrappers that aren't defined in the OpenAPI spec
         if (is_subclass_of($class, CollectionSchemaInterface::class, true)) {
             continue;
