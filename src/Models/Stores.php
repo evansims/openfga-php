@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<Store>
+ * @extends IndexedCollection<Store>
  */
-final class Stores extends AbstractIndexedCollection implements StoresInterface
+final class Stores extends IndexedCollection implements StoresInterface
 {
     protected static string $itemType = Store::class;
 

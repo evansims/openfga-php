@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<TupleChange>
+ * @extends IndexedCollection<TupleChange>
  */
-final class TupleChanges extends AbstractIndexedCollection implements TupleChangesInterface
+final class TupleChanges extends IndexedCollection implements TupleChangesInterface
 {
     protected static string $itemType = TupleChange::class;
 

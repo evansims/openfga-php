@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<User>
+ * @extends IndexedCollection<User>
  */
-final class Users extends AbstractIndexedCollection implements UsersInterface
+final class Users extends IndexedCollection implements UsersInterface
 {
     protected static string $itemType = User::class;
 

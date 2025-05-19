@@ -10,9 +10,8 @@ use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use function array_key_exists;
 use function sprintf;
 
-final class RelationReferences implements RelationReferencesInterface
+final class RelationReferences extends KeyedCollection implements RelationReferencesInterface
 {
-    use KeyedCollectionTrait;
 
     private static ?CollectionSchemaInterface $schema = null;
 

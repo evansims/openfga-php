@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<ConditionParameter>
+ * @extends IndexedCollection<ConditionParameter>
  */
-final class ConditionParameters extends AbstractIndexedCollection implements ConditionParametersInterface
+final class ConditionParameters extends IndexedCollection implements ConditionParametersInterface
 {
     protected static string $itemType = ConditionParameter::class;
 

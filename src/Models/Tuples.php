@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<Tuple>
+ * @extends IndexedCollection<Tuple>
  */
-final class Tuples extends AbstractIndexedCollection implements TuplesInterface
+final class Tuples extends IndexedCollection implements TuplesInterface
 {
     protected static string $itemType = Tuple::class;
 

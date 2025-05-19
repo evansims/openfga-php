@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<AuthorizationModel>
+ * @extends IndexedCollection<AuthorizationModel>
  */
-final class AuthorizationModels extends AbstractIndexedCollection implements AuthorizationModelsInterface
+final class AuthorizationModels extends IndexedCollection implements AuthorizationModelsInterface
 {
     protected static string $itemType = AuthorizationModel::class;
 

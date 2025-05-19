@@ -7,11 +7,11 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<Assertion>
+ * @extends IndexedCollection<Assertion>
  *
  * @implements AssertionsInterface<Assertion>
  */
-final class Assertions extends AbstractIndexedCollection implements AssertionsInterface
+final class Assertions extends IndexedCollection implements AssertionsInterface
 {
     protected static string $itemType = Assertion::class;
 
