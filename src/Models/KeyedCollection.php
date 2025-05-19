@@ -10,6 +10,7 @@ namespace OpenFGA\Models;
  * @template T of ModelInterface
  *
  * @extends Collection<T>
+ *
  * @implements KeyedCollectionInterface<T>
  */
 class KeyedCollection extends Collection implements KeyedCollectionInterface

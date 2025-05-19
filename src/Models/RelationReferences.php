@@ -12,7 +12,6 @@ use function sprintf;
 
 final class RelationReferences extends KeyedCollection implements RelationReferencesInterface
 {
-
     private static ?CollectionSchemaInterface $schema = null;
 
     /**

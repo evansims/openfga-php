@@ -4,22 +4,17 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use ArrayAccess;
-use Countable;
 use InvalidArgumentException;
-use Iterator;
-use JsonSerializable;
 use OpenFGA\Exceptions\ModelException;
-use OpenFGA\Schema\CollectionSchema;
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use OutOfBoundsException;
-use TypeError;
 
 use function array_keys;
 use function array_map;
 use function array_values;
 use function count;
 use function is_a;
+use function is_int;
 
 /**
  * Base collection implementation without traits or abstract classes.
@@ -49,12 +44,18 @@ class Collection implements CollectionInterface
         return count($this->models);
     }
 
+    public function current(): mixed
+    {
+        $key = $this->key();
+        return $this->models[$key] ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         return array_map(static fn (ModelInterface $model) => $model->jsonSerialize(), $this->models);
     }
 
-    public function key(): string|int
+    public function key(): string | int
     {
         $keys = array_keys($this->models);
 
@@ -69,6 +70,11 @@ class Collection implements CollectionInterface
     public function offsetExists(mixed $offset): bool
     {
         return isset($this->models[$offset]);
+    }
+
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->models[$offset] ?? null;
     }
 
     public function offsetSet(mixed $offset, mixed $value): void
@@ -90,7 +96,7 @@ class Collection implements CollectionInterface
             $isNumeric = is_int($offset);
             unset($this->models[$offset]);
             if ($isNumeric) {
-                $this->models   = array_values($this->models);
+                $this->models = array_values($this->models);
                 $this->position = 0;
             }
         }
@@ -110,22 +116,22 @@ class Collection implements CollectionInterface
 
     public static function schema(): CollectionSchemaInterface
     {
-        if (null === static::$schema) {
-            if (! isset(static::$itemType)) {
-                throw ModelException::undefinedItemType(static::class);
+        if (null === self::$schema) {
+            if (! isset(self::$itemType)) {
+                throw ModelException::undefinedItemType(self::class);
             }
 
-            if (! is_a(static::$itemType, ModelInterface::class, true)) {
-                throw ModelException::invalidItemType(static::$itemType);
+            if (! is_a(self::$itemType, ModelInterface::class, true)) {
+                throw ModelException::invalidItemType(self::$itemType);
             }
 
-            static::$schema = new CollectionSchema(
-                className: static::class,
-                itemType: static::$itemType,
+            self::$schema = new CollectionSchema(
+                className: self::class,
+                itemType: self::$itemType,
                 requireItems: false,
             );
         }
 
-        return static::$schema;
+        return self::$schema;
     }
 }

@@ -12,7 +12,6 @@ use function sprintf;
 
 final class TypeDefinitionRelations extends KeyedCollection implements TypeDefinitionRelationsInterface
 {
-
     private static ?CollectionSchemaInterface $schema = null;
 
     /**

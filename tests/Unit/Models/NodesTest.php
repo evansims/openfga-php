@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use OpenFGA\Models\{Node, Nodes};
 
-use function strtoupper;
-
 test('empty collection', function (): void {
     $nodes = new Nodes();
 
