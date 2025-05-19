@@ -98,6 +98,9 @@
       "@php vendor/bin/pest --colors=always --strict-global-state --fail-on-risky --fail-on-warning --configuration phpunit.integration.xml.dist --coverage --strict-coverage --compact",
       "@integration:stop"
     ],
+    "pest:contract": [
+      "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning"
+    ],
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
       "@php vendor/bin/php-cs-fixer fix --dry-run --diff"
@@ -121,6 +124,10 @@
     "test:unit": [
       "@lint",
       "@pest:unit"
+    ],
+    "test:contract": [
+      "@lint",
+      "@pest:contract"
     ],
     "test": [
       "@pest:unit"
