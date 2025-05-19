@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Schema\SchemaInterface;
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 it('validates SDK classes against the OpenAPI spec', function (): void {
     $commit = getenv('OPENFGA_API_COMMIT') ?: 'main';
-    $url = sprintf('https://raw.githubusercontent.com/openfga/api/%s/docs/openapiv2/apidocs.swagger.json', $commit);
+    $url = \sprintf('https://raw.githubusercontent.com/openfga/api/%s/docs/openapiv2/apidocs.swagger.json', $commit);
     $json = @file_get_contents($url);
 
-    if ($json === false) {
+    if (false === $json) {
         $error = error_get_last();
         $errorMsg = $error ? $error['message'] : 'Unknown error';
-        test()->fail(sprintf("Failed to fetch OpenAPI spec from %s: %s", $url, $errorMsg));
+        test()->fail(\sprintf('Failed to fetch OpenAPI spec from %s: %s', $url, $errorMsg));
     }
 
     $spec = json_decode($json, true);
@@ -29,7 +28,7 @@ it('validates SDK classes against the OpenAPI spec', function (): void {
         }
     }
 
-    $root = dirname(__DIR__, 2);
+    $root = \dirname(__DIR__, 2);
 
     foreach (glob($root . '/src/Models/*.php') as $file) {
         $name = basename($file, '.php');
@@ -46,7 +45,7 @@ it('validates SDK classes against the OpenAPI spec', function (): void {
         expect($definitions)->toHaveKey($name);
         /** @var SchemaInterface $schema */
         $schema = $class::schema();
-        $schemaProps = array_map(static fn($p) => $p->name, $schema->getProperties());
+        $schemaProps = array_map(static fn ($p) => $p->name, $schema->getProperties());
         $specProps = array_keys($definitions[$name]['properties'] ?? []);
         foreach ($specProps as $prop) {
             expect($schemaProps)->toContain($prop);
