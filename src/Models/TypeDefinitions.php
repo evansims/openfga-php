@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<TypeDefinition>
+ * @extends IndexedCollection<TypeDefinition>
  */
-final class TypeDefinitions extends AbstractIndexedCollection implements TypeDefinitionsInterface
+final class TypeDefinitions extends IndexedCollection implements TypeDefinitionsInterface
 {
     protected static string $itemType = TypeDefinition::class;
 

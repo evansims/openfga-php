@@ -7,11 +7,11 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<UserTypeFilter>
+ * @extends IndexedCollection<UserTypeFilter>
  *
  * @implements UserTypeFiltersInterface<UserTypeFilter>
  */
-final class UserTypeFilters extends AbstractIndexedCollection implements UserTypeFiltersInterface
+final class UserTypeFilters extends IndexedCollection implements UserTypeFiltersInterface
 {
     protected static string $itemType = UserTypeFilter::class;
 

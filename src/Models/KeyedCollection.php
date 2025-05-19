@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 /**
- * Provides JSON serialization for keyed collections.
+ * Collection implementation that preserves keys when serialized.
  *
- * Classes using this trait must have a property named $models
- * containing an associative array or traversable of model objects
- * that implement JsonSerializable.
+ * @template T of ModelInterface
+ *
+ * @extends Collection<T>
+ * @implements KeyedCollectionInterface<T>
  */
-trait KeyedCollectionTrait
+class KeyedCollection extends Collection implements KeyedCollectionInterface
 {
-    use CollectionTrait;
-
     public function jsonSerialize(): array
     {
         $response = [];

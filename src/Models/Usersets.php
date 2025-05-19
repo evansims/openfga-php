@@ -8,11 +8,11 @@ use InvalidArgumentException;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<Userset>
+ * @extends IndexedCollection<Userset>
  *
  * @implements UsersetsInterface<Userset>
  */
-final class Usersets extends AbstractIndexedCollection implements UsersetsInterface
+final class Usersets extends IndexedCollection implements UsersetsInterface
 {
     protected static string $itemType = Userset::class;
 

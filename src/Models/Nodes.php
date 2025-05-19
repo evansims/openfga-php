@@ -7,9 +7,9 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<Node>
+ * @extends IndexedCollection<Node>
  */
-final class Nodes extends AbstractIndexedCollection implements NodesInterface
+final class Nodes extends IndexedCollection implements NodesInterface
 {
     protected static string $itemType = Node::class;
 

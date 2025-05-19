@@ -7,11 +7,11 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
- * @extends AbstractIndexedCollection<UsersListUser>
+ * @extends IndexedCollection<UsersListUser>
  *
  * @implements UsersListInterface<UsersListUser>
  */
-final class UsersList extends AbstractIndexedCollection implements UsersListInterface
+final class UsersList extends IndexedCollection implements UsersListInterface
 {
     protected static string $itemType = UsersListUser::class;
 

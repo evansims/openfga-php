@@ -4,38 +4,29 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use ArrayAccess;
-use Countable;
-use Iterator;
-use JsonSerializable;
-use OpenFGA\Exceptions\ModelException;
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
-
 use ReturnTypeWillChange;
-
 use TypeError;
 
+use function is_a;
 use function is_iterable;
 use function sprintf;
 
 /**
+ * Generic indexed collection implementation without traits or abstract classes.
+ *
  * @template T of ModelInterface
+ *
+ * @extends Collection<T>
+ * @implements IndexedCollectionInterface<T>
  */
-abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iterator, JsonSerializable
+class IndexedCollection extends Collection implements IndexedCollectionInterface
 {
-    use CollectionTrait;
-
-    /**
-     * @var class-string<T>
-     */
-    protected static string $itemType;
-
     /**
      * @param iterable<T>|T ...$items
      *
      * @throws TypeError When item type is not defined or invalid
      */
-    public function __construct(iterable | ModelInterface ...$items)
+    public function __construct(iterable|ModelInterface ...$items)
     {
         if (! isset(static::$itemType)) {
             throw new TypeError(sprintf('Undefined item type for %s. Define the $itemType property or override the constructor.', static::class));
@@ -58,8 +49,6 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      * Add an item to the collection.
      *
      * @param T $item
-     *
-     * @throws ModelException When item type doesn't match the collection's item type
      */
     public function add(ModelInterface $item): void
     {
@@ -110,8 +99,8 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     {
         /** @var class-string<static> $collection */
         $collection = static::class;
-        /** @var AbstractIndexedCollection<ModelInterface> $new */
-        $new = new $collection();          // keep the same concrete class
+        /** @var IndexedCollection<ModelInterface> $new */
+        $new = new $collection();
         foreach ($this->models as $item) {
             if ($callback($item)) {
                 $new->add($item);
@@ -144,17 +133,6 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
     }
 
     /**
-     * @return array<int, array<string, mixed>>
-     */
-    public function jsonSerialize(): array
-    {
-        return array_map(
-            static fn (ModelInterface $item) => $item->jsonSerialize(),
-            $this->models,
-        );
-    }
-
-    /**
      * Maps the collection to another collection.
      *
      * @template U of ModelInterface
@@ -172,7 +150,6 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
 
         $new = new static();
 
-        // Align the target collection’s expected item type
         $new::$itemType = $targetType;
         foreach ($this->models as $item) {
             $mapped = $callback($item);
@@ -245,7 +222,7 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
      *
      * @return static<T>
      */
-    public function withItems(iterable | ModelInterface ...$items): static
+    public function withItems(iterable|ModelInterface ...$items): static
     {
         $new = clone $this;
         $new->addItems(...$items);
@@ -253,33 +230,10 @@ abstract class AbstractIndexedCollection implements ArrayAccess, Countable, Iter
         return $new;
     }
 
-    public static function schema(): CollectionSchemaInterface
-    {
-        if (null === static::$schema) {
-            if (! isset(static::$itemType)) {
-                throw ModelException::undefinedItemType(static::class);
-            }
-
-            if (! is_a(static::$itemType, ModelInterface::class, true)) {
-                throw ModelException::invalidItemType(static::$itemType);
-            }
-
-            static::$schema = new CollectionSchema(
-                className: static::class,
-                itemType: static::$itemType,
-                requireItems: false,
-            );
-        }
-
-        return static::$schema;
-    }
-
     /**
      * @param iterable<T>|T ...$items
-     *
-     * @throws ModelException
      */
-    protected function addItems(iterable | ModelInterface ...$items): void
+    protected function addItems(iterable|ModelInterface ...$items): void
     {
         foreach ($items as $item) {
             if (is_iterable($item)) {
