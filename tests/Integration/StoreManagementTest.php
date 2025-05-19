@@ -7,11 +7,21 @@ use OpenFGA\Client;
 it('creates and deletes a store', function () {
     $url = getenv('FGA_API_URL') ?: 'http://localhost:8080';
     $client = new Client(url: $url);
+    $createdStoreId = null;
 
     $name = 'php-sdk-test-' . bin2hex(random_bytes(5));
-    $response = $client->createStore(name: $name);
-    expect($response->getId())->not()->toBe('');
+    try {
+        $response = $client->createStore(name: $name);
+        $createdStoreId = $response->getId();
+        expect($createdStoreId)->not()->toBe('');
+        expect($response->getName())->toBe($name);
 
-    $delete = $client->deleteStore(store: $response->getId());
-    expect($delete)->toBeInstanceOf(\OpenFGA\Responses\DeleteStoreResponseInterface::class);
+        $delete = $client->deleteStore(store: $createdStoreId);
+        expect($delete)->toBeInstanceOf(\OpenFGA\Responses\DeleteStoreResponseInterface::class);
+    } finally {
+        // Clean up the store if it was created but not deleted
+        if ($createdStoreId !== null && $client->getStore($createdStoreId) !== null) {
+            $client->deleteStore(store: $createdStoreId);
+        }
+    }
 });
