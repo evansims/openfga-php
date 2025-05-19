@@ -13,9 +13,4 @@ use Psr\Http\Message\StreamFactoryInterface;
 interface RequestInterface
 {
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext;
-
-    /**
-     * @return T
-     */
-    public function toArray(): array;
 }
