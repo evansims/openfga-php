@@ -6,6 +6,7 @@ namespace OpenFGA\Models;
 
 use ReturnTypeWillChange;
 use TypeError;
+use OpenFGA\Exceptions\ModelException;
 
 use function is_a;
 use function is_iterable;
@@ -17,6 +18,7 @@ use function sprintf;
  * @template T of ModelInterface
  *
  * @extends Collection<T>
+ *
  * @implements IndexedCollectionInterface<T>
  */
 class IndexedCollection extends Collection implements IndexedCollectionInterface
@@ -26,14 +28,14 @@ class IndexedCollection extends Collection implements IndexedCollectionInterface
      *
      * @throws TypeError When item type is not defined or invalid
      */
-    public function __construct(iterable|ModelInterface ...$items)
+    public function __construct(iterable | ModelInterface ...$items)
     {
-        if (! isset(static::$itemType)) {
-            throw new TypeError(sprintf('Undefined item type for %s. Define the $itemType property or override the constructor.', static::class));
+        if (! isset(self::$itemType)) {
+            throw new TypeError(sprintf('Undefined item type for %s. Define the $itemType property or override the constructor.', self::class));
         }
 
-        if (! is_a(static::$itemType, ModelInterface::class, true)) {
-            throw new TypeError(sprintf('Expected item type to implement %s, %s given', ModelInterface::class, static::$itemType));
+        if (! is_a(self::$itemType, ModelInterface::class, true)) {
+            throw new TypeError(sprintf('Expected item type to implement %s, %s given', ModelInterface::class, self::$itemType));
         }
 
         foreach ($items as $item) {
@@ -52,8 +54,8 @@ class IndexedCollection extends Collection implements IndexedCollectionInterface
      */
     public function add(ModelInterface $item): void
     {
-        if (! $item instanceof static::$itemType) {
-            throw new TypeError(sprintf('Expected instance of %s, %s given', static::$itemType, $item::class));
+        if (! $item instanceof self::$itemType) {
+            throw new TypeError(sprintf('Expected instance of %s, %s given', self::$itemType, $item::class));
         }
         $this->models[] = $item;
     }
@@ -98,7 +100,7 @@ class IndexedCollection extends Collection implements IndexedCollectionInterface
     public function filter(callable $callback): static
     {
         /** @var class-string<static> $collection */
-        $collection = static::class;
+        $collection = self::class;
         /** @var IndexedCollection<ModelInterface> $new */
         $new = new $collection();
         foreach ($this->models as $item) {
@@ -222,7 +224,7 @@ class IndexedCollection extends Collection implements IndexedCollectionInterface
      *
      * @return static<T>
      */
-    public function withItems(iterable|ModelInterface ...$items): static
+    public function withItems(iterable | ModelInterface ...$items): static
     {
         $new = clone $this;
         $new->addItems(...$items);
@@ -233,7 +235,7 @@ class IndexedCollection extends Collection implements IndexedCollectionInterface
     /**
      * @param iterable<T>|T ...$items
      */
-    protected function addItems(iterable|ModelInterface ...$items): void
+    protected function addItems(iterable | ModelInterface ...$items): void
     {
         foreach ($items as $item) {
             if (is_iterable($item)) {

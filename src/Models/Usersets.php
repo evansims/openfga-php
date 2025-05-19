@@ -4,28 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use InvalidArgumentException;
-use OpenFGA\Schema\CollectionSchemaInterface;
-
 /**
- * @extends IndexedCollection<Userset>
+ * @extends IndexedCollection<UsersetInterface>
  *
- * @implements UsersetsInterface<Userset>
+ * @implements UsersetsInterface<UsersetInterface>
  */
 final class Usersets extends IndexedCollection implements UsersetsInterface
 {
     protected static string $itemType = Userset::class;
-
-    protected static ?CollectionSchemaInterface $schema = null;
-
-    /**
-     * @param ModelInterface $userset Must be an instance of Userset
-     */
-    public function add(ModelInterface $userset): void
-    {
-        if (! $userset instanceof Userset) {
-            throw new InvalidArgumentException('Expected instance of ' . Userset::class . ', got ' . get_debug_type($userset));
-        }
-        parent::add($userset);
-    }
 }
