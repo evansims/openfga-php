@@ -99,7 +99,6 @@
       "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning"
     ],
     "psalm": "@php vendor/bin/psalm",
-    "psalm:fix": "@php vendor/bin/psalm -- --issues=All",
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
       "@php vendor/bin/php-cs-fixer fix --dry-run --diff"
