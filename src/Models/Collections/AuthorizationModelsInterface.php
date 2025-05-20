@@ -14,20 +14,6 @@ use OpenFGA\Models\AuthorizationModelInterface;
 interface AuthorizationModelsInterface extends IndexedCollectionInterface
 {
     /**
-     * Add an authorization model to the collection.
-     *
-     * @param T $authorizationModel
-     */
-    public function add(AuthorizationModelInterface $authorizationModel): void;
-
-    /**
-     * Get the current authorization model in the collection.
-     *
-     * @return T
-     */
-    public function current(): AuthorizationModelInterface;
-
-    /**
      * @return array<int, array{
      *     id: string,
      *     schema_version: string,
@@ -36,13 +22,4 @@ interface AuthorizationModelsInterface extends IndexedCollectionInterface
      * }>
      */
     public function jsonSerialize(): array;
-
-    /**
-     * Get an authorization model by offset.
-     *
-     * @param mixed $offset
-     *
-     * @return null|T
-     */
-    public function offsetGet(mixed $offset): ?AuthorizationModelInterface;
 }

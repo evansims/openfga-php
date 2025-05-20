@@ -9,11 +9,8 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\SchemaValidationException;
 use ReflectionClass;
-
 use ReflectionException;
-
 use ReflectionNamedType;
-
 use RuntimeException;
 
 use function array_key_exists;
@@ -59,8 +56,8 @@ final class SchemaValidator
     /**
      * @template T of object
      *
-     * @param mixed           $data      JSON data (decoded)
-     * @param class-string<T> $className Target data class
+     * @param mixed           $data
+     * @param class-string<T> $className
      *
      * @throws SchemaValidationException If validation fails
      * @throws InvalidArgumentException  If no schema is registered for the class or invalid data type
@@ -81,7 +78,11 @@ final class SchemaValidator
         $schema = $this->schemas[$className];
 
         if ($schema instanceof CollectionSchemaInterface) {
-            return $this->validateAndTransformCollection($data, $schema);
+            if (! array_is_list($data)) {
+                $data = array_values($data);
+            }
+
+            return $this->validateAndTransformCollection($data, $schema, $className);
         }
 
         $errors = [];
@@ -199,14 +200,14 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param class-string<T>   $className
-     * @param array<int, mixed> $items
+     * @param class-string<T> $className
+     * @param array<int|string, mixed> $items
      *
      * @throws ReflectionException
      *
      * @return T
      */
-    private function createCollectionInstance(string $className, array $items): object
+    private function createCollectionInstance(string $className, array $items)
     {
         $reflection = new ReflectionClass($className);
         $constructor = $reflection->getConstructor();
@@ -216,18 +217,19 @@ final class SchemaValidator
             $paramType = $param->getType();
 
             if ($paramType instanceof ReflectionNamedType && 'array' === $paramType->getName()) {
-                // @phpstan-ignore return.type
                 return $reflection->newInstance($items);
             }
         }
 
-        /** @phpstan-var T $instance */
         $instance = $reflection->newInstance();
 
-        if ($reflection->implementsInterface(ArrayAccess::class)) {
-            /** @var ArrayAccess<int|string, mixed> $instance */
+        /* @phpstan-var T $instance */
+
+        if ($instance instanceof ArrayAccess) {
+            /** @var ArrayAccess<int|string, mixed> & T $arrayInstance */
+            $arrayInstance = $instance;
             foreach ($items as $key => $item) {
-                $instance->offsetSet($key, $item);
+                $arrayInstance->offsetSet($key, $item);
             }
         } elseif ($reflection->hasMethod('add')) {
             $addMethod = $reflection->getMethod('add');
@@ -396,18 +398,19 @@ final class SchemaValidator
      *
      * @param array<int, mixed>         $data   Array of items
      * @param CollectionSchemaInterface $schema Collection schema
+     * @param class-string<T>           $className
      *
      * @throws SchemaValidationException If validation fails
      *
      * @return T
-     *
-     * @phpstan-ignore return.type, method.templateTypeNotInParameter
      */
-    private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema)
+    private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema, string $className): object
     {
         $errors = [];
         $transformedItems = [];
         $itemType = $schema->getItemType();
+
+        /** @var class-string<T> $itemType */
 
         // Check if collection requires items
         if ($schema->requiresItems() && 0 === count($data)) {
@@ -429,11 +432,7 @@ final class SchemaValidator
             throw new SchemaValidationException($errors);
         }
 
-        // Create collection instance with transformed items
-        $collectionClass = $schema->getClassName();
-
-        // @phpstan-ignore method.templateTypeNotInParameter
-        return $this->createCollectionInstance($collectionClass, $transformedItems);
+        return $this->createCollectionInstance($className, $transformedItems);
     }
 
     /**
@@ -453,11 +452,19 @@ final class SchemaValidator
                 }
 
                 if ('date' === $format) {
-                    return (bool) DateTimeImmutable::createFromFormat('Y-m-d', $value);
+                    if (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d', $value)) {
+                        return true;
+                    }
+
+                    return false;
                 }
 
                 if ('datetime' === $format) {
-                    return (bool) DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value);
+                    if (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value)) {
+                        return true;
+                    }
+
+                    return false;
                 }
 
                 if (null !== $enum) {
