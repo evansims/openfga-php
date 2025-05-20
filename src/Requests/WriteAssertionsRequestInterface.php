@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{Assertion, AssertionsInterface};
+use OpenFGA\Models\{AssertionInterface, Collections\AssertionsInterface};
 
-/**
- * @extends RequestInterface<array{assertions: array<array{tuple_key: array{user: string, relation: string, object: string}, expectation: bool}>, authorization_model_id: string, store_id: string}>
- */
 interface WriteAssertionsRequestInterface extends RequestInterface
 {
     /**
-     * @return AssertionsInterface<Assertion>
+     * @return AssertionsInterface<AssertionInterface>
      */
     public function getAssertions(): AssertionsInterface;
 

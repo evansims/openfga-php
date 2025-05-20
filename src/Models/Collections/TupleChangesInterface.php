@@ -8,6 +8,7 @@ use OpenFGA\Models\TupleChangeInterface;
 
 /**
  * @template T of TupleChangeInterface
+ *
  * @extends IndexedCollectionInterface<T>
  */
 interface TupleChangesInterface extends IndexedCollectionInterface

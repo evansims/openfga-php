@@ -8,6 +8,7 @@ use OpenFGA\Models\UsersetInterface;
 
 /**
  * @template T of UsersetInterface
+ *
  * @extends KeyedCollectionInterface<T>
  */
 interface TypeDefinitionRelationsInterface extends KeyedCollectionInterface

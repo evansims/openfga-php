@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{Consistency, TupleKeysInterface};
+use OpenFGA\Models\Collections\TupleKeysInterface;
+use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Models\TupleKeyInterface;
 
 interface ListObjectsRequestInterface extends RequestInterface
 {
@@ -14,6 +16,9 @@ interface ListObjectsRequestInterface extends RequestInterface
 
     public function getContext(): ?object;
 
+    /**
+     * @return TupleKeysInterface<TupleKeyInterface>
+     */
     public function getContextualTuples(): ?TupleKeysInterface;
 
     public function getRelation(): string;

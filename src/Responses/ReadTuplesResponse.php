@@ -6,21 +6,21 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Tuples, TuplesInterface};
+use OpenFGA\Models\Collections\{Tuples, TuplesInterface};
+use OpenFGA\Models\TupleInterface;
+use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
-/**
- * @implements ReadTuplesResponseInterface<array{tuples: array, continuation_token: string|null}>
- */
 final class ReadTuplesResponse implements ReadTuplesResponseInterface
 {
-    use ResponseTrait;
-
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param TuplesInterface<TupleInterface> $tuples
+     * @param null|string                     $continuationToken
+     */
     public function __construct(
         private TuplesInterface $tuples,
         private ?string $continuationToken = null,
@@ -37,46 +37,7 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
         return $this->tuples;
     }
 
-    /**
-     * @return array{tuples: array<array{key: array{user: string, relation: string, object: string}, timestamp: string}>, continuation_token: null|string}
-     */
-    public function toArray(): array
-    {
-        $tuples = [];
-
-        foreach ($this->tuples as $tuple) {
-            if (null === $tuple) {
-                continue;
-            }
-
-            $key = $tuple->getKey();
-            $timestamp = $tuple->getTimestamp();
-
-            // Get values from the key
-            $user = $key->getUser() ?? '';
-            $relation = $key->getRelation() ?? '';
-            $object = $key->getObject() ?? '';
-
-            // Format the timestamp
-            $timestampStr = $timestamp->format('Y-m-d\TH:i:s.u\Z');
-
-            $tuples[] = [
-                'key' => [
-                    'user' => $user,
-                    'relation' => $relation,
-                    'object' => $object,
-                ],
-                'timestamp' => $timestampStr,
-            ];
-        }
-
-        return [
-            'tuples' => $tuples,
-            'continuation_token' => $this->continuationToken,
-        ];
-    }
-
-    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -93,7 +54,7 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
             return $validator->validateAndTransform($data, self::class);
         }
 
-        self::handleResponseException($response);
+        RequestManager::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

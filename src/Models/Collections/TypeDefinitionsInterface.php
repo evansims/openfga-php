@@ -8,6 +8,7 @@ use OpenFGA\Models\TypeDefinitionInterface;
 
 /**
  * @template T of TypeDefinitionInterface
+ *
  * @extends IndexedCollectionInterface<T>
  */
 interface TypeDefinitionsInterface extends IndexedCollectionInterface

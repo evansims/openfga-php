@@ -8,15 +8,13 @@ use DateTimeImmutable;
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Models\{Store, StoreInterface};
+use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
 final class GetStoreResponse implements GetStoreResponseInterface
 {
-    use ResponseTrait;
-
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
@@ -64,7 +62,7 @@ final class GetStoreResponse implements GetStoreResponseInterface
         return $this->updatedAt;
     }
 
-    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -80,7 +78,7 @@ final class GetStoreResponse implements GetStoreResponseInterface
             return $validator->validateAndTransform($data, self::class);
         }
 
-        self::handleResponseException($response);
+        RequestManager::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }
@@ -92,9 +90,9 @@ final class GetStoreResponse implements GetStoreResponseInterface
             properties: [
                 new SchemaProperty(name: 'id', type: 'string', required: true),
                 new SchemaProperty(name: 'name', type: 'string', required: true),
-                new SchemaProperty(name: 'created_at', type: 'datetime', required: true),
-                new SchemaProperty(name: 'updated_at', type: 'datetime', required: true),
-                new SchemaProperty(name: 'deleted_at', type: 'datetime', required: false),
+                new SchemaProperty(name: 'created_at', type: 'string', format: 'date-time', required: true),
+                new SchemaProperty(name: 'updated_at', type: 'string', format: 'date-time', required: true),
+                new SchemaProperty(name: 'deleted_at', type: 'string', format: 'date-time', required: false),
             ],
         );
     }

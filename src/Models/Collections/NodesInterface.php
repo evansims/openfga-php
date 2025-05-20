@@ -8,6 +8,7 @@ use OpenFGA\Models\NodeInterface;
 
 /**
  * @template T of NodeInterface
+ *
  * @extends IndexedCollectionInterface<T>
  */
 interface NodesInterface extends IndexedCollectionInterface

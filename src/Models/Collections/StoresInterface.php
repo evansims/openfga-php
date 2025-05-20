@@ -8,6 +8,7 @@ use OpenFGA\Models\StoreInterface;
 
 /**
  * @template T of StoreInterface
+ *
  * @extends IndexedCollectionInterface<T>
  */
 interface StoresInterface extends IndexedCollectionInterface

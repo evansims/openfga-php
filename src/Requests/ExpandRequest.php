@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{Consistency, TupleKeyInterface, TupleKeysInterface};
+use OpenFGA\Models\Collections\TupleKeysInterface;
+use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ExpandRequest implements ExpandRequestInterface
 {
+    /**
+     * @param string                                 $store
+     * @param TupleKeyInterface                      $tupleKey
+     * @param ?string                                $authorizationModel
+     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
+     * @param ?Consistency                           $consistency
+     */
     public function __construct(
         private string $store,
         private TupleKeyInterface $tupleKey,

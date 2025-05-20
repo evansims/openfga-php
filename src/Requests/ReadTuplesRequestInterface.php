@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{Consistency, TupleKeyInterface};
+use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Models\TupleKeyInterface;
 
 interface ReadTuplesRequestInterface extends RequestInterface
 {

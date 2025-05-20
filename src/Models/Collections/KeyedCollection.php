@@ -12,7 +12,9 @@ use OutOfBoundsException;
 use TypeError;
 
 use function count;
+use function gettype;
 use function is_int;
+use function is_object;
 use function sprintf;
 
 /**
@@ -98,6 +100,26 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $this->models[$key];
     }
 
+    /**
+     * @param string $key
+     *
+     * @return null|T
+     */
+    public function get(string $key): ?ModelInterface
+    {
+        return $this->models[$key] ?? null;
+    }
+
+    /**
+     * Check if a key exists in the collection.
+     *
+     * @param string $key
+     */
+    public function has(string $key): bool
+    {
+        return isset($this->models[$key]);
+    }
+
     public function jsonSerialize(): array
     {
         $response = [];
@@ -109,19 +131,28 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $response;
     }
 
-    /**
-     * @return T|null
-     */
-    public function get(string $key): ?ModelInterface
-    {
-        return $this->models[$key] ?? null;
-    }
-
     public function key(): string
     {
         $keys = array_keys($this->models);
 
         return $keys[$this->position] ?? throw new OutOfBoundsException('Invalid position');
+    }
+
+    /**
+     * @template U
+     *
+     * @param callable(T): U $callback
+     *
+     * @return array<string, U>
+     */
+    public function map(callable $callback): array
+    {
+        $result = [];
+        foreach ($this->models as $key => $item) {
+            $result[$key] = $callback($item);
+        }
+
+        return $result;
     }
 
     public function next(): void
@@ -141,7 +172,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
 
     /**
      * @param string $offset
-     * @param T $value
+     * @param T      $value
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -149,27 +180,11 @@ abstract class KeyedCollection implements KeyedCollectionInterface
             throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, is_object($value) ? $value::class : gettype($value)));
         }
 
-        if ($offset === null) {
+        if (null === $offset) {
             throw new InvalidArgumentException('KeyedCollection requires an explicit string key.');
         }
 
         $this->models[$offset] = $value;
-    }
-
-    /**
-     * Check if a key exists in the collection.
-     */
-    public function has(string $key): bool
-    {
-        return isset($this->models[$key]);
-    }
-
-    /**
-     * @return array<string, T>
-     */
-    public function toArray(): array
-    {
-        return $this->models;
     }
 
     public function offsetUnset(mixed $offset): void
@@ -184,23 +199,17 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         }
     }
 
-    /**
-     * @template U
-     * @param callable(T): U $callback
-     * @return array<string, U>
-     */
-    public function map(callable $callback): array
-    {
-        $result = [];
-        foreach ($this->models as $key => $item) {
-            $result[$key] = $callback($item);
-        }
-        return $result;
-    }
-
     public function rewind(): void
     {
         $this->position = 0;
+    }
+
+    /**
+     * @return array<string, T>
+     */
+    public function toArray(): array
+    {
+        return $this->models;
     }
 
     public function valid(): bool

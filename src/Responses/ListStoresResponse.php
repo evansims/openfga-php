@@ -6,18 +6,21 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Stores, StoresInterface};
+use OpenFGA\Models\Collections\{Stores, StoresInterface};
+use OpenFGA\Models\StoreInterface;
+use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
 final class ListStoresResponse implements ListStoresResponseInterface
 {
-    use ResponseTrait;
-
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param StoresInterface<StoreInterface> $stores
+     * @param ?string                         $continuationToken
+     */
     public function __construct(
         private StoresInterface $stores,
         private ?string $continuationToken = null,
@@ -34,7 +37,7 @@ final class ListStoresResponse implements ListStoresResponseInterface
         return $this->stores;
     }
 
-    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -51,7 +54,7 @@ final class ListStoresResponse implements ListStoresResponseInterface
             return $validator->validateAndTransform($data, self::class);
         }
 
-        self::handleResponseException($response);
+        RequestManager::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

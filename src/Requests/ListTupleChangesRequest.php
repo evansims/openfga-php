@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use DateTimeZone;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
@@ -38,7 +39,7 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
             'continuation_token' => $this->getContinuationToken(),
             'page_size' => $this->getPageSize(),
             'type' => $this->getType(),
-            'start_time' => $this->getStartTime()?->setTimezone(new DateTimeZone('UTC'))->format(DATE_ATOM),
+            'start_time' => self::getUtcTimestamp($this->getStartTime()),
         ], static fn ($v) => null !== $v);
 
         $query = count($params) > 0 ? '?' . http_build_query($params) : '';
@@ -62,5 +63,15 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    private static function getUtcTimestamp(?DateTimeInterface $dateTime): ?string
+    {
+        if (null === $dateTime) {
+            return null;
+        }
+
+        return ($dateTime instanceof DateTimeImmutable ? $dateTime : DateTimeImmutable::createFromInterface($dateTime))
+            ->setTimezone(new DateTimeZone('UTC'))->format(DateTimeInterface::RFC3339);
     }
 }
