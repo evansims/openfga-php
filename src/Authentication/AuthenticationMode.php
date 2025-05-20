@@ -6,7 +6,9 @@ namespace OpenFGA\Authentication;
 
 enum AuthenticationMode
 {
-    case NONE;
     case CLIENT_CREDENTIALS;
+
+    case NONE;
+
     case TOKEN;
 }

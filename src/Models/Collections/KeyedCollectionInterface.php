@@ -8,7 +8,6 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 use JsonSerializable;
-use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**

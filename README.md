@@ -3,7 +3,7 @@
 [![codecov](https://codecov.io/gh/evansims/openfga-php/graph/badge.svg?token=DYXXS91T0S)](https://codecov.io/gh/evansims/openfga-php)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/evansims/openfga-php/badge)](https://scorecard.dev/viewer/?uri=github.com/evansims/openfga-php)
 
-An unofficial PHP SDK for [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https://auth0.com/fine-grained-authorization) enabling high performance authorization for modern PHP applications.
+Blazing fast fine-grained authorization for modern PHP applications. An unofficial SDK for [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https://auth0.com/fine-grained-authorization).
 
 - [Requirements](#requirements)
 - [Installation](#installation)

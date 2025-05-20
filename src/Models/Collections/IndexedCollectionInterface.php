@@ -8,8 +8,9 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 use JsonSerializable;
-use OpenFGA\Schema\CollectionSchemaInterface;
 use OpenFGA\Models\ModelInterface;
+use OpenFGA\Schema\CollectionSchemaInterface;
+use ReturnTypeWillChange;
 
 /**
  * Represents a collection that is indexed by an integer, like a JSON array.
@@ -21,24 +22,19 @@ use OpenFGA\Models\ModelInterface;
  */
 interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, JsonSerializable
 {
-    public function count(): int;
-
-    public function key(): int;
-
-    public function next(): void;
-
-    public function offsetExists(mixed $offset): bool;
-
     /**
      * @param T $item
+     *
      * @return $this
      */
     public function add($item): static;
 
+    public function count(): int;
+
     /**
      * @return T
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function current();
 
     /**
@@ -74,26 +70,11 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
     public function get(int $offset);
 
     /**
-     * @param null|int|string $offset
-     * @param T               $value
+     * @return array<int|string, mixed>
      */
-    public function offsetSet(mixed $offset, mixed $value): void;
+    public function jsonSerialize(): array;
 
-    /**
-     * @param mixed $offset
-     *
-     * @return null|T
-     */
-    #[\ReturnTypeWillChange]
-    public function offsetGet(mixed $offset);
-
-    public function offsetUnset(mixed $offset): void;
-
-    public function rewind(): void;
-
-    public function valid(): bool;
-
-    public static function schema(): CollectionSchemaInterface;
+    public function key(): int;
 
     /**
      * Maps the collection to another collection.
@@ -107,6 +88,26 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function map(string $targetType, callable $callback): static;
 
+    public function next(): void;
+
+    public function offsetExists(mixed $offset): bool;
+
+    /**
+     * @param mixed $offset
+     *
+     * @return null|T
+     */
+    #[ReturnTypeWillChange]
+    public function offsetGet(mixed $offset);
+
+    /**
+     * @param null|int|string $offset
+     * @param T               $value
+     */
+    public function offsetSet(mixed $offset, mixed $value): void;
+
+    public function offsetUnset(mixed $offset): void;
+
     /**
      * Reduces the collection to a single value.
      *
@@ -118,6 +119,8 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      * @return U
      */
     public function reduce(mixed $initial, callable $callback): mixed;
+
+    public function rewind(): void;
 
     /**
      * Checks if any item matches the callback.
@@ -131,6 +134,8 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function toArray(): array;
 
+    public function valid(): bool;
+
     /**
      * @param iterable<T>|T ...$items
      *
@@ -138,8 +143,5 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function withItems(...$items): static;
 
-    /**
-     * @return array<int|string, mixed>
-     */
-    public function jsonSerialize(): array;
+    public static function schema(): CollectionSchemaInterface;
 }

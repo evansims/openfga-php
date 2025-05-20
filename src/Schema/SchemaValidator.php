@@ -200,7 +200,7 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param class-string<T> $className
+     * @param class-string<T>          $className
      * @param array<int|string, mixed> $items
      *
      * @throws ReflectionException
@@ -223,10 +223,9 @@ final class SchemaValidator
 
         $instance = $reflection->newInstance();
 
-        /* @phpstan-var T $instance */
-
+        /** @phpstan-var T $instance */
         if ($instance instanceof ArrayAccess) {
-            /** @var ArrayAccess<int|string, mixed> & T $arrayInstance */
+            /** @var ArrayAccess<int|string, mixed>&T $arrayInstance */
             $arrayInstance = $instance;
             foreach ($items as $key => $item) {
                 $arrayInstance->offsetSet($key, $item);
@@ -396,8 +395,8 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param array<int, mixed>         $data   Array of items
-     * @param CollectionSchemaInterface $schema Collection schema
+     * @param array<int, mixed>         $data      Array of items
+     * @param CollectionSchemaInterface $schema    Collection schema
      * @param class-string<T>           $className
      *
      * @throws SchemaValidationException If validation fails
@@ -452,19 +451,11 @@ final class SchemaValidator
                 }
 
                 if ('date' === $format) {
-                    if (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d', $value)) {
-                        return true;
-                    }
-
-                    return false;
+                    return (bool) (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d', $value));
                 }
 
                 if ('datetime' === $format) {
-                    if (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value)) {
-                        return true;
-                    }
-
-                    return false;
+                    return (bool) (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value));
                 }
 
                 if (null !== $enum) {

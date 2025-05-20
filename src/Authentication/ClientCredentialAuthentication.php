@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Authentication;
 
-use OpenFGA\Network\RequestContext;
-use OpenFGA\Network\RequestMethod;
+use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ClientCredentialAuthentication implements AuthenticationInterface

@@ -9,12 +9,15 @@ use OpenFGA\Exceptions\ModelException;
 use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use OutOfBoundsException;
+use ReturnTypeWillChange;
+
 use TypeError;
 
 use function count;
 use function gettype;
 use function is_int;
 use function is_object;
+use function is_string;
 use function sprintf;
 
 /**
@@ -33,6 +36,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
 
     /**
      * @phpstan-var class-string<ModelInterface>
+     *
      * @var class-string<ModelInterface>
      */
     protected static string $itemType;
@@ -70,7 +74,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     /**
      * Add an item to the collection.
      *
-     * @param T $item
+     * @param T      $item
      * @param string $key
      *
      * @return $this
@@ -94,10 +98,11 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     /**
      * @return T
      */
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function current()
     {
         $key = $this->key(); // already throws if invalid
+
         return $this->models[$key];
     }
 
@@ -141,7 +146,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     {
         $key = array_keys($this->models)[$this->position] ?? null;
 
-        if (!is_string($key)) {
+        if (! is_string($key)) {
             throw new OutOfBoundsException('Invalid key type; expected string.');
         }
 
@@ -176,26 +181,20 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return isset($this->models[$offset]);
     }
 
-    #[\ReturnTypeWillChange]
+    #[ReturnTypeWillChange]
     public function offsetGet(mixed $offset)
     {
         return $this->models[$offset] ?? null;
     }
 
     /**
-     * @param string|null $offset
+     * @param null|string $offset
      * @param T           $value
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Expected instance of %s, %s given.',
-                    static::$itemType,
-                    is_object($value) ? $value::class : gettype($value)
-                )
-            );
+            throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, is_object($value) ? $value::class : gettype($value)));
         }
 
         if (! is_string($offset)) {
@@ -230,7 +229,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         $copy = [];
 
         foreach ($this->models as $key => $value) {
-            if (!is_string($key)) {
+            if (! is_string($key)) {
                 continue; // or throw if you want stricter enforcement
             }
 
