@@ -6,7 +6,7 @@ namespace OpenFGA;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthentication, NullCredentialAuthentication};
+use OpenFGA\Authentication\{AccessToken, AccessTokenInterface, AuthenticationInterface, ClientCredentialAuthentication};
 use OpenFGA\Credentials\{ClientCredentialInterface, CredentialInterface};
 use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface, TupleKeyInterface};
 use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
@@ -33,6 +33,8 @@ final class Client implements ClientInterface
     private ?RequestManager $requestManager = null;
 
     private ?SchemaValidator $validator = null;
+
+    private ?AccessTokenInterface $accessToken = null;
 
     public function __construct(
         private string $url,
@@ -314,17 +316,22 @@ final class Client implements ClientInterface
         return WriteTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
-    private function getAuthentication(): AuthenticationInterface
+    private function getAuthenticationHeader(): ?string
     {
-        if (null === $this->authentication) {
-            if ($this->credential instanceof ClientCredentialInterface) {
-                $this->authentication = new ClientCredentialAuthentication($this);
-            } else {
-                $this->authentication = new NullCredentialAuthentication($this);
+        if (null === $this->accessToken || $this->accessToken->isExpired()) {
+            if (null === $this->authentication) {
+                if ($this->credential instanceof ClientCredentialInterface) {
+                    $this->authentication = new ClientCredentialAuthentication($this->credential);
+                    $this->accessToken = AccessToken::fromResponse($this->sendRequest($this->authentication));
+                }
             }
         }
 
-        return $this->authentication;
+        if (null !== $this->accessToken) {
+            return (string) $this->accessToken;
+        }
+
+        return null;
     }
 
     private function getValidator(): SchemaValidator
@@ -336,7 +343,7 @@ final class Client implements ClientInterface
     {
         $this->requestManager ??= new RequestManager(
             url: $this->url,
-            authorizationHeader: $this->getAuthentication()->getAuthorizationHeader(),
+            authorizationHeader: $this->getAuthenticationHeader(),
             httpClient: $this->httpClient,
             httpStreamFactory: $this->httpStreamFactory,
             httpRequestFactory: $this->httpRequestFactory,

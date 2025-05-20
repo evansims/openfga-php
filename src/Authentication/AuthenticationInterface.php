@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Authentication;
 
-interface AuthenticationInterface
+use OpenFGA\Requests\RequestInterface;
+
+interface AuthenticationInterface extends RequestInterface
 {
-    public function getAuthorizationHeader(): ?string;
 }
