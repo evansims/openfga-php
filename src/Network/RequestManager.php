@@ -41,7 +41,7 @@ final class RequestManager implements RequestManagerInterface
 
     public function getHttpClient(): ClientInterface
     {
-        if (null === $this->httpClient) {
+        if (! $this->httpClient instanceof ClientInterface) {
             $httpClient = Discover::httpClient();
 
             if (null === $httpClient) {
@@ -56,7 +56,7 @@ final class RequestManager implements RequestManagerInterface
 
     public function getHttpRequestFactory(): RequestFactoryInterface
     {
-        if (null === $this->httpRequestFactory) {
+        if (! $this->httpRequestFactory instanceof RequestFactoryInterface) {
             $httpRequestFactory = Discover::httpRequestFactory();
 
             if (null === $httpRequestFactory) {
@@ -71,7 +71,7 @@ final class RequestManager implements RequestManagerInterface
 
     public function getHttpResponseFactory(): ResponseFactoryInterface
     {
-        if (null === $this->httpResponseFactory) {
+        if (! $this->httpResponseFactory instanceof ResponseFactoryInterface) {
             $httpResponseFactory = Discover::httpResponseFactory();
 
             if (null === $httpResponseFactory) {
@@ -86,7 +86,7 @@ final class RequestManager implements RequestManagerInterface
 
     public function getHttpStreamFactory(): StreamFactoryInterface
     {
-        if (null === $this->httpStreamFactory) {
+        if (! $this->httpStreamFactory instanceof StreamFactoryInterface) {
             $httpStreamFactory = Discover::httpStreamFactory();
 
             if (null === $httpStreamFactory) {
@@ -131,8 +131,8 @@ final class RequestManager implements RequestManagerInterface
             $request = $request->withHeader((string) $name, $value);
         }
 
-        if (null !== $body) {
-            $request = $request->withBody($body);
+        if ($body instanceof \Psr\Http\Message\StreamInterface) {
+            return $request->withBody($body);
         }
 
         return $request;

@@ -39,7 +39,7 @@ final class ConditionParameter implements ConditionParameterInterface
         return array_filter([
             'type_name' => $this->typeName->value,
             'generic_types' => $this->genericTypes?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

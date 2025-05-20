@@ -47,7 +47,7 @@ final class RelationReference implements RelationReferenceInterface
             'relation' => $this->relation,
             'wildcard' => $this->wildcard,
             'condition' => $this->condition,
-        ], static fn ($v) => null !== $v);
+        ], static fn ($v): bool => null !== $v);
     }
 
     public static function schema(): SchemaInterface

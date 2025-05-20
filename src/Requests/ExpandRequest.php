@@ -50,7 +50,7 @@ final class ExpandRequest implements ExpandRequestInterface
             'authorization_model_id' => $this->authorizationModel,
             'consistency' => $this->consistency?->value,
             'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 

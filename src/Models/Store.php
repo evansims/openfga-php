@@ -57,7 +57,7 @@ final class Store implements StoreInterface
             'created_at' => self::getUtcTimestamp($this->createdAt) ?? '',
             'updated_at' => self::getUtcTimestamp($this->updatedAt) ?? '',
             'deleted_at' => self::getUtcTimestamp($this->deletedAt),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface
@@ -76,7 +76,7 @@ final class Store implements StoreInterface
 
     private static function getUtcTimestamp(?DateTimeInterface $dateTime): ?string
     {
-        if (null === $dateTime) {
+        if (! $dateTime instanceof DateTimeInterface) {
             return null;
         }
 

@@ -54,7 +54,7 @@ final class Node implements NodeInterface
             'difference' => $this->difference?->jsonSerialize(),
             'union' => $this->union?->jsonSerialize(),
             'intersection' => $this->intersection?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

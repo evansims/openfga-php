@@ -7,8 +7,6 @@ namespace OpenFGA\Requests;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function count;
-
 final class ListAuthorizationModelsRequest implements ListAuthorizationModelsRequestInterface
 {
     public function __construct(
@@ -33,9 +31,9 @@ final class ListAuthorizationModelsRequest implements ListAuthorizationModelsReq
         $params = array_filter([
             'continuation_token' => $this->getContinuationToken(),
             'page_size' => $this->getPageSize(),
-        ], static fn ($v) => null !== $v);
+        ], static fn ($v): bool => null !== $v);
 
-        $query = count($params) > 0 ? '?' . http_build_query($params) : '';
+        $query = [] !== $params ? '?' . http_build_query($params) : '';
 
         return new RequestContext(
             method: RequestMethod::GET,

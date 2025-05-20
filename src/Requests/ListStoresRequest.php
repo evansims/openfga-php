@@ -7,8 +7,6 @@ namespace OpenFGA\Requests;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function count;
-
 final class ListStoresRequest implements ListStoresRequestInterface
 {
     public function __construct(
@@ -32,9 +30,9 @@ final class ListStoresRequest implements ListStoresRequestInterface
         $params = array_filter([
             'continuation_token' => $this->getContinuationToken(),
             'page_size' => $this->getPageSize(),
-        ], static fn ($v) => null !== $v);
+        ], static fn ($v): bool => null !== $v);
 
-        $query = count($params) > 0 ? '?' . http_build_query($params) : '';
+        $query = [] !== $params ? '?' . http_build_query($params) : '';
 
         return new RequestContext(
             method: RequestMethod::GET,

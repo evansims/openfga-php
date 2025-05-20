@@ -47,7 +47,7 @@ final class TupleKey implements TupleKeyInterface
             'relation' => $this->relation,
             'object' => $this->object,
             'condition' => $this->condition?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

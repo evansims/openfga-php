@@ -50,7 +50,7 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
             'consistency' => $this->consistency?->value,
             'page_size' => $this->pageSize,
             'continuation_token' => $this->continuationToken,
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 

@@ -43,8 +43,8 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
 
         try {
             $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-        } catch (Exception $e) {
-            throw new ApiUnexpectedResponseException($e->getMessage());
+        } catch (Exception $exception) {
+            throw new ApiUnexpectedResponseException($exception->getMessage());
         }
 
         if (200 === $response->getStatusCode() && is_array($data)) {
@@ -61,7 +61,7 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
 
     public static function schema(): SchemaInterface
     {
-        if (null === self::$schema) {
+        if (! self::$schema instanceof SchemaInterface) {
             self::$schema = new Schema(
                 className: self::class,
                 properties: [

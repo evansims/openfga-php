@@ -24,7 +24,7 @@ final class Leaf implements LeafInterface
         private readonly ?ComputedInterface $computed = null,
         private readonly ?UsersetTreeTupleToUsersetInterface $tupleToUserset = null,
     ) {
-        if (null === $users && null === $computed && null === $tupleToUserset) {
+        if (! $users instanceof UsersListInterface && ! $computed instanceof ComputedInterface && ! $tupleToUserset instanceof UsersetTreeTupleToUsersetInterface) {
             throw new InvalidArgumentException('Leaf must contain at least one of users, computed or tupleToUserset');
         }
     }
@@ -50,7 +50,7 @@ final class Leaf implements LeafInterface
             'users' => $this->users?->jsonSerialize(),
             'computed' => $this->computed?->jsonSerialize(),
             'tupleToUserset' => $this->tupleToUserset?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

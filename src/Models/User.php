@@ -40,7 +40,7 @@ final class User implements UserInterface
             'object' => $this->serializeObject(),
             'userset' => $this->userset?->jsonSerialize(),
             'wildcard' => $this->wildcard?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

@@ -54,7 +54,7 @@ final class Condition implements ConditionInterface
             'expression' => $this->expression,
             'parameters' => $this->parameters?->jsonSerialize(),
             'metadata' => $this->metadata?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

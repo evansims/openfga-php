@@ -37,7 +37,7 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
             'type_definitions' => $this->getTypeDefinitions()->jsonSerialize(),
             'schema_version' => (string) $this->getSchemaVersion()->value,
             'conditions' => $this->getConditions()?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
