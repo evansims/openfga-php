@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type UserTypeFilterShape = array{type: string, relation?: string}
- */
 interface UserTypeFilterInterface extends ModelInterface
 {
     public function getRelation(): ?string;
@@ -14,7 +11,7 @@ interface UserTypeFilterInterface extends ModelInterface
     public function getType(): string;
 
     /**
-     * @return UserTypeFilterShape
+     * @return array{type: string, relation?: string}
      */
     public function jsonSerialize(): array;
 }

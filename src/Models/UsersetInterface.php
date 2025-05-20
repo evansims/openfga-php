@@ -4,43 +4,37 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type UsersetShape = array{computed_userset?: ObjectRelationShape, tuple_to_userset?: TupleToUsersetShape, union?: list<UsersetShape>, intersection?: list<UsersetShape>, difference?: DifferenceShape, direct?: object}
- */
+use OpenFGA\Models\Collections\UsersetsInterface;
+
 interface UsersetInterface extends ModelInterface
 {
-    /**
-     * @return null|ObjectRelationInterface
-     */
     public function getComputedUserset(): ?ObjectRelationInterface;
 
-    /**
-     * @return null|DifferenceV1Interface
-     */
     public function getDifference(): ?DifferenceV1Interface;
 
-    /**
-     * @return null|object
-     */
     public function getDirect(): ?object;
 
     /**
-     * @return null|UsersetsInterface
+     * @return null|UsersetsInterface<UsersetInterface>
      */
     public function getIntersection(): ?UsersetsInterface;
 
-    /**
-     * @return null|TupleToUsersetV1Interface
-     */
     public function getTupleToUserset(): ?TupleToUsersetV1Interface;
 
     /**
-     * @return null|UsersetsInterface
+     * @return null|UsersetsInterface<UsersetInterface>
      */
     public function getUnion(): ?UsersetsInterface;
 
     /**
-     * @return UsersetShape
+     * @return array{
+     *     computed_userset?: array{object?: string, relation?: string},
+     *     tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
+     *     union?: array<mixed>,
+     *     intersection?: array<mixed>,
+     *     difference?: array{base: array<mixed>, subtract: array<mixed>},
+     *     direct?: object,
+     * }
      */
     public function jsonSerialize(): array;
 }

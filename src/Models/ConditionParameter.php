@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
+use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class ConditionParameter implements ConditionParameterInterface
 {
+    public const OPENAPI_MODEL = 'ConditionParamTypeRef';
+
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param TypeName                                                  $typeName
+     * @param ConditionParametersInterface<ConditionParameterInterface> $genericTypes
+     */
     public function __construct(
         private readonly TypeName $typeName,
         private readonly ?ConditionParametersInterface $genericTypes = null,
@@ -26,9 +34,6 @@ final class ConditionParameter implements ConditionParameterInterface
         return $this->typeName;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
         return array_filter([

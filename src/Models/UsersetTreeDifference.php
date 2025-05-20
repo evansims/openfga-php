@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
 {
+    public const OPENAPI_MODEL = 'UsersetTree.Difference';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(

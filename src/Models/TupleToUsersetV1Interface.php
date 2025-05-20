@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type TupleToUsersetShape = array{tupleset: ObjectRelationShape, computed_userset: ObjectRelationShape}
- */
 interface TupleToUsersetV1Interface extends ModelInterface
 {
     public function getComputedUserset(): ObjectRelationInterface;
@@ -14,7 +11,7 @@ interface TupleToUsersetV1Interface extends ModelInterface
     public function getTupleset(): ObjectRelationInterface;
 
     /**
-     * @return TupleToUsersetShape
+     * @return array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
      */
     public function jsonSerialize(): array;
 }

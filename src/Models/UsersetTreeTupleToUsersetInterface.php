@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type UsersetTreeTupleToUsersetShape = array{base: NodeShape, subtract: NodeShape}
- */
+use OpenFGA\Models\Collections\ComputedsInterface;
+
 interface UsersetTreeTupleToUsersetInterface extends ModelInterface
 {
-    public function getBase(): NodeInterface;
+    /**
+     * @return ComputedsInterface<ComputedInterface>
+     */
+    public function getComputed(): ComputedsInterface;
 
-    public function getSubtract(): NodeInterface;
+    public function getTupleset(): string;
 
     /**
-     * @return UsersetTreeTupleToUsersetShape
+     * @return array{tupleset: string, computed: array<int, array{userset: string}}
      */
     public function jsonSerialize(): array;
 }

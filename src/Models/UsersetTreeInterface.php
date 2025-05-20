@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type UsersetTreeShape = array{root: NodeShape}
- */
 interface UsersetTreeInterface extends ModelInterface
 {
     public function getRoot(): NodeInterface;
 
     /**
-     * @return UsersetTreeShape
+     * @return array{root: array{
+     * name: string,
+     * leaf?: array{users?: array<int, string>, computed?: array{userset: string}, tupleToUserset?: mixed},
+     * difference?: array{base: array<mixed>, subtract: array<mixed>},
+     * union?: array<mixed>,
+     * intersection?: array<mixed>,
+     * direct?: object,
+     * }}
      */
     public function jsonSerialize(): array;
 }

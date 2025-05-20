@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type ObjectRelationShape = array{object?: string, relation?: string}
- */
 interface ObjectRelationInterface extends ModelInterface
 {
     public function getObject(): ?string;
@@ -14,7 +11,7 @@ interface ObjectRelationInterface extends ModelInterface
     public function getRelation(): ?string;
 
     /**
-     * @return ObjectRelationShape
+     * @return array{object?: string, relation?: string}
      */
     public function jsonSerialize(): array;
 }

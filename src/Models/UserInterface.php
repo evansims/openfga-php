@@ -4,13 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type UserShape = array{object?: object, userset?: UsersetUserShape, wildcard?: TypedWildcardShape, difference?: DifferenceV1Shape}
- */
 interface UserInterface extends ModelInterface
 {
-    public function getDifference(): ?DifferenceV1Interface;
-
     public function getObject(): ?object;
 
     public function getUserset(): ?UsersetUserInterface;
@@ -18,7 +13,7 @@ interface UserInterface extends ModelInterface
     public function getWildcard(): ?TypedWildcardInterface;
 
     /**
-     * @return UserShape
+     * @return array{object?: mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}
      */
     public function jsonSerialize(): array;
 }

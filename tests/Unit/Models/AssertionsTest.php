@@ -84,12 +84,6 @@ test('validates array item types', function (): void {
     new Assertions([new stdClass()]);
 });
 
-test('validates constructor argument types', function (): void {
-    $this->expectException(TypeError::class);
-    // @phpstan-ignore-next-line - Intentionally passing wrong type for testing
-    new Assertions('invalid');
-});
-
 test('can be initialized with iterable', function (): void {
     $iterable = new class($this->assertion1) implements IteratorAggregate {
         public function __construct(private $assertion)

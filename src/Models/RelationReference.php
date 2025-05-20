@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class RelationReference implements RelationReferenceInterface
 {
+    public const OPENAPI_MODEL = 'RelationReference';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
@@ -38,20 +40,14 @@ final class RelationReference implements RelationReferenceInterface
         return $this->wildcard;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
-        return array_filter(
-            [
-                'type' => $this->type,
-                'relation' => $this->relation,
-                'wildcard' => $this->wildcard,
-                'condition' => $this->condition,
-            ],
-            static fn ($v) => null !== $v,
-        );
+        return array_filter([
+            'type' => $this->type,
+            'relation' => $this->relation,
+            'wildcard' => $this->wildcard,
+            'condition' => $this->condition,
+        ], static fn ($v) => null !== $v);
     }
 
     public static function schema(): SchemaInterface

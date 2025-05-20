@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersetTree implements UsersetTreeInterface
 {
+    public const OPENAPI_TYPE = 'UsersetTree';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(

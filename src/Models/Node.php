@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Node implements NodeInterface
 {
+    public const OPENAPI_MODEL = 'Node';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
@@ -44,21 +46,15 @@ final class Node implements NodeInterface
         return $this->union;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
-        return array_filter(
-            [
-                'name' => $this->name,
-                'leaf' => $this->leaf?->jsonSerialize(),
-                'difference' => $this->difference?->jsonSerialize(),
-                'union' => $this->union?->jsonSerialize(),
-                'intersection' => $this->intersection?->jsonSerialize(),
-            ],
-            static fn ($value) => null !== $value,
-        );
+        return array_filter([
+            'name' => $this->name,
+            'leaf' => $this->leaf?->jsonSerialize(),
+            'difference' => $this->difference?->jsonSerialize(),
+            'union' => $this->union?->jsonSerialize(),
+            'intersection' => $this->intersection?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface

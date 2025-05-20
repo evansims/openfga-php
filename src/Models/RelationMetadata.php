@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class RelationMetadata implements RelationMetadataInterface
 {
+    public const OPENAPI_MODEL = 'RelationMetadata';
+
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param null|string                      $module
-     * @param null|RelationReferencesInterface $directlyRelatedUserTypes
-     * @param null|SourceInfoInterface         $sourceInfo
+     * @param null|string                                                  $module
+     * @param null|RelationReferencesInterface<RelationReferenceInterface> $directlyRelatedUserTypes
+     * @param null|SourceInfoInterface                                     $sourceInfo
      */
     public function __construct(
         private readonly ?string $module = null,
@@ -37,9 +40,6 @@ final class RelationMetadata implements RelationMetadataInterface
         return $this->sourceInfo;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
         return array_filter([

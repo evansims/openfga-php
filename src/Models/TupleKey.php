@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class TupleKey implements TupleKeyInterface
 {
+    public const OPENAPI_MODEL = 'TupleKey';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
@@ -38,9 +40,6 @@ final class TupleKey implements TupleKeyInterface
         return $this->user;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
         return array_filter([

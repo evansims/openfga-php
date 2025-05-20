@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use JsonSerializable;
+use OpenFGA\Models\Collections\TupleKeysInterface;
 
-/**
- * @psalm-type AssertionShape = array{tuple_key: TupleKeyShape, expectation: bool, contextual_tuples?: TupleKeysShape, context?: array}
- */
-interface AssertionInterface extends JsonSerializable, ModelInterface
+interface AssertionInterface extends ModelInterface
 {
+    /**
+     * @return null|array<string, mixed>
+     */
     public function getContext(): ?array;
 
+    /**
+     * @return null|TupleKeysInterface<TupleKeyInterface>
+     */
     public function getContextualTuples(): ?TupleKeysInterface;
 
     public function getExpectation(): bool;
@@ -20,7 +23,12 @@ interface AssertionInterface extends JsonSerializable, ModelInterface
     public function getTupleKey(): AssertionTupleKeyInterface;
 
     /**
-     * @return AssertionShape
+     * @return array{
+     *     tuple_key: array<string, mixed>,
+     *     expectation: bool,
+     *     contextual_tuples?: array<array-key, mixed>,
+     *     context?: array<array-key, mixed>
+     * }
      */
     public function jsonSerialize(): array;
 }

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type AssertionTupleKeyShape = array{user: string, relation: string, object: string}
- */
 interface AssertionTupleKeyInterface extends ModelInterface
 {
     public function getObject(): string;
@@ -16,7 +13,11 @@ interface AssertionTupleKeyInterface extends ModelInterface
     public function getUser(): string;
 
     /**
-     * @return AssertionTupleKeyShape
+     * @return array{
+     *     user: string,
+     *     relation: string,
+     *     object: string,
+     * }
      */
     public function jsonSerialize(): array;
 }

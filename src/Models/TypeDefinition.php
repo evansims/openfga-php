@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitionRelationsInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class TypeDefinition implements TypeDefinitionInterface
 {
+    public const OPENAPI_MODEL = 'TypeDefinition';
+
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                                $type      The type of the object that this definition is for.
-     * @param null|TypeDefinitionRelationsInterface $relations An array of relation names to Userset definitions.
-     * @param null|MetadataInterface                $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
+     * @param string                                                  $type      The type of the object that this definition is for.
+     * @param null|TypeDefinitionRelationsInterface<UsersetInterface> $relations An array of relation names to Userset definitions.
+     * @param null|MetadataInterface                                  $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
      */
     public function __construct(
         private readonly string $type,
@@ -37,19 +40,13 @@ final class TypeDefinition implements TypeDefinitionInterface
         return $this->type;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
-        return array_filter(
-            [
-                'type' => $this->type,
-                'relations' => $this->relations?->jsonSerialize(),
-                'metadata' => $this->metadata?->jsonSerialize(),
-            ],
-            static fn ($value): bool => null !== $value,
-        );
+        return array_filter([
+            'type' => $this->type,
+            'relations' => $this->relations?->jsonSerialize(),
+            'metadata' => $this->metadata?->jsonSerialize(),
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

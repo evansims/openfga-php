@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Computed implements ComputedInterface
 {
+    public const OPENAPI_MODEL = 'Computed';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(

@@ -16,13 +16,7 @@ final class User implements UserInterface
         private readonly ?object $object = null,
         private readonly ?UsersetUserInterface $userset = null,
         private readonly ?TypedWildcardInterface $wildcard = null,
-        private readonly ?DifferenceV1Interface $difference = null,
     ) {
-    }
-
-    public function getDifference(): ?DifferenceV1Interface
-    {
-        return $this->difference;
     }
 
     public function getObject(): ?object
@@ -40,16 +34,12 @@ final class User implements UserInterface
         return $this->wildcard;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
         return array_filter([
             'object' => $this->serializeObject(),
             'userset' => $this->userset?->jsonSerialize(),
             'wildcard' => $this->wildcard?->jsonSerialize(),
-            'difference' => $this->difference?->jsonSerialize(),
         ], static fn ($value) => null !== $value);
     }
 
@@ -66,7 +56,7 @@ final class User implements UserInterface
         );
     }
 
-    private function serializeObject(): object | string | array | null
+    private function serializeObject(): mixed
     {
         if (null === $this->object) {
             return null;

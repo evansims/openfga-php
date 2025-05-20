@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Condition implements ConditionInterface
 {
+    public const OPENAPI_MODEL = 'Condition';
+
     private static ?SchemaInterface $schema = null;
 
     /**
-     * Construct a Condition object.
-     *
-     * @param string                            $name       A unique name for the condition.
-     * @param string                            $expression A Google CEL expression, expressed as a string.
-     * @param null|ConditionParametersInterface $parameters A collection of parameter names to the parameter's defined type reference.
-     * @param null|ConditionMetadataInterface   $metadata   The collection of metadata that should be associated with the condition.
+     * @param string                                                         $name       A unique name for the condition.
+     * @param string                                                         $expression A Google CEL expression, expressed as a string.
+     * @param null|ConditionParametersInterface<ConditionParameterInterface> $parameters A collection of parameter names to the parameter's defined type reference.
+     * @param null|ConditionMetadataInterface                                $metadata   The collection of metadata that should be associated with the condition.
      */
     public function __construct(
         private readonly string $name,
@@ -46,20 +47,14 @@ final class Condition implements ConditionInterface
         return $this->parameters;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
-        return array_filter(
-            [
-                'name' => $this->name,
-                'expression' => $this->expression,
-                'parameters' => $this->parameters?->jsonSerialize(),
-                'metadata' => $this->metadata?->jsonSerialize(),
-            ],
-            static fn ($value): bool => null !== $value,
-        );
+        return array_filter([
+            'name' => $this->name,
+            'expression' => $this->expression,
+            'parameters' => $this->parameters?->jsonSerialize(),
+            'metadata' => $this->metadata?->jsonSerialize(),
+        ], static fn ($value) => null !== $value);
     }
 
     public static function schema(): SchemaInterface
