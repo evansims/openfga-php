@@ -16,7 +16,7 @@
   ],
   "homepage": "https://github.com/evanisms/openfga-php",
   "require": {
-    "php": "^8.2",
+    "php": "^8.3",
     "ext-json": "*",
     "ext-mbstring": "*",
     "ext-openssl": "*",
@@ -26,22 +26,22 @@
     "psr/http-message-implementation": "^1"
   },
   "require-dev": {
-    "ergebnis/composer-normalize": "^2.47",
-    "friendsofphp/php-cs-fixer": "^3.65",
-    "maglnet/composer-require-checker": "^4.16",
-    "mockery/mockery": "^1.6",
+    "ergebnis/composer-normalize": "^2",
+    "friendsofphp/php-cs-fixer": "^3",
+    "maglnet/composer-require-checker": "^4",
+    "mockery/mockery": "^1",
     "pestphp/pest": "^3",
-    "phpro/grumphp": "^2.12",
+    "phpro/grumphp": "^2",
     "phpstan/phpstan": "^2",
     "phpstan/phpstan-strict-rules": "^2",
     "psr-mock/http-client-implementation": "^1",
     "psr-mock/http-factory-implementation": "^1",
     "psr-mock/http-message-implementation": "^1",
-    "rector/rector": "^2.0@RC",
+    "rector/rector": "^2",
     "symfony/cache": "^4 || ^5 || ^6 || ^7",
     "symfony/event-dispatcher": "^4 || ^5 || ^6 || ^7",
-    "vimeo/psalm": "^6.11",
-    "wikimedia/composer-merge-plugin": "^2.1"
+    "vimeo/psalm": "^6",
+    "wikimedia/composer-merge-plugin": "^2"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -98,7 +98,7 @@
     "pest:contract": [
       "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning"
     ],
-    "psalm": "@php vendor/bin/psalm",
+    "psalm": "@php vendor/bin/psalm --no-cache",
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
       "@php vendor/bin/php-cs-fixer fix --dry-run --diff"
