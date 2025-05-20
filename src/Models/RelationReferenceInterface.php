@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type RelationReferenceShape = array{type: string, relation?: string, wildcard?: object, condition?: string}
- */
 interface RelationReferenceInterface extends ModelInterface
 {
     public function getCondition(): ?string;
@@ -18,7 +15,7 @@ interface RelationReferenceInterface extends ModelInterface
     public function getWildcard(): ?object;
 
     /**
-     * @return RelationReferenceShape
+     * @return array{type: string, relation?: string, wildcard?: object, condition?: string}
      */
     public function jsonSerialize(): array;
 }

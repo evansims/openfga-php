@@ -8,7 +8,7 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class DifferenceV1 implements DifferenceV1Interface
 {
-    public const OPENAPI_TYPE = 'v1.Difference';
+    public const OPENAPI_MODEL = 'v1.Difference';
 
     private static ?SchemaInterface $schema = null;
 

@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class ConditionMetadata implements ConditionMetadataInterface
 {
+    public const OPENAPI_MODEL = 'ConditionMetadata';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(

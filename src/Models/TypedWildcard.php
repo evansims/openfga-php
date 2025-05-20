@@ -9,6 +9,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class TypedWildcard implements TypedWildcardInterface
 {
+    public const OPENAPI_TYPE = 'TypedWildcard';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(

@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type SourceInfoShape = array{file: string}
- */
 interface SourceInfoInterface extends ModelInterface
 {
     public function getFile(): string;
 
     /**
-     * @return SourceInfoShape
+     * @return array{file: string}
      */
     public function jsonSerialize(): array;
 }

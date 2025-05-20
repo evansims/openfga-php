@@ -5,12 +5,20 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use InvalidArgumentException;
+use OpenFGA\Models\Collections\{UsersList, UsersListInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Leaf implements LeafInterface
 {
+    public const OPENAPI_MODEL = 'Leaf';
+
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param null|UsersListInterface<UsersListUserInterface> $users
+     * @param null|ComputedInterface                          $computed
+     * @param null|UsersetTreeTupleToUsersetInterface         $tupleToUserset
+     */
     public function __construct(
         private readonly ?UsersListInterface $users = null,
         private readonly ?ComputedInterface $computed = null,
@@ -36,9 +44,6 @@ final class Leaf implements LeafInterface
         return $this->users;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
         return array_filter([

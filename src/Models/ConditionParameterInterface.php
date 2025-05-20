@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type ConditionParameterShape = array{type_name: string, generic_types?: ConditionParametersShape}
- */
+use OpenFGA\Models\Collections\{ConditionParametersInterface};
+use OpenFGA\Models\Enums\TypeName;
+
 interface ConditionParameterInterface extends ModelInterface
 {
+    /**
+     * @return ConditionParametersInterface<ConditionParameterInterface>
+     */
     public function getGenericTypes(): ?ConditionParametersInterface;
 
     public function getTypeName(): TypeName;
 
     /**
-     * @return ConditionParameterShape
+     * @return array{type_name: string, generic_types?: array<int, mixed>}
      */
     public function jsonSerialize(): array;
 }

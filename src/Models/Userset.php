@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\{Usersets, UsersetsInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Userset implements UsersetInterface
@@ -12,6 +13,14 @@ final class Userset implements UsersetInterface
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param null|object                              $direct
+     * @param null|ObjectRelationInterface             $computedUserset
+     * @param null|TupleToUsersetV1Interface           $tupleToUserset
+     * @param null|UsersetsInterface<UsersetInterface> $union
+     * @param null|UsersetsInterface<UsersetInterface> $intersection
+     * @param null|DifferenceV1Interface               $difference
+     */
     public function __construct(
         private readonly ?object $direct = null,
         private readonly ?ObjectRelationInterface $computedUserset = null,
@@ -52,9 +61,6 @@ final class Userset implements UsersetInterface
         return $this->union;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
         return array_filter([

@@ -6,9 +6,6 @@ namespace OpenFGA\Models;
 
 use DateTimeImmutable;
 
-/**
- * @psalm-type TupleShape = array{'key': TupleKeyShape,'timestamp': string}
- */
 interface TupleInterface extends ModelInterface
 {
     public function getKey(): TupleKeyInterface;
@@ -16,7 +13,7 @@ interface TupleInterface extends ModelInterface
     public function getTimestamp(): DateTimeImmutable;
 
     /**
-     * @return TupleShape
+     * @return array{key: array{user: string, relation: string, object: string, condition?: array<string, mixed>}, timestamp: string}
      */
     public function jsonSerialize(): array;
 }

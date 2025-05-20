@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Assertion implements AssertionInterface
 {
+    public const OPENAPI_MODEL = 'Assertion';
+
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param AssertionTupleKeyInterface $tupleKey         Tuple key for assertion.
-     * @param bool                       $expectation      Whether the assertion is expected to be true or false.
-     * @param null|TupleKeysInterface    $contextualTuples Contextual tuples for assertion.
-     * @param null|array                 $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
+     * @param AssertionTupleKeyInterface                 $tupleKey         Tuple key for assertion.
+     * @param bool                                       $expectation      Whether the assertion is expected to be true or false.
+     * @param null|TupleKeysInterface<TupleKeyInterface> $contextualTuples Contextual tuples for assertion.
+     * @param null|array<string, mixed>                  $context          Additional request context that will be used to evaluate any ABAC conditions encountered in the query evaluation.
      */
     public function __construct(
         private readonly AssertionTupleKeyInterface $tupleKey,
@@ -44,9 +47,6 @@ final class Assertion implements AssertionInterface
         return $this->tupleKey;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
         return array_filter([

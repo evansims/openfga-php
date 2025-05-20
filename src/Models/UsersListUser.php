@@ -8,6 +8,10 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersListUser implements UsersListUserInterface
 {
+    /**
+     * TODO: This approach won't work. We'll most likely need to turn this into some sort of custom serializer.
+     * We'll need to replace UsersListUser and UsersList. UsersListUser shouldn't need to exist.
+     */
     private static ?SchemaInterface $schema = null;
 
     public function __construct(

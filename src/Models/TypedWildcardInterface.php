@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type TypedWildcardShape = array{type: string}
- */
 interface TypedWildcardInterface extends ModelInterface
 {
     public function __toString(): string;
@@ -14,7 +11,7 @@ interface TypedWildcardInterface extends ModelInterface
     public function getType(): string;
 
     /**
-     * @return TypedWildcardShape
+     * @return array{type: string}
      */
     public function jsonSerialize(): array;
 }

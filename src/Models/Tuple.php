@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeImmutable;
+use DateTimeInterface;
+use DateTimeZone;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class Tuple implements TupleInterface
 {
+    public const OPENAPI_MODEL = 'Tuple';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
@@ -27,15 +31,12 @@ final class Tuple implements TupleInterface
         return $this->timestamp;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function jsonSerialize(): array
     {
-        return array_filter([
+        return [
             'key' => $this->key->jsonSerialize(),
-            'timestamp' => $this->timestamp->format(DATE_ATOM),
-        ], static fn ($value) => null !== $value);
+            'timestamp' => self::getUtcTimestamp($this->timestamp),
+        ];
     }
 
     public static function schema(): SchemaInterface
@@ -47,5 +48,11 @@ final class Tuple implements TupleInterface
                 new SchemaProperty(name: 'timestamp', type: 'string', format: 'date-time', required: true),
             ],
         );
+    }
+
+    private static function getUtcTimestamp(DateTimeInterface $dateTime): string
+    {
+        return ($dateTime instanceof DateTimeImmutable ? $dateTime : DateTimeImmutable::createFromInterface($dateTime))
+            ->setTimezone(new DateTimeZone('UTC'))->format(DateTimeInterface::RFC3339);
     }
 }

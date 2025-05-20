@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-/**
- * @psalm-type MetadataShape = array{module?: string, relations?: RelationMetadataShape, source_info?: SourceInfoShape}
- */
 interface MetadataInterface extends ModelInterface
 {
     public function getModule(): ?string;
@@ -16,7 +13,11 @@ interface MetadataInterface extends ModelInterface
     public function getSourceInfo(): ?SourceInfoInterface;
 
     /**
-     * @return MetadataShape
+     * @return array{
+     *     module?: string,
+     *     relations?: array<string, mixed>,
+     *     source_info?: array<string, mixed>,
+     * }
      */
     public function jsonSerialize(): array;
 }

@@ -4,25 +4,28 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use DateTimeImmutable;
+use DateTimeInterface;
 
-/**
- * @psalm-type StoreShape = array{id: string, name: string, created_at: string, updated_at: string, deleted_at?: string}
- */
 interface StoreInterface extends ModelInterface
 {
-    public function getCreatedAt(): DateTimeImmutable;
+    public function getCreatedAt(): DateTimeInterface;
 
-    public function getDeletedAt(): ?DateTimeImmutable;
+    public function getDeletedAt(): ?DateTimeInterface;
 
     public function getId(): string;
 
     public function getName(): string;
 
-    public function getUpdatedAt(): DateTimeImmutable;
+    public function getUpdatedAt(): DateTimeInterface;
 
     /**
-     * @return StoreShape
+     * @return array{
+     *     id: string,
+     *     name: string,
+     *     created_at: string,
+     *     updated_at: string,
+     *     deleted_at?: string,
+     * }
      */
     public function jsonSerialize(): array;
 }

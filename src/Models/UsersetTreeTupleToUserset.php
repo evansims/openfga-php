@@ -4,33 +4,40 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\{Computeds, ComputedsInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterface
 {
+    public const OPENAPI_MODEL = 'UsersetTree.TupleToUserset';
+
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param string                                $tupleset
+     * @param ComputedsInterface<ComputedInterface> $computed
+     */
     public function __construct(
-        private readonly NodeInterface $base,
-        private readonly NodeInterface $subtract,
+        private readonly string $tupleset,
+        private readonly ComputedsInterface $computed,
     ) {
     }
 
-    public function getBase(): NodeInterface
+    public function getComputed(): ComputedsInterface
     {
-        return $this->base;
+        return $this->computed;
     }
 
-    public function getSubtract(): NodeInterface
+    public function getTupleset(): string
     {
-        return $this->subtract;
+        return $this->tupleset;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'base' => $this->base->jsonSerialize(),
-            'subtract' => $this->subtract->jsonSerialize(),
+            'tupleset' => $this->tupleset,
+            'computed' => $this->computed->jsonSerialize(),
         ];
     }
 
@@ -39,8 +46,8 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'base', type: Node::class, required: true),
-                new SchemaProperty(name: 'subtract', type: Node::class, required: true),
+                new SchemaProperty(name: 'tupleset', type: 'string', required: true),
+                new SchemaProperty(name: 'computed', type: Computeds::class, required: true),
             ],
         );
     }

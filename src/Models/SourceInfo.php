@@ -9,6 +9,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class SourceInfo implements SourceInfoInterface
 {
+    public const OPENAPI_MODEL = 'SourceInfo';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(

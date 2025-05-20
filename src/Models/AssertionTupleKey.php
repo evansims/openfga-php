@@ -8,6 +8,8 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 final class AssertionTupleKey implements AssertionTupleKeyInterface
 {
+    public const OPENAPI_MODEL = 'AssertionTupleKey';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
