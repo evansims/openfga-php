@@ -6,18 +6,21 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{TupleChanges, TupleChangesInterface};
+use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
+use OpenFGA\Models\TupleChangeInterface;
+use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
 final class ListTupleChangesResponse implements ListTupleChangesResponseInterface
 {
-    use ResponseTrait;
-
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param TupleChangesInterface<TupleChangeInterface> $changes
+     * @param ?string                                     $continuationToken
+     */
     public function __construct(
         private TupleChangesInterface $changes,
         private ?string $continuationToken,
@@ -34,7 +37,7 @@ final class ListTupleChangesResponse implements ListTupleChangesResponseInterfac
         return $this->continuationToken;
     }
 
-    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -51,7 +54,7 @@ final class ListTupleChangesResponse implements ListTupleChangesResponseInterfac
             return $validator->validateAndTransform($data, self::class);
         }
 
-        self::handleResponseException($response);
+        RequestManager::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

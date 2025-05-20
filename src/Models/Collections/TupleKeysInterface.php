@@ -8,6 +8,7 @@ use OpenFGA\Models\TupleKeyInterface;
 
 /**
  * @template T of TupleKeyInterface
+ *
  * @extends IndexedCollectionInterface<T>
  */
 interface TupleKeysInterface extends IndexedCollectionInterface

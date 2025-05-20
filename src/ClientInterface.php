@@ -7,7 +7,9 @@ namespace OpenFGA;
 use DateTimeImmutable;
 use InvalidArgumentException;
 
-use OpenFGA\Models\{AssertionsInterface, AuthorizationModelInterface, ConditionsInterface, Consistency, SchemaVersion, StoreInterface, TupleKeyInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
+use OpenFGA\Models\{AssertionInterface, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
+use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
+use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Responses\{CheckResponseInterface, CreateAuthorizationModelResponseInterface, CreateStoreResponseInterface, DeleteStoreResponseInterface, ExpandResponseInterface, GetAuthorizationModelResponseInterface, GetStoreResponseInterface, ListAuthorizationModelsResponseInterface, ListObjectsResponseInterface, ListStoresResponseInterface, ListTupleChangesResponseInterface, ListUsersResponseInterface, ReadAssertionsResponseInterface, ReadTuplesResponseInterface, WriteAssertionsResponseInterface, WriteTuplesResponseInterface};
 
 interface ClientInterface
@@ -15,13 +17,13 @@ interface ClientInterface
     /**
      * Checks if a user has a specific relationship with an object.
      *
-     * @param StoreInterface|string              $store              The store to check against
-     * @param AuthorizationModelInterface|string $authorizationModel The authorization model to use
-     * @param TupleKeyInterface                  $tupleKey           The relationship to check
-     * @param null|bool                          $trace              Whether to include a trace in the response
-     * @param null|object                        $context            Additional context for the check
-     * @param null|TupleKeysInterface            $contextualTuples   Additional tuples for contextual evaluation
-     * @param null|Consistency                   $consistency        Override the default consistency level
+     * @param StoreInterface|string                      $store              The store to check against
+     * @param AuthorizationModelInterface|string         $authorizationModel The authorization model to use
+     * @param TupleKeyInterface                          $tupleKey           The relationship to check
+     * @param null|bool                                  $trace              Whether to include a trace in the response
+     * @param null|object                                $context            Additional context for the check
+     * @param null|TupleKeysInterface<TupleKeyInterface> $contextualTuples   Additional tuples for contextual evaluation
+     * @param null|Consistency                           $consistency        Override the default consistency level
      *
      * @return CheckResponseInterface The result of the check
      */
@@ -38,10 +40,10 @@ interface ClientInterface
     /**
      * Creates a new authorization model with the given type definitions and conditions.
      *
-     * @param StoreInterface|string    $store           The store to create the model in
-     * @param TypeDefinitionsInterface $typeDefinitions The type definitions for the model
-     * @param ConditionsInterface      $conditions      The conditions for the model
-     * @param SchemaVersion            $schemaVersion   The schema version to use (default: 1.1)
+     * @param StoreInterface|string                             $store           The store to create the model in
+     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions The type definitions for the model
+     * @param ConditionsInterface<ConditionInterface>           $conditions      The conditions for the model
+     * @param SchemaVersion                                     $schemaVersion   The schema version to use (default: 1.1)
      *
      * @return CreateAuthorizationModelResponseInterface The created authorization model
      */
@@ -77,11 +79,11 @@ interface ClientInterface
     /**
      * Expands a relationship tuple to show all users that have the relationship.
      *
-     * @param StoreInterface|string                   $store              The store containing the tuple
-     * @param TupleKeyInterface                       $tupleKey           The tuple to expand
-     * @param null|AuthorizationModelInterface|string $authorizationModel The authorization model to use
-     * @param null|TupleKeysInterface                 $contextualTuples   Additional tuples for contextual evaluation
-     * @param null|Consistency                        $consistency        Override the default consistency level
+     * @param StoreInterface|string                      $store              The store containing the tuple
+     * @param TupleKeyInterface                          $tupleKey           The tuple to expand
+     * @param null|AuthorizationModelInterface|string    $authorizationModel The authorization model to use
+     * @param null|TupleKeysInterface<TupleKeyInterface> $contextualTuples   Additional tuples for contextual evaluation
+     * @param null|Consistency                           $consistency        Override the default consistency level
      *
      * @return ExpandResponseInterface The expanded relationship information
      */
@@ -137,14 +139,14 @@ interface ClientInterface
     /**
      * Lists objects that have a specific relationship with a user.
      *
-     * @param StoreInterface|string              $store              The store to query
-     * @param AuthorizationModelInterface|string $authorizationModel The authorization model to use
-     * @param string                             $type               The type of objects to list
-     * @param string                             $relation           The relationship to check
-     * @param string                             $user               The user to check relationships for
-     * @param null|object                        $context            Additional context for evaluation
-     * @param null|TupleKeysInterface            $contextualTuples   Additional tuples for contextual evaluation
-     * @param null|Consistency                   $consistency        Override the default consistency level
+     * @param StoreInterface|string                      $store              The store to query
+     * @param AuthorizationModelInterface|string         $authorizationModel The authorization model to use
+     * @param string                                     $type               The type of objects to list
+     * @param string                                     $relation           The relationship to check
+     * @param string                                     $user               The user to check relationships for
+     * @param null|object                                $context            Additional context for evaluation
+     * @param null|TupleKeysInterface<TupleKeyInterface> $contextualTuples   Additional tuples for contextual evaluation
+     * @param null|Consistency                           $consistency        Override the default consistency level
      *
      * @return ListObjectsResponseInterface The list of related objects
      */
@@ -198,14 +200,14 @@ interface ClientInterface
     /**
      * Lists users that have a specific relationship with an object.
      *
-     * @param StoreInterface|string              $store              The store to query
-     * @param AuthorizationModelInterface|string $authorizationModel The authorization model to use
-     * @param string                             $object             The object to check relationships for
-     * @param string                             $relation           The relationship to check
-     * @param UserTypeFiltersInterface           $userFilters        Filters for user types to include
-     * @param null|object                        $context            Additional context for evaluation
-     * @param null|TupleKeysInterface            $contextualTuples   Additional tuples for contextual evaluation
-     * @param null|Consistency                   $consistency        Override the default consistency level
+     * @param StoreInterface|string                             $store              The store to query
+     * @param AuthorizationModelInterface|string                $authorizationModel The authorization model to use
+     * @param string                                            $object             The object to check relationships for
+     * @param string                                            $relation           The relationship to check
+     * @param UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters        Filters for user types to include
+     * @param null|object                                       $context            Additional context for evaluation
+     * @param null|TupleKeysInterface<TupleKeyInterface>        $contextualTuples   Additional tuples for contextual evaluation
+     * @param null|Consistency                                  $consistency        Override the default consistency level
      *
      * @return ListUsersResponseInterface The list of related users
      */
@@ -236,11 +238,11 @@ interface ClientInterface
     /**
      * Reads relationship tuples from a store with optional filtering and pagination.
      *
-     * @param StoreInterface|string  $store             The store to read from
-     * @param null|TupleKeyInterface $tupleKey          Filter tuples by this key (return all if null)
-     * @param null|string            $continuationToken Token for pagination
-     * @param null|positive-int      $pageSize          Maximum number of tuples to return
-     * @param null|Consistency       $consistency       Override the default consistency level
+     * @param StoreInterface|string $store             The store to read from
+     * @param TupleKeyInterface     $tupleKey          Filter tuples by this key (return all if null)
+     * @param null|string           $continuationToken Token for pagination
+     * @param null|positive-int     $pageSize          Maximum number of tuples to return
+     * @param null|Consistency      $consistency       Override the default consistency level
      *
      * @throws InvalidArgumentException If pageSize is not a positive integer
      *
@@ -248,7 +250,7 @@ interface ClientInterface
      */
     public function readTuples(
         StoreInterface | string $store,
-        ?TupleKeyInterface $tupleKey = null,
+        TupleKeyInterface $tupleKey,
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,
@@ -257,9 +259,9 @@ interface ClientInterface
     /**
      * Creates or updates assertions for an authorization model.
      *
-     * @param StoreInterface|string              $store              The store containing the model
-     * @param AuthorizationModelInterface|string $authorizationModel The model to update assertions for
-     * @param AssertionsInterface                $assertions         The assertions to upsert
+     * @param StoreInterface|string                   $store              The store containing the model
+     * @param AuthorizationModelInterface|string      $authorizationModel The model to update assertions for
+     * @param AssertionsInterface<AssertionInterface> $assertions         The assertions to upsert
      *
      * @return WriteAssertionsResponseInterface The result of the operation
      */
@@ -272,10 +274,10 @@ interface ClientInterface
     /**
      * Writes or deletes relationship tuples in a store.
      *
-     * @param StoreInterface|string              $store              The store to modify
-     * @param AuthorizationModelInterface|string $authorizationModel The authorization model to use
-     * @param null|TupleKeysInterface            $writes             Tuples to write (create or update)
-     * @param null|TupleKeysInterface            $deletes            Tuples to delete
+     * @param StoreInterface|string                      $store              The store to modify
+     * @param AuthorizationModelInterface|string         $authorizationModel The authorization model to use
+     * @param null|TupleKeysInterface<TupleKeyInterface> $writes             Tuples to write (create or update)
+     * @param null|TupleKeysInterface<TupleKeyInterface> $deletes            Tuples to delete
      *
      * @return WriteTuplesResponseInterface The result of the operation
      */

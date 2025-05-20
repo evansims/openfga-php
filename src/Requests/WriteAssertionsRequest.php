@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\AssertionsInterface;
+use OpenFGA\Models\AssertionInterface;
+use OpenFGA\Models\Collections\AssertionsInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
 {
+    /**
+     * @param AssertionsInterface<AssertionInterface> $assertions
+     * @param string                                  $store
+     * @param string                                  $authorizationModel
+     */
     public function __construct(
         private AssertionsInterface $assertions,
         private string $store,

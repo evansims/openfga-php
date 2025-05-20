@@ -8,7 +8,9 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthentication, NullCredentialAuthentication};
 use OpenFGA\Credentials\{ClientCredentialInterface, CredentialInterface};
-use OpenFGA\Models\{AssertionsInterface, AuthorizationModelInterface, ConditionsInterface, Consistency, SchemaVersion, StoreInterface, TupleKeyInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
+use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface, TupleKeyInterface};
+use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
+use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, WriteAssertionsRequest, WriteTuplesRequest};
 use OpenFGA\Responses\{CheckResponse, CheckResponseInterface, CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface, CreateStoreResponse, CreateStoreResponseInterface, DeleteStoreResponse, DeleteStoreResponseInterface, ExpandResponse, ExpandResponseInterface, GetAuthorizationModelResponse, GetAuthorizationModelResponseInterface, GetStoreResponse, GetStoreResponseInterface, ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface, ListObjectsResponse, ListObjectsResponseInterface, ListStoresResponse, ListStoresResponseInterface, ListTupleChangesResponse, ListTupleChangesResponseInterface, ListUsersResponse, ListUsersResponseInterface, ReadAssertionsResponse, ReadAssertionsResponseInterface, ReadTuplesResponse, ReadTuplesResponseInterface, WriteAssertionsResponse, WriteAssertionsResponseInterface, WriteTuplesResponse, WriteTuplesResponseInterface};
@@ -264,7 +266,7 @@ final class Client implements ClientInterface
 
     public function readTuples(
         StoreInterface | string $store,
-        ?TupleKeyInterface $tupleKey = null,
+        TupleKeyInterface $tupleKey,
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,

@@ -6,15 +6,13 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
+use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
 final class CreateAuthorizationModelResponse implements CreateAuthorizationModelResponseInterface
 {
-    use ResponseTrait;
-
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
@@ -27,7 +25,7 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
         return $this->authorizationModelId;
     }
 
-    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -43,7 +41,7 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
             return $validator->validateAndTransform($data, self::class);
         }
 
-        self::handleResponseException($response);
+        RequestManager::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }

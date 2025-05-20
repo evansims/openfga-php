@@ -16,7 +16,7 @@ interface UsersetTreeTupleToUsersetInterface extends ModelInterface
     public function getTupleset(): string;
 
     /**
-     * @return array{tupleset: string, computed: array<int, array{userset: string}}
+     * @return array{tupleset: string, computed: array<int, array{userset: string}>}
      */
     public function jsonSerialize(): array;
 }

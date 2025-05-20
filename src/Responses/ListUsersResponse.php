@@ -6,21 +6,20 @@ namespace OpenFGA\Responses;
 
 use Exception;
 use OpenFGA\Exceptions\ApiUnexpectedResponseException;
-use OpenFGA\Models\{Users, UsersInterface, UsersetUserInterface};
+use OpenFGA\Models\Collections\{Users, UsersInterface};
+use OpenFGA\Models\UserInterface;
+use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-use Psr\Http\Message\ResponseInterface as HttpResponseInterface;
 
 use function is_array;
 
-/**
- * @implements ListUsersResponseInterface<array{users: array{object: array{type: string, id: string}, relation: string, users: array{users: array{object: array{type: string, id: string}, relation: string, user: string}[]}}}>
- */
 final class ListUsersResponse implements ListUsersResponseInterface
 {
-    use ResponseTrait;
-
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param UsersInterface<UserInterface> $users
+     */
     public function __construct(
         private UsersInterface $users,
     ) {
@@ -31,59 +30,7 @@ final class ListUsersResponse implements ListUsersResponseInterface
         return $this->users;
     }
 
-    /**
-     * @return array{users: array{object: array{type: string, id: string}, relation: string, users: array{users: array<array{object: array{type: string, id: string}, relation: string, user: string}>}}}
-     */
-    public function toArray(): array
-    {
-        $result = [
-            'object' => [
-                'type' => '',
-                'id' => '',
-            ],
-            'relation' => '',
-            'users' => [
-                'users' => [],
-            ],
-        ];
-
-        foreach ($this->users as $user) {
-            if (null === $user) {
-                continue;
-            }
-
-            $object = $user->getObject();
-            $userset = $user->getUserset();
-
-            if (null === $object || null === $userset) {
-                continue;
-            }
-
-            $objectType = $object->getType();
-            $objectId = $object->getId();
-
-            $users = $this->extractUsersFromUserset($userset);
-
-            $result = [
-                'object' => [
-                    'type' => $objectType,
-                    'id' => $objectId,
-                ],
-                'relation' => (string) $userset->getRelation(),
-                'users' => [
-                    'users' => $users,
-                ],
-            ];
-
-            // Only process the first user as we're returning a single result
-            break;
-        }
-
-        /** @var array{users: array{object: array{type: string, id: string}, relation: string, users: array{users: array<array{object: array{type: string, id: string}, relation: string, user: string}>}}} $finalResult */
-        return ['users' => $result];
-    }
-
-    public static function fromResponse(HttpResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
 
@@ -100,7 +47,7 @@ final class ListUsersResponse implements ListUsersResponseInterface
             return $validator->validateAndTransform($data, self::class);
         }
 
-        self::handleResponseException($response);
+        RequestManager::handleResponseException($response);
 
         throw new ApiUnexpectedResponseException($json);
     }
@@ -113,24 +60,5 @@ final class ListUsersResponse implements ListUsersResponseInterface
                 new SchemaProperty(name: 'users', type: Users::class, required: true),
             ],
         );
-    }
-
-    /**
-     * @param UsersetUserInterface $userset
-     *
-     * @return array<array{object: array{type: string, id: string}, relation: string, user: string}>
-     */
-    private function extractUsersFromUserset(UsersetUserInterface $userset): array
-    {
-        return [
-            [
-                'object' => [
-                    'type' => $userset->getType(),
-                    'id' => $userset->getId(),
-                ],
-                'relation' => $userset->getRelation(),
-                'user' => $userset->getId(),
-            ],
-        ];
     }
 }

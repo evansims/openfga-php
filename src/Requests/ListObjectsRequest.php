@@ -4,12 +4,24 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{Consistency, TupleKeysInterface};
+use OpenFGA\Models\Collections\TupleKeysInterface;
+use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ListObjectsRequest implements ListObjectsRequestInterface
 {
+    /**
+     * @param string                                 $store
+     * @param string                                 $type
+     * @param string                                 $relation
+     * @param string                                 $user
+     * @param ?string                                $authorizationModel
+     * @param ?object                                $context
+     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
+     * @param ?Consistency                           $consistency
+     */
     public function __construct(
         private string $store,
         private string $type,

@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
-use OpenFGA\Models\{ConditionsInterface, SchemaVersion, TypeDefinitionsInterface};
+use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
+use OpenFGA\Models\{ConditionInterface, TypeDefinitionInterface};
+use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class CreateAuthorizationModelRequest implements CreateAuthorizationModelRequestInterface
 {
+    /**
+     * @param string                                            $store
+     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions
+     * @param SchemaVersion                                     $schemaVersion
+     * @param ?ConditionsInterface<ConditionInterface>          $conditions
+     */
     public function __construct(
         private string $store,
         private TypeDefinitionsInterface $typeDefinitions,

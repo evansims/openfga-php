@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use InvalidArgumentException;
-use OpenFGA\Models\{Consistency, TupleKeyInterface};
+use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 

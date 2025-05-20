@@ -8,6 +8,7 @@ use OpenFGA\Models\RelationReferenceInterface;
 
 /**
  * @template T of RelationReferenceInterface
+ *
  * @extends KeyedCollectionInterface<T>
  */
 interface RelationReferencesInterface extends KeyedCollectionInterface
