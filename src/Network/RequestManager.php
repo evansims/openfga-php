@@ -30,6 +30,7 @@ final class RequestManager implements RequestManagerInterface
 {
     public function __construct(
         private string $url,
+        private int $maxRetries,
         private ?string $authorizationHeader = null,
         private ?ClientInterface $httpClient = null,
         private ?ResponseFactoryInterface $httpResponseFactory = null,
