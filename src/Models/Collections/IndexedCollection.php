@@ -12,11 +12,9 @@ use OutOfBoundsException;
 use TypeError;
 
 use function count;
-use function gettype;
 use function is_a;
 use function is_int;
 use function is_iterable;
-use function is_object;
 use function sprintf;
 
 /**
@@ -90,8 +88,8 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     public function every(callable $callback): bool
     {
-        foreach ($this->models as $item) {
-            if (! $callback($item)) {
+        foreach ($this->models as $model) {
+            if (! $callback($model)) {
                 return false;
             }
         }
@@ -104,9 +102,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         /** @var static<T> $new */
         $new = new static();
 
-        foreach ($this->models as $item) {
-            if ($callback($item)) {
-                $new->add($item);
+        foreach ($this->models as $model) {
+            if ($callback($model)) {
+                $new->add($model);
             }
         }
 
@@ -119,9 +117,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
             return $this->models[0] ?? null;
         }
 
-        foreach ($this->models as $item) {
-            if ($callback($item)) {
-                return $item;
+        foreach ($this->models as $model) {
+            if ($callback($model)) {
+                return $model;
             }
         }
 
@@ -135,7 +133,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     public function isEmpty(): bool
     {
-        return 0 === count($this->models);
+        return [] === $this->models;
     }
 
     public function jsonSerialize(): array
@@ -177,8 +175,8 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         /* @phpstan-var class-string<U> $targetType */
         $new::$itemType = $targetType;
 
-        foreach ($this->models as $item) {
-            $mapped = $callback($item);
+        foreach ($this->models as $model) {
+            $mapped = $callback($model);
             if (! $mapped instanceof $targetType) {
                 throw ModelException::typeMismatch($targetType, $mapped::class);
             }
@@ -206,7 +204,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
-            throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, is_object($value) ? $value::class : gettype($value)));
+            throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, get_debug_type($value)));
         }
 
         if (null === $offset) {
@@ -231,8 +229,8 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     public function reduce(mixed $initial, callable $callback): mixed
     {
         $result = $initial;
-        foreach ($this->models as $item) {
-            $result = $callback($result, $item);
+        foreach ($this->models as $model) {
+            $result = $callback($result, $model);
         }
 
         return $result;
@@ -245,8 +243,8 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     public function some(callable $callback): bool
     {
-        foreach ($this->models as $item) {
-            if ($callback($item)) {
+        foreach ($this->models as $model) {
+            if ($callback($model)) {
                 return true;
             }
         }

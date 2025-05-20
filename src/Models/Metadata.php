@@ -38,7 +38,7 @@ final class Metadata implements MetadataInterface
             'module' => $this->module,
             'relations' => $this->relations?->jsonSerialize(),
             'source_info' => $this->sourceInfo?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

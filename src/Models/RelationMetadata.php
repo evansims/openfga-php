@@ -46,7 +46,7 @@ final class RelationMetadata implements RelationMetadataInterface
             'module' => $this->module,
             'directly_related_user_types' => $this->directlyRelatedUserTypes?->jsonSerialize(),
             'source_info' => $this->sourceInfo?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

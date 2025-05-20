@@ -31,7 +31,7 @@ final class ObjectRelation implements ObjectRelationInterface
         return array_filter([
             'object' => $this->object,
             'relation' => $this->relation,
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

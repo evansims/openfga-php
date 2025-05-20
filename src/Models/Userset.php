@@ -70,7 +70,7 @@ final class Userset implements UsersetInterface
             'union' => $this->union?->jsonSerialize(),
             'intersection' => $this->intersection?->jsonSerialize(),
             'difference' => $this->difference?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

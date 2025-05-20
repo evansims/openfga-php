@@ -14,9 +14,7 @@ use ReturnTypeWillChange;
 use TypeError;
 
 use function count;
-use function gettype;
 use function is_int;
-use function is_object;
 use function is_string;
 use function sprintf;
 
@@ -194,7 +192,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
-            throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, is_object($value) ? $value::class : gettype($value)));
+            throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, get_debug_type($value)));
         }
 
         if (! is_string($offset)) {

@@ -31,7 +31,7 @@ final class UserTypeFilter implements UserTypeFilterInterface
         return array_filter([
             'type' => $this->type,
             'relation' => $this->relation,
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

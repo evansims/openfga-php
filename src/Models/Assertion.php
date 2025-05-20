@@ -54,7 +54,7 @@ final class Assertion implements AssertionInterface
             'expectation' => $this->expectation,
             'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
             'context' => $this->context,
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

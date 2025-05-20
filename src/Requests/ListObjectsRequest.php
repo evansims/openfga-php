@@ -69,7 +69,7 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
             'context' => $this->context,
             'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
             'consistency' => $this->consistency?->value,
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 

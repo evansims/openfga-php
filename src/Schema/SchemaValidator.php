@@ -23,6 +23,7 @@ use function is_int;
 use function is_object;
 use function is_scalar;
 use function is_string;
+use function sprintf;
 
 final class SchemaValidator
 {
@@ -65,14 +66,14 @@ final class SchemaValidator
      *
      * @return T
      */
-    public function validateAndTransform(mixed $data, string $className)
+    public function validateAndTransform(mixed $data, string $className): object
     {
         if (! is_array($data)) {
             throw new InvalidArgumentException('Data must be an array');
         }
 
         if (! isset($this->schemas[$className])) {
-            throw new InvalidArgumentException("No schema registered for class: {$className}");
+            throw new InvalidArgumentException('No schema registered for class: ' . $className);
         }
 
         $schema = $this->schemas[$className];
@@ -89,20 +90,20 @@ final class SchemaValidator
         $transformedData = [];
 
         // Validate against schema
-        foreach ($schema->getProperties() as $property) {
-            $name = $property->name;
-            $type = $property->type;
-            $required = $property->required;
-            $default = $property->default;
-            $format = $property->format;
-            $enum = $property->enum;
-            $items = $property->items;
-            $propClassName = $property->className;
+        foreach ($schema->getProperties() as $schemaProperty) {
+            $name = $schemaProperty->name;
+            $type = $schemaProperty->type;
+            $required = $schemaProperty->required;
+            $default = $schemaProperty->default;
+            $format = $schemaProperty->format;
+            $enum = $schemaProperty->enum;
+            $items = $schemaProperty->items;
+            $propClassName = $schemaProperty->className;
 
             // Check if required property exists
             if (! isset($data[$name])) {
                 if ($required) {
-                    $errors[] = "Required property '{$name}' is missing";
+                    $errors[] = sprintf("Required property '%s' is missing", $name);
 
                     continue;
                 }
@@ -116,7 +117,7 @@ final class SchemaValidator
 
             // Type validation
             if (! $this->validateType($value, $type, $format, $enum)) {
-                $errors[] = "Property '{$name}' has invalid type, expected {$type}";
+                $errors[] = sprintf("Property '%s' has invalid type, expected %s", $name, $type);
 
                 continue;
             }
@@ -124,7 +125,7 @@ final class SchemaValidator
             // Handle nested objects and arrays
             if ('object' === $type && null !== $propClassName) {
                 if (! is_array($value)) {
-                    $errors[] = "Property '{$name}' must be an object";
+                    $errors[] = sprintf("Property '%s' must be an object", $name);
 
                     continue;
                 }
@@ -133,7 +134,7 @@ final class SchemaValidator
                     $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
                 } catch (SchemaValidationException $e) {
                     foreach ($e->getErrors() as $error) {
-                        $errors[] = "{$name}.{$error}";
+                        $errors[] = sprintf('%s.%s', $name, $error);
                     }
                 }
             } elseif ('array' === $type && null !== $items) {
@@ -141,7 +142,7 @@ final class SchemaValidator
                 $itemClassName = $items['className'] ?? null;
 
                 if (! is_array($value)) {
-                    $errors[] = "Property '{$name}' must be an array";
+                    $errors[] = sprintf("Property '%s' must be an array", $name);
 
                     continue;
                 }
@@ -156,7 +157,7 @@ final class SchemaValidator
                         } catch (SchemaValidationException $e) {
                             // On any error in nested validation, fail the entire array
                             foreach ($e->getErrors() as $error) {
-                                $errors[] = "{$name}[{$i}].{$error}";
+                                $errors[] = sprintf('%s[%s].%s', $name, $i, $error);
                             }
 
                             // Skip adding to transformedArray to prevent partial population
@@ -164,7 +165,7 @@ final class SchemaValidator
                         }
                     } else {
                         if (! $this->validateType($item, $itemType)) {
-                            $errors[] = "Item {$i} in array '{$name}' has invalid type, expected {$itemType}";
+                            $errors[] = sprintf("Item %s in array '%s' has invalid type, expected %s", $i, $name, $itemType);
 
                             // Skip adding to transformedArray to prevent partial population
                             continue;
@@ -174,7 +175,7 @@ final class SchemaValidator
                 }
 
                 // Only add the transformed array if there were no errors
-                if (0 === count($errors)) {
+                if ([] === $errors) {
                     $transformedData[$name] = $transformedArray;
                 }
             } else {
@@ -187,7 +188,7 @@ final class SchemaValidator
             }
         }
 
-        if (count($errors) > 0) {
+        if ([] !== $errors) {
             throw new SchemaValidationException($errors);
         }
 
@@ -245,7 +246,7 @@ final class SchemaValidator
                 }
             }
         } else {
-            throw new RuntimeException("Could not add items to collection: {$className}");
+            throw new RuntimeException('Could not add items to collection: ' . $className);
         }
 
         return $instance;
@@ -272,14 +273,14 @@ final class SchemaValidator
         // If there's a constructor, try to use it with named parameters
         if (null !== $constructor) {
             $params = [];
-            foreach ($constructor->getParameters() as $param) {
-                $paramName = $param->getName();
+            foreach ($constructor->getParameters() as $parameter) {
+                $paramName = $parameter->getName();
                 if (array_key_exists($paramName, $data)) {
                     $params[$paramName] = $data[$paramName];
-                } elseif ($param->isDefaultValueAvailable()) {
-                    $params[$paramName] = $param->getDefaultValue();
+                } elseif ($parameter->isDefaultValueAvailable()) {
+                    $params[$paramName] = $parameter->getDefaultValue();
                 } else {
-                    throw new RuntimeException("Missing required constructor parameter: {$paramName}");
+                    throw new RuntimeException('Missing required constructor parameter: ' . $paramName);
                 }
             }
 
@@ -412,7 +413,7 @@ final class SchemaValidator
         /** @var class-string<T> $itemType */
 
         // Check if collection requires items
-        if ($schema->requiresItems() && 0 === count($data)) {
+        if ($schema->requiresItems() && [] === $data) {
             throw new SchemaValidationException(['Collection requires at least one item']);
         }
 
@@ -422,12 +423,12 @@ final class SchemaValidator
                 $transformedItems[] = $this->validateAndTransform($item, $itemType);
             } catch (SchemaValidationException $e) {
                 foreach ($e->getErrors() as $error) {
-                    $errors[] = "[{$index}].{$error}";
+                    $errors[] = sprintf('[%d].%s', $index, $error);
                 }
             }
         }
 
-        if (count($errors) > 0) {
+        if ([] !== $errors) {
             throw new SchemaValidationException($errors);
         }
 
@@ -480,7 +481,7 @@ final class SchemaValidator
                 if (! is_array($value)) {
                     return false;
                 }
-                if (0 === count($value)) {
+                if ([] === $value) {
                     return false;
                 }
                 // Accept associative arrays (at least one non-numeric key)

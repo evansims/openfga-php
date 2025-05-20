@@ -55,7 +55,7 @@ final class AuthorizationModel implements AuthorizationModelInterface
             'schema_version' => $this->schemaVersion->value,
             'type_definitions' => $this->typeDefinitions->jsonSerialize(),
             'conditions' => $this->conditions?->jsonSerialize(),
-        ], static fn ($value) => null !== $value);
+        ], static fn ($value): bool => null !== $value);
     }
 
     public static function schema(): SchemaInterface

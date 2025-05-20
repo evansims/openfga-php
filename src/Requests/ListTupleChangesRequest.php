@@ -10,8 +10,6 @@ use DateTimeZone;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function count;
-
 final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
 {
     public function __construct(
@@ -40,9 +38,9 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
             'page_size' => $this->getPageSize(),
             'type' => $this->getType(),
             'start_time' => self::getUtcTimestamp($this->getStartTime()),
-        ], static fn ($v) => null !== $v);
+        ], static fn ($v): bool => null !== $v);
 
-        $query = count($params) > 0 ? '?' . http_build_query($params) : '';
+        $query = [] !== $params ? '?' . http_build_query($params) : '';
 
         return new RequestContext(
             method: RequestMethod::GET,
@@ -67,7 +65,7 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
 
     private static function getUtcTimestamp(?DateTimeInterface $dateTime): ?string
     {
-        if (null === $dateTime) {
+        if (! $dateTime instanceof DateTimeInterface) {
             return null;
         }
 
