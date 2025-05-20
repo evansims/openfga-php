@@ -59,14 +59,10 @@ final class AccessToken implements AccessTokenInterface
             throw new \Exception('expires_in must be an integer');
         }
 
-        if (isset($data['scope']) && ! is_string($data['scope'])) {
-            throw new \Exception('scope must be a string');
-        }
-
         return new self(
             token: $data['access_token'],
             expires: time() + $data['expires_in'],
-            scope: $data['scope'] ?? null,
+            scope: isset($data['scope']) && is_string($data['scope']) ? $data['scope'] : null,
         );
     }
 }
