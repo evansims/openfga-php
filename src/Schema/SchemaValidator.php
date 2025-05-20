@@ -451,11 +451,11 @@ final class SchemaValidator
                 }
 
                 if ('date' === $format) {
-                    return (bool) (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d', $value));
+                    return is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d', $value);
                 }
 
                 if ('datetime' === $format) {
-                    return (bool) (is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value));
+                    return is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value);
                 }
 
                 if (null !== $enum) {
