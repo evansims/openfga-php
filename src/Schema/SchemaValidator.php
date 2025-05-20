@@ -94,7 +94,6 @@ final class SchemaValidator
             $name = $schemaProperty->name;
             $type = $schemaProperty->type;
             $required = $schemaProperty->required;
-            $default = $schemaProperty->default;
             $format = $schemaProperty->format;
             $enum = $schemaProperty->enum;
             $items = $schemaProperty->items;
@@ -108,6 +107,8 @@ final class SchemaValidator
                     continue;
                 }
 
+                /** @var mixed $default */
+                $default = $schemaProperty->default;
                 $transformedData[$name] = $default;
 
                 continue;
@@ -149,6 +150,7 @@ final class SchemaValidator
 
                 $transformedArray = [];
 
+                /** @var array<int, mixed> $value */
                 foreach ($value as $i => $item) {
                     if ('object' === $itemType && null !== $itemClassName) {
                         try {

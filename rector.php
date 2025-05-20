@@ -156,8 +156,12 @@ use Rector\TypeDeclaration\Rector\FunctionLike\{AddParamTypeSplFixedArrayRector,
 use Rector\TypeDeclaration\Rector\Property\{TypedPropertyFromAssignsRector,
     TypedPropertyFromStrictConstructorRector,
     TypedPropertyFromStrictSetUpRector,};
+use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 
 return RectorConfig::configure()
+    ->withConfiguredRule(AddOverrideAttributeToOverriddenMethodsRector::class, [
+        'allow_override_empty_method' => false,
+    ])
     ->withRules([
         AbsolutizeRequireAndIncludePathRector::class,
         AddArrowFunctionReturnTypeRector::class,
