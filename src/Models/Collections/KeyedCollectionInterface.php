@@ -8,6 +8,7 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 use JsonSerializable;
+use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\CollectionSchemaInterface;
 
 /**
@@ -36,5 +37,5 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
 
     public function valid(): bool;
 
-    public static function Schema(): CollectionSchemaInterface;
+    public static function schema(): CollectionSchemaInterface;
 }

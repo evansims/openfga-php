@@ -18,7 +18,7 @@ use function is_object;
 use function sprintf;
 
 /**
- * @template T
+ * @template T of ModelInterface
  *
  * @implements KeyedCollectionInterface<T>
  */
@@ -32,7 +32,8 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     private int $position = 0;
 
     /**
-     * @var class-string<T>
+     * @phpstan-var class-string<ModelInterface>
+     * @var class-string<ModelInterface>
      */
     protected static string $itemType;
 
@@ -69,16 +70,20 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     /**
      * Add an item to the collection.
      *
-     * @param T      $item
+     * @param T $item
      * @param string $key
+     *
+     * @return $this
      */
-    public function add(string $key, ModelInterface $item): void
+    public function add(string $key, ModelInterface $item): static
     {
         if (! $item instanceof static::$itemType) {
             throw new TypeError(sprintf('Expected instance of %s, %s given', static::$itemType, $item::class));
         }
 
         $this->models[$key] = $item;
+
+        return $this;
     }
 
     public function count(): int
@@ -89,14 +94,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     /**
      * @return T
      */
-    public function current(): ModelInterface
+    #[\ReturnTypeWillChange]
+    public function current()
     {
-        $key = $this->key();
-
-        if (null === $key) {
-            throw new OutOfBoundsException('Invalid position');
-        }
-
+        $key = $this->key(); // already throws if invalid
         return $this->models[$key];
     }
 
@@ -105,7 +106,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
      *
      * @return null|T
      */
-    public function get(string $key): ?ModelInterface
+    public function get(string $key)
     {
         return $this->models[$key] ?? null;
     }
@@ -120,22 +121,31 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return isset($this->models[$key]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
-        $response = [];
+        $result = [];
 
         foreach ($this->models as $key => $model) {
-            $response[$key] = $model->jsonSerialize();
+            /** @var T $model */
+            $result[$key] = $model->jsonSerialize();
         }
 
-        return $response;
+        /** @var array<string, mixed> $result */
+        return $result;
     }
 
     public function key(): string
     {
-        $keys = array_keys($this->models);
+        $key = array_keys($this->models)[$this->position] ?? null;
 
-        return $keys[$this->position] ?? throw new OutOfBoundsException('Invalid position');
+        if (!is_string($key)) {
+            throw new OutOfBoundsException('Invalid key type; expected string.');
+        }
+
+        return $key;
     }
 
     /**
@@ -148,8 +158,9 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     public function map(callable $callback): array
     {
         $result = [];
+
         foreach ($this->models as $key => $item) {
-            $result[$key] = $callback($item);
+            $result[(string) $key] = $callback($item);
         }
 
         return $result;
@@ -165,23 +176,30 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return isset($this->models[$offset]);
     }
 
-    public function offsetGet(mixed $offset): ?ModelInterface
+    #[\ReturnTypeWillChange]
+    public function offsetGet(mixed $offset)
     {
         return $this->models[$offset] ?? null;
     }
 
     /**
-     * @param string $offset
-     * @param T      $value
+     * @param string|null $offset
+     * @param T           $value
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
-            throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, is_object($value) ? $value::class : gettype($value)));
+            throw new InvalidArgumentException(
+                sprintf(
+                    'Expected instance of %s, %s given.',
+                    static::$itemType,
+                    is_object($value) ? $value::class : gettype($value)
+                )
+            );
         }
 
-        if (null === $offset) {
-            throw new InvalidArgumentException('KeyedCollection requires an explicit string key.');
+        if (! is_string($offset)) {
+            throw new InvalidArgumentException('Key must be a string.');
         }
 
         $this->models[$offset] = $value;
@@ -209,7 +227,18 @@ abstract class KeyedCollection implements KeyedCollectionInterface
      */
     public function toArray(): array
     {
-        return $this->models;
+        $copy = [];
+
+        foreach ($this->models as $key => $value) {
+            if (!is_string($key)) {
+                continue; // or throw if you want stricter enforcement
+            }
+
+            /** @var T $value */
+            $copy[$key] = $value;
+        }
+
+        return $copy;
     }
 
     public function valid(): bool

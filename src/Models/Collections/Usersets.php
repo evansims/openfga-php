@@ -7,7 +7,7 @@ namespace OpenFGA\Models\Collections;
 use OpenFGA\Models\UsersetInterface;
 
 /**
- * @extends KeyedCollection<string, UsersetInterface>
+ * @extends KeyedCollection<UsersetInterface>
  *
  * @implements UsersetsInterface<UsersetInterface>
  */
