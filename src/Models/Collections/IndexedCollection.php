@@ -35,6 +35,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     /**
      * @phpstan-var class-string<ModelInterface>
+     *
      * @var class-string<ModelInterface>
      */
     protected static string $itemType;
@@ -83,6 +84,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     public function current()
     {
         $key = $this->key();
+
         return $this->models[$key];
     }
 
@@ -133,14 +135,14 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     public function isEmpty(): bool
     {
-        return count($this->models) === 0;
+        return 0 === count($this->models);
     }
 
     public function jsonSerialize(): array
     {
         return array_map(
             static fn (ModelInterface $model): mixed => $model->jsonSerialize(),
-            $this->models
+            $this->models,
         );
     }
 
@@ -148,7 +150,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     {
         $key = array_keys($this->models)[$this->position] ?? null;
 
-        if (!is_int($key)) {
+        if (! is_int($key)) {
             throw new OutOfBoundsException('Invalid position');
         }
 
@@ -157,8 +159,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     /**
      * @template U of ModelInterface
+     *
      * @param class-string<U> $targetType
-     * @param callable(T): U $callback
+     * @param callable(T): U  $callback
      *
      * @return static<U>
      */
@@ -171,7 +174,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         /** @var static<U> $new */
         $new = new static();
 
-        /** @phpstan-var class-string<U> $targetType */
+        /* @phpstan-var class-string<U> $targetType */
         $new::$itemType = $targetType;
 
         foreach ($this->models as $item) {

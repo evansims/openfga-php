@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Authentication;
 
+use Exception;
+
+use function is_array;
+use function is_int;
+use function is_string;
+
 final class AccessToken implements AccessTokenInterface
 {
     public function __construct(
@@ -44,19 +50,19 @@ final class AccessToken implements AccessTokenInterface
         $data = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
 
         if (! is_array($data)) {
-            throw new \Exception('Invalid response format');
+            throw new Exception('Invalid response format');
         }
 
         if (! isset($data['access_token'], $data['expires_in'])) {
-            throw new \Exception('Missing required fields in response');
+            throw new Exception('Missing required fields in response');
         }
 
         if (! is_string($data['access_token'])) {
-            throw new \Exception('access_token must be a string');
+            throw new Exception('access_token must be a string');
         }
 
         if (! is_int($data['expires_in'])) {
-            throw new \Exception('expires_in must be an integer');
+            throw new Exception('expires_in must be an integer');
         }
 
         return new self(
