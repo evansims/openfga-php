@@ -14,20 +14,6 @@ use OpenFGA\Models\StoreInterface;
 interface StoresInterface extends IndexedCollectionInterface
 {
     /**
-     * Add a store to the collection.
-     *
-     * @param T $store
-     */
-    public function add(StoreInterface $store): void;
-
-    /**
-     * Get the current store in the collection.
-     *
-     * @return T
-     */
-    public function current(): StoreInterface;
-
-    /**
      * @return array<int, array{
      *     id: string,
      *     name: string,
@@ -37,13 +23,4 @@ interface StoresInterface extends IndexedCollectionInterface
      * }>
      */
     public function jsonSerialize(): array;
-
-    /**
-     * Get a store by offset.
-     *
-     * @param mixed $offset
-     *
-     * @return null|T
-     */
-    public function offsetGet(mixed $offset): ?StoreInterface;
 }

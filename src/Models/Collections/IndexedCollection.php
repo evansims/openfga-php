@@ -20,7 +20,7 @@ use function is_object;
 use function sprintf;
 
 /**
- * @template T
+ * @template T of ModelInterface
  *
  * @implements IndexedCollectionInterface<T>
  */
@@ -34,16 +34,15 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     private int $position = 0;
 
     /**
-     * @var class-string<T>
+     * @phpstan-var class-string<ModelInterface>
+     * @var class-string<ModelInterface>
      */
     protected static string $itemType;
 
     /**
      * @param iterable<T>|T ...$items
-     *
-     * @throws TypeError When item type is not defined or invalid
      */
-    public function __construct(iterable | ModelInterface ...$items)
+    final public function __construct(...$items)
     {
         if (! isset(static::$itemType)) {
             throw new TypeError(sprintf('Undefined item type for %s. Define the $itemType property or override the constructor.', static::class));
@@ -53,21 +52,13 @@ abstract class IndexedCollection implements IndexedCollectionInterface
             throw new TypeError(sprintf('Expected item type to implement %s, %s given', ModelInterface::class, static::$itemType));
         }
 
-        foreach ($items as $item) {
-            if (is_iterable($item)) {
-                $this->addItems($item);
-            } else {
-                $this->add($item);
-            }
+        foreach ($this->normalizeItems($items) as $item) {
+            /** @var T $item */
+            $this->add($item);
         }
     }
 
-    /**
-     * @param T $item
-     *
-     * @return $this
-     */
-    public function add(ModelInterface $item): static
+    public function add($item): static
     {
         if (! $item instanceof static::$itemType) {
             throw new TypeError(sprintf('Expected instance of %s, %s given', static::$itemType, $item::class));
@@ -89,25 +80,12 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return count($this->models);
     }
 
-    /**
-     * @return T
-     */
-    public function current(): ModelInterface
+    public function current()
     {
         $key = $this->key();
-
-        if (null === $key) {
-            throw new OutOfBoundsException('Invalid position');
-        }
-
         return $this->models[$key];
     }
 
-    /**
-     * Checks if all items match the callback.
-     *
-     * @param callable(T): bool $callback
-     */
     public function every(callable $callback): bool
     {
         foreach ($this->models as $item) {
@@ -119,20 +97,11 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return true;
     }
 
-    /**
-     * Filters the collection using a callback.
-     *
-     * @param callable(T): bool $callback
-     *
-     * @return static<T>
-     */
     public function filter(callable $callback): static
     {
-        /** @var class-string<static> $collection */
-        $collection = static::class;
+        /** @var static<T> $new */
+        $new = new static();
 
-        /** @var IndexedCollection<ModelInterface> $new */
-        $new = new $collection();
         foreach ($this->models as $item) {
             if ($callback($item)) {
                 $new->add($item);
@@ -142,14 +111,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $new;
     }
 
-    /**
-     * Returns the first item that matches the callback.
-     *
-     * @param callable(T): bool $callback
-     *
-     * @return null|T
-     */
-    public function first(?callable $callback = null): ?ModelInterface
+    public function first(?callable $callback = null)
     {
         if (null === $callback) {
             return $this->models[0] ?? null;
@@ -164,40 +126,39 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return null;
     }
 
-    /**
-     * @param int $offset
-     *
-     * @return null|T
-     */
-    public function get(int $offset): ?ModelInterface
+    public function get(int $offset)
     {
         return $this->models[$offset] ?? null;
     }
 
     public function isEmpty(): bool
     {
-        return empty($this->models);
+        return count($this->models) === 0;
     }
 
     public function jsonSerialize(): array
     {
-        return array_map(static fn (ModelInterface $model) => $model->jsonSerialize(), $this->models);
+        return array_map(
+            static fn (ModelInterface $model): mixed => $model->jsonSerialize(),
+            $this->models
+        );
     }
 
-    public function key(): string | int
+    public function key(): int
     {
-        $keys = array_keys($this->models);
+        $key = array_keys($this->models)[$this->position] ?? null;
 
-        return $keys[$this->position] ?? throw new OutOfBoundsException('Invalid position');
+        if (!is_int($key)) {
+            throw new OutOfBoundsException('Invalid position');
+        }
+
+        return $key;
     }
 
     /**
-     * Maps the collection to another collection.
-     *
      * @template U of ModelInterface
-     *
      * @param class-string<U> $targetType
-     * @param callable(T): U  $callback
+     * @param callable(T): U $callback
      *
      * @return static<U>
      */
@@ -207,9 +168,12 @@ abstract class IndexedCollection implements IndexedCollectionInterface
             throw ModelException::invalidItemType($targetType);
         }
 
+        /** @var static<U> $new */
         $new = new static();
 
+        /** @phpstan-var class-string<U> $targetType */
         $new::$itemType = $targetType;
+
         foreach ($this->models as $item) {
             $mapped = $callback($item);
             if (! $mapped instanceof $targetType) {
@@ -231,20 +195,11 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return isset($this->models[$offset]);
     }
 
-    /**
-     * @param mixed $offset
-     *
-     * @return null|T
-     */
-    public function offsetGet(mixed $offset): ?ModelInterface
+    public function offsetGet(mixed $offset)
     {
         return $this->models[$offset] ?? null;
     }
 
-    /**
-     * @param null|int|string $offset
-     * @param T               $value
-     */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
@@ -270,16 +225,6 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         }
     }
 
-    /**
-     * Reduces the collection to a single value.
-     *
-     * @template U
-     *
-     * @param U                 $initial
-     * @param callable(U, T): U $callback
-     *
-     * @return U
-     */
     public function reduce(mixed $initial, callable $callback): mixed
     {
         $result = $initial;
@@ -295,11 +240,6 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         $this->position = 0;
     }
 
-    /**
-     * Checks if any item matches the callback.
-     *
-     * @param callable(T): bool $callback
-     */
     public function some(callable $callback): bool
     {
         foreach ($this->models as $item) {
@@ -311,9 +251,6 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return false;
     }
 
-    /**
-     * @return array<int, T>
-     */
     public function toArray(): array
     {
         return $this->models;
@@ -326,13 +263,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return isset($keys[$this->position]);
     }
 
-    /**
-     * @param iterable<T>|T ...$items
-     *
-     * @return static<T>
-     */
-    public function withItems(iterable | ModelInterface ...$items): static
+    public function withItems(...$items): static
     {
+        /** @var static<T> $new */
         $new = clone $this;
         $new->addItems(...$items);
 
@@ -359,13 +292,30 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     /**
      * @param iterable<T>|T ...$items
      */
-    protected function addItems(iterable | ModelInterface ...$items): void
+    protected function addItems(...$items): void
+    {
+        foreach ($this->normalizeItems($items) as $item) {
+            /** @var T $item */
+            $this->add($item);
+        }
+    }
+
+    /**
+     * @param array<int|string, iterable<T>|T> $items
+     *
+     * @return iterable<T>
+     */
+    protected function normalizeItems(array $items): iterable
     {
         foreach ($items as $item) {
             if (is_iterable($item)) {
-                $this->addItems(...$item);
+                foreach ($item as $i) {
+                    /** @var T $i */
+                    yield $i;
+                }
             } else {
-                $this->add($item);
+                /** @var T $item */
+                yield $item;
             }
         }
     }

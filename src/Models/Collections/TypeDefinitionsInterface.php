@@ -14,20 +14,6 @@ use OpenFGA\Models\TypeDefinitionInterface;
 interface TypeDefinitionsInterface extends IndexedCollectionInterface
 {
     /**
-     * Add a type definition to the collection.
-     *
-     * @param T $typeDefinition
-     */
-    public function add(TypeDefinitionInterface $typeDefinition): void;
-
-    /**
-     * Get the current type definition in the collection.
-     *
-     * @return T
-     */
-    public function current(): TypeDefinitionInterface;
-
-    /**
      * @return array<int, array{
      *     type: string,
      *     relations?: array<string, mixed>,
@@ -35,13 +21,4 @@ interface TypeDefinitionsInterface extends IndexedCollectionInterface
      * }>
      */
     public function jsonSerialize(): array;
-
-    /**
-     * Get a type definition by offset.
-     *
-     * @param mixed $offset
-     *
-     * @return null|T
-     */
-    public function offsetGet(mixed $offset): ?TypeDefinitionInterface;
 }

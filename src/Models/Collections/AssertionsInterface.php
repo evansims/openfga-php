@@ -14,20 +14,6 @@ use OpenFGA\Models\AssertionInterface;
 interface AssertionsInterface extends IndexedCollectionInterface
 {
     /**
-     * Add an assertion to the collection.
-     *
-     * @param T $assertion
-     */
-    public function add(AssertionInterface $assertion): void;
-
-    /**
-     * Get the current assertion in the collection.
-     *
-     * @return T
-     */
-    public function current(): AssertionInterface;
-
-    /**
      * @return array<int, array{
      *     tuple_key: array<string, mixed>,
      *     expectation: bool,
@@ -36,13 +22,4 @@ interface AssertionsInterface extends IndexedCollectionInterface
      * }>
      */
     public function jsonSerialize(): array;
-
-    /**
-     * Get an assertion by offset.
-     *
-     * @param mixed $offset
-     *
-     * @return null|T
-     */
-    public function offsetGet(mixed $offset): ?AssertionInterface;
 }
