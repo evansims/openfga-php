@@ -8,9 +8,13 @@ use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, TypeDefinit
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\SchemaValidator;
 use Override;
+use RuntimeException;
+
 use stdClass;
 
 use function count;
+use function is_array;
+use function is_string;
 use function strlen;
 
 final class DslTransformer implements DslTransformerInterface
@@ -27,6 +31,10 @@ final class DslTransformer implements DslTransformerInterface
 
         $currentType = null;
         $relations = [];
+
+        if (! is_array($lines)) {
+            throw new RuntimeException('Failed to parse DSL input.');
+        }
 
         foreach ($lines as $line) {
             $line = trim($line);
@@ -50,7 +58,7 @@ final class DslTransformer implements DslTransformerInterface
                 continue;
             }
 
-            if (preg_match('/^type\s+(\w+)/', $line, $m)) {
+            if (1 === preg_match('/^type\s+(\w+)/', $line, $m)) {
                 if (null !== $currentType) {
                     $typeDefinitions[] = [
                         'type' => $currentType,
@@ -67,7 +75,7 @@ final class DslTransformer implements DslTransformerInterface
                 continue;
             }
 
-            if (preg_match('/^define\s+(\w+)\s*:\s*(.+)$/', $line, $m)) {
+            if (1 === preg_match('/^define\s+(\w+)\s*:\s*(.+)$/', $line, $m)) {
                 $relName = $m[1];
                 $expr = $m[2];
                 $relations[$relName] = self::parseExpression($expr);
@@ -101,11 +109,13 @@ final class DslTransformer implements DslTransformerInterface
         $lines[] = '  schema ' . $model->getSchemaVersion()->value;
 
         foreach ($model->getTypeDefinitions() as $typeDefinition) {
-            /** @var TypeDefinitionInterface $typeDef */
+            /** @var TypeDefinitionInterface $typeDefinition */
             $lines[] = 'type ' . $typeDefinition->getType();
             $relations = $typeDefinition->getRelations();
+
             if (null !== $relations && count($relations) > 0) {
                 $lines[] = '  relations';
+
                 foreach ($relations as $name => $userset) {
                     /** @var UsersetInterface $userset */
                     $lines[] = '    define ' . $name . ': ' . self::renderExpression($userset);
@@ -116,37 +126,38 @@ final class DslTransformer implements DslTransformerInterface
         return implode("\n", $lines);
     }
 
+    /**
+     * @param string $expr
+     *
+     * @return array<string, mixed>
+     */
     private static function parseExpression(string $expr): array
     {
-        $terms = array_map('trim', explode('or', $expr));
-        $parsed = array_map([self::class, 'parseTerm'], $terms);
-        if (1 === count($parsed)) {
-            return $parsed[0];
-        }
+        $terms = array_map(
+            static function (string $term): array {
+                if ('self' === $term) {
+                    return ['direct' => new stdClass()];
+                }
 
-        return ['union' => $parsed];
-    }
+                if (1 === preg_match('/^(\w+)#(\w+)$/', $term, $m)) {
+                    return [
+                        'computed_userset' => [
+                            'object' => $m[1],
+                            'relation' => $m[2],
+                        ],
+                    ];
+                }
 
-    private static function parseTerm(string $term): array
-    {
-        if ('self' === $term) {
-            return ['direct' => new stdClass()];
-        }
+                return [
+                    'computed_userset' => [
+                        'relation' => $term,
+                    ],
+                ];
+            },
+            array_map('trim', explode('or', $expr)),
+        );
 
-        if (preg_match('/^(\w+)#(\w+)$/', $term, $m)) {
-            return [
-                'computed_userset' => [
-                    'object' => $m[1],
-                    'relation' => $m[2],
-                ],
-            ];
-        }
-
-        return [
-            'computed_userset' => [
-                'relation' => $term,
-            ],
-        ];
+        return 1 === count($terms) ? $terms[0] : ['union' => $terms];
     }
 
     private static function renderExpression(UsersetInterface $userset): string
@@ -168,11 +179,17 @@ final class DslTransformer implements DslTransformerInterface
             $cu = $userset->getComputedUserset();
             $object = $cu->getObject();
             $relation = $cu->getRelation();
+
             if (null === $object || '' === $object) {
-                return (string) $relation;
+                if (! is_string($relation)) {
+                    throw new RuntimeException('Invalid computed userset.');
+                }
+
+                return $relation;
             }
+
             if (null === $relation || '' === $relation) {
-                return (string) $object;
+                return $object;
             }
 
             return $object . '#' . $relation;
