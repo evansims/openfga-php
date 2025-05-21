@@ -10,6 +10,7 @@
 ## Methods
 ### getChanges
 
+
 ```php
 public function getChanges(): [TupleChangesInterface](Models/Collections/TupleChangesInterface.md)
 ```
@@ -20,6 +21,7 @@ public function getChanges(): [TupleChangesInterface](Models/Collections/TupleCh
 `[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)` 
 
 ### getContinuationToken
+
 
 ```php
 public function getContinuationToken(): ?string

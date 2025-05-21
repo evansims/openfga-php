@@ -12,6 +12,7 @@
 ## Methods
 ### getComputedUserset
 
+
 ```php
 public function getComputedUserset(): ?[ObjectRelationInterface](Models/ObjectRelationInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getComputedUserset(): ?[ObjectRelationInterface](Models/ObjectRe
 `?[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
 
 ### getDifference
+
 
 ```php
 public function getDifference(): ?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
@@ -34,6 +36,7 @@ public function getDifference(): ?[DifferenceV1Interface](Models/DifferenceV1Int
 
 ### getDirect
 
+
 ```php
 public function getDirect(): ?object
 ```
@@ -44,6 +47,7 @@ public function getDirect(): ?object
 `?object` 
 
 ### getIntersection
+
 
 ```php
 public function getIntersection(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
@@ -56,6 +60,7 @@ public function getIntersection(): ?[UsersetsInterface](Models/Collections/Users
 
 ### getTupleToUserset
 
+
 ```php
 public function getTupleToUserset(): ?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
 ```
@@ -66,6 +71,7 @@ public function getTupleToUserset(): ?[TupleToUsersetV1Interface](Models/TupleTo
 `?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)` 
 
 ### getUnion
+
 
 ```php
 public function getUnion(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
@@ -78,6 +84,7 @@ public function getUnion(): ?[UsersetsInterface](Models/Collections/UsersetsInte
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -85,5 +92,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` computed_userset?: array{object?: string, relation?: string}, tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}, union?: array&lt;mixed&gt;, intersection?: array&lt;mixed&gt;, difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;}, direct?: object, }
+
+### schema
+
+*<small>Implements Models\UsersetInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

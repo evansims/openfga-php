@@ -15,6 +15,7 @@ Represents a collection that is indexed by a string, like a JSON object.
 ## Methods
 ### add
 
+
 ```php
 public function add(string $key, [ModelInterface](Models/ModelInterface.md) $item): static
 ```
@@ -31,6 +32,7 @@ public function add(string $key, [ModelInterface](Models/ModelInterface.md) $ite
 
 ### count
 
+
 ```php
 public function count(): int
 ```
@@ -42,6 +44,7 @@ public function count(): int
 
 ### current
 
+
 ```php
 public function current(): [ModelInterface](Models/ModelInterface.md)
 ```
@@ -52,6 +55,7 @@ public function current(): [ModelInterface](Models/ModelInterface.md)
 `[ModelInterface](Models/ModelInterface.md)` 
 
 ### get
+
 
 ```php
 public function get(string $key)
@@ -65,6 +69,7 @@ public function get(string $key)
 
 
 ### has
+
 
 ```php
 public function has(string $key): bool
@@ -82,6 +87,7 @@ Check if a key exists in the collection.
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -92,6 +98,7 @@ public function jsonSerialize(): array
 `array` mixed&gt;
 
 ### key
+
 
 ```php
 public function key(): string
@@ -104,6 +111,7 @@ public function key(): string
 
 ### next
 
+
 ```php
 public function next(): void
 ```
@@ -114,6 +122,7 @@ public function next(): void
 `void` 
 
 ### offsetExists
+
 
 ```php
 public function offsetExists(mixed $offset): bool
@@ -128,7 +137,22 @@ public function offsetExists(mixed $offset): bool
 #### Returns
 `bool` 
 
+### offsetGet
+
+
+```php
+public function offsetGet(mixed $offset)
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$offset` | `mixed` |  |
+
+
 ### offsetSet
+
 
 ```php
 public function offsetSet(mixed $offset, mixed $value): void
@@ -146,6 +170,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 
 ### offsetUnset
 
+
 ```php
 public function offsetUnset(mixed $offset): void
 ```
@@ -161,6 +186,7 @@ public function offsetUnset(mixed $offset): void
 
 ### rewind
 
+
 ```php
 public function rewind(): void
 ```
@@ -171,6 +197,7 @@ public function rewind(): void
 `void` 
 
 ### toArray
+
 
 ```php
 public function toArray(): array
@@ -183,6 +210,7 @@ public function toArray(): array
 
 ### valid
 
+
 ```php
 public function valid(): bool
 ```
@@ -191,17 +219,4 @@ public function valid(): bool
 
 #### Returns
 `bool` 
-
-### offsetGet
-
-```php
-public function offsetGet(mixed $offset)
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | `mixed` |  |
-
 

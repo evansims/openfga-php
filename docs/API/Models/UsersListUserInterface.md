@@ -12,6 +12,7 @@
 ## Methods
 ### getUser
 
+
 ```php
 public function getUser(): string
 ```
@@ -22,6 +23,7 @@ public function getUser(): string
 `string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): string

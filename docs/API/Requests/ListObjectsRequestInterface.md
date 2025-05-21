@@ -10,6 +10,7 @@
 ## Methods
 ### getConsistency
 
+
 ```php
 public function getConsistency(): ?Consistency
 ```
@@ -20,6 +21,7 @@ public function getConsistency(): ?Consistency
 `?Consistency` 
 
 ### getContext
+
 
 ```php
 public function getContext(): ?object
@@ -32,6 +34,7 @@ public function getContext(): ?object
 
 ### getContextualTuples
 
+
 ```php
 public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
@@ -42,6 +45,7 @@ public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/
 `?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 
 ### getModel
+
 
 ```php
 public function getModel(): ?string
@@ -54,6 +58,7 @@ public function getModel(): ?string
 
 ### getRelation
 
+
 ```php
 public function getRelation(): string
 ```
@@ -63,40 +68,8 @@ public function getRelation(): string
 #### Returns
 `string` 
 
-### getStore
-
-```php
-public function getStore(): string
-```
-
-
-
-#### Returns
-`string` 
-
-### getType
-
-```php
-public function getType(): string
-```
-
-
-
-#### Returns
-`string` 
-
-### getUser
-
-```php
-public function getUser(): string
-```
-
-
-
-#### Returns
-`string` 
-
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -110,4 +83,40 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 #### Returns
 `[RequestContext](Network/RequestContext.md)` 
+
+### getStore
+
+
+```php
+public function getStore(): string
+```
+
+
+
+#### Returns
+`string` 
+
+### getType
+
+
+```php
+public function getType(): string
+```
+
+
+
+#### Returns
+`string` 
+
+### getUser
+
+
+```php
+public function getUser(): string
+```
+
+
+
+#### Returns
+`string` 
 

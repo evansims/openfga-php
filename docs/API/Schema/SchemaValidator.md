@@ -8,6 +8,7 @@
 ## Methods
 ### getSchemas
 
+
 ```php
 public function getSchemas(): array
 ```
@@ -19,6 +20,7 @@ Get all registered schemas.
 `array` SchemaInterface&gt;
 
 ### registerSchema
+
 
 ```php
 public function registerSchema([SchemaInterface](Schema/SchemaInterface.md) $schema): self
@@ -35,6 +37,7 @@ Register a schema.
 `self` 
 
 ### validateAndTransform
+
 
 ```php
 public function validateAndTransform(mixed $data, string $className): object

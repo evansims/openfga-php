@@ -11,6 +11,7 @@
 ## Methods
 ### getAssertions
 
+
 ```php
 public function getAssertions(): [AssertionsInterface](Models/Collections/AssertionsInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getAssertions(): [AssertionsInterface](Models/Collections/Assert
 
 ### getModel
 
+
 ```php
 public function getModel(): string
 ```
@@ -32,6 +34,7 @@ public function getModel(): string
 `string` 
 
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -47,6 +50,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 `[RequestContext](Network/RequestContext.md)` 
 
 ### getStore
+
 
 ```php
 public function getStore(): string

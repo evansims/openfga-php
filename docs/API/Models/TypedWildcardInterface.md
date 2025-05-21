@@ -12,6 +12,7 @@
 ## Methods
 ### getType
 
+
 ```php
 public function getType(): string
 ```
@@ -22,6 +23,7 @@ public function getType(): string
 `string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

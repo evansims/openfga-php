@@ -12,6 +12,7 @@
 ## Methods
 ### getCondition
 
+
 ```php
 public function getCondition(): ?string
 ```
@@ -22,6 +23,7 @@ public function getCondition(): ?string
 `?string` 
 
 ### getRelation
+
 
 ```php
 public function getRelation(): ?string
@@ -34,6 +36,7 @@ public function getRelation(): ?string
 
 ### getType
 
+
 ```php
 public function getType(): string
 ```
@@ -44,6 +47,7 @@ public function getType(): string
 `string` 
 
 ### getWildcard
+
 
 ```php
 public function getWildcard(): ?object
@@ -56,6 +60,7 @@ public function getWildcard(): ?object
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -63,5 +68,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string, relation?: string, wildcard?: object, condition?: string}
+
+### schema
+
+*<small>Implements Models\RelationReferenceInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

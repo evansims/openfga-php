@@ -10,6 +10,7 @@
 ## Methods
 ### getExpires
 
+
 ```php
 public function getExpires(): int
 ```
@@ -20,6 +21,7 @@ public function getExpires(): int
 `int` 
 
 ### getScope
+
 
 ```php
 public function getScope(): ?string
@@ -32,6 +34,7 @@ public function getScope(): ?string
 
 ### getToken
 
+
 ```php
 public function getToken(): string
 ```
@@ -42,6 +45,7 @@ public function getToken(): string
 `string` 
 
 ### isExpired
+
 
 ```php
 public function isExpired(): bool

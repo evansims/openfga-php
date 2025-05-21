@@ -10,6 +10,7 @@
 ## Methods
 ### getAssertions
 
+
 ```php
 public function getAssertions(): ?[AssertionsInterface](Models/Collections/AssertionsInterface.md)
 ```
@@ -20,6 +21,7 @@ public function getAssertions(): ?[AssertionsInterface](Models/Collections/Asser
 `?[AssertionsInterface](Models/Collections/AssertionsInterface.md)` 
 
 ### getModel
+
 
 ```php
 public function getModel(): string

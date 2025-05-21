@@ -10,6 +10,7 @@
 ## Methods
 ### getUsers
 
+
 ```php
 public function getUsers(): [UsersInterface](Models/Collections/UsersInterface.md)
 ```

@@ -11,6 +11,7 @@
 ## Methods
 ### getDirectlyRelatedUserTypes
 
+
 ```php
 public function getDirectlyRelatedUserTypes(): ?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getDirectlyRelatedUserTypes(): ?[RelationReferencesInterface](Mo
 `?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)` 
 
 ### getModule
+
 
 ```php
 public function getModule(): ?string
@@ -33,6 +35,7 @@ public function getModule(): ?string
 
 ### getSourceInfo
 
+
 ```php
 public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterface.md)
 ```
@@ -43,6 +46,7 @@ public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterfa
 `?[SourceInfoInterface](Models/SourceInfoInterface.md)` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

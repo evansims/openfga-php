@@ -10,6 +10,7 @@
 ## Methods
 ### getContinuationToken
 
+
 ```php
 public function getContinuationToken(): ?string
 ```
@@ -21,6 +22,7 @@ public function getContinuationToken(): ?string
 
 ### getPageSize
 
+
 ```php
 public function getPageSize(): ?int
 ```
@@ -31,6 +33,7 @@ public function getPageSize(): ?int
 `?int` 
 
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)

@@ -11,6 +11,7 @@
 ## Methods
 ### getModule
 
+
 ```php
 public function getModule(): string
 ```
@@ -22,6 +23,7 @@ public function getModule(): string
 
 ### getSourceInfo
 
+
 ```php
 public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterface.md)
 ```
@@ -32,6 +34,7 @@ public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterfac
 `[SourceInfoInterface](Models/SourceInfoInterface.md)` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

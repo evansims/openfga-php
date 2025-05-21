@@ -11,6 +11,7 @@
 ## Methods
 ### getConditions
 
+
 ```php
 public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getConditions(): ?[ConditionsInterface](Models/Collections/Condi
 `?[ConditionsInterface](Models/Collections/ConditionsInterface.md)` 
 
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -37,6 +39,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 ### getSchemaVersion
 
+
 ```php
 public function getSchemaVersion(): SchemaVersion
 ```
@@ -48,6 +51,7 @@ public function getSchemaVersion(): SchemaVersion
 
 ### getStore
 
+
 ```php
 public function getStore(): string
 ```
@@ -58,6 +62,7 @@ public function getStore(): string
 `string` 
 
 ### getTypeDefinitions
+
 
 ```php
 public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)

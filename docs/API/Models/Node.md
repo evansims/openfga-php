@@ -12,6 +12,7 @@
 ## Methods
 ### getDifference
 
+
 ```php
 public function getDifference(): ?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getDifference(): ?[UsersetTreeDifferenceInterface](Models/Userse
 `?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)` 
 
 ### getIntersection
+
 
 ```php
 public function getIntersection(): ?[NodeInterface](Models/NodeInterface.md)
@@ -34,6 +36,7 @@ public function getIntersection(): ?[NodeInterface](Models/NodeInterface.md)
 
 ### getLeaf
 
+
 ```php
 public function getLeaf(): ?[LeafInterface](Models/LeafInterface.md)
 ```
@@ -44,6 +47,7 @@ public function getLeaf(): ?[LeafInterface](Models/LeafInterface.md)
 `?[LeafInterface](Models/LeafInterface.md)` 
 
 ### getName
+
 
 ```php
 public function getName(): string
@@ -56,6 +60,7 @@ public function getName(): string
 
 ### getUnion
 
+
 ```php
 public function getUnion(): ?[NodeInterface](Models/NodeInterface.md)
 ```
@@ -67,6 +72,7 @@ public function getUnion(): ?[NodeInterface](Models/NodeInterface.md)
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -74,5 +80,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}
+
+### schema
+
+*<small>Implements Models\NodeInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

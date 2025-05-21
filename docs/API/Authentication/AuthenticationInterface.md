@@ -10,6 +10,7 @@
 ## Methods
 ### getRequest
 
+
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
 ```

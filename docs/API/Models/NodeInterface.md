@@ -11,6 +11,7 @@
 ## Methods
 ### getDifference
 
+
 ```php
 public function getDifference(): ?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getDifference(): ?[UsersetTreeDifferenceInterface](Models/Userse
 `?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)` 
 
 ### getIntersection
+
 
 ```php
 public function getIntersection(): ?self
@@ -33,6 +35,7 @@ public function getIntersection(): ?self
 
 ### getLeaf
 
+
 ```php
 public function getLeaf(): ?[LeafInterface](Models/LeafInterface.md)
 ```
@@ -43,6 +46,7 @@ public function getLeaf(): ?[LeafInterface](Models/LeafInterface.md)
 `?[LeafInterface](Models/LeafInterface.md)` 
 
 ### getName
+
 
 ```php
 public function getName(): string
@@ -55,6 +59,7 @@ public function getName(): string
 
 ### getUnion
 
+
 ```php
 public function getUnion(): ?self
 ```
@@ -65,6 +70,7 @@ public function getUnion(): ?self
 `?self` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

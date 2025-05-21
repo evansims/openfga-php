@@ -10,6 +10,7 @@
 ## Methods
 ### getCreatedAt
 
+
 ```php
 public function getCreatedAt(): DateTimeImmutable
 ```
@@ -20,6 +21,7 @@ public function getCreatedAt(): DateTimeImmutable
 `DateTimeImmutable` 
 
 ### getDeletedAt
+
 
 ```php
 public function getDeletedAt(): ?DateTimeImmutable
@@ -32,6 +34,7 @@ public function getDeletedAt(): ?DateTimeImmutable
 
 ### getId
 
+
 ```php
 public function getId(): string
 ```
@@ -42,6 +45,7 @@ public function getId(): string
 `string` 
 
 ### getName
+
 
 ```php
 public function getName(): string
@@ -54,6 +58,7 @@ public function getName(): string
 
 ### getStore
 
+
 ```php
 public function getStore(): [StoreInterface](Models/StoreInterface.md)
 ```
@@ -64,6 +69,7 @@ public function getStore(): [StoreInterface](Models/StoreInterface.md)
 `[StoreInterface](Models/StoreInterface.md)` 
 
 ### getUpdatedAt
+
 
 ```php
 public function getUpdatedAt(): DateTimeImmutable

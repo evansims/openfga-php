@@ -10,6 +10,7 @@
 ## Methods
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize()
 ```

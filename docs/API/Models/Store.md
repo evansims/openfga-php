@@ -12,6 +12,7 @@
 ## Methods
 ### getCreatedAt
 
+
 ```php
 public function getCreatedAt(): DateTimeInterface
 ```
@@ -22,6 +23,7 @@ public function getCreatedAt(): DateTimeInterface
 `DateTimeInterface` 
 
 ### getDeletedAt
+
 
 ```php
 public function getDeletedAt(): ?DateTimeInterface
@@ -34,6 +36,7 @@ public function getDeletedAt(): ?DateTimeInterface
 
 ### getId
 
+
 ```php
 public function getId(): string
 ```
@@ -44,6 +47,7 @@ public function getId(): string
 `string` 
 
 ### getName
+
 
 ```php
 public function getName(): string
@@ -56,6 +60,7 @@ public function getName(): string
 
 ### getUpdatedAt
 
+
 ```php
 public function getUpdatedAt(): DateTimeInterface
 ```
@@ -67,6 +72,7 @@ public function getUpdatedAt(): DateTimeInterface
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -74,5 +80,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string&gt;
+
+### schema
+
+*<small>Implements Models\StoreInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

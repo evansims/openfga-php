@@ -11,6 +11,7 @@
 ## Methods
 ### getName
 
+
 ```php
 public function getName(): string
 ```
@@ -21,6 +22,7 @@ public function getName(): string
 `string` 
 
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)

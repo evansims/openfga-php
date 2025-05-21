@@ -10,6 +10,7 @@
 ## Methods
 ### getAllowed
 
+
 ```php
 public function getAllowed(): ?bool
 ```
@@ -20,6 +21,7 @@ public function getAllowed(): ?bool
 `?bool` 
 
 ### getResolution
+
 
 ```php
 public function getResolution(): ?string

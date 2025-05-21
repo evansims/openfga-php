@@ -12,6 +12,7 @@
 ## Methods
 ### getContext
 
+
 ```php
 public function getContext(): ?array
 ```
@@ -19,9 +20,10 @@ public function getContext(): ?array
 
 
 #### Returns
-`?array` 
+`?array` mixed&gt;
 
 ### getContextualTuples
+
 
 ```php
 public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
@@ -34,6 +36,7 @@ public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/
 
 ### getExpectation
 
+
 ```php
 public function getExpectation(): bool
 ```
@@ -44,6 +47,7 @@ public function getExpectation(): bool
 `bool` 
 
 ### getTupleKey
+
 
 ```php
 public function getTupleKey(): [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
@@ -56,6 +60,7 @@ public function getTupleKey(): [AssertionTupleKeyInterface](Models/AssertionTupl
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -63,5 +68,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` tuple_key: array&lt;string, mixed&gt;, expectation: bool, contextual_tuples?: array&lt;array-key, mixed&gt;, context?: array&lt;array-key, mixed&gt; }
+
+### schema
+
+*<small>Implements Models\AssertionInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

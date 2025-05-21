@@ -11,6 +11,7 @@
 ## Methods
 ### getGenericTypes
 
+
 ```php
 public function getGenericTypes(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getGenericTypes(): ?[ConditionParametersInterface](Models/Collec
 
 ### getTypeName
 
+
 ```php
 public function getTypeName(): TypeName
 ```
@@ -32,6 +34,7 @@ public function getTypeName(): TypeName
 `TypeName` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

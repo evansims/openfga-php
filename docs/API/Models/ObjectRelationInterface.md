@@ -11,6 +11,7 @@
 ## Methods
 ### getObject
 
+
 ```php
 public function getObject(): ?string
 ```
@@ -22,6 +23,7 @@ public function getObject(): ?string
 
 ### getRelation
 
+
 ```php
 public function getRelation(): ?string
 ```
@@ -32,6 +34,7 @@ public function getRelation(): ?string
 `?string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

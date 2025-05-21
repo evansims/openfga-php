@@ -12,6 +12,7 @@
 ## Methods
 ### getUserset
 
+
 ```php
 public function getUserset(): string
 ```
@@ -23,6 +24,7 @@ public function getUserset(): string
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -30,5 +32,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string}
+
+### schema
+
+*<small>Implements Models\ComputedInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

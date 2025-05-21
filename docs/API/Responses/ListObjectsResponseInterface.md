@@ -10,6 +10,7 @@
 ## Methods
 ### getObjects
 
+
 ```php
 public function getObjects(): array
 ```

@@ -12,6 +12,7 @@
 ## Methods
 ### getId
 
+
 ```php
 public function getId(): string
 ```
@@ -22,6 +23,7 @@ public function getId(): string
 `string` 
 
 ### getRelation
+
 
 ```php
 public function getRelation(): string
@@ -34,6 +36,7 @@ public function getRelation(): string
 
 ### getType
 
+
 ```php
 public function getType(): string
 ```
@@ -45,6 +48,7 @@ public function getType(): string
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -52,5 +56,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string, id: string, relation: string}
+
+### schema
+
+*<small>Implements Models\UsersetUserInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

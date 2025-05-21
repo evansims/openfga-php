@@ -9,7 +9,25 @@
 * Stringable
 
 ## Methods
+### fromResponse
+
+*<small>Implements Authentication\AccessTokenInterface</small>*  
+
+```php
+public function fromResponse(Psr\Http\Message\ResponseInterface $response): self
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$response` | `Psr\Http\Message\ResponseInterface` |  |
+
+#### Returns
+`self` 
+
 ### getExpires
+
 
 ```php
 public function getExpires(): int
@@ -22,6 +40,7 @@ public function getExpires(): int
 
 ### getScope
 
+
 ```php
 public function getScope(): ?string
 ```
@@ -33,6 +52,7 @@ public function getScope(): ?string
 
 ### getToken
 
+
 ```php
 public function getToken(): string
 ```
@@ -43,6 +63,7 @@ public function getToken(): string
 `string` 
 
 ### isExpired
+
 
 ```php
 public function isExpired(): bool

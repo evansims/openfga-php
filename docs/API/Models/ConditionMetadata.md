@@ -12,6 +12,7 @@
 ## Methods
 ### getModule
 
+
 ```php
 public function getModule(): string
 ```
@@ -22,6 +23,7 @@ public function getModule(): string
 `string` 
 
 ### getSourceInfo
+
 
 ```php
 public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterface.md)
@@ -34,6 +36,7 @@ public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterfac
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -41,5 +44,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string, source_info: array{file: string}}
+
+### schema
+
+*<small>Implements Models\ConditionMetadataInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

@@ -11,6 +11,7 @@
 ## Methods
 ### getKey
 
+
 ```php
 public function getKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 
 ### getTimestamp
 
+
 ```php
 public function getTimestamp(): DateTimeImmutable
 ```
@@ -32,6 +34,7 @@ public function getTimestamp(): DateTimeImmutable
 `DateTimeImmutable` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

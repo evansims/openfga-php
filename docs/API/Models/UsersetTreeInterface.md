@@ -11,6 +11,7 @@
 ## Methods
 ### getRoot
 
+
 ```php
 public function getRoot(): [NodeInterface](Models/NodeInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getRoot(): [NodeInterface](Models/NodeInterface.md)
 `[NodeInterface](Models/NodeInterface.md)` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

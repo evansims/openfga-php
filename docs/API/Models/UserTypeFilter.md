@@ -12,6 +12,7 @@
 ## Methods
 ### getRelation
 
+
 ```php
 public function getRelation(): ?string
 ```
@@ -22,6 +23,7 @@ public function getRelation(): ?string
 `?string` 
 
 ### getType
+
 
 ```php
 public function getType(): string
@@ -34,6 +36,7 @@ public function getType(): string
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -41,5 +44,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string&gt;
+
+### schema
+
+*<small>Implements Models\UserTypeFilterInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

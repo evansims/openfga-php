@@ -11,6 +11,7 @@
 ## Methods
 ### getUserset
 
+
 ```php
 public function getUserset(): string
 ```
@@ -21,6 +22,7 @@ public function getUserset(): string
 `string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

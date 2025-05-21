@@ -11,6 +11,7 @@
 ## Methods
 ### getClassName
 
+
 ```php
 public function getClassName(): string
 ```
@@ -22,16 +23,19 @@ public function getClassName(): string
 
 ### getItemType
 
+
 ```php
 public function getItemType(): string
 ```
 
+Get the type of each item in the collection.
 
 
 #### Returns
 `string` 
 
 ### getProperties
+
 
 ```php
 public function getProperties(): array
@@ -40,9 +44,10 @@ public function getProperties(): array
 
 
 #### Returns
-`array` 
+`array` SchemaProperty&gt;
 
 ### getProperty
+
 
 ```php
 public function getProperty(string $name): ?[SchemaProperty](Schema/SchemaProperty.md)
@@ -59,10 +64,12 @@ public function getProperty(string $name): ?[SchemaProperty](Schema/SchemaProper
 
 ### requiresItems
 
+
 ```php
 public function requiresItems(): bool
 ```
 
+Whether the collection requires at least one item.
 
 
 #### Returns

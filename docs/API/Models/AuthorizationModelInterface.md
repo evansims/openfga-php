@@ -11,6 +11,7 @@
 ## Methods
 ### getConditions
 
+
 ```php
 public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getConditions(): ?[ConditionsInterface](Models/Collections/Condi
 `?[ConditionsInterface](Models/Collections/ConditionsInterface.md)` 
 
 ### getId
+
 
 ```php
 public function getId(): string
@@ -33,6 +35,7 @@ public function getId(): string
 
 ### getSchemaVersion
 
+
 ```php
 public function getSchemaVersion(): SchemaVersion
 ```
@@ -43,6 +46,7 @@ public function getSchemaVersion(): SchemaVersion
 `SchemaVersion` 
 
 ### getTypeDefinitions
+
 
 ```php
 public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
@@ -55,11 +59,11 @@ public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collecti
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
 
-id: string, schema_version: string, type_definitions: array&lt;int, array{type: string, relations?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;, conditions?: array&lt;int, array{name: string, expression: string, parameters?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt; }
 
 
 #### Returns
