@@ -10,6 +10,7 @@
 ## Methods
 ### getCreatedAt
 
+
 ```php
 public function getCreatedAt(): DateTimeImmutable
 ```
@@ -20,6 +21,7 @@ public function getCreatedAt(): DateTimeImmutable
 `DateTimeImmutable` 
 
 ### getId
+
 
 ```php
 public function getId(): string
@@ -32,6 +34,7 @@ public function getId(): string
 
 ### getName
 
+
 ```php
 public function getName(): string
 ```
@@ -42,6 +45,7 @@ public function getName(): string
 `string` 
 
 ### getUpdatedAt
+
 
 ```php
 public function getUpdatedAt(): DateTimeImmutable

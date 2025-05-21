@@ -16,6 +16,7 @@
 ## Methods
 ### add
 
+
 ```php
 public function add(string $key, [ModelInterface](Models/ModelInterface.md) $item): static
 ```
@@ -25,12 +26,13 @@ public function add(string $key, [ModelInterface](Models/ModelInterface.md) $ite
 | Name | Type | Description |
 |------|------|-------------|
 | `$key` | `string` |  |
-| `$item` | `[ModelInterface](Models/ModelInterface.md)` |  |
+| `key` | `string` |  |
 
 #### Returns
 `static` 
 
 ### count
+
 
 ```php
 public function count(): int
@@ -43,6 +45,7 @@ public function count(): int
 
 ### current
 
+
 ```php
 public function current(): [ModelInterface](Models/ModelInterface.md)
 ```
@@ -54,6 +57,7 @@ public function current(): [ModelInterface](Models/ModelInterface.md)
 
 ### get
 
+
 ```php
 public function get(string $key)
 ```
@@ -62,25 +66,28 @@ public function get(string $key)
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
+| `key` | `string` |  |
 
 
 ### has
+
 
 ```php
 public function has(string $key): bool
 ```
 
+Check if a key exists in the collection.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
+| `offset` | `mixed` |  |
 
 #### Returns
 `bool` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array
@@ -89,9 +96,10 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` mixed&gt;
 
 ### key
+
 
 ```php
 public function key(): string
@@ -104,6 +112,7 @@ public function key(): string
 
 ### next
 
+
 ```php
 public function next(): void
 ```
@@ -115,6 +124,7 @@ public function next(): void
 
 ### offsetExists
 
+
 ```php
 public function offsetExists(mixed $offset): bool
 ```
@@ -123,12 +133,13 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `offset` | `mixed` |  |
 
 #### Returns
 `bool` 
 
 ### offsetGet
+
 
 ```php
 public function offsetGet(mixed $offset)
@@ -138,10 +149,11 @@ public function offsetGet(mixed $offset)
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `value` | `mixed` |  |
 
 
 ### offsetSet
+
 
 ```php
 public function offsetSet(mixed $offset, mixed $value): void
@@ -152,12 +164,13 @@ public function offsetSet(mixed $offset, mixed $value): void
 | Name | Type | Description |
 |------|------|-------------|
 | `$offset` | `mixed` |  |
-| `$value` | `mixed` |  |
+| `offset` | `mixed` |  |
 
 #### Returns
 `void` 
 
 ### offsetUnset
+
 
 ```php
 public function offsetUnset(mixed $offset): void
@@ -174,6 +187,7 @@ public function offsetUnset(mixed $offset): void
 
 ### rewind
 
+
 ```php
 public function rewind(): void
 ```
@@ -183,7 +197,21 @@ public function rewind(): void
 #### Returns
 `void` 
 
+### schema
+
+*<small>Implements Models\Collections\KeyedCollectionInterface</small>*  
+
+```php
+public function schema(): [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
+```
+
+
+
+#### Returns
+`[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)` 
+
 ### toArray
+
 
 ```php
 public function toArray(): array
@@ -192,9 +220,10 @@ public function toArray(): array
 
 
 #### Returns
-`array` 
+`array` T&gt;
 
 ### valid
+
 
 ```php
 public function valid(): bool

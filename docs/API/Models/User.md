@@ -12,6 +12,7 @@
 ## Methods
 ### getObject
 
+
 ```php
 public function getObject(): ?object
 ```
@@ -22,6 +23,7 @@ public function getObject(): ?object
 `?object` 
 
 ### getUserset
+
 
 ```php
 public function getUserset(): ?[UsersetUserInterface](Models/UsersetUserInterface.md)
@@ -34,6 +36,7 @@ public function getUserset(): ?[UsersetUserInterface](Models/UsersetUserInterfac
 
 ### getWildcard
 
+
 ```php
 public function getWildcard(): ?[TypedWildcardInterface](Models/TypedWildcardInterface.md)
 ```
@@ -45,6 +48,7 @@ public function getWildcard(): ?[TypedWildcardInterface](Models/TypedWildcardInt
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -52,5 +56,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}
+
+### schema
+
+*<small>Implements Models\UserInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

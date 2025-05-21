@@ -11,6 +11,7 @@
 ## Methods
 ### getExpression
 
+
 ```php
 public function getExpression(): string
 ```
@@ -21,6 +22,7 @@ public function getExpression(): string
 `string` 
 
 ### getMetadata
+
 
 ```php
 public function getMetadata(): ?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
@@ -33,6 +35,7 @@ public function getMetadata(): ?[ConditionMetadataInterface](Models/ConditionMet
 
 ### getName
 
+
 ```php
 public function getName(): string
 ```
@@ -44,6 +47,7 @@ public function getName(): string
 
 ### getParameters
 
+
 ```php
 public function getParameters(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 ```
@@ -54,6 +58,7 @@ public function getParameters(): ?[ConditionParametersInterface](Models/Collecti
 `?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

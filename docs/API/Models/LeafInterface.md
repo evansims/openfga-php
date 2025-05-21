@@ -11,6 +11,7 @@
 ## Methods
 ### getComputed
 
+
 ```php
 public function getComputed(): ?[ComputedInterface](Models/ComputedInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getComputed(): ?[ComputedInterface](Models/ComputedInterface.md)
 `?[ComputedInterface](Models/ComputedInterface.md)` 
 
 ### getTupleToUserset
+
 
 ```php
 public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
@@ -33,6 +35,7 @@ public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Model
 
 ### getUsers
 
+
 ```php
 public function getUsers(): ?[UsersListInterface](Models/Collections/UsersListInterface.md)
 ```
@@ -43,6 +46,7 @@ public function getUsers(): ?[UsersListInterface](Models/Collections/UsersListIn
 `?[UsersListInterface](Models/Collections/UsersListInterface.md)` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

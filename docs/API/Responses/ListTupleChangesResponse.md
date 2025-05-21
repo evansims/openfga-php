@@ -9,7 +9,26 @@
 * [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
+### fromResponse
+
+*<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
+
+```php
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$response` | `Psr\Http\Message\ResponseInterface` |  |
+| `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
+
+#### Returns
+`static` 
+
 ### getChanges
+
 
 ```php
 public function getChanges(): [TupleChangesInterface](Models/Collections/TupleChangesInterface.md)
@@ -22,6 +41,7 @@ public function getChanges(): [TupleChangesInterface](Models/Collections/TupleCh
 
 ### getContinuationToken
 
+
 ```php
 public function getContinuationToken(): ?string
 ```
@@ -30,4 +50,17 @@ public function getContinuationToken(): ?string
 
 #### Returns
 `?string` 
+
+### schema
+
+*<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

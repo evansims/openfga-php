@@ -10,6 +10,7 @@
 ## Methods
 ### getConditions
 
+
 ```php
 public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
 ```
@@ -19,40 +20,8 @@ public function getConditions(): ?[ConditionsInterface](Models/Collections/Condi
 #### Returns
 `?[ConditionsInterface](Models/Collections/ConditionsInterface.md)` 
 
-### getSchemaVersion
-
-```php
-public function getSchemaVersion(): SchemaVersion
-```
-
-
-
-#### Returns
-`SchemaVersion` 
-
-### getStore
-
-```php
-public function getStore(): string
-```
-
-
-
-#### Returns
-`string` 
-
-### getTypeDefinitions
-
-```php
-public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
-```
-
-
-
-#### Returns
-`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)` 
-
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -66,4 +35,40 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 #### Returns
 `[RequestContext](Network/RequestContext.md)` 
+
+### getSchemaVersion
+
+
+```php
+public function getSchemaVersion(): SchemaVersion
+```
+
+
+
+#### Returns
+`SchemaVersion` 
+
+### getStore
+
+
+```php
+public function getStore(): string
+```
+
+
+
+#### Returns
+`string` 
+
+### getTypeDefinitions
+
+
+```php
+public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
+```
+
+
+
+#### Returns
+`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)` 
 

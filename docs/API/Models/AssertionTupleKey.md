@@ -12,6 +12,7 @@
 ## Methods
 ### getObject
 
+
 ```php
 public function getObject(): string
 ```
@@ -22,6 +23,7 @@ public function getObject(): string
 `string` 
 
 ### getRelation
+
 
 ```php
 public function getRelation(): string
@@ -34,6 +36,7 @@ public function getRelation(): string
 
 ### getUser
 
+
 ```php
 public function getUser(): string
 ```
@@ -45,6 +48,7 @@ public function getUser(): string
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -52,5 +56,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` user: string, relation: string, object: string, }
+
+### schema
+
+*<small>Implements Models\AssertionTupleKeyInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

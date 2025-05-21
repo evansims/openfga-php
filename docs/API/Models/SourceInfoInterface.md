@@ -11,6 +11,7 @@
 ## Methods
 ### getFile
 
+
 ```php
 public function getFile(): string
 ```
@@ -21,6 +22,7 @@ public function getFile(): string
 `string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

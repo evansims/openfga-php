@@ -10,6 +10,7 @@
 ## Methods
 ### getTree
 
+
 ```php
 public function getTree(): ?[UsersetTreeInterface](Models/UsersetTreeInterface.md)
 ```

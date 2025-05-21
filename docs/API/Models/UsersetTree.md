@@ -12,6 +12,7 @@
 ## Methods
 ### getRoot
 
+
 ```php
 public function getRoot(): [NodeInterface](Models/NodeInterface.md)
 ```
@@ -23,6 +24,7 @@ public function getRoot(): [NodeInterface](Models/NodeInterface.md)
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -30,5 +32,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` array{name: string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}}
+
+### schema
+
+*<small>Implements Models\UsersetTreeInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

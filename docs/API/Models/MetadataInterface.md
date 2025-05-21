@@ -11,6 +11,7 @@
 ## Methods
 ### getModule
 
+
 ```php
 public function getModule(): ?string
 ```
@@ -21,6 +22,7 @@ public function getModule(): ?string
 `?string` 
 
 ### getRelations
+
 
 ```php
 public function getRelations(): ?[RelationMetadataInterface](Models/RelationMetadataInterface.md)
@@ -33,6 +35,7 @@ public function getRelations(): ?[RelationMetadataInterface](Models/RelationMeta
 
 ### getSourceInfo
 
+
 ```php
 public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterface.md)
 ```
@@ -43,6 +46,7 @@ public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterfa
 `?[SourceInfoInterface](Models/SourceInfoInterface.md)` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

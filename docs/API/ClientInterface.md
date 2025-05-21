@@ -8,6 +8,7 @@
 ## Methods
 ### check
 
+
 ```php
 public function check([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?bool $trace = null, ?object $context = null, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = null, ?Consistency $consistency = null): [CheckResponseInterface](Responses/CheckResponseInterface.md)
 ```
@@ -30,6 +31,7 @@ Checks if a user has a specific relationship with an object.
 
 ### createAuthorizationModel
 
+
 ```php
 public function createAuthorizationModel([StoreInterface](Models/StoreInterface.md)|string $store, [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md) $typeDefinitions, [ConditionsInterface](Models/Collections/ConditionsInterface.md) $conditions, SchemaVersion $schemaVersion = &quot;1.1&quot;): [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md)
 ```
@@ -49,6 +51,7 @@ Creates a new authorization model with the given type definitions and conditions
 
 ### createStore
 
+
 ```php
 public function createStore(string $name): [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md)
 ```
@@ -65,6 +68,7 @@ Creates a new store with the given name.
 
 ### deleteStore
 
+
 ```php
 public function deleteStore([StoreInterface](Models/StoreInterface.md)|string $store): [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)
 ```
@@ -80,6 +84,7 @@ Deletes a store.
 `[DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)` The deletion result
 
 ### expand
+
 
 ```php
 public function expand([StoreInterface](Models/StoreInterface.md)|string $store, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string|null $model = null, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = null, ?Consistency $consistency = null): [ExpandResponseInterface](Responses/ExpandResponseInterface.md)
@@ -101,6 +106,7 @@ Expands a relationship tuple to show all users that have the relationship.
 
 ### getAuthorizationModel
 
+
 ```php
 public function getAuthorizationModel([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model): [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md)
 ```
@@ -118,6 +124,7 @@ Retrieves an authorization model by ID.
 
 ### getLastRequest
 
+
 ```php
 public function getLastRequest(): ?Psr\Http\Message\RequestInterface
 ```
@@ -130,6 +137,7 @@ Retrieves the last HTTP request made by the client.
 
 ### getLastResponse
 
+
 ```php
 public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
 ```
@@ -141,6 +149,7 @@ Retrieves the last HTTP response received by the client.
 `?Psr\Http\Message\ResponseInterface` The last response, or null if no response has been received
 
 ### getStore
+
 
 ```php
 public function getStore([StoreInterface](Models/StoreInterface.md)|string $store): [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md)
@@ -157,6 +166,7 @@ Retrieves store details by ID.
 `[GetStoreResponseInterface](Responses/GetStoreResponseInterface.md)` The store details
 
 ### listAuthorizationModels
+
 
 ```php
 public function listAuthorizationModels([StoreInterface](Models/StoreInterface.md)|string $store, ?string $continuationToken = null, ?int $pageSize = null): [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md)
@@ -175,6 +185,7 @@ Lists authorization models in a store with pagination.
 `[ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md)` The list of authorization models
 
 ### listObjects
+
 
 ```php
 public function listObjects([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, string $type, string $relation, string $user, ?object $context = null, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = null, ?Consistency $consistency = null): [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md)
@@ -199,6 +210,7 @@ Lists objects that have a specific relationship with a user.
 
 ### listStores
 
+
 ```php
 public function listStores(?string $continuationToken = null, ?int $pageSize = null): [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md)
 ```
@@ -215,6 +227,7 @@ Lists all stores with pagination.
 `[ListStoresResponseInterface](Responses/ListStoresResponseInterface.md)` The list of stores
 
 ### listTupleChanges
+
 
 ```php
 public function listTupleChanges([StoreInterface](Models/StoreInterface.md)|string $store, ?string $continuationToken = null, ?int $pageSize = null, ?string $type = null, ?DateTimeImmutable $startTime = null): [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md)
@@ -235,6 +248,7 @@ Lists changes to relationship tuples in a store.
 `[ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md)` The list of tuple changes
 
 ### listUsers
+
 
 ```php
 public function listUsers([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, string $object, string $relation, [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md) $userFilters, ?object $context = null, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = null, ?Consistency $consistency = null): [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md)
@@ -259,6 +273,7 @@ Lists users that have a specific relationship with an object.
 
 ### readAssertions
 
+
 ```php
 public function readAssertions([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model): [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md)
 ```
@@ -275,6 +290,7 @@ Retrieves assertions for an authorization model.
 `[ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md)` The model&#039;s assertions
 
 ### readTuples
+
 
 ```php
 public function readTuples([StoreInterface](Models/StoreInterface.md)|string $store, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?string $continuationToken = null, ?int $pageSize = null, ?Consistency $consistency = null): [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md)
@@ -296,6 +312,7 @@ Reads relationship tuples from a store with optional filtering and pagination.
 
 ### writeAssertions
 
+
 ```php
 public function writeAssertions([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, [AssertionsInterface](Models/Collections/AssertionsInterface.md) $assertions): [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md)
 ```
@@ -313,6 +330,7 @@ Creates or updates assertions for an authorization model.
 `[WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md)` The result of the operation
 
 ### writeTuples
+
 
 ```php
 public function writeTuples([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $writes = null, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $deletes = null): [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md)

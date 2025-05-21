@@ -12,6 +12,7 @@
 ## Methods
 ### getOperation
 
+
 ```php
 public function getOperation(): TupleOperation
 ```
@@ -22,6 +23,7 @@ public function getOperation(): TupleOperation
 `TupleOperation` 
 
 ### getTimestamp
+
 
 ```php
 public function getTimestamp(): DateTimeImmutable
@@ -34,6 +36,7 @@ public function getTimestamp(): DateTimeImmutable
 
 ### getTupleKey
 
+
 ```php
 public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 ```
@@ -45,6 +48,7 @@ public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -52,5 +56,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` &#039;TUPLE_OPERATION_DELETE&#039;|&#039;TUPLE_OPERATION_WRITE&#039;, timestamp: string, tuple_key: array&lt;&#039;condition&#039;|&#039;object&#039;|&#039;relation&#039;|&#039;user&#039;, array{expression: string, metadata?: array{module: string, source_info: array{file: string}}, name: string, parameters?: list&lt;array{generic_types?: mixed, type_name: string}&gt;}|string&gt;}
+
+### schema
+
+*<small>Implements Models\TupleChangeInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

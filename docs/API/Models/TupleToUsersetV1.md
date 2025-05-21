@@ -12,6 +12,7 @@
 ## Methods
 ### getComputedUserset
 
+
 ```php
 public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRel
 `[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
 
 ### getTupleset
+
 
 ```php
 public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
@@ -34,6 +36,7 @@ public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationIn
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -41,5 +44,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
+
+### schema
+
+*<small>Implements Models\TupleToUsersetV1Interface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

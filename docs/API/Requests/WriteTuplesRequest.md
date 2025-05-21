@@ -11,6 +11,7 @@
 ## Methods
 ### getDeletes
 
+
 ```php
 public function getDeletes(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getDeletes(): ?[TupleKeysInterface](Models/Collections/TupleKeys
 
 ### getModel
 
+
 ```php
 public function getModel(): string
 ```
@@ -32,6 +34,7 @@ public function getModel(): string
 `string` 
 
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -48,6 +51,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 ### getStore
 
+
 ```php
 public function getStore(): string
 ```
@@ -58,6 +62,7 @@ public function getStore(): string
 `string` 
 
 ### getWrites
+
 
 ```php
 public function getWrites(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)

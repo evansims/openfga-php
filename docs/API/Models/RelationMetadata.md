@@ -12,6 +12,7 @@
 ## Methods
 ### getDirectlyRelatedUserTypes
 
+
 ```php
 public function getDirectlyRelatedUserTypes(): ?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getDirectlyRelatedUserTypes(): ?[RelationReferencesInterface](Mo
 `?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)` 
 
 ### getModule
+
 
 ```php
 public function getModule(): ?string
@@ -34,6 +36,7 @@ public function getModule(): ?string
 
 ### getSourceInfo
 
+
 ```php
 public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterface.md)
 ```
@@ -45,6 +48,7 @@ public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterfa
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -52,5 +56,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string, directly_related_user_types?: array&lt;string, array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;, source_info?: array{file?: string}}
+
+### schema
+
+*<small>Implements Models\RelationMetadataInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

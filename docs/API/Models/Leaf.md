@@ -12,6 +12,7 @@
 ## Methods
 ### getComputed
 
+
 ```php
 public function getComputed(): ?[ComputedInterface](Models/ComputedInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getComputed(): ?[ComputedInterface](Models/ComputedInterface.md)
 `?[ComputedInterface](Models/ComputedInterface.md)` 
 
 ### getTupleToUserset
+
 
 ```php
 public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
@@ -34,6 +36,7 @@ public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Model
 
 ### getUsers
 
+
 ```php
 public function getUsers(): ?[UsersListInterface](Models/Collections/UsersListInterface.md)
 ```
@@ -45,6 +48,7 @@ public function getUsers(): ?[UsersListInterface](Models/Collections/UsersListIn
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -52,5 +56,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}
+
+### schema
+
+*<small>Implements Models\LeafInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

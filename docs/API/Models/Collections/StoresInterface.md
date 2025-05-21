@@ -13,19 +13,8 @@
 * ArrayAccess
 
 ## Methods
-### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-```
-
-id: string, name: string, created_at: string, updated_at: string, deleted_at?: string, }&gt;
-
-
-#### Returns
-`array` array{ id: string, name: string, created_at: string, updated_at: string, deleted_at?: string, }&gt;
-
 ### add
+
 
 ```php
 public function add(mixed $item): static
@@ -42,6 +31,7 @@ public function add(mixed $item): static
 
 ### clear
 
+
 ```php
 public function clear(): void
 ```
@@ -52,6 +42,7 @@ public function clear(): void
 `void` 
 
 ### count
+
 
 ```php
 public function count(): int
@@ -64,6 +55,7 @@ public function count(): int
 
 ### current
 
+
 ```php
 public function current(): [ModelInterface](Models/ModelInterface.md)
 ```
@@ -74,6 +66,7 @@ public function current(): [ModelInterface](Models/ModelInterface.md)
 `[ModelInterface](Models/ModelInterface.md)` 
 
 ### every
+
 
 ```php
 public function every(callable $callback): bool
@@ -91,6 +84,7 @@ Checks if all items match the callback.
 
 ### filter
 
+
 ```php
 public function filter(callable $callback): static
 ```
@@ -107,6 +101,7 @@ Filters the collection using a callback.
 
 ### first
 
+
 ```php
 public function first(?callable $callback = null)
 ```
@@ -121,6 +116,7 @@ Returns the first item that matches the callback.
 
 ### get
 
+
 ```php
 public function get(int $offset)
 ```
@@ -132,7 +128,20 @@ public function get(int $offset)
 | `$offset` | `int` |  |
 
 
+### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+
+#### Returns
+`array` array{ id: string, name: string, created_at: string, updated_at: string, deleted_at?: string, }&gt;
+
 ### key
+
 
 ```php
 public function key(): int
@@ -145,6 +154,7 @@ public function key(): int
 
 ### next
 
+
 ```php
 public function next(): void
 ```
@@ -155,6 +165,7 @@ public function next(): void
 `void` 
 
 ### offsetExists
+
 
 ```php
 public function offsetExists(mixed $offset): bool
@@ -171,6 +182,7 @@ public function offsetExists(mixed $offset): bool
 
 ### offsetGet
 
+
 ```php
 public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterface.md)
 ```
@@ -185,6 +197,7 @@ public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterfac
 `?[ModelInterface](Models/ModelInterface.md)` 
 
 ### offsetSet
+
 
 ```php
 public function offsetSet(mixed $offset, mixed $value): void
@@ -202,6 +215,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 
 ### offsetUnset
 
+
 ```php
 public function offsetUnset(mixed $offset): void
 ```
@@ -216,6 +230,7 @@ public function offsetUnset(mixed $offset): void
 `void` 
 
 ### reduce
+
 
 ```php
 public function reduce(mixed $initial, callable $callback): mixed
@@ -234,6 +249,7 @@ Reduces the collection to a single value.
 
 ### rewind
 
+
 ```php
 public function rewind(): void
 ```
@@ -244,6 +260,7 @@ public function rewind(): void
 `void` 
 
 ### some
+
 
 ```php
 public function some(callable $callback): bool
@@ -261,6 +278,7 @@ Checks if any item matches the callback.
 
 ### toArray
 
+
 ```php
 public function toArray(): array
 ```
@@ -272,6 +290,7 @@ public function toArray(): array
 
 ### valid
 
+
 ```php
 public function valid(): bool
 ```
@@ -282,6 +301,7 @@ public function valid(): bool
 `bool` 
 
 ### withItems
+
 
 ```php
 public function withItems(mixed $items): static

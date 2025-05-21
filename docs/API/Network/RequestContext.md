@@ -8,6 +8,7 @@
 ## Methods
 ### getBody
 
+
 ```php
 public function getBody(): ?Psr\Http\Message\StreamInterface
 ```
@@ -18,6 +19,7 @@ public function getBody(): ?Psr\Http\Message\StreamInterface
 `?Psr\Http\Message\StreamInterface` 
 
 ### getHeaders
+
 
 ```php
 public function getHeaders(): array
@@ -30,6 +32,7 @@ public function getHeaders(): array
 
 ### getMethod
 
+
 ```php
 public function getMethod(): RequestMethod
 ```
@@ -41,6 +44,7 @@ public function getMethod(): RequestMethod
 
 ### getUrl
 
+
 ```php
 public function getUrl(): string
 ```
@@ -51,6 +55,7 @@ public function getUrl(): string
 `string` 
 
 ### useApiUrl
+
 
 ```php
 public function useApiUrl(): bool

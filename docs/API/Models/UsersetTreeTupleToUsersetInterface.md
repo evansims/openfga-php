@@ -11,6 +11,7 @@
 ## Methods
 ### getComputed
 
+
 ```php
 public function getComputed(): [ComputedsInterface](Models/Collections/ComputedsInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getComputed(): [ComputedsInterface](Models/Collections/Computeds
 
 ### getTupleset
 
+
 ```php
 public function getTupleset(): string
 ```
@@ -32,6 +34,7 @@ public function getTupleset(): string
 `string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

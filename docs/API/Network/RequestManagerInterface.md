@@ -8,6 +8,7 @@
 ## Methods
 ### getHttpClient
 
+
 ```php
 public function getHttpClient(): ClientInterface
 ```
@@ -18,6 +19,7 @@ public function getHttpClient(): ClientInterface
 `ClientInterface` 
 
 ### getHttpRequestFactory
+
 
 ```php
 public function getHttpRequestFactory(): RequestFactoryInterface
@@ -30,6 +32,7 @@ public function getHttpRequestFactory(): RequestFactoryInterface
 
 ### getHttpResponseFactory
 
+
 ```php
 public function getHttpResponseFactory(): ResponseFactoryInterface
 ```
@@ -41,6 +44,7 @@ public function getHttpResponseFactory(): ResponseFactoryInterface
 
 ### getHttpStreamFactory
 
+
 ```php
 public function getHttpStreamFactory(): StreamFactoryInterface
 ```
@@ -51,6 +55,7 @@ public function getHttpStreamFactory(): StreamFactoryInterface
 `StreamFactoryInterface` 
 
 ### request
+
 
 ```php
 public function request([RequestInterface](Requests/RequestInterface.md) $request): Psr\Http\Message\RequestInterface
@@ -66,6 +71,7 @@ public function request([RequestInterface](Requests/RequestInterface.md) $reques
 `Psr\Http\Message\RequestInterface` 
 
 ### send
+
 
 ```php
 public function send(Psr\Http\Message\RequestInterface $request): Psr\Http\Message\ResponseInterface

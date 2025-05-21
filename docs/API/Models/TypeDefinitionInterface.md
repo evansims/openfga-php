@@ -11,6 +11,7 @@
 ## Methods
 ### getMetadata
 
+
 ```php
 public function getMetadata(): ?[MetadataInterface](Models/MetadataInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getMetadata(): ?[MetadataInterface](Models/MetadataInterface.md)
 `?[MetadataInterface](Models/MetadataInterface.md)` 
 
 ### getRelations
+
 
 ```php
 public function getRelations(): ?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
@@ -33,6 +35,7 @@ public function getRelations(): ?[TypeDefinitionRelationsInterface](Models/Colle
 
 ### getType
 
+
 ```php
 public function getType(): string
 ```
@@ -43,6 +46,7 @@ public function getType(): string
 `string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

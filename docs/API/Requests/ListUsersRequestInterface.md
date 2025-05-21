@@ -10,6 +10,7 @@
 ## Methods
 ### getConsistency
 
+
 ```php
 public function getConsistency(): ?Consistency
 ```
@@ -20,6 +21,7 @@ public function getConsistency(): ?Consistency
 `?Consistency` 
 
 ### getContext
+
 
 ```php
 public function getContext(): ?object
@@ -32,6 +34,7 @@ public function getContext(): ?object
 
 ### getContextualTuples
 
+
 ```php
 public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
@@ -42,6 +45,7 @@ public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/
 `?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 
 ### getModel
+
 
 ```php
 public function getModel(): string
@@ -54,6 +58,7 @@ public function getModel(): string
 
 ### getObject
 
+
 ```php
 public function getObject(): string
 ```
@@ -65,6 +70,7 @@ public function getObject(): string
 
 ### getRelation
 
+
 ```php
 public function getRelation(): string
 ```
@@ -74,29 +80,8 @@ public function getRelation(): string
 #### Returns
 `string` 
 
-### getStore
-
-```php
-public function getStore(): string
-```
-
-
-
-#### Returns
-`string` 
-
-### getUserFilters
-
-```php
-public function getUserFilters(): [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)
-```
-
-
-
-#### Returns
-`[UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)` 
-
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -110,4 +95,28 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 #### Returns
 `[RequestContext](Network/RequestContext.md)` 
+
+### getStore
+
+
+```php
+public function getStore(): string
+```
+
+
+
+#### Returns
+`string` 
+
+### getUserFilters
+
+
+```php
+public function getUserFilters(): [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)
+```
+
+
+
+#### Returns
+`[UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)` 
 

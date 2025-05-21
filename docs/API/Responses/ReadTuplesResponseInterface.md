@@ -10,6 +10,7 @@
 ## Methods
 ### getContinuationToken
 
+
 ```php
 public function getContinuationToken(): ?string
 ```
@@ -20,6 +21,7 @@ public function getContinuationToken(): ?string
 `?string` 
 
 ### getTuples
+
 
 ```php
 public function getTuples(): [TuplesInterface](Models/Collections/TuplesInterface.md)

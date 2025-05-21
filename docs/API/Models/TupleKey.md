@@ -12,6 +12,7 @@
 ## Methods
 ### getCondition
 
+
 ```php
 public function getCondition(): ?[ConditionInterface](Models/ConditionInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getCondition(): ?[ConditionInterface](Models/ConditionInterface.
 `?[ConditionInterface](Models/ConditionInterface.md)` 
 
 ### getObject
+
 
 ```php
 public function getObject(): string
@@ -34,6 +36,7 @@ public function getObject(): string
 
 ### getRelation
 
+
 ```php
 public function getRelation(): string
 ```
@@ -44,6 +47,7 @@ public function getRelation(): string
 `string` 
 
 ### getUser
+
 
 ```php
 public function getUser(): string
@@ -56,6 +60,7 @@ public function getUser(): string
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -63,5 +68,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` array{expression: string, metadata?: array{module: string, source_info: array{file: string}}, name: string, parameters?: list&lt;array{generic_types?: mixed, type_name: string}&gt;}|string&gt;
+
+### schema
+
+*<small>Implements Models\TupleKeyInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

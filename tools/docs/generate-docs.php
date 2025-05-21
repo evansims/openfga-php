@@ -196,6 +196,12 @@ class DocumentationGenerator
             }, $reflection->getInterfaces()),
             'methods' => [],
         ];
+        
+        // Get interface methods documentation if this is a class (not an interface)
+        $interfaceMethods = [];
+        if (!$isInterface) {
+            $interfaceMethods = $this->getInterfaceMethodsDocumentation($reflection);
+        }
 
         // Process methods
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
@@ -227,6 +233,40 @@ class DocumentationGenerator
                 ];
             }
 
+            // If this method is from an interface, merge the documentation
+            if (isset($interfaceMethods[$method->getName()])) {
+                $interfaceMethod = $interfaceMethods[$method->getName()];
+                
+                // Use interface method description if class method doesn't have one
+                if (empty($methodData['description'])) {
+                    $methodData['description'] = $interfaceMethod['description'];
+                }
+                
+                // Merge parameter descriptions
+                foreach ($methodData['parameters'] as &$param) {
+                    $paramName = ltrim($param['name'], '$');
+                    foreach ($interfaceMethod['parameters'] as $interfaceParam) {
+                        if (ltrim($interfaceParam['name'], '$') === $paramName && !empty($interfaceParam['description'])) {
+                            if (empty($param['description'])) {
+                                $param['description'] = $interfaceParam['description'];
+                            }
+                            break;
+                        }
+                    }
+                }
+                
+                // Use interface return description if class method doesn't have one
+                if (empty($methodData['return']['description']) && !empty($interfaceMethod['return']['description'])) {
+                    $methodData['return']['description'] = $interfaceMethod['return']['description'];
+                }
+                
+                // Mark as from interface for rendering
+                $methodData['fromInterface'] = $interfaceMethod['fromInterface'];
+                
+                // Remove from interface methods to avoid duplication
+                unset($interfaceMethods[$method->getName()]);
+            }
+            
             $classData['methods'][] = $methodData;
         }
 
@@ -251,6 +291,17 @@ class DocumentationGenerator
             mkdir($outputPath, 0755, true);
         }
 
+        // Add any remaining interface methods that weren't implemented in the class
+        foreach ($interfaceMethods as $methodData) {
+            $methodData['isFromInterface'] = true;
+            $classData['methods'][] = $methodData;
+        }
+        
+        // Sort methods alphabetically
+        usort($classData['methods'], function($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
+        
         // Render and save
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
         echo "Writing to: $outputFile\n";
@@ -260,6 +311,59 @@ class DocumentationGenerator
         if ($result === false) {
             echo "Failed to write to: $outputFile\n";
         }
+    }
+
+    /**
+     * Extracts method documentation from all implemented interfaces
+     * 
+     * @param ReflectionClass $reflection The reflection of the class to get interface methods from
+     * @return array Array of method documentation keyed by method name
+     */
+    private function getInterfaceMethodsDocumentation(ReflectionClass $reflection): array
+    {
+        $interfaceMethods = [];
+        
+        // Get all interfaces recursively
+        $interfaces = $reflection->getInterfaces();
+        
+        foreach ($interfaces as $interface) {
+            foreach ($interface->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+                $methodName = $method->getName();
+                
+                // Skip magic methods and constructors
+                if (str_starts_with($methodName, '__')) {
+                    continue;
+                }
+                
+                // Only include if we haven't seen this method name before
+                if (!isset($interfaceMethods[$methodName])) {
+                    $methodData = [
+                        'name' => $methodName,
+                        'signature' => $this->getMethodSignature($method),
+                        'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
+                        'parameters' => [],
+                        'return' => [
+                            'type' => $this->getReturnType($method),
+                            'description' => $this->extractReturnDescription($method->getDocComment() ?: ''),
+                        ],
+                        'fromInterface' => $interface->getName(),
+                    ];
+
+                    // Process parameters
+                    foreach ($method->getParameters() as $param) {
+                        $methodData['parameters'][] = [
+                            'name' => '$' . $param->getName(),
+                            'type' => $this->getParameterType($param),
+                            'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
+                        ];
+                    }
+                    
+                    $interfaceMethods[$methodName] = $methodData;
+                }
+            }
+        }
+        
+        return $interfaceMethods;
     }
 
     private function getMethodSignature(ReflectionMethod $method): string
@@ -457,18 +561,35 @@ class DocumentationGenerator
 
         $lines = explode("\n", $docComment);
         $description = [];
+        $inDescription = true;
         
         foreach ($lines as $line) {
             $line = trim($line, "/* \t");
             
-            if (empty($line) || str_starts_with($line, '@')) {
+            // Skip empty lines and the opening /**
+            if (empty($line) || $line === '/**') {
                 continue;
             }
             
-            $description[] = $line;
+            // Stop processing if we hit a tag and we're in the main description
+            if ($inDescription && str_starts_with($line, '@')) {
+                $inDescription = false;
+                continue;
+            }
+            
+            // Only process the main description
+            if ($inDescription) {
+                $description[] = $line;
+            }
         }
         
-        return implode(" ", $description);
+        $result = trim(implode(" ", $description));
+        
+        // Clean up any remaining asterisks or slashes
+        $result = trim($result, "*/
+ \t");
+        
+        return $result;
     }
 
     private function extractParamDescription(string $docComment, string $paramName): string
@@ -484,22 +605,24 @@ class DocumentationGenerator
         foreach ($lines as $line) {
             $line = trim($line, "/* \t");
             
-            if (str_starts_with($line, "@param")) {
-                $parts = preg_split('/\s+/', $line);
-                if (isset($parts[2]) && $parts[2] === '$' . $paramName) {
-                    $description[] = implode(' ', array_slice($parts, 3));
-                    $capture = true;
-                } else {
-                    $capture = false;
+            // Look for the @param line for this parameter
+            if (preg_match('/@param\s+[^\s]+\s+\$' . preg_quote($paramName, '/') . '(?:\s+(.*))?$/', $line, $matches)) {
+                if (!empty($matches[1])) {
+                    $description[] = $matches[1];
                 }
-            } elseif ($capture && !empty($line) && !str_starts_with($line, '@')) {
-                $description[] = $line;
-            } elseif (!empty($line) && str_starts_with($line, '@')) {
+                $capture = true;
+            } 
+            // If we're capturing and hit another tag, stop
+            elseif ($capture && str_starts_with($line, '@')) {
                 $capture = false;
+            }
+            // If we're capturing and the line isn't empty, add it to the description
+            elseif ($capture && !empty($line)) {
+                $description[] = $line;
             }
         }
         
-        return implode(' ', $description);
+        return trim(implode(' ', $description));
     }
 
     private function extractReturnDescription(string $docComment): string
@@ -515,20 +638,29 @@ class DocumentationGenerator
         foreach ($lines as $line) {
             $line = trim($line, "/* \t");
             
-            if (str_starts_with($line, "@return")) {
-                $parts = preg_split('/\s+/', $line, 3);
-                if (isset($parts[2])) {
-                    $description[] = $parts[2];
+            // Skip empty lines and the opening /**
+            if (empty($line) || $line === '/**') {
+                continue;
+            }
+            
+            // Look for the @return line
+            if (preg_match('/@return\s+[^\s]+(?:\s+(.*))?$/', $line, $matches)) {
+                if (!empty($matches[1])) {
+                    $description[] = $matches[1];
                 }
                 $capture = true;
-            } elseif ($capture && !empty($line) && !str_starts_with($line, '@')) {
-                $description[] = $line;
-            } elseif (!empty($line) && str_starts_with($line, '@')) {
+            } 
+            // If we're capturing and hit another tag, stop
+            elseif ($capture && str_starts_with($line, '@')) {
                 $capture = false;
+            }
+            // If we're capturing and the line isn't empty, add it to the description
+            elseif ($capture && !empty($line)) {
+                $description[] = $line;
             }
         }
         
-        return implode(' ', $description);
+        return trim(implode(' ', $description));
     }
 }
 

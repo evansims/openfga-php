@@ -11,6 +11,7 @@
 ## Methods
 ### getModel
 
+
 ```php
 public function getModel(): string
 ```
@@ -21,6 +22,7 @@ public function getModel(): string
 `string` 
 
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -36,6 +38,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 `[RequestContext](Network/RequestContext.md)` 
 
 ### getStore
+
 
 ```php
 public function getStore(): string

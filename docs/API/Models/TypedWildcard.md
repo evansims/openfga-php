@@ -13,6 +13,7 @@
 ## Methods
 ### getType
 
+
 ```php
 public function getType(): string
 ```
@@ -24,6 +25,7 @@ public function getType(): string
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -31,5 +33,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string}
+
+### schema
+
+*<small>Implements Models\TypedWildcardInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

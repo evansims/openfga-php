@@ -11,6 +11,7 @@
 ## Methods
 ### getAuthorizationModel
 
+
 ```php
 public function getAuthorizationModel(): string
 ```
@@ -21,6 +22,7 @@ public function getAuthorizationModel(): string
 `string` 
 
 ### getConsistency
+
 
 ```php
 public function getConsistency(): ?Consistency
@@ -33,6 +35,7 @@ public function getConsistency(): ?Consistency
 
 ### getContext
 
+
 ```php
 public function getContext(): ?object
 ```
@@ -44,6 +47,7 @@ public function getContext(): ?object
 
 ### getContextualTuples
 
+
 ```php
 public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
@@ -54,6 +58,7 @@ public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/
 `?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -70,6 +75,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 ### getStore
 
+
 ```php
 public function getStore(): string
 ```
@@ -81,6 +87,7 @@ public function getStore(): string
 
 ### getTrace
 
+
 ```php
 public function getTrace(): ?bool
 ```
@@ -91,6 +98,7 @@ public function getTrace(): ?bool
 `?bool` 
 
 ### getTupleKey
+
 
 ```php
 public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)

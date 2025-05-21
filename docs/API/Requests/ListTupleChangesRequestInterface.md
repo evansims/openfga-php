@@ -10,6 +10,7 @@
 ## Methods
 ### getContinuationToken
 
+
 ```php
 public function getContinuationToken(): ?string
 ```
@@ -21,6 +22,7 @@ public function getContinuationToken(): ?string
 
 ### getPageSize
 
+
 ```php
 public function getPageSize(): ?int
 ```
@@ -30,40 +32,8 @@ public function getPageSize(): ?int
 #### Returns
 `?int` 
 
-### getStartTime
-
-```php
-public function getStartTime(): ?DateTimeImmutable
-```
-
-
-
-#### Returns
-`?DateTimeImmutable` 
-
-### getStore
-
-```php
-public function getStore(): string
-```
-
-
-
-#### Returns
-`string` 
-
-### getType
-
-```php
-public function getType(): ?string
-```
-
-
-
-#### Returns
-`?string` 
-
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -77,4 +47,40 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 #### Returns
 `[RequestContext](Network/RequestContext.md)` 
+
+### getStartTime
+
+
+```php
+public function getStartTime(): ?DateTimeImmutable
+```
+
+
+
+#### Returns
+`?DateTimeImmutable` 
+
+### getStore
+
+
+```php
+public function getStore(): string
+```
+
+
+
+#### Returns
+`string` 
+
+### getType
+
+
+```php
+public function getType(): ?string
+```
+
+
+
+#### Returns
+`?string` 
 

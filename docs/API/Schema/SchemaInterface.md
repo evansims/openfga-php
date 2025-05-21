@@ -8,6 +8,7 @@
 ## Methods
 ### getClassName
 
+
 ```php
 public function getClassName(): string
 ```
@@ -19,6 +20,7 @@ public function getClassName(): string
 
 ### getProperties
 
+
 ```php
 public function getProperties(): array
 ```
@@ -29,6 +31,7 @@ public function getProperties(): array
 `array` SchemaProperty&gt;
 
 ### getProperty
+
 
 ```php
 public function getProperty(string $name): ?[SchemaProperty](Schema/SchemaProperty.md)

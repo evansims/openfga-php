@@ -10,6 +10,7 @@
 ## Methods
 ### getConsistency
 
+
 ```php
 public function getConsistency(): ?Consistency
 ```
@@ -20,6 +21,7 @@ public function getConsistency(): ?Consistency
 `?Consistency` 
 
 ### getContinuationToken
+
 
 ```php
 public function getContinuationToken(): ?string
@@ -32,6 +34,7 @@ public function getContinuationToken(): ?string
 
 ### getPageSize
 
+
 ```php
 public function getPageSize(): ?int
 ```
@@ -41,29 +44,8 @@ public function getPageSize(): ?int
 #### Returns
 `?int` 
 
-### getStore
-
-```php
-public function getStore(): string
-```
-
-
-
-#### Returns
-`string` 
-
-### getTupleKey
-
-```php
-public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
-```
-
-
-
-#### Returns
-`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
-
 ### getRequest
+
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
@@ -77,4 +59,28 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 
 #### Returns
 `[RequestContext](Network/RequestContext.md)` 
+
+### getStore
+
+
+```php
+public function getStore(): string
+```
+
+
+
+#### Returns
+`string` 
+
+### getTupleKey
+
+
+```php
+public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
+```
+
+
+
+#### Returns
+`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
 

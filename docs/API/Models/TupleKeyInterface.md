@@ -11,6 +11,7 @@
 ## Methods
 ### getCondition
 
+
 ```php
 public function getCondition(): ?[ConditionInterface](Models/ConditionInterface.md)
 ```
@@ -21,6 +22,7 @@ public function getCondition(): ?[ConditionInterface](Models/ConditionInterface.
 `?[ConditionInterface](Models/ConditionInterface.md)` 
 
 ### getObject
+
 
 ```php
 public function getObject(): ?string
@@ -33,6 +35,7 @@ public function getObject(): ?string
 
 ### getRelation
 
+
 ```php
 public function getRelation(): ?string
 ```
@@ -44,6 +47,7 @@ public function getRelation(): ?string
 
 ### getUser
 
+
 ```php
 public function getUser(): ?string
 ```
@@ -54,6 +58,7 @@ public function getUser(): ?string
 `?string` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

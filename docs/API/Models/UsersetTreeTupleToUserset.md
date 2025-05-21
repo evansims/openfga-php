@@ -12,6 +12,7 @@
 ## Methods
 ### getComputed
 
+
 ```php
 public function getComputed(): [ComputedsInterface](Models/Collections/ComputedsInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getComputed(): [ComputedsInterface](Models/Collections/Computeds
 `[ComputedsInterface](Models/Collections/ComputedsInterface.md)` 
 
 ### getTupleset
+
 
 ```php
 public function getTupleset(): string
@@ -34,6 +36,7 @@ public function getTupleset(): string
 
 ### jsonSerialize
 
+
 ```php
 public function jsonSerialize(): array
 ```
@@ -41,5 +44,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` 
+`array` string, computed: array&lt;int, array{userset: string}&gt;}
+
+### schema
+
+*<small>Implements Models\UsersetTreeTupleToUsersetInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

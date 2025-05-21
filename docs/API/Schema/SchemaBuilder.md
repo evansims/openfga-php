@@ -8,6 +8,7 @@
 ## Methods
 ### array
 
+
 ```php
 public function array(string $name, array $items, bool $required = false, mixed $default = null): self
 ```
@@ -27,6 +28,7 @@ Add an array property.
 
 ### boolean
 
+
 ```php
 public function boolean(string $name, bool $required = false, mixed $default = null): self
 ```
@@ -44,6 +46,7 @@ Add a boolean property.
 `self` 
 
 ### date
+
 
 ```php
 public function date(string $name, bool $required = false, mixed $default = null): self
@@ -63,6 +66,7 @@ Add a date property.
 
 ### datetime
 
+
 ```php
 public function datetime(string $name, bool $required = false, mixed $default = null): self
 ```
@@ -80,6 +84,7 @@ Add a datetime property.
 `self` 
 
 ### integer
+
 
 ```php
 public function integer(string $name, bool $required = false, mixed $default = null): self
@@ -99,6 +104,7 @@ Add an integer property.
 
 ### number
 
+
 ```php
 public function number(string $name, bool $required = false, mixed $default = null): self
 ```
@@ -116,6 +122,7 @@ Add a number (float) property.
 `self` 
 
 ### object
+
 
 ```php
 public function object(string $name, string $className, bool $required = false): self
@@ -135,6 +142,7 @@ Add an object property.
 
 ### register
 
+
 ```php
 public function register(): [Schema](Schema/Schema.md)
 ```
@@ -146,6 +154,7 @@ Build and register the schema.
 `[Schema](Schema/Schema.md)` 
 
 ### string
+
 
 ```php
 public function string(string $name, bool $required = false, ?string $format = null, ?array $enum = null, mixed $default = null): self

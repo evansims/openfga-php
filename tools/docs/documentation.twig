@@ -18,6 +18,10 @@
 {% for method in methods %}
 ### {{ method.name }}
 
+{% if method.isFromInterface is defined and method.isFromInterface %}
+*<small>Implements {{ method.fromInterface|replace({'OpenFGA\\': ''}) }}</small>*  
+{% endif %}
+
 ```php
 {{ method.signature }}
 ```

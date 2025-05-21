@@ -9,18 +9,8 @@
 * Stringable
 
 ## Methods
-### getMessage
-
-```php
-public function getMessage(): string
-```
-
-
-
-#### Returns
-`string` 
-
 ### getCode
+
 
 ```php
 public function getCode()
@@ -30,6 +20,7 @@ public function getCode()
 
 
 ### getFile
+
 
 ```php
 public function getFile(): string
@@ -42,6 +33,7 @@ public function getFile(): string
 
 ### getLine
 
+
 ```php
 public function getLine(): int
 ```
@@ -51,18 +43,20 @@ public function getLine(): int
 #### Returns
 `int` 
 
-### getTrace
+### getMessage
+
 
 ```php
-public function getTrace(): array
+public function getMessage(): string
 ```
 
 
 
 #### Returns
-`array` 
+`string` 
 
 ### getPrevious
+
 
 ```php
 public function getPrevious(): ?Throwable
@@ -73,7 +67,20 @@ public function getPrevious(): ?Throwable
 #### Returns
 `?Throwable` 
 
+### getTrace
+
+
+```php
+public function getTrace(): array
+```
+
+
+
+#### Returns
+`array` 
+
 ### getTraceAsString
+
 
 ```php
 public function getTraceAsString(): string

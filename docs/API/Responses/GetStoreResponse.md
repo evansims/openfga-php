@@ -9,7 +9,26 @@
 * [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
+### fromResponse
+
+*<small>Implements Responses\GetStoreResponseInterface</small>*  
+
+```php
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$response` | `Psr\Http\Message\ResponseInterface` |  |
+| `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
+
+#### Returns
+`static` 
+
 ### getCreatedAt
+
 
 ```php
 public function getCreatedAt(): DateTimeImmutable
@@ -22,6 +41,7 @@ public function getCreatedAt(): DateTimeImmutable
 
 ### getDeletedAt
 
+
 ```php
 public function getDeletedAt(): ?DateTimeImmutable
 ```
@@ -32,6 +52,7 @@ public function getDeletedAt(): ?DateTimeImmutable
 `?DateTimeImmutable` 
 
 ### getId
+
 
 ```php
 public function getId(): string
@@ -44,6 +65,7 @@ public function getId(): string
 
 ### getName
 
+
 ```php
 public function getName(): string
 ```
@@ -54,6 +76,7 @@ public function getName(): string
 `string` 
 
 ### getStore
+
 
 ```php
 public function getStore(): [StoreInterface](Models/StoreInterface.md)
@@ -66,6 +89,7 @@ public function getStore(): [StoreInterface](Models/StoreInterface.md)
 
 ### getUpdatedAt
 
+
 ```php
 public function getUpdatedAt(): DateTimeImmutable
 ```
@@ -74,4 +98,17 @@ public function getUpdatedAt(): DateTimeImmutable
 
 #### Returns
 `DateTimeImmutable` 
+
+### schema
+
+*<small>Implements Responses\GetStoreResponseInterface</small>*  
+
+```php
+public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+```
+
+
+
+#### Returns
+`[SchemaInterface](Schema/SchemaInterface.md)` 
 

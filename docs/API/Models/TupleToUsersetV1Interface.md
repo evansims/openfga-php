@@ -11,6 +11,7 @@
 ## Methods
 ### getComputedUserset
 
+
 ```php
 public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
 ```
@@ -22,6 +23,7 @@ public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRel
 
 ### getTupleset
 
+
 ```php
 public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
 ```
@@ -32,6 +34,7 @@ public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationIn
 `[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
 
 ### jsonSerialize
+
 
 ```php
 public function jsonSerialize(): array

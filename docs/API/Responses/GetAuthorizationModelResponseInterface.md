@@ -10,6 +10,7 @@
 ## Methods
 ### getModel
 
+
 ```php
 public function getModel(): ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
 ```
