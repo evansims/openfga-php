@@ -1,0 +1,304 @@
+# TupleChanges
+
+
+## Namespace
+`OpenFGA\Models\Collections`
+
+## Implements
+* `OpenFGA\Models\Collections\IndexedCollectionInterface`
+* `Traversable`
+* `JsonSerializable`
+* `Iterator`
+* `Countable`
+* `ArrayAccess`
+* `OpenFGA\Models\Collections\TupleChangesInterface`
+
+## Methods
+### add
+
+```php
+public function add(mixed $item): static
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$item` | `mixed` |  |
+
+#### Returns
+`static` 
+
+### clear
+
+```php
+public function clear(): void
+```
+
+
+
+#### Returns
+`void` 
+
+### count
+
+```php
+public function count(): int
+```
+
+
+
+#### Returns
+`int` 
+
+### current
+
+```php
+public function current(): ModelInterface
+```
+
+
+
+#### Returns
+`ModelInterface` 
+
+### every
+
+```php
+public function every(callable $callback): bool
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$callback` | `callable` |  |
+
+#### Returns
+`bool` 
+
+### filter
+
+```php
+public function filter(callable $callback): static
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$callback` | `callable` |  |
+
+#### Returns
+`static` 
+
+### first
+
+```php
+public function first(?callable $callback = null)
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$callback` | `?callable` |  |
+
+
+### get
+
+```php
+public function get(int $offset)
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$offset` | `int` |  |
+
+
+### isEmpty
+
+```php
+public function isEmpty(): bool
+```
+
+
+
+#### Returns
+`bool` 
+
+### jsonSerialize
+
+```php
+public function jsonSerialize(): array
+```
+
+
+
+#### Returns
+`array` 
+
+### key
+
+```php
+public function key(): int
+```
+
+
+
+#### Returns
+`int` 
+
+### next
+
+```php
+public function next(): void
+```
+
+
+
+#### Returns
+`void` 
+
+### offsetExists
+
+```php
+public function offsetExists(mixed $offset): bool
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$offset` | `mixed` |  |
+
+#### Returns
+`bool` 
+
+### offsetGet
+
+```php
+public function offsetGet(mixed $offset): ?ModelInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$offset` | `mixed` |  |
+
+#### Returns
+`?ModelInterface` 
+
+### offsetSet
+
+```php
+public function offsetSet(mixed $offset, mixed $value): void
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$offset` | `mixed` |  |
+| `$value` | `mixed` |  |
+
+#### Returns
+`void` 
+
+### offsetUnset
+
+```php
+public function offsetUnset(mixed $offset): void
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$offset` | `mixed` |  |
+
+#### Returns
+`void` 
+
+### reduce
+
+```php
+public function reduce(mixed $initial, callable $callback): mixed
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$initial` | `mixed` |  |
+| `$callback` | `callable` |  |
+
+#### Returns
+`mixed` 
+
+### rewind
+
+```php
+public function rewind(): void
+```
+
+
+
+#### Returns
+`void` 
+
+### some
+
+```php
+public function some(callable $callback): bool
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$callback` | `callable` |  |
+
+#### Returns
+`bool` 
+
+### toArray
+
+```php
+public function toArray(): array
+```
+
+
+
+#### Returns
+`array` 
+
+### valid
+
+```php
+public function valid(): bool
+```
+
+
+
+#### Returns
+`bool` 
+
+### withItems
+
+```php
+public function withItems(mixed $items): static
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$items` | `mixed` |  |
+
+#### Returns
+`static` 
+

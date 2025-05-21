@@ -1,27 +1,317 @@
 # Client
 
-`OpenFGA\\Client` exposes methods for interacting with the OpenFGA service. Each method corresponds to an endpoint in the HTTP API.
+
+## Namespace
+`OpenFGA`
+
+## Implements
+* `OpenFGA\ClientInterface`
 
 ## Methods
+### check
 
-| Method | Parameters | Returns | Description |
-| ------ | ---------- | ------- | ----------- |
-| `__construct` | `url: string`, `authentication?: [Authentication](Authentication.md)`, `clientId?: string`, `clientSecret?: string`, `issuer?: string`, `audience?: string`, `token?: [AccessTokenInterface](Authentication.md) | string`, `maxRetries?: int`, `httpClient?: \Psr\Http\Client\ClientInterface`, `httpResponseFactory?: \Psr\Http\Message\ResponseFactoryInterface`, `httpStreamFactory?: \Psr\Http\Message\StreamFactoryInterface`, `httpRequestFactory?: \Psr\Http\Message\RequestFactoryInterface` | `void` | Initialize the client. |
-| `check` | `store: [StoreInterface](Models/Store.md) | string`, `model: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string`, `tupleKey: [TupleKeyInterface](Models/TupleKey.md)`, `trace?: bool`, `context?: object`, `contextualTuples?: [TupleKeysInterface](Models/Collections/TupleKeys.md)`, `consistency?: [Consistency](Models/Enums/Consistency.md)` | `[CheckResponseInterface](Responses/CheckResponse.md)` | Check if a relationship exists. |
-| `createAuthorizationModel` | `store: [StoreInterface](Models/Store.md) | string`, `typeDefinitions: [TypeDefinitionsInterface](Models/Collections/TypeDefinitions.md)`, `conditions: [ConditionsInterface](Models/Collections/Conditions.md)`, `schemaVersion?: [SchemaVersion](Models/Enums/SchemaVersion.md)` | `[CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponse.md)` | Create a new authorization model. |
-| `createStore` | `name: string` | `[CreateStoreResponseInterface](Responses/CreateStoreResponse.md)` | Create a new store. |
-| `deleteStore` | `store: [StoreInterface](Models/Store.md) | string` | `[DeleteStoreResponseInterface](Responses/DeleteStoreResponse.md)` | Delete a store by id. |
-| `expand` | `store: [StoreInterface](Models/Store.md) | string`, `tupleKey: [TupleKeyInterface](Models/TupleKey.md)`, `model?: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string`, `contextualTuples?: [TupleKeysInterface](Models/Collections/TupleKeys.md)`, `consistency?: [Consistency](Models/Enums/Consistency.md)` | `[ExpandResponseInterface](Responses/ExpandResponse.md)` | Expand the userset tree for a tuple. |
-| `getAuthorizationModel` | `store: [StoreInterface](Models/Store.md) | string`, `model: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string` | `[GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponse.md)` | Retrieve an authorization model by id. |
-| `getLastRequest` | — | `?\Psr\Http\Message\RequestInterface` | Get the last HTTP request that was sent. |
-| `getLastResponse` | — | `?\Psr\Http\Message\ResponseInterface` | Get the last HTTP response that was received. |
-| `getStore` | `store: [StoreInterface](Models/Store.md) | string` | `[GetStoreResponseInterface](Responses/GetStoreResponse.md)` | Get store details by id. |
-| `listAuthorizationModels` | `store: [StoreInterface](Models/Store.md) | string`, `continuationToken?: string`, `pageSize?: int` | `[ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponse.md)` | List authorization models with pagination. |
-| `listObjects` | `store: [StoreInterface](Models/Store.md) | string`, `model: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string`, `type: string`, `relation: string`, `user: string`, `context?: object`, `contextualTuples?: [TupleKeysInterface](Models/Collections/TupleKeys.md)`, `consistency?: [Consistency](Models/Enums/Consistency.md)` | `[ListObjectsResponseInterface](Responses/ListObjectsResponse.md)` | List objects that a user has a relation to. |
-| `listStores` | `continuationToken?: string`, `pageSize?: int` | `[ListStoresResponseInterface](Responses/ListStoresResponse.md)` | List stores with pagination. |
-| `listTupleChanges` | `store: [StoreInterface](Models/Store.md) | string`, `continuationToken?: string`, `pageSize?: int`, `type?: string`, `startTime?: \DateTimeImmutable` | `[ListTupleChangesResponseInterface](Responses/ListTupleChangesResponse.md)` | List tuple changes for a store. |
-| `listUsers` | `store: [StoreInterface](Models/Store.md) | string`, `model: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string`, `object: string`, `relation: string`, `userFilters: [UserTypeFiltersInterface](Models/Collections/UserTypeFilters.md)`, `context?: object`, `contextualTuples?: [TupleKeysInterface](Models/Collections/TupleKeys.md)`, `consistency?: [Consistency](Models/Enums/Consistency.md)` | `[ListUsersResponseInterface](Responses/ListUsersResponse.md)` | List users that have a relation to an object. |
-| `readAssertions` | `store: [StoreInterface](Models/Store.md) | string`, `model: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string` | `[ReadAssertionsResponseInterface](Responses/ReadAssertionsResponse.md)` | Retrieve assertions for a model. |
-| `readTuples` | `store: [StoreInterface](Models/Store.md) | string`, `tupleKey: [TupleKeyInterface](Models/TupleKey.md)`, `continuationToken?: string`, `pageSize?: int`, `consistency?: [Consistency](Models/Enums/Consistency.md)` | `[ReadTuplesResponseInterface](Responses/ReadTuplesResponse.md)` | Read relationship tuples. |
-| `writeAssertions` | `store: [StoreInterface](Models/Store.md) | string`, `model: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string`, `assertions: [AssertionsInterface](Models/Collections/Assertions.md)` | `[WriteAssertionsResponseInterface](Responses/WriteAssertionsResponse.md)` | Create or update model assertions. |
-| `writeTuples` | `store: [StoreInterface](Models/Store.md) | string`, `model: [AuthorizationModelInterface](Models/AuthorizationModel.md) | string`, `writes?: [TupleKeysInterface](Models/Collections/TupleKeys.md)`, `deletes?: [TupleKeysInterface](Models/Collections/TupleKeys.md)` | `[WriteTuplesResponseInterface](Responses/WriteTuplesResponse.md)` | Write or delete relationship tuples. |
+```php
+public function check(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeyInterface $tupleKey, ?bool $trace = null, ?object $context = null, ?TupleKeysInterface $contextualTuples = null, ?Consistency $consistency = null): CheckResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$model` | `AuthorizationModelInterface|string` |  |
+| `$tupleKey` | `TupleKeyInterface` |  |
+| `$trace` | `?bool` |  |
+| `$context` | `?object` |  |
+| `$contextualTuples` | `?TupleKeysInterface` |  |
+| `$consistency` | `?Consistency` |  |
+
+#### Returns
+`CheckResponseInterface` 
+
+### createAuthorizationModel
+
+```php
+public function createAuthorizationModel(StoreInterface|string $store, TypeDefinitionsInterface $typeDefinitions, ConditionsInterface $conditions, SchemaVersion $schemaVersion = &quot;1.1&quot;): CreateAuthorizationModelResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$typeDefinitions` | `TypeDefinitionsInterface` |  |
+| `$conditions` | `ConditionsInterface` |  |
+| `$schemaVersion` | `SchemaVersion` |  |
+
+#### Returns
+`CreateAuthorizationModelResponseInterface` 
+
+### createStore
+
+```php
+public function createStore(string $name): CreateStoreResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$name` | `string` |  |
+
+#### Returns
+`CreateStoreResponseInterface` 
+
+### deleteStore
+
+```php
+public function deleteStore(StoreInterface|string $store): DeleteStoreResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+
+#### Returns
+`DeleteStoreResponseInterface` 
+
+### expand
+
+```php
+public function expand(StoreInterface|string $store, TupleKeyInterface $tupleKey, ?AuthorizationModelInterface|string|null $model = null, ?TupleKeysInterface $contextualTuples = null, ?Consistency $consistency = null): ExpandResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$tupleKey` | `TupleKeyInterface` |  |
+| `$model` | `?AuthorizationModelInterface|string|null` |  |
+| `$contextualTuples` | `?TupleKeysInterface` |  |
+| `$consistency` | `?Consistency` |  |
+
+#### Returns
+`ExpandResponseInterface` 
+
+### getAuthorizationModel
+
+```php
+public function getAuthorizationModel(StoreInterface|string $store, AuthorizationModelInterface|string $model): GetAuthorizationModelResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$model` | `AuthorizationModelInterface|string` |  |
+
+#### Returns
+`GetAuthorizationModelResponseInterface` 
+
+### getLastRequest
+
+```php
+public function getLastRequest(): ?Psr\Http\Message\RequestInterface
+```
+
+
+
+#### Returns
+`?Psr\Http\Message\RequestInterface` 
+
+### getLastResponse
+
+```php
+public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
+```
+
+
+
+#### Returns
+`?Psr\Http\Message\ResponseInterface` 
+
+### getStore
+
+```php
+public function getStore(StoreInterface|string $store): GetStoreResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+
+#### Returns
+`GetStoreResponseInterface` 
+
+### listAuthorizationModels
+
+```php
+public function listAuthorizationModels(StoreInterface|string $store, ?string $continuationToken = null, ?int $pageSize = null): ListAuthorizationModelsResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$continuationToken` | `?string` |  |
+| `$pageSize` | `?int` |  |
+
+#### Returns
+`ListAuthorizationModelsResponseInterface` 
+
+### listObjects
+
+```php
+public function listObjects(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $type, string $relation, string $user, ?object $context = null, ?TupleKeysInterface $contextualTuples = null, ?Consistency $consistency = null): ListObjectsResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$model` | `AuthorizationModelInterface|string` |  |
+| `$type` | `string` |  |
+| `$relation` | `string` |  |
+| `$user` | `string` |  |
+| `$context` | `?object` |  |
+| `$contextualTuples` | `?TupleKeysInterface` |  |
+| `$consistency` | `?Consistency` |  |
+
+#### Returns
+`ListObjectsResponseInterface` 
+
+### listStores
+
+```php
+public function listStores(?string $continuationToken = null, ?int $pageSize = null): ListStoresResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$continuationToken` | `?string` |  |
+| `$pageSize` | `?int` |  |
+
+#### Returns
+`ListStoresResponseInterface` 
+
+### listTupleChanges
+
+```php
+public function listTupleChanges(StoreInterface|string $store, ?string $continuationToken = null, ?int $pageSize = null, ?string $type = null, ?DateTimeImmutable $startTime = null): ListTupleChangesResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$continuationToken` | `?string` |  |
+| `$pageSize` | `?int` |  |
+| `$type` | `?string` |  |
+| `$startTime` | `?DateTimeImmutable` |  |
+
+#### Returns
+`ListTupleChangesResponseInterface` 
+
+### listUsers
+
+```php
+public function listUsers(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $object, string $relation, UserTypeFiltersInterface $userFilters, ?object $context = null, ?TupleKeysInterface $contextualTuples = null, ?Consistency $consistency = null): ListUsersResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$model` | `AuthorizationModelInterface|string` |  |
+| `$object` | `string` |  |
+| `$relation` | `string` |  |
+| `$userFilters` | `UserTypeFiltersInterface` |  |
+| `$context` | `?object` |  |
+| `$contextualTuples` | `?TupleKeysInterface` |  |
+| `$consistency` | `?Consistency` |  |
+
+#### Returns
+`ListUsersResponseInterface` 
+
+### readAssertions
+
+```php
+public function readAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model): ReadAssertionsResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$model` | `AuthorizationModelInterface|string` |  |
+
+#### Returns
+`ReadAssertionsResponseInterface` 
+
+### readTuples
+
+```php
+public function readTuples(StoreInterface|string $store, TupleKeyInterface $tupleKey, ?string $continuationToken = null, ?int $pageSize = null, ?Consistency $consistency = null): ReadTuplesResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$tupleKey` | `TupleKeyInterface` |  |
+| `$continuationToken` | `?string` |  |
+| `$pageSize` | `?int` |  |
+| `$consistency` | `?Consistency` |  |
+
+#### Returns
+`ReadTuplesResponseInterface` 
+
+### writeAssertions
+
+```php
+public function writeAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model, AssertionsInterface $assertions): WriteAssertionsResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$model` | `AuthorizationModelInterface|string` |  |
+| `$assertions` | `AssertionsInterface` |  |
+
+#### Returns
+`WriteAssertionsResponseInterface` 
+
+### writeTuples
+
+```php
+public function writeTuples(StoreInterface|string $store, AuthorizationModelInterface|string $model, ?TupleKeysInterface $writes = null, ?TupleKeysInterface $deletes = null): WriteTuplesResponseInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | `StoreInterface|string` |  |
+| `$model` | `AuthorizationModelInterface|string` |  |
+| `$writes` | `?TupleKeysInterface` |  |
+| `$deletes` | `?TupleKeysInterface` |  |
+
+#### Returns
+`WriteTuplesResponseInterface` 
+

@@ -1,0 +1,7 @@
+# SchemaProperty
+
+
+## Namespace
+`OpenFGA\Schema`
+
+
