@@ -26,3 +26,30 @@ it('creates and deletes a store', function (): void {
         }
     }
 });
+
+it('retrieves a created store', function (): void {
+    $url = getenv('FGA_API_URL') ?: 'http://localhost:8080';
+    $client = new Client(url: $url);
+    $createdStoreId = null;
+
+    $name = 'php-sdk-test-' . bin2hex(random_bytes(5));
+
+    try {
+        $create = $client->createStore(name: $name);
+        $createdStoreId = $create->getId();
+
+        $get = $client->getStore(store: $createdStoreId);
+        expect($get->getStore()->getName())->toBe($name);
+
+        $list = $client->listStores();
+        $ids = [];
+        foreach ($list->getStores() as $store) {
+            $ids[] = $store->getId();
+        }
+        expect($ids)->toContain($createdStoreId);
+    } finally {
+        if (null !== $createdStoreId && null !== $client->getStore($createdStoreId)) {
+            $client->deleteStore(store: $createdStoreId);
+        }
+    }
+});
