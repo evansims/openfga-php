@@ -92,7 +92,7 @@
     "pest:integration": [
       "@integration:start",
       "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --configuration phpunit.integration.xml.dist --coverage --strict-coverage --compact",
+      "@php vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact",
       "@integration:stop"
     ],
     "pest:contract": [
