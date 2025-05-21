@@ -15,7 +15,7 @@ final class ListUsersRequest implements ListUsersRequestInterface
 {
     /**
      * @param string                                            $store
-     * @param string                                            $authorizationModel
+     * @param string                                            $model
      * @param string                                            $object
      * @param string                                            $relation
      * @param UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters
@@ -25,7 +25,7 @@ final class ListUsersRequest implements ListUsersRequestInterface
      */
     public function __construct(
         private string $store,
-        private string $authorizationModel,
+        private string $model,
         private string $object,
         private string $relation,
         private UserTypeFiltersInterface $userFilters,
@@ -33,12 +33,6 @@ final class ListUsersRequest implements ListUsersRequestInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
-    }
-
-    #[Override]
-    public function getAuthorizationModel(): string
-    {
-        return $this->authorizationModel;
     }
 
     #[Override]
@@ -60,6 +54,12 @@ final class ListUsersRequest implements ListUsersRequestInterface
     }
 
     #[Override]
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    #[Override]
     public function getObject(): string
     {
         return $this->object;
@@ -75,7 +75,7 @@ final class ListUsersRequest implements ListUsersRequestInterface
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
-            'authorization_model_id' => $this->authorizationModel,
+            'authorization_model_id' => $this->model,
             'object' => $this->object,
             'relation' => $this->relation,
             'user_filters' => $this->userFilters->jsonSerialize(),
@@ -88,7 +88,7 @@ final class ListUsersRequest implements ListUsersRequestInterface
 
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/stores/' . $this->getStore() . '/list-users',
+            url: '/stores/' . $this->store . '/list-users',
             body: $stream,
         );
     }

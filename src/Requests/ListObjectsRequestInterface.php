@@ -10,8 +10,6 @@ use OpenFGA\Models\TupleKeyInterface;
 
 interface ListObjectsRequestInterface extends RequestInterface
 {
-    public function getAuthorizationModel(): ?string;
-
     public function getConsistency(): ?Consistency;
 
     public function getContext(): ?object;
@@ -20,6 +18,8 @@ interface ListObjectsRequestInterface extends RequestInterface
      * @return TupleKeysInterface<TupleKeyInterface>
      */
     public function getContextualTuples(): ?TupleKeysInterface;
+
+    public function getModel(): ?string;
 
     public function getRelation(): string;
 

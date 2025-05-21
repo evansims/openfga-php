@@ -12,14 +12,14 @@ final class GetAuthorizationModelRequest implements GetAuthorizationModelRequest
 {
     public function __construct(
         private string $store,
-        private string $authorizationModel,
+        private string $model,
     ) {
     }
 
     #[Override]
-    public function getAuthorizationModel(): string
+    public function getModel(): string
     {
-        return $this->authorizationModel;
+        return $this->model;
     }
 
     #[Override]
@@ -27,7 +27,7 @@ final class GetAuthorizationModelRequest implements GetAuthorizationModelRequest
     {
         return new RequestContext(
             method: RequestMethod::GET,
-            url: '/stores/' . $this->getStore() . '/authorization-models/' . $this->getAuthorizationModel(),
+            url: '/stores/' . $this->store . '/authorization-models/' . $this->model,
         );
     }
 

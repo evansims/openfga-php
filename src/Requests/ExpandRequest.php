@@ -16,23 +16,17 @@ final class ExpandRequest implements ExpandRequestInterface
     /**
      * @param string                                 $store
      * @param TupleKeyInterface                      $tupleKey
-     * @param ?string                                $authorizationModel
+     * @param ?string                                $model
      * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
      * @param ?Consistency                           $consistency
      */
     public function __construct(
         private string $store,
         private TupleKeyInterface $tupleKey,
-        private ?string $authorizationModel = null,
+        private ?string $model = null,
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
-    }
-
-    #[Override]
-    public function getAuthorizationModel(): ?string
-    {
-        return $this->authorizationModel;
     }
 
     #[Override]
@@ -48,11 +42,17 @@ final class ExpandRequest implements ExpandRequestInterface
     }
 
     #[Override]
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
             'tuple_key' => $this->tupleKey->jsonSerialize(),
-            'authorization_model_id' => $this->authorizationModel,
+            'authorization_model_id' => $this->model,
             'consistency' => $this->consistency?->value,
             'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
@@ -61,7 +61,7 @@ final class ExpandRequest implements ExpandRequestInterface
 
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/stores/' . $this->getStore() . '/expand',
+            url: '/stores/' . $this->store . '/expand',
             body: $stream,
         );
     }

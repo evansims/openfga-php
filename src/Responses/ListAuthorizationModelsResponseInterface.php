@@ -10,12 +10,12 @@ use OpenFGA\Schema\SchemaInterface;
 
 interface ListAuthorizationModelsResponseInterface extends ResponseInterface
 {
+    public function getContinuationToken(): ?string;
+
     /**
      * @return AuthorizationModelsInterface<AuthorizationModelInterface>
      */
-    public function getAuthorizationModels(): AuthorizationModelsInterface;
-
-    public function getContinuationToken(): ?string;
+    public function getModels(): AuthorizationModelsInterface;
 
     public static function schema(): SchemaInterface;
 }

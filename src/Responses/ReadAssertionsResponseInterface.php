@@ -15,7 +15,7 @@ interface ReadAssertionsResponseInterface extends ResponseInterface
      */
     public function getAssertions(): ?AssertionsInterface;
 
-    public function getAuthorizationModelId(): string;
+    public function getModel(): string;
 
     public static function schema(): SchemaInterface;
 }

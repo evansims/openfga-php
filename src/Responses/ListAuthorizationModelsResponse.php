@@ -20,25 +20,25 @@ final class ListAuthorizationModelsResponse implements ListAuthorizationModelsRe
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param AuthorizationModelsInterface<AuthorizationModelInterface> $authorizationModels
+     * @param AuthorizationModelsInterface<AuthorizationModelInterface> $models
      * @param ?string                                                   $continuationToken
      */
     public function __construct(
-        private AuthorizationModelsInterface $authorizationModels,
+        private AuthorizationModelsInterface $models,
         private ?string $continuationToken = null,
     ) {
-    }
-
-    #[Override]
-    public function getAuthorizationModels(): AuthorizationModelsInterface
-    {
-        return $this->authorizationModels;
     }
 
     #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
+    }
+
+    #[Override]
+    public function getModels(): AuthorizationModelsInterface
+    {
+        return $this->models;
     }
 
     #[Override]

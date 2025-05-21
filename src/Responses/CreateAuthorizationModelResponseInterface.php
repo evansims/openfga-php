@@ -8,7 +8,7 @@ use OpenFGA\Schema\SchemaInterface;
 
 interface CreateAuthorizationModelResponseInterface extends ResponseInterface
 {
-    public function getAuthorizationModelId(): string;
+    public function getModel(): string;
 
     public static function schema(): SchemaInterface;
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA;
 
 use DateTimeImmutable;
-use OpenFGA\Authentication\{AccessToken, AccessTokenInterface, AuthenticationMode, ClientCredentialAuthentication};
+use OpenFGA\Authentication\{AccessToken, AccessTokenInterface, ClientCredentialAuthentication};
 use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface, TupleKeyInterface};
 use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
@@ -17,6 +17,15 @@ use OpenFGA\Schema\SchemaValidator;
 use Override;
 
 use function is_string;
+
+enum Authentication
+{
+    case CLIENT_CREDENTIALS;
+
+    case NONE;
+
+    case TOKEN;
+}
 
 final class Client implements ClientInterface
 {
@@ -52,12 +61,12 @@ final class Client implements ClientInterface
 
     /**
      * @param string                                          $url                 The OpenFGA API URL to connect to
-     * @param AuthenticationMode                              $authenticationMode  The authentication mode to use
-     * @param null|string                                     $clientId            Optional client ID to use for OIDC authentication (AuthenticationMode::CLIENT_CREDENTIALS)
-     * @param null|string                                     $clientSecret        Optional client secret to use for OIDC authentication (AuthenticationMode::CLIENT_CREDENTIALS)
-     * @param null|string                                     $issuer              Optional issuer to use for OIDC authentication (AuthenticationMode::CLIENT_CREDENTIALS)
-     * @param null|string                                     $audience            Optional audience to use for OIDC authentication (AuthenticationMode::CLIENT_CREDENTIALS)
-     * @param null|AccessTokenInterface|string                $token               Optional token to use for pre-shared key authentication (AuthenticationMode::TOKEN)
+     * @param Authentication                                  $authentication      The authentication approach to use
+     * @param null|string                                     $clientId            Optional client ID to use for OIDC authentication (Authentication::CLIENT_CREDENTIALS)
+     * @param null|string                                     $clientSecret        Optional client secret to use for OIDC authentication (Authentication::CLIENT_CREDENTIALS)
+     * @param null|string                                     $issuer              Optional issuer to use for OIDC authentication (Authentication::CLIENT_CREDENTIALS)
+     * @param null|string                                     $audience            Optional audience to use for OIDC authentication (Authentication::CLIENT_CREDENTIALS)
+     * @param null|AccessTokenInterface|string                $token               Optional token to use for pre-shared key authentication (Authentication::TOKEN)
      * @param null|positive-int                               $maxRetries          Number of times to retry a request before giving up; defaults to 3, disabled if null
      * @param null|\Psr\Http\Client\ClientInterface           $httpClient          Optional PSR-18 HTTP client to use for requests; will use autodiscovery and use the first available if not specified
      * @param null|\Psr\Http\Message\ResponseFactoryInterface $httpResponseFactory Optional PSR-17 HTTP response factory to use for requests; will use autodiscovery and use the first available if not specified
@@ -66,7 +75,7 @@ final class Client implements ClientInterface
      */
     public function __construct(
         private readonly string $url,
-        private readonly AuthenticationMode $authenticationMode = AuthenticationMode::NONE,
+        private readonly Authentication $authentication = Authentication::NONE,
         private readonly ?string $clientId = null,
         private readonly ?string $clientSecret = null,
         private readonly ?string $issuer = null,
@@ -83,7 +92,7 @@ final class Client implements ClientInterface
     #[Override]
     public function check(
         StoreInterface | string $store,
-        AuthorizationModelInterface | string $authorizationModel,
+        AuthorizationModelInterface | string $model,
         TupleKeyInterface $tupleKey,
         ?bool $trace = null,
         ?object $context = null,
@@ -92,7 +101,7 @@ final class Client implements ClientInterface
     ): CheckResponseInterface {
         $request = new CheckRequest(
             store: self::getStoreId($store),
-            authorizationModel: self::getAuthorizationModelId($authorizationModel),
+            model: self::getModelId($model),
             tupleKey: $tupleKey,
             trace: $trace,
             context: $context,
@@ -148,7 +157,7 @@ final class Client implements ClientInterface
     public function expand(
         StoreInterface | string $store,
         TupleKeyInterface $tupleKey,
-        AuthorizationModelInterface | string | null $authorizationModel = null,
+        AuthorizationModelInterface | string | null $model = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
     ): ExpandResponseInterface {
@@ -156,7 +165,7 @@ final class Client implements ClientInterface
             tupleKey: $tupleKey,
             contextualTuples: $contextualTuples,
             store: self::getStoreId($store),
-            authorizationModel: (null !== $authorizationModel) ? self::getAuthorizationModelId($authorizationModel) : null,
+            model: (null !== $model) ? self::getModelId($model) : null,
             consistency: $consistency,
         );
 
@@ -166,11 +175,11 @@ final class Client implements ClientInterface
     #[Override]
     public function getAuthorizationModel(
         StoreInterface | string $store,
-        AuthorizationModelInterface | string $authorizationModel,
+        AuthorizationModelInterface | string $model,
     ): GetAuthorizationModelResponseInterface {
         $request = new GetAuthorizationModelRequest(
             store: self::getStoreId($store),
-            authorizationModel: self::getAuthorizationModelId($authorizationModel),
+            model: self::getModelId($model),
         );
 
         return GetAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -219,7 +228,7 @@ final class Client implements ClientInterface
     #[Override]
     public function listObjects(
         StoreInterface | string $store,
-        AuthorizationModelInterface | string $authorizationModel,
+        AuthorizationModelInterface | string $model,
         string $type,
         string $relation,
         string $user,
@@ -234,7 +243,7 @@ final class Client implements ClientInterface
             context: $context,
             contextualTuples: $contextualTuples,
             store: self::getStoreId($store),
-            authorizationModel: self::getAuthorizationModelId($authorizationModel),
+            model: self::getModelId($model),
             consistency: $consistency,
         );
 
@@ -280,7 +289,7 @@ final class Client implements ClientInterface
     #[Override]
     public function listUsers(
         StoreInterface | string $store,
-        AuthorizationModelInterface | string $authorizationModel,
+        AuthorizationModelInterface | string $model,
         string $object,
         string $relation,
         UserTypeFiltersInterface $userFilters,
@@ -295,7 +304,7 @@ final class Client implements ClientInterface
             context: $context,
             contextualTuples: $contextualTuples,
             store: self::getStoreId($store),
-            authorizationModel: self::getAuthorizationModelId($authorizationModel),
+            model: self::getModelId($model),
             consistency: $consistency,
         );
 
@@ -305,11 +314,11 @@ final class Client implements ClientInterface
     #[Override]
     public function readAssertions(
         StoreInterface | string $store,
-        AuthorizationModelInterface | string $authorizationModel,
+        AuthorizationModelInterface | string $model,
     ): ReadAssertionsResponseInterface {
         $request = new ReadAssertionsRequest(
             store: self::getStoreId($store),
-            authorizationModel: self::getAuthorizationModelId($authorizationModel),
+            model: self::getModelId($model),
         );
 
         return ReadAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -339,13 +348,13 @@ final class Client implements ClientInterface
     #[Override]
     public function writeAssertions(
         StoreInterface | string $store,
-        AuthorizationModelInterface | string $authorizationModel,
+        AuthorizationModelInterface | string $model,
         AssertionsInterface $assertions,
     ): WriteAssertionsResponseInterface {
         $request = new WriteAssertionsRequest(
             assertions: $assertions,
             store: self::getStoreId($store),
-            authorizationModel: self::getAuthorizationModelId($authorizationModel),
+            model: self::getModelId($model),
         );
 
         return WriteAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -354,7 +363,7 @@ final class Client implements ClientInterface
     #[Override]
     public function writeTuples(
         StoreInterface | string $store,
-        AuthorizationModelInterface | string $authorizationModel,
+        AuthorizationModelInterface | string $model,
         ?TupleKeysInterface $writes = null,
         ?TupleKeysInterface $deletes = null,
     ): WriteTuplesResponseInterface {
@@ -362,7 +371,7 @@ final class Client implements ClientInterface
             writes: $writes,
             deletes: $deletes,
             store: self::getStoreId($store),
-            authorizationModel: self::getAuthorizationModelId($authorizationModel),
+            model: self::getModelId($model),
         );
 
         return WriteTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
@@ -389,13 +398,13 @@ final class Client implements ClientInterface
     private function getAuthenticationHeader(): ?string
     {
         // No authentication
-        if (AuthenticationMode::NONE === $this->authenticationMode) {
+        if (Authentication::NONE === $this->authentication) {
             return null;
         }
 
         // Pre-shared key authentication state present
         if (is_string($this->token)) {
-            if (AuthenticationMode::TOKEN === $this->authenticationMode) {
+            if (Authentication::TOKEN === $this->authentication) {
                 return $this->token;
             }
 
@@ -404,7 +413,7 @@ final class Client implements ClientInterface
 
         // Client Credentials / OIDC authentication state present
         if ($this->token instanceof AccessTokenInterface) {
-            if (AuthenticationMode::CLIENT_CREDENTIALS === $this->authenticationMode && ! $this->token->isExpired()) {
+            if (Authentication::CLIENT_CREDENTIALS === $this->authentication && ! $this->token->isExpired()) {
                 return (string) $this->token;
             }
 
@@ -412,7 +421,7 @@ final class Client implements ClientInterface
         }
 
         // Client Credentials / OIDC authentication configured
-        if (AuthenticationMode::CLIENT_CREDENTIALS === $this->authenticationMode) {
+        if (Authentication::CLIENT_CREDENTIALS === $this->authentication) {
             $clientId = is_string($this->clientId) && '' !== trim($this->clientId) ? trim($this->clientId) : null;
             $clientSecret = is_string($this->clientSecret) && '' !== trim($this->clientSecret) ? trim($this->clientSecret) : null;
             $issuer = is_string($this->issuer) && '' !== trim($this->issuer) ? trim($this->issuer) : null;
@@ -471,17 +480,17 @@ final class Client implements ClientInterface
      * retrieved from the object using the getId() method. Otherwise, the value
      * will be used as the authorization model ID.
      *
-     * @param AuthorizationModelInterface|string $authorizationModel The authorization model to get the ID from.
+     * @param AuthorizationModelInterface|string $model The authorization model to get the ID from.
      *
      * @return string The authorization model ID.
      */
-    private static function getAuthorizationModelId(AuthorizationModelInterface | string $authorizationModel): string
+    private static function getModelId(AuthorizationModelInterface | string $model): string
     {
-        if ($authorizationModel instanceof AuthorizationModelInterface) {
-            return $authorizationModel->getId();
+        if ($model instanceof AuthorizationModelInterface) {
+            return $model->getId();
         }
 
-        return $authorizationModel;
+        return $model;
     }
 
     /**

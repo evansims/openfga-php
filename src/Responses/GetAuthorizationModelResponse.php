@@ -19,14 +19,14 @@ final class GetAuthorizationModelResponse implements GetAuthorizationModelRespon
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private ?AuthorizationModelInterface $authorizationModel = null,
+        private ?AuthorizationModelInterface $model = null,
     ) {
     }
 
     #[Override]
-    public function getAuthorizationModel(): ?AuthorizationModelInterface
+    public function getModel(): ?AuthorizationModelInterface
     {
-        return $this->authorizationModel;
+        return $this->model;
     }
 
     #[Override]

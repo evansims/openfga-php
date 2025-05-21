@@ -12,14 +12,14 @@ final class ReadAssertionsRequest implements ReadAssertionsRequestInterface
 {
     public function __construct(
         private string $store,
-        private string $authorizationModel,
+        private string $model,
     ) {
     }
 
     #[Override]
-    public function getAuthorizationModel(): string
+    public function getModel(): string
     {
-        return $this->authorizationModel;
+        return $this->model;
     }
 
     #[Override]
@@ -27,7 +27,7 @@ final class ReadAssertionsRequest implements ReadAssertionsRequestInterface
     {
         return new RequestContext(
             method: RequestMethod::GET,
-            url: '/stores/' . $this->getStore() . '/assertions/' . $this->getAuthorizationModel(),
+            url: '/stores/' . $this->store . '/assertions/' . $this->model,
         );
     }
 

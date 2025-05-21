@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace OpenFGA\Language;
 
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, TypeDefinitionInterface, UsersetInterface};
-use OpenFGA\Models\Collections\{TypeDefinitions, TypeDefinitionRelations, Usersets};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\SchemaValidator;
 use stdClass;
+
+use function count;
+use function strlen;
 
 final class DslTransformer
 {
@@ -23,35 +25,40 @@ final class DslTransformer
 
         foreach ($lines as $line) {
             $line = trim($line);
-            if ($line === '' || str_starts_with($line, '#')) {
+            if ('' === $line) {
+                continue;
+            }
+            if (str_starts_with($line, '#')) {
                 continue;
             }
 
-            if ($line === 'model') {
+            if ('model' === $line) {
                 continue;
             }
 
             if (str_starts_with($line, 'schema')) {
                 $version = trim(substr($line, strlen('schema')));
-                if ($version !== '') {
+                if ('' !== $version) {
                     $schemaVersion = SchemaVersion::from($version);
                 }
+
                 continue;
             }
 
             if (preg_match('/^type\s+(\w+)/', $line, $m)) {
-                if ($currentType !== null) {
+                if (null !== $currentType) {
                     $typeDefinitions[] = [
                         'type' => $currentType,
-                        'relations' => $relations === [] ? null : $relations,
+                        'relations' => [] === $relations ? null : $relations,
                     ];
                     $relations = [];
                 }
                 $currentType = $m[1];
+
                 continue;
             }
 
-            if ($line === 'relations') {
+            if ('relations' === $line) {
                 continue;
             }
 
@@ -62,10 +69,10 @@ final class DslTransformer
             }
         }
 
-        if ($currentType !== null) {
+        if (null !== $currentType) {
             $typeDefinitions[] = [
                 'type' => $currentType,
-                'relations' => $relations === [] ? null : $relations,
+                'relations' => [] === $relations ? null : $relations,
             ];
         }
 
@@ -84,11 +91,11 @@ final class DslTransformer
         $lines[] = 'model';
         $lines[] = '  schema ' . $model->getSchemaVersion()->value;
 
-        foreach ($model->getTypeDefinitions() as $typeDef) {
+        foreach ($model->getTypeDefinitions() as $typeDefinition) {
             /** @var TypeDefinitionInterface $typeDef */
-            $lines[] = 'type ' . $typeDef->getType();
-            $relations = $typeDef->getRelations();
-            if ($relations !== null && count($relations) > 0) {
+            $lines[] = 'type ' . $typeDefinition->getType();
+            $relations = $typeDefinition->getRelations();
+            if (null !== $relations && count($relations) > 0) {
                 $lines[] = '  relations';
                 foreach ($relations as $name => $userset) {
                     /** @var UsersetInterface $userset */
@@ -104,7 +111,7 @@ final class DslTransformer
     {
         $terms = array_map('trim', explode('or', $expr));
         $parsed = array_map([self::class, 'parseTerm'], $terms);
-        if (count($parsed) === 1) {
+        if (1 === count($parsed)) {
             return $parsed[0];
         }
 
@@ -113,7 +120,7 @@ final class DslTransformer
 
     private static function parseTerm(string $term): array
     {
-        if ($term === 'self') {
+        if ('self' === $term) {
             return ['direct' => new stdClass()];
         }
 
@@ -135,28 +142,30 @@ final class DslTransformer
 
     private static function renderExpression(UsersetInterface $userset): string
     {
-        if ($userset->getUnion() !== null) {
+        if ($userset->getUnion() instanceof \OpenFGA\Models\Collections\UsersetsInterface) {
             $parts = [];
             foreach ($userset->getUnion() as $child) {
                 $parts[] = self::renderExpression($child);
             }
+
             return implode(' or ', $parts);
         }
 
-        if ($userset->getDirect() !== null) {
+        if (null !== $userset->getDirect()) {
             return 'self';
         }
 
-        if ($userset->getComputedUserset() !== null) {
+        if ($userset->getComputedUserset() instanceof \OpenFGA\Models\ObjectRelationInterface) {
             $cu = $userset->getComputedUserset();
             $object = $cu->getObject();
             $relation = $cu->getRelation();
-            if ($object === null || $object === '') {
+            if (null === $object || '' === $object) {
                 return (string) $relation;
             }
-            if ($relation === null || $relation === '') {
+            if (null === $relation || '' === $relation) {
                 return (string) $object;
             }
+
             return $object . '#' . $relation;
         }
 

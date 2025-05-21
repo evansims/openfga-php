@@ -9,12 +9,12 @@ use OpenFGA\Models\TupleKeyInterface;
 
 interface WriteTuplesRequestInterface extends RequestInterface
 {
-    public function getAuthorizationModel(): string;
-
     /**
      * @return null|TupleKeysInterface<TupleKeyInterface>
      */
     public function getDeletes(): ?TupleKeysInterface;
+
+    public function getModel(): string;
 
     public function getStore(): string;
 

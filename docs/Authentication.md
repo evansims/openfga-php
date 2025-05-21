@@ -5,25 +5,26 @@ The client supports token and client credentials authentication. The URL is the 
 ## Token authentication
 
 ```php
-use OpenFGA\Authentication\AuthenticationMode;
-use OpenFGA\Client;
+use OpenFGA\{Client, Authentication};
 
 $client = new Client(
     url: 'http://localhost:8080',
-    authenticationMode: AuthenticationMode::TOKEN,
-    token: 'my-token',
+    authentication: Authentication::TOKEN,
+    token: getenv('OPENFGA_TOKEN'),
 );
 ```
 
 ## Client credentials
 
 ```php
+use OpenFGA\{Client, Authentication};
+
 $client = new Client(
     url: 'http://localhost:8080',
-    authenticationMode: AuthenticationMode::CLIENT_CREDENTIALS,
-    clientId: 'client-id',
-    clientSecret: 'client-secret',
-    issuer: 'https://issuer.example',
-    audience: 'https://api.example',
+    authentication: Authentication::CLIENT_CREDENTIALS,
+    clientId: getenv('OPENFGA_CLIENT_ID'),
+    clientSecret: getenv('OPENFGA_CLIENT_SECRET'),
+    issuer: getenv('OPENFGA_ISSUER'),
+    audience: getenv('OPENFGA_AUDIENCE'),
 );
 ```

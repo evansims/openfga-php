@@ -3,11 +3,14 @@
 Create and retrieve authorization models.
 
 ```php
-use OpenFGA\Client;
+use OpenFGA\{Client, Authentication};
 use OpenFGA\Models\Collections\{Conditions, TypeDefinitions};
 use OpenFGA\Models\{Condition, TypeDefinition, Userset};
 
-$client = new Client(url: 'http://localhost:8080');
+$client = new Client(
+    url: 'http://localhost:8080',
+    authentication: Authentication::NONE,
+);
 
 $types = new TypeDefinitions([
     new TypeDefinition(

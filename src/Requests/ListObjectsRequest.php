@@ -18,7 +18,7 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
      * @param string                                 $type
      * @param string                                 $relation
      * @param string                                 $user
-     * @param ?string                                $authorizationModel
+     * @param ?string                                $model
      * @param ?object                                $context
      * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
      * @param ?Consistency                           $consistency
@@ -28,17 +28,11 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         private string $type,
         private string $relation,
         private string $user,
-        private ?string $authorizationModel = null,
+        private ?string $model = null,
         private ?object $context = null,
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
-    }
-
-    #[Override]
-    public function getAuthorizationModel(): ?string
-    {
-        return $this->authorizationModel;
     }
 
     #[Override]
@@ -60,6 +54,12 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
     }
 
     #[Override]
+    public function getModel(): ?string
+    {
+        return $this->model;
+    }
+
+    #[Override]
     public function getRelation(): string
     {
         return $this->relation;
@@ -72,7 +72,7 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
             'type' => $this->type,
             'relation' => $this->relation,
             'user' => $this->user,
-            'authorization_model_id' => $this->authorizationModel,
+            'authorization_model_id' => $this->model,
             'context' => $this->context,
             'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
             'consistency' => $this->consistency?->value,
@@ -82,7 +82,7 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
 
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/stores/' . $this->getStore() . '/list-objects',
+            url: '/stores/' . $this->store . '/list-objects',
             body: $stream,
         );
     }

@@ -1,33 +1,35 @@
 <?php
 
+declare(strict_types=1);
+
 use OpenFGA\Language\DslTransformer;
 use OpenFGA\Models\AuthorizationModelInterface;
 use OpenFGA\Schema\SchemaValidator;
 
 it('transforms DSL to model and back', function (): void {
-    $dsl = <<<DSL
-model
-  schema 1.1
+    $dsl = <<<'DSL'
+        model
+          schema 1.1
 
-type user
+        type user
 
-type document
-  relations
-    define viewer: self
-    define writer: user
-DSL;
+        type document
+          relations
+            define viewer: self
+            define writer: user
+        DSL;
 
     $validator = new SchemaValidator();
 
     // Register schemas used by AuthorizationModel
     $validator
-        ->registerSchema(\OpenFGA\Models\AuthorizationModel::schema())
-        ->registerSchema(\OpenFGA\Models\Collections\TypeDefinitions::schema())
-        ->registerSchema(\OpenFGA\Models\TypeDefinition::schema())
-        ->registerSchema(\OpenFGA\Models\Collections\TypeDefinitionRelations::schema())
-        ->registerSchema(\OpenFGA\Models\Userset::schema())
-        ->registerSchema(\OpenFGA\Models\Collections\Usersets::schema())
-        ->registerSchema(\OpenFGA\Models\ObjectRelation::schema());
+        ->registerSchema(OpenFGA\Models\AuthorizationModel::schema())
+        ->registerSchema(OpenFGA\Models\Collections\TypeDefinitions::schema())
+        ->registerSchema(OpenFGA\Models\TypeDefinition::schema())
+        ->registerSchema(OpenFGA\Models\Collections\TypeDefinitionRelations::schema())
+        ->registerSchema(OpenFGA\Models\Userset::schema())
+        ->registerSchema(OpenFGA\Models\Collections\Usersets::schema())
+        ->registerSchema(OpenFGA\Models\ObjectRelation::schema());
 
     $model = DslTransformer::fromDsl($dsl, $validator);
 

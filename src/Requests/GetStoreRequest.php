@@ -20,7 +20,7 @@ final class GetStoreRequest implements GetStoreRequestInterface
     {
         return new RequestContext(
             method: RequestMethod::GET,
-            url: '/stores/' . $this->getStore(),
+            url: '/stores/' . $this->store,
         );
     }
 
