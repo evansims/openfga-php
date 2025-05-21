@@ -1,4 +1,4 @@
-name: 'Dependency Review'
+name: "Dependency Review"
 on: [pull_request]
 
 permissions:
@@ -13,14 +13,14 @@ jobs:
         with:
           egress-policy: audit
 
-      - name: 'Checkout Repository'
+      - name: "Checkout Repository"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: 'Dependency Review'
+      - name: "Dependency Review"
         uses: actions/dependency-review-action@cc4f6536e38d1126c5e3b0683d469a14f23bfea4 # v3
         with:
           # Scan for vulnerabilities and reject PR if severity threshold exceeded
           fail-on-severity: critical
           # Deny licenses that are problematic for open source projects
-          deny-licenses: 'AGPL-1.0-only, AGPL-1.0-or-later, AGPL-3.0-only, AGPL-3.0-or-later'
+          deny-licenses: "AGPL-1.0-only, AGPL-1.0-or-later, AGPL-3.0-only, AGPL-3.0-or-later"
           # Additional reviewers for dependency-related changes
           comment-summary-in-pr: true
