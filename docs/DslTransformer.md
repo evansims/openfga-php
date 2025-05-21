@@ -1,4 +1,4 @@
-# DSL transformer
+# DSL Transformer
 
 Transform DSL strings to authorization models and back.
 

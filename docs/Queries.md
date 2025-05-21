@@ -1,4 +1,4 @@
-# Relationship queries
+# Relationship Queries
 
 Check and expand relationships or list matching objects and users.
 

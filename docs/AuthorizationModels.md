@@ -1,4 +1,4 @@
-# Authorization models
+# Authorization Models
 
 Create and retrieve authorization models.
 
