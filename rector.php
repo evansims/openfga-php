@@ -159,6 +159,10 @@ use Rector\TypeDeclaration\Rector\Property\{TypedPropertyFromAssignsRector,
     TypedPropertyFromStrictSetUpRector,};
 
 return RectorConfig::configure()
+    ->withPaths([
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
+    ])
     ->withConfiguredRule(AddOverrideAttributeToOverriddenMethodsRector::class, [
         'allow_override_empty_method' => false,
     ])
