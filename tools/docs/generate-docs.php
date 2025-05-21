@@ -26,7 +26,7 @@ class DocumentationGenerator
     {
         $this->srcDir = rtrim($srcDir, '/');
         $this->outputDir = rtrim($outputDir, '/');
-        
+
         $loader = new FilesystemLoader(__DIR__);
         $this->twig = new Environment($loader);
     }
@@ -45,16 +45,16 @@ class DocumentationGenerator
         $processedFiles = 0;
 
         echo "Scanning for PHP files in: " . $this->srcDir . "\n";
-        
+
         foreach ($finder as $file) {
             $totalFiles++;
             $filePath = $file->getRealPath();
             $className = $this->getClassNameFromFile($filePath);
-            
+
             if ($className) {
                 $this->classMap[$className] = $filePath;
                 $processedFiles++;
-                
+
                 // Only show progress for every 10 files to reduce noise
                 if ($processedFiles % 10 === 0) {
                     echo "Processed $processedFiles files...\n";
@@ -63,7 +63,7 @@ class DocumentationGenerator
                 echo "Skipping file (no class/interface found): " . $file->getRelativePathname() . "\n";
             }
         }
-        
+
         echo "Build complete. Processed $processedFiles of $totalFiles files. Found " . count($this->classMap) . " classes/interfaces.\n";
     }
 
@@ -86,28 +86,28 @@ class DocumentationGenerator
     private function getClassNameFromFile(string $file): ?string
     {
         static $cache = [];
-        
+
         // Use cached result if available
         if (isset($cache[$file])) {
             return $cache[$file];
         }
-        
+
         $content = @file_get_contents($file);
         if ($content === false) {
             echo "[DEBUG] Could not read file: $file\n";
             $cache[$file] = null;
             return null;
         }
-        
+
         // Skip files that don't contain a namespace
         if (!preg_match('/namespace\s+([^;]+);/s', $content, $namespaceMatches)) {
             echo "[DEBUG] No namespace found in file: $file\n";
             $cache[$file] = null;
             return null;
         }
-        
+
         $namespace = $namespaceMatches[1];
-        
+
         // Look for either class or interface definition
         if (preg_match('/(class|interface)\s+(\w+)/', $content, $matches)) {
             $type = $matches[1]; // 'class' or 'interface'
@@ -117,7 +117,7 @@ class DocumentationGenerator
             $cache[$file] = $className;
             return $className;
         }
-        
+
         echo "[DEBUG] No class or interface found in file: $file\n";
         $cache[$file] = null;
         return null;
@@ -130,7 +130,7 @@ class DocumentationGenerator
         $classCount = 0;
         $skippedCount = 0;
         $totalInterfaces = 0;
-        
+
         // First, count total interfaces for progress reporting
         foreach ($this->classMap as $className => $file) {
             try {
@@ -142,21 +142,21 @@ class DocumentationGenerator
                 // Ignore errors during counting
             }
         }
-        
+
         // Now process all classes and interfaces
         $processedInterfaces = 0;
-        
+
         foreach ($this->classMap as $className => $file) {
             try {
                 $reflection = new ReflectionClass($className);
                 $isInterface = $reflection->isInterface();
-                
+
                 // Skip abstract classes that are not interfaces
                 if ($reflection->isAbstract() && !$isInterface) {
                     $skippedCount++;
                     continue;
                 }
-                
+
                 if ($isInterface) {
                     $interfaceCount++;
                     $processedInterfaces++;
@@ -165,21 +165,21 @@ class DocumentationGenerator
                     $classCount++;
                     echo "Generating class: $className\n";
                 }
-                
+
                 $this->generateClassDocumentation($className, $file, $isInterface);
-                
+
             } catch (\Exception $e) {
                 echo "Error processing $className: " . $e->getMessage() . "\n";
             }
         }
-        
+
         echo "Documentation generation complete. Generated $classCount classes, $interfaceCount interfaces, and skipped $skippedCount abstract classes.\n";
     }
 
     private function generateClassDocumentation(string $className, string $file, bool $isInterface = false): void
     {
         $reflection = new ReflectionClass($className);
-        
+
         // Skip abstract classes (but not interfaces)
         if ($reflection->isAbstract() && !$isInterface) {
             return;
@@ -195,7 +195,7 @@ class DocumentationGenerator
             }, $reflection->getInterfaces()),
             'methods' => [],
         ];
-        
+
         // Get interface methods documentation if this is a class (not an interface)
         $interfaceMethods = [];
         if (!$isInterface) {
@@ -235,12 +235,12 @@ class DocumentationGenerator
             // If this method is from an interface, merge the documentation
             if (isset($interfaceMethods[$method->getName()])) {
                 $interfaceMethod = $interfaceMethods[$method->getName()];
-                
+
                 // Use interface method description if class method doesn't have one
                 if (empty($methodData['description'])) {
                     $methodData['description'] = $interfaceMethod['description'];
                 }
-                
+
                 // Merge parameter descriptions
                 foreach ($methodData['parameters'] as &$param) {
                     $paramName = ltrim($param['name'], '$');
@@ -253,25 +253,25 @@ class DocumentationGenerator
                         }
                     }
                 }
-                
+
                 // Use interface return description if class method doesn't have one
                 if (empty($methodData['return']['description']) && !empty($interfaceMethod['return']['description'])) {
                     $methodData['return']['description'] = $interfaceMethod['return']['description'];
                 }
-                
+
                 // Mark as from interface for rendering
                 $methodData['fromInterface'] = $interfaceMethod['fromInterface'];
-                
+
                 // Remove from interface methods to avoid duplication
                 unset($interfaceMethods[$method->getName()]);
             }
-            
+
             $classData['methods'][] = $methodData;
         }
 
         // Generate output path
         $namespace = $reflection->getNamespaceName();
-        
+
         // Handle root namespace (OpenFGA) differently
         if ($namespace === 'OpenFGA') {
             $outputPath = $this->outputDir;
@@ -279,12 +279,12 @@ class DocumentationGenerator
             $relativePath = str_replace('OpenFGA\\', '', $namespace);
             $relativePath = str_replace('\\', '/', $relativePath);
             $outputPath = $this->outputDir . '/' . $relativePath;
-            
+
             if (!is_dir($outputPath)) {
                 mkdir($outputPath, 0755, true);
             }
         }
-        
+
         // Ensure the output directory exists
         if (!is_dir($outputPath)) {
             mkdir($outputPath, 0755, true);
@@ -295,17 +295,17 @@ class DocumentationGenerator
             $methodData['isFromInterface'] = true;
             $classData['methods'][] = $methodData;
         }
-        
+
         // Sort methods alphabetically
         usort($classData['methods'], function($a, $b) {
             return strcmp($a['name'], $b['name']);
         });
-        
+
         // Render and save
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
         echo "Writing to: $outputFile\n";
         $content = $this->twig->render('documentation.twig', $classData);
-        
+
         $result = file_put_contents($outputFile, $content);
         if ($result === false) {
             echo "Failed to write to: $outputFile\n";
@@ -314,26 +314,26 @@ class DocumentationGenerator
 
     /**
      * Extracts method documentation from all implemented interfaces
-     * 
+     *
      * @param ReflectionClass $reflection The reflection of the class to get interface methods from
      * @return array Array of method documentation keyed by method name
      */
     private function getInterfaceMethodsDocumentation(ReflectionClass $reflection): array
     {
         $interfaceMethods = [];
-        
+
         // Get all interfaces recursively
         $interfaces = $reflection->getInterfaces();
-        
+
         foreach ($interfaces as $interface) {
             foreach ($interface->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
                 $methodName = $method->getName();
-                
+
                 // Skip magic methods and constructors
                 if (str_starts_with($methodName, '__')) {
                     continue;
                 }
-                
+
                 // Only include if we haven't seen this method name before
                 if (!isset($interfaceMethods[$methodName])) {
                     $methodData = [
@@ -356,12 +356,12 @@ class DocumentationGenerator
                             'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
                         ];
                     }
-                    
+
                     $interfaceMethods[$methodName] = $methodData;
                 }
             }
         }
-        
+
         return $interfaceMethods;
     }
 
@@ -371,18 +371,18 @@ class DocumentationGenerator
         foreach ($method->getParameters() as $param) {
             $paramStr = $this->getParameterType($param) . ' ';
             $paramStr .= ($param->isPassedByReference() ? '&' : '') . '$' . $param->getName();
-            
+
             if ($param->isDefaultValueAvailable()) {
                 $default = $param->getDefaultValue();
                 $paramStr .= ' = ' . var_export($default, true);
             }
-            
+
             $params[] = $paramStr;
         }
 
         $returnType = $this->getReturnType($method);
         $returnTypeStr = $returnType ? ': ' . $returnType : '';
-        
+
         return sprintf(
             'public function %s(%s)%s',
             $method->getName(),
@@ -396,15 +396,15 @@ class DocumentationGenerator
         if ($param->hasType()) {
             $type = $param->getType();
             $typeStr = (string) $type;
-            
+
             // Handle nullable types
             if ($type->allowsNull() && $typeStr !== 'mixed') {
                 $typeStr = '?' . $typeStr;
             }
-            
+
             return $this->convertToMarkdownLink($typeStr);
         }
-        
+
         return 'mixed';
     }
 
@@ -413,15 +413,15 @@ class DocumentationGenerator
         if ($method->hasReturnType()) {
             $returnType = $method->getReturnType();
             $typeStr = (string) $returnType;
-            
+
             // Handle nullable return types
             if ($returnType->allowsNull() && $typeStr !== 'mixed') {
                 $typeStr = '?' . $typeStr;
             }
-            
+
             return $this->convertToMarkdownLink($typeStr);
         }
-        
+
         return '';
     }
 
@@ -457,9 +457,9 @@ class DocumentationGenerator
         // Expanded list of built-in types
         $builtInTypes = [
             // Basic types
-            'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double', 
-            'array', 'object', 'mixed', 'null', 'true', 'false', 'void', 'iterable', 
-            'callable', 'self', 'static', 'parent', 'resource', 'scalar', 'number', 
+            'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
+            'array', 'object', 'mixed', 'null', 'true', 'false', 'void', 'iterable',
+            'callable', 'self', 'static', 'parent', 'resource', 'scalar', 'number',
             'callback', 'never', 'class-string', 'array-key', 'int|string',
             // PHP 8.0+ types
             'positive-int', 'negative-int', 'non-empty-array', 'non-empty-string', 'numeric',
@@ -506,14 +506,14 @@ class DocumentationGenerator
         $relativePath = '';
         $fullTypeName = $type;
         $displayName = $type;
-        
+
         // Handle fully qualified class names
         if (str_starts_with($type, 'OpenFGA\\')) {
             $isInternalClass = array_key_exists($type, $this->classMap);
             $relativePath = str_replace('OpenFGA\\', '', $type);
             $relativePath = str_replace('\\', '/', $relativePath);
             $displayName = substr($type, strrpos($type, '\\') + 1);
-        } 
+        }
         // Handle relative class names (already in our SDK)
         elseif (array_key_exists('OpenFGA\\' . $type, $this->classMap)) {
             $isInternalClass = true;
@@ -545,7 +545,7 @@ class DocumentationGenerator
                 $result = substr($type, strrpos($type, '\\') + 1);
             }
         }
-        
+
         // Add back generic suffix, array brackets, and nullable
         $result .= $genericSuffix;
         if ($isArray) $result .= '[]';
@@ -561,33 +561,33 @@ class DocumentationGenerator
         $lines = explode("\n", $docComment);
         $description = [];
         $inDescription = true;
-        
+
         foreach ($lines as $line) {
             $line = trim($line, "/* \t");
-            
+
             // Skip empty lines and the opening /**
             if (empty($line) || $line === '/**') {
                 continue;
             }
-            
+
             // Stop processing if we hit a tag and we're in the main description
             if ($inDescription && str_starts_with($line, '@')) {
                 $inDescription = false;
                 continue;
             }
-            
+
             // Only process the main description
             if ($inDescription) {
                 $description[] = $line;
             }
         }
-        
+
         $result = trim(implode(" ", $description));
-        
+
         // Clean up any remaining asterisks or slashes
         $result = trim($result, "*/
  \t");
-        
+
         return $result;
     }
 
@@ -600,17 +600,17 @@ class DocumentationGenerator
         $lines = explode("\n", $docComment);
         $description = [];
         $capture = false;
-        
+
         foreach ($lines as $line) {
             $line = trim($line, "/* \t");
-            
+
             // Look for the @param line for this parameter
             if (preg_match('/@param\s+[^\s]+\s+\$' . preg_quote($paramName, '/') . '(?:\s+(.*))?$/', $line, $matches)) {
                 if (!empty($matches[1])) {
                     $description[] = $matches[1];
                 }
                 $capture = true;
-            } 
+            }
             // If we're capturing and hit another tag, stop
             elseif ($capture && str_starts_with($line, '@')) {
                 $capture = false;
@@ -620,7 +620,7 @@ class DocumentationGenerator
                 $description[] = $line;
             }
         }
-        
+
         return trim(implode(' ', $description));
     }
 
@@ -633,22 +633,22 @@ class DocumentationGenerator
         $lines = explode("\n", $docComment);
         $description = [];
         $capture = false;
-        
+
         foreach ($lines as $line) {
             $line = trim($line, "/* \t");
-            
+
             // Skip empty lines and the opening /**
             if (empty($line) || $line === '/**') {
                 continue;
             }
-            
+
             // Look for the @return line
             if (preg_match('/@return\s+[^\s]+(?:\s+(.*))?$/', $line, $matches)) {
                 if (!empty($matches[1])) {
                     $description[] = $matches[1];
                 }
                 $capture = true;
-            } 
+            }
             // If we're capturing and hit another tag, stop
             elseif ($capture && str_starts_with($line, '@')) {
                 $capture = false;
@@ -658,11 +658,11 @@ class DocumentationGenerator
                 $description[] = $line;
             }
         }
-        
+
         return trim(implode(' ', $description));
     }
 
-    private static function deleteDir(string $dir): void
+    public static function deleteDir(string $dir): void
     {
         if (!is_dir($dir)) {
             return;
@@ -681,7 +681,7 @@ class DocumentationGenerator
     }
 }
 
-if (php_sapi_name() === 'cli' && realpath($argv[0]) === __FILE__) {
+if (php_sapi_name() === 'cli' && isset($argv[0]) && realpath($argv[0]) === __FILE__) {
     $options = getopt('', ['src::', 'out::', 'clean']);
 
     $srcDir = $options['src'] ?? __DIR__ . '/../../src';

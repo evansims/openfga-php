@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require_once implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'tools', 'docs', 'generate-docs.php']);
+require_once implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'tools', 'docs', 'generate-docs.php']);
 
 use ReflectionClass;
 
@@ -15,7 +15,7 @@ test('method signature prints default values using PHP syntax', function (): voi
     }
 
     $generator = new DocumentationGenerator(__DIR__, __DIR__);
-    $method = (new ReflectionClass(Dummy::class))->getMethod('foo');
+    $method = (new ReflectionClass(DocumentationGeneratorTest::class))->getMethod('foo');
 
     $signatureMethod = (new ReflectionClass(DocumentationGenerator::class))
         ->getMethod('getMethodSignature');

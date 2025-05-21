@@ -85,6 +85,10 @@
   "scripts": {
     "integration:start": "docker compose -f docker-compose.integration.yml up -d",
     "integration:stop": "docker compose -f docker-compose.integration.yml down -v",
+    "pest:tools": [
+      "@putenv XDEBUG_MODE=coverage",
+      "@php vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
+    ],
     "pest:unit": [
       "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
