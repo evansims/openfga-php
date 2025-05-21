@@ -48,7 +48,7 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
 
         return new RequestContext(
             method: RequestMethod::GET,
-            url: '/stores/' . $this->getStore() . '/changes' . $query,
+            url: '/stores/' . $this->store . '/changes' . $query,
         );
     }
 

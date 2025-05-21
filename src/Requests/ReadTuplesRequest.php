@@ -61,7 +61,7 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
 
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/stores/' . $this->getStore() . '/read',
+            url: '/stores/' . $this->store . '/read',
             body: $stream,
         );
     }

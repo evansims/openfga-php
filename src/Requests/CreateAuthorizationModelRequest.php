@@ -46,7 +46,7 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
 
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/stores/' . $this->getStore() . '/authorization-models',
+            url: '/stores/' . $this->store . '/authorization-models',
             body: $stream,
         );
     }

@@ -13,7 +13,7 @@ interface WriteAssertionsRequestInterface extends RequestInterface
      */
     public function getAssertions(): AssertionsInterface;
 
-    public function getAuthorizationModel(): string;
+    public function getModel(): string;
 
     public function getStore(): string;
 }

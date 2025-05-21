@@ -18,14 +18,14 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private string $authorizationModelId,
+        private string $model,
     ) {
     }
 
     #[Override]
-    public function getAuthorizationModelId(): string
+    public function getModel(): string
     {
-        return $this->authorizationModelId;
+        return $this->model;
     }
 
     #[Override]

@@ -6,7 +6,7 @@ namespace OpenFGA\Requests;
 
 interface ReadAssertionsRequestInterface extends RequestInterface
 {
-    public function getAuthorizationModel(): string;
+    public function getModel(): string;
 
     public function getStore(): string;
 }

@@ -14,22 +14,16 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
 {
     /**
      * @param string                                     $store
-     * @param string                                     $authorizationModel
+     * @param string                                     $model
      * @param null|TupleKeysInterface<TupleKeyInterface> $writes
      * @param null|TupleKeysInterface<TupleKeyInterface> $deletes
      */
     public function __construct(
         private string $store,
-        private string $authorizationModel,
+        private string $model,
         private ?TupleKeysInterface $writes = null,
         private ?TupleKeysInterface $deletes = null,
     ) {
-    }
-
-    #[Override]
-    public function getAuthorizationModel(): string
-    {
-        return $this->authorizationModel;
     }
 
     #[Override]
@@ -39,19 +33,25 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
     }
 
     #[Override]
+    public function getModel(): string
+    {
+        return $this->model;
+    }
+
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
-            'authorization_model_id' => $this->getAuthorizationModel(),
-            'writes' => $this->getWrites()?->jsonSerialize(),
-            'deletes' => $this->getDeletes()?->jsonSerialize(),
+            'authorization_model_id' => $this->model,
+            'writes' => $this->writes?->jsonSerialize(),
+            'deletes' => $this->deletes?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/stores/' . $this->getStore() . '/write',
+            url: '/stores/' . $this->store . '/write',
             body: $stream,
         );
     }

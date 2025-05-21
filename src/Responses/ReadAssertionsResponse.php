@@ -21,11 +21,11 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
 
     /**
      * @param AssertionsInterface<AssertionInterface> $assertions
-     * @param string                                  $authorizationModelId
+     * @param string                                  $model
      */
     public function __construct(
         private ?AssertionsInterface $assertions,
-        private string $authorizationModelId,
+        private string $model,
     ) {
     }
 
@@ -36,9 +36,9 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
     }
 
     #[Override]
-    public function getAuthorizationModelId(): string
+    public function getModel(): string
     {
-        return $this->authorizationModelId;
+        return $this->model;
     }
 
     #[Override]

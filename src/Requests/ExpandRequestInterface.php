@@ -10,14 +10,14 @@ use OpenFGA\Models\TupleKeyInterface;
 
 interface ExpandRequestInterface extends RequestInterface
 {
-    public function getAuthorizationModel(): ?string;
-
     public function getConsistency(): ?Consistency;
 
     /**
      * @return TupleKeysInterface<TupleKeyInterface>
      */
     public function getContextualTuples(): ?TupleKeysInterface;
+
+    public function getModel(): ?string;
 
     public function getStore(): string;
 

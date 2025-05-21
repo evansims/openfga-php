@@ -20,7 +20,7 @@ final class DeleteStoreRequest implements DeleteStoreRequestInterface
     {
         return new RequestContext(
             method: RequestMethod::DELETE,
-            url: '/stores/' . $this->getStore(),
+            url: '/stores/' . $this->store,
         );
     }
 

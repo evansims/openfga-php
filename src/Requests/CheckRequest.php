@@ -15,7 +15,7 @@ final class CheckRequest implements CheckRequestInterface
 {
     /**
      * @param string                                 $store
-     * @param string                                 $authorizationModel
+     * @param string                                 $model
      * @param TupleKeyInterface                      $tupleKey
      * @param ?bool                                  $trace
      * @param ?object                                $context
@@ -24,7 +24,7 @@ final class CheckRequest implements CheckRequestInterface
      */
     public function __construct(
         private string $store,
-        private string $authorizationModel,
+        private string $model,
         private TupleKeyInterface $tupleKey,
         private ?bool $trace = null,
         private ?object $context = null,
@@ -36,7 +36,7 @@ final class CheckRequest implements CheckRequestInterface
     #[Override]
     public function getAuthorizationModel(): string
     {
-        return $this->authorizationModel;
+        return $this->model;
     }
 
     #[Override]
@@ -62,7 +62,7 @@ final class CheckRequest implements CheckRequestInterface
     {
         $body = array_filter([
             'tuple_key' => $this->tupleKey->jsonSerialize(),
-            'authorization_model_id' => $this->authorizationModel,
+            'authorization_model_id' => $this->model,
             'trace' => $this->trace,
             'context' => $this->context,
             'consistency' => $this->consistency?->value,
@@ -73,7 +73,7 @@ final class CheckRequest implements CheckRequestInterface
 
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/stores/' . $this->getStore() . '/check',
+            url: '/stores/' . $this->store . '/check',
             body: $stream,
         );
     }

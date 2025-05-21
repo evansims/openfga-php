@@ -41,7 +41,7 @@ final class ListAuthorizationModelsRequest implements ListAuthorizationModelsReq
 
         return new RequestContext(
             method: RequestMethod::GET,
-            url: '/stores/' . $this->getStore() . '/authorization-models' . $query,
+            url: '/stores/' . $this->store . '/authorization-models' . $query,
         );
     }
 

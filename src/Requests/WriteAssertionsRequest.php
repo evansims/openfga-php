@@ -15,12 +15,12 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
     /**
      * @param AssertionsInterface<AssertionInterface> $assertions
      * @param string                                  $store
-     * @param string                                  $authorizationModel
+     * @param string                                  $model
      */
     public function __construct(
         private AssertionsInterface $assertions,
         private string $store,
-        private string $authorizationModel,
+        private string $model,
     ) {
     }
 
@@ -31,9 +31,9 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
     }
 
     #[Override]
-    public function getAuthorizationModel(): string
+    public function getModel(): string
     {
-        return $this->authorizationModel;
+        return $this->model;
     }
 
     #[Override]
@@ -45,7 +45,7 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
 
         return new RequestContext(
             method: RequestMethod::PUT,
-            url: '/stores/' . $this->getStore() . '/assertions/' . $this->getAuthorizationModel(),
+            url: '/stores/' . $this->store . '/assertions/' . $this->model,
             body: $stream,
         );
     }
