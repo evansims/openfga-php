@@ -48,7 +48,7 @@ jobs:
           path: |
             ${{ steps.composer-cache.outputs.dir }}
             vendor
-          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('composer.json') }}
+          key: ${{ runner.os }}-php-${{ matrix.php }}-${{ hashFiles('composer.json', 'composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-${{ matrix.php }}-
 
