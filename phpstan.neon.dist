@@ -6,5 +6,8 @@ parameters:
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
 
+    ignoreErrors:
+        - identifier: property.onlyWritten
+
     paths:
         - src
