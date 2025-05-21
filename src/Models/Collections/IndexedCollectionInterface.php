@@ -10,6 +10,7 @@ use Iterator;
 use JsonSerializable;
 use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\CollectionSchemaInterface;
+use Override;
 use ReturnTypeWillChange;
 
 /**
@@ -29,13 +30,17 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function add($item): static;
 
+    public function clear(): void;
+
+    #[Override]
     public function count(): int;
 
     /**
      * @return T
      */
+    #[Override]
     #[ReturnTypeWillChange]
-    public function current();
+    public function current(): ModelInterface;
 
     /**
      * Checks if all items match the callback.
@@ -72,24 +77,16 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
     /**
      * @return array<int|string, mixed>
      */
+    #[Override]
     public function jsonSerialize(): array;
 
+    #[Override]
     public function key(): int;
 
-    /**
-     * Maps the collection to another collection.
-     *
-     * @template U of ModelInterface
-     *
-     * @param class-string<U> $targetType
-     * @param callable(T): U  $callback
-     *
-     * @return static<U>
-     */
-    public function map(string $targetType, callable $callback): static;
-
+    #[Override]
     public function next(): void;
 
+    #[Override]
     public function offsetExists(mixed $offset): bool;
 
     /**
@@ -97,15 +94,18 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      *
      * @return null|T
      */
+    #[Override]
     #[ReturnTypeWillChange]
-    public function offsetGet(mixed $offset);
+    public function offsetGet(mixed $offset): ?ModelInterface;
 
     /**
      * @param null|int|string $offset
      * @param T               $value
      */
+    #[Override]
     public function offsetSet(mixed $offset, mixed $value): void;
 
+    #[Override]
     public function offsetUnset(mixed $offset): void;
 
     /**
@@ -120,6 +120,7 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function reduce(mixed $initial, callable $callback): mixed;
 
+    #[Override]
     public function rewind(): void;
 
     /**
@@ -134,6 +135,7 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function toArray(): array;
 
+    #[Override]
     public function valid(): bool;
 
     /**

@@ -21,4 +21,6 @@ interface RequestManagerInterface
     public function request(RequestInterface $request): MessageRequestInterface;
 
     public function send(MessageRequestInterface $request): ResponseInterface;
+
+    public static function handleResponseException(ResponseInterface $response): void;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\StoreInterface;
+use Override;
 
 /**
  * @template T of StoreInterface
@@ -22,5 +23,6 @@ interface StoresInterface extends IndexedCollectionInterface
      *     deleted_at?: string,
      * }>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

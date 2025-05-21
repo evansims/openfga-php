@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{Computeds, ComputedsInterface};
+
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterface
 {
@@ -23,16 +25,19 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
     ) {
     }
 
+    #[Override]
     public function getComputed(): ComputedsInterface
     {
         return $this->computed;
     }
 
+    #[Override]
     public function getTupleset(): string
     {
         return $this->tupleset;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -41,6 +46,7 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

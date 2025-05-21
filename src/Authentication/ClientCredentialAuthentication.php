@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Authentication;
 
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ClientCredentialAuthentication implements AuthenticationInterface
@@ -17,6 +18,7 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
     ) {
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(

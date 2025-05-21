@@ -6,6 +6,7 @@ namespace OpenFGA\Models;
 
 use InvalidArgumentException;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class TypedWildcard implements TypedWildcardInterface
 {
@@ -30,11 +31,13 @@ final class TypedWildcard implements TypedWildcardInterface
         return $this->type;
     }
 
+    #[Override]
     public function getType(): string
     {
         return $this->type;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -42,6 +45,7 @@ final class TypedWildcard implements TypedWildcardInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

@@ -6,6 +6,7 @@ namespace OpenFGA\Models;
 
 use InvalidArgumentException;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class SourceInfo implements SourceInfoInterface
 {
@@ -21,11 +22,13 @@ final class SourceInfo implements SourceInfoInterface
         }
     }
 
+    #[Override]
     public function getFile(): string
     {
         return $this->file;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -33,6 +36,7 @@ final class SourceInfo implements SourceInfoInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

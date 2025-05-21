@@ -8,6 +8,7 @@ use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\{ConditionInterface, TypeDefinitionInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class CreateAuthorizationModelRequest implements CreateAuthorizationModelRequestInterface
@@ -26,11 +27,13 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
     ) {
     }
 
+    #[Override]
     public function getConditions(): ?ConditionsInterface
     {
         return $this->conditions;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -48,16 +51,19 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
         );
     }
 
+    #[Override]
     public function getSchemaVersion(): SchemaVersion
     {
         return $this->schemaVersion;
     }
 
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
+    #[Override]
     public function getTypeDefinitions(): TypeDefinitionsInterface
     {
         return $this->typeDefinitions;

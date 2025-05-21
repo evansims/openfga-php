@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitionRelationsInterface};
+
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class TypeDefinition implements TypeDefinitionInterface
 {
@@ -25,21 +27,25 @@ final class TypeDefinition implements TypeDefinitionInterface
     ) {
     }
 
+    #[Override]
     public function getMetadata(): ?MetadataInterface
     {
         return $this->metadata;
     }
 
+    #[Override]
     public function getRelations(): ?TypeDefinitionRelationsInterface
     {
         return $this->relations;
     }
 
+    #[Override]
     public function getType(): string
     {
         return $this->type;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -49,6 +55,7 @@ final class TypeDefinition implements TypeDefinitionInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

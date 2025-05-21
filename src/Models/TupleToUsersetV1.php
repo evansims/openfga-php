@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class TupleToUsersetV1 implements TupleToUsersetV1Interface
 {
     public const OPENAPI_TYPE = 'v1.TupleToUserset';
@@ -18,16 +20,19 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
     ) {
     }
 
+    #[Override]
     public function getComputedUserset(): ObjectRelationInterface
     {
         return $this->computedUserset;
     }
 
+    #[Override]
     public function getTupleset(): ObjectRelationInterface
     {
         return $this->tupleset;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -36,6 +41,7 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

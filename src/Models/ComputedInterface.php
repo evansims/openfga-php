@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface ComputedInterface extends ModelInterface
 {
     public function getUserset(): string;
@@ -11,5 +13,6 @@ interface ComputedInterface extends ModelInterface
     /**
      * @return array{userset: string}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

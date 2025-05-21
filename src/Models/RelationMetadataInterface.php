@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\RelationReferencesInterface;
+use Override;
 
 interface RelationMetadataInterface extends ModelInterface
 {
@@ -20,5 +21,6 @@ interface RelationMetadataInterface extends ModelInterface
     /**
      * @return array{module?: string, directly_related_user_types?: array<string, array{type: string, relation?: string, wildcard?: object, condition?: string}>, source_info?: array{file?: string}}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

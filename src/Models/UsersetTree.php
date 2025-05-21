@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class UsersetTree implements UsersetTreeInterface
 {
     public const OPENAPI_TYPE = 'UsersetTree';
@@ -17,11 +19,13 @@ final class UsersetTree implements UsersetTreeInterface
     ) {
     }
 
+    #[Override]
     public function getRoot(): NodeInterface
     {
         return $this->root;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -29,6 +33,7 @@ final class UsersetTree implements UsersetTreeInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

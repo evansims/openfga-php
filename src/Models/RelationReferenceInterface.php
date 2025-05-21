@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface RelationReferenceInterface extends ModelInterface
 {
     public function getCondition(): ?string;
@@ -17,5 +19,6 @@ interface RelationReferenceInterface extends ModelInterface
     /**
      * @return array{type: string, relation?: string, wildcard?: object, condition?: string}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

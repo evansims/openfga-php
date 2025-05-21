@@ -7,6 +7,7 @@ namespace OpenFGA\Models;
 use OpenFGA\Models\Collections\{Conditions, ConditionsInterface, TypeDefinitions, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class AuthorizationModel implements AuthorizationModelInterface
 {
@@ -28,26 +29,31 @@ final class AuthorizationModel implements AuthorizationModelInterface
     ) {
     }
 
+    #[Override]
     public function getConditions(): ?ConditionsInterface
     {
         return $this->conditions;
     }
 
+    #[Override]
     public function getId(): string
     {
         return $this->id;
     }
 
+    #[Override]
     public function getSchemaVersion(): SchemaVersion
     {
         return $this->schemaVersion;
     }
 
+    #[Override]
     public function getTypeDefinitions(): TypeDefinitionsInterface
     {
         return $this->typeDefinitions;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -58,6 +64,7 @@ final class AuthorizationModel implements AuthorizationModelInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

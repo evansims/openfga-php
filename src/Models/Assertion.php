@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
+
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class Assertion implements AssertionInterface
 {
@@ -27,26 +29,31 @@ final class Assertion implements AssertionInterface
     ) {
     }
 
+    #[Override]
     public function getContext(): ?array
     {
         return $this->context;
     }
 
+    #[Override]
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
+    #[Override]
     public function getExpectation(): bool
     {
         return $this->expectation;
     }
 
+    #[Override]
     public function getTupleKey(): AssertionTupleKeyInterface
     {
         return $this->tupleKey;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -57,6 +64,7 @@ final class Assertion implements AssertionInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

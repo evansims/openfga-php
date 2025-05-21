@@ -11,6 +11,8 @@ use OpenFGA\Models\TupleInterface;
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 
+use Override;
+
 use function is_array;
 
 final class ReadTuplesResponse implements ReadTuplesResponseInterface
@@ -27,16 +29,19 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
     ) {
     }
 
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
+    #[Override]
     public function getTuples(): TuplesInterface
     {
         return $this->tuples;
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -59,6 +64,7 @@ final class ReadTuplesResponse implements ReadTuplesResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         if (! self::$schema instanceof SchemaInterface) {

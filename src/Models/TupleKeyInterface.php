@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface TupleKeyInterface extends ModelInterface
 {
     public function getCondition(): ?ConditionInterface;
@@ -15,7 +17,8 @@ interface TupleKeyInterface extends ModelInterface
     public function getUser(): ?string;
 
     /**
-     * @return array{user: string, relation: string, object: string, condition?: array<string, mixed>}
+     * @return array<'condition'|'object'|'relation'|'user', array{expression: string, metadata?: array{module: string, source_info: array{file: string}}, name: string, parameters?: list<array{generic_types?: mixed, type_name: string}>}|string>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

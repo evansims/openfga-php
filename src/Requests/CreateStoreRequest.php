@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class CreateStoreRequest implements CreateStoreRequestInterface
@@ -14,11 +15,13 @@ final class CreateStoreRequest implements CreateStoreRequestInterface
     ) {
     }
 
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = [

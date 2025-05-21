@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\NodeInterface;
+use Override;
 
 /**
  * @template T of NodeInterface
@@ -23,5 +24,6 @@ interface NodesInterface extends IndexedCollectionInterface
      * direct?: object,
      * }>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

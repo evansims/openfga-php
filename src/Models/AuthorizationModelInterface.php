@@ -6,6 +6,7 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
+use Override;
 
 interface AuthorizationModelInterface extends ModelInterface
 {
@@ -31,5 +32,6 @@ interface AuthorizationModelInterface extends ModelInterface
      *     conditions?: array<int, array{name: string, expression: string, parameters?: array<string, mixed>, metadata?: array<string, mixed>}>
      * }
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

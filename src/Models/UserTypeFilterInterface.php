@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface UserTypeFilterInterface extends ModelInterface
 {
     public function getRelation(): ?string;
@@ -11,7 +13,8 @@ interface UserTypeFilterInterface extends ModelInterface
     public function getType(): string;
 
     /**
-     * @return array{type: string, relation?: string}
+     * @return array<'relation'|'type', string>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

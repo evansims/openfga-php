@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class GetAuthorizationModelRequest implements GetAuthorizationModelRequestInterface
@@ -15,11 +16,13 @@ final class GetAuthorizationModelRequest implements GetAuthorizationModelRequest
     ) {
     }
 
+    #[Override]
     public function getAuthorizationModel(): string
     {
         return $this->authorizationModel;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(
@@ -28,6 +31,7 @@ final class GetAuthorizationModelRequest implements GetAuthorizationModelRequest
         );
     }
 
+    #[Override]
     public function getStore(): string
     {
         return $this->store;

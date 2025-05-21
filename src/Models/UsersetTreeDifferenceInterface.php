@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface UsersetTreeDifferenceInterface extends ModelInterface
 {
     public function getBase(): NodeInterface;
@@ -11,21 +13,8 @@ interface UsersetTreeDifferenceInterface extends ModelInterface
     public function getSubtract(): NodeInterface;
 
     /**
-     * @return array{base: array{
-     *     computed_userset?: array{object?: string, relation?: string},
-     *     tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-     *     union?: array<mixed>,
-     *     intersection?: array<mixed>,
-     *     difference?: array{base: array<mixed>, subtract: array<mixed>},
-     *     direct?: object,
-     * }, subtract: array{
-     *     computed_userset?: array{object?: string, relation?: string},
-     *     tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-     *     union?: array<mixed>,
-     *     intersection?: array<mixed>,
-     *     difference?: array{base: array<mixed>, subtract: array<mixed>},
-     *     direct?: object,
-     * }}
+     * @return array{base: array{name: string, leaf?: array{users?: array<int, string>, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}, subtract: array{name: string, leaf?: array{users?: array<int, string>, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

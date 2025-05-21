@@ -9,6 +9,8 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 
+use Override;
+
 use function is_array;
 
 final class CreateAuthorizationModelResponse implements CreateAuthorizationModelResponseInterface
@@ -20,11 +22,13 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
     ) {
     }
 
+    #[Override]
     public function getAuthorizationModelId(): string
     {
         return $this->authorizationModelId;
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -46,6 +50,7 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
         throw new ApiUnexpectedResponseException($json);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

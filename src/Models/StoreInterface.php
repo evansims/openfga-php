@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use DateTimeInterface;
+use Override;
 
 interface StoreInterface extends ModelInterface
 {
@@ -19,13 +20,8 @@ interface StoreInterface extends ModelInterface
     public function getUpdatedAt(): DateTimeInterface;
 
     /**
-     * @return array{
-     *     id: string,
-     *     name: string,
-     *     created_at: string,
-     *     updated_at: string,
-     *     deleted_at?: string,
-     * }
+     * @return array<'created_at'|'deleted_at'|'id'|'name'|'updated_at', string>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

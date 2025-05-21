@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{Usersets, UsersetsInterface};
+
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class Userset implements UsersetInterface
 {
@@ -31,36 +33,43 @@ final class Userset implements UsersetInterface
     ) {
     }
 
+    #[Override]
     public function getComputedUserset(): ?ObjectRelationInterface
     {
         return $this->computedUserset;
     }
 
+    #[Override]
     public function getDifference(): ?DifferenceV1Interface
     {
         return $this->difference;
     }
 
+    #[Override]
     public function getDirect(): ?object
     {
         return $this->direct;
     }
 
+    #[Override]
     public function getIntersection(): ?UsersetsInterface
     {
         return $this->intersection;
     }
 
+    #[Override]
     public function getTupleToUserset(): ?TupleToUsersetV1Interface
     {
         return $this->tupleToUserset;
     }
 
+    #[Override]
     public function getUnion(): ?UsersetsInterface
     {
         return $this->union;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -73,6 +82,7 @@ final class Userset implements UsersetInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

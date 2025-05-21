@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\ConditionParametersInterface;
+use Override;
 
 interface ConditionInterface extends ModelInterface
 {
@@ -22,5 +23,6 @@ interface ConditionInterface extends ModelInterface
     /**
      * @return array{name: string, expression: string, parameters?: list<array{type_name: string, generic_types?: mixed}>, metadata?: array{module: string, source_info: array{file: string}}}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Schema;
 
+use Override;
+
 final class Schema implements SchemaInterface
 {
     /**
@@ -24,19 +26,19 @@ final class Schema implements SchemaInterface
         }
     }
 
-    #[\Override]
+    #[Override]
     public function getClassName(): string
     {
         return $this->className;
     }
 
-    #[\Override]
+    #[Override]
     public function getProperties(): array
     {
         return $this->properties;
     }
 
-    #[\Override]
+    #[Override]
     public function getProperty(string $name): ?SchemaProperty
     {
         return $this->properties[$name] ?? null;

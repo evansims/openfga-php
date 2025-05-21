@@ -21,6 +21,8 @@ interface ListUsersRequestInterface extends RequestInterface
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 
+    public function getObject(): string;
+
     public function getRelation(): string;
 
     public function getStore(): string;

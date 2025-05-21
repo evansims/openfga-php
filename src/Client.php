@@ -14,6 +14,8 @@ use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStore
 use OpenFGA\Responses\{CheckResponse, CheckResponseInterface, CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface, CreateStoreResponse, CreateStoreResponseInterface, DeleteStoreResponse, DeleteStoreResponseInterface, ExpandResponse, ExpandResponseInterface, GetAuthorizationModelResponse, GetAuthorizationModelResponseInterface, GetStoreResponse, GetStoreResponseInterface, ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface, ListObjectsResponse, ListObjectsResponseInterface, ListStoresResponse, ListStoresResponseInterface, ListTupleChangesResponse, ListTupleChangesResponseInterface, ListUsersResponse, ListUsersResponseInterface, ReadAssertionsResponse, ReadAssertionsResponseInterface, ReadTuplesResponse, ReadTuplesResponseInterface, WriteAssertionsResponse, WriteAssertionsResponseInterface, WriteTuplesResponse, WriteTuplesResponseInterface};
 use OpenFGA\Schema\SchemaValidator;
 
+use Override;
+
 use function is_string;
 
 final class Client implements ClientInterface
@@ -78,6 +80,7 @@ final class Client implements ClientInterface
     ) {
     }
 
+    #[Override]
     public function check(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
@@ -100,6 +103,7 @@ final class Client implements ClientInterface
         return CheckResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function createAuthorizationModel(
         StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
@@ -116,6 +120,7 @@ final class Client implements ClientInterface
         return CreateAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function createStore(
         string $name,
     ): CreateStoreResponseInterface {
@@ -128,6 +133,7 @@ final class Client implements ClientInterface
         return CreateStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function deleteStore(
         StoreInterface | string $store,
     ): DeleteStoreResponseInterface {
@@ -138,6 +144,7 @@ final class Client implements ClientInterface
         return DeleteStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function expand(
         StoreInterface | string $store,
         TupleKeyInterface $tupleKey,
@@ -156,6 +163,7 @@ final class Client implements ClientInterface
         return ExpandResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function getAuthorizationModel(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
@@ -168,16 +176,19 @@ final class Client implements ClientInterface
         return GetAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function getLastRequest(): ?\Psr\Http\Message\RequestInterface
     {
         return $this->lastRequest;
     }
 
+    #[Override]
     public function getLastResponse(): ?\Psr\Http\Message\ResponseInterface
     {
         return $this->lastResponse;
     }
 
+    #[Override]
     public function getStore(
         StoreInterface | string $store,
     ): GetStoreResponseInterface {
@@ -188,6 +199,7 @@ final class Client implements ClientInterface
         return GetStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function listAuthorizationModels(
         StoreInterface | string $store,
         ?string $continuationToken = null,
@@ -204,6 +216,7 @@ final class Client implements ClientInterface
         return ListAuthorizationModelsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function listObjects(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
@@ -228,6 +241,7 @@ final class Client implements ClientInterface
         return ListObjectsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function listStores(
         ?string $continuationToken = null,
         ?int $pageSize = null,
@@ -242,6 +256,7 @@ final class Client implements ClientInterface
         return ListStoresResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function listTupleChanges(
         StoreInterface | string $store,
         ?string $continuationToken = null,
@@ -262,6 +277,7 @@ final class Client implements ClientInterface
         return ListTupleChangesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function listUsers(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
@@ -286,6 +302,7 @@ final class Client implements ClientInterface
         return ListUsersResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function readAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
@@ -298,6 +315,7 @@ final class Client implements ClientInterface
         return ReadAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function readTuples(
         StoreInterface | string $store,
         TupleKeyInterface $tupleKey,
@@ -318,6 +336,7 @@ final class Client implements ClientInterface
         return ReadTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function writeAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,
@@ -332,6 +351,7 @@ final class Client implements ClientInterface
         return WriteAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
     }
 
+    #[Override]
     public function writeTuples(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $authorizationModel,

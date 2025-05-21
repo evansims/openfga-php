@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class RelationReference implements RelationReferenceInterface
 {
     public const OPENAPI_MODEL = 'RelationReference';
@@ -20,26 +22,31 @@ final class RelationReference implements RelationReferenceInterface
     ) {
     }
 
+    #[Override]
     public function getCondition(): ?string
     {
         return $this->condition;
     }
 
+    #[Override]
     public function getRelation(): ?string
     {
         return $this->relation;
     }
 
+    #[Override]
     public function getType(): string
     {
         return $this->type;
     }
 
+    #[Override]
     public function getWildcard(): ?object
     {
         return $this->wildcard;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -50,6 +57,7 @@ final class RelationReference implements RelationReferenceInterface
         ], static fn ($v): bool => null !== $v);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

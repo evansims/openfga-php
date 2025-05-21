@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class DifferenceV1 implements DifferenceV1Interface
 {
     public const OPENAPI_MODEL = 'v1.Difference';
@@ -18,16 +20,19 @@ final class DifferenceV1 implements DifferenceV1Interface
     ) {
     }
 
+    #[Override]
     public function getBase(): UsersetInterface
     {
         return $this->base;
     }
 
+    #[Override]
     public function getSubtract(): UsersetInterface
     {
         return $this->subtract;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -36,6 +41,7 @@ final class DifferenceV1 implements DifferenceV1Interface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

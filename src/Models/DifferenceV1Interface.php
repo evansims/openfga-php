@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface DifferenceV1Interface extends ModelInterface
 {
     public function getBase(): UsersetInterface;
@@ -27,5 +29,6 @@ interface DifferenceV1Interface extends ModelInterface
      *     direct?: object,
      * }}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

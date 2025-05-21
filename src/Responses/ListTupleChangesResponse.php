@@ -11,6 +11,8 @@ use OpenFGA\Models\TupleChangeInterface;
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 
+use Override;
+
 use function is_array;
 
 final class ListTupleChangesResponse implements ListTupleChangesResponseInterface
@@ -27,16 +29,19 @@ final class ListTupleChangesResponse implements ListTupleChangesResponseInterfac
     ) {
     }
 
+    #[Override]
     public function getChanges(): TupleChangesInterface
     {
         return $this->changes;
     }
 
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -59,6 +64,7 @@ final class ListTupleChangesResponse implements ListTupleChangesResponseInterfac
         throw new ApiUnexpectedResponseException($json);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

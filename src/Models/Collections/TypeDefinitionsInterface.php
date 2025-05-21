@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\TypeDefinitionInterface;
+use Override;
 
 /**
  * @template T of TypeDefinitionInterface
@@ -20,5 +21,6 @@ interface TypeDefinitionsInterface extends IndexedCollectionInterface
      *     metadata?: array<string, mixed>,
      * }>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

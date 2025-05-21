@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class Tuple implements TupleInterface
 {
@@ -21,16 +22,19 @@ final class Tuple implements TupleInterface
     ) {
     }
 
+    #[Override]
     public function getKey(): TupleKeyInterface
     {
         return $this->key;
     }
 
+    #[Override]
     public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -39,6 +43,7 @@ final class Tuple implements TupleInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

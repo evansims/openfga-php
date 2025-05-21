@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class Computed implements ComputedInterface
 {
     public const OPENAPI_MODEL = 'Computed';
@@ -17,11 +19,13 @@ final class Computed implements ComputedInterface
     ) {
     }
 
+    #[Override]
     public function getUserset(): string
     {
         return $this->userset;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -29,6 +33,7 @@ final class Computed implements ComputedInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

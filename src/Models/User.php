@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use JsonSerializable;
-
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
+use Override;
 
 final class User implements UserInterface
 {
@@ -19,21 +20,25 @@ final class User implements UserInterface
     ) {
     }
 
+    #[Override]
     public function getObject(): ?object
     {
         return $this->object;
     }
 
+    #[Override]
     public function getUserset(): ?UsersetUserInterface
     {
         return $this->userset;
     }
 
+    #[Override]
     public function getWildcard(): ?TypedWildcardInterface
     {
         return $this->wildcard;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -43,6 +48,7 @@ final class User implements UserInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

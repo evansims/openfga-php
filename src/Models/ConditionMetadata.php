@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class ConditionMetadata implements ConditionMetadataInterface
 {
     public const OPENAPI_MODEL = 'ConditionMetadata';
@@ -18,16 +20,19 @@ final class ConditionMetadata implements ConditionMetadataInterface
     ) {
     }
 
+    #[Override]
     public function getModule(): string
     {
         return $this->module;
     }
 
+    #[Override]
     public function getSourceInfo(): SourceInfoInterface
     {
         return $this->sourceInfo;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -36,6 +41,7 @@ final class ConditionMetadata implements ConditionMetadataInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

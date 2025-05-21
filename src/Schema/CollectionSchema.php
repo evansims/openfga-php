@@ -6,15 +6,12 @@ namespace OpenFGA\Schema;
 
 use InvalidArgumentException;
 
+use Override;
+
 use function sprintf;
 
 final class CollectionSchema implements CollectionSchemaInterface
 {
-    /**
-     * @param class-string $className    The collection class name
-     * @param class-string $itemType     The type of each item in the collection
-     * @param bool         $requireItems Whether the collection requires at least one item
-     */
     /**
      * @param class-string $className    The collection class name
      * @param class-string $itemType     The type of each item in the collection
@@ -36,43 +33,33 @@ final class CollectionSchema implements CollectionSchemaInterface
         }
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[Override]
     public function getClassName(): string
     {
         return $this->className;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[Override]
     public function getItemType(): string
     {
         return $this->itemType;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[Override]
     public function getProperties(): array
     {
         // Collection schemas don't have properties in the traditional sense
         return [];
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[Override]
     public function getProperty(string $name): ?SchemaProperty
     {
         // Collection schemas don't have properties in the traditional sense
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
+    #[Override]
     public function requiresItems(): bool
     {
         return $this->requireItems;

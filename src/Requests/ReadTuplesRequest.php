@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ReadTuplesRequest implements ReadTuplesRequestInterface
@@ -28,21 +29,25 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
         }
     }
 
+    #[Override]
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
+    #[Override]
     public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -61,11 +66,13 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
         );
     }
 
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
+    #[Override]
     public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;

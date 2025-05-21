@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class Metadata implements MetadataInterface
 {
     private static ?SchemaInterface $schema = null;
@@ -17,21 +19,25 @@ final class Metadata implements MetadataInterface
     ) {
     }
 
+    #[Override]
     public function getModule(): ?string
     {
         return $this->module;
     }
 
+    #[Override]
     public function getRelations(): ?RelationMetadataInterface
     {
         return $this->relations;
     }
 
+    #[Override]
     public function getSourceInfo(): ?SourceInfoInterface
     {
         return $this->sourceInfo;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -41,6 +47,7 @@ final class Metadata implements MetadataInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
