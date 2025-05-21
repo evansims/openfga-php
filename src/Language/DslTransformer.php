@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Language;
 
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, TypeDefinitionInterface, UsersetInterface};
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, UsersetInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\SchemaValidator;
 use Override;
@@ -109,7 +109,6 @@ final class DslTransformer implements DslTransformerInterface
         $lines[] = '  schema ' . $model->getSchemaVersion()->value;
 
         foreach ($model->getTypeDefinitions() as $typeDefinition) {
-            /** @var TypeDefinitionInterface $typeDefinition */
             $lines[] = 'type ' . $typeDefinition->getType();
             $relations = $typeDefinition->getRelations();
 
@@ -117,7 +116,6 @@ final class DslTransformer implements DslTransformerInterface
                 $lines[] = '  relations';
 
                 foreach ($relations as $name => $userset) {
-                    /** @var UsersetInterface $userset */
                     $lines[] = '    define ' . $name . ': ' . self::renderExpression($userset);
                 }
             }

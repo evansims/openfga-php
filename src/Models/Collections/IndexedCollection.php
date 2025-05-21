@@ -54,7 +54,6 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         }
 
         foreach ($this->normalizeItems($items) as $item) {
-            /** @var T $item */
             $this->add($item);
         }
     }
@@ -322,6 +321,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     public function withItems(...$items): static
     {
         /** @var static<T> $new */
+        /** @psalm-suppress UnnecessaryVarAnnotation */
         $new = clone $this;
         $new->addItems(...$items);
 
@@ -355,7 +355,6 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     protected function addItems(...$items): void
     {
         foreach ($this->normalizeItems($items) as $item) {
-            /** @var T $item */
             $this->add($item);
         }
     }
@@ -374,7 +373,6 @@ abstract class IndexedCollection implements IndexedCollectionInterface
                     yield $i;
                 }
             } else {
-                /** @var T $item */
                 yield $item;
             }
         }

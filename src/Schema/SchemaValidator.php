@@ -226,7 +226,6 @@ final class SchemaValidator
 
         $instance = $reflection->newInstance();
 
-        /** @phpstan-var T $instance */
         if ($instance instanceof ArrayAccess) {
             /** @var ArrayAccess<int|string, mixed>&T $arrayInstance */
             $arrayInstance = $instance;
@@ -296,9 +295,11 @@ final class SchemaValidator
         foreach ($data as $name => $value) {
             if ($reflection->hasProperty($name)) {
                 $property = $reflection->getProperty($name);
-                if (! $property->isPublic()) {
-                    $property->setAccessible(true);
-                }
+
+                // if (! $property->isPublic()) {
+                //     $property->setAccessible(true);
+                // }
+
                 $property->setValue($instance, $value);
             }
         }

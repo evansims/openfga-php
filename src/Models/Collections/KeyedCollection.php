@@ -16,7 +16,6 @@ use ReturnTypeWillChange;
 use TypeError;
 
 use function count;
-use function is_int;
 use function is_string;
 use function sprintf;
 
@@ -134,7 +133,6 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         $result = [];
 
         foreach ($this->models as $key => $model) {
-            /** @var T $model */
             $result[$key] = $model->jsonSerialize();
         }
 
@@ -209,12 +207,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     public function offsetUnset(mixed $offset): void
     {
         if (isset($this->models[$offset])) {
-            $isNumeric = is_int($offset);
             unset($this->models[$offset]);
-            if ($isNumeric) {
-                $this->models = array_values($this->models);
-                $this->position = 0;
-            }
         }
     }
 
@@ -237,10 +230,9 @@ abstract class KeyedCollection implements KeyedCollectionInterface
 
         foreach ($this->models as $key => $value) {
             if (! is_string($key)) {
-                continue; // or throw if you want stricter enforcement
+                continue;
             }
 
-            /** @var T $value */
             $copy[$key] = $value;
         }
 

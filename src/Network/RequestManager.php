@@ -14,7 +14,6 @@ use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as MessageReques
 
 use PsrDiscovery\Discover;
 
-use function is_string;
 use function sprintf;
 
 enum RequestMethod: string
@@ -146,10 +145,6 @@ final class RequestManager implements RequestManagerInterface
         );
 
         foreach ($headers as $name => $value) {
-            if (! is_string($value)) {
-                throw new Exception('Header value must be a string.');
-            }
-
             $request = $request->withHeader((string) $name, $value);
         }
 

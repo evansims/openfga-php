@@ -1,14 +1,33 @@
 <?xml version="1.0"?>
 <psalm
-    errorLevel="5"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-    findUnusedBaselineEntry="true"
-    findUnusedCode="false"
     noCache="true"
+    errorLevel="5"
+    resolveFromConfigFile="true"
+    findUnusedCode="false"
+    findUnusedVariablesAndParams="true"
+    allowPhpStormGenerics="true"
+    useDocblockTypes="true"
+    requireDocblocks="true"
 >
     <projectFiles>
         <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <MissingReturnType errorLevel="info" />
+        <MissingParamType errorLevel="info" />
+        <MissingPropertyType errorLevel="info" />
+
+        <InvalidReturnType errorLevel="error" />
+        <InvalidArgument errorLevel="error" />
+        <DocblockTypeContradiction errorLevel="error" />
+        <RedundantCondition errorLevel="info" />
+        <NoValue errorLevel="suppress" />
+    </issueHandlers>
 </psalm>
