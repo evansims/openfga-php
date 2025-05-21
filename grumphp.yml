@@ -9,10 +9,10 @@ grumphp:
     # composer: ~
     # composer_normalize: ~
     # composer_require_checker: ~
-    composer_script:
-      script:
-        - test:unit
-        - test:integration
+    # composer_script:
+    #   script:
+    #     - test:unit
+    #     - test:integration
     # deptrac: ~
     # doctrine_orm: ~
     # ecs: ~

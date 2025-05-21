@@ -1,0 +1,15 @@
+{
+  "name": "openfga/php-sdk-docs",
+  "description": "Documentation generator for OpenFGA PHP SDK",
+  "type": "library",
+  "require": {
+    "php": "^8.0",
+    "twig/twig": "^3.0",
+    "symfony/finder": "^6.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "OpenFGA\\": "../../src"
+    }
+  }
+}

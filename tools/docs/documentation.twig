@@ -1,0 +1,42 @@
+# {{ className }}
+
+{% if classDescription %}{{ classDescription }}
+{% endif %}
+
+## Namespace
+`{{ namespace }}`
+
+{% if interfaces is not empty %}
+## Implements
+{% for interface in interfaces %}
+* `{{ interface }}`
+{% endfor %}
+{% endif %}
+
+{% if methods is not empty %}
+## Methods
+{% for method in methods %}
+### {{ method.name }}
+
+```php
+{{ method.signature }}
+```
+
+{% if method.description %}{{ method.description }}
+{% endif %}
+
+{% if method.parameters is not empty %}
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+{% for param in method.parameters %}| `{{ param.name }}` | `{{ param.type }}` | {{ param.description }} |
+{% endfor %}
+{% endif %}
+
+{% if method.return.type %}
+#### Returns
+`{{ method.return.type }}` {{ method.return.description }}
+{% endif %}
+
+{% endfor %}
+{% endif %}
