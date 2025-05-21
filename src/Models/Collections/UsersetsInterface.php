@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\UsersetInterface;
+use Override;
 
 /**
  * @template T of UsersetInterface
@@ -13,13 +14,6 @@ use OpenFGA\Models\UsersetInterface;
  */
 interface UsersetsInterface extends KeyedCollectionInterface
 {
-    /**
-     * Add a userset to the collection.
-     *
-     * @param T $userset
-     */
-    public function add(UsersetInterface $userset): void;
-
     /**
      * @return array<string, array{
      *     computed_userset?: array{object?: string, relation?: string},
@@ -30,5 +24,6 @@ interface UsersetsInterface extends KeyedCollectionInterface
      *     direct?: object,
      * }>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

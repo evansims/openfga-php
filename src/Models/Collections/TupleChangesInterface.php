@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\TupleChangeInterface;
+use Override;
 
 /**
  * @template T of TupleChangeInterface
@@ -25,5 +26,6 @@ interface TupleChangesInterface extends IndexedCollectionInterface
      *     timestamp: string,
      * }>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

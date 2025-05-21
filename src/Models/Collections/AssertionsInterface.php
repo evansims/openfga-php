@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\AssertionInterface;
+use Override;
 
 /**
  * @template T of AssertionInterface
@@ -21,5 +22,6 @@ interface AssertionsInterface extends IndexedCollectionInterface
      *     context?: array<array-key, mixed>
      * }>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

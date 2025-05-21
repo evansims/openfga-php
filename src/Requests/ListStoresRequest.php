@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ListStoresRequest implements ListStoresRequestInterface
@@ -15,16 +16,19 @@ final class ListStoresRequest implements ListStoresRequestInterface
     ) {
     }
 
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
+    #[Override]
     public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $params = array_filter([

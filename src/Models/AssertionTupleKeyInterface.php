@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface AssertionTupleKeyInterface extends ModelInterface
 {
     public function getObject(): string;
@@ -19,5 +21,6 @@ interface AssertionTupleKeyInterface extends ModelInterface
      *     object: string,
      * }
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

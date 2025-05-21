@@ -8,8 +8,10 @@ use Exception;
 use OpenFGA\Client;
 use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnauthenticatedException, ApiValidationException};
 use OpenFGA\Requests\RequestInterface;
+use Override;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as MessageRequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
+
 use PsrDiscovery\Discover;
 
 use function is_string;
@@ -39,6 +41,7 @@ final class RequestManager implements RequestManagerInterface
     ) {
     }
 
+    #[Override]
     public function getHttpClient(): ClientInterface
     {
         if (! $this->httpClient instanceof ClientInterface) {
@@ -54,6 +57,7 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpClient;
     }
 
+    #[Override]
     public function getHttpRequestFactory(): RequestFactoryInterface
     {
         if (! $this->httpRequestFactory instanceof RequestFactoryInterface) {
@@ -69,6 +73,7 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpRequestFactory;
     }
 
+    #[Override]
     public function getHttpResponseFactory(): ResponseFactoryInterface
     {
         if (! $this->httpResponseFactory instanceof ResponseFactoryInterface) {
@@ -84,6 +89,7 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpResponseFactory;
     }
 
+    #[Override]
     public function getHttpStreamFactory(): StreamFactoryInterface
     {
         if (! $this->httpStreamFactory instanceof StreamFactoryInterface) {
@@ -99,6 +105,7 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpStreamFactory;
     }
 
+    #[Override]
     public function request(RequestInterface $request): MessageRequestInterface
     {
         $request = $request->getRequest($this->getHttpStreamFactory());
@@ -138,11 +145,13 @@ final class RequestManager implements RequestManagerInterface
         return $request;
     }
 
+    #[Override]
     public function send(MessageRequestInterface $request): ResponseInterface
     {
         return $this->getHttpClient()->sendRequest($request);
     }
 
+    #[Override]
     public static function handleResponseException(ResponseInterface $response): void
     {
         $error = '';

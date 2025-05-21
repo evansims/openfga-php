@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class UsersListUser implements UsersListUserInterface
 {
     /**
@@ -24,16 +26,19 @@ final class UsersListUser implements UsersListUserInterface
         return $this->getUser();
     }
 
+    #[Override]
     public function getUser(): string
     {
         return $this->user;
     }
 
+    #[Override]
     public function jsonSerialize(): string
     {
         return $this->getUser();
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

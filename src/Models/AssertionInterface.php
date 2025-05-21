@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\TupleKeysInterface;
+use Override;
 
 interface AssertionInterface extends ModelInterface
 {
@@ -30,5 +31,6 @@ interface AssertionInterface extends ModelInterface
      *     context?: array<array-key, mixed>
      * }
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

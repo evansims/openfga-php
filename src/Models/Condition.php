@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
+
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class Condition implements ConditionInterface
 {
@@ -27,26 +29,31 @@ final class Condition implements ConditionInterface
     ) {
     }
 
+    #[Override]
     public function getExpression(): string
     {
         return $this->expression;
     }
 
+    #[Override]
     public function getMetadata(): ?ConditionMetadataInterface
     {
         return $this->metadata;
     }
 
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
+    #[Override]
     public function getParameters(): ?ConditionParametersInterface
     {
         return $this->parameters;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -57,6 +64,7 @@ final class Condition implements ConditionInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

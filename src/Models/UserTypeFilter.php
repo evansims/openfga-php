@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class UserTypeFilter implements UserTypeFilterInterface
 {
     private static ?SchemaInterface $schema = null;
@@ -16,16 +18,19 @@ final class UserTypeFilter implements UserTypeFilterInterface
     ) {
     }
 
+    #[Override]
     public function getRelation(): ?string
     {
         return $this->relation;
     }
 
+    #[Override]
     public function getType(): string
     {
         return $this->type;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -34,6 +39,7 @@ final class UserTypeFilter implements UserTypeFilterInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

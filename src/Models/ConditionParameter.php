@@ -7,6 +7,7 @@ namespace OpenFGA\Models;
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
 use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class ConditionParameter implements ConditionParameterInterface
 {
@@ -24,16 +25,19 @@ final class ConditionParameter implements ConditionParameterInterface
     ) {
     }
 
+    #[Override]
     public function getGenericTypes(): ?ConditionParametersInterface
     {
         return $this->genericTypes;
     }
 
+    #[Override]
     public function getTypeName(): TypeName
     {
         return $this->typeName;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -42,6 +46,7 @@ final class ConditionParameter implements ConditionParameterInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

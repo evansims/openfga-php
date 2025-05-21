@@ -8,6 +8,7 @@ use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ExpandRequest implements ExpandRequestInterface
@@ -28,21 +29,25 @@ final class ExpandRequest implements ExpandRequestInterface
     ) {
     }
 
+    #[Override]
     public function getAuthorizationModel(): ?string
     {
         return $this->authorizationModel;
     }
 
+    #[Override]
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
+    #[Override]
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -61,11 +66,13 @@ final class ExpandRequest implements ExpandRequestInterface
         );
     }
 
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
+    #[Override]
     public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;

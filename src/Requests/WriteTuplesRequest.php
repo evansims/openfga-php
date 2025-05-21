@@ -7,6 +7,7 @@ namespace OpenFGA\Requests;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class WriteTuplesRequest implements WriteTuplesRequestInterface
@@ -25,16 +26,19 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
     ) {
     }
 
+    #[Override]
     public function getAuthorizationModel(): string
     {
         return $this->authorizationModel;
     }
 
+    #[Override]
     public function getDeletes(): ?TupleKeysInterface
     {
         return $this->deletes;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -52,11 +56,13 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
         );
     }
 
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
+    #[Override]
     public function getWrites(): ?TupleKeysInterface
     {
         return $this->writes;

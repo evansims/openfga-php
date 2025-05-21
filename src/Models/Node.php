@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class Node implements NodeInterface
 {
     public const OPENAPI_MODEL = 'Node';
@@ -21,31 +23,37 @@ final class Node implements NodeInterface
     ) {
     }
 
+    #[Override]
     public function getDifference(): ?UsersetTreeDifferenceInterface
     {
         return $this->difference;
     }
 
+    #[Override]
     public function getIntersection(): ?NodeInterface
     {
         return $this->intersection;
     }
 
+    #[Override]
     public function getLeaf(): ?LeafInterface
     {
         return $this->leaf;
     }
 
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
+    #[Override]
     public function getUnion(): ?NodeInterface
     {
         return $this->union;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -57,6 +65,7 @@ final class Node implements NodeInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

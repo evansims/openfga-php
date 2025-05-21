@@ -11,6 +11,8 @@ use OpenFGA\Models\Collections\{Assertions, AssertionsInterface};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 
+use Override;
+
 use function is_array;
 
 final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
@@ -27,16 +29,19 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
     ) {
     }
 
+    #[Override]
     public function getAssertions(): ?AssertionsInterface
     {
         return $this->assertions;
     }
 
+    #[Override]
     public function getAuthorizationModelId(): string
     {
         return $this->authorizationModelId;
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -59,6 +64,7 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

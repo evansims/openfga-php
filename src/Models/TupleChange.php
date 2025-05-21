@@ -9,6 +9,7 @@ use DateTimeInterface;
 use DateTimeZone;
 use OpenFGA\Models\Enums\TupleOperation;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class TupleChange implements TupleChangeInterface
 {
@@ -23,21 +24,25 @@ final class TupleChange implements TupleChangeInterface
     ) {
     }
 
+    #[Override]
     public function getOperation(): TupleOperation
     {
         return $this->operation;
     }
 
+    #[Override]
     public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
+    #[Override]
     public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -47,6 +52,7 @@ final class TupleChange implements TupleChangeInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

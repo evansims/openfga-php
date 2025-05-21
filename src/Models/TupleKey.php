@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class TupleKey implements TupleKeyInterface
 {
     public const OPENAPI_MODEL = 'TupleKey';
@@ -20,26 +22,31 @@ final class TupleKey implements TupleKeyInterface
     ) {
     }
 
+    #[Override]
     public function getCondition(): ?ConditionInterface
     {
         return $this->condition;
     }
 
+    #[Override]
     public function getObject(): string
     {
         return $this->object;
     }
 
+    #[Override]
     public function getRelation(): string
     {
         return $this->relation;
     }
 
+    #[Override]
     public function getUser(): string
     {
         return $this->user;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -50,6 +57,7 @@ final class TupleKey implements TupleKeyInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

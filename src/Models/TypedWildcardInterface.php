@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use Override;
+
 interface TypedWildcardInterface extends ModelInterface
 {
     public function __toString(): string;
@@ -13,5 +15,6 @@ interface TypedWildcardInterface extends ModelInterface
     /**
      * @return array{type: string}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

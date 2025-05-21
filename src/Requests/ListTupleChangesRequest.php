@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
@@ -21,16 +22,19 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
     ) {
     }
 
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
+    #[Override]
     public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $params = array_filter([
@@ -48,16 +52,19 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
         );
     }
 
+    #[Override]
     public function getStartTime(): ?DateTimeImmutable
     {
         return $this->startTime;
     }
 
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
+    #[Override]
     public function getType(): ?string
     {
         return $this->type;

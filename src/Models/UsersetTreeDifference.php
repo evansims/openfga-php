@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
 {
     public const OPENAPI_MODEL = 'UsersetTree.Difference';
@@ -18,16 +20,19 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
     ) {
     }
 
+    #[Override]
     public function getBase(): NodeInterface
     {
         return $this->base;
     }
 
+    #[Override]
     public function getSubtract(): NodeInterface
     {
         return $this->subtract;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -36,6 +41,7 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

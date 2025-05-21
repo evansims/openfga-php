@@ -7,6 +7,7 @@ namespace OpenFGA\Requests;
 use OpenFGA\Models\AssertionInterface;
 use OpenFGA\Models\Collections\AssertionsInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
@@ -23,16 +24,19 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
     ) {
     }
 
+    #[Override]
     public function getAssertions(): AssertionsInterface
     {
         return $this->assertions;
     }
 
+    #[Override]
     public function getAuthorizationModel(): string
     {
         return $this->authorizationModel;
     }
 
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = ['assertions' => $this->assertions->jsonSerialize()];
@@ -46,6 +50,7 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         );
     }
 
+    #[Override]
     public function getStore(): string
     {
         return $this->store;

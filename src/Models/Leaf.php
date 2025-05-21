@@ -7,6 +7,7 @@ namespace OpenFGA\Models;
 use InvalidArgumentException;
 use OpenFGA\Models\Collections\{UsersList, UsersListInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class Leaf implements LeafInterface
 {
@@ -29,21 +30,25 @@ final class Leaf implements LeafInterface
         }
     }
 
+    #[Override]
     public function getComputed(): ?ComputedInterface
     {
         return $this->computed;
     }
 
+    #[Override]
     public function getTupleToUserset(): ?UsersetTreeTupleToUsersetInterface
     {
         return $this->tupleToUserset;
     }
 
+    #[Override]
     public function getUsers(): ?UsersListInterface
     {
         return $this->users;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -53,6 +58,7 @@ final class Leaf implements LeafInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

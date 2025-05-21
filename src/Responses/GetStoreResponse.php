@@ -11,6 +11,8 @@ use OpenFGA\Models\{Store, StoreInterface};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 
+use Override;
+
 use function is_array;
 
 final class GetStoreResponse implements GetStoreResponseInterface
@@ -26,26 +28,31 @@ final class GetStoreResponse implements GetStoreResponseInterface
     ) {
     }
 
+    #[Override]
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
+    #[Override]
     public function getDeletedAt(): ?DateTimeImmutable
     {
         return $this->deletedAt;
     }
 
+    #[Override]
     public function getId(): string
     {
         return $this->id;
     }
 
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
+    #[Override]
     public function getStore(): StoreInterface
     {
         return new Store(
@@ -57,11 +64,13 @@ final class GetStoreResponse implements GetStoreResponseInterface
         );
     }
 
+    #[Override]
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -83,6 +92,7 @@ final class GetStoreResponse implements GetStoreResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

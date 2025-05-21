@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\AuthorizationModelInterface;
+use Override;
 
 /**
  * @template T of AuthorizationModelInterface
@@ -21,5 +22,6 @@ interface AuthorizationModelsInterface extends IndexedCollectionInterface
      *     conditions?: array<int, array<int, array{name: string, expression: string, parameters?: array<string, mixed>, metadata?: array<string, mixed>}>>,
      * }>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

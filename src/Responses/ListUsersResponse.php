@@ -11,6 +11,8 @@ use OpenFGA\Models\UserInterface;
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 
+use Override;
+
 use function is_array;
 
 final class ListUsersResponse implements ListUsersResponseInterface
@@ -25,11 +27,13 @@ final class ListUsersResponse implements ListUsersResponseInterface
     ) {
     }
 
+    #[Override]
     public function getUsers(): UsersInterface
     {
         return $this->users;
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -52,6 +56,7 @@ final class ListUsersResponse implements ListUsersResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

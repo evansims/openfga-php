@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface};
+
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class RelationMetadata implements RelationMetadataInterface
 {
@@ -25,21 +27,25 @@ final class RelationMetadata implements RelationMetadataInterface
     ) {
     }
 
+    #[Override]
     public function getDirectlyRelatedUserTypes(): ?RelationReferencesInterface
     {
         return $this->directlyRelatedUserTypes;
     }
 
+    #[Override]
     public function getModule(): ?string
     {
         return $this->module;
     }
 
+    #[Override]
     public function getSourceInfo(): ?SourceInfoInterface
     {
         return $this->sourceInfo;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -49,6 +55,7 @@ final class RelationMetadata implements RelationMetadataInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

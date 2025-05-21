@@ -109,6 +109,20 @@ interface ClientInterface
     ): GetAuthorizationModelResponseInterface;
 
     /**
+     * Retrieves the last HTTP request made by the client.
+     *
+     * @return ?\Psr\Http\Message\RequestInterface The last request, or null if no request has been made
+     */
+    public function getLastRequest(): ?\Psr\Http\Message\RequestInterface;
+
+    /**
+     * Retrieves the last HTTP response received by the client.
+     *
+     * @return ?\Psr\Http\Message\ResponseInterface The last response, or null if no response has been received
+     */
+    public function getLastResponse(): ?\Psr\Http\Message\ResponseInterface;
+
+    /**
      * Retrieves store details by ID.
      *
      * @param StoreInterface|string $store The store to retrieve

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\UsersetsInterface;
+use Override;
 
 interface UsersetInterface extends ModelInterface
 {
@@ -36,5 +37,6 @@ interface UsersetInterface extends ModelInterface
      *     direct?: object,
      * }
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

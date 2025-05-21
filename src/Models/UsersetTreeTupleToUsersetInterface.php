@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\ComputedsInterface;
+use Override;
 
 interface UsersetTreeTupleToUsersetInterface extends ModelInterface
 {
@@ -18,5 +19,6 @@ interface UsersetTreeTupleToUsersetInterface extends ModelInterface
     /**
      * @return array{tupleset: string, computed: array<int, array{userset: string}>}
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

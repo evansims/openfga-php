@@ -9,6 +9,8 @@ use OpenFGA\Exceptions\ModelException;
 use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use OutOfBoundsException;
+use Override;
+
 use ReturnTypeWillChange;
 
 use TypeError;
@@ -69,14 +71,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         }
     }
 
-    /**
-     * Add an item to the collection.
-     *
-     * @param T      $item
-     * @param string $key
-     *
-     * @return $this
-     */
+    #[Override]
     public function add(string $key, ModelInterface $item): static
     {
         if (! $item instanceof static::$itemType) {
@@ -88,45 +83,34 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function count(): int
     {
         return count($this->models);
     }
 
-    /**
-     * @return T
-     */
+    #[Override]
     #[ReturnTypeWillChange]
-    public function current()
+    public function current(): ModelInterface
     {
-        $key = $this->key(); // already throws if invalid
+        $key = $this->key();
 
         return $this->models[$key];
     }
 
-    /**
-     * @param string $key
-     *
-     * @return null|T
-     */
+    #[Override]
     public function get(string $key)
     {
         return $this->models[$key] ?? null;
     }
 
-    /**
-     * Check if a key exists in the collection.
-     *
-     * @param string $key
-     */
+    #[Override]
     public function has(string $key): bool
     {
         return isset($this->models[$key]);
     }
 
-    /**
-     * @return array<string, mixed>
-     */
+    #[Override]
     public function jsonSerialize(): array
     {
         $result = [];
@@ -140,6 +124,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $result;
     }
 
+    #[Override]
     public function key(): string
     {
         $key = array_keys($this->models)[$this->position] ?? null;
@@ -151,44 +136,26 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $key;
     }
 
-    /**
-     * @template U
-     *
-     * @param callable(T): U $callback
-     *
-     * @return array<string, U>
-     */
-    public function map(callable $callback): array
-    {
-        $result = [];
-
-        foreach ($this->models as $key => $item) {
-            $result[(string) $key] = $callback($item);
-        }
-
-        return $result;
-    }
-
+    #[Override]
     public function next(): void
     {
         ++$this->position;
     }
 
+    #[Override]
     public function offsetExists(mixed $offset): bool
     {
         return isset($this->models[$offset]);
     }
 
+    #[Override]
     #[ReturnTypeWillChange]
     public function offsetGet(mixed $offset)
     {
         return $this->models[$offset] ?? null;
     }
 
-    /**
-     * @param null|string $offset
-     * @param T           $value
-     */
+    #[Override]
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
@@ -202,6 +169,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         $this->models[$offset] = $value;
     }
 
+    #[Override]
     public function offsetUnset(mixed $offset): void
     {
         if (isset($this->models[$offset])) {
@@ -214,14 +182,13 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         }
     }
 
+    #[Override]
     public function rewind(): void
     {
         $this->position = 0;
     }
 
-    /**
-     * @return array<string, T>
-     */
+    #[Override]
     public function toArray(): array
     {
         $copy = [];
@@ -238,6 +205,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $copy;
     }
 
+    #[Override]
     public function valid(): bool
     {
         $keys = array_keys($this->models);
@@ -245,6 +213,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return isset($keys[$this->position]);
     }
 
+    #[Override]
     public static function schema(): CollectionSchemaInterface
     {
         if (! isset(static::$itemType)) {

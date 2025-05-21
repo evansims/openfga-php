@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use Override;
 
 final class Store implements StoreInterface
 {
@@ -24,31 +25,37 @@ final class Store implements StoreInterface
     ) {
     }
 
+    #[Override]
     public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
+    #[Override]
     public function getDeletedAt(): ?DateTimeInterface
     {
         return $this->deletedAt;
     }
 
+    #[Override]
     public function getId(): string
     {
         return $this->id;
     }
 
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
+    #[Override]
     public function getUpdatedAt(): DateTimeInterface
     {
         return $this->updatedAt;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -60,6 +67,7 @@ final class Store implements StoreInterface
         ], static fn ($value): bool => null !== $value);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

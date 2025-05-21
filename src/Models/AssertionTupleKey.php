@@ -6,6 +6,8 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
+use Override;
+
 final class AssertionTupleKey implements AssertionTupleKeyInterface
 {
     public const OPENAPI_MODEL = 'AssertionTupleKey';
@@ -19,21 +21,25 @@ final class AssertionTupleKey implements AssertionTupleKeyInterface
     ) {
     }
 
+    #[Override]
     public function getObject(): string
     {
         return $this->object;
     }
 
+    #[Override]
     public function getRelation(): string
     {
         return $this->relation;
     }
 
+    #[Override]
     public function getUser(): string
     {
         return $this->user;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -43,6 +49,7 @@ final class AssertionTupleKey implements AssertionTupleKeyInterface
         ];
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

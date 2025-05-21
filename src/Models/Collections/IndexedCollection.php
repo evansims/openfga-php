@@ -9,6 +9,8 @@ use OpenFGA\Exceptions\ModelException;
 use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use OutOfBoundsException;
+use Override;
+
 use TypeError;
 
 use function count;
@@ -57,6 +59,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         }
     }
 
+    #[Override]
     public function add($item): static
     {
         if (! $item instanceof static::$itemType) {
@@ -68,24 +71,28 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $this;
     }
 
+    #[Override]
     public function clear(): void
     {
         $this->models = [];
         $this->position = 0;
     }
 
+    #[Override]
     public function count(): int
     {
         return count($this->models);
     }
 
-    public function current()
+    #[Override]
+    public function current(): ModelInterface
     {
         $key = $this->key();
 
         return $this->models[$key];
     }
 
+    #[Override]
     public function every(callable $callback): bool
     {
         foreach ($this->models as $model) {
@@ -97,6 +104,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return true;
     }
 
+    #[Override]
     public function filter(callable $callback): static
     {
         /** @var static<T> $new */
@@ -111,6 +119,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $new;
     }
 
+    #[Override]
     public function first(?callable $callback = null)
     {
         if (null === $callback) {
@@ -126,6 +135,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return null;
     }
 
+    #[Override]
     public function get(int $offset)
     {
         return $this->models[$offset] ?? null;
@@ -136,6 +146,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return [] === $this->models;
     }
 
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_map(
@@ -144,6 +155,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         );
     }
 
+    #[Override]
     public function key(): int
     {
         $key = array_keys($this->models)[$this->position] ?? null;
@@ -155,52 +167,25 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $key;
     }
 
-    /**
-     * @template U of ModelInterface
-     *
-     * @param class-string<U> $targetType
-     * @param callable(T): U  $callback
-     *
-     * @return static<U>
-     */
-    public function map(string $targetType, callable $callback): static
-    {
-        if (! is_a($targetType, ModelInterface::class, true)) {
-            throw ModelException::invalidItemType($targetType);
-        }
-
-        /** @var static<U> $new */
-        $new = new static();
-
-        /* @phpstan-var class-string<U> $targetType */
-        $new::$itemType = $targetType;
-
-        foreach ($this->models as $model) {
-            $mapped = $callback($model);
-            if (! $mapped instanceof $targetType) {
-                throw ModelException::typeMismatch($targetType, $mapped::class);
-            }
-            $new->add($mapped);
-        }
-
-        return $new;
-    }
-
+    #[Override]
     public function next(): void
     {
         ++$this->position;
     }
 
+    #[Override]
     public function offsetExists(mixed $offset): bool
     {
         return isset($this->models[$offset]);
     }
 
-    public function offsetGet(mixed $offset)
+    #[Override]
+    public function offsetGet(mixed $offset): ?ModelInterface
     {
         return $this->models[$offset] ?? null;
     }
 
+    #[Override]
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
@@ -214,6 +199,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         }
     }
 
+    #[Override]
     public function offsetUnset(mixed $offset): void
     {
         if (isset($this->models[$offset])) {
@@ -226,6 +212,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         }
     }
 
+    #[Override]
     public function reduce(mixed $initial, callable $callback): mixed
     {
         $result = $initial;
@@ -236,11 +223,13 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $result;
     }
 
+    #[Override]
     public function rewind(): void
     {
         $this->position = 0;
     }
 
+    #[Override]
     public function some(callable $callback): bool
     {
         foreach ($this->models as $model) {
@@ -252,11 +241,13 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return false;
     }
 
+    #[Override]
     public function toArray(): array
     {
         return $this->models;
     }
 
+    #[Override]
     public function valid(): bool
     {
         $keys = array_keys($this->models);
@@ -264,6 +255,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return isset($keys[$this->position]);
     }
 
+    #[Override]
     public function withItems(...$items): static
     {
         /** @var static<T> $new */
@@ -273,6 +265,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $new;
     }
 
+    #[Override]
     public static function schema(): CollectionSchemaInterface
     {
         if (! isset(static::$itemType)) {

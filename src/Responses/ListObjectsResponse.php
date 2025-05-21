@@ -9,6 +9,8 @@ use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 
+use Override;
+
 use function is_array;
 
 final class ListObjectsResponse implements ListObjectsResponseInterface
@@ -23,11 +25,13 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
     ) {
     }
 
+    #[Override]
     public function getObjects(): array
     {
         return $this->objects;
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -49,6 +53,7 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
         throw new ApiUnexpectedResponseException($json);
     }
 
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

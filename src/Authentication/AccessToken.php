@@ -6,6 +6,8 @@ namespace OpenFGA\Authentication;
 
 use Exception;
 
+use Override;
+
 use function is_array;
 use function is_int;
 use function is_string;
@@ -24,26 +26,31 @@ final class AccessToken implements AccessTokenInterface
         return $this->token;
     }
 
+    #[Override]
     public function getExpires(): int
     {
         return $this->expires;
     }
 
+    #[Override]
     public function getScope(): ?string
     {
         return $this->scope;
     }
 
+    #[Override]
     public function getToken(): string
     {
         return $this->token;
     }
 
+    #[Override]
     public function isExpired(): bool
     {
         return $this->expires < time();
     }
 
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response): self
     {
         $body = $response->getBody()->getContents();
