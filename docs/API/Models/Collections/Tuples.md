@@ -104,7 +104,7 @@ Filters the collection using a callback.
 
 
 ```php
-public function first(?callable $callback = null)
+public function first(?callable $callback = NULL)
 ```
 
 Returns the first item that matches the callback.

@@ -1,4 +1,4 @@
-# Relationship tuples
+# Relationship Tuples
 
 Write, read and track relationship tuples.
 

@@ -21,7 +21,7 @@ A high-performance PHP client for [OpenFGA](https://openfga.dev/) and [Auth0 FGA
 composer require evansims/openfga-php
 ```
 
-## Quick start
+## Quick Start
 
 Create a client using a shared key or client credentials. Only the URL is required when no authentication is needed.
 
@@ -46,7 +46,7 @@ $client = new Client(
 );
 ```
 
-## Working with stores
+## Working with Stores
 
 ```php
 $response = $client->createStore('my-store');
@@ -57,7 +57,7 @@ $client->deleteStore($store->getId());
 
 See [docs/Stores.md](docs/Stores.md) for more information.
 
-## Authorization models
+## Authorization Models
 
 ```php
 $models = $client->listAuthorizationModels($store->getId());
@@ -71,7 +71,7 @@ $detail = $client->getAuthorizationModel($store->getId(), $model->getId());
 
 See [docs/AuthorizationModels.md](docs/AuthorizationModels.md) for more information.
 
-## Relationship tuples
+## Relationship Tuples
 
 ```php
 $client->writeTuples(
@@ -86,7 +86,7 @@ $changes = $client->listTupleChanges($store->getId());
 
 See [docs/RelationshipTuples.md](docs/RelationshipTuples.md) for more information.
 
-## Relationship queries
+## Relationship Queries
 
 ```php
 $check = $client->check(
@@ -104,7 +104,7 @@ $objects = $client->listObjects($store->getId(), $model->getId(), 'document', 'v
 
 See [docs/Queries.md](docs/Queries.md) for more information.
 
-### Streaming objects
+### Streaming Objects
 
 ```php
 $stream = $client->streamedListObjects(
@@ -125,9 +125,44 @@ $client->writeAssertions($store->getId(), $model->getId(), $assertions);
 
 See [docs/Assertions.md](docs/Assertions.md) for more information.
 
+## DSL Transformer
+
+Use the DSL transformer to parse a DSL schema string into an authorization model and render it back to a DSL string.
+
+```php
+use OpenFGA\Language\DslTransformer;
+use OpenFGA\Schema\SchemaValidator;
+
+$dsl = <<'DSL'
+model
+  schema 1.1
+
+type user
+
+type document
+  relations
+    define viewer: self
+DSL;
+
+$validator = new SchemaValidator();
+$validator
+    ->registerSchema(OpenFGA\Models\AuthorizationModel::schema())
+    ->registerSchema(OpenFGA\Models\Collections\TypeDefinitions::schema())
+    ->registerSchema(OpenFGA\Models\TypeDefinition::schema())
+    ->registerSchema(OpenFGA\Models\Collections\TypeDefinitionRelations::schema())
+    ->registerSchema(OpenFGA\Models\Userset::schema())
+    ->registerSchema(OpenFGA\Models\Collections\Usersets::schema())
+    ->registerSchema(OpenFGA\Models\ObjectRelation::schema());
+
+$model = DslTransformer::fromDsl($dsl, $validator);
+$dslString = DslTransformer::toDsl($model);
+```
+
+See [docs/DslTransformer.md](docs/DslTransformer.md) for more information.
+
 ## Documentation
 
-- API reference is in [docs/API](docs/API).
+API reference is in [docs/API](docs/API).
 
 ---
 

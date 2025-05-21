@@ -10,7 +10,7 @@
 
 
 ```php
-public function array(string $name, array $items, bool $required = false, mixed $default = null): self
+public function array(string $name, array $items, bool $required = false, mixed $default = NULL): self
 ```
 
 Add an array property.
@@ -30,7 +30,7 @@ Add an array property.
 
 
 ```php
-public function boolean(string $name, bool $required = false, mixed $default = null): self
+public function boolean(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
 Add a boolean property.
@@ -49,7 +49,7 @@ Add a boolean property.
 
 
 ```php
-public function date(string $name, bool $required = false, mixed $default = null): self
+public function date(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
 Add a date property.
@@ -68,7 +68,7 @@ Add a date property.
 
 
 ```php
-public function datetime(string $name, bool $required = false, mixed $default = null): self
+public function datetime(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
 Add a datetime property.
@@ -87,7 +87,7 @@ Add a datetime property.
 
 
 ```php
-public function integer(string $name, bool $required = false, mixed $default = null): self
+public function integer(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
 Add an integer property.
@@ -106,7 +106,7 @@ Add an integer property.
 
 
 ```php
-public function number(string $name, bool $required = false, mixed $default = null): self
+public function number(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
 Add a number (float) property.
@@ -157,7 +157,7 @@ Build and register the schema.
 
 
 ```php
-public function string(string $name, bool $required = false, ?string $format = null, ?array $enum = null, mixed $default = null): self
+public function string(string $name, bool $required = false, ?string $format = NULL, ?array $enum = NULL, mixed $default = NULL): self
 ```
 
 Add a string property.
