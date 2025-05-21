@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\GetAuthorizationModelRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getModel

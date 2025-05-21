@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\AssertionInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [AssertionInterface](Models/AssertionInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getContext
@@ -24,13 +24,13 @@ public function getContext(): ?array
 ### getContextualTuples
 
 ```php
-public function getContextualTuples(): ?TupleKeysInterface
+public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
 
 
 
 #### Returns
-`?TupleKeysInterface` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 
 ### getExpectation
 
@@ -46,13 +46,13 @@ public function getExpectation(): bool
 ### getTupleKey
 
 ```php
-public function getTupleKey(): AssertionTupleKeyInterface
+public function getTupleKey(): [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
 ```
 
 
 
 #### Returns
-`AssertionTupleKeyInterface` 
+`[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)` 
 
 ### jsonSerialize
 

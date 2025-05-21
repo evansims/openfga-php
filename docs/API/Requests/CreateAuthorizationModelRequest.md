@@ -5,20 +5,20 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\CreateAuthorizationModelRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getConditions
 
 ```php
-public function getConditions(): ?ConditionsInterface
+public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
 ```
 
 
 
 #### Returns
-`?ConditionsInterface` 
+`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)` 
 
 ### getRequest
 
@@ -60,11 +60,11 @@ public function getStore(): string
 ### getTypeDefinitions
 
 ```php
-public function getTypeDefinitions(): TypeDefinitionsInterface
+public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
 ```
 
 
 
 #### Returns
-`TypeDefinitionsInterface` 
+`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)` 
 

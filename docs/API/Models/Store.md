@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\StoreInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [StoreInterface](Models/StoreInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getCreatedAt

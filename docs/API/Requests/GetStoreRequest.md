@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\GetStoreRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getRequest

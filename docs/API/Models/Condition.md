@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\ConditionInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [ConditionInterface](Models/ConditionInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getExpression
@@ -24,13 +24,13 @@ public function getExpression(): string
 ### getMetadata
 
 ```php
-public function getMetadata(): ?ConditionMetadataInterface
+public function getMetadata(): ?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
 ```
 
 
 
 #### Returns
-`?ConditionMetadataInterface` 
+`?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)` 
 
 ### getName
 
@@ -46,13 +46,13 @@ public function getName(): string
 ### getParameters
 
 ```php
-public function getParameters(): ?ConditionParametersInterface
+public function getParameters(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 ```
 
 
 
 #### Returns
-`?ConditionParametersInterface` 
+`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)` 
 
 ### jsonSerialize
 

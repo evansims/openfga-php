@@ -5,6 +5,6 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\WriteTuplesResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 

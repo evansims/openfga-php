@@ -5,18 +5,18 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ListUsersResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getUsers
 
 ```php
-public function getUsers(): UsersInterface
+public function getUsers(): [UsersInterface](Models/Collections/UsersInterface.md)
 ```
 
 
 
 #### Returns
-`UsersInterface` 
+`[UsersInterface](Models/Collections/UsersInterface.md)` 
 

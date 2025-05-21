@@ -5,20 +5,20 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\WriteAssertionsRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getAssertions
 
 ```php
-public function getAssertions(): AssertionsInterface
+public function getAssertions(): [AssertionsInterface](Models/Collections/AssertionsInterface.md)
 ```
 
 
 
 #### Returns
-`AssertionsInterface` 
+`[AssertionsInterface](Models/Collections/AssertionsInterface.md)` 
 
 ### getModel
 

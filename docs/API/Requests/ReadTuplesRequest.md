@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\ReadTuplesRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getConsistency
@@ -71,11 +71,11 @@ public function getStore(): string
 ### getTupleKey
 
 ```php
-public function getTupleKey(): TupleKeyInterface
+public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 ```
 
 
 
 #### Returns
-`TupleKeyInterface` 
+`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
 

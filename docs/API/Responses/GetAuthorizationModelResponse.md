@@ -5,18 +5,18 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\GetAuthorizationModelResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getModel
 
 ```php
-public function getModel(): ?AuthorizationModelInterface
+public function getModel(): ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
 ```
 
 
 
 #### Returns
-`?AuthorizationModelInterface` 
+`?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)` 
 

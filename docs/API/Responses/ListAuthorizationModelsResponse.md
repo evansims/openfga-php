@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ListAuthorizationModelsResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getContinuationToken
@@ -23,11 +23,11 @@ public function getContinuationToken(): ?string
 ### getModels
 
 ```php
-public function getModels(): AuthorizationModelsInterface
+public function getModels(): [AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)
 ```
 
 
 
 #### Returns
-`AuthorizationModelsInterface` 
+`[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)` 
 

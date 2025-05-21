@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ListStoresResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getContinuationToken
@@ -23,11 +23,11 @@ public function getContinuationToken(): ?string
 ### getStores
 
 ```php
-public function getStores(): StoresInterface
+public function getStores(): [StoresInterface](Models/Collections/StoresInterface.md)
 ```
 
 
 
 #### Returns
-`StoresInterface` 
+`[StoresInterface](Models/Collections/StoresInterface.md)` 
 

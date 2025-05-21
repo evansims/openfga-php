@@ -5,32 +5,32 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\TypeDefinitionInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [TypeDefinitionInterface](Models/TypeDefinitionInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getMetadata
 
 ```php
-public function getMetadata(): ?MetadataInterface
+public function getMetadata(): ?[MetadataInterface](Models/MetadataInterface.md)
 ```
 
 
 
 #### Returns
-`?MetadataInterface` 
+`?[MetadataInterface](Models/MetadataInterface.md)` 
 
 ### getRelations
 
 ```php
-public function getRelations(): ?TypeDefinitionRelationsInterface
+public function getRelations(): ?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
 ```
 
 
 
 #### Returns
-`?TypeDefinitionRelationsInterface` 
+`?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)` 
 
 ### getType
 

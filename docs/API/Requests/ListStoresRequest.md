@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\ListStoresRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getContinuationToken

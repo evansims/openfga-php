@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\ConditionMetadataInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getModule
@@ -24,13 +24,13 @@ public function getModule(): string
 ### getSourceInfo
 
 ```php
-public function getSourceInfo(): SourceInfoInterface
+public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterface.md)
 ```
 
 
 
 #### Returns
-`SourceInfoInterface` 
+`[SourceInfoInterface](Models/SourceInfoInterface.md)` 
 
 ### jsonSerialize
 

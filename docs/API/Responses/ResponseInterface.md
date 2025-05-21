@@ -1,0 +1,7 @@
+# ResponseInterface
+
+
+## Namespace
+`OpenFGA\Responses`
+
+

@@ -5,21 +5,21 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\UsersetTreeInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [UsersetTreeInterface](Models/UsersetTreeInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getRoot
 
 ```php
-public function getRoot(): NodeInterface
+public function getRoot(): [NodeInterface](Models/NodeInterface.md)
 ```
 
 
 
 #### Returns
-`NodeInterface` 
+`[NodeInterface](Models/NodeInterface.md)` 
 
 ### jsonSerialize
 

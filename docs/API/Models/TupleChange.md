@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\TupleChangeInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [TupleChangeInterface](Models/TupleChangeInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getOperation
@@ -35,13 +35,13 @@ public function getTimestamp(): DateTimeImmutable
 ### getTupleKey
 
 ```php
-public function getTupleKey(): TupleKeyInterface
+public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 ```
 
 
 
 #### Returns
-`TupleKeyInterface` 
+`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
 
 ### jsonSerialize
 

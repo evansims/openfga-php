@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\ReadAssertionsRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getModel

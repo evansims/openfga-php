@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\SourceInfoInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [SourceInfoInterface](Models/SourceInfoInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getFile

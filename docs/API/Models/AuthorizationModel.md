@@ -5,21 +5,21 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\AuthorizationModelInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getConditions
 
 ```php
-public function getConditions(): ?ConditionsInterface
+public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
 ```
 
 
 
 #### Returns
-`?ConditionsInterface` 
+`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)` 
 
 ### getId
 
@@ -46,13 +46,13 @@ public function getSchemaVersion(): SchemaVersion
 ### getTypeDefinitions
 
 ```php
-public function getTypeDefinitions(): TypeDefinitionsInterface
+public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
 ```
 
 
 
 #### Returns
-`TypeDefinitionsInterface` 
+`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)` 
 
 ### jsonSerialize
 

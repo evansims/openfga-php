@@ -21,7 +21,7 @@ Get all registered schemas.
 ### registerSchema
 
 ```php
-public function registerSchema(SchemaInterface $schema): self
+public function registerSchema([SchemaInterface](Schema/SchemaInterface.md) $schema): self
 ```
 
 Register a schema.
@@ -29,7 +29,7 @@ Register a schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | `SchemaInterface` |  |
+| `$schema` | `[SchemaInterface](Schema/SchemaInterface.md)` |  |
 
 #### Returns
 `self` 

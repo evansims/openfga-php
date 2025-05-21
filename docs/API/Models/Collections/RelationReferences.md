@@ -5,19 +5,19 @@
 `OpenFGA\Models\Collections`
 
 ## Implements
-* `OpenFGA\Models\Collections\KeyedCollectionInterface`
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
-* `OpenFGA\Models\Collections\RelationReferencesInterface`
+* [KeyedCollectionInterface](Models/Collections/KeyedCollectionInterface.md)
+* Traversable
+* JsonSerializable
+* Iterator
+* Countable
+* ArrayAccess
+* [RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
 
 ## Methods
 ### add
 
 ```php
-public function add(string $key, ModelInterface $item): static
+public function add(string $key, [ModelInterface](Models/ModelInterface.md) $item): static
 ```
 
 
@@ -25,7 +25,7 @@ public function add(string $key, ModelInterface $item): static
 | Name | Type | Description |
 |------|------|-------------|
 | `$key` | `string` |  |
-| `$item` | `ModelInterface` |  |
+| `$item` | `[ModelInterface](Models/ModelInterface.md)` |  |
 
 #### Returns
 `static` 
@@ -44,13 +44,13 @@ public function count(): int
 ### current
 
 ```php
-public function current(): ModelInterface
+public function current(): [ModelInterface](Models/ModelInterface.md)
 ```
 
 
 
 #### Returns
-`ModelInterface` 
+`[ModelInterface](Models/ModelInterface.md)` 
 
 ### get
 

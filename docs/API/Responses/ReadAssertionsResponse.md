@@ -5,20 +5,20 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ReadAssertionsResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getAssertions
 
 ```php
-public function getAssertions(): ?AssertionsInterface
+public function getAssertions(): ?[AssertionsInterface](Models/Collections/AssertionsInterface.md)
 ```
 
 
 
 #### Returns
-`?AssertionsInterface` 
+`?[AssertionsInterface](Models/Collections/AssertionsInterface.md)` 
 
 ### getModel
 

@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\CreateStoreResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getCreatedAt

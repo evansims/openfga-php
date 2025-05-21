@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\CheckRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [CheckRequestInterface](Requests/CheckRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getAuthorizationModel
@@ -45,13 +45,13 @@ public function getContext(): ?object
 ### getContextualTuples
 
 ```php
-public function getContextualTuples(): ?TupleKeysInterface
+public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
 
 
 
 #### Returns
-`?TupleKeysInterface` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 
 ### getRequest
 
@@ -93,11 +93,11 @@ public function getTrace(): ?bool
 ### getTupleKey
 
 ```php
-public function getTupleKey(): TupleKeyInterface
+public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 ```
 
 
 
 #### Returns
-`TupleKeyInterface` 
+`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
 

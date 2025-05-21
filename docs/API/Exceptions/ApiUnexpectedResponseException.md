@@ -5,8 +5,8 @@
 `OpenFGA\Exceptions`
 
 ## Implements
-* `Throwable`
-* `Stringable`
+* Throwable
+* Stringable
 
 ## Methods
 ### getMessage

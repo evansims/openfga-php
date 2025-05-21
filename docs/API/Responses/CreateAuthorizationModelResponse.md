@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\CreateAuthorizationModelResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getModel

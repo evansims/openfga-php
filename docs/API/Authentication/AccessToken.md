@@ -5,8 +5,8 @@
 `OpenFGA\Authentication`
 
 ## Implements
-* `OpenFGA\Authentication\AccessTokenInterface`
-* `Stringable`
+* [AccessTokenInterface](Authentication/AccessTokenInterface.md)
+* Stringable
 
 ## Methods
 ### getExpires

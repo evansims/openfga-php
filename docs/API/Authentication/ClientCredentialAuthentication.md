@@ -5,8 +5,8 @@
 `OpenFGA\Authentication`
 
 ## Implements
-* `OpenFGA\Authentication\AuthenticationInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [AuthenticationInterface](Authentication/AuthenticationInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getRequest

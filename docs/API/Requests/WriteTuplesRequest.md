@@ -5,20 +5,20 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\WriteTuplesRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getDeletes
 
 ```php
-public function getDeletes(): ?TupleKeysInterface
+public function getDeletes(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
 
 
 
 #### Returns
-`?TupleKeysInterface` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 
 ### getModel
 
@@ -60,11 +60,11 @@ public function getStore(): string
 ### getWrites
 
 ```php
-public function getWrites(): ?TupleKeysInterface
+public function getWrites(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
 
 
 
 #### Returns
-`?TupleKeysInterface` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 

@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ReadTuplesResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getContinuationToken
@@ -23,11 +23,11 @@ public function getContinuationToken(): ?string
 ### getTuples
 
 ```php
-public function getTuples(): TuplesInterface
+public function getTuples(): [TuplesInterface](Models/Collections/TuplesInterface.md)
 ```
 
 
 
 #### Returns
-`TuplesInterface` 
+`[TuplesInterface](Models/Collections/TuplesInterface.md)` 
 

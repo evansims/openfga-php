@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\ObjectRelationInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [ObjectRelationInterface](Models/ObjectRelationInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getObject

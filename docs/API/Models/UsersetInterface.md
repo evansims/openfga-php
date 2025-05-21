@@ -1,0 +1,89 @@
+# UsersetInterface
+
+
+## Namespace
+`OpenFGA\Models`
+
+## Implements
+* [ModelInterface](Models/ModelInterface.md)
+* JsonSerializable
+
+## Methods
+### getComputedUserset
+
+```php
+public function getComputedUserset(): ?[ObjectRelationInterface](Models/ObjectRelationInterface.md)
+```
+
+
+
+#### Returns
+`?[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
+
+### getDifference
+
+```php
+public function getDifference(): ?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
+```
+
+
+
+#### Returns
+`?[DifferenceV1Interface](Models/DifferenceV1Interface.md)` 
+
+### getDirect
+
+```php
+public function getDirect(): ?object
+```
+
+
+
+#### Returns
+`?object` 
+
+### getIntersection
+
+```php
+public function getIntersection(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+```
+
+
+
+#### Returns
+`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)` 
+
+### getTupleToUserset
+
+```php
+public function getTupleToUserset(): ?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
+```
+
+
+
+#### Returns
+`?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)` 
+
+### getUnion
+
+```php
+public function getUnion(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+```
+
+
+
+#### Returns
+`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)` 
+
+### jsonSerialize
+
+```php
+public function jsonSerialize(): array
+```
+
+computed_userset?: array{object?: string, relation?: string}, tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}, union?: array&lt;mixed&gt;, intersection?: array&lt;mixed&gt;, difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;}, direct?: object, }
+
+
+#### Returns
+`array` computed_userset?: array{object?: string, relation?: string}, tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}, union?: array&lt;mixed&gt;, intersection?: array&lt;mixed&gt;, difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;}, direct?: object, }
+

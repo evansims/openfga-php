@@ -5,21 +5,21 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\TupleKeyInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [TupleKeyInterface](Models/TupleKeyInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getCondition
 
 ```php
-public function getCondition(): ?ConditionInterface
+public function getCondition(): ?[ConditionInterface](Models/ConditionInterface.md)
 ```
 
 
 
 #### Returns
-`?ConditionInterface` 
+`?[ConditionInterface](Models/ConditionInterface.md)` 
 
 ### getObject
 

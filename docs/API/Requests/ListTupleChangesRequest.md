@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\ListTupleChangesRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getContinuationToken

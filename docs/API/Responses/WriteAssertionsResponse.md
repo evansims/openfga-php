@@ -5,6 +5,6 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\WriteAssertionsResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 

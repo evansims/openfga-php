@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\MetadataInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [MetadataInterface](Models/MetadataInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getModule
@@ -24,24 +24,24 @@ public function getModule(): ?string
 ### getRelations
 
 ```php
-public function getRelations(): ?RelationMetadataInterface
+public function getRelations(): ?[RelationMetadataInterface](Models/RelationMetadataInterface.md)
 ```
 
 
 
 #### Returns
-`?RelationMetadataInterface` 
+`?[RelationMetadataInterface](Models/RelationMetadataInterface.md)` 
 
 ### getSourceInfo
 
 ```php
-public function getSourceInfo(): ?SourceInfoInterface
+public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterface.md)
 ```
 
 
 
 #### Returns
-`?SourceInfoInterface` 
+`?[SourceInfoInterface](Models/SourceInfoInterface.md)` 
 
 ### jsonSerialize
 

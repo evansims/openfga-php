@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\ExpandRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [ExpandRequestInterface](Requests/ExpandRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getConsistency
@@ -23,13 +23,13 @@ public function getConsistency(): ?Consistency
 ### getContextualTuples
 
 ```php
-public function getContextualTuples(): ?TupleKeysInterface
+public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 ```
 
 
 
 #### Returns
-`?TupleKeysInterface` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
 
 ### getModel
 
@@ -71,11 +71,11 @@ public function getStore(): string
 ### getTupleKey
 
 ```php
-public function getTupleKey(): TupleKeyInterface
+public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 ```
 
 
 
 #### Returns
-`TupleKeyInterface` 
+`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
 

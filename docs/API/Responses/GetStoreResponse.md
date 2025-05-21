@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\GetStoreResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getCreatedAt
@@ -56,13 +56,13 @@ public function getName(): string
 ### getStore
 
 ```php
-public function getStore(): StoreInterface
+public function getStore(): [StoreInterface](Models/StoreInterface.md)
 ```
 
 
 
 #### Returns
-`StoreInterface` 
+`[StoreInterface](Models/StoreInterface.md)` 
 
 ### getUpdatedAt
 
