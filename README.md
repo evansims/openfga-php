@@ -71,40 +71,6 @@ $detail = $client->getAuthorizationModel($store->getId(), $model->getId());
 
 See [docs/AuthorizationModels.md](docs/AuthorizationModels.md) for more information.
 
-## DSL transformer
-
-```php
-use OpenFGA\Language\DslTransformer;
-use OpenFGA\Schema\SchemaValidator;
-
-$dsl = <<'DSL'
-model
-  schema 1.1
-
-type user
-
-type document
-  relations
-    define viewer: self
-DSL;
-
-$validator = new SchemaValidator();
-$validator
-    ->registerSchema(OpenFGA\Models\AuthorizationModel::schema())
-    ->registerSchema(OpenFGA\Models\Collections\TypeDefinitions::schema())
-    ->registerSchema(OpenFGA\Models\TypeDefinition::schema())
-    ->registerSchema(OpenFGA\Models\Collections\TypeDefinitionRelations::schema())
-    ->registerSchema(OpenFGA\Models\Userset::schema())
-    ->registerSchema(OpenFGA\Models\Collections\Usersets::schema())
-    ->registerSchema(OpenFGA\Models\ObjectRelation::schema());
-
-$model = DslTransformer::fromDsl($dsl, $validator);
-$dslString = DslTransformer::toDsl($model);
-```
-
-See [docs/DslTransformer.md](docs/DslTransformer.md) for more information.
-
-
 ## Relationship tuples
 
 ```php
@@ -161,6 +127,8 @@ See [docs/Assertions.md](docs/Assertions.md) for more information.
 
 ## DSL transformer
 
+Use the DSL transformer to parse a DSL schema string into an authorization model and render it back to a DSL string.
+
 ```php
 use OpenFGA\Language\DslTransformer;
 use OpenFGA\Schema\SchemaValidator;
@@ -194,8 +162,7 @@ See [docs/DslTransformer.md](docs/DslTransformer.md) for more information.
 
 ## Documentation
 
-- API reference is in [docs/API](docs/API).
-- DSL transformer usage is in [docs/DslTransformer.md](docs/DslTransformer.md).
+API reference is in [docs/API](docs/API).
 
 ---
 
