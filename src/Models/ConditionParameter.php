@@ -26,18 +26,27 @@ final class ConditionParameter implements ConditionParameterInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getGenericTypes(): ?ConditionParametersInterface
     {
         return $this->genericTypes;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTypeName(): TypeName
     {
         return $this->typeName;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -47,6 +56,9 @@ final class ConditionParameter implements ConditionParameterInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

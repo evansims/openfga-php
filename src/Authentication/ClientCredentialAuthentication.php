@@ -19,6 +19,9 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(

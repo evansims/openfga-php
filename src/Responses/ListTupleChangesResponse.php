@@ -30,18 +30,27 @@ final class ListTupleChangesResponse implements ListTupleChangesResponseInterfac
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getChanges(): TupleChangesInterface
     {
         return $this->changes;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -65,6 +74,9 @@ final class ListTupleChangesResponse implements ListTupleChangesResponseInterfac
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

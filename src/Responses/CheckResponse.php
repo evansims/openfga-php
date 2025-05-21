@@ -24,18 +24,27 @@ final class CheckResponse implements CheckResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getAllowed(): ?bool
     {
         return $this->allowed;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getResolution(): ?string
     {
         return $this->resolution;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -58,6 +67,9 @@ final class CheckResponse implements CheckResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

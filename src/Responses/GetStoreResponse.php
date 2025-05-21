@@ -29,30 +29,45 @@ final class GetStoreResponse implements GetStoreResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getDeletedAt(): ?DateTimeImmutable
     {
         return $this->deletedAt;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): StoreInterface
     {
         return new Store(
@@ -65,12 +80,18 @@ final class GetStoreResponse implements GetStoreResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -93,6 +114,9 @@ final class GetStoreResponse implements GetStoreResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

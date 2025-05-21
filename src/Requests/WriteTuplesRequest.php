@@ -27,18 +27,27 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getDeletes(): ?TupleKeysInterface
     {
         return $this->deletes;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getModel(): string
     {
         return $this->model;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -57,12 +66,18 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): string
     {
         return $this->store;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getWrites(): ?TupleKeysInterface
     {
         return $this->writes;

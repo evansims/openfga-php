@@ -16,6 +16,9 @@ final class GetStoreRequest implements GetStoreRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(
@@ -25,6 +28,9 @@ final class GetStoreRequest implements GetStoreRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): string
     {
         return $this->store;

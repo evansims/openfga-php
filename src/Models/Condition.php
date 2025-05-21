@@ -30,30 +30,45 @@ final class Condition implements ConditionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getExpression(): string
     {
         return $this->expression;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getMetadata(): ?ConditionMetadataInterface
     {
         return $this->metadata;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getParameters(): ?ConditionParametersInterface
     {
         return $this->parameters;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -65,6 +80,9 @@ final class Condition implements ConditionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

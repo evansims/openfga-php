@@ -27,18 +27,27 @@ final class Schema implements SchemaInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getClassName(): string
     {
         return $this->className;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getProperties(): array
     {
         return $this->properties;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getProperty(string $name): ?SchemaProperty
     {
         return $this->properties[$name] ?? null;

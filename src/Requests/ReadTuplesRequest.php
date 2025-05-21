@@ -30,24 +30,36 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -67,12 +79,18 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): string
     {
         return $this->store;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;

@@ -7,8 +7,11 @@ require_once implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', '..', 'tools', '
 use ReflectionClass;
 
 test('method signature prints default values using PHP syntax', function (): void {
-    class Dummy {
-        public function foo(string $bar = 'baz', array $data = [1, 2]): void {}
+    final class DocumentationGeneratorTest
+    {
+        public function foo(string $bar = 'baz', array $data = [1, 2]): void
+        {
+        }
     }
 
     $generator = new DocumentationGenerator(__DIR__, __DIR__);

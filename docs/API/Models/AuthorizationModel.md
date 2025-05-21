@@ -10,6 +10,19 @@
 * [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
+### dsl
+
+
+```php
+public function dsl(): string
+```
+
+Return a DSL representation of the model.
+
+
+#### Returns
+`string` 
+
 ### getConditions
 
 
@@ -17,6 +30,7 @@
 public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
 ```
 
+Return the conditions of the model.
 
 
 #### Returns
@@ -29,6 +43,7 @@ public function getConditions(): ?[ConditionsInterface](Models/Collections/Condi
 public function getId(): string
 ```
 
+Return the ID of the model.
 
 
 #### Returns
@@ -41,6 +56,7 @@ public function getId(): string
 public function getSchemaVersion(): SchemaVersion
 ```
 
+Return the schema version of the model.
 
 
 #### Returns
@@ -53,6 +69,7 @@ public function getSchemaVersion(): SchemaVersion
 public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
 ```
 
+Return the type definitions of the model.
 
 
 #### Returns
@@ -65,6 +82,7 @@ public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collecti
 public function jsonSerialize(): array
 ```
 
+Return a JSON representation of the model.
 
 
 #### Returns

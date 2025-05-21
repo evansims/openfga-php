@@ -19,18 +19,27 @@ final class UserTypeFilter implements UserTypeFilterInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRelation(): ?string
     {
         return $this->relation;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getType(): string
     {
         return $this->type;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -40,6 +49,9 @@ final class UserTypeFilter implements UserTypeFilterInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

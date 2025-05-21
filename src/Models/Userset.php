@@ -34,42 +34,63 @@ final class Userset implements UsersetInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getComputedUserset(): ?ObjectRelationInterface
     {
         return $this->computedUserset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getDifference(): ?DifferenceV1Interface
     {
         return $this->difference;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getDirect(): ?object
     {
         return $this->direct;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getIntersection(): ?UsersetsInterface
     {
         return $this->intersection;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleToUserset(): ?TupleToUsersetV1Interface
     {
         return $this->tupleToUserset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUnion(): ?UsersetsInterface
     {
         return $this->union;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -83,6 +104,9 @@ final class Userset implements UsersetInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

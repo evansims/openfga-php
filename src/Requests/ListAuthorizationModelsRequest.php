@@ -18,18 +18,27 @@ final class ListAuthorizationModelsRequest implements ListAuthorizationModelsReq
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $params = array_filter([
@@ -46,6 +55,9 @@ final class ListAuthorizationModelsRequest implements ListAuthorizationModelsReq
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): string
     {
         return $this->store;

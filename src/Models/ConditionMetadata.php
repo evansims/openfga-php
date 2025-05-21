@@ -21,18 +21,27 @@ final class ConditionMetadata implements ConditionMetadataInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getModule(): string
     {
         return $this->module;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getSourceInfo(): SourceInfoInterface
     {
         return $this->sourceInfo;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -42,6 +51,9 @@ final class ConditionMetadata implements ConditionMetadataInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

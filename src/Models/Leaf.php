@@ -31,24 +31,36 @@ final class Leaf implements LeafInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getComputed(): ?ComputedInterface
     {
         return $this->computed;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleToUserset(): ?UsersetTreeTupleToUsersetInterface
     {
         return $this->tupleToUserset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUsers(): ?UsersListInterface
     {
         return $this->users;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -59,6 +71,9 @@ final class Leaf implements LeafInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

@@ -30,30 +30,45 @@ final class Assertion implements AssertionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContext(): ?array
     {
         return $this->context;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getExpectation(): bool
     {
         return $this->expectation;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleKey(): AssertionTupleKeyInterface
     {
         return $this->tupleKey;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -65,6 +80,9 @@ final class Assertion implements AssertionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

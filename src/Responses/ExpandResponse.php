@@ -24,12 +24,18 @@ final class ExpandResponse implements ExpandResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTree(): ?UsersetTreeInterface
     {
         return $this->tree;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -53,6 +59,9 @@ final class ExpandResponse implements ExpandResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

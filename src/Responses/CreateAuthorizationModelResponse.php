@@ -23,12 +23,18 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getModel(): string
     {
         return $this->model;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -51,6 +57,9 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

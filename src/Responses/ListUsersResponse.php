@@ -28,12 +28,18 @@ final class ListUsersResponse implements ListUsersResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUsers(): UsersInterface
     {
         return $this->users;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -57,6 +63,9 @@ final class ListUsersResponse implements ListUsersResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

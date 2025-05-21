@@ -127,13 +127,10 @@ See [docs/Assertions.md](docs/Assertions.md) for more information.
 
 ## DSL Transformer
 
-Use the DSL transformer to parse a DSL schema string into an authorization model and render it back to a DSL string.
+Use the Client's `dsl` method to parse a DSL string and return an AuthorizationModel:
 
 ```php
-use OpenFGA\Language\DslTransformer;
-use OpenFGA\Schema\SchemaValidator;
-
-$dsl = <<'DSL'
+$model = $client->dsl('
 model
   schema 1.1
 
@@ -142,20 +139,13 @@ type user
 type document
   relations
     define viewer: self
-DSL;
+');
+```
 
-$validator = new SchemaValidator();
-$validator
-    ->registerSchema(OpenFGA\Models\AuthorizationModel::schema())
-    ->registerSchema(OpenFGA\Models\Collections\TypeDefinitions::schema())
-    ->registerSchema(OpenFGA\Models\TypeDefinition::schema())
-    ->registerSchema(OpenFGA\Models\Collections\TypeDefinitionRelations::schema())
-    ->registerSchema(OpenFGA\Models\Userset::schema())
-    ->registerSchema(OpenFGA\Models\Collections\Usersets::schema())
-    ->registerSchema(OpenFGA\Models\ObjectRelation::schema());
+Use the AuthorizationModel's `dsl` method to return it's DSL:
 
-$model = DslTransformer::fromDsl($dsl, $validator);
-$dslString = DslTransformer::toDsl($model);
+```php
+$dsl = $model->dsl(); // Returns a string containing the DSL
 ```
 
 See [docs/DslTransformer.md](docs/DslTransformer.md) for more information.

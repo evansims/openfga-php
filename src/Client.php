@@ -6,8 +6,9 @@ namespace OpenFGA;
 
 use DateTimeImmutable;
 use OpenFGA\Authentication\{AccessToken, AccessTokenInterface, ClientCredentialAuthentication};
-use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface, TupleKeyInterface};
-use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
+use OpenFGA\Language\DslTransformer;
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, ObjectRelation, StoreInterface, TupleKeyInterface, TypeDefinition, Userset};
+use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, WriteAssertionsRequest, WriteTuplesRequest};
@@ -90,6 +91,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function check(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -113,6 +117,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function createAuthorizationModel(
         StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
@@ -130,6 +137,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function createStore(
         string $name,
     ): CreateStoreResponseInterface {
@@ -143,6 +153,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function deleteStore(
         StoreInterface | string $store,
     ): DeleteStoreResponseInterface {
@@ -154,6 +167,29 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function dsl(string $dsl): AuthorizationModelInterface
+    {
+        $validator = $this->getValidator();
+
+        $validator
+            ->registerSchema(AuthorizationModel::schema())
+            ->registerSchema(TypeDefinitions::schema())
+            ->registerSchema(TypeDefinition::schema())
+            ->registerSchema(TypeDefinitionRelations::schema())
+            ->registerSchema(Userset::schema())
+            ->registerSchema(Usersets::schema())
+            ->registerSchema(ObjectRelation::schema());
+
+        return DslTransformer::fromDsl($dsl, $validator);
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public function expand(
         StoreInterface | string $store,
         TupleKeyInterface $tupleKey,
@@ -173,6 +209,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getAuthorizationModel(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -186,18 +225,27 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getLastRequest(): ?\Psr\Http\Message\RequestInterface
     {
         return $this->lastRequest;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getLastResponse(): ?\Psr\Http\Message\ResponseInterface
     {
         return $this->lastResponse;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(
         StoreInterface | string $store,
     ): GetStoreResponseInterface {
@@ -209,6 +257,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function listAuthorizationModels(
         StoreInterface | string $store,
         ?string $continuationToken = null,
@@ -226,6 +277,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function listObjects(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -251,6 +305,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function listStores(
         ?string $continuationToken = null,
         ?int $pageSize = null,
@@ -266,6 +323,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function listTupleChanges(
         StoreInterface | string $store,
         ?string $continuationToken = null,
@@ -287,6 +347,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function listUsers(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -312,6 +375,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function readAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -325,6 +391,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function readTuples(
         StoreInterface | string $store,
         TupleKeyInterface $tupleKey,
@@ -346,6 +415,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function writeAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -361,6 +433,9 @@ final class Client implements ClientInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function writeTuples(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,

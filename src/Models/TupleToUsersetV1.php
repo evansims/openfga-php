@@ -21,18 +21,27 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getComputedUserset(): ObjectRelationInterface
     {
         return $this->computedUserset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleset(): ObjectRelationInterface
     {
         return $this->tupleset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -42,6 +51,9 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

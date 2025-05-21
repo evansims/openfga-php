@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Language\DslTransformer;
 use OpenFGA\Models\Collections\{Conditions, ConditionsInterface, TypeDefinitions, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
@@ -30,30 +31,54 @@ final class AuthorizationModel implements AuthorizationModelInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function dsl(): string
+    {
+        return DslTransformer::toDsl($this);
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getConditions(): ?ConditionsInterface
     {
         return $this->conditions;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getSchemaVersion(): SchemaVersion
     {
         return $this->schemaVersion;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTypeDefinitions(): TypeDefinitionsInterface
     {
         return $this->typeDefinitions;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -65,6 +90,9 @@ final class AuthorizationModel implements AuthorizationModelInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

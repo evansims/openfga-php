@@ -42,6 +42,9 @@ final class RequestManager implements RequestManagerInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getHttpClient(): ClientInterface
     {
         if (! $this->httpClient instanceof ClientInterface) {
@@ -58,6 +61,9 @@ final class RequestManager implements RequestManagerInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getHttpRequestFactory(): RequestFactoryInterface
     {
         if (! $this->httpRequestFactory instanceof RequestFactoryInterface) {
@@ -74,6 +80,9 @@ final class RequestManager implements RequestManagerInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getHttpResponseFactory(): ResponseFactoryInterface
     {
         if (! $this->httpResponseFactory instanceof ResponseFactoryInterface) {
@@ -90,6 +99,9 @@ final class RequestManager implements RequestManagerInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getHttpStreamFactory(): StreamFactoryInterface
     {
         if (! $this->httpStreamFactory instanceof StreamFactoryInterface) {
@@ -106,6 +118,9 @@ final class RequestManager implements RequestManagerInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function request(RequestInterface $request): MessageRequestInterface
     {
         $request = $request->getRequest($this->getHttpStreamFactory());
@@ -146,12 +161,18 @@ final class RequestManager implements RequestManagerInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function send(MessageRequestInterface $request): ResponseInterface
     {
         return $this->getHttpClient()->sendRequest($request);
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function handleResponseException(ResponseInterface $response): void
     {
         $error = '';

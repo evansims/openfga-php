@@ -32,12 +32,18 @@ final class TypedWildcard implements TypedWildcardInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getType(): string
     {
         return $this->type;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -46,6 +52,9 @@ final class TypedWildcard implements TypedWildcardInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

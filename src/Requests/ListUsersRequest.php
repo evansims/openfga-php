@@ -36,42 +36,63 @@ final class ListUsersRequest implements ListUsersRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContext(): ?object
     {
         return $this->context;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getModel(): string
     {
         return $this->model;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getObject(): string
     {
         return $this->object;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRelation(): string
     {
         return $this->relation;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -94,12 +115,18 @@ final class ListUsersRequest implements ListUsersRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): string
     {
         return $this->store;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUserFilters(): UserTypeFiltersInterface
     {
         return $this->userFilters;

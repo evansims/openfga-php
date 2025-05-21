@@ -30,18 +30,27 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getAssertions(): ?AssertionsInterface
     {
         return $this->assertions;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getModel(): string
     {
         return $this->model;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -65,6 +74,9 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

@@ -17,18 +17,27 @@ final class ListStoresRequest implements ListStoresRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $params = array_filter([

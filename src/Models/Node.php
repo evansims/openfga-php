@@ -24,36 +24,54 @@ final class Node implements NodeInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getDifference(): ?UsersetTreeDifferenceInterface
     {
         return $this->difference;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getIntersection(): ?NodeInterface
     {
         return $this->intersection;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getLeaf(): ?LeafInterface
     {
         return $this->leaf;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUnion(): ?NodeInterface
     {
         return $this->union;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -66,6 +84,9 @@ final class Node implements NodeInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

@@ -12,6 +12,9 @@ use Override;
 final class WriteTuplesResponse implements WriteTuplesResponseInterface
 {
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         if (204 === $response->getStatusCode()) {

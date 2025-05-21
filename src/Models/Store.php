@@ -26,36 +26,54 @@ final class Store implements StoreInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getDeletedAt(): ?DateTimeInterface
     {
         return $this->deletedAt;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUpdatedAt(): DateTimeInterface
     {
         return $this->updatedAt;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -68,6 +86,9 @@ final class Store implements StoreInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

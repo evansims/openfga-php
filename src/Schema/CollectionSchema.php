@@ -34,18 +34,27 @@ final class CollectionSchema implements CollectionSchemaInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getClassName(): string
     {
         return $this->className;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getItemType(): string
     {
         return $this->itemType;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getProperties(): array
     {
         // Collection schemas don't have properties in the traditional sense
@@ -53,6 +62,9 @@ final class CollectionSchema implements CollectionSchemaInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getProperty(string $name): ?SchemaProperty
     {
         // Collection schemas don't have properties in the traditional sense
@@ -60,6 +72,9 @@ final class CollectionSchema implements CollectionSchemaInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function requiresItems(): bool
     {
         return $this->requireItems;

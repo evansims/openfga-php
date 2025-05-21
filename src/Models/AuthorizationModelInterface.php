@@ -11,20 +11,40 @@ use Override;
 interface AuthorizationModelInterface extends ModelInterface
 {
     /**
+     * Return a DSL representation of the model.
+     */
+    public function dsl(): string;
+
+    /**
+     * Return the conditions of the model.
+
+     *
      * @return null|ConditionsInterface<ConditionInterface>
      */
     public function getConditions(): ?ConditionsInterface;
 
+    /**
+     * Return the ID of the model.
+     */
     public function getId(): string;
 
+    /**
+     * Return the schema version of the model.
+     */
     public function getSchemaVersion(): SchemaVersion;
 
     /**
+     * Return the type definitions of the model.
+
+     *
      * @return TypeDefinitionsInterface<TypeDefinitionInterface>
      */
     public function getTypeDefinitions(): TypeDefinitionsInterface;
 
     /**
+     * Return a JSON representation of the model.
+
+     *
      * @return array{
      *     id: string,
      *     schema_version: string,

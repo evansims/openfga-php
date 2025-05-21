@@ -20,12 +20,18 @@ final class Computed implements ComputedInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUserset(): string
     {
         return $this->userset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -34,6 +40,9 @@ final class Computed implements ComputedInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

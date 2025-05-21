@@ -28,24 +28,36 @@ final class RelationMetadata implements RelationMetadataInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getDirectlyRelatedUserTypes(): ?RelationReferencesInterface
     {
         return $this->directlyRelatedUserTypes;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getModule(): ?string
     {
         return $this->module;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getSourceInfo(): ?SourceInfoInterface
     {
         return $this->sourceInfo;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -56,6 +68,9 @@ final class RelationMetadata implements RelationMetadataInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

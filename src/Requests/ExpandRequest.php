@@ -30,24 +30,36 @@ final class ExpandRequest implements ExpandRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getModel(): ?string
     {
         return $this->model;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -67,12 +79,18 @@ final class ExpandRequest implements ExpandRequestInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): string
     {
         return $this->store;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;

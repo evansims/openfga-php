@@ -77,6 +77,15 @@ interface ClientInterface
     ): DeleteStoreResponseInterface;
 
     /**
+     * Parses a DSL string and returns an AuthorizationModel.
+     *
+     * @param string $dsl The DSL string to parse
+     *
+     * @return AuthorizationModelInterface The parsed authorization model
+     */
+    public function dsl(string $dsl): AuthorizationModelInterface;
+
+    /**
      * Expands a relationship tuple to show all users that have the relationship.
      *
      * @param StoreInterface|string                      $store            The store containing the tuple

@@ -26,12 +26,18 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getObjects(): array
     {
         return $this->objects;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         $json = (string) $response->getBody();
@@ -54,6 +60,9 @@ final class ListObjectsResponse implements ListObjectsResponseInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

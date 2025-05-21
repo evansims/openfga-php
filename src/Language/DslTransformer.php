@@ -7,13 +7,18 @@ namespace OpenFGA\Language;
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, TypeDefinitionInterface, UsersetInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\SchemaValidator;
+use Override;
 use stdClass;
 
 use function count;
 use function strlen;
 
-final class DslTransformer
+final class DslTransformer implements DslTransformerInterface
 {
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromDsl(string $dsl, SchemaValidator $validator): AuthorizationModelInterface
     {
         $lines = preg_split('/\r?\n/', $dsl);
@@ -85,6 +90,10 @@ final class DslTransformer
         return $validator->validateAndTransform($data, AuthorizationModel::class);
     }
 
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function toDsl(AuthorizationModelInterface $model): string
     {
         $lines = [];

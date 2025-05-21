@@ -20,24 +20,36 @@ final class UsersetUser implements UsersetUserInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRelation(): string
     {
         return $this->relation;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getType(): string
     {
         return $this->type;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -48,6 +60,9 @@ final class UsersetUser implements UsersetUserInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

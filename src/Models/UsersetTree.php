@@ -20,12 +20,18 @@ final class UsersetTree implements UsersetTreeInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRoot(): NodeInterface
     {
         return $this->root;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -34,6 +40,9 @@ final class UsersetTree implements UsersetTreeInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

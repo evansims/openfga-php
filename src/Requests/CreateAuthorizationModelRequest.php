@@ -28,12 +28,18 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getConditions(): ?ConditionsInterface
     {
         return $this->conditions;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = array_filter([
@@ -52,18 +58,27 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getSchemaVersion(): SchemaVersion
     {
         return $this->schemaVersion;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getStore(): string
     {
         return $this->store;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTypeDefinitions(): TypeDefinitionsInterface
     {
         return $this->typeDefinitions;

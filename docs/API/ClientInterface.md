@@ -83,6 +83,23 @@ Deletes a store.
 #### Returns
 `[DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)` The deletion result
 
+### dsl
+
+
+```php
+public function dsl(string $dsl): [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+```
+
+Parses a DSL string and returns an AuthorizationModel.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$dsl` | `string` | The DSL string to parse |
+
+#### Returns
+`[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)` The parsed authorization model
+
 ### expand
 
 

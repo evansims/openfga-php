@@ -26,18 +26,27 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getComputed(): ComputedsInterface
     {
         return $this->computed;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleset(): string
     {
         return $this->tupleset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -47,6 +56,9 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

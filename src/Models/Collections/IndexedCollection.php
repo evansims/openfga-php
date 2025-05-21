@@ -60,6 +60,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function add($item): static
     {
         if (! $item instanceof static::$itemType) {
@@ -72,6 +75,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function clear(): void
     {
         $this->models = [];
@@ -79,12 +85,18 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function count(): int
     {
         return count($this->models);
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function current(): ModelInterface
     {
         $key = $this->key();
@@ -93,6 +105,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function every(callable $callback): bool
     {
         foreach ($this->models as $model) {
@@ -105,6 +120,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function filter(callable $callback): static
     {
         /** @var static<T> $new */
@@ -120,6 +138,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function first(?callable $callback = null)
     {
         if (null === $callback) {
@@ -136,6 +157,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function get(int $offset)
     {
         return $this->models[$offset] ?? null;
@@ -147,6 +171,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_map(
@@ -156,6 +183,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function key(): int
     {
         $key = array_keys($this->models)[$this->position] ?? null;
@@ -168,24 +198,36 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function next(): void
     {
         ++$this->position;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function offsetExists(mixed $offset): bool
     {
         return isset($this->models[$offset]);
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function offsetGet(mixed $offset): ?ModelInterface
     {
         return $this->models[$offset] ?? null;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
@@ -200,6 +242,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function offsetUnset(mixed $offset): void
     {
         if (isset($this->models[$offset])) {
@@ -213,6 +258,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function reduce(mixed $initial, callable $callback): mixed
     {
         $result = $initial;
@@ -224,12 +272,18 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function rewind(): void
     {
         $this->position = 0;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function some(callable $callback): bool
     {
         foreach ($this->models as $model) {
@@ -242,12 +296,18 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function toArray(): array
     {
         return $this->models;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function valid(): bool
     {
         $keys = array_keys($this->models);
@@ -256,6 +316,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function withItems(...$items): static
     {
         /** @var static<T> $new */
@@ -266,6 +329,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): CollectionSchemaInterface
     {
         if (! isset(static::$itemType)) {

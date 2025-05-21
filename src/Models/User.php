@@ -21,24 +21,36 @@ final class User implements UserInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getObject(): ?object
     {
         return $this->object;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUserset(): ?UsersetUserInterface
     {
         return $this->userset;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getWildcard(): ?TypedWildcardInterface
     {
         return $this->wildcard;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -49,6 +61,9 @@ final class User implements UserInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

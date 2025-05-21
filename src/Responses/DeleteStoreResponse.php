@@ -12,6 +12,9 @@ use Override;
 final class DeleteStoreResponse implements DeleteStoreResponseInterface
 {
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
     {
         if (204 === $response->getStatusCode()) {

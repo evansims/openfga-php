@@ -23,30 +23,45 @@ final class TupleKey implements TupleKeyInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getCondition(): ?ConditionInterface
     {
         return $this->condition;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getObject(): string
     {
         return $this->object;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getRelation(): string
     {
         return $this->relation;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUser(): string
     {
         return $this->user;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -58,6 +73,9 @@ final class TupleKey implements TupleKeyInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

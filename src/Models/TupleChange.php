@@ -25,24 +25,36 @@ final class TupleChange implements TupleChangeInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getOperation(): TupleOperation
     {
         return $this->operation;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -53,6 +65,9 @@ final class TupleChange implements TupleChangeInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

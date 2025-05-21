@@ -27,18 +27,27 @@ final class UsersListUser implements UsersListUserInterface
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function getUser(): string
     {
         return $this->user;
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): string
     {
         return $this->getUser();
     }
 
     #[Override]
+    /**
+     * @inheritDoc
+     */
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
