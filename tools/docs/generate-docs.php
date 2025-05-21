@@ -11,7 +11,6 @@ if (!file_exists($autoloader)) {
 
 require_once $autoloader;
 
-use OpenFGA\Client;
 use Symfony\Component\Finder\Finder;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -375,7 +374,7 @@ class DocumentationGenerator
             
             if ($param->isDefaultValueAvailable()) {
                 $default = $param->getDefaultValue();
-                $paramStr .= ' = ' . json_encode($default);
+                $paramStr .= ' = ' . var_export($default, true);
             }
             
             $params[] = $paramStr;
@@ -662,17 +661,42 @@ class DocumentationGenerator
         
         return trim(implode(' ', $description));
     }
+
+    private static function deleteDir(string $dir): void
+    {
+        if (!is_dir($dir)) {
+            return;
+        }
+
+        foreach (array_diff(scandir($dir), ['.', '..']) as $item) {
+            $path = $dir . DIRECTORY_SEPARATOR . $item;
+            if (is_dir($path)) {
+                self::deleteDir($path);
+            } else {
+                unlink($path);
+            }
+        }
+
+        rmdir($dir);
+    }
 }
 
-// Run the generator
-$srcDir = __DIR__ . '/../../src';
-$outputDir = __DIR__ . '/../../docs/API';
+if (php_sapi_name() === 'cli' && realpath($argv[0]) === __FILE__) {
+    $options = getopt('', ['src::', 'out::', 'clean']);
 
-if (!is_dir($outputDir)) {
-    mkdir($outputDir, 0755, true);
+    $srcDir = $options['src'] ?? __DIR__ . '/../../src';
+    $outputDir = $options['out'] ?? __DIR__ . '/../../docs/API';
+
+    if (isset($options['clean']) && is_dir($outputDir)) {
+        DocumentationGenerator::deleteDir($outputDir);
+    }
+
+    if (!is_dir($outputDir)) {
+        mkdir($outputDir, 0755, true);
+    }
+
+    $generator = new DocumentationGenerator($srcDir, $outputDir);
+    $generator->generate();
+
+    echo "Documentation generated successfully!\n";
 }
-
-$generator = new DocumentationGenerator($srcDir, $outputDir);
-$generator->generate();
-
-echo "Documentation generated successfully!\n";

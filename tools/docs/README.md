@@ -26,10 +26,12 @@ This tool generates API documentation from the OpenFGA PHP SDK source code.
 Run the documentation generator:
 
 ```bash
-php generate-docs.php
+php generate-docs.php [--src=path/to/src] [--out=path/to/output] [--clean]
 ```
 
-This will parse all PHP files in the `src/` directory and generate Markdown documentation in the `docs/API/` directory.
+`--src` and `--out` let you override the default source and output folders. The optional `--clean` flag removes the output directory before generating files.
+
+This will parse all PHP files in the `src/` directory and generate Markdown documentation in the `docs/API/` directory by default.
 
 ## Customizing the Output
 
