@@ -113,6 +113,8 @@ $assertions = $client->readAssertions($store->getId(), $model->getId());
 $client->writeAssertions($store->getId(), $model->getId(), $assertions);
 ```
 
+Further examples are available in the `docs` directory.
+
 ---
 
 Licensed under the Apache 2.0 License.
