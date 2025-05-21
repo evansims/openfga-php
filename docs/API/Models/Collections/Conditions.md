@@ -5,13 +5,13 @@
 `OpenFGA\Models\Collections`
 
 ## Implements
-* `OpenFGA\Models\Collections\IndexedCollectionInterface`
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
-* `OpenFGA\Models\Collections\ConditionsInterface`
+* [IndexedCollectionInterface](Models/Collections/IndexedCollectionInterface.md)
+* Traversable
+* JsonSerializable
+* Iterator
+* Countable
+* ArrayAccess
+* [ConditionsInterface](Models/Collections/ConditionsInterface.md)
 
 ## Methods
 ### add
@@ -54,13 +54,13 @@ public function count(): int
 ### current
 
 ```php
-public function current(): ModelInterface
+public function current(): [ModelInterface](Models/ModelInterface.md)
 ```
 
 
 
 #### Returns
-`ModelInterface` 
+`[ModelInterface](Models/ModelInterface.md)` 
 
 ### every
 
@@ -180,7 +180,7 @@ public function offsetExists(mixed $offset): bool
 ### offsetGet
 
 ```php
-public function offsetGet(mixed $offset): ?ModelInterface
+public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterface.md)
 ```
 
 
@@ -190,7 +190,7 @@ public function offsetGet(mixed $offset): ?ModelInterface
 | `$offset` | `mixed` |  |
 
 #### Returns
-`?ModelInterface` 
+`?[ModelInterface](Models/ModelInterface.md)` 
 
 ### offsetSet
 

@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ListObjectsResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getObjects

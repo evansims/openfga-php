@@ -42,13 +42,30 @@ class DocumentationGenerator
     {
         $finder = new Finder();
         $finder->files()->in($this->srcDir)->name('*.php');
+        $totalFiles = 0;
+        $processedFiles = 0;
 
+        echo "Scanning for PHP files in: " . $this->srcDir . "\n";
+        
         foreach ($finder as $file) {
-            $className = $this->getClassNameFromFile($file->getRealPath());
+            $totalFiles++;
+            $filePath = $file->getRealPath();
+            $className = $this->getClassNameFromFile($filePath);
+            
             if ($className) {
-                $this->classMap[$className] = $file->getRealPath();
+                $this->classMap[$className] = $filePath;
+                $processedFiles++;
+                
+                // Only show progress for every 10 files to reduce noise
+                if ($processedFiles % 10 === 0) {
+                    echo "Processed $processedFiles files...\n";
+                }
+            } else {
+                echo "Skipping file (no class/interface found): " . $file->getRelativePathname() . "\n";
             }
         }
+        
+        echo "Build complete. Processed $processedFiles of $totalFiles files. Found " . count($this->classMap) . " classes/interfaces.\n";
     }
 
     /**
@@ -69,47 +86,114 @@ class DocumentationGenerator
 
     private function getClassNameFromFile(string $file): ?string
     {
+        static $cache = [];
+        
+        // Use cached result if available
+        if (isset($cache[$file])) {
+            return $cache[$file];
+        }
+        
         $content = @file_get_contents($file);
         if ($content === false) {
+            echo "[DEBUG] Could not read file: $file\n";
+            $cache[$file] = null;
             return null;
         }
         
-        if (!preg_match('/namespace\s+([^;]+);/', $content, $namespaceMatches)) {
+        // Skip files that don't contain a namespace
+        if (!preg_match('/namespace\s+([^;]+);/s', $content, $namespaceMatches)) {
+            echo "[DEBUG] No namespace found in file: $file\n";
+            $cache[$file] = null;
             return null;
         }
         
         $namespace = $namespaceMatches[1];
         
-        if (!preg_match('/class\s+(\w+)/', $content, $classMatches)) {
-            return null;
+        // Look for either class or interface definition
+        if (preg_match('/(class|interface)\s+(\w+)/', $content, $matches)) {
+            $type = $matches[1]; // 'class' or 'interface'
+            $name = $matches[2];
+            $className = $namespace . '\\' . $name;
+            echo "[DEBUG] Found $type: $className in $file\n";
+            $cache[$file] = $className;
+            return $className;
         }
         
-        $className = $classMatches[1];
-        
-        return $namespace . '\\' . $className;
+        echo "[DEBUG] No class or interface found in file: $file\n";
+        $cache[$file] = null;
+        return null;
     }
 
     private function generateDocumentation(): void
     {
+        echo "Generating documentation...\n";
+        $interfaceCount = 0;
+        $classCount = 0;
+        $skippedCount = 0;
+        $totalInterfaces = 0;
+        
+        // First, count total interfaces for progress reporting
         foreach ($this->classMap as $className => $file) {
-            $this->generateClassDocumentation($className, $file);
+            try {
+                $reflection = new ReflectionClass($className);
+                if ($reflection->isInterface()) {
+                    $totalInterfaces++;
+                }
+            } catch (\Exception $e) {
+                // Ignore errors during counting
+            }
         }
+        
+        // Now process all classes and interfaces
+        $processedInterfaces = 0;
+        
+        foreach ($this->classMap as $className => $file) {
+            try {
+                $reflection = new ReflectionClass($className);
+                $isInterface = $reflection->isInterface();
+                
+                // Skip abstract classes that are not interfaces
+                if ($reflection->isAbstract() && !$isInterface) {
+                    $skippedCount++;
+                    continue;
+                }
+                
+                if ($isInterface) {
+                    $interfaceCount++;
+                    $processedInterfaces++;
+                    echo "Generating interface: $className ($processedInterfaces/$totalInterfaces)\n";
+                } else {
+                    $classCount++;
+                    echo "Generating class: $className\n";
+                }
+                
+                $this->generateClassDocumentation($className, $file, $isInterface);
+                
+            } catch (\Exception $e) {
+                echo "Error processing $className: " . $e->getMessage() . "\n";
+            }
+        }
+        
+        echo "Documentation generation complete. Generated $classCount classes, $interfaceCount interfaces, and skipped $skippedCount abstract classes.\n";
     }
 
-    private function generateClassDocumentation(string $className, string $file): void
+    private function generateClassDocumentation(string $className, string $file, bool $isInterface = false): void
     {
         $reflection = new ReflectionClass($className);
         
-        // Skip abstract classes and interfaces
-        if ($reflection->isAbstract() || $reflection->isInterface()) {
+        // Skip abstract classes (but not interfaces)
+        if ($reflection->isAbstract() && !$isInterface) {
             return;
         }
 
         $classData = [
             'className' => $reflection->getShortName(),
             'namespace' => $reflection->getNamespaceName(),
+            'isInterface' => $isInterface,
             'classDescription' => $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
-            'interfaces' => array_map(fn($i) => $i->getName(), $reflection->getInterfaces()),
+            'interfaces' => array_map(function($interface) {
+                return $this->convertToMarkdownLink($interface->getName());
+            }, $reflection->getInterfaces()),
             'methods' => [],
         ];
 
@@ -161,12 +245,21 @@ class DocumentationGenerator
                 mkdir($outputPath, 0755, true);
             }
         }
+        
+        // Ensure the output directory exists
+        if (!is_dir($outputPath)) {
+            mkdir($outputPath, 0755, true);
+        }
 
         // Render and save
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
+        echo "Writing to: $outputFile\n";
         $content = $this->twig->render('documentation.twig', $classData);
         
-        file_put_contents($outputFile, $content);
+        $result = file_put_contents($outputFile, $content);
+        if ($result === false) {
+            echo "Failed to write to: $outputFile\n";
+        }
     }
 
     private function getMethodSignature(ReflectionMethod $method): string

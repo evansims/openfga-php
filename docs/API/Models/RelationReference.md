@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\RelationReferenceInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [RelationReferenceInterface](Models/RelationReferenceInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getCondition

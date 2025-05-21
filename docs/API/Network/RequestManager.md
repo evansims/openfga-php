@@ -5,7 +5,7 @@
 `OpenFGA\Network`
 
 ## Implements
-* `OpenFGA\Network\RequestManagerInterface`
+* [RequestManagerInterface](Network/RequestManagerInterface.md)
 
 ## Methods
 ### getHttpClient
@@ -55,14 +55,14 @@ public function getHttpStreamFactory(): StreamFactoryInterface
 ### request
 
 ```php
-public function request(RequestInterface $request): Psr\Http\Message\RequestInterface
+public function request([RequestInterface](Requests/RequestInterface.md) $request): Psr\Http\Message\RequestInterface
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | `RequestInterface` |  |
+| `$request` | `[RequestInterface](Requests/RequestInterface.md)` |  |
 
 #### Returns
 `Psr\Http\Message\RequestInterface` 

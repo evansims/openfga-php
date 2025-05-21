@@ -5,6 +5,6 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\DeleteStoreResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 

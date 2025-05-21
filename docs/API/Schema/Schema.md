@@ -5,7 +5,7 @@
 `OpenFGA\Schema`
 
 ## Implements
-* `OpenFGA\Schema\SchemaInterface`
+* [SchemaInterface](Schema/SchemaInterface.md)
 
 ## Methods
 ### getClassName

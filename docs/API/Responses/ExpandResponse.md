@@ -5,18 +5,18 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ExpandResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ExpandResponseInterface](Responses/ExpandResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getTree
 
 ```php
-public function getTree(): ?UsersetTreeInterface
+public function getTree(): ?[UsersetTreeInterface](Models/UsersetTreeInterface.md)
 ```
 
 
 
 #### Returns
-`?UsersetTreeInterface` 
+`?[UsersetTreeInterface](Models/UsersetTreeInterface.md)` 
 

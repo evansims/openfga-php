@@ -5,43 +5,43 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\LeafInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [LeafInterface](Models/LeafInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getComputed
 
 ```php
-public function getComputed(): ?ComputedInterface
+public function getComputed(): ?[ComputedInterface](Models/ComputedInterface.md)
 ```
 
 
 
 #### Returns
-`?ComputedInterface` 
+`?[ComputedInterface](Models/ComputedInterface.md)` 
 
 ### getTupleToUserset
 
 ```php
-public function getTupleToUserset(): ?UsersetTreeTupleToUsersetInterface
+public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
 ```
 
 
 
 #### Returns
-`?UsersetTreeTupleToUsersetInterface` 
+`?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)` 
 
 ### getUsers
 
 ```php
-public function getUsers(): ?UsersListInterface
+public function getUsers(): ?[UsersListInterface](Models/Collections/UsersListInterface.md)
 ```
 
 
 
 #### Returns
-`?UsersListInterface` 
+`?[UsersListInterface](Models/Collections/UsersListInterface.md)` 
 
 ### jsonSerialize
 

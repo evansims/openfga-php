@@ -5,8 +5,8 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\CheckResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [CheckResponseInterface](Responses/CheckResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getAllowed

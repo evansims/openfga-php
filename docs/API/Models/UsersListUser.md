@@ -5,10 +5,10 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\UsersListUserInterface`
-* `Stringable`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [UsersListUserInterface](Models/UsersListUserInterface.md)
+* Stringable
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getUser

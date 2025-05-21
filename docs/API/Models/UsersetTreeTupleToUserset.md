@@ -5,21 +5,21 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\UsersetTreeTupleToUsersetInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getComputed
 
 ```php
-public function getComputed(): ComputedsInterface
+public function getComputed(): [ComputedsInterface](Models/Collections/ComputedsInterface.md)
 ```
 
 
 
 #### Returns
-`ComputedsInterface` 
+`[ComputedsInterface](Models/Collections/ComputedsInterface.md)` 
 
 ### getTupleset
 

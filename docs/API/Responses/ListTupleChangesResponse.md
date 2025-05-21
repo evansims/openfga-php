@@ -5,20 +5,20 @@
 `OpenFGA\Responses`
 
 ## Implements
-* `OpenFGA\Responses\ListTupleChangesResponseInterface`
-* `OpenFGA\Responses\ResponseInterface`
+* [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md)
+* [ResponseInterface](Responses/ResponseInterface.md)
 
 ## Methods
 ### getChanges
 
 ```php
-public function getChanges(): TupleChangesInterface
+public function getChanges(): [TupleChangesInterface](Models/Collections/TupleChangesInterface.md)
 ```
 
 
 
 #### Returns
-`TupleChangesInterface` 
+`[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)` 
 
 ### getContinuationToken
 

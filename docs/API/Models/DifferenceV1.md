@@ -5,32 +5,32 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\DifferenceV1Interface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [DifferenceV1Interface](Models/DifferenceV1Interface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getBase
 
 ```php
-public function getBase(): UsersetInterface
+public function getBase(): [UsersetInterface](Models/UsersetInterface.md)
 ```
 
 
 
 #### Returns
-`UsersetInterface` 
+`[UsersetInterface](Models/UsersetInterface.md)` 
 
 ### getSubtract
 
 ```php
-public function getSubtract(): UsersetInterface
+public function getSubtract(): [UsersetInterface](Models/UsersetInterface.md)
 ```
 
 
 
 #### Returns
-`UsersetInterface` 
+`[UsersetInterface](Models/UsersetInterface.md)` 
 
 ### jsonSerialize
 

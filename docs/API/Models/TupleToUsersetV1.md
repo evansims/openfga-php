@@ -5,32 +5,32 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\TupleToUsersetV1Interface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getComputedUserset
 
 ```php
-public function getComputedUserset(): ObjectRelationInterface
+public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
 ```
 
 
 
 #### Returns
-`ObjectRelationInterface` 
+`[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
 
 ### getTupleset
 
 ```php
-public function getTupleset(): ObjectRelationInterface
+public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
 ```
 
 
 
 #### Returns
-`ObjectRelationInterface` 
+`[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
 
 ### jsonSerialize
 

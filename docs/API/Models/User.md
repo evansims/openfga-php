@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\UserInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [UserInterface](Models/UserInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getObject
@@ -24,24 +24,24 @@ public function getObject(): ?object
 ### getUserset
 
 ```php
-public function getUserset(): ?UsersetUserInterface
+public function getUserset(): ?[UsersetUserInterface](Models/UsersetUserInterface.md)
 ```
 
 
 
 #### Returns
-`?UsersetUserInterface` 
+`?[UsersetUserInterface](Models/UsersetUserInterface.md)` 
 
 ### getWildcard
 
 ```php
-public function getWildcard(): ?TypedWildcardInterface
+public function getWildcard(): ?[TypedWildcardInterface](Models/TypedWildcardInterface.md)
 ```
 
 
 
 #### Returns
-`?TypedWildcardInterface` 
+`?[TypedWildcardInterface](Models/TypedWildcardInterface.md)` 
 
 ### jsonSerialize
 

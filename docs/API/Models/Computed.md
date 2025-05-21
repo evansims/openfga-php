@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\ComputedInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [ComputedInterface](Models/ComputedInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getUserset

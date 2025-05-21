@@ -5,32 +5,32 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\UsersetInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [UsersetInterface](Models/UsersetInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getComputedUserset
 
 ```php
-public function getComputedUserset(): ?ObjectRelationInterface
+public function getComputedUserset(): ?[ObjectRelationInterface](Models/ObjectRelationInterface.md)
 ```
 
 
 
 #### Returns
-`?ObjectRelationInterface` 
+`?[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
 
 ### getDifference
 
 ```php
-public function getDifference(): ?DifferenceV1Interface
+public function getDifference(): ?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
 ```
 
 
 
 #### Returns
-`?DifferenceV1Interface` 
+`?[DifferenceV1Interface](Models/DifferenceV1Interface.md)` 
 
 ### getDirect
 
@@ -46,35 +46,35 @@ public function getDirect(): ?object
 ### getIntersection
 
 ```php
-public function getIntersection(): ?UsersetsInterface
+public function getIntersection(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
 ```
 
 
 
 #### Returns
-`?UsersetsInterface` 
+`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)` 
 
 ### getTupleToUserset
 
 ```php
-public function getTupleToUserset(): ?TupleToUsersetV1Interface
+public function getTupleToUserset(): ?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
 ```
 
 
 
 #### Returns
-`?TupleToUsersetV1Interface` 
+`?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)` 
 
 ### getUnion
 
 ```php
-public function getUnion(): ?UsersetsInterface
+public function getUnion(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
 ```
 
 
 
 #### Returns
-`?UsersetsInterface` 
+`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)` 
 
 ### jsonSerialize
 

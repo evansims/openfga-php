@@ -5,32 +5,32 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\UsersetTreeDifferenceInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getBase
 
 ```php
-public function getBase(): NodeInterface
+public function getBase(): [NodeInterface](Models/NodeInterface.md)
 ```
 
 
 
 #### Returns
-`NodeInterface` 
+`[NodeInterface](Models/NodeInterface.md)` 
 
 ### getSubtract
 
 ```php
-public function getSubtract(): NodeInterface
+public function getSubtract(): [NodeInterface](Models/NodeInterface.md)
 ```
 
 
 
 #### Returns
-`NodeInterface` 
+`[NodeInterface](Models/NodeInterface.md)` 
 
 ### jsonSerialize
 

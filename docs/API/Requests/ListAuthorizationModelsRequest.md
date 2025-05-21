@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\ListAuthorizationModelsRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getContinuationToken

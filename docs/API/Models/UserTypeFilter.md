@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\UserTypeFilterInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [UserTypeFilterInterface](Models/UserTypeFilterInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getRelation

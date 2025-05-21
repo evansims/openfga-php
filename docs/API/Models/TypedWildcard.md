@@ -5,10 +5,10 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\TypedWildcardInterface`
-* `Stringable`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [TypedWildcardInterface](Models/TypedWildcardInterface.md)
+* Stringable
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getType

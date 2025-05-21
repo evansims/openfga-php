@@ -5,21 +5,21 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\ConditionParameterInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [ConditionParameterInterface](Models/ConditionParameterInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getGenericTypes
 
 ```php
-public function getGenericTypes(): ?ConditionParametersInterface
+public function getGenericTypes(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 ```
 
 
 
 #### Returns
-`?ConditionParametersInterface` 
+`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)` 
 
 ### getTypeName
 

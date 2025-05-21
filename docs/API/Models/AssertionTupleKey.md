@@ -5,9 +5,9 @@
 `OpenFGA\Models`
 
 ## Implements
-* `OpenFGA\Models\AssertionTupleKeyInterface`
-* `JsonSerializable`
-* `OpenFGA\Models\ModelInterface`
+* [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
+* JsonSerializable
+* [ModelInterface](Models/ModelInterface.md)
 
 ## Methods
 ### getObject

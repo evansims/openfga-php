@@ -5,8 +5,8 @@
 `OpenFGA\Requests`
 
 ## Implements
-* `OpenFGA\Requests\DeleteStoreRequestInterface`
-* `OpenFGA\Requests\RequestInterface`
+* [DeleteStoreRequestInterface](Requests/DeleteStoreRequestInterface.md)
+* [RequestInterface](Requests/RequestInterface.md)
 
 ## Methods
 ### getRequest
