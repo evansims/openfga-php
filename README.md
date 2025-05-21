@@ -124,6 +124,7 @@ $client->writeAssertions($store->getId(), $model->getId(), $assertions);
 ```
 
 See [docs/Assertions.md](docs/Assertions.md) for more information.
+See [docs/API/README.md](docs/API/README.md) for the full API reference.
 
 ---
 
