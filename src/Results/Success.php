@@ -77,7 +77,7 @@ final class Success extends Result implements ResultInterface
     {
         $mappedValue = $fn($this->value);
 
-        return new static($mappedValue);
+        return new self($mappedValue);
     }
 
     #[Override]

@@ -87,7 +87,7 @@ final class Failure extends Result implements ResultInterface
     {
         $result = $fn($this->error);
 
-        return new static($result);
+        return new self($result);
     }
 
     #[Override]
