@@ -61,14 +61,11 @@ final class Success extends Result
 
     #[Override]
     /**
-     * @inheritDoc
-     */
-    /**
      * @template U
-     *
      * @param callable(T): U $fn
-     *
      * @return static<U, E>
+     * @psalm-return Success<U, E>
+     * @phpstan-return Success<U, E>
      */
     public function map(callable $fn): static
     {
@@ -76,7 +73,7 @@ final class Success extends Result
         $mappedValue = $fn($this->value);
 
         // Create a new Success with the mapped value
-        return new self($mappedValue);
+        return new static($mappedValue);
     }
 
     #[Override]

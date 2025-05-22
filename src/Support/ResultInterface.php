@@ -38,15 +38,11 @@ interface ResultInterface
     public function getValue(): mixed;
 
     /**
-     * @return bool
-     *
      * @phpstan-assert-if-true Failure<E> $this
      */
     public function isFailure(): bool;
 
     /**
-     * @return bool
-     *
      * @phpstan-assert-if-true Success<T, E> $this
      */
     public function isSuccess(): bool;

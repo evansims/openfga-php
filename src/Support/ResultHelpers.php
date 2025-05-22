@@ -26,8 +26,6 @@ function unwrap(ResultInterface $result, mixed $default = null): mixed
  *
  * @param ResultInterface<T, E>  $result
  * @param null|callable(T): void $fn
- *
- * @return bool
  */
 function success(ResultInterface $result, ?callable $fn = null): bool
 {
@@ -48,8 +46,6 @@ function success(ResultInterface $result, ?callable $fn = null): bool
  *
  * @param ResultInterface<T, E>  $result
  * @param null|callable(E): void $fn
- *
- * @return bool
  */
 function failure(ResultInterface $result, ?callable $fn = null): bool
 {

@@ -16,16 +16,10 @@ use Throwable;
 final class Failure extends Result
 {
     /**
-     * @var E
-     */
-    private readonly Throwable $error;
-
-    /**
      * @param E $error
      */
-    public function __construct(Throwable $error)
+    public function __construct(private readonly Throwable $error)
     {
-        $this->error = $error;
     }
 
     #[Override]
@@ -131,10 +125,14 @@ final class Failure extends Result
 
     #[Override]
     /**
-     * @inheritDoc
+     * @template F of Throwable
+     * @param F $error
+     * @return static<F>
+     * @psalm-return Failure<F>
+     * @phpstan-return Failure<F>
      */
     public static function createFailure(Throwable $error): static
     {
-        return new self($error);
+        return new static($error);
     }
 }
