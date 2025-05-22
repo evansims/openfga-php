@@ -35,7 +35,7 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): CreateAuthorizationModelResponseInterface
     {
         $json = (string) $response->getBody();
 

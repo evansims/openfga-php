@@ -15,7 +15,7 @@ final class DeleteStoreResponse implements DeleteStoreResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): DeleteStoreResponseInterface
     {
         if (204 === $response->getStatusCode()) {
             return new self();

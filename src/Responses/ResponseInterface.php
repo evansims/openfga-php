@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Schema\SchemaValidator;
+use ReturnTypeWillChange;
 
 interface ResponseInterface
 {
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static;
+    #[ReturnTypeWillChange]
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): self;
 }

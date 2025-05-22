@@ -12,10 +12,12 @@ use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleK
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, WriteAssertionsRequest, WriteTuplesRequest};
-use OpenFGA\Responses\{CheckResponse, CheckResponseInterface, CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface, CreateStoreResponse, CreateStoreResponseInterface, DeleteStoreResponse, DeleteStoreResponseInterface, ExpandResponse, ExpandResponseInterface, GetAuthorizationModelResponse, GetAuthorizationModelResponseInterface, GetStoreResponse, GetStoreResponseInterface, ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface, ListObjectsResponse, ListObjectsResponseInterface, ListStoresResponse, ListStoresResponseInterface, ListTupleChangesResponse, ListTupleChangesResponseInterface, ListUsersResponse, ListUsersResponseInterface, ReadAssertionsResponse, ReadAssertionsResponseInterface, ReadTuplesResponse, ReadTuplesResponseInterface, WriteAssertionsResponse, WriteAssertionsResponseInterface, WriteTuplesResponse, WriteTuplesResponseInterface};
+use OpenFGA\Responses\{CheckResponse, CreateAuthorizationModelResponse, CreateStoreResponse, DeleteStoreResponse, ExpandResponse, GetAuthorizationModelResponse, GetStoreResponse, ListAuthorizationModelsResponse, ListObjectsResponse, ListStoresResponse, ListTupleChangesResponse, ListUsersResponse, ReadAssertionsResponse, ReadTuplesResponse, WriteAssertionsResponse, WriteTuplesResponse};
+use OpenFGA\Results\{Failure, ResultInterface, Success};
 use OpenFGA\Schema\SchemaValidator;
 
 use Override;
+use Throwable;
 
 use function is_string;
 
@@ -102,7 +104,7 @@ final class Client implements ClientInterface
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): CheckResponseInterface {
+    ): ResultInterface {
         $request = new CheckRequest(
             store: self::getStoreId($store),
             model: self::getModelId($model),
@@ -113,7 +115,11 @@ final class Client implements ClientInterface
             consistency: $consistency,
         );
 
-        return CheckResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(CheckResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -125,7 +131,7 @@ final class Client implements ClientInterface
         TypeDefinitionsInterface $typeDefinitions,
         ConditionsInterface $conditions,
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
-    ): CreateAuthorizationModelResponseInterface {
+    ): ResultInterface {
         $request = new CreateAuthorizationModelRequest(
             typeDefinitions: $typeDefinitions,
             conditions: $conditions,
@@ -133,7 +139,11 @@ final class Client implements ClientInterface
             store: self::getStoreId($store),
         );
 
-        return CreateAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(CreateAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -142,14 +152,18 @@ final class Client implements ClientInterface
      */
     public function createStore(
         string $name,
-    ): CreateStoreResponseInterface {
+    ): ResultInterface {
         $name = trim($name);
 
         $request = new CreateStoreRequest(
             name: $name,
         );
 
-        return CreateStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(CreateStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -158,32 +172,40 @@ final class Client implements ClientInterface
      */
     public function deleteStore(
         StoreInterface | string $store,
-    ): DeleteStoreResponseInterface {
+    ): ResultInterface {
         $request = new DeleteStoreRequest(
             store: self::getStoreId($store),
         );
 
-        return DeleteStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(DeleteStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
     /**
      * @inheritDoc
      */
-    public function dsl(string $dsl): AuthorizationModelInterface
+    public function dsl(string $dsl): ResultInterface
     {
-        $validator = $this->getValidator();
+        try {
+            $validator = $this->getValidator();
 
-        $validator
-            ->registerSchema(AuthorizationModel::schema())
-            ->registerSchema(TypeDefinitions::schema())
-            ->registerSchema(TypeDefinition::schema())
-            ->registerSchema(TypeDefinitionRelations::schema())
-            ->registerSchema(Userset::schema())
-            ->registerSchema(Usersets::schema())
-            ->registerSchema(ObjectRelation::schema());
+            $validator
+                ->registerSchema(AuthorizationModel::schema())
+                ->registerSchema(TypeDefinitions::schema())
+                ->registerSchema(TypeDefinition::schema())
+                ->registerSchema(TypeDefinitionRelations::schema())
+                ->registerSchema(Userset::schema())
+                ->registerSchema(Usersets::schema())
+                ->registerSchema(ObjectRelation::schema());
 
-        return DslTransformer::fromDsl($dsl, $validator);
+            return new Success(DslTransformer::fromDsl($dsl, $validator));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -196,7 +218,7 @@ final class Client implements ClientInterface
         AuthorizationModelInterface | string | null $model = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): ExpandResponseInterface {
+    ): ResultInterface {
         $request = new ExpandRequest(
             tupleKey: $tupleKey,
             contextualTuples: $contextualTuples,
@@ -205,7 +227,11 @@ final class Client implements ClientInterface
             consistency: $consistency,
         );
 
-        return ExpandResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ExpandResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -215,13 +241,17 @@ final class Client implements ClientInterface
     public function getAuthorizationModel(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
-    ): GetAuthorizationModelResponseInterface {
+    ): ResultInterface {
         $request = new GetAuthorizationModelRequest(
             store: self::getStoreId($store),
             model: self::getModelId($model),
         );
 
-        return GetAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(GetAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -248,12 +278,16 @@ final class Client implements ClientInterface
      */
     public function getStore(
         StoreInterface | string $store,
-    ): GetStoreResponseInterface {
+    ): ResultInterface {
         $request = new GetStoreRequest(
             store: self::getStoreId($store),
         );
 
-        return GetStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(GetStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -264,8 +298,8 @@ final class Client implements ClientInterface
         StoreInterface | string $store,
         ?string $continuationToken = null,
         ?int $pageSize = null,
-    ): ListAuthorizationModelsResponseInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+    ): ResultInterface {
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ListAuthorizationModelsRequest(
             store: self::getStoreId($store),
@@ -273,7 +307,11 @@ final class Client implements ClientInterface
             pageSize: $pageSize,
         );
 
-        return ListAuthorizationModelsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ListAuthorizationModelsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -289,7 +327,7 @@ final class Client implements ClientInterface
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): ListObjectsResponseInterface {
+    ): ResultInterface {
         $request = new ListObjectsRequest(
             type: $type,
             relation: $relation,
@@ -301,7 +339,11 @@ final class Client implements ClientInterface
             consistency: $consistency,
         );
 
-        return ListObjectsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ListObjectsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -311,15 +353,19 @@ final class Client implements ClientInterface
     public function listStores(
         ?string $continuationToken = null,
         ?int $pageSize = null,
-    ): ListStoresResponseInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+    ): ResultInterface {
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ListStoresRequest(
             continuationToken: $continuationToken,
             pageSize: $pageSize,
         );
 
-        return ListStoresResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ListStoresResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -332,8 +378,8 @@ final class Client implements ClientInterface
         ?int $pageSize = null,
         ?string $type = null,
         ?DateTimeImmutable $startTime = null,
-    ): ListTupleChangesResponseInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+    ): ResultInterface {
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ListTupleChangesRequest(
             store: self::getStoreId($store),
@@ -343,7 +389,11 @@ final class Client implements ClientInterface
             startTime: $startTime,
         );
 
-        return ListTupleChangesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ListTupleChangesResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -359,7 +409,7 @@ final class Client implements ClientInterface
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): ListUsersResponseInterface {
+    ): ResultInterface {
         $request = new ListUsersRequest(
             object: $object,
             relation: $relation,
@@ -371,7 +421,11 @@ final class Client implements ClientInterface
             consistency: $consistency,
         );
 
-        return ListUsersResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ListUsersResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -381,13 +435,17 @@ final class Client implements ClientInterface
     public function readAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
-    ): ReadAssertionsResponseInterface {
+    ): ResultInterface {
         $request = new ReadAssertionsRequest(
             store: self::getStoreId($store),
             model: self::getModelId($model),
         );
 
-        return ReadAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ReadAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -400,8 +458,8 @@ final class Client implements ClientInterface
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,
-    ): ReadTuplesResponseInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+    ): ResultInterface {
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ReadTuplesRequest(
             tupleKey: $tupleKey,
@@ -411,7 +469,11 @@ final class Client implements ClientInterface
             consistency: $consistency,
         );
 
-        return ReadTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(ReadTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -422,14 +484,18 @@ final class Client implements ClientInterface
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
         AssertionsInterface $assertions,
-    ): WriteAssertionsResponseInterface {
+    ): ResultInterface {
         $request = new WriteAssertionsRequest(
             assertions: $assertions,
             store: self::getStoreId($store),
             model: self::getModelId($model),
         );
 
-        return WriteAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(WriteAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     #[Override]
@@ -441,7 +507,7 @@ final class Client implements ClientInterface
         AuthorizationModelInterface | string $model,
         ?TupleKeysInterface $writes = null,
         ?TupleKeysInterface $deletes = null,
-    ): WriteTuplesResponseInterface {
+    ): ResultInterface {
         $request = new WriteTuplesRequest(
             writes: $writes,
             deletes: $deletes,
@@ -449,7 +515,11 @@ final class Client implements ClientInterface
             model: self::getModelId($model),
         );
 
-        return WriteTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator());
+        try {
+            return new Success(WriteTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
+        }
     }
 
     /**

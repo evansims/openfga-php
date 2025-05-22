@@ -15,7 +15,7 @@ final class WriteTuplesResponse implements WriteTuplesResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): WriteTuplesResponseInterface
     {
         if (204 === $response->getStatusCode()) {
             return new self();

@@ -51,7 +51,7 @@ final class ReadAssertionsResponse implements ReadAssertionsResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): ReadAssertionsResponseInterface
     {
         $json = (string) $response->getBody();
 

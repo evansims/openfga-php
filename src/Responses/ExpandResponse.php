@@ -36,7 +36,7 @@ final class ExpandResponse implements ExpandResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): ExpandResponseInterface
     {
         $json = (string) $response->getBody();
 

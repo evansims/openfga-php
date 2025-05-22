@@ -15,7 +15,7 @@ final class WriteAssertionsResponse implements WriteAssertionsResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): WriteAssertionsResponseInterface
     {
         if (204 === $response->getStatusCode()) {
             return new self();
