@@ -117,8 +117,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(CheckResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -141,8 +141,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(CreateAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -161,8 +161,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(CreateStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -179,8 +179,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(DeleteStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -203,8 +203,8 @@ final class Client implements ClientInterface
                 ->registerSchema(ObjectRelation::schema());
 
             return new Success(DslTransformer::fromDsl($dsl, $validator));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -229,8 +229,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ExpandResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -249,8 +249,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(GetAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -285,8 +285,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(GetStoreResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -309,8 +309,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ListAuthorizationModelsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -341,8 +341,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ListObjectsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -363,8 +363,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ListStoresResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -391,8 +391,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ListTupleChangesResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -423,8 +423,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ListUsersResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -443,8 +443,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ReadAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -471,8 +471,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(ReadTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -493,8 +493,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(WriteAssertionsResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
@@ -517,8 +517,8 @@ final class Client implements ClientInterface
 
         try {
             return new Success(WriteTuplesResponse::fromResponse($this->sendRequest($request), $this->getValidator()));
-        } catch (Throwable $e) {
-            return new Failure($e);
+        } catch (Throwable $throwable) {
+            return new Failure($throwable);
         }
     }
 
