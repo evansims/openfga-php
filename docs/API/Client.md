@@ -80,7 +80,7 @@ Deletes a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `consistency` | `?OpenFGA\Models\Enums\Consistency` |  |
+| `dsl` | `string` |  |
 
 #### Returns
 `[DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)` The deletion result
