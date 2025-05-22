@@ -67,11 +67,7 @@ final class Success extends Result implements ResultInterface
      *
      * @param callable(T): U $fn
      *
-     * @return static<U, E>
-     *
-     * @psalm-return Success<U, E>
-     *
-     * @phpstan-return Success<U, E>
+     * @return Success<U, never>
      */
     public function map(callable $fn): ResultInterface
     {
