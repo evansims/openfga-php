@@ -36,7 +36,7 @@ final class GetAuthorizationModelResponse implements GetAuthorizationModelRespon
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): GetAuthorizationModelResponseInterface
     {
         $json = (string) $response->getBody();
 

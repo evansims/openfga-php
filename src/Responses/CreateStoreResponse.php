@@ -66,7 +66,7 @@ final class CreateStoreResponse implements CreateStoreResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): CreateStoreResponseInterface
     {
         $json = (string) $response->getBody();
 

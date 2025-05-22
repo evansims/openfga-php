@@ -40,7 +40,7 @@ final class ListUsersResponse implements ListUsersResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): static
+    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): ListUsersResponseInterface
     {
         $json = (string) $response->getBody();
 

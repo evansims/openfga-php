@@ -6,11 +6,13 @@ namespace OpenFGA;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
+use Throwable;
 
 use OpenFGA\Models\{AssertionInterface, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
 use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Responses\{CheckResponseInterface, CreateAuthorizationModelResponseInterface, CreateStoreResponseInterface, DeleteStoreResponseInterface, ExpandResponseInterface, GetAuthorizationModelResponseInterface, GetStoreResponseInterface, ListAuthorizationModelsResponseInterface, ListObjectsResponseInterface, ListStoresResponseInterface, ListTupleChangesResponseInterface, ListUsersResponseInterface, ReadAssertionsResponseInterface, ReadTuplesResponseInterface, WriteAssertionsResponseInterface, WriteTuplesResponseInterface};
+use OpenFGA\Results\ResultInterface;
 
 interface ClientInterface
 {
@@ -25,7 +27,7 @@ interface ClientInterface
      * @param null|TupleKeysInterface<TupleKeyInterface> $contextualTuples Additional tuples for contextual evaluation
      * @param null|Consistency                           $consistency      Override the default consistency level
      *
-     * @return CheckResponseInterface The result of the check
+     * @return ResultInterface<CheckResponseInterface, Throwable> The result of the check request
      */
     public function check(
         StoreInterface | string $store,
@@ -35,7 +37,7 @@ interface ClientInterface
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): CheckResponseInterface;
+    ): ResultInterface;
 
     /**
      * Creates a new authorization model with the given type definitions and conditions.
@@ -45,45 +47,45 @@ interface ClientInterface
      * @param ConditionsInterface<ConditionInterface>           $conditions      The conditions for the model
      * @param SchemaVersion                                     $schemaVersion   The schema version to use (default: 1.1)
      *
-     * @return CreateAuthorizationModelResponseInterface The created authorization model
+     * @return ResultInterface<CreateAuthorizationModelResponseInterface, Throwable> The result of the authorization model creation request
      */
     public function createAuthorizationModel(
         StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
         ConditionsInterface $conditions,
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
-    ): CreateAuthorizationModelResponseInterface;
+    ): ResultInterface;
 
     /**
      * Creates a new store with the given name.
      *
      * @param string $name The name for the new store
      *
-     * @return CreateStoreResponseInterface The created store details
+     * @return ResultInterface<CreateStoreResponseInterface, Throwable> The result of the store creation request
      */
     public function createStore(
         string $name,
-    ): CreateStoreResponseInterface;
+    ): ResultInterface;
 
     /**
      * Deletes a store.
      *
      * @param StoreInterface|string $store The store to delete
      *
-     * @return DeleteStoreResponseInterface The deletion result
+     * @return ResultInterface<DeleteStoreResponseInterface, Throwable> The result of the store deletion request
      */
     public function deleteStore(
         StoreInterface | string $store,
-    ): DeleteStoreResponseInterface;
+    ): ResultInterface;
 
     /**
      * Parses a DSL string and returns an AuthorizationModel.
      *
      * @param string $dsl The DSL string to parse
      *
-     * @return AuthorizationModelInterface The parsed authorization model
+     * @return ResultInterface<AuthorizationModelInterface, Throwable> The result of the DSL transformation request
      */
-    public function dsl(string $dsl): AuthorizationModelInterface;
+    public function dsl(string $dsl): ResultInterface;
 
     /**
      * Expands a relationship tuple to show all users that have the relationship.
@@ -94,7 +96,7 @@ interface ClientInterface
      * @param null|TupleKeysInterface<TupleKeyInterface> $contextualTuples Additional tuples for contextual evaluation
      * @param null|Consistency                           $consistency      Override the default consistency level
      *
-     * @return ExpandResponseInterface The expanded relationship information
+     * @return ResultInterface<ExpandResponseInterface, Throwable> The result of the expansion request
      */
     public function expand(
         StoreInterface | string $store,
@@ -102,7 +104,7 @@ interface ClientInterface
         AuthorizationModelInterface | string | null $model = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): ExpandResponseInterface;
+    ): ResultInterface;
 
     /**
      * Retrieves an authorization model by ID.
@@ -110,12 +112,12 @@ interface ClientInterface
      * @param StoreInterface|string              $store The store containing the model
      * @param AuthorizationModelInterface|string $model The model to retrieve
      *
-     * @return GetAuthorizationModelResponseInterface The authorization model
+     * @return ResultInterface<GetAuthorizationModelResponseInterface, Throwable> The result of the authorization model retrieval request
      */
     public function getAuthorizationModel(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
-    ): GetAuthorizationModelResponseInterface;
+    ): ResultInterface;
 
     /**
      * Retrieves the last HTTP request made by the client.
@@ -136,11 +138,11 @@ interface ClientInterface
      *
      * @param StoreInterface|string $store The store to retrieve
      *
-     * @return GetStoreResponseInterface The store details
+     * @return ResultInterface<GetStoreResponseInterface, Throwable> The result of the store retrieval request
      */
     public function getStore(
         StoreInterface | string $store,
-    ): GetStoreResponseInterface;
+    ): ResultInterface;
 
     /**
      * Lists authorization models in a store with pagination.
@@ -151,13 +153,13 @@ interface ClientInterface
      *
      * @throws InvalidArgumentException If pageSize is not a positive integer
      *
-     * @return ListAuthorizationModelsResponseInterface The list of authorization models
+     * @return ResultInterface<ListAuthorizationModelsResponseInterface, Throwable> The result of the authorization model listing request
      */
     public function listAuthorizationModels(
         StoreInterface | string $store,
         ?string $continuationToken = null,
         ?int $pageSize = null,
-    ): ListAuthorizationModelsResponseInterface;
+    ): ResultInterface;
 
     /**
      * Lists objects that have a specific relationship with a user.
@@ -171,7 +173,7 @@ interface ClientInterface
      * @param null|TupleKeysInterface<TupleKeyInterface> $contextualTuples Additional tuples for contextual evaluation
      * @param null|Consistency                           $consistency      Override the default consistency level
      *
-     * @return ListObjectsResponseInterface The list of related objects
+     * @return ResultInterface<ListObjectsResponseInterface, Throwable> The result of the object listing request
      */
     public function listObjects(
         StoreInterface | string $store,
@@ -182,7 +184,7 @@ interface ClientInterface
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): ListObjectsResponseInterface;
+    ): ResultInterface;
 
     /**
      * Lists all stores with pagination.
@@ -192,12 +194,12 @@ interface ClientInterface
      *
      * @throws InvalidArgumentException If pageSize is not a positive integer
      *
-     * @return ListStoresResponseInterface The list of stores
+     * @return ResultInterface<ListStoresResponseInterface, Throwable> The result of the store listing request
      */
     public function listStores(
         ?string $continuationToken = null,
         ?int $pageSize = null,
-    ): ListStoresResponseInterface;
+    ): ResultInterface;
 
     /**
      * Lists changes to relationship tuples in a store.
@@ -210,7 +212,7 @@ interface ClientInterface
      *
      * @throws InvalidArgumentException If pageSize is not a positive integer
      *
-     * @return ListTupleChangesResponseInterface The list of tuple changes
+     * @return ResultInterface<ListTupleChangesResponseInterface, Throwable> The result of the tuple change listing request
      */
     public function listTupleChanges(
         StoreInterface | string $store,
@@ -218,7 +220,7 @@ interface ClientInterface
         ?int $pageSize = null,
         ?string $type = null,
         ?DateTimeImmutable $startTime = null,
-    ): ListTupleChangesResponseInterface;
+    ): ResultInterface;
 
     /**
      * Lists users that have a specific relationship with an object.
@@ -232,7 +234,7 @@ interface ClientInterface
      * @param null|TupleKeysInterface<TupleKeyInterface>        $contextualTuples Additional tuples for contextual evaluation
      * @param null|Consistency                                  $consistency      Override the default consistency level
      *
-     * @return ListUsersResponseInterface The list of related users
+     * @return ResultInterface<ListUsersResponseInterface, Throwable> The result of the user listing request
      */
     public function listUsers(
         StoreInterface | string $store,
@@ -243,7 +245,7 @@ interface ClientInterface
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
-    ): ListUsersResponseInterface;
+    ): ResultInterface;
 
     /**
      * Retrieves assertions for an authorization model.
@@ -251,12 +253,12 @@ interface ClientInterface
      * @param StoreInterface|string              $store The store containing the model
      * @param AuthorizationModelInterface|string $model The model to get assertions for
      *
-     * @return ReadAssertionsResponseInterface The model's assertions
+     * @return ResultInterface<ReadAssertionsResponseInterface, Throwable> The result of the assertions read request
      */
     public function readAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
-    ): ReadAssertionsResponseInterface;
+    ): ResultInterface;
 
     /**
      * Reads relationship tuples from a store with optional filtering and pagination.
@@ -269,7 +271,7 @@ interface ClientInterface
      *
      * @throws InvalidArgumentException If pageSize is not a positive integer
      *
-     * @return ReadTuplesResponseInterface The matching relationship tuples
+     * @return ResultInterface<ReadTuplesResponseInterface, Throwable> The result of the tuple read request
      */
     public function readTuples(
         StoreInterface | string $store,
@@ -277,7 +279,7 @@ interface ClientInterface
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,
-    ): ReadTuplesResponseInterface;
+    ): ResultInterface;
 
     /**
      * Creates or updates assertions for an authorization model.
@@ -286,13 +288,13 @@ interface ClientInterface
      * @param AuthorizationModelInterface|string      $model      The model to update assertions for
      * @param AssertionsInterface<AssertionInterface> $assertions The assertions to upsert
      *
-     * @return WriteAssertionsResponseInterface The result of the operation
+     * @return ResultInterface<WriteAssertionsResponseInterface, Throwable> The result of the assertion write request
      */
     public function writeAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
         AssertionsInterface $assertions,
-    ): WriteAssertionsResponseInterface;
+    ): ResultInterface;
 
     /**
      * Writes or deletes relationship tuples in a store.
@@ -302,12 +304,12 @@ interface ClientInterface
      * @param null|TupleKeysInterface<TupleKeyInterface> $writes  Tuples to write (create or update)
      * @param null|TupleKeysInterface<TupleKeyInterface> $deletes Tuples to delete
      *
-     * @return WriteTuplesResponseInterface The result of the operation
+     * @return ResultInterface<WriteTuplesResponseInterface, Throwable> The result of the tuple write request
      */
     public function writeTuples(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
         ?TupleKeysInterface $writes = null,
         ?TupleKeysInterface $deletes = null,
-    ): WriteTuplesResponseInterface;
+    ): ResultInterface;
 }
