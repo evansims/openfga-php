@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\Support;
+namespace OpenFGA\Results;
 
 use Throwable;
 

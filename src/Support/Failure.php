@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\Support;
+namespace OpenFGA\Results;
 
 use LogicException;
 use Override;
@@ -65,16 +65,16 @@ final class Failure extends Result
     /**
      * @inheritDoc
      */
-    public static function createFailure(Throwable $error): ResultInterface
+    public static function createFailure(Throwable $error): static
     {
-        return new self($error);
+        return new static($error);
     }
 
     #[Override]
     /**
      * @inheritDoc
      */
-    public function onSuccess(callable $fn): self
+    public function onSuccess(callable $fn): ResultInterface
     {
         return $this;
     }
@@ -83,7 +83,7 @@ final class Failure extends Result
     /**
      * @inheritDoc
      */
-    public function onFailure(callable $fn): self
+    public function onFailure(callable $fn): ResultInterface
     {
         $fn($this->error);
         return $this;

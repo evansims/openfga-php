@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\Support;
+namespace OpenFGA\Results;
 
 use LogicException;
 use Throwable;
@@ -44,49 +44,49 @@ interface ResultInterface
      *
      * @return E
      */
-    public function getError();
+    public function getError(): Throwable;
 
     /**
      * @throws LogicException if called on Failure
      *
      * @return T
      */
-    public function getValue();
+    public function getValue(): mixed;
 
     /**
      * @return bool
      *
-     * @psalm-assert-if-true E $this
+     * @psalm-assert-if-true Failure<T,E> $this
      */
     public function isFailure(): bool;
 
     /**
      * @return bool
      *
-     * @psalm-assert-if-true T $this
+     * @psalm-assert-if-true Success<T,E> $this
      */
     public function isSuccess(): bool;
 
     /**
      * @param callable(T): void $fn
      *
-     * @return self
+     * @return ResultInterface<T, E>
      */
-    public function onSuccess(callable $fn): self;
+    public function onSuccess(callable $fn): ResultInterface;
 
     /**
      * @param callable(E): void $fn
      *
-     * @return self
+     * @return ResultInterface<T, E>
      */
-    public function onFailure(callable $fn): self;
+    public function onFailure(callable $fn): ResultInterface;
 
     /**
      * @template U
      * @param callable(T): U $fn
      * @return ResultInterface<U, E>
      */
-    public function map(callable $fn): self;
+    public function map(callable $fn): ResultInterface;
 
 
     /**
@@ -109,5 +109,5 @@ interface ResultInterface
      *
      * @return ResultInterface<T, Throwable>
      */
-    public static function createFailure(Throwable $error): ResultInterface;
+    public static function createFailure(Throwable $error): static;
 }
