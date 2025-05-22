@@ -54,7 +54,7 @@ interface ResultInterface
      *
      * @return ResultInterface<U, E>
      */
-    public function map(callable $fn): ResultInterface;
+    public function map(callable $fn): self;
 
     /**
      * @template F of Throwable
@@ -63,35 +63,35 @@ interface ResultInterface
      *
      * @return ResultInterface<T, F>
      */
-    public function mapError(callable $fn): ResultInterface;
+    public function mapError(callable $fn): self;
 
     /**
      * @param callable(E): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function onFailure(callable $fn): ResultInterface;
+    public function onFailure(callable $fn): self;
 
     /**
      * @param callable(T): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function onSuccess(callable $fn): ResultInterface;
+    public function onSuccess(callable $fn): self;
 
     /**
      * @param callable(T): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function tap(callable $fn): ResultInterface;
+    public function tap(callable $fn): self;
 
     /**
      * @param callable(E): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function tapError(callable $fn): ResultInterface;
+    public function tapError(callable $fn): self;
 
     /**
      * @template U
@@ -100,7 +100,7 @@ interface ResultInterface
      *
      * @return ResultInterface<U, E>
      */
-    public function then(callable $fn): ResultInterface;
+    public function then(callable $fn): self;
 
     /**
      * @template R

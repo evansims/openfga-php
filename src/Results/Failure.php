@@ -10,7 +10,9 @@ use Throwable;
 
 /**
  * @template E of Throwable
+ *
  * @extends Result<never, E>
+ *
  * @implements ResultInterface<never, E>
  */
 final class Failure extends Result implements ResultInterface

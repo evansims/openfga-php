@@ -13,6 +13,7 @@ use Throwable;
  * @template E of Throwable
  *
  * @extends Result<T, never>
+ *
  * @implements ResultInterface<T, never>
  */
 final class Success extends Result implements ResultInterface
