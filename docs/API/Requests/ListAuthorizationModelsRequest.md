@@ -8,6 +8,8 @@
 * [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md)
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getContinuationToken
 
@@ -19,7 +21,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getPageSize
 
@@ -31,7 +33,7 @@ public function getPageSize(): ?int
 
 
 #### Returns
-`?int` 
+`?int`
 
 ### getRequest
 
@@ -47,7 +49,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStore
 
@@ -59,5 +61,5 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 

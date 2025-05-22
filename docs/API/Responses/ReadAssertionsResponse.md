@@ -8,13 +8,15 @@
 * [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md)
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### fromResponse
 
 *<small>Implements Responses\ReadAssertionsResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -25,7 +27,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`static` 
+`self`
 
 ### getAssertions
 
@@ -37,7 +39,7 @@ public function getAssertions(): ?[AssertionsInterface](Models/Collections/Asser
 
 
 #### Returns
-`?[AssertionsInterface](Models/Collections/AssertionsInterface.md)` 
+`?[AssertionsInterface](Models/Collections/AssertionsInterface.md)`
 
 ### getModel
 
@@ -49,7 +51,7 @@ public function getModel(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### schema
 
@@ -62,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

@@ -7,6 +7,8 @@
 ## Implements
 * [RequestManagerInterface](Network/RequestManagerInterface.md)
 
+
+
 ## Methods
 ### getHttpClient
 
@@ -18,7 +20,7 @@ public function getHttpClient(): ClientInterface
 
 
 #### Returns
-`ClientInterface` 
+`ClientInterface`
 
 ### getHttpRequestFactory
 
@@ -30,7 +32,7 @@ public function getHttpRequestFactory(): RequestFactoryInterface
 
 
 #### Returns
-`RequestFactoryInterface` 
+`RequestFactoryInterface`
 
 ### getHttpResponseFactory
 
@@ -42,7 +44,7 @@ public function getHttpResponseFactory(): ResponseFactoryInterface
 
 
 #### Returns
-`ResponseFactoryInterface` 
+`ResponseFactoryInterface`
 
 ### getHttpStreamFactory
 
@@ -54,7 +56,7 @@ public function getHttpStreamFactory(): StreamFactoryInterface
 
 
 #### Returns
-`StreamFactoryInterface` 
+`StreamFactoryInterface`
 
 ### handleResponseException
 
@@ -71,7 +73,7 @@ public function handleResponseException(Psr\Http\Message\ResponseInterface $resp
 | `$response` | `Psr\Http\Message\ResponseInterface` |  |
 
 #### Returns
-`void` 
+`void`
 
 ### request
 
@@ -87,7 +89,7 @@ public function request([RequestInterface](Requests/RequestInterface.md) $reques
 | `request` | `Psr\Http\Message\RequestInterface` |  |
 
 #### Returns
-`Psr\Http\Message\RequestInterface` 
+`Psr\Http\Message\RequestInterface`
 
 ### send
 
@@ -103,5 +105,5 @@ public function send(Psr\Http\Message\RequestInterface $request): Psr\Http\Messa
 | `$request` | `Psr\Http\Message\RequestInterface` |  |
 
 #### Returns
-`Psr\Http\Message\ResponseInterface` 
+`Psr\Http\Message\ResponseInterface`
 

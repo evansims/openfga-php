@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getContinuationToken
 
@@ -18,7 +20,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getModels
 
@@ -30,5 +32,5 @@ public function getModels(): [AuthorizationModelsInterface](Models/Collections/A
 
 
 #### Returns
-`[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)` 
+`[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)`
 

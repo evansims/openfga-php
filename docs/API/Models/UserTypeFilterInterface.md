@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getRelation
 
@@ -19,7 +21,7 @@ public function getRelation(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getType
 
@@ -31,7 +33,7 @@ public function getType(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -43,5 +45,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string&gt;
+`array`
+ string&gt;
 

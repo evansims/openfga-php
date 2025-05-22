@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;TupleKey&#039;` |  |
+
+
 ## Methods
 ### getCondition
 
@@ -20,7 +26,7 @@ public function getCondition(): ?[ConditionInterface](Models/ConditionInterface.
 
 
 #### Returns
-`?[ConditionInterface](Models/ConditionInterface.md)` 
+`?[ConditionInterface](Models/ConditionInterface.md)`
 
 ### getObject
 
@@ -32,7 +38,7 @@ public function getObject(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getRelation
 
@@ -44,7 +50,7 @@ public function getRelation(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUser
 
@@ -56,7 +62,7 @@ public function getUser(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -68,7 +74,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` array{expression: string, metadata?: array{module: string, source_info: array{file: string}}, name: string, parameters?: list&lt;array{generic_types?: mixed, type_name: string}&gt;}|string&gt;
+`array`
+ array{expression: string, metadata?: array{module: string, source_info: array{file: string}}, name: string, parameters?: list&lt;array{generic_types?: mixed, type_name: string}&gt;}|string&gt;
 
 ### schema
 
@@ -81,5 +88,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

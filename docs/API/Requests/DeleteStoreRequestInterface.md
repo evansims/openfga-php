@@ -7,6 +7,8 @@
 ## Implements
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getRequest
 
@@ -22,7 +24,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStore
 
@@ -34,5 +36,5 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 

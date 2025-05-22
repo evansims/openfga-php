@@ -8,13 +8,15 @@
 * [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md)
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### fromResponse
 
 *<small>Implements Responses\ListStoresResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -25,7 +27,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`static` 
+`self`
 
 ### getContinuationToken
 
@@ -37,7 +39,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getStores
 
@@ -49,7 +51,7 @@ public function getStores(): [StoresInterface](Models/Collections/StoresInterfac
 
 
 #### Returns
-`[StoresInterface](Models/Collections/StoresInterface.md)` 
+`[StoresInterface](Models/Collections/StoresInterface.md)`
 
 ### schema
 
@@ -62,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

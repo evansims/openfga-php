@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getCreatedAt
 
@@ -18,7 +20,7 @@ public function getCreatedAt(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable` 
+`DateTimeImmutable`
 
 ### getDeletedAt
 
@@ -30,7 +32,7 @@ public function getDeletedAt(): ?DateTimeImmutable
 
 
 #### Returns
-`?DateTimeImmutable` 
+`?DateTimeImmutable`
 
 ### getId
 
@@ -42,7 +44,7 @@ public function getId(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getName
 
@@ -54,7 +56,7 @@ public function getName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getStore
 
@@ -66,7 +68,7 @@ public function getStore(): [StoreInterface](Models/StoreInterface.md)
 
 
 #### Returns
-`[StoreInterface](Models/StoreInterface.md)` 
+`[StoreInterface](Models/StoreInterface.md)`
 
 ### getUpdatedAt
 
@@ -78,5 +80,5 @@ public function getUpdatedAt(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable` 
+`DateTimeImmutable`
 

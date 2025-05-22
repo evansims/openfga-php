@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getContinuationToken
 
@@ -18,7 +20,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getStores
 
@@ -30,5 +32,5 @@ public function getStores(): [StoresInterface](Models/Collections/StoresInterfac
 
 
 #### Returns
-`[StoresInterface](Models/Collections/StoresInterface.md)` 
+`[StoresInterface](Models/Collections/StoresInterface.md)`
 

@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;v1.Difference&#039;` |  |
+
+
 ## Methods
 ### getBase
 
@@ -20,7 +26,7 @@ public function getBase(): [UsersetInterface](Models/UsersetInterface.md)
 
 
 #### Returns
-`[UsersetInterface](Models/UsersetInterface.md)` 
+`[UsersetInterface](Models/UsersetInterface.md)`
 
 ### getSubtract
 
@@ -32,7 +38,7 @@ public function getSubtract(): [UsersetInterface](Models/UsersetInterface.md)
 
 
 #### Returns
-`[UsersetInterface](Models/UsersetInterface.md)` 
+`[UsersetInterface](Models/UsersetInterface.md)`
 
 ### jsonSerialize
 
@@ -44,7 +50,24 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` array{ computed_userset?: array{object?: string, relation?: string}, tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}, union?: array&lt;mixed&gt;, intersection?: array&lt;mixed&gt;, difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;}, direct?: object, }, subtract: array{ computed_userset?: array{object?: string, relation?: string}, tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}, union?: array&lt;mixed&gt;, intersection?: array&lt;mixed&gt;, difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;}, direct?: object, }}
+`array`
+```php
+array{
+computed_userset?: array{object?: string, relation?: string},
+tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
+union?: array&lt;mixed&gt;,
+intersection?: array&lt;mixed&gt;,
+difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
+direct?: object,
+}, subtract: array{
+computed_userset?: array{object?: string, relation?: string},
+tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
+union?: array&lt;mixed&gt;,
+intersection?: array&lt;mixed&gt;,
+difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
+direct?: object,
+}}
+```
 
 ### schema
 
@@ -57,5 +80,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

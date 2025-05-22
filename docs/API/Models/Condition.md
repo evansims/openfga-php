@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;Condition&#039;` |  |
+
+
 ## Methods
 ### getExpression
 
@@ -20,7 +26,7 @@ public function getExpression(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getMetadata
 
@@ -32,7 +38,7 @@ public function getMetadata(): ?[ConditionMetadataInterface](Models/ConditionMet
 
 
 #### Returns
-`?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)` 
+`?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)`
 
 ### getName
 
@@ -44,7 +50,7 @@ public function getName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getParameters
 
@@ -56,7 +62,7 @@ public function getParameters(): ?[ConditionParametersInterface](Models/Collecti
 
 
 #### Returns
-`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)` 
+`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)`
 
 ### jsonSerialize
 
@@ -68,7 +74,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, expression: string, parameters?: list&lt;array{type_name: string, generic_types?: mixed}&gt;, metadata?: array{module: string, source_info: array{file: string}}}
+`array`
+ string, expression: string, parameters?: list&lt;array{type_name: string, generic_types?: mixed}&gt;, metadata?: array{module: string, source_info: array{file: string}}}
 
 ### schema
 
@@ -81,5 +88,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

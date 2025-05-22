@@ -7,6 +7,8 @@
 ## Implements
 * [DslTransformerInterface](Language/DslTransformerInterface.md)
 
+
+
 ## Methods
 ### fromDsl
 
@@ -24,7 +26,7 @@ public function fromDsl(string $dsl, [SchemaValidator](Schema/SchemaValidator.md
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)` 
+`[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)`
 
 ### toDsl
 
@@ -41,5 +43,5 @@ public function toDsl([AuthorizationModelInterface](Models/AuthorizationModelInt
 | `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)` |  |
 
 #### Returns
-`string` 
+`string`
 

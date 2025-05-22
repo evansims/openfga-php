@@ -5,6 +5,8 @@
 `OpenFGA\Schema`
 
 
+
+
 ## Methods
 ### getSchemas
 
@@ -17,7 +19,8 @@ Get all registered schemas.
 
 
 #### Returns
-`array` SchemaInterface&gt;
+`array`
+ SchemaInterface&gt;
 
 ### registerSchema
 
@@ -34,7 +37,7 @@ Register a schema.
 | `$schema` | `[SchemaInterface](Schema/SchemaInterface.md)` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### validateAndTransform
 
@@ -51,5 +54,5 @@ public function validateAndTransform(mixed $data, string $className): object
 | `$className` | `string` |  |
 
 #### Returns
-`object` 
+`object`
 

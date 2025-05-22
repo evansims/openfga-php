@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getComputedUserset
 
@@ -19,7 +21,7 @@ public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRel
 
 
 #### Returns
-`[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
+`[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
 
 ### getTupleset
 
@@ -31,7 +33,7 @@ public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationIn
 
 
 #### Returns
-`[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
+`[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
 
 ### jsonSerialize
 
@@ -43,5 +45,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
+`array`
+ array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
 

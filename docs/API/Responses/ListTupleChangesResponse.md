@@ -8,13 +8,15 @@
 * [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md)
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### fromResponse
 
 *<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -25,7 +27,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`static` 
+`self`
 
 ### getChanges
 
@@ -37,7 +39,7 @@ public function getChanges(): [TupleChangesInterface](Models/Collections/TupleCh
 
 
 #### Returns
-`[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)` 
+`[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)`
 
 ### getContinuationToken
 
@@ -49,7 +51,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### schema
 
@@ -62,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

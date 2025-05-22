@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getModel
 
@@ -18,5 +20,5 @@ public function getModel(): string
 
 
 #### Returns
-`string` 
+`string`
 

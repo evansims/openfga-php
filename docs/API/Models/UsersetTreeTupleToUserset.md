@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;UsersetTree.TupleToUserset&#039;` |  |
+
+
 ## Methods
 ### getComputed
 
@@ -20,7 +26,7 @@ public function getComputed(): [ComputedsInterface](Models/Collections/Computeds
 
 
 #### Returns
-`[ComputedsInterface](Models/Collections/ComputedsInterface.md)` 
+`[ComputedsInterface](Models/Collections/ComputedsInterface.md)`
 
 ### getTupleset
 
@@ -32,7 +38,7 @@ public function getTupleset(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -44,7 +50,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, computed: array&lt;int, array{userset: string}&gt;}
+`array`
+ string, computed: array&lt;int, array{userset: string}&gt;}
 
 ### schema
 
@@ -57,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

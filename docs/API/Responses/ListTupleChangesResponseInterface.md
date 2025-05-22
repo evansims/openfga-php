@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getChanges
 
@@ -18,7 +20,7 @@ public function getChanges(): [TupleChangesInterface](Models/Collections/TupleCh
 
 
 #### Returns
-`[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)` 
+`[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)`
 
 ### getContinuationToken
 
@@ -30,5 +32,5 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 

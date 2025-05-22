@@ -13,6 +13,23 @@
 {% endfor %}
 {% endif %}
 
+{% if constants is defined and constants|length > 0 %}
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+{% for constant in constants %}
+| `{{ constant.name }}` | `{{ constant.value }}` | {{ constant.description }} |
+{% endfor %}
+{% endif %}
+
+{% if isEnum and cases is not empty %}
+## Cases
+| Name | Value | Description |
+|------|-------|-------------|
+{% for case in cases %}| `{{ case.name }}` | {% if case.value is not null %}`{{ case.value }}`{% else %}-{% endif %} | {{ case.description }} |
+{% endfor %}
+{% endif %}
+
 {% if methods is not empty %}
 ## Methods
 {% for method in methods %}
@@ -39,7 +56,16 @@
 
 {% if method.return.type %}
 #### Returns
-`{{ method.return.type }}` {{ method.return.description }}
+`{{ method.return.type }}`
+{% if method.return.description is defined and method.return.description is not empty %}
+{% if "\n" in method.return.description %}
+```php
+{{ method.return.description }}
+```
+{% else %}
+ {{ method.return.description }}
+{% endif %}
+{% endif %}
 {% endif %}
 
 {% endfor %}

@@ -8,13 +8,15 @@
 * [ExpandResponseInterface](Responses/ExpandResponseInterface.md)
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### fromResponse
 
 *<small>Implements Responses\ExpandResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -25,7 +27,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`static` 
+`self`
 
 ### getTree
 
@@ -37,7 +39,7 @@ public function getTree(): ?[UsersetTreeInterface](Models/UsersetTreeInterface.m
 
 
 #### Returns
-`?[UsersetTreeInterface](Models/UsersetTreeInterface.md)` 
+`?[UsersetTreeInterface](Models/UsersetTreeInterface.md)`
 
 ### schema
 
@@ -50,5 +52,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_TYPE` | `&#039;v1.TupleToUserset&#039;` |  |
+
+
 ## Methods
 ### getComputedUserset
 
@@ -20,7 +26,7 @@ public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRel
 
 
 #### Returns
-`[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
+`[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
 
 ### getTupleset
 
@@ -32,7 +38,7 @@ public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationIn
 
 
 #### Returns
-`[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
+`[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
 
 ### jsonSerialize
 
@@ -44,7 +50,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
+`array`
+ array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
 
 ### schema
 
@@ -57,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

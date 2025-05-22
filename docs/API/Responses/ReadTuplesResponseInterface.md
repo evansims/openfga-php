@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getContinuationToken
 
@@ -18,7 +20,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getTuples
 
@@ -30,5 +32,5 @@ public function getTuples(): [TuplesInterface](Models/Collections/TuplesInterfac
 
 
 #### Returns
-`[TuplesInterface](Models/Collections/TuplesInterface.md)` 
+`[TuplesInterface](Models/Collections/TuplesInterface.md)`
 

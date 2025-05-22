@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getModule
 
@@ -19,7 +21,7 @@ public function getModule(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getSourceInfo
 
@@ -31,7 +33,7 @@ public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterfac
 
 
 #### Returns
-`[SourceInfoInterface](Models/SourceInfoInterface.md)` 
+`[SourceInfoInterface](Models/SourceInfoInterface.md)`
 
 ### jsonSerialize
 
@@ -43,5 +45,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, source_info: array{file: string}}
+`array`
+ string, source_info: array{file: string}}
 

@@ -9,6 +9,8 @@
 * Stringable
 * JsonSerializable
 
+
+
 ## Methods
 ### getType
 
@@ -20,7 +22,7 @@ public function getType(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -32,5 +34,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string}
+`array`
+ string}
 

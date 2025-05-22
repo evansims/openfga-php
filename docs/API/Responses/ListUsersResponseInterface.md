@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getUsers
 
@@ -18,5 +20,5 @@ public function getUsers(): [UsersInterface](Models/Collections/UsersInterface.m
 
 
 #### Returns
-`[UsersInterface](Models/Collections/UsersInterface.md)` 
+`[UsersInterface](Models/Collections/UsersInterface.md)`
 

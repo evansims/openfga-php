@@ -13,6 +13,8 @@
 * ArrayAccess
 * [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
 
+
+
 ## Methods
 ### add
 
@@ -28,7 +30,7 @@ public function add(mixed $item): static
 | `callback` | `callable` |  |
 
 #### Returns
-`static` 
+`static`
 
 ### clear
 
@@ -40,7 +42,7 @@ public function clear(): void
 
 
 #### Returns
-`void` 
+`void`
 
 ### count
 
@@ -52,7 +54,7 @@ public function count(): int
 
 
 #### Returns
-`int` 
+`int`
 
 ### current
 
@@ -64,7 +66,7 @@ public function current(): [ModelInterface](Models/ModelInterface.md)
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)` 
+`[ModelInterface](Models/ModelInterface.md)`
 
 ### every
 
@@ -81,7 +83,7 @@ Checks if all items match the callback.
 | `callback` | `callable` |  |
 
 #### Returns
-`bool` 
+`bool`
 
 ### filter
 
@@ -98,7 +100,7 @@ Filters the collection using a callback.
 | `callback` | `?callable` |  |
 
 #### Returns
-`static` 
+`static`
 
 ### first
 
@@ -139,7 +141,7 @@ public function isEmpty(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 
 ### jsonSerialize
 
@@ -151,7 +153,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` mixed&gt;
+`array`
+ mixed&gt;
 
 ### key
 
@@ -163,7 +166,7 @@ public function key(): int
 
 
 #### Returns
-`int` 
+`int`
 
 ### next
 
@@ -175,7 +178,7 @@ public function next(): void
 
 
 #### Returns
-`void` 
+`void`
 
 ### offsetExists
 
@@ -191,7 +194,7 @@ public function offsetExists(mixed $offset): bool
 | `offset` | `mixed` |  |
 
 #### Returns
-`bool` 
+`bool`
 
 ### offsetGet
 
@@ -207,7 +210,7 @@ public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterfac
 | `value` | `mixed` |  |
 
 #### Returns
-`?[ModelInterface](Models/ModelInterface.md)` 
+`?[ModelInterface](Models/ModelInterface.md)`
 
 ### offsetSet
 
@@ -224,7 +227,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 | `offset` | `mixed` |  |
 
 #### Returns
-`void` 
+`void`
 
 ### offsetUnset
 
@@ -240,7 +243,7 @@ public function offsetUnset(mixed $offset): void
 | `callback` | `callable` |  |
 
 #### Returns
-`void` 
+`void`
 
 ### reduce
 
@@ -258,7 +261,7 @@ Reduces the collection to a single value.
 | `callback` | `callable` |  |
 
 #### Returns
-`mixed` 
+`mixed`
 
 ### rewind
 
@@ -270,7 +273,7 @@ public function rewind(): void
 
 
 #### Returns
-`void` 
+`void`
 
 ### schema
 
@@ -283,7 +286,7 @@ public function schema(): [CollectionSchemaInterface](Schema/CollectionSchemaInt
 
 
 #### Returns
-`[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)` 
+`[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)`
 
 ### some
 
@@ -300,7 +303,7 @@ Checks if any item matches the callback.
 | `items` | `` |  |
 
 #### Returns
-`bool` 
+`bool`
 
 ### toArray
 
@@ -312,7 +315,8 @@ public function toArray(): array
 
 
 #### Returns
-`array` T&gt;
+`array`
+ T&gt;
 
 ### valid
 
@@ -324,7 +328,7 @@ public function valid(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 
 ### withItems
 
@@ -340,5 +344,5 @@ public function withItems(mixed $items): static
 | `$items` | `mixed` |  |
 
 #### Returns
-`static` 
+`static`
 

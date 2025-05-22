@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getCreatedAt
 
@@ -18,7 +20,7 @@ public function getCreatedAt(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable` 
+`DateTimeImmutable`
 
 ### getId
 
@@ -30,7 +32,7 @@ public function getId(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getName
 
@@ -42,7 +44,7 @@ public function getName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUpdatedAt
 
@@ -54,5 +56,5 @@ public function getUpdatedAt(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable` 
+`DateTimeImmutable`
 

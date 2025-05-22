@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;SourceInfo&#039;` |  |
+
+
 ## Methods
 ### getFile
 
@@ -20,7 +26,7 @@ public function getFile(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -32,7 +38,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string}
+`array`
+ string}
 
 ### schema
 
@@ -45,5 +52,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

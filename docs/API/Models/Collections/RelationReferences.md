@@ -13,6 +13,8 @@
 * ArrayAccess
 * [RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
 
+
+
 ## Methods
 ### add
 
@@ -29,7 +31,7 @@ public function add(string $key, [ModelInterface](Models/ModelInterface.md) $ite
 | `key` | `string` |  |
 
 #### Returns
-`static` 
+`static`
 
 ### count
 
@@ -41,7 +43,7 @@ public function count(): int
 
 
 #### Returns
-`int` 
+`int`
 
 ### current
 
@@ -53,7 +55,7 @@ public function current(): [ModelInterface](Models/ModelInterface.md)
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)` 
+`[ModelInterface](Models/ModelInterface.md)`
 
 ### get
 
@@ -84,7 +86,7 @@ Check if a key exists in the collection.
 | `offset` | `mixed` |  |
 
 #### Returns
-`bool` 
+`bool`
 
 ### jsonSerialize
 
@@ -96,7 +98,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` mixed&gt;
+`array`
+ mixed&gt;
 
 ### key
 
@@ -108,7 +111,7 @@ public function key(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### next
 
@@ -120,7 +123,7 @@ public function next(): void
 
 
 #### Returns
-`void` 
+`void`
 
 ### offsetExists
 
@@ -136,7 +139,7 @@ public function offsetExists(mixed $offset): bool
 | `offset` | `mixed` |  |
 
 #### Returns
-`bool` 
+`bool`
 
 ### offsetGet
 
@@ -167,7 +170,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 | `offset` | `mixed` |  |
 
 #### Returns
-`void` 
+`void`
 
 ### offsetUnset
 
@@ -183,7 +186,7 @@ public function offsetUnset(mixed $offset): void
 | `$offset` | `mixed` |  |
 
 #### Returns
-`void` 
+`void`
 
 ### rewind
 
@@ -195,7 +198,7 @@ public function rewind(): void
 
 
 #### Returns
-`void` 
+`void`
 
 ### schema
 
@@ -208,7 +211,7 @@ public function schema(): [CollectionSchemaInterface](Schema/CollectionSchemaInt
 
 
 #### Returns
-`[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)` 
+`[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)`
 
 ### toArray
 
@@ -220,7 +223,8 @@ public function toArray(): array
 
 
 #### Returns
-`array` T&gt;
+`array`
+ T&gt;
 
 ### valid
 
@@ -232,5 +236,5 @@ public function valid(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 

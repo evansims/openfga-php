@@ -7,12 +7,18 @@
 ## Implements
 * [ClientInterface](ClientInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `VERSION` | `&#039;0.2.0&#039;` | The version of the OpenFGA PHP SDK. |
+
+
 ## Methods
 ### check
 
 
 ```php
-public function check([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?bool $trace = NULL, ?object $context = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [CheckResponseInterface](Responses/CheckResponseInterface.md)
+public function check([StoreInterface](Models/StoreInterface.md) | string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string $model, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?bool $trace = NULL, ?object $context = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Checks if a user has a specific relationship with an object.
@@ -20,8 +26,8 @@ Checks if a user has a specific relationship with an object.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to check against |
-| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string` | The authorization model to use |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to check against |
+| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string` | The authorization model to use |
 | `$tupleKey` | `[TupleKeyInterface](Models/TupleKeyInterface.md)` | The relationship to check |
 | `$trace` | `?bool` | Whether to include a trace in the response |
 | `$context` | `?object` | Additional context for the check |
@@ -29,13 +35,14 @@ Checks if a user has a specific relationship with an object.
 | `schemaVersion` | `OpenFGA\Models\Enums\SchemaVersion` |  |
 
 #### Returns
-`[CheckResponseInterface](Responses/CheckResponseInterface.md)` The result of the check
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the check request
 
 ### createAuthorizationModel
 
 
 ```php
-public function createAuthorizationModel([StoreInterface](Models/StoreInterface.md)|string $store, [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md) $typeDefinitions, [ConditionsInterface](Models/Collections/ConditionsInterface.md) $conditions, SchemaVersion $schemaVersion = \OpenFGA\Models\Enums\SchemaVersion::V1_1): [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md)
+public function createAuthorizationModel([StoreInterface](Models/StoreInterface.md) | string $store, [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md) $typeDefinitions, [ConditionsInterface](Models/Collections/ConditionsInterface.md) $conditions, SchemaVersion $schemaVersion = SchemaVersion::V1_1): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Creates a new authorization model with the given type definitions and conditions.
@@ -43,19 +50,20 @@ Creates a new authorization model with the given type definitions and conditions
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to create the model in |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to create the model in |
 | `$typeDefinitions` | `[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)` | The type definitions for the model |
 | `$conditions` | `[ConditionsInterface](Models/Collections/ConditionsInterface.md)` | The conditions for the model |
 | `name` | `string` |  |
 
 #### Returns
-`[CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md)` The created authorization model
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the authorization model creation request
 
 ### createStore
 
 
 ```php
-public function createStore(string $name): [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md)
+public function createStore(string $name): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Creates a new store with the given name.
@@ -66,13 +74,14 @@ Creates a new store with the given name.
 | `store` | `OpenFGA\Models\StoreInterface|string` |  |
 
 #### Returns
-`[CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md)` The created store details
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the store creation request
 
 ### deleteStore
 
 
 ```php
-public function deleteStore([StoreInterface](Models/StoreInterface.md)|string $store): [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)
+public function deleteStore([StoreInterface](Models/StoreInterface.md) | string $store): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Deletes a store.
@@ -83,13 +92,14 @@ Deletes a store.
 | `dsl` | `string` |  |
 
 #### Returns
-`[DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)` The deletion result
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the store deletion request
 
 ### dsl
 
 
 ```php
-public function dsl(string $dsl): [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+public function dsl(string $dsl): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Parses a DSL string and returns an AuthorizationModel.
@@ -100,13 +110,14 @@ Parses a DSL string and returns an AuthorizationModel.
 | `consistency` | `?OpenFGA\Models\Enums\Consistency` |  |
 
 #### Returns
-`[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)` The parsed authorization model
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the DSL transformation request
 
 ### expand
 
 
 ```php
-public function expand([StoreInterface](Models/StoreInterface.md)|string $store, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string|null $model = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [ExpandResponseInterface](Responses/ExpandResponseInterface.md)
+public function expand([StoreInterface](Models/StoreInterface.md) | string $store, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string | null $model = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Expands a relationship tuple to show all users that have the relationship.
@@ -114,20 +125,21 @@ Expands a relationship tuple to show all users that have the relationship.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store containing the tuple |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store containing the tuple |
 | `$tupleKey` | `[TupleKeyInterface](Models/TupleKeyInterface.md)` | The tuple to expand |
-| `$model` | `?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string|null` | The authorization model to use |
+| `$model` | `?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string | null` | The authorization model to use |
 | `$contextualTuples` | `?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` | Additional tuples for contextual evaluation |
 | `model` | `OpenFGA\Models\AuthorizationModelInterface|string` |  |
 
 #### Returns
-`[ExpandResponseInterface](Responses/ExpandResponseInterface.md)` The expanded relationship information
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the expansion request
 
 ### getAuthorizationModel
 
 
 ```php
-public function getAuthorizationModel([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model): [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md)
+public function getAuthorizationModel([StoreInterface](Models/StoreInterface.md) | string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string $model): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Retrieves an authorization model by ID.
@@ -135,11 +147,12 @@ Retrieves an authorization model by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store containing the model |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store containing the model |
 | `store` | `OpenFGA\Models\StoreInterface|string` |  |
 
 #### Returns
-`[GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md)` The authorization model
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the authorization model retrieval request
 
 ### getLastRequest
 
@@ -152,7 +165,8 @@ Retrieves the last HTTP request made by the client.
 
 
 #### Returns
-`?Psr\Http\Message\RequestInterface` The last request, or null if no request has been made
+`?Psr\Http\Message\RequestInterface`
+ The last request, or null if no request has been made
 
 ### getLastResponse
 
@@ -165,13 +179,14 @@ Retrieves the last HTTP response received by the client.
 
 
 #### Returns
-`?Psr\Http\Message\ResponseInterface` The last response, or null if no response has been received
+`?Psr\Http\Message\ResponseInterface`
+ The last response, or null if no response has been received
 
 ### getStore
 
 
 ```php
-public function getStore([StoreInterface](Models/StoreInterface.md)|string $store): [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md)
+public function getStore([StoreInterface](Models/StoreInterface.md) | string $store): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Retrieves store details by ID.
@@ -182,13 +197,14 @@ Retrieves store details by ID.
 | `pageSize` | `?int` |  |
 
 #### Returns
-`[GetStoreResponseInterface](Responses/GetStoreResponseInterface.md)` The store details
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the store retrieval request
 
 ### listAuthorizationModels
 
 
 ```php
-public function listAuthorizationModels([StoreInterface](Models/StoreInterface.md)|string $store, ?string $continuationToken = NULL, ?int $pageSize = NULL): [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md)
+public function listAuthorizationModels([StoreInterface](Models/StoreInterface.md) | string $store, ?string $continuationToken = NULL, ?int $pageSize = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Lists authorization models in a store with pagination.
@@ -196,18 +212,19 @@ Lists authorization models in a store with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to list models from |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to list models from |
 | `$continuationToken` | `?string` | Token for pagination |
 | `consistency` | `?OpenFGA\Models\Enums\Consistency` |  |
 
 #### Returns
-`[ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md)` The list of authorization models
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the authorization model listing request
 
 ### listObjects
 
 
 ```php
-public function listObjects([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, string $type, string $relation, string $user, ?object $context = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md)
+public function listObjects([StoreInterface](Models/StoreInterface.md) | string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string $model, string $type, string $relation, string $user, ?object $context = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Lists objects that have a specific relationship with a user.
@@ -215,8 +232,8 @@ Lists objects that have a specific relationship with a user.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to query |
-| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string` | The authorization model to use |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to query |
+| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string` | The authorization model to use |
 | `$type` | `string` | The type of objects to list |
 | `$relation` | `string` | The relationship to check |
 | `$user` | `string` | The user to check relationships for |
@@ -225,13 +242,14 @@ Lists objects that have a specific relationship with a user.
 | `pageSize` | `?int` |  |
 
 #### Returns
-`[ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md)` The list of related objects
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the object listing request
 
 ### listStores
 
 
 ```php
-public function listStores(?string $continuationToken = NULL, ?int $pageSize = NULL): [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md)
+public function listStores(?string $continuationToken = NULL, ?int $pageSize = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Lists all stores with pagination.
@@ -243,13 +261,14 @@ Lists all stores with pagination.
 | `startTime` | `?DateTimeImmutable` |  |
 
 #### Returns
-`[ListStoresResponseInterface](Responses/ListStoresResponseInterface.md)` The list of stores
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the store listing request
 
 ### listTupleChanges
 
 
 ```php
-public function listTupleChanges([StoreInterface](Models/StoreInterface.md)|string $store, ?string $continuationToken = NULL, ?int $pageSize = NULL, ?string $type = NULL, ?DateTimeImmutable $startTime = NULL): [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md)
+public function listTupleChanges([StoreInterface](Models/StoreInterface.md) | string $store, ?string $continuationToken = NULL, ?int $pageSize = NULL, ?string $type = NULL, ?DateTimeImmutable $startTime = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Lists changes to relationship tuples in a store.
@@ -257,20 +276,21 @@ Lists changes to relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to list changes for |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to list changes for |
 | `$continuationToken` | `?string` | Token for pagination |
 | `$pageSize` | `?int` | Maximum number of changes to return |
 | `$type` | `?string` | Filter changes by type |
 | `consistency` | `?OpenFGA\Models\Enums\Consistency` |  |
 
 #### Returns
-`[ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md)` The list of tuple changes
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the tuple change listing request
 
 ### listUsers
 
 
 ```php
-public function listUsers([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, string $object, string $relation, [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md) $userFilters, ?object $context = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md)
+public function listUsers([StoreInterface](Models/StoreInterface.md) | string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string $model, string $object, string $relation, [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md) $userFilters, ?object $context = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $contextualTuples = NULL, ?Consistency $consistency = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Lists users that have a specific relationship with an object.
@@ -278,8 +298,8 @@ Lists users that have a specific relationship with an object.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to query |
-| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string` | The authorization model to use |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to query |
+| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string` | The authorization model to use |
 | `$object` | `string` | The object to check relationships for |
 | `$relation` | `string` | The relationship to check |
 | `$userFilters` | `[UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)` | Filters for user types to include |
@@ -288,13 +308,14 @@ Lists users that have a specific relationship with an object.
 | `model` | `OpenFGA\Models\AuthorizationModelInterface|string` |  |
 
 #### Returns
-`[ListUsersResponseInterface](Responses/ListUsersResponseInterface.md)` The list of related users
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the user listing request
 
 ### readAssertions
 
 
 ```php
-public function readAssertions([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model): [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md)
+public function readAssertions([StoreInterface](Models/StoreInterface.md) | string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string $model): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Retrieves assertions for an authorization model.
@@ -302,17 +323,18 @@ Retrieves assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store containing the model |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store containing the model |
 | `consistency` | `?OpenFGA\Models\Enums\Consistency` |  |
 
 #### Returns
-`[ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md)` The model&#039;s assertions
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the assertions read request
 
 ### readTuples
 
 
 ```php
-public function readTuples([StoreInterface](Models/StoreInterface.md)|string $store, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?string $continuationToken = NULL, ?int $pageSize = NULL, ?Consistency $consistency = NULL): [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md)
+public function readTuples([StoreInterface](Models/StoreInterface.md) | string $store, [TupleKeyInterface](Models/TupleKeyInterface.md) $tupleKey, ?string $continuationToken = NULL, ?int $pageSize = NULL, ?Consistency $consistency = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Reads relationship tuples from a store with optional filtering and pagination.
@@ -320,20 +342,21 @@ Reads relationship tuples from a store with optional filtering and pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to read from |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to read from |
 | `$tupleKey` | `[TupleKeyInterface](Models/TupleKeyInterface.md)` | Filter tuples by this key (return all if null) |
 | `$continuationToken` | `?string` | Token for pagination |
 | `$pageSize` | `?int` | Maximum number of tuples to return |
 | `assertions` | `OpenFGA\Models\Collections\AssertionsInterface` |  |
 
 #### Returns
-`[ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md)` The matching relationship tuples
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the tuple read request
 
 ### writeAssertions
 
 
 ```php
-public function writeAssertions([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, [AssertionsInterface](Models/Collections/AssertionsInterface.md) $assertions): [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md)
+public function writeAssertions([StoreInterface](Models/StoreInterface.md) | string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string $model, [AssertionsInterface](Models/Collections/AssertionsInterface.md) $assertions): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Creates or updates assertions for an authorization model.
@@ -341,18 +364,19 @@ Creates or updates assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store containing the model |
-| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string` | The model to update assertions for |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store containing the model |
+| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string` | The model to update assertions for |
 | `deletes` | `?OpenFGA\Models\Collections\TupleKeysInterface` |  |
 
 #### Returns
-`[WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md)` The result of the operation
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the assertion write request
 
 ### writeTuples
 
 
 ```php
-public function writeTuples([StoreInterface](Models/StoreInterface.md)|string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string $model, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $writes = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $deletes = NULL): [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md)
+public function writeTuples([StoreInterface](Models/StoreInterface.md) | string $store, [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string $model, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $writes = NULL, ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) $deletes = NULL): [ResultInterface](Results/ResultInterface.md)
 ```
 
 Writes or deletes relationship tuples in a store.
@@ -360,11 +384,12 @@ Writes or deletes relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `[StoreInterface](Models/StoreInterface.md)|string` | The store to modify |
-| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)|string` | The authorization model to use |
+| `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to modify |
+| `$model` | `[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string` | The authorization model to use |
 | `$writes` | `?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` | Tuples to write (create or update) |
 | `$deletes` | `?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` | Tuples to delete |
 
 #### Returns
-`[WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md)` The result of the operation
+`[ResultInterface](Results/ResultInterface.md)`
+ Throwable&gt; The result of the tuple write request
 
