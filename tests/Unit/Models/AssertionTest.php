@@ -7,86 +7,14 @@ use OpenFGA\Models\AssertionTupleKey;
 use OpenFGA\Models\AssertionTupleKeyInterface;
 use OpenFGA\Models\Collections\TupleKeys;
 use OpenFGA\Models\Collections\TupleKeysInterface;
+use OpenFGA\Schema\CollectionSchema;
+use OpenFGA\Schema\CollectionSchemaInterface;
 use OpenFGA\Schema\SchemaInterface;
-use JsonSerializable;
-use ArrayIterator;
-use Countable;
-use IteratorAggregate;
-
-// Dummy Interfaces & Classes for AssertionTest
-
-if (!interface_exists(AssertionTupleKeyInterface::class)) {
-    interface AssertionTupleKeyInterface extends JsonSerializable {
-        public function getUser(): string;
-        public function getRelation(): string;
-        public function getObject(): string;
-    }
-}
-
-class DummyAssertionTupleKey implements AssertionTupleKeyInterface {
-    public function __construct(
-        private string $user = 'user:anne',
-        private string $relation = 'viewer',
-        private string $object = 'document:123'
-    ) {
-    }
-
-    public function getUser(): string {
-        return $this->user;
-    }
-
-    public function getRelation(): string {
-        return $this->relation;
-    }
-
-    public function getObject(): string {
-        return $this->object;
-    }
-
-    public function jsonSerialize(): array {
-        return [
-            'user' => $this->user,
-            'relation' => $this->relation,
-            'object' => $this->object,
-        ];
-    }
-}
-
-if (!interface_exists(TupleKeysInterface::class)) {
-    interface TupleKeysInterface extends JsonSerializable, Countable, IteratorAggregate {
-        // Define methods based on actual interface
-    }
-}
-
-class DummyTupleKeys implements TupleKeysInterface {
-    private array $keys;
-
-    public function __construct(array $keys = []) {
-        if (empty($keys)) {
-            // Provide a default if empty, matching the example structure
-            $this->keys = [['user' => 'user:bob', 'relation' => 'editor', 'object' => 'folder:abc']];
-        } else {
-            $this->keys = $keys;
-        }
-    }
-
-    public function jsonSerialize(): array {
-        return $this->keys;
-    }
-
-    public function count(): int {
-        return count($this->keys);
-    }
-
-    public function getIterator(): ArrayIterator {
-        return new ArrayIterator($this->keys);
-    }
-}
 
 describe('Assertion', function () {
     describe('constructor', function () {
         it('constructs with required tupleKey and expectation', function () {
-            $tupleKey = new DummyAssertionTupleKey();
+            $tupleKey = new AssertionTupleKey();
             $assertion = new Assertion(tupleKey: $tupleKey, expectation: true);
 
             expect($assertion->getTupleKey())->toBe($tupleKey)
@@ -96,8 +24,8 @@ describe('Assertion', function () {
         });
 
         it('constructs with all parameters', function () {
-            $tupleKey = new DummyAssertionTupleKey('u1', 'r1', 'o1');
-            $contextualTuples = new DummyTupleKeys([['user' => 'u2', 'relation' => 'r2', 'object' => 'o2']]);
+            $tupleKey = new AssertionTupleKey('u1', 'r1', 'o1');
+            $contextualTuples = new TupleKeys([['user' => 'u2', 'relation' => 'r2', 'object' => 'o2']]);
             $context = ['ip_address' => '127.0.0.1'];
             $assertion = new Assertion(
                 tupleKey: $tupleKey,
@@ -114,11 +42,11 @@ describe('Assertion', function () {
     });
 
     describe('getters', function () {
-        $tupleKey = new DummyAssertionTupleKey();
-        $contextualTuples = new DummyTupleKeys();
+        $tupleKey = new AssertionTupleKey();
+        $contextualTuples = new TupleKeys();
         $context = ['param' => 'value'];
         $assertion = new Assertion($tupleKey, true, $contextualTuples, $context);
-        $assertionRequiredOnly = new Assertion(new DummyAssertionTupleKey('u', 'r', 'o'), false);
+        $assertionRequiredOnly = new Assertion(new AssertionTupleKey('u', 'r', 'o'), false);
 
         it('getTupleKey returns the correct value', function () use ($assertion, $tupleKey) {
             expect($assertion->getTupleKey())->toBe($tupleKey);
@@ -141,7 +69,7 @@ describe('Assertion', function () {
 
     describe('jsonSerialize', function () {
         it('serializes with only required fields', function () {
-            $tupleKey = new DummyAssertionTupleKey('user:charlie', 'can_read', 'report:secret');
+            $tupleKey = new AssertionTupleKey('user:charlie', 'can_read', 'report:secret');
             $assertion = new Assertion(tupleKey: $tupleKey, expectation: true);
             expect($assertion->jsonSerialize())->toBe([
                 'tuple_key' => [
@@ -154,9 +82,9 @@ describe('Assertion', function () {
         });
 
         it('serializes with all fields', function () {
-            $tupleKey = new DummyAssertionTupleKey('u1', 'r1', 'o1');
+            $tupleKey = new AssertionTupleKey('u1', 'r1', 'o1');
             $contextualTuplesData = [['user' => 'u2', 'relation' => 'r2', 'object' => 'o2']];
-            $contextualTuples = new DummyTupleKeys($contextualTuplesData);
+            $contextualTuples = new TupleKeys($contextualTuplesData);
             $context = ['request_id' => 'xyz789'];
             $assertion = new Assertion(
                 tupleKey: $tupleKey,
