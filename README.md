@@ -3,485 +3,169 @@
 [![codecov](https://codecov.io/gh/evansims/openfga-php/graph/badge.svg)](https://codecov.io/gh/evansims/openfga-php)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/evansims/openfga-php/badge)](https://scorecard.dev/viewer/?uri=github.com/evansims/openfga-php)
 
-High-performance fine-grained authorization for PHP applications with [OpenFGA](https://openfga.dev/)/[Auth0 FGA](https://auth0.com/fine-grained-authorization).
+Welcome to the OpenFGA PHP SDK! This SDK provides a high-performance and developer-friendly way to integrate your PHP applications with [OpenFGA](https://openfga.dev/) or [Auth0 FGA](https://auth0.com/fine-grained-authorization). OpenFGA is an open-source solution for fine-grained authorization, designed to give you flexibility and control over who can access what in your applications.
+
+With this SDK, you can easily manage authorization stores, define expressive authorization models using a domain-specific language (DSL), manage relationship tuples, and perform authorization checks and queries.
 
 ## Requirements
 
 - PHP 8.3+
 - Composer
-- OpenFGA or Auth0 FGA
-- Dependencies:
-  - Any [PSR-18 implementation](https://packagist.org/providers/psr/http-client-implementation)
-  - Any [PSR-17 implementation](https://packagist.org/providers/psr/http-factory-implementation)
-  - Any [PSR-7 implementation](https://packagist.org/providers/psr/http-message-implementation)
+- An active OpenFGA or Auth0 FGA instance.
+- PSR-7, PSR-17, and PSR-18 compatible HTTP client and factory implementations. Popular choices include Guzzle, Symfony HTTP Client, etc. These are typically auto-discovered or can be explicitly configured.
 
 ## Installation
+
+You can install the SDK via Composer:
 
 ```bash
 composer require evansims/openfga-php
 ```
 
-Please ensure your project has the [required dependencies](#requirements) installed.
+Ensure your project also includes implementations for PSR-7, PSR-17 (HTTP Factories), and PSR-18 (HTTP Client). If not already present, Composer will often prompt you to install them, or you can add them manually. For example, to use Guzzle:
+
+```bash
+composer require guzzlehttp/guzzle # PSR-7 and PSR-18
+composer require guzzlehttp/psr7 # PSR-7 and PSR-17
+```
 
 ## Quick Start
 
-Create a client. The only required parameter is the URL of your OpenFGA instance.
+Here's a quick example to get you up and running. This demonstrates creating a client, setting up a store, defining an authorization model, writing a relationship tuple, and performing an authorization check.
 
 ```php
-use OpenFGA\{Client, Authentication};
+<?php
 
-use function OpenFGA\Results\{fold, success, failure, unwrap};
+require_once __DIR__ . '/vendor/autoload.php';
 
-$client = new Client(
-    url: $_ENV['FGA_API_URL'],
-);
-```
-
-- **Authentication:** None by default, but pre-shared keys and client credentials [are supported](docs/Authentication.md).
-- **Result Functions:** Helpers for working with [Results](docs/Results.md) returned by client methods.
-
-## Stores
-
-Stores are isolated environments that contain their own authorization model and data, allowing you to manage permissions separately for different applications, tenants, or environments.
-
-**Create a store** with `Client::createStore()`:
-
-```php
-use OpenFGA\Responses\CreateStoreResponseInterface;
-
-$result = $client->createStore(name: 'my-store');
-
-echo fold(
-    $result,
-    fn(CreateStoreResponseInterface $response) => "Store created: {$response->getId()}",
-    fn(Throwable $err) => "Store creation failed: {$err->getMessage()}"
-);
-
-failure($result, fn(Throwable $error) => {
-    // Store creation failed. Log or gracefully handle the error.
-    throw $error;
-});
-```
-
-**List stores** with `Client::listStores()`:
-
-```php
-use OpenFGA\Responses\ListStoresResponseInterface;
-
-$result = $client->listStores();
-
-success($result, fn(ListStoresResponseInterface $response) => {
-    foreach ($response->getStores() as $store) {
-        echo "Store: {$store->getId()}\n";
-    }
-});
-```
-
-**Get a store** with `Client::getStore()`:
-
-```php
-use OpenFGA\Responses\GetStoreResponseInterface;
-
-($client->getStore(store: 'my-store'))->onSuccess(fn(GetStoreResponseInterface $response) => {
-    echo "Store ID: {$response->getId()}\n";
-    echo "Store Name: {$response->getName()}\n";
-    echo "Store Created At: {$response->getCreatedAt()->format('Y-m-d H:i:s')}\n";
-    echo "Store Updated At: {$response->getUpdatedAt()->format('Y-m-d H:i:s')}\n";
-});
-```
-
-**Delete a store** with `Client::deleteStore()`:
-
-```php
-success($store, fn(CreateStoreResponseInterface $store) => {
-    // Delete the store we created with our `createStore()` call above.
-    $client->deleteStore(store: $store->getId());
-});
-```
-
-See [docs/Stores.md](docs/Stores.md) for more information.
-
-## Authorization Models
-
-Authorization models define the structure of your access control system: what types of objects exist, what relationships (like viewer or owner) they support, and how access is granted. They’re the blueprint that tells the system how to interpret and enforce permissions.
-
-**Transform a [DSL](https://openfga.dev/docs/configuration-language)** into an `AuthorizationModel` with `Client::dsl()`:
-
-```php
-use OpenFGA\Models\AuthorizationModel;
-
-$dsl = <<<DSL
-model
-schema 1.1
-
-type user
-
-type domain
-relations
-    define member: [user]
-
-type folder
-relations
-    define can_share: writer
-    define owner: [user, domain#member] or owner from parent_folder
-    define parent_folder: [folder]
-    define viewer: [user, domain#member] or writer or viewer from parent_folder
-    define writer: [user, domain#member] or owner or writer from parent_folder
-
-type document
-relations
-    define can_share: writer
-    define owner: [user, domain#member] or owner from parent_folder
-    define parent_folder: [folder]
-    define viewer: [user, domain#member] or writer or viewer from parent_folder
-    define writer: [user, domain#member] or owner or writer from parent_folder
-DSL;
-
-$result = $client->dsl($dsl);
-
-echo fold(
-    $result,
-    fn(AuthorizationModelInterface $model) => "DSL transformed successfully!",
-    fn(Throwable $err) => "DSL transformation failed: {$err->getMessage()}"
-);
-
-failure($result, fn (Throwable $error): never => {
-    // Handle transformation failure
-    throw $error;
-});
-
-$model = unwrap($result);
-```
-
-**Create an authorization model** with `Client::createAuthorizationModel()`:
-
-```php
-use OpenFGA\Responses\CreateAuthorizationModelResponseInterface;
-
-($client->createAuthorizationModel(
-    store: $store->getId(),
-    typeDefinitions: $model->getTypeDefinitions(),
-    conditions: $model->getConditions(),
-))->onSuccess(fn(CreateAuthorizationModelResponseInterface $response) => {
-    echo "Created Authorization Model ID: {$response->getModel()}\n";
-});
-```
-
-**List authorization models** with `Client::listAuthorizationModels()`:
-
-```php
-use OpenFGA\Responses\ListAuthorizationModelsResponseInterface;
-
-$continuationToken = null;
-
-for ($i = 0; $i < 10; $i++) {
-    $result = $client->listAuthorizationModels(
-        store: $store->getId(),
-        continuationToken: $continuationToken,
-    );
-
-    success($result, fn (ListAuthorizationModelsResponseInterface $response) => {
-        foreach ($response->getModels() as $model) {
-            echo "Authorization Model ID: {$model->getId()}\n";
-        }
-
-        $continuationToken = $response->getContinuationToken();
-    });
-
-    if (failure($result) || $continuationToken === null) {
-        break;
-    }
-}
-```
-
-- The `continuationToken` parameter is only necessary when paginating results.
-- The `pageSize` parameter controls the number of models returned per pagination request.
-
-**Get an authorization model** with `Client::getAuthorizationModel()`:
-
-```php
-use OpenFGA\Responses\GetAuthorizationModelResponseInterface;
-
-$result = $client->getAuthorizationModel(
-    store: $store->getId(),
-    model: $model->getId()
-);
-
-success($result, fn(GetAuthorizationModelResponseInterface $response) => {
-    $model = $response->getModel();
-
-    echo "Authorization Model ID: {$model->getId()}\n\n";
-
-    // Transform the AuthorizationModel into a DSL string with `AuthorizationModel::dsl()`.
-    echo "Authorization Model DSL:\n\n{$model->dsl()}\n";
-});
-```
-
-See [docs/AuthorizationModels.md](docs/AuthorizationModels.md) for more information.
-
-## Relationship Tuples
-
-**Write tuples** with `Client::writeTuples()`:
-
-Add or remove relationship tuples, essentially updating who has access to what.
-
-```php
-use OpenFGA\Responses\WriteTuplesResponseInterface;
-use OpenFGA\Models\{TupleKey, TupleKeys};
-
-$tuples = new TupleKeys([
-    new TupleKey(
-        user: 'user:anne',
-        relation: 'reader',
-        object: 'document:roadmap'
-    ),
-]);
-
-$result = $client->writeTuples(
-    store: $store->getId(),
-    model: $model->getId(),
-    writes: $tuples,
-);
-
-echo fold(
-    $result,
-    fn(WriteTuplesResponseInterface $response) => "Tuples written successfully.",
-    fn(Throwable $err) => "Tuples write failed: {$err->getMessage()}"
-);
-```
-
-- The `writes` parameter controls the tuples to write.
-- The `deletes` parameter controls the tuples to delete.
-
-**Read tuples** with `Client::readTuples()`:
-
-Returns all the relationship tuples (permissions data) that match a given filter, such as all users who are viewers of a document.
-
-```php
-use OpenFGA\Responses\ReadTuplesResponseInterface;
+use OpenFGA\Client;
 use OpenFGA\Models\TupleKey;
+use OpenFGA\Models\TupleKeys;
+use OpenFGA\Results\unwrap; // Helper to simplify result handling
 
-$tuple = new TupleKey(
-    user: 'user:anne',
-    relation: 'reader',
-    object: 'document:roadmap'
-);
+// 1. Initialize the Client
+// Assumes FGA_API_URL and FGA_STORE_NAME are set in your environment or .env file
+// See docs/Authentication.md for authentication options.
+$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 
-$continuationToken = null;
+try {
+    // 2. Create a Store (or use an existing one)
+    // Stores are isolated environments for your authorization models and data.
+    $storeName = $_ENV['FGA_STORE_NAME'] ?? 'my_php_sdk_store';
+    $store = unwrap($client->createStore(name: $storeName));
+    echo "Store '{$store->getName()}' created with ID: {$store->getId()}\n";
+    $client->setStore($store->getId()); // Set store for subsequent client calls
 
-for ($i = 0; $i < 10; $i++) {
-    $result = $client->readTuples(
-        store: $store->getId(),
-        tupleKey: $tuple,
-        continuationToken: $continuationToken,
-    );
+    // 3. Define and Create an Authorization Model (DSL)
+    // Authorization models define your access control structure.
+    $dsl = <<<DSL
+    model
+      schema 1.1
+    type user
+    type document
+      relations
+        define viewer: [user]
+    DSL;
+    $model = unwrap($client->dsl($dsl)); // Transform DSL to model object
+    $createdModel = unwrap($client->createAuthorizationModel(
+        typeDefinitions: $model->getTypeDefinitions()
+    ));
+    echo "Authorization Model created with ID: {$createdModel->getId()}\n";
+    $client->setModel($createdModel->getId()); // Set model for subsequent client calls
 
-    success($result, fn(ReadTuplesResponseInterface $response) => {
-        foreach ($response->getTuples() as $tuple) {
-            echo "Tuple: {$tuple->getUser()} {$tuple->getRelation()} {$tuple->getObject()}\n";
-        }
+    // 4. Write a Relationship Tuple
+    // Tuples define relationships, e.g., "user:anne is a viewer of document:roadmap".
+    $tuple = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:roadmap');
+    unwrap($client->writeTuples(writes: new TupleKeys([$tuple])));
+    echo "Tuple written: user:anne is a viewer of document:roadmap\n";
 
-        $continuationToken = $response->getContinuationToken();
-    });
-
-    if (failure($result) || $continuationToken === null) {
-        break;
+    // 5. Perform an Authorization Check
+    // "Can user:anne view document:roadmap?"
+    $checkResult = unwrap($client->check(tupleKey: $tuple));
+    if ($checkResult->getIsAllowed()) {
+        echo "SUCCESS: Anne CAN view the roadmap!\n";
+    } else {
+        echo "FAILURE: Anne CANNOT view the roadmap.\n";
     }
+
+} catch (Throwable $e) {
+    echo "An error occurred: {$e->getMessage()}\n";
+    // For production, log the error and handle it gracefully.
+    // You can inspect $e for more details, e.g., if it's an OpenFGA\Errors\FGAApiError
 }
+
+// For a more detailed walkthrough, see docs/GettingStarted.md
+?>
 ```
 
-- The `continuationToken` parameter is only necessary when paginating results.
-- The `pageSize` parameter controls the number of tuples returned per pagination request.
-- The `consistency` parameter controls the consistency of the read operation.
+This example uses `unwrap()` for brevity. For robust error handling, explore the `Success`/`Failure` patterns described in [Error Handling and Results](docs/Results.md).
 
-**List tuple changes** with `Client::listTupleChanges()`:
+## Core Concepts
 
-Returns a stream of recent authorization data changes (like added or removed relationships) so you can track updates over time.
+This SDK allows you to interact with all the core features of OpenFGA. Here's a brief overview:
 
-```php
-use OpenFGA\Responses\ListTupleChangesResponseInterface;
+-   **Stores:** Isolated environments for your authorization models and relationship data. They allow you to manage permissions separately for different applications or tenants.
+    [Learn more in `docs/Stores.md`](docs/Stores.md)
 
-$continuationToken = null;
+-   **Authorization Models:** These define the structure of your access control system – the types of objects, the possible relationships (e.g., `viewer`, `editor`), and how those relationships grant permissions. You can define models using a user-friendly DSL.
+    [Learn more in `docs/AuthorizationModels.md`](docs/AuthorizationModels.md)
 
-for ($i = 0; $i < 10; $i++) {
-    $result = $client->listTupleChanges(
-        store: $store->getId(),
-        continuationToken: $continuationToken,
-    );
+-   **Relationship Tuples:** These are the actual pieces of data that define who has what relationship with which object (e.g., "user:anne is a `viewer` of document:roadmap"). You can write, read, and delete these tuples.
+    [Learn more in `docs/RelationshipTuples.md`](docs/RelationshipTuples.md)
 
-    success($result, fn(ListTupleChangesResponseInterface $response) => {
-        foreach ($response->getChanges() as $change) {
-            echo "Change: {$change->getUser()} {$change->getRelation()} {$change->getObject()}\n";
-        }
+-   **Queries:** OpenFGA allows you to ask powerful questions about your authorization data:
+    -   `check()`: "Does this user have this permission on this object?"
+    -   `expand()`: "How does this user have this permission?" (shows the tree of relationships)
+    -   `listUsers()`: "Which users have this permission on this object?"
+    -   `listObjects()`: "Which objects of a certain type can this user access with this permission?"
+    [Learn more in `docs/Queries.md`](docs/Queries.md)
 
-        $continuationToken = $response->getContinuationToken();
-    });
+-   **Assertions:** These are used for testing your authorization models. You can assert whether specific relationships should exist or not, helping you verify your model's correctness.
+    [Learn more in `docs/Assertions.md`](docs/Assertions.md)
 
-    if (failure($result) || $continuationToken === null) {
-        break;
-    }
-}
-```
+## Authentication
 
-- The `continuationToken` parameter is only necessary when paginating results.
-- The `pageSize` parameter controls the number of changes returned per pagination request.
-- The `type` parameter controls the type of changes returned.
-- The `startTime` parameter controls the start time of the changes returned.
+The SDK supports various authentication methods to connect to your OpenFGA instance:
+-   No authentication (suitable for local development or trusted environments).
+-   API Key (Pre-Shared Key).
+-   Client Credentials.
 
-See [docs/RelationshipTuples.md](docs/RelationshipTuples.md) for more information.
+[Learn more about configuring authentication in `docs/Authentication.md`](docs/Authentication.md)
 
-## Relationship Queries
+## Error Handling and Results
 
-**Check** with `Client::check()`:
+Client methods return `Result` objects which can be either a `Success` or a `Failure`. This pattern allows for explicit error handling. Helper functions like `unwrap()`, `fold()`, `success()`, and `failure()` are provided to work with these results.
 
-Returns a simple answer to the question: "_Does_ this user have this access to this object?"
-
-```php
-use OpenFGA\Responses\CheckResponseInterface;
-use OpenFGA\Models\TupleKey;
-
-$tuple = new TupleKey(
-    user: 'user:anne',
-    relation: 'reader',
-    object: 'document:roadmap',
-)
-
-$result = ($client->check(
-    store: $store->getId(),
-    model: $model->getId(),
-    tupleKey: $tuple,
-))->then(fn(CheckResponseInterface $response) => $response->getIsAllowed());
-
-$allowed = $result->unwrap(false);
-```
-
-**Expand** with `Client::expand()`:
-
-Returns a detailed tree of all the possible access paths granting a specific relation on an object. "_How_ does this user have access to this object?"
-
-```php
-use OpenFGA\Responses\ExpandResponseInterface;
-
-$tuple = new TupleKey(
-    relation: 'reader',
-    object: 'document:roadmap',
-)
-
-$result = $client->expand(
-    store: $store->getId(),
-    tupleKey: $tuple,
-);
-
-success($result, fn(ExpandResponseInterface $response) => {
-    foreach ($response->getTuples() as $tuple) {
-        echo "Tuple: {$tuple->getUser()} {$tuple->getRelation()} {$tuple->getObject()}\n";
-    }
-});
-```
-
-**List users** with `Client::listUsers()`:
-
-Returns all users who have a specific type of access to a given object. "_Who_ has access to this object?"
-
-```php
-use OpenFGA\Responses\ListUsersResponseInterface;
-
-$result = $client->listUsers(
-    store: $store->getId(),
-    model: $model->getId(),
-    tupleKey: new TupleKey(relation: 'viewer', object: 'document:roadmap'),
-);
-
-success($result, fn(ListUsersResponseInterface $response) => {
-    foreach ($response->getUsers() as $user) {
-        echo "User: {$user->getUser()} {$user->getRelation()} {$user->getObject()}\n";
-    }
-});
-```
-
-**List objects** with `Client::listObjects()`:
-
-Returns all the objects a specific user has a certain type of access to (like all documents they can view). "_What_ objects does this user have access to?"
-
-```php
-use OpenFGA\Responses\ListObjectsResponseInterface;
-
-$result = $client->listObjects(
-    store: $store->getId(),
-    model: $model->getId(),
-    tupleKey: new TupleKey(relation: 'viewer', object: 'document:roadmap'),
-);
-
-success($result, fn(ListObjectsResponseInterface $response) => {
-    foreach ($response->getObjects() as $object) {
-        echo "Object: {$object->getObject()} {$object->getRelation()} {$object->getUser()}\n";
-    }
-});
-```
-
-See [docs/Queries.md](docs/Queries.md) for more information.
-
-## Assertions
-
-Assertions are test cases that check whether specific users should or shouldn’t have access to certain resources, based on your authorization model. They help you validate that your access rules behave as expected and catch mistakes early.
-
-**Read assertions** with `Client::readAssertions()`:
-
-```php
-use OpenFGA\Responses\ReadAssertionsResponseInterface;
-
-$result = $client->readAssertions(
-    store: $store->getId(),
-    model: $model->getId(),
-);
-
-success($result, fn(ReadAssertionsResponseInterface $response) => {
-    foreach ($response->getAssertions() as $assertion) {
-        echo "Assertion: {$assertion->getAssertion()} {$assertion->getRelation()} {$assertion->getObject()}\n";
-    }
-});
-```
-
-**Write assertions** with `Client::writeAssertions()`:
-
-```php
-use OpenFGA\Responses\WriteAssertionsResponseInterface;
-use OpenFGA\Models\{Assertion, TupleKey};
-use OpenFGA\Collections\Assertions;
-
-$assertions = new Assertions([
-    new Assertion(
-        tupleKey: new TupleKey(
-            user: 'user:anne',
-            relation: 'reader',
-            object: 'document:roadmap',
-        ),
-        expectation: true,
-    ),
-]);
-
-$result = $client->writeAssertions(
-    store: $store->getId(),
-    model: $model->getId(),
-    assertions: $assertions,
-);
-
-success($result, fn(WriteAssertionsResponseInterface $response) => {
-    foreach ($response->getAssertions() as $assertion) {
-        echo "Assertion: {$assertion->getAssertion()} {$assertion->getRelation()} {$assertion->getObject()}\n";
-    }
-});
-```
-
-See [docs/Assertions.md](docs/Assertions.md) for more information.
+[Learn more about handling results and errors in `docs/Results.md`](docs/Results.md)
 
 ## Documentation
 
-- [SDK API Technical Reference](docs/API)
-- [OpenFGA Documentation](https://openfga.dev/docs)
+For more detailed information, please refer to the following resources:
+
+-   **SDK Documentation:** The `docs/` directory in this repository contains detailed information on:
+    -   [Getting Started](docs/GettingStarted.md)
+    -   [Authentication](docs/Authentication.md)
+    -   [Stores](docs/Stores.md)
+    -   [Authorization Models](docs/AuthorizationModels.md)
+    -   [Relationship Tuples](docs/RelationshipTuples.md)
+    -   [Queries](docs/Queries.md)
+    -   [Assertions](docs/Assertions.md)
+    -   [Results (Error Handling)](docs/Results.md)
+-   **SDK API Technical Reference:** [Generated API documentation](docs/API) (link might need to be updated based on actual generation path).
+-   **OpenFGA Official Documentation:** [openfga.dev/docs](https://openfga.dev/docs) for comprehensive information about OpenFGA itself.
+
+## Contributing
+
+Contributions are welcome! Whether it's bug reports, feature suggestions, or pull requests, please feel free to contribute.
+-   If you find a bug or have a feature request, please open an issue on GitHub.
+-   If you'd like to contribute code, please fork the repository and submit a pull request.
+
+(Consider adding a `CONTRIBUTING.md` file with more detailed guidelines if one doesn't exist).
+
+## License
+
+This project is licensed under the Apache 2.0 License. See the [LICENSE](LICENSE) file for details.
 
 ---
 
 This project is an unofficial, community-maintained SDK and is not endorsed by OpenFGA or Auth0.
-
-Licensed under [the Apache 2.0 License](LICENSE).
