@@ -81,7 +81,7 @@ final class Failure extends Result implements ResultInterface
      *
      * @param callable(E): F $fn
      *
-     * @return Failure<F>
+     * @return Failure<E>
      */
     public function mapError(callable $fn): ResultInterface
     {
