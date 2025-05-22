@@ -12,12 +12,13 @@ use Throwable;
  * @template T
  * @template E of Throwable
  *
- * @extends Result<T, E>
+ * @extends Result<T, never>
+ * @implements ResultInterface<T, never>
  */
-final class Success extends Result
+final class Success extends Result implements ResultInterface
 {
     /**
-     * @inheritDoc
+     * @param T $value
      */
     public function __construct(private readonly mixed $value)
     {
@@ -71,25 +72,20 @@ final class Success extends Result
      *
      * @phpstan-return Success<U, E>
      */
-    public function map(callable $fn): static
+    public function map(callable $fn): ResultInterface
     {
-        // Call the function with the current value
         $mappedValue = $fn($this->value);
 
-        // Create a new Success with the mapped value
         return new static($mappedValue);
     }
 
     #[Override]
     /**
-     * @inheritDoc
-     */
-    /**
      * @template F of Throwable
      *
      * @param callable(never): F $fn
      *
-     * @return $this
+     * @return self<T, E>
      */
     public function mapError(callable $fn): ResultInterface
     {
@@ -118,9 +114,6 @@ final class Success extends Result
 
     #[Override]
     /**
-     * @inheritDoc
-     */
-    /**
      * @template U
      *
      * @param callable(T): ResultInterface<U, E> $fn
@@ -130,14 +123,5 @@ final class Success extends Result
     public function then(callable $fn): ResultInterface
     {
         return $fn($this->value);
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public static function createFailure(Throwable $error): static
-    {
-        throw new LogicException('Cannot create failure from Success');
     }
 }

@@ -52,9 +52,9 @@ interface ResultInterface
      *
      * @param callable(T): U $fn
      *
-     * @return static<U, E>
+     * @return ResultInterface<U, E>
      */
-    public function map(callable $fn);
+    public function map(callable $fn): ResultInterface;
 
     /**
      * @template F of Throwable
@@ -63,35 +63,35 @@ interface ResultInterface
      *
      * @return ResultInterface<T, F>
      */
-    public function mapError(callable $fn): self;
+    public function mapError(callable $fn): ResultInterface;
 
     /**
      * @param callable(E): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function onFailure(callable $fn): self;
+    public function onFailure(callable $fn): ResultInterface;
 
     /**
      * @param callable(T): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function onSuccess(callable $fn): self;
+    public function onSuccess(callable $fn): ResultInterface;
 
     /**
      * @param callable(T): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function tap(callable $fn): self;
+    public function tap(callable $fn): ResultInterface;
 
     /**
      * @param callable(E): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function tapError(callable $fn): self;
+    public function tapError(callable $fn): ResultInterface;
 
     /**
      * @template U
@@ -100,7 +100,7 @@ interface ResultInterface
      *
      * @return ResultInterface<U, E>
      */
-    public function then(callable $fn): self;
+    public function then(callable $fn): ResultInterface;
 
     /**
      * @template R
@@ -110,13 +110,4 @@ interface ResultInterface
      * @return R|T
      */
     public function unwrap(mixed $default = null): mixed;
-
-    /**
-     * @template F of Throwable
-     *
-     * @param F $error
-     *
-     * @return static<T, F>
-     */
-    public static function createFailure(Throwable $error): static;
 }

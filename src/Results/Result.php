@@ -81,14 +81,4 @@ abstract class Result implements ResultInterface
      * @inheritDoc
      */
     abstract public function isSuccess(): bool;
-
-    #[Override]
-    /**
-     * @template U
-     *
-     * @param callable(T): U $fn
-     *
-     * @return static<U, E>
-     */
-    abstract public function map(callable $fn);
 }

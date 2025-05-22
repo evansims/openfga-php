@@ -10,10 +10,10 @@ use Throwable;
 
 /**
  * @template E of Throwable
- *
  * @extends Result<never, E>
+ * @implements ResultInterface<never, E>
  */
-final class Failure extends Result
+final class Failure extends Result implements ResultInterface
 {
     /**
      * @param E $error
@@ -36,8 +36,6 @@ final class Failure extends Result
     #[Override]
     /**
      * @inheritDoc
-     *
-     * @return never
      */
     public function getValue(): never
     {
@@ -64,15 +62,14 @@ final class Failure extends Result
 
     #[Override]
     /**
-     * @template U
+     * @template F of Throwable
      *
-     * @param callable(mixed): U $fn
+     * @param callable(never): F $fn
      *
-     * @return self<E>
+     * @return self<never, E>
      */
-    public function map(callable $fn)
+    public function map(callable $fn): ResultInterface
     {
-        // On failure, we just return $this without calling the function
         return $this;
     }
 
@@ -86,13 +83,12 @@ final class Failure extends Result
      */
     public function mapError(callable $fn): ResultInterface
     {
-        return new self($fn($this->error));
+        $result = $fn($this->error);
+
+        return new static($result);
     }
 
     #[Override]
-    /**
-     * @inheritDoc
-     */
     /**
      * @param callable(E): void $fn
      *
@@ -121,22 +117,5 @@ final class Failure extends Result
     public function then(callable $fn): ResultInterface
     {
         return $this;
-    }
-
-    #[Override]
-    /**
-     * @template F of Throwable
-     *
-     * @param F $error
-     *
-     * @return static<F>
-     *
-     * @psalm-return Failure<F>
-     *
-     * @phpstan-return Failure<F>
-     */
-    public static function createFailure(Throwable $error): static
-    {
-        return new static($error);
     }
 }
