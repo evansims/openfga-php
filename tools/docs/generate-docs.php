@@ -194,7 +194,22 @@ class DocumentationGenerator
                 return $this->convertToMarkdownLink($interface->getName());
             }, $reflection->getInterfaces()),
             'methods' => [],
+            'constants' => [],
         ];
+
+        // Process Constants if it's not an interface
+        if (!$isInterface) {
+            $reflectionConstants = $reflection->getReflectionConstants();
+            foreach ($reflectionConstants as $constant) {
+                if ($constant->isPublic()) {
+                    $classData['constants'][] = [
+                        'name' => $constant->getName(),
+                        'value' => var_export($constant->getValue(), true),
+                        'description' => $this->extractDescriptionFromDocComment($constant->getDocComment() ?: ''),
+                    ];
+                }
+            }
+        }
 
         // Get interface methods documentation if this is a class (not an interface)
         $interfaceMethods = [];
@@ -204,7 +219,7 @@ class DocumentationGenerator
 
         // Process methods
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            if ($method->isConstructor() || $method->isDestructor() || $method->isStatic()) {
+            if ($method->isDestructor() || $method->isStatic()) { // Allow constructors
                 continue;
             }
 
@@ -374,7 +389,54 @@ class DocumentationGenerator
 
             if ($param->isDefaultValueAvailable()) {
                 $default = $param->getDefaultValue();
-                $paramStr .= ' = ' . var_export($default, true);
+                $defaultValueStr = '';
+
+                if (is_object($default)) {
+                    $defaultClassRef = new ReflectionClass(get_class($default));
+                    if ($defaultClassRef->isEnum()) {
+                        $enumTypeLink = $this->convertToMarkdownLink($defaultClassRef->getName());
+                        $defaultValueStr = $enumTypeLink . '::' . $default->name;
+                    } else {
+                        // Non-enum objects - default to var_export
+                        $defaultValueStr = var_export($default, true);
+                    }
+                } elseif (is_array($default)) {
+                    $exportedParts = [];
+                    $isList = (array_keys($default) === range(0, count($default) - 1)); // Simple list check
+
+                    foreach ($default as $key => $value) {
+                        $exportedValue = '';
+                        if (is_object($value)) {
+                            $valueClassRef = new ReflectionClass(get_class($value));
+                            if ($valueClassRef->isEnum()) {
+                                $enumTypeLink = $this->convertToMarkdownLink($valueClassRef->getName());
+                                $exportedValue = $enumTypeLink . '::' . $value->name;
+                            } else {
+                                $exportedValue = var_export($value, true);
+                            }
+                        } else {
+                            $exportedValue = var_export($value, true);
+                        }
+                        
+                        if ($isList) {
+                            $exportedParts[] = $exportedValue;
+                        } else {
+                            $exportedKey = var_export($key, true);
+                            $exportedParts[] = $exportedKey . ' => ' . $exportedValue;
+                        }
+                    }
+                    if (empty($exportedParts)) {
+                        $defaultValueStr = '[]';
+                    } elseif ($isList) {
+                        $defaultValueStr = '[' . implode(', ', $exportedParts) . ']';
+                    } else {
+                        $defaultValueStr = '[' . implode(', ', $exportedParts) . ']'; // For associative arrays
+                    }
+                } else {
+                    // Scalars, null
+                    $defaultValueStr = var_export($default, true);
+                }
+                $paramStr .= ' = ' . $defaultValueStr;
             }
 
             $params[] = $paramStr;
@@ -431,7 +493,7 @@ class DocumentationGenerator
         if (str_contains($type, '|')) {
             $types = array_map('trim', explode('|', $type));
             $convertedTypes = array_map([$this, 'convertToMarkdownLink'], $types);
-            return implode('|', $convertedTypes);
+            return implode(' | ', $convertedTypes); // Added spaces around |
         }
 
         // Handle array types (e.g., string[] or Type[])
@@ -578,50 +640,62 @@ class DocumentationGenerator
 
             // Only process the main description
             if ($inDescription) {
+                // If the line *is* @inheritDoc (case-insensitive), don't add it to the description text.
+                if (strtolower(trim($line)) === '@inheritdoc') {
+                    continue; 
+                }
                 $description[] = $line;
             }
         }
 
         $result = trim(implode(" ", $description));
 
-        // Clean up any remaining asterisks or slashes
-        $result = trim($result, "*/
- \t");
+        // Clean up any remaining asterisks or slashes from the joined string
+        $result = trim($result, "*/ \t");
+        // Final check in case the description somehow ended up being only "@inheritdoc"
+        if (strtolower($result) === '@inheritdoc') {
+            return '';
+        }
 
         return $result;
     }
 
     private function extractParamDescription(string $docComment, string $paramName): string
     {
-        if (empty($docComment)) {
+        if (empty($docComment) || empty($paramName)) {
             return '';
         }
 
         $lines = explode("\n", $docComment);
-        $description = [];
-        $capture = false;
+        $descriptionLines = [];
+        $capturing = false;
+        // Regex to find the specific @param line for $paramName.
+        // It ensures that $paramName is a whole word to avoid partial matches.
+        $paramRegex = '/@param\s+[^\s]+\s+\$' . preg_quote($paramName, '/') . '(?:\s+(.*))?$/';
 
         foreach ($lines as $line) {
-            $line = trim($line, "/* \t");
+            $trimmedLine = trim($line, "/* \t\n\r");
 
-            // Look for the @param line for this parameter
-            if (preg_match('/@param\s+[^\s]+\s+\$' . preg_quote($paramName, '/') . '(?:\s+(.*))?$/', $line, $matches)) {
-                if (!empty($matches[1])) {
-                    $description[] = $matches[1];
+            if ($capturing) {
+                // If the line starts with a new PHPDoc tag, stop capturing.
+                if (preg_match('/^@\w+/', $trimmedLine)) {
+                    $capturing = false;
+                    break; 
                 }
-                $capture = true;
-            }
-            // If we're capturing and hit another tag, stop
-            elseif ($capture && str_starts_with($line, '@')) {
-                $capture = false;
-            }
-            // If we're capturing and the line isn't empty, add it to the description
-            elseif ($capture && !empty($line)) {
-                $description[] = $line;
+                // Add non-empty lines to the description.
+                if (!empty($trimmedLine)) {
+                    $descriptionLines[] = $trimmedLine;
+                }
+            } else {
+                if (preg_match($paramRegex, $trimmedLine, $matches)) {
+                    $capturing = true;
+                    if (!empty($matches[1])) { // Description starts on the same line.
+                        $descriptionLines[] = trim($matches[1]);
+                    }
+                }
             }
         }
-
-        return trim(implode(' ', $description));
+        return trim(implode(' ', $descriptionLines));
     }
 
     private function extractReturnDescription(string $docComment): string
@@ -631,35 +705,33 @@ class DocumentationGenerator
         }
 
         $lines = explode("\n", $docComment);
-        $description = [];
-        $capture = false;
+        $descriptionLines = [];
+        $capturing = false;
+        $returnRegex = '/@return\s+[^\s]+(?:\s+(.*))?$/';
 
         foreach ($lines as $line) {
-            $line = trim($line, "/* \t");
+            $trimmedLine = trim($line, "/* \t\n\r");
 
-            // Skip empty lines and the opening /**
-            if (empty($line) || $line === '/**') {
-                continue;
-            }
-
-            // Look for the @return line
-            if (preg_match('/@return\s+[^\s]+(?:\s+(.*))?$/', $line, $matches)) {
-                if (!empty($matches[1])) {
-                    $description[] = $matches[1];
+            if ($capturing) {
+                // If the line starts with a new PHPDoc tag, stop capturing.
+                if (preg_match('/^@\w+/', $trimmedLine)) {
+                    $capturing = false;
+                    break;
                 }
-                $capture = true;
-            }
-            // If we're capturing and hit another tag, stop
-            elseif ($capture && str_starts_with($line, '@')) {
-                $capture = false;
-            }
-            // If we're capturing and the line isn't empty, add it to the description
-            elseif ($capture && !empty($line)) {
-                $description[] = $line;
+                // Add non-empty lines to the description.
+                 if (!empty($trimmedLine)) {
+                    $descriptionLines[] = $trimmedLine;
+                }
+            } else {
+                if (preg_match($returnRegex, $trimmedLine, $matches)) {
+                    $capturing = true;
+                    if (!empty($matches[1])) { // Description starts on the same line.
+                        $descriptionLines[] = trim($matches[1]);
+                    }
+                }
             }
         }
-
-        return trim(implode(' ', $description));
+        return trim(implode("\n", $descriptionLines));
     }
 
     public static function deleteDir(string $dir): void
