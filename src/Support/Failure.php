@@ -126,9 +126,13 @@ final class Failure extends Result
     #[Override]
     /**
      * @template F of Throwable
+     *
      * @param F $error
+     *
      * @return static<F>
+     *
      * @psalm-return Failure<F>
+     *
      * @phpstan-return Failure<F>
      */
     public static function createFailure(Throwable $error): static

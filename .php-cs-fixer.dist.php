@@ -180,7 +180,6 @@ return (new PhpCsFixer\Config())
         'return_type_declaration' => ['space_before' => 'none'],
         'return_type_declaration' => true,
         'self_accessor' => true,
-        'self_static_accessor' => true,
         'semicolon_after_instruction' => true,
         'set_type_to_cast' => true,
         'short_scalar_cast' => true,
