@@ -127,10 +127,12 @@ Results can also be manipulated using a number of built-in methods.
   $transformed = $result->map(fn(array $data) => $data['id']);
   // $transformed is Success<int>
 
+  ```
+
 - `mapError(callable $fn): ResultInterface` transforms the error value when a `Failure`.
 
   ```php
-  $result = Failure(new Exception('We failed!'));
+  $result = new Failure(new Exception('We failed!'));
   // $result is Failure<Throwable>
 
   $transformed = $result->mapError(fn(Throwable $error) => $error->getMessage());
@@ -140,7 +142,7 @@ Results can also be manipulated using a number of built-in methods.
 - `tap(callable $fn): ResultInterface` performs a side-effect when a `Success`, without altering the result.
 
   ```php
-  $result = Success(['id' => 123]);
+  $result = new Success(['id' => 123]);
   // $result is Success<array<string, int>>
 
   $result->tap(fn(array $data) => print "ID: {$data['id']}\n");
@@ -150,40 +152,40 @@ Results can also be manipulated using a number of built-in methods.
 - `tapError(callable $fn): ResultInterface` performs a side-effect when a `Failure`, without altering the result.
 
   ```php
-  $result = Failure(new Exception('We failed!'));
+  $result = new Failure(new Exception('We failed!'));
   // $result is Failure<Throwable>
 
-  $result->tapError(fn(Throwable $error) => echo "Error: {$error->getMessage()}\n");
+  $result->tapError(fn(Throwable $error) => print "Error: {$error->getMessage()}\n");
   // $result is still Failure<Throwable>
   ```
 
 - `onSuccess(callable $fn): ResultInterface` branches on `Success`, without altering the result.
 
   ```php
-  $result = Success(['id' => 123]);
+  $result = new Success(['id' => 123]);
   // $result is Success<array<string, int>>
 
-  $result->onSuccess(fn(array $data) => echo "ID: {$data['id']}");
+  $result->onSuccess(fn(array $data) => print "ID: {$data['id']}");
   // $result is still Success<array<string, int>>
   ```
 
 - `onFailure(callable $fn): ResultInterface` branches on `Failure`, without altering the result.
 
   ```php
-  $result = Failure(new Exception('We failed!'));
+  $result = new Failure(new Exception('We failed!'));
   // $result is Failure<Throwable>
 
-  $result->onFailure(fn(Throwable $error) => echo "Error: {$error->getMessage()}");
+  $result->onFailure(fn(Throwable $error) => print "Error: {$error->getMessage()}");
   // $result is still Failure<Throwable>
   ```
 
 - `unwrap(mixed $default = null): mixed` returns the success value, or a default value if the result is a `Failure`.
 
   ```php
-  $success = Success(['id' => 123]);
+  $success = new Success(['id' => 123]);
   $value = $success->unwrap([]); // Returns ['id' => 123]
 
-  $failure = Failure(new Exception('We failed!'));
+  $failure = new Failure(new Exception('We failed!'));
   $value = $failure->unwrap([]); // Returns []
   ```
 
