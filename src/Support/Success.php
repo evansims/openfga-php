@@ -10,17 +10,18 @@ use Throwable;
 
 /**
  * @template T
- * @extends Result<T, never>
+ * @template E of Throwable
+ *
+ * @extends Result<T, E>
  */
 final class Success extends Result
 {
-    public function __construct(private readonly mixed $value) {}
-
-    #[Override]
     /**
      * @inheritDoc
      */
-    public function getValue(): mixed { return $this->value; }
+    public function __construct(private readonly mixed $value)
+    {
+    }
 
     #[Override]
     /**
@@ -35,14 +36,59 @@ final class Success extends Result
     /**
      * @inheritDoc
      */
-    public function map(callable $fn): ResultInterface
+    public function getValue(): mixed
     {
-        return new Success($fn($this->value));
+        return $this->value;
     }
 
     #[Override]
     /**
      * @inheritDoc
+     */
+    public function isFailure(): bool
+    {
+        return false;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function isSuccess(): bool
+    {
+        return true;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    /**
+     * @template U
+     *
+     * @param callable(T): U $fn
+     *
+     * @return static<U, E>
+     */
+    public function map(callable $fn): static
+    {
+        // Call the function with the current value
+        $mappedValue = $fn($this->value);
+
+        // Create a new Success with the mapped value
+        return new self($mappedValue);
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    /**
+     * @template F of Throwable
+     *
+     * @param callable(never): F $fn
+     *
+     * @return $this
      */
     public function mapError(callable $fn): ResultInterface
     {
@@ -52,6 +98,33 @@ final class Success extends Result
     #[Override]
     /**
      * @inheritDoc
+     */
+    public function onFailure(callable $fn): ResultInterface
+    {
+        return $this;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function onSuccess(callable $fn): ResultInterface
+    {
+        $fn($this->value);
+
+        return $this;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    /**
+     * @template U
+     *
+     * @param callable(T): ResultInterface<U, E> $fn
+     *
+     * @return ResultInterface<U, E>
      */
     public function then(callable $fn): ResultInterface
     {
@@ -65,24 +138,5 @@ final class Success extends Result
     public static function createFailure(Throwable $error): static
     {
         throw new LogicException('Cannot create failure from Success');
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function onSuccess(callable $fn): ResultInterface
-    {
-        $fn($this->value);
-        return $this;
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function onFailure(callable $fn): ResultInterface
-    {
-        return $this;
     }
 }

@@ -14,30 +14,14 @@ use Throwable;
 interface ResultInterface
 {
     /**
-     * @template U
-     * @param callable(T): ResultInterface<U, E> $fn
-     * @return ResultInterface<U, E>
-     */
-    public function then(callable $fn): ResultInterface;
-
-    /**
-     * @param callable(T): void $fn
-     * @return ResultInterface<T, E>
-     */
-    public function tap(callable $fn): ResultInterface;
-
-    /**
-     * @param callable(E): void $fn
-     * @return ResultInterface<T, E>
-     */
-    public function tapError(callable $fn): ResultInterface;
-
-    /**
      * @template R
-     * @param R $default
-     * @return T|R
+     *
+     * @param callable(T): R $onSuccess
+     * @param callable(E): R $onFailure
+     *
+     * @return R
      */
-    public function unwrap(mixed $default = null): mixed;
+    public function fold(callable $onSuccess, callable $onFailure): mixed;
 
     /**
      * @throws LogicException if called on Success
@@ -56,58 +40,87 @@ interface ResultInterface
     /**
      * @return bool
      *
-     * @psalm-assert-if-true Failure<T,E> $this
+     * @phpstan-assert-if-true Failure<E> $this
      */
     public function isFailure(): bool;
 
     /**
      * @return bool
      *
-     * @psalm-assert-if-true Success<T,E> $this
+     * @phpstan-assert-if-true Success<T, E> $this
      */
     public function isSuccess(): bool;
 
     /**
-     * @param callable(T): void $fn
+     * @template U
      *
-     * @return ResultInterface<T, E>
+     * @param callable(T): U $fn
+     *
+     * @return static<U, E>
      */
-    public function onSuccess(callable $fn): ResultInterface;
+    public function map(callable $fn);
+
+    /**
+     * @template F of Throwable
+     *
+     * @param callable(E): F $fn
+     *
+     * @return ResultInterface<T, F>
+     */
+    public function mapError(callable $fn): self;
 
     /**
      * @param callable(E): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function onFailure(callable $fn): ResultInterface;
+    public function onFailure(callable $fn): self;
+
+    /**
+     * @param callable(T): void $fn
+     *
+     * @return ResultInterface<T, E>
+     */
+    public function onSuccess(callable $fn): self;
+
+    /**
+     * @param callable(T): void $fn
+     *
+     * @return ResultInterface<T, E>
+     */
+    public function tap(callable $fn): self;
+
+    /**
+     * @param callable(E): void $fn
+     *
+     * @return ResultInterface<T, E>
+     */
+    public function tapError(callable $fn): self;
 
     /**
      * @template U
-     * @param callable(T): U $fn
+     *
+     * @param callable(T): ResultInterface<U, E> $fn
+     *
      * @return ResultInterface<U, E>
      */
-    public function map(callable $fn): ResultInterface;
-
-
-    /**
-     * @template F of Throwable
-     * @param callable(E): F $fn
-     * @return ResultInterface<T, F>
-     */
-    public function mapError(callable $fn): ResultInterface;
+    public function then(callable $fn): self;
 
     /**
      * @template R
-     * @param callable(T): R $onSuccess
-     * @param callable(E): R $onFailure
-     * @return R
+     *
+     * @param R $default
+     *
+     * @return R|T
      */
-    public function fold(callable $onSuccess, callable $onFailure): mixed;
+    public function unwrap(mixed $default = null): mixed;
 
     /**
-     * @param Throwable $error
+     * @template F of Throwable
      *
-     * @return ResultInterface<T, Throwable>
+     * @param F $error
+     *
+     * @return static<T, F>
      */
     public static function createFailure(Throwable $error): static;
 }

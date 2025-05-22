@@ -8,9 +8,10 @@ use Throwable;
 
 /**
  * @template T
+ * @template E of Throwable
  *
  * @param ResultInterface<T, E> $result
- * @param T $default
+ * @param T                     $default
  *
  * @return T
  */
@@ -23,7 +24,7 @@ function unwrap(ResultInterface $result, mixed $default = null): mixed
  * @template T
  * @template E of Throwable
  *
- * @param ResultInterface<T, E> $result
+ * @param ResultInterface<T, E>  $result
  * @param null|callable(T): void $fn
  *
  * @return bool
@@ -31,7 +32,7 @@ function unwrap(ResultInterface $result, mixed $default = null): mixed
 function success(ResultInterface $result, ?callable $fn = null): bool
 {
     if ($result->isSuccess()) {
-        if ($fn !== null) {
+        if (null !== $fn) {
             $fn($result->getValue());
         }
 
@@ -45,7 +46,7 @@ function success(ResultInterface $result, ?callable $fn = null): bool
  * @template T
  * @template E of Throwable
  *
- * @param ResultInterface<T, E> $result
+ * @param ResultInterface<T, E>  $result
  * @param null|callable(E): void $fn
  *
  * @return bool
@@ -53,7 +54,7 @@ function success(ResultInterface $result, ?callable $fn = null): bool
 function failure(ResultInterface $result, ?callable $fn = null): bool
 {
     if ($result->isFailure()) {
-        if ($fn !== null) {
+        if (null !== $fn) {
             $fn($result->getError());
         }
 
@@ -69,8 +70,8 @@ function failure(ResultInterface $result, ?callable $fn = null): bool
  * @template R
  *
  * @param ResultInterface<T, E> $result
- * @param callable(T): R $onSuccess
- * @param callable(E): R $onFailure
+ * @param callable(T): R        $onSuccess
+ * @param callable(E): R        $onFailure
  *
  * @return R
  */

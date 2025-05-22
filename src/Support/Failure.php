@@ -10,15 +10,40 @@ use Throwable;
 
 /**
  * @template E of Throwable
+ *
  * @extends Result<never, E>
  */
 final class Failure extends Result
 {
-    public function __construct(private readonly Throwable $error) {}
+    /**
+     * @var E
+     */
+    private readonly Throwable $error;
+
+    /**
+     * @param E $error
+     */
+    public function __construct(Throwable $error)
+    {
+        $this->error = $error;
+    }
 
     #[Override]
     /**
      * @inheritDoc
+     *
+     * @return E
+     */
+    public function getError(): Throwable
+    {
+        return $this->error;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     *
+     * @return never
      */
     public function getValue(): never
     {
@@ -29,17 +54,60 @@ final class Failure extends Result
     /**
      * @inheritDoc
      */
-    public function getError(): Throwable
+    public function isFailure(): bool
     {
-        return $this->error;
+        return true;
     }
 
     #[Override]
     /**
      * @inheritDoc
      */
-    public function map(callable $fn): ResultInterface
+    public function isSuccess(): bool
     {
+        return false;
+    }
+
+    #[Override]
+    /**
+     * @template U
+     *
+     * @param callable(mixed): U $fn
+     *
+     * @return self<E>
+     */
+    public function map(callable $fn)
+    {
+        // On failure, we just return $this without calling the function
+        return $this;
+    }
+
+    #[Override]
+    /**
+     * @template F of Throwable
+     *
+     * @param callable(E): F $fn
+     *
+     * @return Failure<F>
+     */
+    public function mapError(callable $fn): ResultInterface
+    {
+        return new self($fn($this->error));
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    /**
+     * @param callable(E): void $fn
+     *
+     * @return $this
+     */
+    public function onFailure(callable $fn): ResultInterface
+    {
+        $fn($this->error);
+
         return $this;
     }
 
@@ -47,9 +115,9 @@ final class Failure extends Result
     /**
      * @inheritDoc
      */
-    public function mapError(callable $fn): ResultInterface
+    public function onSuccess(callable $fn): ResultInterface
     {
-        return new Failure($fn($this->error));
+        return $this;
     }
 
     #[Override]
@@ -67,25 +135,6 @@ final class Failure extends Result
      */
     public static function createFailure(Throwable $error): static
     {
-        return new static($error);
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function onSuccess(callable $fn): ResultInterface
-    {
-        return $this;
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function onFailure(callable $fn): ResultInterface
-    {
-        $fn($this->error);
-        return $this;
+        return new self($error);
     }
 }
