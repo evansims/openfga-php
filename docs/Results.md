@@ -144,7 +144,7 @@ Results can also be manipulated using a number of built-in methods.
   $result = Success(['id' => 123]);
   // $result is Success<array<string, int>>
 
-  $result->tap(fn(array $data) => echo "ID: {$data['id']}\n");
+  $result->tap(fn(array $data) => print "ID: {$data['id']}\n");
   // $result is still Success<array<string, int>>
   ```
 
