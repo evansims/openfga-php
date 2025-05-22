@@ -299,7 +299,7 @@ final class Client implements ClientInterface
         ?string $continuationToken = null,
         ?int $pageSize = null,
     ): ResultInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ListAuthorizationModelsRequest(
             store: self::getStoreId($store),
@@ -354,7 +354,7 @@ final class Client implements ClientInterface
         ?string $continuationToken = null,
         ?int $pageSize = null,
     ): ResultInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ListStoresRequest(
             continuationToken: $continuationToken,
@@ -379,7 +379,7 @@ final class Client implements ClientInterface
         ?string $type = null,
         ?DateTimeImmutable $startTime = null,
     ): ResultInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ListTupleChangesRequest(
             store: self::getStoreId($store),
@@ -459,7 +459,7 @@ final class Client implements ClientInterface
         ?int $pageSize = null,
         ?Consistency $consistency = null,
     ): ResultInterface {
-        $pageSize = max(1, min($pageSize, self::MAX_PAGE_SIZE));
+        $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
 
         $request = new ReadTuplesRequest(
             tupleKey: $tupleKey,
