@@ -12,14 +12,13 @@ use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleK
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, WriteAssertionsRequest, WriteTuplesRequest};
-use OpenFGA\Responses\{CheckResponse, CheckResponseInterface, CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface, CreateStoreResponse, CreateStoreResponseInterface, DeleteStoreResponse, DeleteStoreResponseInterface, ExpandResponse, ExpandResponseInterface, GetAuthorizationModelResponse, GetAuthorizationModelResponseInterface, GetStoreResponse, GetStoreResponseInterface, ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface, ListObjectsResponse, ListObjectsResponseInterface, ListStoresResponse, ListStoresResponseInterface, ListTupleChangesResponse, ListTupleChangesResponseInterface, ListUsersResponse, ListUsersResponseInterface, ReadAssertionsResponse, ReadAssertionsResponseInterface, ReadTuplesResponse, ReadTuplesResponseInterface, WriteAssertionsResponse, WriteAssertionsResponseInterface, WriteTuplesResponse, WriteTuplesResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Responses\{CheckResponse, CreateAuthorizationModelResponse, CreateStoreResponse, DeleteStoreResponse, ExpandResponse, GetAuthorizationModelResponse, GetStoreResponse, ListAuthorizationModelsResponse, ListObjectsResponse, ListStoresResponse, ListTupleChangesResponse, ListUsersResponse, ReadAssertionsResponse, ReadTuplesResponse, WriteAssertionsResponse, WriteTuplesResponse};
 use OpenFGA\Results\{Failure, ResultInterface, Success};
+use OpenFGA\Schema\SchemaValidator;
 
-use Throwable;
 use Override;
+use Throwable;
 
-use function OpenFGA\Results\{failure, success};
 use function is_string;
 
 enum Authentication

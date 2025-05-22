@@ -6,13 +6,13 @@ namespace OpenFGA;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use Throwable;
-
 use OpenFGA\Models\{AssertionInterface, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
+
 use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Responses\{CheckResponseInterface, CreateAuthorizationModelResponseInterface, CreateStoreResponseInterface, DeleteStoreResponseInterface, ExpandResponseInterface, GetAuthorizationModelResponseInterface, GetStoreResponseInterface, ListAuthorizationModelsResponseInterface, ListObjectsResponseInterface, ListStoresResponseInterface, ListTupleChangesResponseInterface, ListUsersResponseInterface, ReadAssertionsResponseInterface, ReadTuplesResponseInterface, WriteAssertionsResponseInterface, WriteTuplesResponseInterface};
 use OpenFGA\Results\ResultInterface;
+use Throwable;
 
 interface ClientInterface
 {
