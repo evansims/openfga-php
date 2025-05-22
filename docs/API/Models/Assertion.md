@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;Assertion&#039;` |  |
+
+
 ## Methods
 ### getContext
 
@@ -20,7 +26,8 @@ public function getContext(): ?array
 
 
 #### Returns
-`?array` mixed&gt;
+`?array`
+ mixed&gt;
 
 ### getContextualTuples
 
@@ -32,7 +39,7 @@ public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
 
 ### getExpectation
 
@@ -44,7 +51,7 @@ public function getExpectation(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 
 ### getTupleKey
 
@@ -56,7 +63,7 @@ public function getTupleKey(): [AssertionTupleKeyInterface](Models/AssertionTupl
 
 
 #### Returns
-`[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)` 
+`[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)`
 
 ### jsonSerialize
 
@@ -68,7 +75,14 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` tuple_key: array&lt;string, mixed&gt;, expectation: bool, contextual_tuples?: array&lt;array-key, mixed&gt;, context?: array&lt;array-key, mixed&gt; }
+`array`
+```php
+tuple_key: array&lt;string, mixed&gt;,
+expectation: bool,
+contextual_tuples?: array&lt;array-key, mixed&gt;,
+context?: array&lt;array-key, mixed&gt;
+}
+```
 
 ### schema
 
@@ -81,5 +95,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

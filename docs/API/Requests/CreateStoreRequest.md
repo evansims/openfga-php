@@ -8,6 +8,8 @@
 * [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md)
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getName
 
@@ -19,7 +21,7 @@ public function getName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getRequest
 
@@ -35,5 +37,5 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 

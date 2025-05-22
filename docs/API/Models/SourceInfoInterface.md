@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getFile
 
@@ -19,7 +21,7 @@ public function getFile(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -31,5 +33,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string}
+`array`
+ string}
 

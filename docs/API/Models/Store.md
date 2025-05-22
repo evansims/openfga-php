@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;Store&#039;` |  |
+
+
 ## Methods
 ### getCreatedAt
 
@@ -20,7 +26,7 @@ public function getCreatedAt(): DateTimeInterface
 
 
 #### Returns
-`DateTimeInterface` 
+`DateTimeInterface`
 
 ### getDeletedAt
 
@@ -32,7 +38,7 @@ public function getDeletedAt(): ?DateTimeInterface
 
 
 #### Returns
-`?DateTimeInterface` 
+`?DateTimeInterface`
 
 ### getId
 
@@ -44,7 +50,7 @@ public function getId(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getName
 
@@ -56,7 +62,7 @@ public function getName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUpdatedAt
 
@@ -68,7 +74,7 @@ public function getUpdatedAt(): DateTimeInterface
 
 
 #### Returns
-`DateTimeInterface` 
+`DateTimeInterface`
 
 ### jsonSerialize
 
@@ -80,7 +86,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string&gt;
+`array`
+ string&gt;
 
 ### schema
 
@@ -93,5 +100,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

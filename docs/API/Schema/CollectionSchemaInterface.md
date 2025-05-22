@@ -7,6 +7,8 @@
 ## Implements
 * [SchemaInterface](Schema/SchemaInterface.md)
 
+
+
 ## Methods
 ### getClassName
 
@@ -18,7 +20,7 @@ public function getClassName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getItemType
 
@@ -31,7 +33,7 @@ Get the type of each item in the collection.
 
 
 #### Returns
-`string` 
+`string`
 
 ### getProperties
 
@@ -43,7 +45,8 @@ public function getProperties(): array
 
 
 #### Returns
-`array` SchemaProperty&gt;
+`array`
+ SchemaProperty&gt;
 
 ### getProperty
 
@@ -59,7 +62,7 @@ public function getProperty(string $name): ?[SchemaProperty](Schema/SchemaProper
 | `$name` | `string` |  |
 
 #### Returns
-`?[SchemaProperty](Schema/SchemaProperty.md)` 
+`?[SchemaProperty](Schema/SchemaProperty.md)`
 
 ### requiresItems
 
@@ -72,5 +75,5 @@ Whether the collection requires at least one item.
 
 
 #### Returns
-`bool` 
+`bool`
 

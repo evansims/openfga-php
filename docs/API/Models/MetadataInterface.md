@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getModule
 
@@ -19,7 +21,7 @@ public function getModule(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getRelations
 
@@ -31,7 +33,7 @@ public function getRelations(): ?[RelationMetadataInterface](Models/RelationMeta
 
 
 #### Returns
-`?[RelationMetadataInterface](Models/RelationMetadataInterface.md)` 
+`?[RelationMetadataInterface](Models/RelationMetadataInterface.md)`
 
 ### getSourceInfo
 
@@ -43,7 +45,7 @@ public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterfa
 
 
 #### Returns
-`?[SourceInfoInterface](Models/SourceInfoInterface.md)` 
+`?[SourceInfoInterface](Models/SourceInfoInterface.md)`
 
 ### jsonSerialize
 
@@ -55,5 +57,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` array{directly_related_user_types?: array&lt;string, array{condition?: string, relation?: string, type: string, wildcard?: object}&gt;, file?: string, module?: string, source_info?: array{file?: string}}|string&gt;
+`array`
+ array{directly_related_user_types?: array&lt;string, array{condition?: string, relation?: string, type: string, wildcard?: object}&gt;, file?: string, module?: string, source_info?: array{file?: string}}|string&gt;
 

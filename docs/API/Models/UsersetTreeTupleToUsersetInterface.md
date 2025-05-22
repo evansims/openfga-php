@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getComputed
 
@@ -19,7 +21,7 @@ public function getComputed(): [ComputedsInterface](Models/Collections/Computeds
 
 
 #### Returns
-`[ComputedsInterface](Models/Collections/ComputedsInterface.md)` 
+`[ComputedsInterface](Models/Collections/ComputedsInterface.md)`
 
 ### getTupleset
 
@@ -31,7 +33,7 @@ public function getTupleset(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -43,5 +45,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, computed: array&lt;int, array{userset: string}&gt;}
+`array`
+ string, computed: array&lt;int, array{userset: string}&gt;}
 

@@ -5,6 +5,8 @@
 `OpenFGA\Results`
 
 
+
+
 ## Methods
 ### fold
 
@@ -21,7 +23,7 @@ public function fold(callable $onSuccess, callable $onFailure): mixed
 | `$onFailure` | `callable` |  |
 
 #### Returns
-`mixed` 
+`mixed`
 
 ### getError
 
@@ -33,7 +35,7 @@ public function getError(): Throwable
 
 
 #### Returns
-`Throwable` 
+`Throwable`
 
 ### getValue
 
@@ -45,7 +47,7 @@ public function getValue(): mixed
 
 
 #### Returns
-`mixed` 
+`mixed`
 
 ### isFailure
 
@@ -57,7 +59,7 @@ public function isFailure(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 
 ### isSuccess
 
@@ -69,7 +71,7 @@ public function isSuccess(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 
 ### map
 
@@ -85,7 +87,8 @@ public function map(callable $fn): self
 | `$fn` | `callable` |  |
 
 #### Returns
-`self` E&gt;
+`self`
+ E&gt;
 
 ### mapError
 
@@ -101,7 +104,8 @@ public function mapError(callable $fn): self
 | `$fn` | `callable` |  |
 
 #### Returns
-`self` F&gt;
+`self`
+ F&gt;
 
 ### onFailure
 
@@ -117,7 +121,8 @@ public function onFailure(callable $fn): self
 | `$fn` | `callable` |  |
 
 #### Returns
-`self` E&gt;
+`self`
+ E&gt;
 
 ### onSuccess
 
@@ -133,7 +138,8 @@ public function onSuccess(callable $fn): self
 | `$fn` | `callable` |  |
 
 #### Returns
-`self` E&gt;
+`self`
+ E&gt;
 
 ### tap
 
@@ -149,7 +155,8 @@ public function tap(callable $fn): self
 | `$fn` | `callable` |  |
 
 #### Returns
-`self` E&gt;
+`self`
+ E&gt;
 
 ### tapError
 
@@ -165,7 +172,8 @@ public function tapError(callable $fn): self
 | `$fn` | `callable` |  |
 
 #### Returns
-`self` E&gt;
+`self`
+ E&gt;
 
 ### then
 
@@ -181,7 +189,8 @@ public function then(callable $fn): self
 | `$fn` | `callable` |  |
 
 #### Returns
-`self` E&gt;
+`self`
+ E&gt;
 
 ### unwrap
 
@@ -197,5 +206,5 @@ public function unwrap(mixed $default = NULL): mixed
 | `$default` | `mixed` |  |
 
 #### Returns
-`mixed` 
+`mixed`
 

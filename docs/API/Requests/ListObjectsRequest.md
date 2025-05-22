@@ -8,6 +8,8 @@
 * [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md)
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getConsistency
 
@@ -19,7 +21,7 @@ public function getConsistency(): ?Consistency
 
 
 #### Returns
-`?Consistency` 
+`?Consistency`
 
 ### getContext
 
@@ -31,7 +33,7 @@ public function getContext(): ?object
 
 
 #### Returns
-`?object` 
+`?object`
 
 ### getContextualTuples
 
@@ -43,7 +45,7 @@ public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
 
 ### getModel
 
@@ -55,7 +57,7 @@ public function getModel(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getRelation
 
@@ -67,7 +69,7 @@ public function getRelation(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getRequest
 
@@ -83,7 +85,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStore
 
@@ -95,7 +97,7 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getType
 
@@ -107,7 +109,7 @@ public function getType(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUser
 
@@ -119,5 +121,5 @@ public function getUser(): string
 
 
 #### Returns
-`string` 
+`string`
 

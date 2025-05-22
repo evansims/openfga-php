@@ -7,6 +7,8 @@
 ## Implements
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getConsistency
 
@@ -18,7 +20,7 @@ public function getConsistency(): ?Consistency
 
 
 #### Returns
-`?Consistency` 
+`?Consistency`
 
 ### getContinuationToken
 
@@ -30,7 +32,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getPageSize
 
@@ -42,7 +44,7 @@ public function getPageSize(): ?int
 
 
 #### Returns
-`?int` 
+`?int`
 
 ### getRequest
 
@@ -58,7 +60,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStore
 
@@ -70,7 +72,7 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getTupleKey
 
@@ -82,5 +84,5 @@ public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 
 
 #### Returns
-`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
+`[TupleKeyInterface](Models/TupleKeyInterface.md)`
 

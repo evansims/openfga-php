@@ -5,6 +5,8 @@
 `OpenFGA\Network`
 
 
+
+
 ## Methods
 ### getBody
 
@@ -16,7 +18,7 @@ public function getBody(): ?Psr\Http\Message\StreamInterface
 
 
 #### Returns
-`?Psr\Http\Message\StreamInterface` 
+`?Psr\Http\Message\StreamInterface`
 
 ### getHeaders
 
@@ -28,7 +30,8 @@ public function getHeaders(): array
 
 
 #### Returns
-`array` string&gt;
+`array`
+ string&gt;
 
 ### getMethod
 
@@ -40,7 +43,7 @@ public function getMethod(): RequestMethod
 
 
 #### Returns
-`RequestMethod` 
+`RequestMethod`
 
 ### getUrl
 
@@ -52,7 +55,7 @@ public function getUrl(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### useApiUrl
 
@@ -64,5 +67,5 @@ public function useApiUrl(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 

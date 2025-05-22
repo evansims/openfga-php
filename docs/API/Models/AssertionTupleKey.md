@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;AssertionTupleKey&#039;` |  |
+
+
 ## Methods
 ### getObject
 
@@ -20,7 +26,7 @@ public function getObject(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getRelation
 
@@ -32,7 +38,7 @@ public function getRelation(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUser
 
@@ -44,7 +50,7 @@ public function getUser(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -56,7 +62,13 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` user: string, relation: string, object: string, }
+`array`
+```php
+user: string,
+relation: string,
+object: string,
+}
+```
 
 ### schema
 
@@ -69,5 +81,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

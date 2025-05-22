@@ -10,6 +10,8 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+
+
 ## Methods
 ### getUser
 
@@ -21,7 +23,7 @@ public function getUser(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -33,7 +35,7 @@ public function jsonSerialize(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### schema
 
@@ -46,5 +48,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

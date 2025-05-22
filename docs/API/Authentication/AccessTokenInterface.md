@@ -7,6 +7,8 @@
 ## Implements
 * Stringable
 
+
+
 ## Methods
 ### getExpires
 
@@ -18,7 +20,7 @@ public function getExpires(): int
 
 
 #### Returns
-`int` 
+`int`
 
 ### getScope
 
@@ -30,7 +32,7 @@ public function getScope(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getToken
 
@@ -42,7 +44,7 @@ public function getToken(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### isExpired
 
@@ -54,5 +56,5 @@ public function isExpired(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 

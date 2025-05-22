@@ -7,6 +7,8 @@
 ## Implements
 * [ResultInterface](Results/ResultInterface.md)
 
+
+
 ## Methods
 ### fold
 
@@ -23,7 +25,7 @@ public function fold(callable $onSuccess, callable $onFailure): mixed
 | `fn` | `callable` |  |
 
 #### Returns
-`mixed` 
+`mixed`
 
 ### getError
 
@@ -35,7 +37,7 @@ public function getError(): Throwable
 
 
 #### Returns
-`Throwable` 
+`Throwable`
 
 ### getValue
 
@@ -47,7 +49,7 @@ public function getValue(): never
 
 
 #### Returns
-`never` 
+`never`
 
 ### isFailure
 
@@ -59,7 +61,7 @@ public function isFailure(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 
 ### isSuccess
 
@@ -71,7 +73,7 @@ public function isSuccess(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 
 ### map
 
@@ -87,7 +89,8 @@ public function map(callable $fn): [ResultInterface](Results/ResultInterface.md)
 | `fn` | `callable` |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)` E&gt;
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
 
 ### mapError
 
@@ -103,7 +106,8 @@ public function mapError(callable $fn): [ResultInterface](Results/ResultInterfac
 | `fn` | `callable` |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)` F&gt;
+`[ResultInterface](Results/ResultInterface.md)`
+ F&gt;
 
 ### onFailure
 
@@ -119,7 +123,8 @@ public function onFailure(callable $fn): [ResultInterface](Results/ResultInterfa
 | `fn` | `callable` |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)` E&gt;
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
 
 ### onSuccess
 
@@ -135,7 +140,8 @@ public function onSuccess(callable $fn): [ResultInterface](Results/ResultInterfa
 | `fn` | `callable` |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)` E&gt;
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
 
 ### tap
 
@@ -151,7 +157,8 @@ public function tap(callable $fn): [ResultInterface](Results/ResultInterface.md)
 | `fn` | `callable` |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)` E&gt;
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
 
 ### tapError
 
@@ -167,7 +174,8 @@ public function tapError(callable $fn): [ResultInterface](Results/ResultInterfac
 | `default` | `mixed` |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)` E&gt;
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
 
 ### then
 
@@ -183,7 +191,8 @@ public function then(callable $fn): [ResultInterface](Results/ResultInterface.md
 | `onFailure` | `callable` |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)` E&gt;
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
 
 ### unwrap
 
@@ -199,5 +208,5 @@ public function unwrap(mixed $default = NULL): mixed
 | `$default` | `mixed` |  |
 
 #### Returns
-`mixed` 
+`mixed`
 

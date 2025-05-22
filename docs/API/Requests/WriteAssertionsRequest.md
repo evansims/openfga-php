@@ -8,6 +8,8 @@
 * [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md)
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getAssertions
 
@@ -19,7 +21,7 @@ public function getAssertions(): [AssertionsInterface](Models/Collections/Assert
 
 
 #### Returns
-`[AssertionsInterface](Models/Collections/AssertionsInterface.md)` 
+`[AssertionsInterface](Models/Collections/AssertionsInterface.md)`
 
 ### getModel
 
@@ -31,7 +33,7 @@ public function getModel(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getRequest
 
@@ -47,7 +49,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStore
 
@@ -59,5 +61,5 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 

@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getObject
 
@@ -19,7 +21,7 @@ public function getObject(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getRelation
 
@@ -31,7 +33,7 @@ public function getRelation(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUser
 
@@ -43,7 +45,7 @@ public function getUser(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -55,5 +57,11 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` user: string, relation: string, object: string, }
+`array`
+```php
+user: string,
+relation: string,
+object: string,
+}
+```
 

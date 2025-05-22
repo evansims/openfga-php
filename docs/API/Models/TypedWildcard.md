@@ -10,6 +10,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_TYPE` | `&#039;TypedWildcard&#039;` |  |
+
+
 ## Methods
 ### getType
 
@@ -21,7 +27,7 @@ public function getType(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### jsonSerialize
 
@@ -33,7 +39,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string}
+`array`
+ string}
 
 ### schema
 
@@ -46,5 +53,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

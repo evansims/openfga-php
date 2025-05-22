@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getDirectlyRelatedUserTypes
 
@@ -19,7 +21,7 @@ public function getDirectlyRelatedUserTypes(): ?[RelationReferencesInterface](Mo
 
 
 #### Returns
-`?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)` 
+`?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)`
 
 ### getModule
 
@@ -31,7 +33,7 @@ public function getModule(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getSourceInfo
 
@@ -43,7 +45,7 @@ public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterfa
 
 
 #### Returns
-`?[SourceInfoInterface](Models/SourceInfoInterface.md)` 
+`?[SourceInfoInterface](Models/SourceInfoInterface.md)`
 
 ### jsonSerialize
 
@@ -55,5 +57,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, directly_related_user_types?: array&lt;string, array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;, source_info?: array{file?: string}}
+`array`
+ string, directly_related_user_types?: array&lt;string, array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;, source_info?: array{file?: string}}
 

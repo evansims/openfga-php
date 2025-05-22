@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;ConditionMetadata&#039;` |  |
+
+
 ## Methods
 ### getModule
 
@@ -20,7 +26,7 @@ public function getModule(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getSourceInfo
 
@@ -32,7 +38,7 @@ public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterfac
 
 
 #### Returns
-`[SourceInfoInterface](Models/SourceInfoInterface.md)` 
+`[SourceInfoInterface](Models/SourceInfoInterface.md)`
 
 ### jsonSerialize
 
@@ -44,7 +50,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, source_info: array{file: string}}
+`array`
+ string, source_info: array{file: string}}
 
 ### schema
 
@@ -57,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

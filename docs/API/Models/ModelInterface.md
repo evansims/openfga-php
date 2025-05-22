@@ -7,6 +7,8 @@
 ## Implements
 * JsonSerializable
 
+
+
 ## Methods
 ### jsonSerialize
 

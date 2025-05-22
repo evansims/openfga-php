@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;RelationMetadata&#039;` |  |
+
+
 ## Methods
 ### getDirectlyRelatedUserTypes
 
@@ -20,7 +26,7 @@ public function getDirectlyRelatedUserTypes(): ?[RelationReferencesInterface](Mo
 
 
 #### Returns
-`?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)` 
+`?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)`
 
 ### getModule
 
@@ -32,7 +38,7 @@ public function getModule(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getSourceInfo
 
@@ -44,7 +50,7 @@ public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterfa
 
 
 #### Returns
-`?[SourceInfoInterface](Models/SourceInfoInterface.md)` 
+`?[SourceInfoInterface](Models/SourceInfoInterface.md)`
 
 ### jsonSerialize
 
@@ -56,7 +62,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, directly_related_user_types?: array&lt;string, array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;, source_info?: array{file?: string}}
+`array`
+ string, directly_related_user_types?: array&lt;string, array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;, source_info?: array{file?: string}}
 
 ### schema
 
@@ -69,5 +76,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

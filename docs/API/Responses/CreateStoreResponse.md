@@ -8,13 +8,15 @@
 * [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md)
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### fromResponse
 
 *<small>Implements Responses\CreateStoreResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -25,7 +27,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`static` 
+`self`
 
 ### getCreatedAt
 
@@ -37,7 +39,7 @@ public function getCreatedAt(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable` 
+`DateTimeImmutable`
 
 ### getId
 
@@ -49,7 +51,7 @@ public function getId(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getName
 
@@ -61,7 +63,7 @@ public function getName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUpdatedAt
 
@@ -73,7 +75,7 @@ public function getUpdatedAt(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable` 
+`DateTimeImmutable`
 
 ### schema
 
@@ -86,5 +88,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

@@ -8,6 +8,8 @@
 * [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md)
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getConditions
 
@@ -19,7 +21,7 @@ public function getConditions(): ?[ConditionsInterface](Models/Collections/Condi
 
 
 #### Returns
-`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)` 
+`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)`
 
 ### getRequest
 
@@ -35,7 +37,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getSchemaVersion
 
@@ -47,7 +49,7 @@ public function getSchemaVersion(): SchemaVersion
 
 
 #### Returns
-`SchemaVersion` 
+`SchemaVersion`
 
 ### getStore
 
@@ -59,7 +61,7 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getTypeDefinitions
 
@@ -71,5 +73,5 @@ public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collecti
 
 
 #### Returns
-`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)` 
+`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)`
 

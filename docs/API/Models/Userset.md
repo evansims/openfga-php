@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_TYPE` | `&#039;Userset&#039;` |  |
+
+
 ## Methods
 ### getComputedUserset
 
@@ -20,7 +26,7 @@ public function getComputedUserset(): ?[ObjectRelationInterface](Models/ObjectRe
 
 
 #### Returns
-`?[ObjectRelationInterface](Models/ObjectRelationInterface.md)` 
+`?[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
 
 ### getDifference
 
@@ -32,7 +38,7 @@ public function getDifference(): ?[DifferenceV1Interface](Models/DifferenceV1Int
 
 
 #### Returns
-`?[DifferenceV1Interface](Models/DifferenceV1Interface.md)` 
+`?[DifferenceV1Interface](Models/DifferenceV1Interface.md)`
 
 ### getDirect
 
@@ -44,7 +50,7 @@ public function getDirect(): ?object
 
 
 #### Returns
-`?object` 
+`?object`
 
 ### getIntersection
 
@@ -56,7 +62,7 @@ public function getIntersection(): ?[UsersetsInterface](Models/Collections/Users
 
 
 #### Returns
-`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)` 
+`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)`
 
 ### getTupleToUserset
 
@@ -68,7 +74,7 @@ public function getTupleToUserset(): ?[TupleToUsersetV1Interface](Models/TupleTo
 
 
 #### Returns
-`?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)` 
+`?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)`
 
 ### getUnion
 
@@ -80,7 +86,7 @@ public function getUnion(): ?[UsersetsInterface](Models/Collections/UsersetsInte
 
 
 #### Returns
-`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)` 
+`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)`
 
 ### jsonSerialize
 
@@ -92,7 +98,16 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` computed_userset?: array{object?: string, relation?: string}, tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}, union?: array&lt;mixed&gt;, intersection?: array&lt;mixed&gt;, difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;}, direct?: object, }
+`array`
+```php
+computed_userset?: array{object?: string, relation?: string},
+tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
+union?: array&lt;mixed&gt;,
+intersection?: array&lt;mixed&gt;,
+difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
+direct?: object,
+}
+```
 
 ### schema
 
@@ -105,5 +120,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

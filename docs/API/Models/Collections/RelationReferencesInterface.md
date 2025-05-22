@@ -12,6 +12,8 @@
 * Countable
 * ArrayAccess
 
+
+
 ## Methods
 ### add
 
@@ -28,7 +30,7 @@ public function add(string $key, [ModelInterface](Models/ModelInterface.md) $ite
 | `$item` | `[ModelInterface](Models/ModelInterface.md)` |  |
 
 #### Returns
-`static` 
+`static`
 
 ### count
 
@@ -40,7 +42,7 @@ public function count(): int
 
 
 #### Returns
-`int` 
+`int`
 
 ### current
 
@@ -52,7 +54,7 @@ public function current(): [ModelInterface](Models/ModelInterface.md)
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)` 
+`[ModelInterface](Models/ModelInterface.md)`
 
 ### get
 
@@ -83,7 +85,7 @@ Check if a key exists in the collection.
 | `$key` | `string` |  |
 
 #### Returns
-`bool` 
+`bool`
 
 ### jsonSerialize
 
@@ -96,7 +98,8 @@ Serialize the collection to an array.
 
 
 #### Returns
-`array` array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;
+`array`
+ array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;
 
 ### key
 
@@ -108,7 +111,7 @@ public function key(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### next
 
@@ -120,7 +123,7 @@ public function next(): void
 
 
 #### Returns
-`void` 
+`void`
 
 ### offsetExists
 
@@ -136,7 +139,7 @@ public function offsetExists(mixed $offset): bool
 | `$offset` | `mixed` |  |
 
 #### Returns
-`bool` 
+`bool`
 
 ### offsetGet
 
@@ -167,7 +170,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 | `$value` | `mixed` |  |
 
 #### Returns
-`void` 
+`void`
 
 ### offsetUnset
 
@@ -183,7 +186,7 @@ public function offsetUnset(mixed $offset): void
 | `$offset` | `mixed` |  |
 
 #### Returns
-`void` 
+`void`
 
 ### rewind
 
@@ -195,7 +198,7 @@ public function rewind(): void
 
 
 #### Returns
-`void` 
+`void`
 
 ### toArray
 
@@ -207,7 +210,8 @@ public function toArray(): array
 
 
 #### Returns
-`array` T&gt;
+`array`
+ T&gt;
 
 ### valid
 
@@ -219,5 +223,5 @@ public function valid(): bool
 
 
 #### Returns
-`bool` 
+`bool`
 

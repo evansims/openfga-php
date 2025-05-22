@@ -5,6 +5,8 @@
 `OpenFGA\Schema`
 
 
+
+
 ## Methods
 ### array
 
@@ -24,7 +26,7 @@ Add an array property.
 | `$default` | `mixed` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### boolean
 
@@ -43,7 +45,7 @@ Add a boolean property.
 | `$default` | `mixed` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### date
 
@@ -62,7 +64,7 @@ Add a date property.
 | `$default` | `mixed` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### datetime
 
@@ -81,7 +83,7 @@ Add a datetime property.
 | `$default` | `mixed` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### integer
 
@@ -100,7 +102,7 @@ Add an integer property.
 | `$default` | `mixed` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### number
 
@@ -119,7 +121,7 @@ Add a number (float) property.
 | `$default` | `mixed` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### object
 
@@ -138,7 +140,7 @@ Add an object property.
 | `$required` | `bool` |  |
 
 #### Returns
-`self` 
+`self`
 
 ### register
 
@@ -151,7 +153,7 @@ Build and register the schema.
 
 
 #### Returns
-`[Schema](Schema/Schema.md)` 
+`[Schema](Schema/Schema.md)`
 
 ### string
 
@@ -172,5 +174,5 @@ Add a string property.
 | `$default` | `mixed` |  |
 
 #### Returns
-`self` 
+`self`
 

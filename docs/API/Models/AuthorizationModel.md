@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_MODEL` | `&#039;AuthorizationModel&#039;` |  |
+
+
 ## Methods
 ### dsl
 
@@ -21,7 +27,7 @@ Return a DSL representation of the model.
 
 
 #### Returns
-`string` 
+`string`
 
 ### getConditions
 
@@ -34,7 +40,7 @@ Return the conditions of the model.
 
 
 #### Returns
-`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)` 
+`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)`
 
 ### getId
 
@@ -47,7 +53,7 @@ Return the ID of the model.
 
 
 #### Returns
-`string` 
+`string`
 
 ### getSchemaVersion
 
@@ -60,7 +66,7 @@ Return the schema version of the model.
 
 
 #### Returns
-`SchemaVersion` 
+`SchemaVersion`
 
 ### getTypeDefinitions
 
@@ -73,7 +79,7 @@ Return the type definitions of the model.
 
 
 #### Returns
-`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)` 
+`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)`
 
 ### jsonSerialize
 
@@ -86,7 +92,14 @@ Return a JSON representation of the model.
 
 
 #### Returns
-`array` id: string, schema_version: string, type_definitions: array&lt;int, array{type: string, relations?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;, conditions?: array&lt;int, array{name: string, expression: string, parameters?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt; }
+`array`
+```php
+id: string,
+schema_version: string,
+type_definitions: array&lt;int, array{type: string, relations?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;,
+conditions?: array&lt;int, array{name: string, expression: string, parameters?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;
+}
+```
 
 ### schema
 
@@ -99,5 +112,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

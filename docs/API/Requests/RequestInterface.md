@@ -5,6 +5,8 @@
 `OpenFGA\Requests`
 
 
+
+
 ## Methods
 ### getRequest
 
@@ -20,5 +22,5 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 

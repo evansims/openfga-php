@@ -9,6 +9,12 @@
 * JsonSerializable
 * [ModelInterface](Models/ModelInterface.md)
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `OPENAPI_TYPE` | `&#039;UsersetTree&#039;` |  |
+
+
 ## Methods
 ### getRoot
 
@@ -20,7 +26,7 @@ public function getRoot(): [NodeInterface](Models/NodeInterface.md)
 
 
 #### Returns
-`[NodeInterface](Models/NodeInterface.md)` 
+`[NodeInterface](Models/NodeInterface.md)`
 
 ### jsonSerialize
 
@@ -32,7 +38,8 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` array{name: string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}}
+`array`
+ array{name: string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}}
 
 ### schema
 
@@ -45,5 +52,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

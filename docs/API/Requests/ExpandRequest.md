@@ -8,6 +8,8 @@
 * [ExpandRequestInterface](Requests/ExpandRequestInterface.md)
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getConsistency
 
@@ -19,7 +21,7 @@ public function getConsistency(): ?Consistency
 
 
 #### Returns
-`?Consistency` 
+`?Consistency`
 
 ### getContextualTuples
 
@@ -31,7 +33,7 @@ public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
 
 ### getModel
 
@@ -43,7 +45,7 @@ public function getModel(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getRequest
 
@@ -59,7 +61,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStore
 
@@ -71,7 +73,7 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getTupleKey
 
@@ -83,5 +85,5 @@ public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
 
 
 #### Returns
-`[TupleKeyInterface](Models/TupleKeyInterface.md)` 
+`[TupleKeyInterface](Models/TupleKeyInterface.md)`
 

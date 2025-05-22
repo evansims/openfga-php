@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getAllowed
 
@@ -18,7 +20,7 @@ public function getAllowed(): ?bool
 
 
 #### Returns
-`?bool` 
+`?bool`
 
 ### getResolution
 
@@ -30,5 +32,5 @@ public function getResolution(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 

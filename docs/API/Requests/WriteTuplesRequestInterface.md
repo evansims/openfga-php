@@ -7,6 +7,8 @@
 ## Implements
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getDeletes
 
@@ -18,7 +20,7 @@ public function getDeletes(): ?[TupleKeysInterface](Models/Collections/TupleKeys
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
 
 ### getModel
 
@@ -30,7 +32,7 @@ public function getModel(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getRequest
 
@@ -46,7 +48,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStore
 
@@ -58,7 +60,7 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getWrites
 
@@ -70,5 +72,5 @@ public function getWrites(): ?[TupleKeysInterface](Models/Collections/TupleKeysI
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)` 
+`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
 

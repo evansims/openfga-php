@@ -8,6 +8,8 @@
 * [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md)
 * [RequestInterface](Requests/RequestInterface.md)
 
+
+
 ## Methods
 ### getContinuationToken
 
@@ -19,7 +21,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getPageSize
 
@@ -31,7 +33,7 @@ public function getPageSize(): ?int
 
 
 #### Returns
-`?int` 
+`?int`
 
 ### getRequest
 
@@ -47,7 +49,7 @@ public function getRequest(StreamFactoryInterface $streamFactory): [RequestConte
 | `$streamFactory` | `StreamFactoryInterface` |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)` 
+`[RequestContext](Network/RequestContext.md)`
 
 ### getStartTime
 
@@ -59,7 +61,7 @@ public function getStartTime(): ?DateTimeImmutable
 
 
 #### Returns
-`?DateTimeImmutable` 
+`?DateTimeImmutable`
 
 ### getStore
 
@@ -71,7 +73,7 @@ public function getStore(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getType
 
@@ -83,5 +85,5 @@ public function getType(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 

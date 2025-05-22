@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getDifference
 
@@ -19,7 +21,7 @@ public function getDifference(): ?[UsersetTreeDifferenceInterface](Models/Userse
 
 
 #### Returns
-`?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)` 
+`?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)`
 
 ### getIntersection
 
@@ -31,7 +33,7 @@ public function getIntersection(): ?self
 
 
 #### Returns
-`?self` 
+`?self`
 
 ### getLeaf
 
@@ -43,7 +45,7 @@ public function getLeaf(): ?[LeafInterface](Models/LeafInterface.md)
 
 
 #### Returns
-`?[LeafInterface](Models/LeafInterface.md)` 
+`?[LeafInterface](Models/LeafInterface.md)`
 
 ### getName
 
@@ -55,7 +57,7 @@ public function getName(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getUnion
 
@@ -67,7 +69,7 @@ public function getUnion(): ?self
 
 
 #### Returns
-`?self` 
+`?self`
 
 ### jsonSerialize
 
@@ -79,5 +81,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}
+`array`
+ string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}
 

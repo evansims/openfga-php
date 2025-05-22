@@ -8,6 +8,8 @@
 * [ModelInterface](Models/ModelInterface.md)
 * JsonSerializable
 
+
+
 ## Methods
 ### getObject
 
@@ -19,7 +21,7 @@ public function getObject(): ?object
 
 
 #### Returns
-`?object` 
+`?object`
 
 ### getUserset
 
@@ -31,7 +33,7 @@ public function getUserset(): ?[UsersetUserInterface](Models/UsersetUserInterfac
 
 
 #### Returns
-`?[UsersetUserInterface](Models/UsersetUserInterface.md)` 
+`?[UsersetUserInterface](Models/UsersetUserInterface.md)`
 
 ### getWildcard
 
@@ -43,7 +45,7 @@ public function getWildcard(): ?[TypedWildcardInterface](Models/TypedWildcardInt
 
 
 #### Returns
-`?[TypedWildcardInterface](Models/TypedWildcardInterface.md)` 
+`?[TypedWildcardInterface](Models/TypedWildcardInterface.md)`
 
 ### jsonSerialize
 
@@ -55,5 +57,6 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array` mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}
+`array`
+ mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}
 

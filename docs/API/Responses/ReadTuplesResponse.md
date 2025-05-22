@@ -8,13 +8,15 @@
 * [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md)
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### fromResponse
 
 *<small>Implements Responses\ReadTuplesResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -25,7 +27,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`static` 
+`self`
 
 ### getContinuationToken
 
@@ -37,7 +39,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getTuples
 
@@ -49,7 +51,7 @@ public function getTuples(): [TuplesInterface](Models/Collections/TuplesInterfac
 
 
 #### Returns
-`[TuplesInterface](Models/Collections/TuplesInterface.md)` 
+`[TuplesInterface](Models/Collections/TuplesInterface.md)`
 
 ### schema
 
@@ -62,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

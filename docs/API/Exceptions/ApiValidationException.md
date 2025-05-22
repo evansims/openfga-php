@@ -8,6 +8,12 @@
 * Throwable
 * Stringable
 
+## Constants
+| Name | Value | Description |
+|------|-------|-------------|
+| `EXCEPTION_MESSAGE` | `&#039;API request failed (invalid): %s&#039;` |  |
+
+
 ## Methods
 ### getCode
 
@@ -29,7 +35,7 @@ public function getFile(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getLine
 
@@ -41,7 +47,7 @@ public function getLine(): int
 
 
 #### Returns
-`int` 
+`int`
 
 ### getMessage
 
@@ -53,7 +59,7 @@ public function getMessage(): string
 
 
 #### Returns
-`string` 
+`string`
 
 ### getPrevious
 
@@ -65,7 +71,7 @@ public function getPrevious(): ?Throwable
 
 
 #### Returns
-`?Throwable` 
+`?Throwable`
 
 ### getTrace
 
@@ -77,7 +83,7 @@ public function getTrace(): array
 
 
 #### Returns
-`array` 
+`array`
 
 ### getTraceAsString
 
@@ -89,5 +95,5 @@ public function getTraceAsString(): string
 
 
 #### Returns
-`string` 
+`string`
 

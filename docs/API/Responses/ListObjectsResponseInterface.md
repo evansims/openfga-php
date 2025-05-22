@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getObjects
 
@@ -18,5 +20,6 @@ public function getObjects(): array
 
 
 #### Returns
-`array` string&gt;
+`array`
+ string&gt;
 

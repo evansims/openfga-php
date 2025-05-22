@@ -5,6 +5,8 @@
 `OpenFGA\Network`
 
 
+
+
 ## Methods
 ### getHttpClient
 
@@ -16,7 +18,7 @@ public function getHttpClient(): ClientInterface
 
 
 #### Returns
-`ClientInterface` 
+`ClientInterface`
 
 ### getHttpRequestFactory
 
@@ -28,7 +30,7 @@ public function getHttpRequestFactory(): RequestFactoryInterface
 
 
 #### Returns
-`RequestFactoryInterface` 
+`RequestFactoryInterface`
 
 ### getHttpResponseFactory
 
@@ -40,7 +42,7 @@ public function getHttpResponseFactory(): ResponseFactoryInterface
 
 
 #### Returns
-`ResponseFactoryInterface` 
+`ResponseFactoryInterface`
 
 ### getHttpStreamFactory
 
@@ -52,7 +54,7 @@ public function getHttpStreamFactory(): StreamFactoryInterface
 
 
 #### Returns
-`StreamFactoryInterface` 
+`StreamFactoryInterface`
 
 ### request
 
@@ -68,7 +70,7 @@ public function request([RequestInterface](Requests/RequestInterface.md) $reques
 | `$request` | `[RequestInterface](Requests/RequestInterface.md)` |  |
 
 #### Returns
-`Psr\Http\Message\RequestInterface` 
+`Psr\Http\Message\RequestInterface`
 
 ### send
 
@@ -84,5 +86,5 @@ public function send(Psr\Http\Message\RequestInterface $request): Psr\Http\Messa
 | `$request` | `Psr\Http\Message\RequestInterface` |  |
 
 #### Returns
-`Psr\Http\Message\ResponseInterface` 
+`Psr\Http\Message\ResponseInterface`
 

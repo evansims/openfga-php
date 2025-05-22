@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getAssertions
 
@@ -18,7 +20,7 @@ public function getAssertions(): ?[AssertionsInterface](Models/Collections/Asser
 
 
 #### Returns
-`?[AssertionsInterface](Models/Collections/AssertionsInterface.md)` 
+`?[AssertionsInterface](Models/Collections/AssertionsInterface.md)`
 
 ### getModel
 
@@ -30,5 +32,5 @@ public function getModel(): string
 
 
 #### Returns
-`string` 
+`string`
 

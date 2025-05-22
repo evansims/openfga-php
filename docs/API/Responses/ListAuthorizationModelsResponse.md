@@ -8,13 +8,15 @@
 * [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md)
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### fromResponse
 
 *<small>Implements Responses\ListAuthorizationModelsResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): static
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -25,7 +27,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns
-`static` 
+`self`
 
 ### getContinuationToken
 
@@ -37,7 +39,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string` 
+`?string`
 
 ### getModels
 
@@ -49,7 +51,7 @@ public function getModels(): [AuthorizationModelsInterface](Models/Collections/A
 
 
 #### Returns
-`[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)` 
+`[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)`
 
 ### schema
 
@@ -62,5 +64,5 @@ public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)` 
+`[SchemaInterface](Schema/SchemaInterface.md)`
 

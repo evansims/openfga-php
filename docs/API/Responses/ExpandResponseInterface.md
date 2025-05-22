@@ -7,6 +7,8 @@
 ## Implements
 * [ResponseInterface](Responses/ResponseInterface.md)
 
+
+
 ## Methods
 ### getTree
 
@@ -18,5 +20,5 @@ public function getTree(): ?[UsersetTreeInterface](Models/UsersetTreeInterface.m
 
 
 #### Returns
-`?[UsersetTreeInterface](Models/UsersetTreeInterface.md)` 
+`?[UsersetTreeInterface](Models/UsersetTreeInterface.md)`
 
