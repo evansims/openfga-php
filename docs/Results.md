@@ -121,12 +121,11 @@ Results can also be manipulated using a number of built-in methods.
 - `map(callable $fn): ResultInterface` transforms the value when a `Success`.
 
   ```php
-  $result = Success(['id' => 123]);
+  $result = new Success(['id' => 123]);
   // $result is Success<array<string, int>>
 
   $transformed = $result->map(fn(array $data) => $data['id']);
   // $transformed is Success<int>
-  ```
 
 - `mapError(callable $fn): ResultInterface` transforms the error value when a `Failure`.
 
@@ -144,7 +143,7 @@ Results can also be manipulated using a number of built-in methods.
   $result = Success(['id' => 123]);
   // $result is Success<array<string, int>>
 
-  $result->tap(fn(array $data) => echo "ID: {$data['id']}\n");
+  $result->tap(fn(array $data) => print "ID: {$data['id']}\n");
   // $result is still Success<array<string, int>>
   ```
 
