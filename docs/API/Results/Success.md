@@ -10,24 +10,6 @@
 
 
 ## Methods
-### catch
-
-
-```php
-public function catch(callable $fn): [ResultInterface](Results/ResultInterface.md)
-```
-
-Execute on `Failure`, mutate the result, and continue the chain.
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `fn` | `callable` |  |
-
-#### Returns
-`[ResultInterface](Results/ResultInterface.md)`
- F&gt;
-
 ### err
 
 
@@ -67,6 +49,42 @@ Execute on `Failure` and continue the chain.
 | Name | Type | Description |
 |------|------|-------------|
 | `fn` | `callable` |  |
+
+#### Returns
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
+
+### recover
+
+
+```php
+public function recover(callable $fn): [ResultInterface](Results/ResultInterface.md)
+```
+
+Execute on `Failure`, mutate the result, and continue the chain.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `fn` | `callable` |  |
+
+#### Returns
+`[ResultInterface](Results/ResultInterface.md)`
+ F&gt;
+
+### rethrow
+
+
+```php
+public function rethrow(?Throwable $throwable = NULL): [ResultInterface](Results/ResultInterface.md)
+```
+
+Throw the error of a `Failure`, or continue the chain.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `default` | `mixed` |  |
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
@@ -120,24 +138,6 @@ Execute on `Success`, mutate the result, and continue the chain.
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
  F&gt;
-
-### throw
-
-
-```php
-public function throw(?Throwable $throwable = NULL): [ResultInterface](Results/ResultInterface.md)
-```
-
-Throw the error of a `Failure`, or continue the chain.
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `default` | `mixed` |  |
-
-#### Returns
-`[ResultInterface](Results/ResultInterface.md)`
- E&gt;
 
 ### unwrap
 

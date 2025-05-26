@@ -8,24 +8,6 @@
 
 
 ## Methods
-### catch
-
-
-```php
-public function catch(callable $fn): self
-```
-
-Execute on `Failure`, mutate the result, and continue the chain.
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
-
-#### Returns
-`self`
- F&gt;
-
 ### err
 
 
@@ -65,6 +47,42 @@ Execute on `Failure` and continue the chain.
 | Name | Type | Description |
 |------|------|-------------|
 | `$fn` | `callable` |  |
+
+#### Returns
+`self`
+ E&gt;
+
+### recover
+
+
+```php
+public function recover(callable $fn): self
+```
+
+Execute on `Failure`, mutate the result, and continue the chain.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$fn` | `callable` |  |
+
+#### Returns
+`self`
+ F&gt;
+
+### rethrow
+
+
+```php
+public function rethrow(?Throwable $throwable = NULL): self
+```
+
+Throw the error of a `Failure`, or continue the chain.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$throwable` | `?Throwable` |  |
 
 #### Returns
 `self`
@@ -118,24 +136,6 @@ Execute on `Success`, mutate the result, and continue the chain.
 #### Returns
 `self`
  F&gt;
-
-### throw
-
-
-```php
-public function throw(?Throwable $throwable = NULL): self
-```
-
-Throw the error of a `Failure`, or continue the chain.
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$throwable` | `?Throwable` |  |
-
-#### Returns
-`self`
- E&gt;
 
 ### unwrap
 
