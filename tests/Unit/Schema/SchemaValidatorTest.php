@@ -390,21 +390,16 @@ test('validates arrays with complex object items', function (array $input, bool 
     ],
 ]);
 
-test('throws exception for invalid input types', function (mixed $input, string $expectedException, string $expectedMessage): void {
-    $this->expectException($expectedException);
-    $this->expectExceptionMessage($expectedMessage);
+test('throws exception for invalid input types', function (mixed $input): void {
+    $this->expectException(SerializationException::class);
 
     $this->validator->validateAndTransform($input, 'SomeClass');
 })->with([
     'non-array input' => [
         'not-an-array',
-        InvalidArgumentException::class,
-        'Data must be an array',
     ],
     'unregistered class' => [
         [],
-        InvalidArgumentException::class,
-        'No schema registered for class: SomeClass',
     ],
 ]);
 

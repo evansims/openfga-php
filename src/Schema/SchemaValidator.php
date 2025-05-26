@@ -6,12 +6,10 @@ namespace OpenFGA\Schema;
 
 use ArrayAccess;
 use DateTimeImmutable;
-use InvalidArgumentException;
 use OpenFGA\Exceptions\{SerializationError, SerializationException};
 use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
-use RuntimeException;
 
 use function array_key_exists;
 use function count;
@@ -60,20 +58,18 @@ final class SchemaValidator
      * @param mixed           $data
      * @param class-string<T> $className
      *
-     * @throws SerializationException   If validation fails
-     * @throws InvalidArgumentException If no schema is registered for the class or invalid data type
-     * @throws RuntimeException         If there's an error creating the instance
+     * @throws SerializationException If validation fails, missing required constructor parameter, or could not add items to collection
      *
      * @return T
      */
     public function validateAndTransform(mixed $data, string $className): object
     {
         if (! is_array($data)) {
-            throw new InvalidArgumentException('Data must be an array');
+            throw SerializationError::InvalidItemType->exception(context: ['className' => $className]);
         }
 
         if (! isset($this->schemas[$className])) {
-            throw new InvalidArgumentException('No schema registered for class: ' . $className);
+            throw SerializationError::UndefinedItemType->exception(context: ['className' => $className]);
         }
 
         $schema = $this->schemas[$className];
@@ -218,7 +214,7 @@ final class SchemaValidator
                 }
             }
         } else {
-            throw new RuntimeException('Could not add items to collection: ' . $className);
+            throw SerializationError::CouldNotAddItemsToCollection->exception(context: ['className' => $className]);
         }
 
         return $instance;
@@ -252,7 +248,7 @@ final class SchemaValidator
                 } elseif ($parameter->isDefaultValueAvailable()) {
                     $params[$paramName] = $parameter->getDefaultValue();
                 } else {
-                    throw new RuntimeException('Missing required constructor parameter: ' . $paramName);
+                    throw SerializationError::MissingRequiredConstructorParameter->exception(context: ['className' => $className, 'paramName' => $paramName]);
                 }
             }
 
