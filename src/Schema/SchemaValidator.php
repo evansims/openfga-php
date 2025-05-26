@@ -377,7 +377,7 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param array<int, mixed>         $data      Array of items
+     * @param array<int|string, mixed>  $data      Array of items
      * @param CollectionSchemaInterface $schema    Collection schema
      * @param class-string<T>           $className
      *
@@ -479,7 +479,8 @@ final class SchemaValidator
      */
     private function camelToSnakeCase(string $input): string
     {
-        return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $input));
+        $result = preg_replace('/([a-z])([A-Z])/', '$1_$2', $input);
+        return strtolower($result ?? $input);
     }
 
     /**
@@ -494,7 +495,9 @@ final class SchemaValidator
             
             // Handle enum types
             if (enum_exists($typeName) && is_string($value)) {
-                return $typeName::from($value);
+                /** @var class-string<\BackedEnum> $enumClass */
+                $enumClass = $typeName;
+                return $enumClass::from($value);
             }
         }
         

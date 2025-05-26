@@ -135,6 +135,6 @@
     "test": [
       "@pest:unit"
     ],
-    "openapi": "scripts/openapi.sh"
+    "docs": "@php tools/docs/generate.php"
   }
 }
