@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace OpenFGA\Exceptions;
 
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
-use RuntimeException;
+use Exception;
 use Throwable;
 
-final class ConfigurationException extends RuntimeException implements ClientThrowable
+final class ConfigurationException extends Exception implements ClientThrowable
 {
     use ExceptionTrait;
 

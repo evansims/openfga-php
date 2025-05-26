@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\StoreInterface;
+use OpenFGA\Models\{StoreInterface, Store};
 
 /**
  * @extends IndexedCollection<StoreInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\StoreInterface;
  */
 final class Stores extends IndexedCollection implements StoresInterface
 {
-    protected static string $itemType = StoreInterface::class;
+    protected static string $itemType = Store::class;
 }

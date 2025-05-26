@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\AssertionInterface;
+use OpenFGA\Models\{AssertionInterface, Assertion};
 
 /**
  * @extends IndexedCollection<AssertionInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\AssertionInterface;
  */
 final class Assertions extends IndexedCollection implements AssertionsInterface
 {
-    protected static string $itemType = AssertionInterface::class;
+    protected static string $itemType = Assertion::class;
 }

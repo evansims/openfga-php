@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UsersetInterface;
+use OpenFGA\Models\{UsersetInterface, Userset};
 
 /**
  * @extends KeyedCollection<UsersetInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\UsersetInterface;
  */
 final class Usersets extends KeyedCollection implements UsersetsInterface
 {
-    protected static string $itemType = UsersetInterface::class;
+    protected static string $itemType = Userset::class;
 }

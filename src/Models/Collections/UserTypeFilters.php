@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UserTypeFilterInterface;
+use OpenFGA\Models\{UserTypeFilterInterface, UserTypeFilter};
 
 /**
  * @extends IndexedCollection<UserTypeFilterInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\UserTypeFilterInterface;
  */
 final class UserTypeFilters extends IndexedCollection implements UserTypeFiltersInterface
 {
-    protected static string $itemType = UserTypeFilterInterface::class;
+    protected static string $itemType = UserTypeFilter::class;
 }

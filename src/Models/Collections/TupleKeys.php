@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\TupleKeyInterface;
+use OpenFGA\Models\{TupleKeyInterface, TupleKey};
 
 /**
  * @extends IndexedCollection<TupleKeyInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\TupleKeyInterface;
  */
 final class TupleKeys extends IndexedCollection implements TupleKeysInterface
 {
-    protected static string $itemType = TupleKeyInterface::class;
+    protected static string $itemType = TupleKey::class;
 }

@@ -23,6 +23,7 @@ use OpenFGA\Tests\Support\Schema\{
     User,
 };
 
+use InvalidArgumentException;
 use ReflectionClass;
 
 beforeEach(function (): void {
