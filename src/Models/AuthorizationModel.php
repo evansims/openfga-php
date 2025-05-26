@@ -100,8 +100,8 @@ final class AuthorizationModel implements AuthorizationModelInterface
             properties: [
                 new SchemaProperty(name: 'id', type: 'string', required: true),
                 new SchemaProperty(name: 'schema_version', type: 'string', required: true),
-                new SchemaProperty(name: 'type_definitions', type: TypeDefinitions::class, required: true),
-                new SchemaProperty(name: 'conditions', type: Conditions::class, required: false),
+                new SchemaProperty(name: 'type_definitions', type: 'object', className: TypeDefinitions::class, required: true),
+                new SchemaProperty(name: 'conditions', type: 'object', className: Conditions::class, required: false),
             ],
         );
     }

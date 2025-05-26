@@ -75,7 +75,8 @@ final class SchemaValidator
         $schema = $this->schemas[$className];
 
         if ($schema instanceof CollectionSchemaInterface) {
-            if (! array_is_list($data)) {
+            // Only convert to list for IndexedCollections, preserve keys for KeyedCollections
+            if (! array_is_list($data) && ! is_subclass_of($className, \OpenFGA\Models\Collections\KeyedCollection::class)) {
                 $data = array_values($data);
             }
 
@@ -112,8 +113,8 @@ final class SchemaValidator
 
             $value = $data[$name];
 
-            // Type validation
-            if (! $this->validateType($value, $type, $format, $enum)) {
+            // Type validation (skip for object types with className as they're handled recursively)
+            if (! ('object' === $type && null !== $propClassName) && ! $this->validateType($value, $type, $format, $enum)) {
                 throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
             }
 
@@ -124,6 +125,9 @@ final class SchemaValidator
                 }
 
                 $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
+            } elseif ('object' === $type && null === $propClassName) {
+                // Plain object without specific class - accept as-is
+                $transformedData[$name] = $value;
             } elseif ('array' === $type && null !== $items) {
                 $itemType = $items['type'] ?? null;
                 $itemClassName = $items['className'] ?? null;
@@ -159,6 +163,11 @@ final class SchemaValidator
                 }
                 $transformedData[$name] = $this->transformValue($value, $type, $format);
             }
+        }
+
+        // Check if there were any errors and throw exception if needed
+        if ([] !== $errors) {
+            throw SerializationError::InvalidItemType->exception(context: ['errors' => implode(', ', $errors)]);
         }
 
         // Create data class instance using reflection
@@ -243,8 +252,12 @@ final class SchemaValidator
             $params = [];
             foreach ($constructor->getParameters() as $parameter) {
                 $paramName = $parameter->getName();
+                $snakeCaseName = $this->camelToSnakeCase($paramName);
+                
                 if (array_key_exists($paramName, $data)) {
-                    $params[$paramName] = $data[$paramName];
+                    $params[$paramName] = $this->transformParameterValue($data[$paramName], $parameter);
+                } elseif (array_key_exists($snakeCaseName, $data)) {
+                    $params[$paramName] = $this->transformParameterValue($data[$snakeCaseName], $parameter);
                 } elseif ($parameter->isDefaultValueAvailable()) {
                     $params[$paramName] = $parameter->getDefaultValue();
                 } else {
@@ -258,12 +271,14 @@ final class SchemaValidator
             $instance = $reflection->newInstanceWithoutConstructor();
         }
 
-        // Set public properties
+        // Set public properties (skip readonly properties)
         foreach ($data as $name => $value) {
             if ($reflection->hasProperty($name)) {
                 $property = $reflection->getProperty($name);
 
-                $property->setValue($instance, $value);
+                if (! $property->isReadOnly()) {
+                    $property->setValue($instance, $value);
+                }
             }
         }
 
@@ -383,8 +398,8 @@ final class SchemaValidator
         }
 
         // Validate each item in the array
-        foreach ($data as $item) {
-            $transformedItems[] = $this->validateAndTransform($item, $itemType);
+        foreach ($data as $key => $item) {
+            $transformedItems[$key] = $this->validateAndTransform($item, $itemType);
         }
 
         return $this->createCollectionInstance($className, $transformedItems);
@@ -433,16 +448,19 @@ final class SchemaValidator
                 return is_array($value);
 
             case 'object':
-                if (! is_array($value)) {
-                    return false;
-                }
-                if ([] === $value) {
-                    return false;
+                // Accept actual objects
+                if (is_object($value)) {
+                    return true;
                 }
                 // Accept associative arrays (at least one non-numeric key)
-                foreach (array_keys($value) as $k) {
-                    if (! is_int($k)) {
-                        return true;
+                if (is_array($value)) {
+                    if ([] === $value) {
+                        return false;
+                    }
+                    foreach (array_keys($value) as $k) {
+                        if (! is_int($k)) {
+                            return true;
+                        }
                     }
                 }
 
@@ -454,5 +472,32 @@ final class SchemaValidator
             default:
                 return false;
         }
+    }
+
+    /**
+     * Convert camelCase to snake_case.
+     */
+    private function camelToSnakeCase(string $input): string
+    {
+        return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $input));
+    }
+
+    /**
+     * Transform a parameter value to match the expected type.
+     */
+    private function transformParameterValue(mixed $value, \ReflectionParameter $parameter): mixed
+    {
+        $type = $parameter->getType();
+        
+        if ($type instanceof ReflectionNamedType) {
+            $typeName = $type->getName();
+            
+            // Handle enum types
+            if (enum_exists($typeName) && is_string($value)) {
+                return $typeName::from($value);
+            }
+        }
+        
+        return $value;
     }
 }

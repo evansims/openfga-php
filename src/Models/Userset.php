@@ -113,11 +113,11 @@ final class Userset implements UsersetInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'direct', type: 'object', required: false),
-                new SchemaProperty(name: 'computed_userset', type: ObjectRelation::class, required: false),
-                new SchemaProperty(name: 'tuple_to_userset', type: TupleToUsersetV1::class, required: false),
-                new SchemaProperty(name: 'union', type: Usersets::class, required: false),
-                new SchemaProperty(name: 'intersection', type: Usersets::class, required: false),
-                new SchemaProperty(name: 'difference', type: DifferenceV1::class, required: false),
+                new SchemaProperty(name: 'computed_userset', type: 'object', className: ObjectRelation::class, required: false),
+                new SchemaProperty(name: 'tuple_to_userset', type: 'object', className: TupleToUsersetV1::class, required: false),
+                new SchemaProperty(name: 'union', type: 'object', className: Usersets::class, required: false),
+                new SchemaProperty(name: 'intersection', type: 'object', className: Usersets::class, required: false),
+                new SchemaProperty(name: 'difference', type: 'object', className: DifferenceV1::class, required: false),
             ],
         );
     }
