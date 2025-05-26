@@ -8,14 +8,18 @@ use Closure;
 use Throwable;
 
 /**
- * Helper for unwrapping a `Success` or throwing a `Failure`.
+ * Helper for executing a Closure safely or unwrapping a Result.
+ * 
+ * When passed a Closure, executes it and returns the result wrapped in a Success,
+ * or catches any thrown exceptions and wraps them in a Failure object.
+ * When passed a ResultInterface, unwraps a Success or throws the error from a Failure.
  *
  * @template T
  * @template E of Throwable
  *
  * @param Closure():ResultInterface<T, E>|Closure():T|ResultInterface<T, E> $context
  *
- * @throws Throwable if a `Failure` is encountered
+ * @throws Throwable if a `Failure` ResultInterface is passed and needs to be unwrapped
  *
  * @return ResultInterface<T, Throwable>|T
  */
