@@ -23,7 +23,7 @@ Both `Success<TValue>` and `Failure<TError>` objects implement the `OpenFGA\Resu
 
 - `recover(callable $fn): ResultInterface`: When a `Failure` chains an operation that itself returns a `ResultInterface`.
 - `failure(callable $fn): ResultInterface`: Performs a side effect if the Result is `Failure`.
-- `throw(?Throwable $throwable = null): ResultInterface`: Throws the error of a `Failure`, or continues the chain.
+- `rethrow(?Throwable $throwable = null): ResultInterface`: Throws the error of a `Failure`, or continues the chain.
 
 - `then(callable $fn): ResultInterface`: When a `Success` chains an operation that itself returns a `ResultInterface`.
 - `success(callable $fn): ResultInterface`: Performs a side effect if the Result is `Success`.

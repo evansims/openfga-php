@@ -79,7 +79,7 @@ interface ResultInterface
      *
      * @return ResultInterface<T, E>
      */
-    public function throw(?Throwable $throwable = null): self;
+    public function rethrow(?Throwable $throwable = null): self;
 
     /**
      * Return the unwrapped value of a `Success`, or a default value.

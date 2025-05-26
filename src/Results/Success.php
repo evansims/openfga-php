@@ -98,7 +98,7 @@ final class Success extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function throw(?Throwable $throwable = null): ResultInterface
+    public function rethrow(?Throwable $throwable = null): ResultInterface
     {
         return $this;
     }
