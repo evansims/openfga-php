@@ -124,9 +124,9 @@ Let's put some of the core concepts together in a simple, runnable example. This
 require_once __DIR__ . '/vendor/autoload.php'; // Adjust if your vendor dir is elsewhere
 
 use OpenFGA\Client;
-use OpenFGA\Models\TupleKey;
-use OpenFGA\Models\TupleKeys;
-use OpenFGA\Results\unwrap; // Helper for simpler result handling in examples
+use OpenFGA\Models\{TupleKey, TupleKeys};
+
+use function OpenFGA\Results\unwrap; // Helper for simpler result handling in examples
 
 // Initialize the client (ensure FGA_API_URL is set or use default)
 $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';

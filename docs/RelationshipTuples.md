@@ -43,13 +43,11 @@ For robust error handling beyond the `unwrap()` helper shown in these examples, 
 require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 
 use OpenFGA\Client;
-use OpenFGA\Results\unwrap;
-use OpenFGA\Models\TupleKey; // Represents a single tuple
-use OpenFGA\Models\TupleKeys; // Represents a collection of tuples for writing/deleting
-use OpenFGA\Enum\Consistency; // For ReadTuples consistency options
-use OpenFGA\Responses\ReadTuplesResponseInterface;
-use OpenFGA\Responses\WriteTuplesResponseInterface;
-use OpenFGA\Responses\ListTupleChangesResponseInterface;
+use OpenFGA\Models\{TupleKey, TupleKeys};
+use OpenFGA\Enum\Consistency;
+use OpenFGA\Responses\{ReadTuplesResponseInterface, WriteTuplesResponseInterface, ListTupleChangesResponseInterface};
+
+use function OpenFGA\Results\unwrap;
 
 // Assuming $client is initialized and storeId & modelId are set:
 // $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';

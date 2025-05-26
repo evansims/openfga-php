@@ -92,11 +92,12 @@ For robust error handling beyond the `unwrap()` helper shown, please see our gui
 require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 
 use OpenFGA\Client;
-use OpenFGA\Results\unwrap;
 use OpenFGA\Models\AuthorizationModelInterface; // For type hinting
 use OpenFGA\Responses\CreateAuthorizationModelResponseInterface;
 use OpenFGA\Responses\GetAuthorizationModelResponseInterface;
 use OpenFGA\Responses\ListAuthorizationModelsResponseInterface;
+
+use function OpenFGA\Results\unwrap;
 
 // Assuming $client is initialized and $storeId is set:
 // $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';

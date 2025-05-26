@@ -53,7 +53,7 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

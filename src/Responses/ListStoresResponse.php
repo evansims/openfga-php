@@ -64,7 +64,7 @@ final class ListStoresResponse extends Response implements ListStoresResponseInt
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

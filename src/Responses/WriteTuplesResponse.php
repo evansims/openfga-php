@@ -26,7 +26,7 @@ final class WriteTuplesResponse extends Response implements WriteTuplesResponseI
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

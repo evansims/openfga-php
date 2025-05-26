@@ -26,7 +26,7 @@ final class DeleteStoreResponse implements DeleteStoreResponseInterface
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

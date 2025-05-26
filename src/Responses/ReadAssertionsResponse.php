@@ -64,7 +64,7 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

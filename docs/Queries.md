@@ -26,16 +26,16 @@ For robust error handling beyond the `unwrap()` helper shown in these examples, 
 require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 
 use OpenFGA\Client;
-use OpenFGA\Results\unwrap;
-use OpenFGA\Models\TupleKey;
-use OpenFGA\Models\TupleKeys; // For contextual tuples
+use OpenFGA\Models\{TupleKey, TupleKeys, UsersetTree};
 use OpenFGA\Enum\Consistency;  // For consistency options if needed
+
 // Response interfaces for type hinting (optional but good practice)
 use OpenFGA\Responses\CheckResponseInterface;
 use OpenFGA\Responses\ExpandResponseInterface;
 use OpenFGA\Responses\ListUsersResponseInterface;
 use OpenFGA\Responses\ListObjectsResponseInterface;
-use OpenFGA\Models\UsersetTree; // For Expand response
+
+use function OpenFGA\Results\unwrap;
 
 // Assuming $client is initialized and storeId & modelId are set:
 // $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';

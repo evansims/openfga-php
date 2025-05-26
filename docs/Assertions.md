@@ -33,13 +33,15 @@ For robust error handling beyond the `unwrap()` helper shown in these examples, 
 require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 
 use OpenFGA\Client;
-use OpenFGA\Results\unwrap;
 use OpenFGA\Models\TupleKey;    // Represents the (user, relation, object) part of an assertion
 use OpenFGA\Models\Assertion;   // Represents a single assertion (TupleKey + expectation)
 use OpenFGA\Collections\Assertions; // Represents a collection of Assertion objects for writing
+
 // Response interfaces for type hinting (optional but good practice)
 use OpenFGA\Responses\ReadAssertionsResponseInterface;
 use OpenFGA\Responses\WriteAssertionsResponseInterface; // Though Write usually returns a specific type or void
+
+use function OpenFGA\Results\unwrap;
 
 // Assuming $client is initialized and storeId & modelId are set:
 // $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';

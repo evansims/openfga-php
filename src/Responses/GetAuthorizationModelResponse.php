@@ -49,7 +49,7 @@ final class GetAuthorizationModelResponse extends Response implements GetAuthori
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

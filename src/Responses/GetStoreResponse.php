@@ -104,7 +104,7 @@ final class GetStoreResponse extends Response implements GetStoreResponseInterfa
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

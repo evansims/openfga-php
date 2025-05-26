@@ -64,7 +64,7 @@ final class ReadTuplesResponse extends Response implements ReadTuplesResponseInt
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

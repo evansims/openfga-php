@@ -49,7 +49,7 @@ final class ExpandResponse extends Response implements ExpandResponseInterface
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

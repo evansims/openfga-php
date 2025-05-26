@@ -46,7 +46,7 @@ final class CreateAuthorizationModelResponse extends Response implements CreateA
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

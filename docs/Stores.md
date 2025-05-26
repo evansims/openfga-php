@@ -27,13 +27,9 @@ For robust error handling beyond the `unwrap()` helper shown in these examples, 
 require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 
 use OpenFGA\Client;
-use OpenFGA\Results\unwrap; // For concise example code
-// For more detailed error handling, you might use:
-// use function OpenFGA\Results\{fold, success, failure};
-use OpenFGA\Responses\CreateStoreResponseInterface;
-use OpenFGA\Responses\GetStoreResponseInterface;
-use OpenFGA\Responses\ListStoresResponseInterface;
-use OpenFGA\Responses\DeleteStoreResponseInterface; // Though delete usually returns a specific type or void
+use OpenFGA\Responses\{CreateStoreResponseInterface, GetStoreResponseInterface, ListStoresResponseInterface, DeleteStoreResponseInterface};
+
+use function OpenFGA\Results\unwrap;
 
 // Assuming $client is initialized as shown in GettingStarted.md
 // $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');

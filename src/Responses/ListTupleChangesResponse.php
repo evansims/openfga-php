@@ -64,7 +64,7 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );

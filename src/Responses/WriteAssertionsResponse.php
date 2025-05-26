@@ -26,7 +26,7 @@ final class WriteAssertionsResponse extends Response implements WriteAssertionsR
         }
 
         // Handle network errors
-        RequestManager::handleResponseException(
+        return RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );
