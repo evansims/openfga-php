@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Tools;
+
+use OpenFGA\Tools\DocumentationGenerator;
+use ReflectionClass;
+
 require_once implode(DIRECTORY_SEPARATOR, [__DIR__, '..', '..', 'tools', 'docs', 'generate-docs.php']);
 
 test('method signature prints default values using PHP syntax', function (): void {

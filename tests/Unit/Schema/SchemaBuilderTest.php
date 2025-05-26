@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Schema;
+
+use DateTimeImmutable;
 use OpenFGA\Schema\{Schema, SchemaBuilder};
 
 test('SchemaBuilder creates a schema with the correct class name', function (): void {

@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tools;
+
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionParameter;
+
 // Load Composer autoloader
 $autoloader = __DIR__ . '/vendor/autoload.php';
 
@@ -417,7 +423,7 @@ class DocumentationGenerator
                         } else {
                             $exportedValue = var_export($value, true);
                         }
-                        
+
                         if ($isList) {
                             $exportedParts[] = $exportedValue;
                         } else {
@@ -642,7 +648,7 @@ class DocumentationGenerator
             if ($inDescription) {
                 // If the line *is* @inheritDoc (case-insensitive), don't add it to the description text.
                 if (strtolower(trim($line)) === '@inheritdoc') {
-                    continue; 
+                    continue;
                 }
                 $description[] = $line;
             }
@@ -680,7 +686,7 @@ class DocumentationGenerator
                 // If the line starts with a new PHPDoc tag, stop capturing.
                 if (preg_match('/^@\w+/', $trimmedLine)) {
                     $capturing = false;
-                    break; 
+                    break;
                 }
                 // Add non-empty lines to the description.
                 if (!empty($trimmedLine)) {

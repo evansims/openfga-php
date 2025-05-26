@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Schema;
+
+use ReflectionClass;
 use OpenFGA\Schema\{Schema, SchemaBuilder, SchemaRegistry};
 
 beforeEach(function (): void {

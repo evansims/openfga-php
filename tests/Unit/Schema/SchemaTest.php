@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Schema;
+
 use OpenFGA\Schema\{Schema, SchemaProperty};
 
 test('Schema can be created with class name', function (): void {

@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Schema;
+
+use OpenFGA\Schema\SchemaProperty;
+
 test('SchemaProperty can be created with required fields', function (): void {
-    $property = new OpenFGA\Schema\SchemaProperty(
+    $property = new SchemaProperty(
         name: 'test',
         type: 'string',
     );
@@ -19,7 +23,7 @@ test('SchemaProperty can be created with required fields', function (): void {
 });
 
 test('SchemaProperty can be created with all fields', function (): void {
-    $property = new OpenFGA\Schema\SchemaProperty(
+    $property = new SchemaProperty(
         name: 'test',
         type: 'array',
         required: true,
