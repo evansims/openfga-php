@@ -44,12 +44,15 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use OpenFGA\Client;
-use OpenFGA\Models\{tuple, tuples};
-use OpenFGA\Responses\{CreateStoreResponseInterface};
+use OpenFGA\Models\{AuthorizationModel, tuple, tuples};
+use OpenFGA\Responses\{
+    CreateStoreResponseInterface,
+    CreateAuthorizationModelResponseInterface
+};
 
 use function OpenFGA\Results\{success, failure, unwrap};
 
-define('STORE_NAME', 'my-php-store')
+define('STORE_NAME', 'my-php-store');
 
 /**
  * 1. Initialize the SDK Client
@@ -87,7 +90,7 @@ DSL;
 
 $model = ($client->dsl($dsl))
     ->failure(fn(Throwable $error) => throw $error)
-    ->then(fn(AuthenticationModel $model) => $client->createAuthorizationModel(
+    ->then(fn(AuthorizationModel $model) => $client->createAuthorizationModel(
         store: $store,
         typeDefinitions: $model->getTypeDefinitions(),
         conditions: $model->getConditions(),

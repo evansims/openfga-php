@@ -72,7 +72,7 @@ echo $failureResult->unwrap("Default value for failure") . "\n"; // Output: Defa
 <?php
 use OpenFGA\Client; // Assuming $client is an instance
 use OpenFGA\Responses\CreateStoreResponseInterface;
-use function OpenFGA\Results\{success, failure};
+use function OpenFGA\Results\{catch, then, success, failure, unwrap, ok, err};
 
 use Exception;
 
@@ -101,7 +101,7 @@ failure($createStoreResult, function(Throwable $error) {
 ```php
 <?php
 use OpenFGA\Results\{success, failure};
-use Excetion;
+use Exception;
 
 // Mini-scenario:
 // $apiResponseResult = $client->someOperation(); // Returns ResultInterface<HttpResponseInterface, ApiError>

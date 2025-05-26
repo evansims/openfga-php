@@ -65,8 +65,6 @@ Once the SDK is installed, you can initialize the `OpenFGA\Client`.
 require_once __DIR__ . '/vendor/autoload.php'; // Adjust path if necessary
 
 use OpenFGA\Client;
-// For handling results, you might use these helper functions:
-// use function OpenFGA\Results\{fold, success, failure, unwrap};
 
 // Configure the client with your OpenFGA API URL
 // It's good practice to use environment variables for configuration
@@ -126,7 +124,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // Adjust if your vendor dir is e
 use OpenFGA\Client;
 use OpenFGA\Models\{TupleKey, TupleKeys};
 
-use function OpenFGA\Results\unwrap; // Helper for simpler result handling in examples
+use function OpenFGA\Results\{catch, then, success, failure, unwrap, ok, err};
 
 // Initialize the client (ensure FGA_API_URL is set or use default)
 $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';

@@ -171,11 +171,10 @@ The `listUsers()` method returns a list of users (and usersets) that have a give
 
 **Parameters:**
 
-- `object_type` (string): The type of the object (e.g., `document`). **Required.**
-- `object_id` (string): The ID of the object (e.g., `roadmap`). **Required.**
+- `object` (string): The ID of the object (e.g., `roadmap`). **Required.**
 - `relation` (string): The permission/relation to list users for (e.g., `viewer`). **Required.**
-- `user_filters` (optional array of `OpenFGA\Models\UserFilter`): Filters the results to specific user types and relations (e.g., only return users of type `user`, or only users who are `member` of `group:engineering`). Each `UserFilter` has a `type` (e.g., `user`) and an optional `relation` (e.g., `member`).
-- `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
+- `userFilters` (optional array of `OpenFGA\Models\UserFilter`): Filters the results to specific user types and relations (e.g., only return users of type `user`, or only users who are `member` of `group:engineering`). Each `UserFilter` has a `type` (e.g., `user`) and an optional `relation` (e.g., `member`).
+- `contextualTuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
 - `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
 - `authorization_model_id` (optional string): Overrides the client's model ID.
 
@@ -187,10 +186,9 @@ The `listUsers()` method returns a list of users (and usersets) that have a give
 try {
     /** @var ListUsersResponseInterface $response */
     $response = unwrap($client->listUsers(
-        objectType: 'document',
-        objectId: 'roadmap',
+        object: 'roadmap',
         relation: 'viewer'
-        // Example with user_filters:
+        // Example with userFilters:
         // userFilters: [new \OpenFGA\Models\UserFilter(type: 'user')] // Only list direct users
     ));
 
