@@ -21,7 +21,7 @@ Both `Success<TValue>` and `Failure<TError>` objects implement the `OpenFGA\Resu
 - `succeeded(): bool`: Returns `true` if the result is a `Success`, `false` otherwise.
 - `failed(): bool`: Returns `true` if the result is a `Failure`, `false` otherwise.
 
-- `catch(callable $fn): ResultInterface`: When a `Failure` chains an operation that itself returns a `ResultInterface`.
+- `recover(callable $fn): ResultInterface`: When a `Failure` chains an operation that itself returns a `ResultInterface`.
 - `failure(callable $fn): ResultInterface`: Performs a side effect if the Result is `Failure`.
 - `throw(?Throwable $throwable = null): ResultInterface`: Throws the error of a `Failure`, or continues the chain.
 
@@ -72,7 +72,7 @@ echo $failureResult->unwrap("Default value for failure") . "\n"; // Output: Defa
 <?php
 use OpenFGA\Client; // Assuming $client is an instance
 use OpenFGA\Responses\CreateStoreResponseInterface;
-use function OpenFGA\Results\{catch, then, success, failure, unwrap, ok, err};
+use function OpenFGA\Results\{recover, then, success, failure, unwrap, ok, err};
 
 use Exception;
 
@@ -93,7 +93,7 @@ failure($createStoreResult, function(Throwable $error) {
 ?>
 ```
 
-**3. Using `Result` Methods (`catch`, `then`, `success`, `failure`, etc.)**
+**3. Using `Result` Methods (`recover`, `then`, `success`, `failure`, etc.)**
 
 - **When:** Ideal for creating **fluent processing pipelines**, transforming the `Result` or its contents, or conditionally chaining operations.
 - **Behavior:** These methods are called directly on the `Result` object. See detailed explanations below.
@@ -153,14 +153,14 @@ Here's a closer look at the key methods available on `ResultInterface` objects:
 
 - **`unwrap(mixed $default = null): mixed`** (Already covered in Guidance)
 
-- **`catch(callable $fn): ResultInterface`**
+- **`recover(callable $fn): ResultInterface`**
 
   - **Purpose:** Transforms the error inside a `Failure` object using `$fn`. If it's a `Success`, it remains `Success`. `$fn` receives the error and should return the new error.
   - **Works On:** `Failure` (transforms its error), `Success` (passes through).
 
   - ```php
     $result = new Failure(new Exception("Account Already Exists"));
-    $caught = $result->catch(function (Throwable $err) {
+    $caught = $result->recover(function (Throwable $err) {
         $userDetails = $this->getUserDetails($err->getMessage());
         return success($userDetails); // Success($userDetails)
     });

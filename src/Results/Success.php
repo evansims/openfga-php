@@ -31,7 +31,7 @@ final class Success extends Result implements ResultInterface
      * @psalm-suppress InvalidReturnType
      */
     #[Override]
-    public function catch(callable $fn): ResultInterface
+    public function recover(callable $fn): ResultInterface
     {
         return $this;
     }

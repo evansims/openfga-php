@@ -28,7 +28,7 @@ final class Failure extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function catch(callable $fn): ResultInterface
+    public function recover(callable $fn): ResultInterface
     {
         return $fn($this->err());
     }

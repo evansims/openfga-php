@@ -23,7 +23,7 @@ interface ResultInterface
      *
      * @return ResultInterface<U, F>
      */
-    public function catch(callable $fn): self;
+    public function recover(callable $fn): self;
 
     /**
      * Return the unwrapped error of a `Failure`.
