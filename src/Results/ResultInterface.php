@@ -14,95 +14,76 @@ use Throwable;
 interface ResultInterface
 {
     /**
-     * @template R
+     * Execute on `Failure`, mutate the result, and continue the chain.
      *
-     * @param callable(T): R $onSuccess
-     * @param callable(E): R $onFailure
-     *
-     * @return R
-     */
-    public function fold(callable $onSuccess, callable $onFailure): mixed;
-
-    /**
-     * @throws LogicException if called on Success
-     *
-     * @return E
-     */
-    public function getError(): Throwable;
-
-    /**
-     * @throws LogicException if called on Failure
-     *
-     * @return T
-     */
-    public function getValue(): mixed;
-
-    /**
-     * @phpstan-assert-if-true Failure<E> $this
-     */
-    public function isFailure(): bool;
-
-    /**
-     * @phpstan-assert-if-true Success<T, E> $this
-     */
-    public function isSuccess(): bool;
-
-    /**
      * @template U
-     *
-     * @param callable(T): U $fn
-     *
-     * @return ResultInterface<U, E>
-     */
-    public function map(callable $fn): self;
-
-    /**
      * @template F of Throwable
      *
-     * @param callable(E): F $fn
+     * @param callable(Throwable): ResultInterface<U, F> $fn
      *
-     * @return ResultInterface<T, F>
+     * @return ResultInterface<U, F>
      */
-    public function mapError(callable $fn): self;
+    public function catch(callable $fn): self;
 
     /**
+     * Return the unwrapped error of a `Failure`.
+     *
+     * @throws LogicException if called on Success
+     */
+    public function err(): Throwable;
+
+    /**
+     * Return `true` if this is a `Failure`.
+     */
+    public function failed(): bool;
+
+    /**
+     * Execute on `Failure` and continue the chain.
+     *
      * @param callable(E): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function onFailure(callable $fn): self;
+    public function failure(callable $fn): self;
 
     /**
+     * Return `true` if this is a `Success`.
+     */
+    public function succeeded(): bool;
+
+    /**
+     * Execute on `Success` and continue the chain.
+     *
      * @param callable(T): void $fn
      *
      * @return ResultInterface<T, E>
      */
-    public function onSuccess(callable $fn): self;
+    public function success(callable $fn): self;
 
     /**
-     * @param callable(T): void $fn
+     * Execute on `Success`, mutate the result, and continue the chain.
      *
-     * @return ResultInterface<T, E>
-     */
-    public function tap(callable $fn): self;
-
-    /**
-     * @param callable(E): void $fn
-     *
-     * @return ResultInterface<T, E>
-     */
-    public function tapError(callable $fn): self;
-
-    /**
      * @template U
+     * @template F of Throwable
      *
-     * @param callable(T): ResultInterface<U, E> $fn
+     * @param callable(T): ResultInterface<U, F> $fn
      *
-     * @return ResultInterface<U, E>
+     * @return ResultInterface<U, F>
      */
     public function then(callable $fn): self;
 
     /**
+     * Throw the error of a `Failure`, or continue the chain.
+     *
+     * @param ?Throwable $throwable
+     *
+     * @return ResultInterface<T, E>
+     */
+    public function throw(?Throwable $throwable = null): self;
+
+    /**
+     * Return the unwrapped value of a `Success`, or a default value.
+     *
      * @template R
      *
      * @param R $default
@@ -110,4 +91,11 @@ interface ResultInterface
      * @return R|T
      */
     public function unwrap(mixed $default = null): mixed;
+
+    /**
+     * Return the unwrapped value of a `Success`.
+     *
+     * @throws LogicException if called on Failure
+     */
+    public function val(): mixed;
 }

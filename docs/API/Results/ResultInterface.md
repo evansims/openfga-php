@@ -8,95 +8,14 @@
 
 
 ## Methods
-### fold
+### catch
 
 
 ```php
-public function fold(callable $onSuccess, callable $onFailure): mixed
+public function catch(callable $fn): self
 ```
 
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$onSuccess` | `callable` |  |
-| `$onFailure` | `callable` |  |
-
-#### Returns
-`mixed`
-
-### getError
-
-
-```php
-public function getError(): Throwable
-```
-
-
-
-#### Returns
-`Throwable`
-
-### getValue
-
-
-```php
-public function getValue(): mixed
-```
-
-
-
-#### Returns
-`mixed`
-
-### isFailure
-
-
-```php
-public function isFailure(): bool
-```
-
-
-
-#### Returns
-`bool`
-
-### isSuccess
-
-
-```php
-public function isSuccess(): bool
-```
-
-
-
-#### Returns
-`bool`
-
-### map
-
-
-```php
-public function map(callable $fn): self
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
-
-#### Returns
-`self`
- E&gt;
-
-### mapError
-
-
-```php
-public function mapError(callable $fn): self
-```
-
+Execute on `Failure`, mutate the result, and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
@@ -107,13 +26,40 @@ public function mapError(callable $fn): self
 `self`
  F&gt;
 
-### onFailure
+### err
 
 
 ```php
-public function onFailure(callable $fn): self
+public function err(): Throwable
 ```
 
+Return the unwrapped error of a `Failure`.
+
+
+#### Returns
+`Throwable`
+
+### failed
+
+
+```php
+public function failed(): bool
+```
+
+Return `true` if this is a `Failure`.
+
+
+#### Returns
+`bool`
+
+### failure
+
+
+```php
+public function failure(callable $fn): self
+```
+
+Execute on `Failure` and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
@@ -124,47 +70,27 @@ public function onFailure(callable $fn): self
 `self`
  E&gt;
 
-### onSuccess
+### succeeded
 
 
 ```php
-public function onSuccess(callable $fn): self
+public function succeeded(): bool
 ```
 
+Return `true` if this is a `Success`.
 
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
 
 #### Returns
-`self`
- E&gt;
+`bool`
 
-### tap
-
-
-```php
-public function tap(callable $fn): self
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
-
-#### Returns
-`self`
- E&gt;
-
-### tapError
+### success
 
 
 ```php
-public function tapError(callable $fn): self
+public function success(callable $fn): self
 ```
 
+Execute on `Success` and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
@@ -182,11 +108,30 @@ public function tapError(callable $fn): self
 public function then(callable $fn): self
 ```
 
+Execute on `Success`, mutate the result, and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
 | `$fn` | `callable` |  |
+
+#### Returns
+`self`
+ F&gt;
+
+### throw
+
+
+```php
+public function throw(?Throwable $throwable = NULL): self
+```
+
+Throw the error of a `Failure`, or continue the chain.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$throwable` | `?Throwable` |  |
 
 #### Returns
 `self`
@@ -199,11 +144,25 @@ public function then(callable $fn): self
 public function unwrap(mixed $default = NULL): mixed
 ```
 
+Return the unwrapped value of a `Success`, or a default value.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
 | `$default` | `mixed` |  |
+
+#### Returns
+`mixed`
+
+### val
+
+
+```php
+public function val(): mixed
+```
+
+Return the unwrapped value of a `Success`.
+
 
 #### Returns
 `mixed`

@@ -6,11 +6,11 @@ namespace OpenFGA\Network;
 
 use Exception;
 use OpenFGA\Client;
-use OpenFGA\Exceptions\{ApiEndpointException, ApiForbiddenException, ApiInternalServerException, ApiTimeoutException, ApiTransactionException, ApiUnauthenticatedException, ApiValidationException};
-use OpenFGA\Requests\RequestInterface;
+use OpenFGA\Exceptions\{ConfigurationError, NetworkError};
+use OpenFGA\Requests\RequestInterface as ClientRequestInterface;
 use Override;
 use Psr\Http\Client\ClientInterface;
-use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as MessageRequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
+use Psr\Http\Message\{RequestFactoryInterface, RequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface};
 
 use PsrDiscovery\Discover;
 
@@ -50,7 +50,7 @@ final class RequestManager implements RequestManagerInterface
             $httpClient = Discover::httpClient();
 
             if (null === $httpClient) {
-                throw new Exception('An available PSR-18 HTTP Client factory could not be discovered.');
+                throw ConfigurationError::HttpClientMissing->exception();
             }
 
             $this->httpClient = $httpClient;
@@ -69,7 +69,7 @@ final class RequestManager implements RequestManagerInterface
             $httpRequestFactory = Discover::httpRequestFactory();
 
             if (null === $httpRequestFactory) {
-                throw new Exception('An available PSR-17 HTTP Request factory could not be discovered.');
+                throw ConfigurationError::HttpRequestFactoryMissing->exception();
             }
 
             $this->httpRequestFactory = $httpRequestFactory;
@@ -88,7 +88,7 @@ final class RequestManager implements RequestManagerInterface
             $httpResponseFactory = Discover::httpResponseFactory();
 
             if (null === $httpResponseFactory) {
-                throw new Exception('An available PSR-17 HTTP Response factory could not be discovered.');
+                throw ConfigurationError::HttpResponseFactoryMissing->exception();
             }
 
             $this->httpResponseFactory = $httpResponseFactory;
@@ -107,7 +107,7 @@ final class RequestManager implements RequestManagerInterface
             $httpStreamFactory = Discover::httpStreamFactory();
 
             if (null === $httpStreamFactory) {
-                throw new Exception('An available PSR-17 Stream factory could not be discovered.');
+                throw ConfigurationError::HttpStreamFactoryMissing->exception();
             }
 
             $this->httpStreamFactory = $httpStreamFactory;
@@ -120,7 +120,7 @@ final class RequestManager implements RequestManagerInterface
     /**
      * @inheritDoc
      */
-    public function request(RequestInterface $request): MessageRequestInterface
+    public function request(ClientRequestInterface $request): RequestInterface
     {
         $request = $request->getRequest($this->getHttpStreamFactory());
 
@@ -159,7 +159,7 @@ final class RequestManager implements RequestManagerInterface
     /**
      * @inheritDoc
      */
-    public function send(MessageRequestInterface $request): ResponseInterface
+    public function send(RequestInterface $request): ResponseInterface
     {
         return $this->getHttpClient()->sendRequest($request);
     }
@@ -168,47 +168,43 @@ final class RequestManager implements RequestManagerInterface
     /**
      * @inheritDoc
      */
-    public static function handleResponseException(ResponseInterface $response): void
+    public static function handleResponseException(
+        ResponseInterface $response,
+        ?RequestInterface $request = null,
+    ): never {
+        $handles = [
+            400 => NetworkError::Invalid,
+            401 => NetworkError::Unauthenticated,
+            403 => NetworkError::Forbidden,
+            404 => NetworkError::UndefinedEndpoint,
+            409 => NetworkError::Conflict,
+            422 => NetworkError::Timeout,
+            500 => NetworkError::Server,
+        ];
+
+        if (isset($handles[$response->getStatusCode()])) {
+            $error = self::parseError($response);
+
+            throw $handles[$response->getStatusCode()]->exception(request: $request, response: $response, context: ['%error%' => $error]);
+        }
+
+        throw NetworkError::Unexpected->exception(request: $request, response: $response, context: ['%error%' => 'API responded with an unexpected status code: ' . $response->getStatusCode()]);
+    }
+
+    private static function parseError(ResponseInterface $response): string
     {
         $error = '';
 
         try {
             $error = trim((string) $response->getBody());
+            $error = json_encode($error, JSON_THROW_ON_ERROR);
         } catch (Exception) {
         }
 
         if ('' === $error) {
-            $error = 'Unknown error';
+            return 'Unknown error';
         }
 
-        $error = json_encode($error, JSON_THROW_ON_ERROR);
-
-        if (400 === $response->getStatusCode()) {
-            throw new ApiValidationException($error);
-        }
-
-        if (401 === $response->getStatusCode()) {
-            throw new ApiUnauthenticatedException($error);
-        }
-
-        if (403 === $response->getStatusCode()) {
-            throw new ApiForbiddenException($error);
-        }
-
-        if (404 === $response->getStatusCode()) {
-            throw new ApiEndpointException($error);
-        }
-
-        if (409 === $response->getStatusCode()) {
-            throw new ApiTransactionException($error);
-        }
-
-        if (422 === $response->getStatusCode()) {
-            throw new ApiTimeoutException($error);
-        }
-
-        if (500 === $response->getStatusCode()) {
-            throw new ApiInternalServerException($error);
-        }
+        return $error;
     }
 }

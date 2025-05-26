@@ -27,10 +27,19 @@ final class Failure extends Result implements ResultInterface
     #[Override]
     /**
      * @inheritDoc
+     */
+    public function catch(callable $fn): ResultInterface
+    {
+        return $fn($this->err());
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
      *
      * @return E
      */
-    public function getError(): Throwable
+    public function err(): Throwable
     {
         return $this->error;
     }
@@ -39,16 +48,7 @@ final class Failure extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function getValue(): never
-    {
-        throw new LogicException('Failure has no value');
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function isFailure(): bool
+    public function failed(): bool
     {
         return true;
     }
@@ -57,46 +57,7 @@ final class Failure extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function isSuccess(): bool
-    {
-        return false;
-    }
-
-    #[Override]
-    /**
-     * @template F of Throwable
-     *
-     * @param callable(never): F $fn
-     *
-     * @return self<never, E>
-     */
-    public function map(callable $fn): ResultInterface
-    {
-        return $this;
-    }
-
-    #[Override]
-    /**
-     * @template F of Throwable
-     *
-     * @param callable(E): F $fn
-     *
-     * @return Failure<E>
-     */
-    public function mapError(callable $fn): ResultInterface
-    {
-        $result = $fn($this->error);
-
-        return new self($result);
-    }
-
-    #[Override]
-    /**
-     * @param callable(E): void $fn
-     *
-     * @return $this
-     */
-    public function onFailure(callable $fn): ResultInterface
+    public function failure(callable $fn): ResultInterface
     {
         $fn($this->error);
 
@@ -107,7 +68,28 @@ final class Failure extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function onSuccess(callable $fn): ResultInterface
+    public function succeeded(): bool
+    {
+        return false;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function success(callable $fn): ResultInterface
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress InvalidReturnType
+     */
+    #[Override]
+    public function then(callable $fn): ResultInterface
     {
         return $this;
     }
@@ -116,8 +98,19 @@ final class Failure extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function then(callable $fn): ResultInterface
+    public function throw(?Throwable $throwable = null): ResultInterface
     {
-        return $this;
+        throw $throwable ?? $this->error;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     *
+     * @return never
+     */
+    public function val(): never
+    {
+        throw new LogicException('Failure has no value');
     }
 }

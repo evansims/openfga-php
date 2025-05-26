@@ -10,168 +10,94 @@
 
 
 ## Methods
-### fold
+### catch
 
 
 ```php
-public function fold(callable $onSuccess, callable $onFailure): mixed
+public function catch(callable $fn): [ResultInterface](Results/ResultInterface.md)
 ```
 
+Execute on `Failure`, mutate the result, and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$onSuccess` | `callable` |  |
 | `fn` | `callable` |  |
 
 #### Returns
-`mixed`
+`[ResultInterface](Results/ResultInterface.md)`
+ F&gt;
 
-### getError
+### err
 
 
 ```php
-public function getError(): never
+public function err(): never
 ```
 
+Return the unwrapped error of a `Failure`.
 
 
 #### Returns
 `never`
 
-### getValue
+### failed
 
 
 ```php
-public function getValue(): mixed
+public function failed(): bool
 ```
 
-
-
-#### Returns
-`mixed`
-
-### isFailure
-
-
-```php
-public function isFailure(): bool
-```
-
+Return `true` if this is a `Failure`.
 
 
 #### Returns
 `bool`
 
-### isSuccess
+### failure
 
 
 ```php
-public function isSuccess(): bool
+public function failure(callable $fn): [ResultInterface](Results/ResultInterface.md)
 ```
 
+Execute on `Failure` and continue the chain.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `fn` | `callable` |  |
+
+#### Returns
+`[ResultInterface](Results/ResultInterface.md)`
+ E&gt;
+
+### succeeded
+
+
+```php
+public function succeeded(): bool
+```
+
+Return `true` if this is a `Success`.
 
 
 #### Returns
 `bool`
 
-### map
+### success
 
 
 ```php
-public function map(callable $fn): [ResultInterface](Results/ResultInterface.md)
+public function success(callable $fn): [ResultInterface](Results/ResultInterface.md)
 ```
 
+Execute on `Success` and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
 | `fn` | `callable` |  |
-
-#### Returns
-`[ResultInterface](Results/ResultInterface.md)`
- never&gt;
-
-### mapError
-
-
-```php
-public function mapError(callable $fn): [ResultInterface](Results/ResultInterface.md)
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `fn` | `callable` |  |
-
-#### Returns
-`[ResultInterface](Results/ResultInterface.md)`
- E&gt;
-
-### onFailure
-
-
-```php
-public function onFailure(callable $fn): [ResultInterface](Results/ResultInterface.md)
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `fn` | `callable` |  |
-
-#### Returns
-`[ResultInterface](Results/ResultInterface.md)`
- E&gt;
-
-### onSuccess
-
-
-```php
-public function onSuccess(callable $fn): [ResultInterface](Results/ResultInterface.md)
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `fn` | `callable` |  |
-
-#### Returns
-`[ResultInterface](Results/ResultInterface.md)`
- E&gt;
-
-### tap
-
-
-```php
-public function tap(callable $fn): [ResultInterface](Results/ResultInterface.md)
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `fn` | `callable` |  |
-
-#### Returns
-`[ResultInterface](Results/ResultInterface.md)`
- E&gt;
-
-### tapError
-
-
-```php
-public function tapError(callable $fn): [ResultInterface](Results/ResultInterface.md)
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `default` | `mixed` |  |
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
@@ -184,11 +110,30 @@ public function tapError(callable $fn): [ResultInterface](Results/ResultInterfac
 public function then(callable $fn): [ResultInterface](Results/ResultInterface.md)
 ```
 
+Execute on `Success`, mutate the result, and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `onFailure` | `callable` |  |
+| `throwable` | `?Throwable` |  |
+
+#### Returns
+`[ResultInterface](Results/ResultInterface.md)`
+ F&gt;
+
+### throw
+
+
+```php
+public function throw(?Throwable $throwable = NULL): [ResultInterface](Results/ResultInterface.md)
+```
+
+Throw the error of a `Failure`, or continue the chain.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `default` | `mixed` |  |
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
@@ -201,11 +146,25 @@ public function then(callable $fn): [ResultInterface](Results/ResultInterface.md
 public function unwrap(mixed $default = NULL): mixed
 ```
 
+Return the unwrapped value of a `Success`, or a default value.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
 | `$default` | `mixed` |  |
+
+#### Returns
+`mixed`
+
+### val
+
+
+```php
+public function val(): mixed
+```
+
+Return the unwrapped value of a `Success`.
+
 
 #### Returns
 `mixed`

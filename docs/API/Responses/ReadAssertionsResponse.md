@@ -16,7 +16,7 @@
 *<small>Implements Responses\ReadAssertionsResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, Psr\Http\Message\RequestInterface $request, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
 ```
 
 
@@ -24,6 +24,7 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response, [Sche
 | Name | Type | Description |
 |------|------|-------------|
 | `$response` | `Psr\Http\Message\ResponseInterface` |  |
+| `$request` | `Psr\Http\Message\RequestInterface` |  |
 | `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
 
 #### Returns

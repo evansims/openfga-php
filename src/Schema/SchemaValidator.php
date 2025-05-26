@@ -7,7 +7,7 @@ namespace OpenFGA\Schema;
 use ArrayAccess;
 use DateTimeImmutable;
 use InvalidArgumentException;
-use OpenFGA\Exceptions\SchemaValidationException;
+use OpenFGA\Exceptions\{SerializationError, SerializationException};
 use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
@@ -60,9 +60,9 @@ final class SchemaValidator
      * @param mixed           $data
      * @param class-string<T> $className
      *
-     * @throws SchemaValidationException If validation fails
-     * @throws InvalidArgumentException  If no schema is registered for the class or invalid data type
-     * @throws RuntimeException          If there's an error creating the instance
+     * @throws SerializationException   If validation fails
+     * @throws InvalidArgumentException If no schema is registered for the class or invalid data type
+     * @throws RuntimeException         If there's an error creating the instance
      *
      * @return T
      */
@@ -118,59 +118,34 @@ final class SchemaValidator
 
             // Type validation
             if (! $this->validateType($value, $type, $format, $enum)) {
-                $errors[] = sprintf("Property '%s' has invalid type, expected %s", $name, $type);
-
-                continue;
+                throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
             }
 
             // Handle nested objects and arrays
             if ('object' === $type && null !== $propClassName) {
                 if (! is_array($value)) {
-                    $errors[] = sprintf("Property '%s' must be an object", $name);
-
-                    continue;
+                    throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
                 }
 
-                try {
-                    $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
-                } catch (SchemaValidationException $e) {
-                    foreach ($e->getErrors() as $error) {
-                        $errors[] = sprintf('%s.%s', $name, $error);
-                    }
-                }
+                $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
             } elseif ('array' === $type && null !== $items) {
                 $itemType = $items['type'] ?? null;
                 $itemClassName = $items['className'] ?? null;
 
                 if (! is_array($value)) {
-                    $errors[] = sprintf("Property '%s' must be an array", $name);
-
-                    continue;
+                    throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
                 }
 
                 $transformedArray = [];
 
                 /** @var array<int, mixed> $value */
-                foreach ($value as $i => $item) {
+                foreach ($value as $item) {
                     if ('object' === $itemType && null !== $itemClassName) {
-                        try {
-                            $transformedItem = $this->validateAndTransform($item, $itemClassName);
-                            $transformedArray[] = $transformedItem;
-                        } catch (SchemaValidationException $e) {
-                            // On any error in nested validation, fail the entire array
-                            foreach ($e->getErrors() as $error) {
-                                $errors[] = sprintf('%s[%s].%s', $name, $i, $error);
-                            }
-
-                            // Skip adding to transformedArray to prevent partial population
-                            continue;
-                        }
+                        $transformedItem = $this->validateAndTransform($item, $itemClassName);
+                        $transformedArray[] = $transformedItem;
                     } else {
                         if (! $this->validateType($item, $itemType)) {
-                            $errors[] = sprintf("Item %s in array '%s' has invalid type, expected %s", $i, $name, $itemType);
-
-                            // Skip adding to transformedArray to prevent partial population
-                            continue;
+                            throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $itemType]);
                         }
                         $transformedArray[] = $item;
                     }
@@ -188,10 +163,6 @@ final class SchemaValidator
                 }
                 $transformedData[$name] = $this->transformValue($value, $type, $format);
             }
-        }
-
-        if ([] !== $errors) {
-            throw new SchemaValidationException($errors);
         }
 
         // Create data class instance using reflection
@@ -261,7 +232,7 @@ final class SchemaValidator
      * @param array<string, mixed> $data
      * @param class-string<T>      $className
      *
-     * @throws SchemaValidationException
+     * @throws SerializationException
      * @throws ReflectionException
      *
      * @return T
@@ -295,10 +266,6 @@ final class SchemaValidator
         foreach ($data as $name => $value) {
             if ($reflection->hasProperty($name)) {
                 $property = $reflection->getProperty($name);
-
-                // if (! $property->isPublic()) {
-                //     $property->setAccessible(true);
-                // }
 
                 $property->setValue($instance, $value);
             }
@@ -403,13 +370,12 @@ final class SchemaValidator
      * @param CollectionSchemaInterface $schema    Collection schema
      * @param class-string<T>           $className
      *
-     * @throws SchemaValidationException If validation fails
+     * @throws SerializationException If validation fails
      *
      * @return T
      */
     private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema, string $className): object
     {
-        $errors = [];
         $transformedItems = [];
         $itemType = $schema->getItemType();
 
@@ -417,22 +383,12 @@ final class SchemaValidator
 
         // Check if collection requires items
         if ($schema->requiresItems() && [] === $data) {
-            throw new SchemaValidationException(['Collection requires at least one item']);
+            throw SerializationError::EmptyCollection->exception();
         }
 
         // Validate each item in the array
-        foreach ($data as $index => $item) {
-            try {
-                $transformedItems[] = $this->validateAndTransform($item, $itemType);
-            } catch (SchemaValidationException $e) {
-                foreach ($e->getErrors() as $error) {
-                    $errors[] = sprintf('[%d].%s', $index, $error);
-                }
-            }
-        }
-
-        if ([] !== $errors) {
-            throw new SchemaValidationException($errors);
+        foreach ($data as $item) {
+            $transformedItems[] = $this->validateAndTransform($item, $itemType);
         }
 
         return $this->createCollectionInstance($className, $transformedItems);

@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use DateTimeImmutable;
-use Exception;
-use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-
 use Override;
 
-use function is_array;
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
-final class CreateStoreResponse implements CreateStoreResponseInterface
+final class CreateStoreResponse extends Response implements CreateStoreResponseInterface
 {
     private static ?SchemaInterface $schema = null;
 
@@ -66,25 +63,25 @@ final class CreateStoreResponse implements CreateStoreResponseInterface
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): CreateStoreResponseInterface
-    {
-        $json = (string) $response->getBody();
+    public static function fromResponse(
+        ResponseInterface $response,
+        RequestInterface $request,
+        SchemaValidator $validator,
+    ): CreateStoreResponseInterface {
+        // Handle successful responses
+        if (201 === $response->getStatusCode()) {
+            $data = self::parseResponse($response, $request);
 
-        try {
-            $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-        } catch (Exception $exception) {
-            throw new ApiUnexpectedResponseException($exception->getMessage());
-        }
-
-        if (201 === $response->getStatusCode() && is_array($data)) {
             $validator->registerSchema(self::schema());
 
             return $validator->validateAndTransform($data, self::class);
         }
 
-        RequestManager::handleResponseException($response);
-
-        throw new ApiUnexpectedResponseException($json);
+        // Handle network errors
+        RequestManager::handleResponseException(
+            response: $response,
+            request: $request,
+        );
     }
 
     #[Override]

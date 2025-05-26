@@ -2,27 +2,29 @@
 
 An **Authorization Model** is the heart of your OpenFGA setup. Think of it as the **blueprint for your permission system**. It defines:
 
-*   **Who** (which types of users or entities) can have access.
-*   **What** (which types of objects or resources) they can access.
-*   **How** (through which relationships or actions) they can access them.
+- **Who** (which types of users or entities) can have access.
+- **What** (which types of objects or resources) they can access.
+- **How** (through which relationships or actions) they can access them.
 
-Essentially, the Authorization Model defines all the possible types of entities in your system and the relationships that can exist between them. It doesn't contain the actual data about *who specifically* has access to *what specifically* – that's the job of [Relationship Tuples](RelationshipTuples.md). The model just defines the rules and structure.
+Essentially, the Authorization Model defines all the possible types of entities in your system and the relationships that can exist between them. It doesn't contain the actual data about _who specifically_ has access to _what specifically_ – that's the job of [Relationship Tuples](RelationshipTuples.md). The model just defines the rules and structure.
 
 ## Core Components of an Authorization Model
 
-1.  **Type Definitions:** These declare the kinds of objects or entities involved in your authorization decisions.
-    *   Examples: `user`, `document`, `folder`, `organization`, `team`.
-    *   Each type can have `relations` and (less commonly) `metadata`.
+1. **Type Definitions:** These declare the kinds of objects or entities involved in your authorization decisions.
 
-2.  **Relations:** These define how different types can be related to each other, or how instances of the same type can be related. Relations are the verbs of your authorization system.
-    *   Examples: A `user` can be an `owner` of a `document`. A `folder` can have a `parent_folder` which is also a `folder`. A `user` can be a `member` of a `team`.
-    *   Relations can be:
-        *   **Direct:** Assignable directly to an object or a userset (e.g., `owner: [user]`).
-        *   **Computed:** Defined by other relations (e.g., `viewer: editor` means anyone who is an `editor` is also a `viewer`).
-        *   **Unions:** Combining multiple rules (e.g., `viewer: editor or direct_viewer_relation`).
-        *   **Intersections & Exclusions:** More advanced ways to combine relations (less common for initial models).
+   - Examples: `user`, `document`, `folder`, `organization`, `team`.
+   - Each type can have `relations` and (less commonly) `metadata`.
 
-3.  **Conditions (Optional):** These are advanced rules, written in CEL (Common Expression Language), that can gate relationships based on contextual data (e.g., IP address, time of day, attributes of the user or object). Conditions add an extra layer of dynamic control. We won't focus heavily on them in this guide, but it's good to know they exist for more complex scenarios.
+2. **Relations:** These define how different types can be related to each other, or how instances of the same type can be related. Relations are the verbs of your authorization system.
+
+   - Examples: A `user` can be an `owner` of a `document`. A `folder` can have a `parent_folder` which is also a `folder`. A `user` can be a `member` of a `team`.
+   - Relations can be:
+     - **Direct:** Assignable directly to an object or a userset (e.g., `owner: [user]`).
+     - **Computed:** Defined by other relations (e.g., `viewer: editor` means anyone who is an `editor` is also a `viewer`).
+     - **Unions:** Combining multiple rules (e.g., `viewer: editor or direct_viewer_relation`).
+     - **Intersections & Exclusions:** More advanced ways to combine relations (less common for initial models).
+
+3. **Conditions (Optional):** These are advanced rules, written in CEL (Common Expression Language), that can gate relationships based on contextual data (e.g., IP address, time of day, attributes of the user or object). Conditions add an extra layer of dynamic control. We won't focus heavily on them in this guide, but it's good to know they exist for more complex scenarios.
 
 ## The OpenFGA DSL (Domain Specific Language)
 
@@ -65,22 +67,22 @@ type document
 
 **Key DSL Concepts Illustrated:**
 
-*   `model schema 1.1`: Specifies the version of the OpenFGA language. `1.1` is a common modern version.
-*   `type <name>`: Declares a new type (e.g., `user`, `document`).
-*   `relations`: A block within a type definition that lists its possible relationships.
-*   `define <relation_name>: [<assignable_type>]`: Defines a direct relationship. An object of type `<assignable_type>` can be directly assigned this relation.
-*   `define <relation_name>: <another_relation>`: Defines a computed relationship. Users who have `<another_relation>` automatically gain `<relation_name>`.
-*   `define <relation_name>: [<assignable_type>] or <another_relation>`: A union. The relation can be satisfied either by direct assignment of `<assignable_type>` OR by having `<another_relation>`.
-*   Tuples-to-Usersets (e.g., `define X: Y from Z`): A more advanced concept where relation `Y` on an object `Z` (which itself is related to the current object) grants relation `X`. This is useful for hierarchical permissions (e.g., permissions inherited from a parent folder). Our simple example doesn't use this, but you'll see it in more complex models.
+- `model schema 1.1`: Specifies the version of the OpenFGA language. `1.1` is a common modern version.
+- `type <name>`: Declares a new type (e.g., `user`, `document`).
+- `relations`: A block within a type definition that lists its possible relationships.
+- `define <relation_name>: [<assignable_type>]`: Defines a direct relationship. An object of type `<assignable_type>` can be directly assigned this relation.
+- `define <relation_name>: <another_relation>`: Defines a computed relationship. Users who have `<another_relation>` automatically gain `<relation_name>`.
+- `define <relation_name>: [<assignable_type>] or <another_relation>`: A union. The relation can be satisfied either by direct assignment of `<assignable_type>` OR by having `<another_relation>`.
+- Tuples-to-Usersets (e.g., `define X: Y from Z`): A more advanced concept where relation `Y` on an object `Z` (which itself is related to the current object) grants relation `X`. This is useful for hierarchical permissions (e.g., permissions inherited from a parent folder). Our simple example doesn't use this, but you'll see it in more complex models.
 
 ## Prerequisites
 
 These examples assume:
 
-1.  You have initialized the SDK client as `$client`.
-2.  You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
-3.  Refer to [Getting Started](GettingStarted.md) for client initialization and [Stores](Stores.md) for creating/managing stores and getting a `$storeId`.
-4.  The variable `$modelId` in later examples refers to the unique identifier of an authorization model after it has been created on the server.
+1. You have initialized the SDK client as `$client`.
+2. You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
+3. Refer to [Getting Started](GettingStarted.md) for client initialization and [Stores](Stores.md) for creating/managing stores and getting a `$storeId`.
+4. The variable `$modelId` in later examples refers to the unique identifier of an authorization model after it has been created on the server.
 
 For robust error handling beyond the `unwrap()` helper shown, please see our guide on [Results and Error Handling](Results.md).
 
@@ -108,10 +110,10 @@ use OpenFGA\Responses\ListAuthorizationModelsResponseInterface;
 
 Working with authorization models generally follows these steps:
 
-1.  **Write your model in DSL:** Define your types and relations.
-2.  **Transform DSL to an `AuthorizationModel` object (Client-Side):** Use `Client::dsl()` to parse your DSL string into an object the SDK can work with. This is a local operation.
-3.  **Create the Authorization Model on the Server:** Use `Client::createAuthorizationModel()` to send the transformed model (specifically its `typeDefinitions` and `conditions`) to your OpenFGA server, saving it within your selected store. This returns a `$modelId`.
-4.  **Use the `$modelId`:** For most subsequent operations (writing tuples, checks, listing objects), you'll need this `$modelId`. You can set it on the client for convenience using `Client::setModel($modelId)`.
+1. **Write your model in DSL:** Define your types and relations.
+2. **Transform DSL to an `AuthorizationModel` object (Client-Side):** Use `Client::dsl()` to parse your DSL string into an object the SDK can work with. This is a local operation.
+3. **Create the Authorization Model on the Server:** Use `Client::createAuthorizationModel()` to send the transformed model (specifically its `typeDefinitions` and `conditions`) to your OpenFGA server, saving it within your selected store. This returns a `$modelId`.
+4. **Use the `$modelId`:** For most subsequent operations (writing tuples, checks, listing objects), you'll need this `$modelId`. You can set it on the client for convenience using `Client::setModel($modelId)`.
 
 ## 1. Transforming DSL to an `AuthorizationModel` Object (Client-Side)
 
@@ -150,6 +152,7 @@ try {
 }
 ?>
 ```
+
 This step is purely client-side; no request is made to the OpenFGA server yet.
 
 ## 2. Creating an Authorization Model (Server-Side)
@@ -280,11 +283,11 @@ if (empty($modelId)) {
 
 Once your Authorization Model is defined, created on the server, and its ID is set on the client, you're ready to define who has access to what. This is done by:
 
-*   **[Writing Relationship Tuples](RelationshipTuples.md):** These are the data that link specific users to specific relations on specific objects (e.g., "user:anne is an editor of document:budget").
+- **[Writing Relationship Tuples](RelationshipTuples.md):** These are the data that link specific users to specific relations on specific objects (e.g., "user:anne is an editor of document:budget").
 
 After you have some tuples, you can:
 
-*   **[Perform Queries](Queries.md):** Ask questions like "Can user:anne view document:budget?" (`check()`) or "What documents can user:anne view?" (`listObjects()`).
-*   **[Write Assertions](Assertions.md):** Test your model to ensure it behaves as expected under various scenarios.
+- **[Perform Queries](Queries.md):** Ask questions like "Can user:anne view document:budget?" (`check()`) or "What documents can user:anne view?" (`listObjects()`).
+- **[Write Assertions](Assertions.md):** Test your model to ensure it behaves as expected under various scenarios.
 
 A well-defined Authorization Model is the foundation for all authorization decisions in OpenFGA.

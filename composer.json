@@ -23,7 +23,8 @@
     "psr-discovery/all": "^1",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
-    "psr/http-message-implementation": "^1"
+    "psr/http-message-implementation": "^1",
+    "symfony/translation": "^7.2"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2",

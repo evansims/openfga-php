@@ -8,17 +8,19 @@ The fundamental structure of a tuple is:
 
 Let's break down each component:
 
-*   **`user`**: This identifies who or what is being granted the relationship. It can be:
-    *   A specific user ID: e.g., `user:anne`, `employee:bob@company.com`. The `user:` part is a type, and `anne` is the ID.
-    *   A userset (a group defined by a type and relation): e.g., `group:admins#member`. This means any user who has the `member` relation to the `group:admins` object.
-    *   Another object type (for object-to-object relationships): e.g., `document:budget` (if, for example, a `folder` can grant permissions to documents it contains).
-    *   The wildcard `*` (for public access): e.g., `user:*` means any user.
+- **`user`**: This identifies who or what is being granted the relationship. It can be:
 
-*   **`relation`**: This is the specific relationship being granted. It must be a relation defined in your active Authorization Model for the given object type.
-    *   Examples: `viewer`, `editor`, `owner`, `can_share`, `member`.
+  - A specific user ID: e.g., `user:anne`, `employee:bob@company.com`. The `user:` part is a type, and `anne` is the ID.
+  - A userset (a group defined by a type and relation): e.g., `group:admins#member`. This means any user who has the `member` relation to the `group:admins` object.
+  - Another object type (for object-to-object relationships): e.g., `document:budget` (if, for example, a `folder` can grant permissions to documents it contains).
+  - The wildcard `*` (for public access): e.g., `user:*` means any user.
 
-*   **`object`**: This identifies the specific resource to which the relationship applies.
-    *   Examples: `document:roadmap`, `folder:budgets`, `report:2023-annual`. The `document:` part is a type, and `roadmap` is the ID.
+- **`relation`**: This is the specific relationship being granted. It must be a relation defined in your active Authorization Model for the given object type.
+
+  - Examples: `viewer`, `editor`, `owner`, `can_share`, `member`.
+
+- **`object`**: This identifies the specific resource to which the relationship applies.
+  - Examples: `document:roadmap`, `folder:budgets`, `report:2023-annual`. The `document:` part is a type, and `roadmap` is the ID.
 
 For example, the tuple `(user:anne, viewer, document:roadmap)` means "User Anne is a viewer of the document Roadmap."
 
@@ -28,10 +30,10 @@ This guide demonstrates how to manage these tuples using the OpenFGA PHP SDK.
 
 These examples assume:
 
-1.  You have initialized the SDK client as `$client`.
-2.  You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
-3.  You have a `modelId` (Authorization Model ID) and have set it on the client: `$client->setModel($modelId);`.
-4.  Refer to [Getting Started](GettingStarted.md), [Stores](Stores.md), and [Understanding Authorization Models](AuthorizationModels.md) for these initial setup steps.
+1. You have initialized the SDK client as `$client`.
+2. You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
+3. You have a `modelId` (Authorization Model ID) and have set it on the client: `$client->setModel($modelId);`.
+4. Refer to [Getting Started](GettingStarted.md), [Stores](Stores.md), and [Understanding Authorization Models](AuthorizationModels.md) for these initial setup steps.
 
 For robust error handling beyond the `unwrap()` helper shown in these examples, please see our guide on [Results and Error Handling](Results.md). All client methods return `Result` objects.
 
@@ -63,12 +65,12 @@ use OpenFGA\Responses\ListTupleChangesResponseInterface;
 
 In the PHP SDK, a single relationship tuple is represented by an `OpenFGA\Models\TupleKey` object. It has the following main properties:
 
-*   `user`: (string) The user or userset (e.g., `user:anne`, `group:admins#member`).
-*   `relation`: (string) The relation (e.g., `viewer`).
-*   `object`: (string) The object (e.g., `document:roadmap`).
-*   `condition` (optional `OpenFGA\Models\RelationshipCondition`): For advanced scenarios where the tuple is only valid if a named condition (defined in the Authorization Model) evaluates to true, given some context.
-    *   `name`: (string) The name of the condition as defined in the model.
-    *   `context`: (array|object, optional) A key-value map providing contextual information for the condition evaluation.
+- `user`: (string) The user or userset (e.g., `user:anne`, `group:admins#member`).
+- `relation`: (string) The relation (e.g., `viewer`).
+- `object`: (string) The object (e.g., `document:roadmap`).
+- `condition` (optional `OpenFGA\Models\RelationshipCondition`): For advanced scenarios where the tuple is only valid if a named condition (defined in the Authorization Model) evaluates to true, given some context.
+  - `name`: (string) The name of the condition as defined in the model.
+  - `context`: (array|object, optional) A key-value map providing contextual information for the condition evaluation.
 
 We will focus on non-conditional tuples in these examples.
 
@@ -78,14 +80,14 @@ The `writeTuples()` method allows you to add (write) and remove (delete) relatio
 
 **Key Features:**
 
-*   **Transactional:** All writes and deletes within a single `writeTuples()` call are processed as a single transaction. Either all changes apply, or none do.
-*   **Batch Operations:** You can write and delete multiple tuples in one call.
+- **Transactional:** All writes and deletes within a single `writeTuples()` call are processed as a single transaction. Either all changes apply, or none do.
+- **Batch Operations:** You can write and delete multiple tuples in one call.
 
 **Parameters:**
 
-*   `writes` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to be created.
-*   `deletes` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to be removed.
-*   `authorization_model_id` (optional string): If you haven't set the model ID on the client using `$client->setModel()`, or if you need to override it for this specific call, you can provide it here.
+- `writes` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to be created.
+- `deletes` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to be removed.
+- `authorization_model_id` (optional string): If you haven't set the model ID on the client using `$client->setModel()`, or if you need to override it for this specific call, you can provide it here.
 
 ```php
 <?php
@@ -137,20 +139,20 @@ The `readTuples()` method retrieves relationship tuples that match a specified f
 
 **Parameters:**
 
-*   `tupleKey` (optional `OpenFGA\Models\TupleKey`): A `TupleKey` object used as a filter.
-    *   If all parts (`user`, `relation`, `object`) are provided, it fetches that specific tuple (if it exists).
-    *   If only `object` is provided, it fetches all tuples for that object.
-    *   If only `user` is provided, it fetches all tuples for that user.
-    *   If only `user` and `relation` are provided, it fetches all objects for that user with that relation.
-    *   And so on for other combinations.
-    *   If `tupleKey` is `null` or empty, it reads all tuples in the store (use with caution on large stores, pagination is recommended).
-*   `pageSize` (optional int): The maximum number of tuples to return in a single response. Used for pagination.
-*   `continuationToken` (optional string): A token received from a previous `readTuples` response, used to fetch the next page of results.
-*   `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies the consistency level for the read operation.
-    *   `Consistency::NONE` (Default): Offers the lowest latency. Reads may not reflect the absolute latest writes due to replication delays. Generally suitable for most cases.
-    *   `Consistency::SNAPSHOT`: Reads from a consistent snapshot of the data. This ensures that all results are from the same point in time, but that point might be slightly delayed from the absolute latest writes.
-    *   `Consistency::STRICT`: Ensures that reads reflect all committed writes up to the point the read was initiated. This offers the highest consistency but may incur higher latency.
-    *   For detailed explanations of consistency levels, refer to the [official OpenFGA documentation on Read Consistency](https://openfga.dev/docs/reference/consistency).
+- `tupleKey` (optional `OpenFGA\Models\TupleKey`): A `TupleKey` object used as a filter.
+  - If all parts (`user`, `relation`, `object`) are provided, it fetches that specific tuple (if it exists).
+  - If only `object` is provided, it fetches all tuples for that object.
+  - If only `user` is provided, it fetches all tuples for that user.
+  - If only `user` and `relation` are provided, it fetches all objects for that user with that relation.
+  - And so on for other combinations.
+  - If `tupleKey` is `null` or empty, it reads all tuples in the store (use with caution on large stores, pagination is recommended).
+- `pageSize` (optional int): The maximum number of tuples to return in a single response. Used for pagination.
+- `continuationToken` (optional string): A token received from a previous `readTuples` response, used to fetch the next page of results.
+- `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies the consistency level for the read operation.
+  - `Consistency::NONE` (Default): Offers the lowest latency. Reads may not reflect the absolute latest writes due to replication delays. Generally suitable for most cases.
+  - `Consistency::SNAPSHOT`: Reads from a consistent snapshot of the data. This ensures that all results are from the same point in time, but that point might be slightly delayed from the absolute latest writes.
+  - `Consistency::STRICT`: Ensures that reads reflect all committed writes up to the point the read was initiated. This offers the highest consistency but may incur higher latency.
+  - For detailed explanations of consistency levels, refer to the [official OpenFGA documentation on Read Consistency](https://openfga.dev/docs/reference/consistency).
 
 ```php
 <?php
@@ -218,10 +220,10 @@ It returns a list of changes, where each change indicates whether a tuple was wr
 
 **Parameters:**
 
-*   `type` (required string): The object type you want to see changes for (e.g., `document`, `folder`). You cannot leave this empty.
-*   `pageSize` (optional int): The maximum number of changes to return in a single response.
-*   `continuationToken` (optional string): A token from a previous `listTupleChanges` response to fetch the next page.
-*   `startTime` (optional `DateTimeInterface`): If provided, only returns changes that occurred at or after this specific point in time. Useful for fetching changes since your last check.
+- `type` (required string): The object type you want to see changes for (e.g., `document`, `folder`). You cannot leave this empty.
+- `pageSize` (optional int): The maximum number of changes to return in a single response.
+- `continuationToken` (optional string): A token from a previous `listTupleChanges` response to fetch the next page.
+- `startTime` (optional `DateTimeInterface`): If provided, only returns changes that occurred at or after this specific point in time. Useful for fetching changes since your last check.
 
 ```php
 <?php
@@ -264,6 +266,5 @@ try {
 
 Now that you know how to manage relationship data by writing, reading, and listing changes to tuples, you can:
 
-*   **[Perform Relationship Queries (Queries.md)](Queries.md):** Use methods like `check()`, `listObjects()`, and `listUsers()` to determine effective permissions based on your model and tuple data.
-*   **[Write Assertions (Assertions.md)](Assertions.md):** Test your authorization model and data to ensure they behave as expected.
-```
+- **[Perform Relationship Queries (Queries.md)](Queries.md):** Use methods like `check()`, `listObjects()`, and `listUsers()` to determine effective permissions based on your model and tuple data.
+- **[Write Assertions (Assertions.md)](Assertions.md):** Test your authorization model and data to ensure they behave as expected.

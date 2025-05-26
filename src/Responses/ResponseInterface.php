@@ -10,5 +10,9 @@ use ReturnTypeWillChange;
 interface ResponseInterface
 {
     #[ReturnTypeWillChange]
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): self;
+    public static function fromResponse(
+        \Psr\Http\Message\ResponseInterface $response,
+        \Psr\Http\Message\RequestInterface $request,
+        SchemaValidator $validator,
+    ): self;
 }

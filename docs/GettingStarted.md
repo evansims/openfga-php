@@ -8,15 +8,15 @@ Our goal is to get you up and running as quickly as possible.
 
 Before you begin, ensure you have the following:
 
-*   **PHP:** Version 8.3 or higher.
-*   **Composer:** For managing PHP dependencies.
-*   **OpenFGA Instance:**
-    *   For local development, an OpenFGA server instance. [Docker](https://openfga.dev/docs/getting-started/setup-openfga/docker) is recommended.
-    *   Alternatively, an [Auth0 FGA](https://auth0.com/fine-grained-authorization) account (managed service).
-*   **PSR Implementations:** Your project must include implementations for:
-    *   [PSR-7 (HTTP Message Interfaces)](https://packagist.org/providers/psr/http-message-implementation)
-    *   [PSR-17 (HTTP Factory Interfaces)](https://packagist.org/providers/psr/http-factory-implementation)
-    *   [PSR-18 (HTTP Client Interfaces)](https://packagist.org/providers/psr/http-client-implementation)
+- **PHP:** Version 8.3 or higher.
+- **Composer:** For managing PHP dependencies.
+- **OpenFGA Instance:**
+  - For local development, an OpenFGA server instance. [Docker](https://openfga.dev/docs/getting-started/setup-openfga/docker) is recommended.
+  - Alternatively, an [Auth0 FGA](https://auth0.com/fine-grained-authorization) account (managed service).
+- **PSR Implementations:** Your project must include implementations for:
+  - [PSR-7 (HTTP Message Interfaces)](https://packagist.org/providers/psr/http-message-implementation)
+  - [PSR-17 (HTTP Factory Interfaces)](https://packagist.org/providers/psr/http-factory-implementation)
+  - [PSR-18 (HTTP Client Interfaces)](https://packagist.org/providers/psr/http-client-implementation)
     (Refer to the main [README.md requirements section](../../README.md#requirements) for more details and installation examples, e.g., using Guzzle.)
 
 ## 1. Setting up OpenFGA
@@ -34,6 +34,7 @@ docker pull openfga/openfga
 # Run the OpenFGA server
 docker run -d -p 8080:8080 --name openfga openfga/openfga run
 ```
+
 This will start an OpenFGA server accessible at `http://localhost:8080`.
 
 **For Auth0 FGA (Managed Service):**
@@ -49,6 +50,7 @@ composer require evansims/openfga-php
 ```
 
 Remember to also install your chosen PSR-7, PSR-17, and PSR-18 implementations if they are not already part of your project. For example, if you want to use Guzzle:
+
 ```bash
 composer require guzzlehttp/guzzle guzzlehttp/psr7
 ```
@@ -89,24 +91,28 @@ Ensure your `FGA_API_URL` environment variable is set correctly, or directly rep
 
 With the client initialized, the typical workflow in OpenFGA involves these steps:
 
-1.  **Create a Store:** Stores are containers that isolate your authorization models and relationship data. This is often a one-time setup per application or tenant.
-    *   [Learn more about Stores](Stores.md)
+1. **Create a Store:** Stores are containers that isolate your authorization models and relationship data. This is often a one-time setup per application or tenant.
 
-2.  **Define an Authorization Model:** Within a store, you'll define an authorization model using the OpenFGA DSL. This model specifies your object types (e.g., `document`, `folder`), the relationships they can have (e.g., `viewer`, `editor`), and how these relationships grant permissions.
-    *   [Learn more about Authorization Models](AuthorizationModels.md)
+   - [Learn more about Stores](Stores.md)
 
-3.  **Write Relationship Tuples:** Tuples are statements that define specific relationships between users (or other subjects) and objects. For example: "`user:anne` is a `viewer` of `document:roadmap`".
-    *   [Learn more about Relationship Tuples](RelationshipTuples.md)
+2. **Define an Authorization Model:** Within a store, you'll define an authorization model using the OpenFGA DSL. This model specifies your object types (e.g., `document`, `folder`), the relationships they can have (e.g., `viewer`, `editor`), and how these relationships grant permissions.
 
-4.  **Perform Queries:** Once your model and tuples are in place, you can ask OpenFGA questions:
-    *   `check()`: "Does user X have Y permission on object Z?"
-    *   `listObjects()`: "What objects can user X access with Y permission?"
-    *   `listUsers()`: "Which users have Y permission on object Z?"
-    *   `expand()`: "How (via which relationships) does user X have Y permission on object Z?"
-    *   [Learn more about Queries](Queries.md)
+   - [Learn more about Authorization Models](AuthorizationModels.md)
 
-5.  **(Optional) Test with Assertions:** You can write assertions to test your authorization model and ensure it behaves as expected.
-    *   [Learn more about Assertions](Assertions.md)
+3. **Write Relationship Tuples:** Tuples are statements that define specific relationships between users (or other subjects) and objects. For example: "`user:anne` is a `viewer` of `document:roadmap`".
+
+   - [Learn more about Relationship Tuples](RelationshipTuples.md)
+
+4. **Perform Queries:** Once your model and tuples are in place, you can ask OpenFGA questions:
+
+   - `check()`: "Does user X have Y permission on object Z?"
+   - `listObjects()`: "What objects can user X access with Y permission?"
+   - `listUsers()`: "Which users have Y permission on object Z?"
+   - `expand()`: "How (via which relationships) does user X have Y permission on object Z?"
+   - [Learn more about Queries](Queries.md)
+
+5. **(Optional) Test with Assertions:** You can write assertions to test your authorization model and ensure it behaves as expected.
+   - [Learn more about Assertions](Assertions.md)
 
 ## 5. Your First End-to-End Check
 
@@ -132,7 +138,7 @@ try {
     $storeName = 'my_first_fga_store_' . bin2hex(random_bytes(3));
     $store = unwrap($client->createStore(name: $storeName));
     echo "Store '{$store->getName()}' created with ID: {$store->getId()}\n";
-    
+
     // Configure the client to use this store for subsequent calls
     $client->setStore($store->getId());
 
@@ -184,6 +190,7 @@ try {
 ```
 
 To run this:
+
 1. Save it as a PHP file (e.g., `test_fga.php`) in your project root (or adjust paths).
 2. Ensure your OpenFGA server is running (see Step 1).
 3. Execute it from your terminal: `php test_fga.php`.
@@ -194,12 +201,12 @@ You should see output indicating the successful creation of the store, model, tu
 
 Now that you have a basic understanding of the SDK and have performed your first check, you can dive deeper into specific areas:
 
-*   **[Stores (`Stores.md`)](Stores.md):** Learn more about managing multiple stores.
-*   **[Authorization Models (`AuthorizationModels.md`)](AuthorizationModels.md):** Explore the details of the DSL and model management.
-*   **[Relationship Tuples (`RelationshipTuples.md`)](RelationshipTuples.md):** Understand how to read, write, and delete tuples at scale.
-*   **[Queries (`Queries.md`)](Queries.md):** Master the different types of authorization queries.
-*   **[Assertions (`Assertions.md`)](Assertions.md):** Learn how to test your authorization models effectively.
-*   **[Authentication (`Authentication.md`)](Authentication.md):** Secure your connection to the OpenFGA server.
-*   **[Results & Error Handling (`Results.md`)](Results.md):** Implement robust error handling for production applications.
+- **[Stores (`Stores.md`)](Stores.md):** Learn more about managing multiple stores.
+- **[Authorization Models (`AuthorizationModels.md`)](AuthorizationModels.md):** Explore the details of the DSL and model management.
+- **[Relationship Tuples (`RelationshipTuples.md`)](RelationshipTuples.md):** Understand how to read, write, and delete tuples at scale.
+- **[Queries (`Queries.md`)](Queries.md):** Master the different types of authorization queries.
+- **[Assertions (`Assertions.md`)](Assertions.md):** Learn how to test your authorization models effectively.
+- **[Authentication (`Authentication.md`)](Authentication.md):** Secure your connection to the OpenFGA server.
+- **[Results & Error Handling (`Results.md`)](Results.md):** Implement robust error handling for production applications.
 
 Refer to the main [README.md](../../README.md) for a general overview and other information. Happy coding!

@@ -4,9 +4,9 @@ In OpenFGA, a **Store** is a fundamental concept. Think of it as a top-level con
 
 **Why are Stores important?**
 
-*   **Isolation:** They allow you to segregate authorization systems for different applications, services, or tenants. For example, you might have separate stores for `MyApp_Development`, `MyApp_Staging`, and `MyApp_Production`.
-*   **Organization:** They help keep your authorization configurations clean and manageable, especially as your system grows.
-*   **Multi-tenancy:** If you're building a multi-tenant application, you could potentially use a store per tenant to keep their authorization rules and data completely separate.
+- **Isolation:** They allow you to segregate authorization systems for different applications, services, or tenants. For example, you might have separate stores for `MyApp_Development`, `MyApp_Staging`, and `MyApp_Production`.
+- **Organization:** They help keep your authorization configurations clean and manageable, especially as your system grows.
+- **Multi-tenancy:** If you're building a multi-tenant application, you could potentially use a store per tenant to keep their authorization rules and data completely separate.
 
 This guide will show you how to manage Stores using the OpenFGA PHP SDK.
 
@@ -14,9 +14,9 @@ This guide will show you how to manage Stores using the OpenFGA PHP SDK.
 
 These examples assume:
 
-1.  You have initialized the SDK client as `$client`. If not, please refer to the [Getting Started guide](GettingStarted.md).
-2.  You have included necessary `use` statements for response types and helper functions.
-3.  The variable `$storeId` in the examples refers to the unique identifier of an OpenFGA store. You'll typically get this ID when you create a store or list existing ones.
+1. You have initialized the SDK client as `$client`. If not, please refer to the [Getting Started guide](GettingStarted.md).
+2. You have included necessary `use` statements for response types and helper functions.
+3. The variable `$storeId` in the examples refers to the unique identifier of an OpenFGA store. You'll typically get this ID when you create a store or list existing ones.
 
 For robust error handling beyond the `unwrap()` helper shown in these examples, please see our guide on [Results and Error Handling](Results.md). All client methods return `Result` objects that can be `Success` or `Failure`.
 
@@ -29,7 +29,7 @@ require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 use OpenFGA\Client;
 use OpenFGA\Results\unwrap; // For concise example code
 // For more detailed error handling, you might use:
-// use function OpenFGA\Results\{fold, success, failure}; 
+// use function OpenFGA\Results\{fold, success, failure};
 use OpenFGA\Responses\CreateStoreResponseInterface;
 use OpenFGA\Responses\GetStoreResponseInterface;
 use OpenFGA\Responses\ListStoresResponseInterface;
@@ -180,16 +180,17 @@ if (empty($storeId)) {
 }
 ?>
 ```
+
 If you don't set a store ID on the client, you'll need to pass the `store` parameter in every relevant SDK method call. Setting it on the client simplifies your code if you're working primarily with one store at a time.
 
 ## Next Steps
 
 With a Store created and selected, your next logical step is to define the rules of your authorization system within that Store. This is done by creating an **Authorization Model**.
 
-*   **[Define an Authorization Model](AuthorizationModels.md)**
+- **[Define an Authorization Model](AuthorizationModels.md)**
 
 You can also explore other topics:
-*   [Managing Relationship Tuples](RelationshipTuples.md)
-*   [Performing Queries (Checks, ListObjects, etc.)](Queries.md)
-*   [Testing with Assertions](Assertions.md)
-```
+
+- [Managing Relationship Tuples](RelationshipTuples.md)
+- [Performing Queries (Checks, ListObjects, etc.)](Queries.md)
+- [Testing with Assertions](Assertions.md)

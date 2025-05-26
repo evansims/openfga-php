@@ -4,19 +4,19 @@ Once you have an [Authorization Model](AuthorizationModels.md) in place and have
 
 This guide will walk you through the main types of queries:
 
-*   **`check()`**: Answers: "Does user X have permission Y on object Z?"
-*   **`expand()`**: Answers: "How does user X have permission Y on object Z?" (by showing the relationship tree).
-*   **`listUsers()`**: Answers: "Which users have permission Y on object Z?"
-*   **`listObjects()`**: Answers: "What objects of type T can user X access with permission Y?"
+- **`check()`**: Answers: "Does user X have permission Y on object Z?"
+- **`expand()`**: Answers: "How does user X have permission Y on object Z?" (by showing the relationship tree).
+- **`listUsers()`**: Answers: "Which users have permission Y on object Z?"
+- **`listObjects()`**: Answers: "What objects of type T can user X access with permission Y?"
 
 ## Prerequisites
 
 These examples assume:
 
-1.  You have initialized the SDK client as `$client`.
-2.  You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
-3.  You have a `modelId` (Authorization Model ID) and have set it on the client: `$client->setModel($modelId);`.
-4.  Refer to [Getting Started](GettingStarted.md), [Stores](Stores.md), and [Understanding Authorization Models](AuthorizationModels.md) for these initial setup steps.
+1. You have initialized the SDK client as `$client`.
+2. You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
+3. You have a `modelId` (Authorization Model ID) and have set it on the client: `$client->setModel($modelId);`.
+4. Refer to [Getting Started](GettingStarted.md), [Stores](Stores.md), and [Understanding Authorization Models](AuthorizationModels.md) for these initial setup steps.
 
 For robust error handling beyond the `unwrap()` helper shown in these examples, please see our guide on [Results and Error Handling](Results.md). All client methods return `Result` objects.
 
@@ -54,18 +54,19 @@ use OpenFGA\Models\UsersetTree; // For Expand response
 The `check()` method is the most fundamental query. It returns a simple boolean answer: `true` if the permission is granted, `false` otherwise.
 
 **Use Cases:**
-*   Enforcing access control in your application (e.g., "Can the current user view this page?").
-*   Verifying if a specific user has a particular role or capability on a resource.
+
+- Enforcing access control in your application (e.g., "Can the current user view this page?").
+- Verifying if a specific user has a particular role or capability on a resource.
 
 **Parameters:**
 
-*   `tupleKey` (required `OpenFGA\Models\TupleKey`): A `TupleKey` object specifying:
-    *   `user` (string): The user or userset (e.g., `user:anne`, `group:editors#member`). **Required.**
-    *   `relation` (string): The permission/relation to check (e.g., `viewer`, `can_edit`). **Required.**
-    *   `object` (string): The specific object (e.g., `document:roadmap`, `folder:secrets`). **Required.**
-*   `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to consider only for this specific check, without permanently writing them. See [Contextual Tuples](#contextual-tuples-what-if-scenarios) below.
-*   `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency. Defaults to `Consistency::NONE`. See [Relationship Tuples `consistency` explanation](RelationshipTuples.md#reading-tuples-clientreadtuples) for details.
-*   `authorization_model_id` (optional string): Overrides the model ID set on the client for this specific call.
+- `tupleKey` (required `OpenFGA\Models\TupleKey`): A `TupleKey` object specifying:
+  - `user` (string): The user or userset (e.g., `user:anne`, `group:editors#member`). **Required.**
+  - `relation` (string): The permission/relation to check (e.g., `viewer`, `can_edit`). **Required.**
+  - `object` (string): The specific object (e.g., `document:roadmap`, `folder:secrets`). **Required.**
+- `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to consider only for this specific check, without permanently writing them. See [Contextual Tuples](#contextual-tuples-what-if-scenarios) below.
+- `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency. Defaults to `Consistency::NONE`. See [Relationship Tuples `consistency` explanation](RelationshipTuples.md#reading-tuples-clientreadtuples) for details.
+- `authorization_model_id` (optional string): Overrides the model ID set on the client for this specific call.
 
 **Example:**
 
@@ -95,6 +96,7 @@ try {
 }
 ?>
 ```
+
 **Response Interpretation:**
 The primary method on the `CheckResponseInterface` is `getIsAllowed()`, which returns a boolean.
 
@@ -105,18 +107,19 @@ The primary method on the `CheckResponseInterface` is `getIsAllowed()`, which re
 The `expand()` method returns a tree structure (`UsersetTree`) showing all the ways a specific `relation` on an `object` can be satisfied. It reveals the "why" behind a permission.
 
 **Use Cases:**
-*   Debugging permissions: Understanding why a user has (or doesn't have) a certain access.
-*   Displaying detailed access information to administrators.
-*   Auditing how permissions are derived.
+
+- Debugging permissions: Understanding why a user has (or doesn't have) a certain access.
+- Displaying detailed access information to administrators.
+- Auditing how permissions are derived.
 
 **Parameters:**
 
-*   `tupleKey` (required `OpenFGA\Models\TupleKey`): A `TupleKey` object specifying:
-    *   `relation` (string): The permission/relation to expand (e.g., `viewer`). **Required.**
-    *   `object` (string): The specific object (e.g., `document:roadmap`). **Required.**
-    *   `user` is NOT part of the `tupleKey` for `expand`. Expand shows all paths to the relation for the object.
-*   `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
-*   `authorization_model_id` (optional string): Overrides the client's model ID.
+- `tupleKey` (required `OpenFGA\Models\TupleKey`): A `TupleKey` object specifying:
+  - `relation` (string): The permission/relation to expand (e.g., `viewer`). **Required.**
+  - `object` (string): The specific object (e.g., `document:roadmap`). **Required.**
+  - `user` is NOT part of the `tupleKey` for `expand`. Expand shows all paths to the relation for the object.
+- `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
+- `authorization_model_id` (optional string): Overrides the client's model ID.
 
 **Example:**
 
@@ -151,6 +154,7 @@ try {
 }
 ?>
 ```
+
 **Response Interpretation:**
 The `ExpandResponseInterface::getTree()` method returns a `UsersetTree` object. This tree can be complex, representing direct assignments (`LeafNode`), unions (`UnionNode`), intersections (`IntersectionNode`), or computed relations (`DifferenceNode`). Each node shows how usersets (like `user:anne` or `group:editors#member`) contribute to the target relation.
 
@@ -161,18 +165,19 @@ The `ExpandResponseInterface::getTree()` method returns a `UsersetTree` object. 
 The `listUsers()` method returns a list of users (and usersets) that have a given `relation` to a specific `object`.
 
 **Use Cases:**
-*   Displaying a list of users who can access a resource.
-*   Administrative tasks, like managing who has a particular role.
+
+- Displaying a list of users who can access a resource.
+- Administrative tasks, like managing who has a particular role.
 
 **Parameters:**
 
-*   `object_type` (string): The type of the object (e.g., `document`). **Required.**
-*   `object_id` (string): The ID of the object (e.g., `roadmap`). **Required.**
-*   `relation` (string): The permission/relation to list users for (e.g., `viewer`). **Required.**
-*   `user_filters` (optional array of `OpenFGA\Models\UserFilter`): Filters the results to specific user types and relations (e.g., only return users of type `user`, or only users who are `member` of `group:engineering`). Each `UserFilter` has a `type` (e.g., `user`) and an optional `relation` (e.g., `member`).
-*   `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
-*   `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
-*   `authorization_model_id` (optional string): Overrides the client's model ID.
+- `object_type` (string): The type of the object (e.g., `document`). **Required.**
+- `object_id` (string): The ID of the object (e.g., `roadmap`). **Required.**
+- `relation` (string): The permission/relation to list users for (e.g., `viewer`). **Required.**
+- `user_filters` (optional array of `OpenFGA\Models\UserFilter`): Filters the results to specific user types and relations (e.g., only return users of type `user`, or only users who are `member` of `group:engineering`). Each `UserFilter` has a `type` (e.g., `user`) and an optional `relation` (e.g., `member`).
+- `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
+- `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
+- `authorization_model_id` (optional string): Overrides the client's model ID.
 
 **Example:**
 
@@ -210,6 +215,7 @@ try {
 }
 ?>
 ```
+
 **Response Interpretation:**
 The `ListUsersResponseInterface::getUsers()` method returns an array of `OpenFGA\Models\User` objects. Each `User` object can represent a direct user (`isUser()`, `getUserId()`), a userset (`isUserset()`, `getUsersetObject()`, `getUsersetRelation()`), or a wildcard (`isWildcard()`, `getUserType()`).
 
@@ -220,17 +226,18 @@ The `ListUsersResponseInterface::getUsers()` method returns an array of `OpenFGA
 The `listObjects()` method returns a list of object IDs of a specified `type` that a given `user` has a certain `relation` to.
 
 **Use Cases:**
-*   Displaying all documents a user can view.
-*   Filtering a list of resources based on the current user's permissions.
+
+- Displaying all documents a user can view.
+- Filtering a list of resources based on the current user's permissions.
 
 **Parameters:**
 
-*   `user` (string): The user or userset (e.g., `user:anne`, `group:editors#member`). **Required.**
-*   `relation` (string): The permission/relation to check for (e.g., `viewer`). **Required.**
-*   `type` (string): The type of objects to list (e.g., `document`, `folder`). **Required.**
-*   `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
-*   `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
-*   `authorization_model_id` (optional string): Overrides the client's model ID.
+- `user` (string): The user or userset (e.g., `user:anne`, `group:editors#member`). **Required.**
+- `relation` (string): The permission/relation to check for (e.g., `viewer`). **Required.**
+- `type` (string): The type of objects to list (e.g., `document`, `folder`). **Required.**
+- `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
+- `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
+- `authorization_model_id` (optional string): Overrides the client's model ID.
 
 **Example:**
 
@@ -260,21 +267,22 @@ try {
 }
 ?>
 ```
+
 **Response Interpretation:**
 The `ListObjectsResponseInterface::getObjects()` method returns an array of strings, where each string is an object ID of the specified type.
 
 ## Contextual Tuples: "What-If" Scenarios
 
-Contextual tuples are a powerful feature that allows you to include additional relationship tuples *only for the scope of a single query* (`check`, `listUsers`, `listObjects`). These tuples are not permanently written to the store.
+Contextual tuples are a powerful feature that allows you to include additional relationship tuples _only for the scope of a single query_ (`check`, `listUsers`, `listObjects`). These tuples are not permanently written to the store.
 
 **Use Cases:**
 
-*   **"What-if" analysis:** Previewing the effect of granting a new permission before actually writing it. For example, "If I make user:bob an editor of document:budget, will they also become a viewer?"
-*   **Temporary context:** Incorporating temporary conditions or relationships that are only relevant for a specific request.
+- **"What-if" analysis:** Previewing the effect of granting a new permission before actually writing it. For example, "If I make user:bob an editor of document:budget, will they also become a viewer?"
+- **Temporary context:** Incorporating temporary conditions or relationships that are only relevant for a specific request.
 
 **Example with `check()`:**
 
-Imagine `user:temp-contractor` does not normally have `viewer` access to `document:confidential`. We want to check if giving them a temporary `member` role in `group:project-alpha` (which *does* have `viewer` access to the document) would grant them access.
+Imagine `user:temp-contractor` does not normally have `viewer` access to `document:confidential`. We want to check if giving them a temporary `member` role in `group:project-alpha` (which _does_ have `viewer` access to the document) would grant them access.
 
 ```php
 <?php
@@ -312,12 +320,12 @@ try {
 }
 ?>
 ```
+
 In this example, the `contextualTuple` is only considered for this single `check()` call and is not saved in the database.
 
 ## Next Steps
 
 With a solid understanding of how to query your OpenFGA system, you can now:
 
-*   **[Write Assertions (Assertions.md)](Assertions.md):** Create tests to validate that your authorization model, tuples, and queries behave as expected under various scenarios. This is crucial for maintaining a reliable authorization system.
-*   Review other documentation sections if you haven't already, to ensure a comprehensive understanding of the SDK and OpenFGA concepts.
-```
+- **[Write Assertions (Assertions.md)](Assertions.md):** Create tests to validate that your authorization model, tuples, and queries behave as expected under various scenarios. This is crucial for maintaining a reliable authorization system.
+- Review other documentation sections if you haven't already, to ensure a comprehensive understanding of the SDK and OpenFGA concepts.

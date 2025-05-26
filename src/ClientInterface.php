@@ -6,8 +6,9 @@ namespace OpenFGA;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use OpenFGA\Models\{AssertionInterface, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
+use LogicException;
 
+use OpenFGA\Models\{AssertionInterface, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
 use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Responses\{CheckResponseInterface, CreateAuthorizationModelResponseInterface, CreateStoreResponseInterface, DeleteStoreResponseInterface, ExpandResponseInterface, GetAuthorizationModelResponseInterface, GetStoreResponseInterface, ListAuthorizationModelsResponseInterface, ListObjectsResponseInterface, ListStoresResponseInterface, ListTupleChangesResponseInterface, ListUsersResponseInterface, ReadAssertionsResponseInterface, ReadTuplesResponseInterface, WriteAssertionsResponseInterface, WriteTuplesResponseInterface};
@@ -16,6 +17,15 @@ use Throwable;
 
 interface ClientInterface
 {
+    /**
+     * Retrieves the last HTTP request made by the client.
+     *
+     * @throws LogicException If no last request has been made
+     *
+     * @return \Psr\Http\Message\RequestInterface The last request
+     */
+    public function assertLastRequest(): \Psr\Http\Message\RequestInterface;
+
     /**
      * Checks if a user has a specific relationship with an object.
      *

@@ -8,6 +8,20 @@
 
 
 ## Methods
+### assertLastRequest
+
+
+```php
+public function assertLastRequest(): Psr\Http\Message\RequestInterface
+```
+
+Retrieves the last HTTP request made by the client.
+
+
+#### Returns
+`Psr\Http\Message\RequestInterface`
+ The last request
+
 ### check
 
 
