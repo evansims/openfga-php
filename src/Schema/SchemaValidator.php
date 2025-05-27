@@ -7,11 +7,13 @@ namespace OpenFGA\Schema;
 use ArrayAccess;
 use BackedEnum;
 use DateTimeImmutable;
+use Exception;
 use OpenFGA\Exceptions\{SerializationError, SerializationException};
 use ReflectionClass;
-use ReflectionException;
 
+use ReflectionException;
 use ReflectionNamedType;
+
 use ReflectionParameter;
 
 use function array_key_exists;
@@ -385,7 +387,7 @@ final class SchemaValidator
                     if (is_string($value)) {
                         try {
                             return new DateTimeImmutable($value);
-                        } catch (\Exception) {
+                        } catch (Exception) {
                         }
                     }
 
@@ -473,7 +475,7 @@ final class SchemaValidator
 
                     try {
                         new DateTimeImmutable($value);
-                    } catch (\Exception) {
+                    } catch (Exception) {
                         return false;
                     }
 

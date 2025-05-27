@@ -150,8 +150,9 @@ describe('Tuple Model', function (): void {
             object: 'document:roadmap',
             condition: new OpenFGA\Models\Condition(
                 name: 'inRegion',
+                expression: 'true',
                 parameters: new OpenFGA\Models\Collections\ConditionParameters([
-                    new OpenFGA\Models\ConditionParameter(typeName: \OpenFGA\Models\Enums\TypeName::STRING),
+                    new OpenFGA\Models\ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING),
                 ]),
             ),
         );

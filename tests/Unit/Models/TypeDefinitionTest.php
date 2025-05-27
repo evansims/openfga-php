@@ -179,7 +179,7 @@ describe('TypeDefinition Model', function (): void {
         );
 
         expect($typeDefinition->getRelations())->toBe($relations);
-        expect($typeDefinition->getRelations()->count() === 0)->toBe(true);
+        expect(0 === $typeDefinition->getRelations()->count())->toBe(true);
     });
 
     test('preserves exact type name without modification', function (): void {

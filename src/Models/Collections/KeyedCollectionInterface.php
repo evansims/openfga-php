@@ -55,6 +55,8 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
      */
     public function has(string $key): bool;
 
+    public function isEmpty(): bool;
+
     /**
      * @return array<string, mixed>
      */

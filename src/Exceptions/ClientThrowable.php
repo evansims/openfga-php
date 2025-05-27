@@ -16,9 +16,9 @@ interface ClientThrowable extends Throwable
 
     public function kind(): ClientError | AuthenticationError | ConfigurationError | NetworkError | SerializationError;
 
+    public function previous(): ?Throwable;
+
     public function request(): ?RequestInterface;
 
     public function response(): ?ResponseInterface;
-
-    public function previous(): ?Throwable;
 }

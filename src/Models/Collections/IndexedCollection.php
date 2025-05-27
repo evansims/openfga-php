@@ -164,6 +164,10 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $this->models[$offset] ?? null;
     }
 
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public function isEmpty(): bool
     {
         return [] === $this->models;

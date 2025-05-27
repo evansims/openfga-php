@@ -5,8 +5,8 @@ declare(strict_types=1);
 use OpenFGA\Client;
 
 beforeEach(function (): void {
-    $this->responseFactory = new \Nyholm\Psr7\Factory\Psr17Factory();
-    $this->httpClient = new \Buzz\Client\FileGetContents($this->responseFactory);
+    $this->responseFactory = new Nyholm\Psr7\Factory\Psr17Factory();
+    $this->httpClient = new Buzz\Client\FileGetContents($this->responseFactory);
     $this->httpRequestFactory = $this->responseFactory;
     $this->httpStreamFactory = $this->responseFactory;
     $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';

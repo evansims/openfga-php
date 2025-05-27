@@ -29,8 +29,8 @@ describe('Condition Model', function (): void {
     });
 
     test('constructs with parameters', function (): void {
-        $param1 = new ConditionParameter(name: 'region', value: 'string');
-        $param2 = new ConditionParameter(name: 'userId', value: 'string');
+        $param1 = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
+        $param2 = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
         $parameters = new ConditionParameters([$param1, $param2]);
 
         $condition = new Condition(
@@ -44,7 +44,7 @@ describe('Condition Model', function (): void {
     });
 
     test('constructs with metadata', function (): void {
-        $sourceInfo = new SourceInfo(file: 'conditions.fga', line: 10);
+        $sourceInfo = new SourceInfo(file: 'conditions.fga');
         $metadata = new ConditionMetadata(
             module: 'auth',
             sourceInfo: $sourceInfo,
@@ -95,11 +95,11 @@ describe('Condition Model', function (): void {
     });
 
     test('serializes to JSON with all fields', function (): void {
-        $param = new ConditionParameter(name: 'region', value: 'string');
+        $param = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
         $parameters = new ConditionParameters([$param]);
 
         $sourceInfo = new SourceInfo(file: 'conditions.fga');
-        $metadata = new ConditionMetadata(sourceInfo: $sourceInfo);
+        $metadata = new ConditionMetadata(module: 'default', sourceInfo: $sourceInfo);
 
         $condition = new Condition(
             name: 'inRegion',

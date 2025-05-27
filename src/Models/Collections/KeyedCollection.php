@@ -128,6 +128,15 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     /**
      * @inheritDoc
      */
+    public function isEmpty(): bool
+    {
+        return [] === $this->models;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public function jsonSerialize(): array
     {
         $result = [];

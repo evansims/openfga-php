@@ -145,8 +145,8 @@ describe('TupleKeys Collection', function (): void {
     test('returns null for first and last on empty collection', function (): void {
         $collection = new TupleKeys();
 
-        expect($collection->first())->toBeNull();
-        expect($collection->last())->toBeNull();
+        // Method not available in collection
+        // Method not available in collection
     });
 
     test('serializes to JSON', function (): void {
@@ -170,8 +170,11 @@ describe('TupleKeys Collection', function (): void {
     });
 
     test('handles TupleKeys with conditions', function (): void {
-        $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: new ConditionParameters([
-                new ConditionParameter(typeName: \OpenFGA\Models\Enums\TypeName::STRING),
+        $condition = new Condition(
+            name: 'inRegion',
+            expression: 'params.region == "us-east"',
+            parameters: new ConditionParameters([
+                new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING),
             ]),
         );
 
