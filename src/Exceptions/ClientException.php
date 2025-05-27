@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Exceptions;
 
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Exception;
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Throwable;
 
 final class ClientException extends Exception implements ClientThrowable

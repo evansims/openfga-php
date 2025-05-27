@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{TupleKeyInterface, TupleKey};
+use OpenFGA\Models\{TupleKey, TupleKeyInterface};
 
 /**
  * @extends IndexedCollection<TupleKeyInterface>

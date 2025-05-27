@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{ConditionParameterInterface, ConditionParameter};
+use OpenFGA\Models\{ConditionParameter, ConditionParameterInterface};
 
 /**
  * @extends IndexedCollection<ConditionParameterInterface>

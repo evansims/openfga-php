@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Language;
 
 use OpenFGA\Language\DslTransformer;
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, ObjectRelation, TypeDefinition, Userset};
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitions, Usersets};
-use OpenFGA\Models\{AuthorizationModelInterface, AuthorizationModel, TypeDefinition, Userset, ObjectRelation};
 use OpenFGA\Schema\SchemaValidator;
 
 it('transforms DSL to model and back', function (): void {

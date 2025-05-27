@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{ComputedInterface, Computed};
+use OpenFGA\Models\{Computed, ComputedInterface};
 
 /**
  * @extends IndexedCollection<ComputedInterface>

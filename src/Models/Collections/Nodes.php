@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{NodeInterface, Node};
+use OpenFGA\Models\{Node, NodeInterface};
 
 /**
  * @extends IndexedCollection<NodeInterface>

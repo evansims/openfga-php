@@ -23,7 +23,6 @@ use OpenFGA\Tests\Support\Schema\{
     User,
 };
 
-use InvalidArgumentException;
 use ReflectionClass;
 
 beforeEach(function (): void {
@@ -440,4 +439,3 @@ test('handles nested object validation with errors', function (array $input, boo
         null,
     ],
 ]);
-

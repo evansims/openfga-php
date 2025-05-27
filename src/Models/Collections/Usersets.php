@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{UsersetInterface, Userset};
+use OpenFGA\Models\{Userset, UsersetInterface};
 
 /**
  * @extends KeyedCollection<UsersetInterface>

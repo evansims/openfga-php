@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{UserTypeFilterInterface, UserTypeFilter};
+use OpenFGA\Models\{UserTypeFilter, UserTypeFilterInterface};
 
 /**
  * @extends IndexedCollection<UserTypeFilterInterface>

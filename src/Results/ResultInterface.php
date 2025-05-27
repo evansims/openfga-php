@@ -14,18 +14,6 @@ use Throwable;
 interface ResultInterface
 {
     /**
-     * Execute on `Failure`, mutate the result, and continue the chain.
-     *
-     * @template U
-     * @template F of Throwable
-     *
-     * @param callable(Throwable): ResultInterface<U, F> $fn
-     *
-     * @return ResultInterface<U, F>
-     */
-    public function recover(callable $fn): self;
-
-    /**
      * Return the unwrapped error of a `Failure`.
      *
      * @throws LogicException if called on Success
@@ -45,6 +33,27 @@ interface ResultInterface
      * @return ResultInterface<T, E>
      */
     public function failure(callable $fn): self;
+
+    /**
+     * Execute on `Failure`, mutate the result, and continue the chain.
+     *
+     * @template U
+     * @template F of Throwable
+     *
+     * @param callable(Throwable): ResultInterface<U, F> $fn
+     *
+     * @return ResultInterface<U, F>
+     */
+    public function recover(callable $fn): self;
+
+    /**
+     * Throw the error of a `Failure`, or continue the chain.
+     *
+     * @param ?Throwable $throwable
+     *
+     * @return ResultInterface<T, E>
+     */
+    public function rethrow(?Throwable $throwable = null): self;
 
     /**
      * Return `true` if this is a `Success`.
@@ -71,15 +80,6 @@ interface ResultInterface
      * @return ResultInterface<U, F>
      */
     public function then(callable $fn): self;
-
-    /**
-     * Throw the error of a `Failure`, or continue the chain.
-     *
-     * @param ?Throwable $throwable
-     *
-     * @return ResultInterface<T, E>
-     */
-    public function rethrow(?Throwable $throwable = null): self;
 
     /**
      * Return the unwrapped value of a `Success`, or a default value.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{RelationReferenceInterface, RelationReference};
+use OpenFGA\Models\{RelationReference, RelationReferenceInterface};
 
 /**
  * @extends KeyedCollection<RelationReferenceInterface>

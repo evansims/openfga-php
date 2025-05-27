@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{TupleChangeInterface, TupleChange};
+use OpenFGA\Models\{TupleChange, TupleChangeInterface};
 
 /**
  * @extends IndexedCollection<TupleChangeInterface>

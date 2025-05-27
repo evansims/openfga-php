@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace OpenFGA\Schema;
 
 use ArrayAccess;
+use BackedEnum;
 use DateTimeImmutable;
 use OpenFGA\Exceptions\{SerializationError, SerializationException};
 use ReflectionClass;
 use ReflectionException;
+
 use ReflectionNamedType;
+use ReflectionParameter;
 
 use function array_key_exists;
 use function count;
@@ -175,6 +178,18 @@ final class SchemaValidator
     }
 
     /**
+     * Convert camelCase to snake_case.
+     *
+     * @param string $input
+     */
+    private function camelToSnakeCase(string $input): string
+    {
+        $result = preg_replace('/([a-z])([A-Z])/', '$1_$2', $input);
+
+        return strtolower($result ?? $input);
+    }
+
+    /**
      * Create a collection instance with the given items.
      *
      * @template T of object
@@ -253,7 +268,7 @@ final class SchemaValidator
             foreach ($constructor->getParameters() as $parameter) {
                 $paramName = $parameter->getName();
                 $snakeCaseName = $this->camelToSnakeCase($paramName);
-                
+
                 if (array_key_exists($paramName, $data)) {
                     $params[$paramName] = $this->transformParameterValue($data[$paramName], $parameter);
                 } elseif (array_key_exists($snakeCaseName, $data)) {
@@ -283,6 +298,31 @@ final class SchemaValidator
         }
 
         return $instance;
+    }
+
+    /**
+     * Transform a parameter value to match the expected type.
+     *
+     * @param mixed               $value
+     * @param ReflectionParameter $parameter
+     */
+    private function transformParameterValue(mixed $value, ReflectionParameter $parameter): mixed
+    {
+        $type = $parameter->getType();
+
+        if ($type instanceof ReflectionNamedType) {
+            $typeName = $type->getName();
+
+            // Handle enum types
+            if (enum_exists($typeName) && is_string($value)) {
+                /** @var class-string<BackedEnum> $enumClass */
+                $enumClass = $typeName;
+
+                return $enumClass::from($value);
+            }
+        }
+
+        return $value;
     }
 
     /**
@@ -472,35 +512,5 @@ final class SchemaValidator
             default:
                 return false;
         }
-    }
-
-    /**
-     * Convert camelCase to snake_case.
-     */
-    private function camelToSnakeCase(string $input): string
-    {
-        $result = preg_replace('/([a-z])([A-Z])/', '$1_$2', $input);
-        return strtolower($result ?? $input);
-    }
-
-    /**
-     * Transform a parameter value to match the expected type.
-     */
-    private function transformParameterValue(mixed $value, \ReflectionParameter $parameter): mixed
-    {
-        $type = $parameter->getType();
-        
-        if ($type instanceof ReflectionNamedType) {
-            $typeName = $type->getName();
-            
-            // Handle enum types
-            if (enum_exists($typeName) && is_string($value)) {
-                /** @var class-string<\BackedEnum> $enumClass */
-                $enumClass = $typeName;
-                return $enumClass::from($value);
-            }
-        }
-        
-        return $value;
     }
 }

@@ -27,15 +27,6 @@ final class Failure extends Result implements ResultInterface
     #[Override]
     /**
      * @inheritDoc
-     */
-    public function recover(callable $fn): ResultInterface
-    {
-        return $fn($this->err());
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
      *
      * @return E
      */
@@ -68,6 +59,24 @@ final class Failure extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
+    public function recover(callable $fn): ResultInterface
+    {
+        return $fn($this->err());
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function rethrow(?Throwable $throwable = null): ResultInterface
+    {
+        throw $throwable ?? $this->error;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public function succeeded(): bool
     {
         return false;
@@ -92,15 +101,6 @@ final class Failure extends Result implements ResultInterface
     public function then(callable $fn): ResultInterface
     {
         return $this;
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function rethrow(?Throwable $throwable = null): ResultInterface
-    {
-        throw $throwable ?? $this->error;
     }
 
     #[Override]

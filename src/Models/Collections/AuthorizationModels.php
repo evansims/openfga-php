@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{AuthorizationModelInterface, AuthorizationModel};
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface};
 
 /**
  * @extends IndexedCollection<AuthorizationModelInterface>

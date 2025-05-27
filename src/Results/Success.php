@@ -24,18 +24,6 @@ final class Success extends Result implements ResultInterface
     {
     }
 
-    /**
-     * @inheritDoc
-     *
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress InvalidReturnType
-     */
-    #[Override]
-    public function recover(callable $fn): ResultInterface
-    {
-        return $this;
-    }
-
     #[Override]
     /**
      * @inheritDoc
@@ -61,6 +49,27 @@ final class Success extends Result implements ResultInterface
      * @inheritDoc
      */
     public function failure(callable $fn): ResultInterface
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress InvalidReturnType
+     */
+    #[Override]
+    public function recover(callable $fn): ResultInterface
+    {
+        return $this;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function rethrow(?Throwable $throwable = null): ResultInterface
     {
         return $this;
     }
@@ -92,15 +101,6 @@ final class Success extends Result implements ResultInterface
     public function then(callable $fn): ResultInterface
     {
         return $fn($this->val());
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function rethrow(?Throwable $throwable = null): ResultInterface
-    {
-        return $this;
     }
 
     #[Override]

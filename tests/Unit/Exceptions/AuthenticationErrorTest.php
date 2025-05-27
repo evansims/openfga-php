@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Exceptions;
 
-use OpenFGA\Exceptions\AuthenticationError;
-use OpenFGA\Exceptions\AuthenticationException;
-use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Exceptions\{AuthenticationError, AuthenticationException, ClientThrowable};
 use PsrMock\Psr7\{Request, Response};
 use RuntimeException;
-use Throwable;
 
-/**
+/*
  * @param AuthenticationError $authenticationErrorCase
  */
 it('AuthenticationError enum exception() factory creates AuthenticationException with all parameters', function (AuthenticationError $authenticationErrorCase): void {
@@ -31,7 +28,7 @@ it('AuthenticationError enum exception() factory creates AuthenticationException
         ->and($exception->getPrevious())->toBe($previousThrowable);
 })->with(AuthenticationError::cases());
 
-/**
+/*
  * @param AuthenticationError $authenticationErrorCase
  */
 it('AuthenticationError enum exception() factory creates AuthenticationException with default parameters', function (AuthenticationError $authenticationErrorCase): void {

@@ -120,12 +120,12 @@ final class DslTransformer implements DslTransformerInterface
                     $lines[] = '    define ' . $name . ': ' . self::renderExpression($userset);
                 }
             }
-            
+
             $lines[] = ''; // Blank line after each type definition
         }
 
         // Remove the trailing blank line
-        if (end($lines) === '') {
+        if ('' === end($lines)) {
             array_pop($lines);
         }
 

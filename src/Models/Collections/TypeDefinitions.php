@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{TypeDefinitionInterface, TypeDefinition};
+use OpenFGA\Models\{TypeDefinition, TypeDefinitionInterface};
 
 /**
  * @extends IndexedCollection<TypeDefinitionInterface>

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{UsersListUserInterface, UsersListUser};
+use OpenFGA\Models\{UsersListUser, UsersListUserInterface};
 
 /**
  * @extends IndexedCollection<UsersListUserInterface>

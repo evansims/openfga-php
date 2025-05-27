@@ -9,7 +9,7 @@ use Throwable;
 
 /**
  * Helper for executing a Closure safely or unwrapping a Result.
- * 
+ *
  * When passed a Closure, executes it and returns the result wrapped in a Success,
  * or catches any thrown exceptions and wraps them in a Failure object.
  * When passed a ResultInterface, unwraps a Success or throws the error from a Failure.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{AssertionInterface, Assertion};
+use OpenFGA\Models\{Assertion, AssertionInterface};
 
 /**
  * @extends IndexedCollection<AssertionInterface>

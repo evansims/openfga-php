@@ -14,6 +14,7 @@ use Psr\Http\Message\{RequestFactoryInterface, RequestInterface, ResponseFactory
 
 use PsrDiscovery\Discover;
 
+use function is_string;
 use function sprintf;
 
 enum RequestMethod: string
@@ -198,6 +199,7 @@ final class RequestManager implements RequestManagerInterface
         try {
             $error = trim((string) $response->getBody());
             $decoded = json_decode($error, true, 512, JSON_THROW_ON_ERROR);
+
             return is_string($decoded) ? $decoded : $error;
         } catch (Exception) {
             if ('' !== $error) {

@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Exceptions;
 
-use OpenFGA\Exceptions\ConfigurationError;
-use OpenFGA\Exceptions\ConfigurationException;
-use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Exceptions\{ClientThrowable, ConfigurationError, ConfigurationException};
 use PsrMock\Psr7\{Request, Response};
 use RuntimeException;
-use Throwable;
 
-/**
+/*
  * @param ConfigurationError $configurationErrorCase
  */
 it('ConfigurationError enum exception() factory creates ConfigurationException with all parameters', function (ConfigurationError $configurationErrorCase): void {
@@ -31,7 +28,7 @@ it('ConfigurationError enum exception() factory creates ConfigurationException w
         ->and($exception->getPrevious())->toBe($previousThrowable);
 })->with(ConfigurationError::cases());
 
-/**
+/*
  * @param ConfigurationError $configurationErrorCase
  */
 it('ConfigurationError enum exception() factory creates ConfigurationException with default parameters', function (ConfigurationError $configurationErrorCase): void {
@@ -46,7 +43,7 @@ it('ConfigurationError enum exception() factory creates ConfigurationException w
         ->and($exception->getPrevious())->toBeNull();
 })->with(ConfigurationError::cases());
 
-/**
+/*
  * @param ConfigurationError $configurationErrorCase
  */
 it('ConfigurationError enum exception() factory handles edge case with empty context array', function (ConfigurationError $configurationErrorCase): void {
@@ -65,7 +62,7 @@ it('ConfigurationError enum exception() factory handles edge case with empty con
         ->and($exception->getPrevious())->toBeNull();
 })->with(ConfigurationError::cases());
 
-/**
+/*
  * @param ConfigurationError $configurationErrorCase
  */
 it('ConfigurationError enum exception() factory handles edge case with non-empty context and previous exception', function (ConfigurationError $configurationErrorCase): void {
@@ -73,7 +70,7 @@ it('ConfigurationError enum exception() factory handles edge case with non-empty
         'message' => 'Configuration error occurred',
         'component' => 'http_client',
         'details' => ['factory' => 'missing', 'required' => true],
-        'timestamp' => '2023-01-01T00:00:00Z'
+        'timestamp' => '2023-01-01T00:00:00Z',
     ];
     $previousThrowable = new RuntimeException('Underlying configuration issue');
 
@@ -89,7 +86,7 @@ it('ConfigurationError enum exception() factory handles edge case with non-empty
         ->and($exception->getMessage())->toBe('Configuration error occurred'); // Should use message from context
 })->with(ConfigurationError::cases());
 
-/**
+/*
  * @param ConfigurationError $configurationErrorCase
  */
 it('ConfigurationError enum exception() factory handles edge case with only request parameter', function (ConfigurationError $configurationErrorCase): void {
@@ -106,7 +103,7 @@ it('ConfigurationError enum exception() factory handles edge case with only requ
         ->and($exception->getPrevious())->toBeNull();
 })->with(ConfigurationError::cases());
 
-/**
+/*
  * @param ConfigurationError $configurationErrorCase
  */
 it('ConfigurationError enum exception() factory handles edge case with only response parameter', function (ConfigurationError $configurationErrorCase): void {

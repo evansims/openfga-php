@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{StoreInterface, Store};
+use OpenFGA\Models\{Store, StoreInterface};
 
 /**
  * @extends IndexedCollection<StoreInterface>

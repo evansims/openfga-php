@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Exceptions;
 
-use OpenFGA\Exceptions\ClientError;
-use OpenFGA\Exceptions\ClientException;
-use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Exceptions\{ClientError, ClientException, ClientThrowable};
 use PsrMock\Psr7\{Request, Response};
 use RuntimeException;
-use Throwable;
 
-/**
+/*
  * @param ClientError $clientErrorCase
  */
 it('ClientError enum exception() factory creates ClientException with all parameters', function (ClientError $clientErrorCase): void {
@@ -31,7 +28,7 @@ it('ClientError enum exception() factory creates ClientException with all parame
         ->and($exception->getPrevious())->toBe($previousThrowable);
 })->with(ClientError::cases());
 
-/**
+/*
  * @param ClientError $clientErrorCase
  */
 it('ClientError enum exception() factory creates ClientException with default parameters', function (ClientError $clientErrorCase): void {

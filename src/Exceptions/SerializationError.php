@@ -9,17 +9,17 @@ use Throwable;
 
 enum SerializationError: string
 {
+    case CouldNotAddItemsToCollection = 'could_not_add_items_to_collection';
+
     case EmptyCollection = 'empty_collection';
 
     case InvalidItemType = 'invalid_item_type';
 
+    case MissingRequiredConstructorParameter = 'missing_required_constructor_parameter';
+
     case Response = 'response';
 
     case UndefinedItemType = 'undefined_item_type';
-
-    case MissingRequiredConstructorParameter = 'missing_required_constructor_parameter';
-
-    case CouldNotAddItemsToCollection = 'could_not_add_items_to_collection';
 
     /**
      * Creates and returns a new SerializationException.
