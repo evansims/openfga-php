@@ -47,7 +47,9 @@ use OpenFGA\Client;
 use OpenFGA\Models\AuthorizationModel;
 use OpenFGA\Responses\{
     CreateStoreResponseInterface,
-    CreateAuthorizationModelResponseInterface
+    CreateAuthorizationModelResponseInterface,
+    WriteTuplesResponseInterface,
+    CheckResponseInterface
 };
 
 use function OpenFGA\Models\{tuple, tuples};
@@ -106,7 +108,7 @@ $model = ($client->dsl($dsl))
  */
 
 $tuple = tuple(
-    type: 'user',
+    user: 'user:anne',
     relation: 'viewer',
     object: 'document:roadmap',
 );

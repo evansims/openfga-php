@@ -209,3 +209,111 @@ Here's a closer look at the key methods available on `ResultInterface` objects:
     $result = new Failure(new \Exception("Something failed"));
     $result->failure(fn(Throwable $err) => echo "Operation failed: " . $err->getMessage() . "\n");
     ```
+
+## Best Practices
+
+### When to Use Which Pattern
+
+1. **Use `unwrap()` when:**
+   - You want exceptions to bubble up naturally
+   - You're in a context where exception handling is already established
+   - You need the simplest possible API
+
+2. **Use `success()`/`failure()` callbacks when:**
+   - You want to handle success/failure cases inline
+   - You need side effects (logging, metrics) without changing the result
+   - You're building a pipeline of operations
+
+3. **Use `then()` when:**
+   - You need to transform success values
+   - You're chaining multiple operations
+   - You want functional programming style
+
+4. **Use `recover()` when:**
+   - You have fallback values for specific errors
+   - You want to convert certain failures to successes
+   - You're implementing retry logic
+
+### Common Patterns
+
+#### Pattern 1: Pipeline with Fallback
+
+```php
+$config = $client->getStore($storeId)
+    ->then(fn($store) => $store->getConfiguration())
+    ->recover(fn() => Configuration::default())
+    ->unwrap();
+```
+
+#### Pattern 2: Collecting Multiple Results
+
+```php
+$results = [
+    $client->check(...),
+    $client->check(...),
+    $client->check(...)
+];
+
+$allAllowed = array_reduce($results, 
+    fn($carry, $result) => $carry && $result->unwrap()->getIsAllowed(),
+    true
+);
+```
+
+#### Pattern 3: Error Context
+
+```php
+$result = $client->writeTuples($store, $model, $tuples)
+    ->failure(function(Throwable $e) use ($store) {
+        error_log("Failed to write tuples to store {$store->getId()}: " . $e->getMessage());
+    })
+    ->rethrow(fn($e) => new ApplicationException("Permission update failed", previous: $e));
+```
+
+## Integration with Frameworks
+
+### Laravel Example
+
+```php
+class PermissionService
+{
+    public function __construct(
+        private ClientInterface $client,
+        private string $storeId,
+        private string $modelId
+    ) {}
+
+    public function checkPermission(string $user, string $relation, string $object): bool
+    {
+        return $this->client
+            ->check($this->storeId, $this->modelId, tuple($user, $relation, $object))
+            ->then(fn($response) => $response->getIsAllowed())
+            ->recover(function(Throwable $e) {
+                Log::error('Permission check failed', ['error' => $e->getMessage()]);
+                return false; // Fail closed
+            })
+            ->unwrap();
+    }
+}
+```
+
+### Symfony Example
+
+```php
+class FgaVoter extends Voter
+{
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    {
+        $user = $token->getUserIdentifier();
+        
+        return $this->client
+            ->check($this->store, $this->model, tuple($user, $attribute, $subject->getId()))
+            ->then(fn($response) => $response->getIsAllowed())
+            ->unwrap();
+    }
+}
+```
+
+## Summary
+
+The Result pattern provides a flexible way to handle operations that might fail without relying solely on exceptions. It encourages explicit error handling while remaining ergonomic for common use cases. Choose the method that best fits your application's error handling strategy and coding style.

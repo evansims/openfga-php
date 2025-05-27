@@ -26,24 +26,17 @@ For robust error handling beyond the `unwrap()` helper shown in these examples, 
 require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 
 use OpenFGA\Client;
-use OpenFGA\Models\{TupleKey, TupleKeys, UsersetTree};
-use OpenFGA\Enum\Consistency;  // For consistency options if needed
+use OpenFGA\Models\UsersetTree;
+use OpenFGA\Models\Enums\Consistency;  // For consistency options if needed
 
 // Response interfaces for type hinting (optional but good practice)
-use OpenFGA\Responses\CheckResponseInterface;
-use OpenFGA\Responses\ExpandResponseInterface;
-use OpenFGA\Responses\ListUsersResponseInterface;
-use OpenFGA\Responses\ListObjectsResponseInterface;
+use OpenFGA\Responses\{CheckResponseInterface, ExpandResponseInterface, ListUsersResponseInterface, ListObjectsResponseInterface};
 
+use function OpenFGA\Models\{tuple, tuples};
 use function OpenFGA\Results\unwrap;
 
-// Assuming $client is initialized and storeId & modelId are set:
-// $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
-// $storeId = $_ENV['FGA_STORE_ID'] ?? 'your_test_store_id';
-// $modelId = $_ENV['FGA_MODEL_ID'] ?? 'your_test_model_id';
-// $client = new Client(url: $fgaApiUrl);
-// $client->setStore($storeId);
-// $client->setModel($modelId); // Important: sets the model for these query operations
+// Assuming $client is initialized as shown in GettingStarted.md
+// $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ?>
 ```
 
@@ -64,16 +57,17 @@ The `check()` method is the most fundamental query. It returns a simple boolean 
   - `user` (string): The user or userset (e.g., `user:anne`, `group:editors#member`). **Required.**
   - `relation` (string): The permission/relation to check (e.g., `viewer`, `can_edit`). **Required.**
   - `object` (string): The specific object (e.g., `document:roadmap`, `folder:secrets`). **Required.**
-- `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to consider only for this specific check, without permanently writing them. See [Contextual Tuples](#contextual-tuples-what-if-scenarios) below.
+- `contextualTuples` (optional `OpenFGA\Models\Collections\TupleKeys`): A collection of tuples to consider only for this specific check, without permanently writing them. Use the `tuples()` helper function. See [Contextual Tuples](#contextual-tuples-what-if-scenarios) below.
 - `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency. Defaults to `Consistency::NONE`. See [Relationship Tuples `consistency` explanation](RelationshipTuples.md#reading-tuples-clientreadtuples) for details.
-- `authorization_model_id` (optional string): Overrides the model ID set on the client for this specific call.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 **Example:**
 
 ```php
 <?php
 // Check if user:anne is a viewer of document:roadmap
-$checkTupleKey = new TupleKey(
+$checkTupleKey = tuple(
     user: 'user:anne',
     relation: 'viewer',
     object: 'document:roadmap'
@@ -81,7 +75,11 @@ $checkTupleKey = new TupleKey(
 
 try {
     /** @var CheckResponseInterface $response */
-    $response = unwrap($client->check(tupleKey: $checkTupleKey));
+    $response = unwrap($client->check(
+        store: $storeId,
+        model: $modelId,
+        tupleKey: $checkTupleKey
+    ));
 
     if ($response->getIsAllowed()) {
         echo "User 'user:anne' IS ALLOWED to 'viewer' 'document:roadmap'.\n";
@@ -119,7 +117,8 @@ The `expand()` method returns a tree structure (`UsersetTree`) showing all the w
   - `object` (string): The specific object (e.g., `document:roadmap`). **Required.**
   - `user` is NOT part of the `tupleKey` for `expand`. Expand shows all paths to the relation for the object.
 - `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
-- `authorization_model_id` (optional string): Overrides the client's model ID.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 **Example:**
 
@@ -176,7 +175,8 @@ The `listUsers()` method returns a list of users (and usersets) that have a give
 - `userFilters` (optional array of `OpenFGA\Models\UserFilter`): Filters the results to specific user types and relations (e.g., only return users of type `user`, or only users who are `member` of `group:engineering`). Each `UserFilter` has a `type` (e.g., `user`) and an optional `relation` (e.g., `member`).
 - `contextualTuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
 - `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
-- `authorization_model_id` (optional string): Overrides the client's model ID.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 **Example:**
 
@@ -233,9 +233,10 @@ The `listObjects()` method returns a list of object IDs of a specified `type` th
 - `user` (string): The user or userset (e.g., `user:anne`, `group:editors#member`). **Required.**
 - `relation` (string): The permission/relation to check for (e.g., `viewer`). **Required.**
 - `type` (string): The type of objects to list (e.g., `document`, `folder`). **Required.**
-- `contextual_tuples` (optional `OpenFGA\Models\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
+- `contextualTuples` (optional `OpenFGA\Models\Collections\TupleKeys`): See [Contextual Tuples](#contextual-tuples-what-if-scenarios).
 - `consistency` (optional `OpenFGA\Enum\Consistency`): Specifies read consistency.
-- `authorization_model_id` (optional string): Overrides the client's model ID.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 **Example:**
 
@@ -287,19 +288,19 @@ Imagine `user:temp-contractor` does not normally have `viewer` access to `docume
 // Assume user:temp-contractor is NOT normally a viewer of document:confidential
 // Assume group:project-alpha#member IS a viewer of document:confidential in the model/stored tuples
 
-$checkTupleKey = new TupleKey(
+$checkTupleKey = tuple(
     user: 'user:temp-contractor',
     relation: 'viewer',
     object: 'document:confidential'
 );
 
 // Contextual tuple: "user:temp-contractor is a member of group:project-alpha"
-$contextualTuple = new TupleKey(
+$contextualTuple = tuple(
     user: 'user:temp-contractor',
     relation: 'member',
     object: 'group:project-alpha'
 );
-$contextualTuples = new TupleKeys([$contextualTuple]);
+$contextualTuples = tuples($contextualTuple);
 
 try {
     /** @var CheckResponseInterface $response */

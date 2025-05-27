@@ -49,13 +49,8 @@ use OpenFGA\Responses\{ReadTuplesResponseInterface, WriteTuplesResponseInterface
 
 use function OpenFGA\Results\unwrap;
 
-// Assuming $client is initialized and storeId & modelId are set:
-// $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
-// $storeId = $_ENV['FGA_STORE_ID'] ?? 'your_test_store_id';
-// $modelId = $_ENV['FGA_MODEL_ID'] ?? 'your_test_model_id';
-// $client = new Client(url: $fgaApiUrl);
-// $client->setStore($storeId);
-// $client->setModel($modelId); // Important: sets the model for these operations
+// Assuming $client is initialized as shown in GettingStarted.md
+// $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ?>
 ```
 
@@ -85,7 +80,8 @@ The `writeTuples()` method allows you to add (write) and remove (delete) relatio
 
 - `writes` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to be created.
 - `deletes` (optional `OpenFGA\Models\TupleKeys`): A collection of `TupleKey` objects to be removed.
-- `authorization_model_id` (optional string): If you haven't set the model ID on the client using `$client->setModel()`, or if you need to override it for this specific call, you can provide it here.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 ```php
 <?php
@@ -106,6 +102,8 @@ try {
     /** @var WriteTuplesResponseInterface $response */
     // For this call, we rely on the model ID set via $client->setModel()
     $response = unwrap($client->writeTuples(
+        store: $storeId,
+        model: $modelId,
         writes: $tupleKeysToWrite,
         deletes: $tupleKeysToDelete
     ));
@@ -123,7 +121,11 @@ try {
 // Example: Writing a single tuple
 $singleTuple = new TupleKey(user: 'user:diana', relation: 'owner', object: 'folder:projects');
 try {
-    unwrap($client->writeTuples(writes: new TupleKeys([$singleTuple])));
+    unwrap($client->writeTuples(
+        store: $storeId,
+        model: $modelId,
+        writes: new TupleKeys([$singleTuple])
+    ));
     echo "Single tuple (Diana owner of folder:projects) written successfully.\n";
 } catch (Throwable $e) {
     echo "Error writing single tuple: " . $e->getMessage() . "\n";
@@ -151,6 +153,8 @@ The `readTuples()` method retrieves relationship tuples that match a specified f
   - `Consistency::SNAPSHOT`: Reads from a consistent snapshot of the data. This ensures that all results are from the same point in time, but that point might be slightly delayed from the absolute latest writes.
   - `Consistency::STRICT`: Ensures that reads reflect all committed writes up to the point the read was initiated. This offers the highest consistency but may incur higher latency.
   - For detailed explanations of consistency levels, refer to the [official OpenFGA documentation on Read Consistency](https://openfga.dev/docs/reference/consistency).
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 ```php
 <?php
@@ -158,7 +162,12 @@ The `readTuples()` method retrieves relationship tuples that match a specified f
 try {
     $filterByObject = new TupleKey(object: 'document:roadmap');
     /** @var ReadTuplesResponseInterface $response */
-    $response = unwrap($client->readTuples(tupleKey: $filterByObject, pageSize: 10));
+    $response = unwrap($client->readTuples(
+        store: $storeId,
+        model: $modelId,
+        tupleKey: $filterByObject,
+        pageSize: 10
+    ));
 
     echo "Tuples for 'document:roadmap':\n";
     if (empty($response->getTuples())) {
@@ -178,7 +187,11 @@ try {
 try {
     $filterAnneViewer = new TupleKey(user: 'user:anne', relation: 'viewer');
     /** @var ReadTuplesResponseInterface $response */
-    $response = unwrap($client->readTuples(tupleKey: $filterAnneViewer));
+    $response = unwrap($client->readTuples(
+        store: $storeId,
+        model: $modelId,
+        tupleKey: $filterAnneViewer
+    ));
 
     echo "\n'user:anne' is a 'viewer' of:\n";
     if (empty($response->getTuples())) {
@@ -198,7 +211,12 @@ echo "\nAll tuples in the store (paginated):\n";
 try {
     do {
         /** @var ReadTuplesResponseInterface $response */
-        $response = unwrap($client->readTuples(pageSize: 5, continuationToken: $continuationToken));
+        $response = unwrap($client->readTuples(
+            store: $storeId,
+            model: $modelId,
+            pageSize: 5,
+            continuationToken: $continuationToken
+        ));
         foreach ($response->getTuples() as $tuple) {
             echo "- User: {$tuple->getUser()}, Relation: {$tuple->getRelation()}, Object: {$tuple->getObject()}\n";
         }
@@ -222,6 +240,8 @@ It returns a list of changes, where each change indicates whether a tuple was wr
 - `pageSize` (optional int): The maximum number of changes to return in a single response.
 - `continuationToken` (optional string): A token from a previous `listTupleChanges` response to fetch the next page.
 - `startTime` (optional `DateTimeInterface`): If provided, only returns changes that occurred at or after this specific point in time. Useful for fetching changes since your last check.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 ```php
 <?php
@@ -235,6 +255,8 @@ try {
     do {
         /** @var ListTupleChangesResponseInterface $response */
         $response = unwrap($client->listTupleChanges(
+            store: $storeId,
+            model: $modelId,
             type: 'document', // Required: specify the object type
             pageSize: 3,
             continuationToken: $continuationTokenChanges

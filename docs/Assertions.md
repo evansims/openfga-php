@@ -33,23 +33,16 @@ For robust error handling beyond the `unwrap()` helper shown in these examples, 
 require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
 
 use OpenFGA\Client;
-use OpenFGA\Models\TupleKey;    // Represents the (user, relation, object) part of an assertion
-use OpenFGA\Models\Assertion;   // Represents a single assertion (TupleKey + expectation)
-use OpenFGA\Collections\Assertions; // Represents a collection of Assertion objects for writing
+use OpenFGA\Models\{TupleKey, Assertion};
+use OpenFGA\Collections\Assertions;
 
 // Response interfaces for type hinting (optional but good practice)
-use OpenFGA\Responses\ReadAssertionsResponseInterface;
-use OpenFGA\Responses\WriteAssertionsResponseInterface; // Though Write usually returns a specific type or void
+use OpenFGA\Responses\{ReadAssertionsResponseInterface, WriteAssertionsResponseInterface};
 
 use function OpenFGA\Results\unwrap;
 
-// Assuming $client is initialized and storeId & modelId are set:
-// $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
-// $storeId = $_ENV['FGA_STORE_ID'] ?? 'your_test_store_id';
-// $modelId = $_ENV['FGA_MODEL_ID'] ?? 'your_test_model_id'; // Crucial for assertions
-// $client = new Client(url: $fgaApiUrl);
-// $client->setStore($storeId);
-// $client->setModel($modelId); // Important: sets the model for these assertion operations
+// Assuming $client is initialized as shown in GettingStarted.md
+// $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ?>
 ```
 
@@ -76,7 +69,8 @@ You write assertions for a specific authorization model. The `writeAssertions()`
 **Parameters:**
 
 - `assertions` (required `OpenFGA\Collections\Assertions`): A collection of `Assertion` objects.
-- `authorization_model_id` (optional string): If you haven't set the model ID on the client using `$client->setModel()`, or if you need to override it for this specific call, you **must** provide it here. Assertions are always tied to a model.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 ```php
 <?php
@@ -121,9 +115,9 @@ $assertionsToWrite = new Assertions([
 try {
     // We rely on the model ID set via $client->setModel() for this call.
     // If not set on the client, you MUST pass it as a parameter:
-    // $client->writeAssertions(assertions: $assertionsToWrite, authorizationModelId: 'your_specific_model_id');
+    // $client->writeAssertions(store: $storeId, model: $modelId, assertions: $assertionsToWrite);
 
-    unwrap($client->writeAssertions(assertions: $assertionsToWrite));
+    unwrap($client->writeAssertions(store: $storeId, model: $modelId, assertions: $assertionsToWrite));
 
     echo "Assertions written successfully for model ID: " . $client->getModel() . "\n";
     echo "Remember: This overwrites any previous assertions for this model.\n";
@@ -141,7 +135,8 @@ You can retrieve all assertions associated with a specific authorization model. 
 
 **Parameters:**
 
-- `authorization_model_id` (optional string): If you haven't set the model ID on the client, or if you need to override it, provide it here.
+- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
+- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
 
 ```php
 <?php
@@ -150,10 +145,10 @@ You can retrieve all assertions associated with a specific authorization model. 
 try {
     // We rely on the model ID set via $client->setModel() for this call.
     // If not set on the client, you MUST pass it as a parameter:
-    // $client->readAssertions(authorizationModelId: 'your_specific_model_id');
+    // $client->readAssertions(store: $storeId, model: 'your_specific_model_id');
 
     /** @var ReadAssertionsResponseInterface $response */
-    $response = unwrap($client->readAssertions());
+    $response = unwrap($client->readAssertions(store: $storeId, model: $modelId));
 
     $retrievedAssertions = $response->getAssertions();
 

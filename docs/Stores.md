@@ -143,6 +143,7 @@ if (empty($storeIdToDelete)) {
     }
 }
 */
+
 echo "Delete store example is commented out for safety. Please review and uncomment to run.\n";
 ?>
 ```
