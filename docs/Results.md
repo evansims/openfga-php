@@ -215,16 +215,19 @@ Here's a closer look at the key methods available on `ResultInterface` objects:
 ### When to Use Which Pattern
 
 1. **Use `unwrap()` when:**
+
    - You want exceptions to bubble up naturally
    - You're in a context where exception handling is already established
    - You need the simplest possible API
 
 2. **Use `success()`/`failure()` callbacks when:**
+
    - You want to handle success/failure cases inline
    - You need side effects (logging, metrics) without changing the result
    - You're building a pipeline of operations
 
 3. **Use `then()` when:**
+
    - You need to transform success values
    - You're chaining multiple operations
    - You want functional programming style
@@ -254,7 +257,7 @@ $results = [
     $client->check(...)
 ];
 
-$allAllowed = array_reduce($results, 
+$allAllowed = array_reduce($results,
     fn($carry, $result) => $carry && $result->unwrap()->getIsAllowed(),
     true
 );
@@ -305,7 +308,7 @@ class FgaVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUserIdentifier();
-        
+
         return $this->client
             ->check($this->store, $this->model, tuple($user, $attribute, $subject->getId()))
             ->then(fn($response) => $response->getIsAllowed())
