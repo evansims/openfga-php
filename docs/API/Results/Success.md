@@ -21,7 +21,7 @@ Return the unwrapped error of a `Failure`.
 
 
 #### Returns
-`never`
+never
 
 ### failed
 
@@ -34,13 +34,13 @@ Return `true` if this is a `Failure`.
 
 
 #### Returns
-`bool`
+bool
 
 ### failure
 
 
 ```php
-public function failure(callable $fn): [ResultInterface](Results/ResultInterface.md)
+public function failure(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
 Execute on `Failure` and continue the chain.
@@ -48,16 +48,16 @@ Execute on `Failure` and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `fn` | `callable` |  |
+| `fn` | callable |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)`
+[ResultInterface](Results/ResultInterface.md)
 
 ### recover
 
 
 ```php
-public function recover(callable $fn): [ResultInterface](Results/ResultInterface.md)
+public function recover(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
 Execute on `Failure`, mutate the result, and continue the chain.
@@ -65,16 +65,16 @@ Execute on `Failure`, mutate the result, and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `fn` | `callable` |  |
+| `throwable` | ?Throwable |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)`
+[ResultInterface](Results/ResultInterface.md)
 
 ### rethrow
 
 
 ```php
-public function rethrow(?Throwable $throwable = NULL): [ResultInterface](Results/ResultInterface.md)
+public function rethrow(?Throwable $throwable = NULL): OpenFGA\Results\ResultInterface
 ```
 
 Throw the error of a `Failure`, or continue the chain.
@@ -82,10 +82,10 @@ Throw the error of a `Failure`, or continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `default` | `mixed` |  |
+| `fn` | callable |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)`
+[ResultInterface](Results/ResultInterface.md)
 
 ### succeeded
 
@@ -98,13 +98,13 @@ Return `true` if this is a `Success`.
 
 
 #### Returns
-`bool`
+bool
 
 ### success
 
 
 ```php
-public function success(callable $fn): [ResultInterface](Results/ResultInterface.md)
+public function success(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
 Execute on `Success` and continue the chain.
@@ -112,16 +112,16 @@ Execute on `Success` and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `fn` | `callable` |  |
+| `fn` | callable |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)`
+[ResultInterface](Results/ResultInterface.md)
 
 ### then
 
 
 ```php
-public function then(callable $fn): [ResultInterface](Results/ResultInterface.md)
+public function then(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
 Execute on `Success`, mutate the result, and continue the chain.
@@ -129,10 +129,10 @@ Execute on `Success`, mutate the result, and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `throwable` | `?Throwable` |  |
+| `default` | mixed |  |
 
 #### Returns
-`[ResultInterface](Results/ResultInterface.md)`
+[ResultInterface](Results/ResultInterface.md)
 
 ### unwrap
 
@@ -146,10 +146,10 @@ Return the unwrapped value of a `Success`, or a default value.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$default` | `mixed` |  |
+| `$default` | mixed |  |
 
 #### Returns
-`mixed`
+mixed
 
 ### val
 
@@ -162,5 +162,5 @@ Return the unwrapped value of a `Success`.
 
 
 #### Returns
-`T`
+T
 

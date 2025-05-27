@@ -20,13 +20,13 @@
 
 
 ```php
-public function getOperation(): TupleOperation
+public function getOperation(): OpenFGA\Models\Enums\TupleOperation
 ```
 
 
 
 #### Returns
-`TupleOperation`
+TupleOperation
 
 ### getTimestamp
 
@@ -38,19 +38,19 @@ public function getTimestamp(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable`
+DateTimeImmutable
 
 ### getTupleKey
 
 
 ```php
-public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
+public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
 ```
 
 
 
 #### Returns
-`[TupleKeyInterface](Models/TupleKeyInterface.md)`
+[TupleKeyInterface](Models/TupleKeyInterface.md)
 
 ### jsonSerialize
 
@@ -62,18 +62,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\TupleChangeInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

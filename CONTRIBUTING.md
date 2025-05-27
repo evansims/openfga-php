@@ -35,32 +35,20 @@ composer lint
 
 ## Tests
 
-Update the snapshots:
-
-```bash
-composer update:snapshots
-```
-
-Run all tests:
-
-```bash
-composer test
-```
-
-Check types:
-
-```bash
-composer test:type:check
-```
-
 Unit tests:
 
 ```bash
-composer test:unit
+composer test
 ```
 
 Integration tests require Docker. The container starts automatically:
 
 ```bash
 composer test:integration
+```
+
+Contract tests download the OpenAPI spec and validate the SDK's models against it:
+
+```bash
+composer test:contract
 ```

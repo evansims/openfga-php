@@ -26,7 +26,7 @@ public function getCreatedAt(): DateTimeInterface
 
 
 #### Returns
-`DateTimeInterface`
+DateTimeInterface
 
 ### getDeletedAt
 
@@ -38,7 +38,7 @@ public function getDeletedAt(): ?DateTimeInterface
 
 
 #### Returns
-`?DateTimeInterface`
+?DateTimeInterface
 
 ### getId
 
@@ -50,7 +50,7 @@ public function getId(): string
 
 
 #### Returns
-`string`
+string
 
 ### getName
 
@@ -62,7 +62,7 @@ public function getName(): string
 
 
 #### Returns
-`string`
+string
 
 ### getUpdatedAt
 
@@ -74,7 +74,7 @@ public function getUpdatedAt(): DateTimeInterface
 
 
 #### Returns
-`DateTimeInterface`
+DateTimeInterface
 
 ### jsonSerialize
 
@@ -86,18 +86,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\StoreInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

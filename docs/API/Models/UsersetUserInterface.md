@@ -21,7 +21,7 @@ public function getId(): string
 
 
 #### Returns
-`string`
+string
 
 ### getRelation
 
@@ -33,7 +33,7 @@ public function getRelation(): string
 
 
 #### Returns
-`string`
+string
 
 ### getType
 
@@ -45,7 +45,7 @@ public function getType(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -57,5 +57,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

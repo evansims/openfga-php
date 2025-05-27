@@ -21,19 +21,19 @@ public function getGenericTypes(): ConditionParametersInterface<ConditionParamet
 
 
 #### Returns
-`ConditionParametersInterface<ConditionParameterInterface>`
+ConditionParametersInterface&lt;[ConditionParameterInterface](Models/ConditionParameterInterface.md)&gt;
 
 ### getTypeName
 
 
 ```php
-public function getTypeName(): TypeName
+public function getTypeName(): OpenFGA\Models\Enums\TypeName
 ```
 
 
 
 #### Returns
-`TypeName`
+TypeName
 
 ### jsonSerialize
 
@@ -45,5 +45,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

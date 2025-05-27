@@ -20,7 +20,7 @@ public function getChanges(): TupleChangesInterface<TupleChangeInterface>
 
 
 #### Returns
-`TupleChangesInterface<TupleChangeInterface>`
+TupleChangesInterface&lt;TupleChangeInterface&gt;
 
 ### getContinuationToken
 
@@ -32,5 +32,5 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string`
+?string
 

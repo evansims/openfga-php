@@ -21,7 +21,7 @@ public function getObject(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getRelation
 
@@ -33,7 +33,7 @@ public function getRelation(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### jsonSerialize
 
@@ -45,5 +45,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

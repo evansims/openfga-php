@@ -15,17 +15,17 @@
 
 
 ```php
-public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
+public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | `StreamFactoryInterface` |  |
+| `$streamFactory` | StreamFactoryInterface |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)`
+[RequestContext](Network/RequestContext.md)
 
 ### getStore
 
@@ -37,5 +37,5 @@ public function getStore(): string
 
 
 #### Returns
-`string`
+string
 

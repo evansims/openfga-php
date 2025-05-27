@@ -20,5 +20,5 @@ public function getModel(): string
 
 
 #### Returns
-`string`
+string
 

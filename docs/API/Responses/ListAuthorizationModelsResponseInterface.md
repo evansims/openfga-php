@@ -20,7 +20,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getModels
 
@@ -32,5 +32,5 @@ public function getModels(): AuthorizationModelsInterface<AuthorizationModelInte
 
 
 #### Returns
-`AuthorizationModelsInterface<AuthorizationModelInterface>`
+AuthorizationModelsInterface&lt;AuthorizationModelInterface&gt;
 

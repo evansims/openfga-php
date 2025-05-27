@@ -27,20 +27,20 @@ Return a DSL representation of the model.
 
 
 #### Returns
-`string`
+string
 
 ### getConditions
 
 
 ```php
-public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+public function getConditions(): ?OpenFGA\Models\Collections\ConditionsInterface
 ```
 
 Return the conditions of the model.
 
 
 #### Returns
-`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)`
+?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
 
 ### getId
 
@@ -53,33 +53,33 @@ Return the ID of the model.
 
 
 #### Returns
-`string`
+string
 
 ### getSchemaVersion
 
 
 ```php
-public function getSchemaVersion(): SchemaVersion
+public function getSchemaVersion(): OpenFGA\Models\Enums\SchemaVersion
 ```
 
 Return the schema version of the model.
 
 
 #### Returns
-`SchemaVersion`
+SchemaVersion
 
 ### getTypeDefinitions
 
 
 ```php
-public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
+public function getTypeDefinitions(): OpenFGA\Models\Collections\TypeDefinitionsInterface
 ```
 
 Return the type definitions of the model.
 
 
 #### Returns
-`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)`
+[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
 
 ### jsonSerialize
 
@@ -92,18 +92,18 @@ Return a JSON representation of the model.
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\AuthorizationModelInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

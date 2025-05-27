@@ -14,11 +14,11 @@
 
 
 ```php
-public function getModel(): ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+public function getModel(): ?OpenFGA\Models\AuthorizationModelInterface
 ```
 
 
 
 #### Returns
-`?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)`
+?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
 

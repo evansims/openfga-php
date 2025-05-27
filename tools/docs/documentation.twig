@@ -50,13 +50,13 @@
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-{% for param in method.parameters %}| `{{ param.name }}` | `{{ param.type|raw }}` | {{ param.description }} |
+{% for param in method.parameters %}| `{{ param.name }}` | {{ param.typeDisplay|default(param.type)|raw }} | {{ param.description }} |
 {% endfor %}
 {% endif %}
 
 {% if method.return.type %}
 #### Returns
-`{{ method.return.type|raw }}`
+{{ method.return.typeDisplay|default(method.return.type)|raw }}
 {% if method.return.description is defined and method.return.description is not empty %}
 {% if "\n" in method.return.description %}
 ```php

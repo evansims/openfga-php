@@ -117,22 +117,21 @@
     "rector:fix": "@php vendor/bin/rector process src",
     "lint": [
       "@phpstan",
+      "@psalm",
       "@rector",
       "@phpcs"
     ],
     "test:integration": [
-      "@lint",
       "@pest:integration"
     ],
     "test:unit": [
-      "@lint",
       "@pest:unit"
     ],
     "test:contract": [
-      "@lint",
       "@pest:contract"
     ],
     "test": [
+      "@lint",
       "@pest:unit"
     ],
     "docs": "@php tools/docs/generate.php"

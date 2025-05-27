@@ -27,10 +27,10 @@ public function add(mixed $item): static
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | `callable` |  |
+| `callback` | callable |  |
 
 #### Returns
-`static`
+static
 
 ### clear
 
@@ -42,7 +42,7 @@ public function clear(): void
 
 
 #### Returns
-`void`
+void
 
 ### count
 
@@ -54,19 +54,19 @@ public function count(): int
 
 
 #### Returns
-`int`
+int
 
 ### current
 
 
 ```php
-public function current(): [ModelInterface](Models/ModelInterface.md)
+public function current(): OpenFGA\Models\ModelInterface
 ```
 
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)`
+[ModelInterface](Models/ModelInterface.md)
 
 ### every
 
@@ -80,10 +80,10 @@ Checks if all items match the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | `callable` |  |
+| `callback` | callable |  |
 
 #### Returns
-`bool`
+bool
 
 ### filter
 
@@ -97,10 +97,10 @@ Filters the collection using a callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | `?callable` |  |
+| `callback` | ?callable |  |
 
 #### Returns
-`static`
+static
 
 ### first
 
@@ -114,7 +114,7 @@ Returns the first item that matches the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | `int` |  |
+| `offset` | int |  |
 
 
 ### get
@@ -128,7 +128,7 @@ public function get(int $offset)
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | `mixed` |  |
+| `offset` | mixed |  |
 
 
 ### isEmpty
@@ -141,7 +141,7 @@ public function isEmpty(): bool
 
 
 #### Returns
-`bool`
+bool
 
 ### jsonSerialize
 
@@ -153,7 +153,7 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### key
 
@@ -165,7 +165,7 @@ public function key(): int
 
 
 #### Returns
-`int`
+int
 
 ### next
 
@@ -177,7 +177,7 @@ public function next(): void
 
 
 #### Returns
-`void`
+void
 
 ### offsetExists
 
@@ -190,26 +190,26 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | `mixed` |  |
+| `offset` | mixed |  |
 
 #### Returns
-`bool`
+bool
 
 ### offsetGet
 
 
 ```php
-public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterface.md)
+public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `value` | `mixed` |  |
+| `value` | mixed |  |
 
 #### Returns
-`?[ModelInterface](Models/ModelInterface.md)`
+?[ModelInterface](Models/ModelInterface.md)
 
 ### offsetSet
 
@@ -222,11 +222,11 @@ public function offsetSet(mixed $offset, mixed $value): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
-| `offset` | `mixed` |  |
+| `$offset` | mixed |  |
+| `offset` | mixed |  |
 
 #### Returns
-`void`
+void
 
 ### offsetUnset
 
@@ -239,10 +239,10 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | `callable` |  |
+| `callback` | callable |  |
 
 #### Returns
-`void`
+void
 
 ### reduce
 
@@ -256,11 +256,11 @@ Reduces the collection to a single value.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | `mixed` |  |
-| `callback` | `callable` |  |
+| `$initial` | mixed |  |
+| `callback` | callable |  |
 
 #### Returns
-`mixed`
+mixed
 
 ### rewind
 
@@ -272,20 +272,20 @@ public function rewind(): void
 
 
 #### Returns
-`void`
+void
 
 ### schema
 
 *<small>Implements Models\Collections\IndexedCollectionInterface</small>*  
 
 ```php
-public function schema(): [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
+public function schema(): OpenFGA\Schema\CollectionSchemaInterface
 ```
 
 
 
 #### Returns
-`[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)`
+[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
 
 ### some
 
@@ -299,10 +299,10 @@ Checks if any item matches the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `items` | `` |  |
+| `items` |  |  |
 
 #### Returns
-`bool`
+bool
 
 ### toArray
 
@@ -314,7 +314,7 @@ public function toArray(): array
 
 
 #### Returns
-`array`
+array
 
 ### valid
 
@@ -326,7 +326,7 @@ public function valid(): bool
 
 
 #### Returns
-`bool`
+bool
 
 ### withItems
 
@@ -339,8 +339,8 @@ public function withItems(mixed $items): static
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$items` | `mixed` |  |
+| `$items` | mixed |  |
 
 #### Returns
-`static`
+static
 

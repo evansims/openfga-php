@@ -20,13 +20,13 @@
 
 
 ```php
-public function getDirectlyRelatedUserTypes(): ?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
+public function getDirectlyRelatedUserTypes(): ?OpenFGA\Models\Collections\RelationReferencesInterface
 ```
 
 
 
 #### Returns
-`?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)`
+?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
 
 ### getModule
 
@@ -38,19 +38,19 @@ public function getModule(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getSourceInfo
 
 
 ```php
-public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterface.md)
+public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
 ```
 
 
 
 #### Returns
-`?[SourceInfoInterface](Models/SourceInfoInterface.md)`
+?[SourceInfoInterface](Models/SourceInfoInterface.md)
 
 ### jsonSerialize
 
@@ -62,18 +62,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\RelationMetadataInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

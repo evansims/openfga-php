@@ -19,7 +19,7 @@ Return the unwrapped error of a `Failure`.
 
 
 #### Returns
-`Throwable`
+Throwable
 
 ### failed
 
@@ -32,7 +32,7 @@ Return `true` if this is a `Failure`.
 
 
 #### Returns
-`bool`
+bool
 
 ### failure
 
@@ -46,10 +46,10 @@ Execute on `Failure` and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`ResultInterface<T, E>`
+[ResultInterface](Results/ResultInterface.md)&lt;T, E&gt;
 
 ### recover
 
@@ -63,10 +63,10 @@ Execute on `Failure`, mutate the result, and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`ResultInterface<U, F>`
+[ResultInterface](Results/ResultInterface.md)&lt;U, F&gt;
 
 ### rethrow
 
@@ -80,10 +80,10 @@ Throw the error of a `Failure`, or continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$throwable` | `?Throwable` |  |
+| `$throwable` | ?Throwable |  |
 
 #### Returns
-`ResultInterface<T, E>`
+[ResultInterface](Results/ResultInterface.md)&lt;T, E&gt;
 
 ### succeeded
 
@@ -96,7 +96,7 @@ Return `true` if this is a `Success`.
 
 
 #### Returns
-`bool`
+bool
 
 ### success
 
@@ -110,10 +110,10 @@ Execute on `Success` and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`ResultInterface<T, E>`
+[ResultInterface](Results/ResultInterface.md)&lt;T, E&gt;
 
 ### then
 
@@ -127,16 +127,16 @@ Execute on `Success`, mutate the result, and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`ResultInterface<U, F>`
+[ResultInterface](Results/ResultInterface.md)&lt;U, F&gt;
 
 ### unwrap
 
 
 ```php
-public function unwrap(R $default = NULL): R | T
+public function unwrap(R $default = NULL): R|T
 ```
 
 Return the unwrapped value of a `Success`, or a default value.
@@ -144,10 +144,10 @@ Return the unwrapped value of a `Success`, or a default value.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$default` | `R` |  |
+| `$default` | R |  |
 
 #### Returns
-`R | T`
+R | T
 
 ### val
 
@@ -160,5 +160,5 @@ Return the unwrapped value of a `Success`.
 
 
 #### Returns
-`mixed`
+mixed
 

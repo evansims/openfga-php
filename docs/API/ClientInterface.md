@@ -12,21 +12,21 @@
 
 
 ```php
-public function assertLastRequest(): RequestInterface
+public function assertLastRequest(): \Psr\Http\Message\RequestInterface
 ```
 
 Retrieves the last HTTP request made by the client.
 
 
 #### Returns
-`RequestInterface`
+RequestInterface
  The last request
 
 ### check
 
 
 ```php
-public function check(StoreInterface | string $store, AuthorizationModelInterface | string $model, TupleKeyInterface $tupleKey, null | bool $trace = NULL, null | object $context = NULL, null | TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null | Consistency $consistency = NULL): ResultInterface<CheckResponseInterface, Throwable>
+public function check(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeyInterface $tupleKey, null|bool $trace = NULL, null|object $context = NULL, null|TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null|Consistency $consistency = NULL): ResultInterface<CheckResponseInterface, Throwable>
 ```
 
 Checks if a user has a specific relationship with an object.
@@ -34,23 +34,23 @@ Checks if a user has a specific relationship with an object.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to check against |
-| `$model` | `AuthorizationModelInterface | string` | The authorization model to use |
-| `$tupleKey` | `TupleKeyInterface` | The relationship to check |
-| `$trace` | `null | bool` | Whether to include a trace in the response |
-| `$context` | `null | object` | Additional context for the check |
-| `$contextualTuples` | `null | TupleKeysInterface<TupleKeyInterface>` | Additional tuples for contextual evaluation |
-| `$consistency` | `null | Consistency` | Override the default consistency level |
+| `$store` | StoreInterface | string | The store to check against |
+| `$model` | AuthorizationModelInterface | string | The authorization model to use |
+| `$tupleKey` | TupleKeyInterface | The relationship to check |
+| `$trace` | null | bool | Whether to include a trace in the response |
+| `$context` | null | object | Additional context for the check |
+| `$contextualTuples` | null | TupleKeysInterface&lt;TupleKeyInterface&gt; | Additional tuples for contextual evaluation |
+| `$consistency` | null | Consistency | Override the default consistency level |
 
 #### Returns
-`ResultInterface<CheckResponseInterface, Throwable>`
+ResultInterface&lt;CheckResponseInterface, Throwable&gt;
  The result of the check request
 
 ### createAuthorizationModel
 
 
 ```php
-public function createAuthorizationModel(StoreInterface | string $store, TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions, ConditionsInterface<ConditionInterface> $conditions, SchemaVersion $schemaVersion = SchemaVersion::V1_1): ResultInterface<CreateAuthorizationModelResponseInterface, Throwable>
+public function createAuthorizationModel(StoreInterface|string $store, TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions, ConditionsInterface<ConditionInterface> $conditions, SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): ResultInterface<CreateAuthorizationModelResponseInterface, Throwable>
 ```
 
 Creates a new authorization model with the given type definitions and conditions.
@@ -58,13 +58,13 @@ Creates a new authorization model with the given type definitions and conditions
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to create the model in |
-| `$typeDefinitions` | `TypeDefinitionsInterface<TypeDefinitionInterface>` | The type definitions for the model |
-| `$conditions` | `ConditionsInterface<ConditionInterface>` | The conditions for the model |
-| `$schemaVersion` | `SchemaVersion` | The schema version to use (default: 1.1) |
+| `$store` | StoreInterface | string | The store to create the model in |
+| `$typeDefinitions` | TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt; | The type definitions for the model |
+| `$conditions` | ConditionsInterface&lt;ConditionInterface&gt; | The conditions for the model |
+| `$schemaVersion` | SchemaVersion | The schema version to use (default: 1.1) |
 
 #### Returns
-`ResultInterface<CreateAuthorizationModelResponseInterface, Throwable>`
+ResultInterface&lt;CreateAuthorizationModelResponseInterface, Throwable&gt;
  The result of the authorization model creation request
 
 ### createStore
@@ -79,17 +79,17 @@ Creates a new store with the given name.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | `string` | The name for the new store |
+| `$name` | string | The name for the new store |
 
 #### Returns
-`ResultInterface<CreateStoreResponseInterface, Throwable>`
+ResultInterface&lt;CreateStoreResponseInterface, Throwable&gt;
  The result of the store creation request
 
 ### deleteStore
 
 
 ```php
-public function deleteStore(StoreInterface | string $store): ResultInterface<DeleteStoreResponseInterface, Throwable>
+public function deleteStore(StoreInterface|string $store): ResultInterface<DeleteStoreResponseInterface, Throwable>
 ```
 
 Deletes a store.
@@ -97,10 +97,10 @@ Deletes a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to delete |
+| `$store` | StoreInterface | string | The store to delete |
 
 #### Returns
-`ResultInterface<DeleteStoreResponseInterface, Throwable>`
+ResultInterface&lt;DeleteStoreResponseInterface, Throwable&gt;
  The result of the store deletion request
 
 ### dsl
@@ -115,17 +115,17 @@ Parses a DSL string and returns an AuthorizationModel.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$dsl` | `string` | The DSL string to parse |
+| `$dsl` | string | The DSL string to parse |
 
 #### Returns
-`ResultInterface<AuthorizationModelInterface, Throwable>`
+ResultInterface&lt;AuthorizationModelInterface, Throwable&gt;
  The result of the DSL transformation request
 
 ### expand
 
 
 ```php
-public function expand(StoreInterface | string $store, TupleKeyInterface $tupleKey, null | AuthorizationModelInterface | string $model = NULL, null | TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null | Consistency $consistency = NULL): ResultInterface<ExpandResponseInterface, Throwable>
+public function expand(StoreInterface|string $store, TupleKeyInterface $tupleKey, null|AuthorizationModelInterface|string $model = NULL, null|TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null|Consistency $consistency = NULL): ResultInterface<ExpandResponseInterface, Throwable>
 ```
 
 Expands a relationship tuple to show all users that have the relationship.
@@ -133,21 +133,21 @@ Expands a relationship tuple to show all users that have the relationship.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store containing the tuple |
-| `$tupleKey` | `TupleKeyInterface` | The tuple to expand |
-| `$model` | `null | AuthorizationModelInterface | string` | The authorization model to use |
-| `$contextualTuples` | `null | TupleKeysInterface<TupleKeyInterface>` | Additional tuples for contextual evaluation |
-| `$consistency` | `null | Consistency` | Override the default consistency level |
+| `$store` | StoreInterface | string | The store containing the tuple |
+| `$tupleKey` | TupleKeyInterface | The tuple to expand |
+| `$model` | null | AuthorizationModelInterface | string | The authorization model to use |
+| `$contextualTuples` | null | TupleKeysInterface&lt;TupleKeyInterface&gt; | Additional tuples for contextual evaluation |
+| `$consistency` | null | Consistency | Override the default consistency level |
 
 #### Returns
-`ResultInterface<ExpandResponseInterface, Throwable>`
+ResultInterface&lt;ExpandResponseInterface, Throwable&gt;
  The result of the expansion request
 
 ### getAuthorizationModel
 
 
 ```php
-public function getAuthorizationModel(StoreInterface | string $store, AuthorizationModelInterface | string $model): ResultInterface<GetAuthorizationModelResponseInterface, Throwable>
+public function getAuthorizationModel(StoreInterface|string $store, AuthorizationModelInterface|string $model): ResultInterface<GetAuthorizationModelResponseInterface, Throwable>
 ```
 
 Retrieves an authorization model by ID.
@@ -155,11 +155,11 @@ Retrieves an authorization model by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store containing the model |
-| `$model` | `AuthorizationModelInterface | string` | The model to retrieve |
+| `$store` | StoreInterface | string | The store containing the model |
+| `$model` | AuthorizationModelInterface | string | The model to retrieve |
 
 #### Returns
-`ResultInterface<GetAuthorizationModelResponseInterface, Throwable>`
+ResultInterface&lt;GetAuthorizationModelResponseInterface, Throwable&gt;
  The result of the authorization model retrieval request
 
 ### getLastRequest
@@ -173,7 +173,7 @@ Retrieves the last HTTP request made by the client.
 
 
 #### Returns
-`?Psr\Http\Message\RequestInterface`
+?Psr\Http\Message\RequestInterface
 
 ### getLastResponse
 
@@ -186,13 +186,13 @@ Retrieves the last HTTP response received by the client.
 
 
 #### Returns
-`?Psr\Http\Message\ResponseInterface`
+?Psr\Http\Message\ResponseInterface
 
 ### getStore
 
 
 ```php
-public function getStore(StoreInterface | string $store): ResultInterface<GetStoreResponseInterface, Throwable>
+public function getStore(StoreInterface|string $store): ResultInterface<GetStoreResponseInterface, Throwable>
 ```
 
 Retrieves store details by ID.
@@ -200,17 +200,17 @@ Retrieves store details by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to retrieve |
+| `$store` | StoreInterface | string | The store to retrieve |
 
 #### Returns
-`ResultInterface<GetStoreResponseInterface, Throwable>`
+ResultInterface&lt;GetStoreResponseInterface, Throwable&gt;
  The result of the store retrieval request
 
 ### listAuthorizationModels
 
 
 ```php
-public function listAuthorizationModels(StoreInterface | string $store, null | string $continuationToken = NULL, ?int $pageSize = NULL): ResultInterface<ListAuthorizationModelsResponseInterface, Throwable>
+public function listAuthorizationModels(StoreInterface|string $store, null|string $continuationToken = NULL, ?int $pageSize = NULL): ResultInterface<ListAuthorizationModelsResponseInterface, Throwable>
 ```
 
 Lists authorization models in a store with pagination.
@@ -218,19 +218,19 @@ Lists authorization models in a store with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to list models from |
-| `$continuationToken` | `null | string` | Token for pagination |
-| `$pageSize` | `?int` |  |
+| `$store` | StoreInterface | string | The store to list models from |
+| `$continuationToken` | null | string | Token for pagination |
+| `$pageSize` | ?int |  |
 
 #### Returns
-`ResultInterface<ListAuthorizationModelsResponseInterface, Throwable>`
+ResultInterface&lt;ListAuthorizationModelsResponseInterface, Throwable&gt;
  The result of the authorization model listing request
 
 ### listObjects
 
 
 ```php
-public function listObjects(StoreInterface | string $store, AuthorizationModelInterface | string $model, string $type, string $relation, string $user, null | object $context = NULL, null | TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null | Consistency $consistency = NULL): ResultInterface<ListObjectsResponseInterface, Throwable>
+public function listObjects(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $type, string $relation, string $user, null|object $context = NULL, null|TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null|Consistency $consistency = NULL): ResultInterface<ListObjectsResponseInterface, Throwable>
 ```
 
 Lists objects that have a specific relationship with a user.
@@ -238,24 +238,24 @@ Lists objects that have a specific relationship with a user.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to query |
-| `$model` | `AuthorizationModelInterface | string` | The authorization model to use |
-| `$type` | `string` | The type of objects to list |
-| `$relation` | `string` | The relationship to check |
-| `$user` | `string` | The user to check relationships for |
-| `$context` | `null | object` | Additional context for evaluation |
-| `$contextualTuples` | `null | TupleKeysInterface<TupleKeyInterface>` | Additional tuples for contextual evaluation |
-| `$consistency` | `null | Consistency` | Override the default consistency level |
+| `$store` | StoreInterface | string | The store to query |
+| `$model` | AuthorizationModelInterface | string | The authorization model to use |
+| `$type` | string | The type of objects to list |
+| `$relation` | string | The relationship to check |
+| `$user` | string | The user to check relationships for |
+| `$context` | null | object | Additional context for evaluation |
+| `$contextualTuples` | null | TupleKeysInterface&lt;TupleKeyInterface&gt; | Additional tuples for contextual evaluation |
+| `$consistency` | null | Consistency | Override the default consistency level |
 
 #### Returns
-`ResultInterface<ListObjectsResponseInterface, Throwable>`
+ResultInterface&lt;ListObjectsResponseInterface, Throwable&gt;
  The result of the object listing request
 
 ### listStores
 
 
 ```php
-public function listStores(null | string $continuationToken = NULL, ?int $pageSize = NULL): ResultInterface<ListStoresResponseInterface, Throwable>
+public function listStores(null|string $continuationToken = NULL, ?int $pageSize = NULL): ResultInterface<ListStoresResponseInterface, Throwable>
 ```
 
 Lists all stores with pagination.
@@ -263,18 +263,18 @@ Lists all stores with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$continuationToken` | `null | string` | Token for pagination |
-| `$pageSize` | `?int` |  |
+| `$continuationToken` | null | string | Token for pagination |
+| `$pageSize` | ?int |  |
 
 #### Returns
-`ResultInterface<ListStoresResponseInterface, Throwable>`
+ResultInterface&lt;ListStoresResponseInterface, Throwable&gt;
  The result of the store listing request
 
 ### listTupleChanges
 
 
 ```php
-public function listTupleChanges(StoreInterface | string $store, null | string $continuationToken = NULL, ?int $pageSize = NULL, null | string $type = NULL, null | DateTimeImmutable $startTime = NULL): ResultInterface<ListTupleChangesResponseInterface, Throwable>
+public function listTupleChanges(StoreInterface|string $store, null|string $continuationToken = NULL, ?int $pageSize = NULL, null|string $type = NULL, null|DateTimeImmutable $startTime = NULL): ResultInterface<ListTupleChangesResponseInterface, Throwable>
 ```
 
 Lists changes to relationship tuples in a store.
@@ -282,21 +282,21 @@ Lists changes to relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to list changes for |
-| `$continuationToken` | `null | string` | Token for pagination |
-| `$pageSize` | `?int` |  |
-| `$type` | `null | string` | Filter changes by type |
-| `$startTime` | `null | DateTimeImmutable` | Only include changes at or after this time (inclusive) |
+| `$store` | StoreInterface | string | The store to list changes for |
+| `$continuationToken` | null | string | Token for pagination |
+| `$pageSize` | ?int |  |
+| `$type` | null | string | Filter changes by type |
+| `$startTime` | null | DateTimeImmutable | Only include changes at or after this time (inclusive) |
 
 #### Returns
-`ResultInterface<ListTupleChangesResponseInterface, Throwable>`
+ResultInterface&lt;ListTupleChangesResponseInterface, Throwable&gt;
  The result of the tuple change listing request
 
 ### listUsers
 
 
 ```php
-public function listUsers(StoreInterface | string $store, AuthorizationModelInterface | string $model, string $object, string $relation, UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters, null | object $context = NULL, null | TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null | Consistency $consistency = NULL): ResultInterface<ListUsersResponseInterface, Throwable>
+public function listUsers(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $object, string $relation, UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters, null|object $context = NULL, null|TupleKeysInterface<TupleKeyInterface> $contextualTuples = NULL, null|Consistency $consistency = NULL): ResultInterface<ListUsersResponseInterface, Throwable>
 ```
 
 Lists users that have a specific relationship with an object.
@@ -304,24 +304,24 @@ Lists users that have a specific relationship with an object.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to query |
-| `$model` | `AuthorizationModelInterface | string` | The authorization model to use |
-| `$object` | `string` | The object to check relationships for |
-| `$relation` | `string` | The relationship to check |
-| `$userFilters` | `UserTypeFiltersInterface<UserTypeFilterInterface>` | Filters for user types to include |
-| `$context` | `null | object` | Additional context for evaluation |
-| `$contextualTuples` | `null | TupleKeysInterface<TupleKeyInterface>` | Additional tuples for contextual evaluation |
-| `$consistency` | `null | Consistency` | Override the default consistency level |
+| `$store` | StoreInterface | string | The store to query |
+| `$model` | AuthorizationModelInterface | string | The authorization model to use |
+| `$object` | string | The object to check relationships for |
+| `$relation` | string | The relationship to check |
+| `$userFilters` | UserTypeFiltersInterface&lt;UserTypeFilterInterface&gt; | Filters for user types to include |
+| `$context` | null | object | Additional context for evaluation |
+| `$contextualTuples` | null | TupleKeysInterface&lt;TupleKeyInterface&gt; | Additional tuples for contextual evaluation |
+| `$consistency` | null | Consistency | Override the default consistency level |
 
 #### Returns
-`ResultInterface<ListUsersResponseInterface, Throwable>`
+ResultInterface&lt;ListUsersResponseInterface, Throwable&gt;
  The result of the user listing request
 
 ### readAssertions
 
 
 ```php
-public function readAssertions(StoreInterface | string $store, AuthorizationModelInterface | string $model): ResultInterface<ReadAssertionsResponseInterface, Throwable>
+public function readAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model): ResultInterface<ReadAssertionsResponseInterface, Throwable>
 ```
 
 Retrieves assertions for an authorization model.
@@ -329,18 +329,18 @@ Retrieves assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store containing the model |
-| `$model` | `AuthorizationModelInterface | string` | The model to get assertions for |
+| `$store` | StoreInterface | string | The store containing the model |
+| `$model` | AuthorizationModelInterface | string | The model to get assertions for |
 
 #### Returns
-`ResultInterface<ReadAssertionsResponseInterface, Throwable>`
+ResultInterface&lt;ReadAssertionsResponseInterface, Throwable&gt;
  The result of the assertions read request
 
 ### readTuples
 
 
 ```php
-public function readTuples(StoreInterface | string $store, TupleKeyInterface $tupleKey, null | string $continuationToken = NULL, ?int $pageSize = NULL, null | Consistency $consistency = NULL): ResultInterface<ReadTuplesResponseInterface, Throwable>
+public function readTuples(StoreInterface|string $store, TupleKeyInterface $tupleKey, null|string $continuationToken = NULL, ?int $pageSize = NULL, null|Consistency $consistency = NULL): ResultInterface<ReadTuplesResponseInterface, Throwable>
 ```
 
 Reads relationship tuples from a store with optional filtering and pagination.
@@ -348,21 +348,21 @@ Reads relationship tuples from a store with optional filtering and pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to read from |
-| `$tupleKey` | `TupleKeyInterface` | Filter tuples by this key (return all if null) |
-| `$continuationToken` | `null | string` | Token for pagination |
-| `$pageSize` | `?int` |  |
-| `$consistency` | `null | Consistency` | Override the default consistency level |
+| `$store` | StoreInterface | string | The store to read from |
+| `$tupleKey` | TupleKeyInterface | Filter tuples by this key (return all if null) |
+| `$continuationToken` | null | string | Token for pagination |
+| `$pageSize` | ?int |  |
+| `$consistency` | null | Consistency | Override the default consistency level |
 
 #### Returns
-`ResultInterface<ReadTuplesResponseInterface, Throwable>`
+ResultInterface&lt;ReadTuplesResponseInterface, Throwable&gt;
  The result of the tuple read request
 
 ### writeAssertions
 
 
 ```php
-public function writeAssertions(StoreInterface | string $store, AuthorizationModelInterface | string $model, AssertionsInterface<AssertionInterface> $assertions): ResultInterface<WriteAssertionsResponseInterface, Throwable>
+public function writeAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model, AssertionsInterface<AssertionInterface> $assertions): ResultInterface<WriteAssertionsResponseInterface, Throwable>
 ```
 
 Creates or updates assertions for an authorization model.
@@ -370,19 +370,19 @@ Creates or updates assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store containing the model |
-| `$model` | `AuthorizationModelInterface | string` | The model to update assertions for |
-| `$assertions` | `AssertionsInterface<AssertionInterface>` | The assertions to upsert |
+| `$store` | StoreInterface | string | The store containing the model |
+| `$model` | AuthorizationModelInterface | string | The model to update assertions for |
+| `$assertions` | AssertionsInterface&lt;AssertionInterface&gt; | The assertions to upsert |
 
 #### Returns
-`ResultInterface<WriteAssertionsResponseInterface, Throwable>`
+ResultInterface&lt;WriteAssertionsResponseInterface, Throwable&gt;
  The result of the assertion write request
 
 ### writeTuples
 
 
 ```php
-public function writeTuples(StoreInterface | string $store, AuthorizationModelInterface | string $model, null | TupleKeysInterface<TupleKeyInterface> $writes = NULL, null | TupleKeysInterface<TupleKeyInterface> $deletes = NULL): ResultInterface<WriteTuplesResponseInterface, Throwable>
+public function writeTuples(StoreInterface|string $store, AuthorizationModelInterface|string $model, null|TupleKeysInterface<TupleKeyInterface> $writes = NULL, null|TupleKeysInterface<TupleKeyInterface> $deletes = NULL): ResultInterface<WriteTuplesResponseInterface, Throwable>
 ```
 
 Writes or deletes relationship tuples in a store.
@@ -390,12 +390,12 @@ Writes or deletes relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | `StoreInterface | string` | The store to modify |
-| `$model` | `AuthorizationModelInterface | string` | The authorization model to use |
-| `$writes` | `null | TupleKeysInterface<TupleKeyInterface>` | Tuples to write (create or update) |
-| `$deletes` | `null | TupleKeysInterface<TupleKeyInterface>` | Tuples to delete |
+| `$store` | StoreInterface | string | The store to modify |
+| `$model` | AuthorizationModelInterface | string | The authorization model to use |
+| `$writes` | null | TupleKeysInterface&lt;TupleKeyInterface&gt; | Tuples to write (create or update) |
+| `$deletes` | null | TupleKeysInterface&lt;TupleKeyInterface&gt; | Tuples to delete |
 
 #### Returns
-`ResultInterface<WriteTuplesResponseInterface, Throwable>`
+ResultInterface&lt;WriteTuplesResponseInterface, Throwable&gt;
  The result of the tuple write request
 

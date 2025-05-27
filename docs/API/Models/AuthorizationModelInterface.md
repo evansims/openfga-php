@@ -22,20 +22,20 @@ Return a DSL representation of the model.
 
 
 #### Returns
-`string`
+string
 
 ### getConditions
 
 
 ```php
-public function getConditions(): null | ConditionsInterface<ConditionInterface>
+public function getConditions(): null|ConditionsInterface<ConditionInterface>
 ```
 
 Return the conditions of the model.
 
 
 #### Returns
-`null | ConditionsInterface<ConditionInterface>`
+null | ConditionsInterface&lt;[ConditionInterface](Models/ConditionInterface.md)&gt;
 
 ### getId
 
@@ -48,20 +48,20 @@ Return the ID of the model.
 
 
 #### Returns
-`string`
+string
 
 ### getSchemaVersion
 
 
 ```php
-public function getSchemaVersion(): SchemaVersion
+public function getSchemaVersion(): OpenFGA\Models\Enums\SchemaVersion
 ```
 
 Return the schema version of the model.
 
 
 #### Returns
-`SchemaVersion`
+SchemaVersion
 
 ### getTypeDefinitions
 
@@ -74,7 +74,7 @@ Return the type definitions of the model.
 
 
 #### Returns
-`TypeDefinitionsInterface<TypeDefinitionInterface>`
+TypeDefinitionsInterface&lt;[TypeDefinitionInterface](Models/TypeDefinitionInterface.md)&gt;
 
 ### jsonSerialize
 
@@ -87,5 +87,5 @@ Return a JSON representation of the model.
 
 
 #### Returns
-`array`
+array
 

@@ -21,7 +21,7 @@ public function getCondition(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getRelation
 
@@ -33,7 +33,7 @@ public function getRelation(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getType
 
@@ -45,7 +45,7 @@ public function getType(): string
 
 
 #### Returns
-`string`
+string
 
 ### getWildcard
 
@@ -57,7 +57,7 @@ public function getWildcard(): ?object
 
 
 #### Returns
-`?object`
+?object
 
 ### jsonSerialize
 
@@ -69,5 +69,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

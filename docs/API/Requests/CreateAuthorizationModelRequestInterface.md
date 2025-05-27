@@ -20,35 +20,35 @@ public function getConditions(): ConditionsInterface<ConditionInterface>
 
 
 #### Returns
-`ConditionsInterface<ConditionInterface>`
+ConditionsInterface&lt;ConditionInterface&gt;
 
 ### getRequest
 
 
 ```php
-public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
+public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | `StreamFactoryInterface` |  |
+| `$streamFactory` | StreamFactoryInterface |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)`
+[RequestContext](Network/RequestContext.md)
 
 ### getSchemaVersion
 
 
 ```php
-public function getSchemaVersion(): SchemaVersion
+public function getSchemaVersion(): OpenFGA\Models\Enums\SchemaVersion
 ```
 
 
 
 #### Returns
-`SchemaVersion`
+SchemaVersion
 
 ### getStore
 
@@ -60,7 +60,7 @@ public function getStore(): string
 
 
 #### Returns
-`string`
+string
 
 ### getTypeDefinitions
 
@@ -72,5 +72,5 @@ public function getTypeDefinitions(): TypeDefinitionsInterface<TypeDefinitionInt
 
 
 #### Returns
-`TypeDefinitionsInterface<TypeDefinitionInterface>`
+TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt;
 

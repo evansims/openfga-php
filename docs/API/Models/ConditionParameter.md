@@ -20,25 +20,25 @@
 
 
 ```php
-public function getGenericTypes(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+public function getGenericTypes(): ?OpenFGA\Models\Collections\ConditionParametersInterface
 ```
 
 
 
 #### Returns
-`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)`
+?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 
 ### getTypeName
 
 
 ```php
-public function getTypeName(): TypeName
+public function getTypeName(): OpenFGA\Models\Enums\TypeName
 ```
 
 
 
 #### Returns
-`TypeName`
+TypeName
 
 ### jsonSerialize
 
@@ -50,18 +50,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\ConditionParameterInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

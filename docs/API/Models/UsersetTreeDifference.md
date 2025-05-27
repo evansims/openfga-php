@@ -20,25 +20,25 @@
 
 
 ```php
-public function getBase(): [NodeInterface](Models/NodeInterface.md)
+public function getBase(): OpenFGA\Models\NodeInterface
 ```
 
 
 
 #### Returns
-`[NodeInterface](Models/NodeInterface.md)`
+[NodeInterface](Models/NodeInterface.md)
 
 ### getSubtract
 
 
 ```php
-public function getSubtract(): [NodeInterface](Models/NodeInterface.md)
+public function getSubtract(): OpenFGA\Models\NodeInterface
 ```
 
 
 
 #### Returns
-`[NodeInterface](Models/NodeInterface.md)`
+[NodeInterface](Models/NodeInterface.md)
 
 ### jsonSerialize
 
@@ -50,18 +50,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\UsersetTreeDifferenceInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

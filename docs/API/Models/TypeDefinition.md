@@ -20,25 +20,25 @@
 
 
 ```php
-public function getMetadata(): ?[MetadataInterface](Models/MetadataInterface.md)
+public function getMetadata(): ?OpenFGA\Models\MetadataInterface
 ```
 
 
 
 #### Returns
-`?[MetadataInterface](Models/MetadataInterface.md)`
+?[MetadataInterface](Models/MetadataInterface.md)
 
 ### getRelations
 
 
 ```php
-public function getRelations(): ?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
+public function getRelations(): ?OpenFGA\Models\Collections\TypeDefinitionRelationsInterface
 ```
 
 
 
 #### Returns
-`?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)`
+?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
 
 ### getType
 
@@ -50,7 +50,7 @@ public function getType(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -62,18 +62,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\TypeDefinitionInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

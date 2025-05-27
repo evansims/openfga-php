@@ -20,25 +20,25 @@
 
 
 ```php
-public function getBase(): [UsersetInterface](Models/UsersetInterface.md)
+public function getBase(): OpenFGA\Models\UsersetInterface
 ```
 
 
 
 #### Returns
-`[UsersetInterface](Models/UsersetInterface.md)`
+[UsersetInterface](Models/UsersetInterface.md)
 
 ### getSubtract
 
 
 ```php
-public function getSubtract(): [UsersetInterface](Models/UsersetInterface.md)
+public function getSubtract(): OpenFGA\Models\UsersetInterface
 ```
 
 
 
 #### Returns
-`[UsersetInterface](Models/UsersetInterface.md)`
+[UsersetInterface](Models/UsersetInterface.md)
 
 ### jsonSerialize
 
@@ -50,18 +50,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\DifferenceV1Interface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

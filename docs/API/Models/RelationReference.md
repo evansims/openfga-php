@@ -26,7 +26,7 @@ public function getCondition(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getRelation
 
@@ -38,7 +38,7 @@ public function getRelation(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getType
 
@@ -50,7 +50,7 @@ public function getType(): string
 
 
 #### Returns
-`string`
+string
 
 ### getWildcard
 
@@ -62,7 +62,7 @@ public function getWildcard(): ?object
 
 
 #### Returns
-`?object`
+?object
 
 ### jsonSerialize
 
@@ -74,18 +74,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\RelationReferenceInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

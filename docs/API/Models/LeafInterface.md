@@ -15,37 +15,37 @@
 
 
 ```php
-public function getComputed(): ?[ComputedInterface](Models/ComputedInterface.md)
+public function getComputed(): ?OpenFGA\Models\ComputedInterface
 ```
 
 
 
 #### Returns
-`?[ComputedInterface](Models/ComputedInterface.md)`
+?[ComputedInterface](Models/ComputedInterface.md)
 
 ### getTupleToUserset
 
 
 ```php
-public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
+public function getTupleToUserset(): ?OpenFGA\Models\UsersetTreeTupleToUsersetInterface
 ```
 
 
 
 #### Returns
-`?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)`
+?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
 
 ### getUsers
 
 
 ```php
-public function getUsers(): null | UsersListInterface<UsersListUserInterface>
+public function getUsers(): null|UsersListInterface<UsersListUserInterface>
 ```
 
 
 
 #### Returns
-`null | UsersListInterface<UsersListUserInterface>`
+null | UsersListInterface&lt;[UsersListUserInterface](Models/UsersListUserInterface.md)&gt;
 
 ### jsonSerialize
 
@@ -57,5 +57,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

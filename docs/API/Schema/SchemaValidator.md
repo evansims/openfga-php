@@ -19,7 +19,7 @@ Get all registered schemas.
 
 
 #### Returns
-`array<string, SchemaInterface>`
+array&lt;string, [SchemaInterface](Schema/SchemaInterface.md)&gt;
 
 ### registerSchema
 
@@ -33,10 +33,10 @@ Register a schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | `SchemaInterface` |  |
+| `$schema` | [SchemaInterface](Schema/SchemaInterface.md) |  |
 
 #### Returns
-`self`
+self
 
 ### validateAndTransform
 
@@ -49,9 +49,9 @@ public function validateAndTransform(mixed $data, string $className): T
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$data` | `mixed` |  |
-| `$className` | `string` |  |
+| `$data` | mixed |  |
+| `$className` | string |  |
 
 #### Returns
-`T`
+T
 

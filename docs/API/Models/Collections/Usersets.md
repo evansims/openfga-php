@@ -20,18 +20,18 @@
 
 
 ```php
-public function add(string $key, [ModelInterface](Models/ModelInterface.md) $item): static
+public function add(string $key, OpenFGA\Models\ModelInterface $item): static
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
-| `key` | `string` |  |
+| `$key` | string |  |
+| `key` | string |  |
 
 #### Returns
-`static`
+static
 
 ### count
 
@@ -43,19 +43,19 @@ public function count(): int
 
 
 #### Returns
-`int`
+int
 
 ### current
 
 
 ```php
-public function current(): [ModelInterface](Models/ModelInterface.md)
+public function current(): OpenFGA\Models\ModelInterface
 ```
 
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)`
+[ModelInterface](Models/ModelInterface.md)
 
 ### get
 
@@ -68,7 +68,7 @@ public function get(string $key)
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `key` | `string` |  |
+| `key` | string |  |
 
 
 ### has
@@ -83,10 +83,10 @@ Check if a key exists in the collection.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | `mixed` |  |
+| `offset` | mixed |  |
 
 #### Returns
-`bool`
+bool
 
 ### jsonSerialize
 
@@ -98,7 +98,7 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### key
 
@@ -110,7 +110,7 @@ public function key(): string
 
 
 #### Returns
-`string`
+string
 
 ### next
 
@@ -122,7 +122,7 @@ public function next(): void
 
 
 #### Returns
-`void`
+void
 
 ### offsetExists
 
@@ -135,10 +135,10 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | `mixed` |  |
+| `offset` | mixed |  |
 
 #### Returns
-`bool`
+bool
 
 ### offsetGet
 
@@ -151,7 +151,7 @@ public function offsetGet(mixed $offset)
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `value` | `mixed` |  |
+| `value` | mixed |  |
 
 
 ### offsetSet
@@ -165,11 +165,11 @@ public function offsetSet(mixed $offset, mixed $value): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
-| `offset` | `mixed` |  |
+| `$offset` | mixed |  |
+| `offset` | mixed |  |
 
 #### Returns
-`void`
+void
 
 ### offsetUnset
 
@@ -182,10 +182,10 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`void`
+void
 
 ### rewind
 
@@ -197,20 +197,20 @@ public function rewind(): void
 
 
 #### Returns
-`void`
+void
 
 ### schema
 
 *<small>Implements Models\Collections\KeyedCollectionInterface</small>*  
 
 ```php
-public function schema(): [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
+public function schema(): OpenFGA\Schema\CollectionSchemaInterface
 ```
 
 
 
 #### Returns
-`[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)`
+[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
 
 ### toArray
 
@@ -222,7 +222,7 @@ public function toArray(): array
 
 
 #### Returns
-`array`
+array
 
 ### valid
 
@@ -234,5 +234,5 @@ public function valid(): bool
 
 
 #### Returns
-`bool`
+bool
 

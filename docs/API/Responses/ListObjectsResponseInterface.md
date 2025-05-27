@@ -20,5 +20,5 @@ public function getObjects(): array<int, string>
 
 
 #### Returns
-`array<int, string>`
+array&lt;int, string&gt;
 

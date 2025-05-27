@@ -20,5 +20,5 @@ public function getUsers(): UsersInterface<UserInterface>
 
 
 #### Returns
-`UsersInterface<UserInterface>`
+UsersInterface&lt;UserInterface&gt;
 

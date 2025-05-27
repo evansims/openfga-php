@@ -15,13 +15,13 @@
 
 
 ```php
-public function getRoot(): [NodeInterface](Models/NodeInterface.md)
+public function getRoot(): OpenFGA\Models\NodeInterface
 ```
 
 
 
 #### Returns
-`[NodeInterface](Models/NodeInterface.md)`
+[NodeInterface](Models/NodeInterface.md)
 
 ### jsonSerialize
 
@@ -33,5 +33,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

@@ -20,7 +20,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getTuples
 
@@ -32,5 +32,5 @@ public function getTuples(): TuplesInterface<TupleInterface>
 
 
 #### Returns
-`TuplesInterface<TupleInterface>`
+TuplesInterface&lt;TupleInterface&gt;
 

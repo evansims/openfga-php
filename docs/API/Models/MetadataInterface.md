@@ -21,31 +21,31 @@ public function getModule(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getRelations
 
 
 ```php
-public function getRelations(): ?[RelationMetadataInterface](Models/RelationMetadataInterface.md)
+public function getRelations(): ?OpenFGA\Models\RelationMetadataInterface
 ```
 
 
 
 #### Returns
-`?[RelationMetadataInterface](Models/RelationMetadataInterface.md)`
+?[RelationMetadataInterface](Models/RelationMetadataInterface.md)
 
 ### getSourceInfo
 
 
 ```php
-public function getSourceInfo(): ?[SourceInfoInterface](Models/SourceInfoInterface.md)
+public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
 ```
 
 
 
 #### Returns
-`?[SourceInfoInterface](Models/SourceInfoInterface.md)`
+?[SourceInfoInterface](Models/SourceInfoInterface.md)
 
 ### jsonSerialize
 
@@ -57,5 +57,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

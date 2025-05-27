@@ -15,25 +15,25 @@
 
 
 ```php
-public function getContext(): null | array<string, mixed>
+public function getContext(): null|array<string, mixed>
 ```
 
 
 
 #### Returns
-`null | array<string, mixed>`
+null | array&lt;string, mixed&gt;
 
 ### getContextualTuples
 
 
 ```php
-public function getContextualTuples(): null | TupleKeysInterface<TupleKeyInterface>
+public function getContextualTuples(): null|TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`null | TupleKeysInterface<TupleKeyInterface>`
+null | TupleKeysInterface&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt;
 
 ### getExpectation
 
@@ -45,19 +45,19 @@ public function getExpectation(): bool
 
 
 #### Returns
-`bool`
+bool
 
 ### getTupleKey
 
 
 ```php
-public function getTupleKey(): [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
+public function getTupleKey(): OpenFGA\Models\AssertionTupleKeyInterface
 ```
 
 
 
 #### Returns
-`[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)`
+[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
 
 ### jsonSerialize
 
@@ -69,5 +69,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

@@ -15,13 +15,13 @@
 
 
 ```php
-public function getConsistency(): ?Consistency
+public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
 ```
 
 
 
 #### Returns
-`?Consistency`
+?Consistency
 
 ### getContext
 
@@ -33,19 +33,19 @@ public function getContext(): ?object
 
 
 #### Returns
-`?object`
+?object
 
 ### getContextualTuples
 
 
 ```php
-public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 
 ### getModel
 
@@ -57,7 +57,7 @@ public function getModel(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getRelation
 
@@ -69,23 +69,23 @@ public function getRelation(): string
 
 
 #### Returns
-`string`
+string
 
 ### getRequest
 
 
 ```php
-public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
+public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | `StreamFactoryInterface` |  |
+| `$streamFactory` | StreamFactoryInterface |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)`
+[RequestContext](Network/RequestContext.md)
 
 ### getStore
 
@@ -97,7 +97,7 @@ public function getStore(): string
 
 
 #### Returns
-`string`
+string
 
 ### getType
 
@@ -109,7 +109,7 @@ public function getType(): string
 
 
 #### Returns
-`string`
+string
 
 ### getUser
 
@@ -121,5 +121,5 @@ public function getUser(): string
 
 
 #### Returns
-`string`
+string
 

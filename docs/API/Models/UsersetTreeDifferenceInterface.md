@@ -15,25 +15,25 @@
 
 
 ```php
-public function getBase(): [NodeInterface](Models/NodeInterface.md)
+public function getBase(): OpenFGA\Models\NodeInterface
 ```
 
 
 
 #### Returns
-`[NodeInterface](Models/NodeInterface.md)`
+[NodeInterface](Models/NodeInterface.md)
 
 ### getSubtract
 
 
 ```php
-public function getSubtract(): [NodeInterface](Models/NodeInterface.md)
+public function getSubtract(): OpenFGA\Models\NodeInterface
 ```
 
 
 
 #### Returns
-`[NodeInterface](Models/NodeInterface.md)`
+[NodeInterface](Models/NodeInterface.md)
 
 ### jsonSerialize
 
@@ -45,5 +45,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

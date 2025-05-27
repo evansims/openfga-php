@@ -21,19 +21,19 @@ public function getModule(): string
 
 
 #### Returns
-`string`
+string
 
 ### getSourceInfo
 
 
 ```php
-public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterface.md)
+public function getSourceInfo(): OpenFGA\Models\SourceInfoInterface
 ```
 
 
 
 #### Returns
-`[SourceInfoInterface](Models/SourceInfoInterface.md)`
+[SourceInfoInterface](Models/SourceInfoInterface.md)
 
 ### jsonSerialize
 
@@ -45,5 +45,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

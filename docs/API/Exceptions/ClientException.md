@@ -22,7 +22,7 @@ public function context(): array<string, mixed>
 
 
 #### Returns
-`array<string, mixed>`
+array&lt;string, mixed&gt;
 
 ### getCode
 
@@ -44,7 +44,7 @@ public function getFile(): string
 
 
 #### Returns
-`string`
+string
 
 ### getLine
 
@@ -56,7 +56,7 @@ public function getLine(): int
 
 
 #### Returns
-`int`
+int
 
 ### getMessage
 
@@ -68,7 +68,7 @@ public function getMessage(): string
 
 
 #### Returns
-`string`
+string
 
 ### getPrevious
 
@@ -80,7 +80,7 @@ public function getPrevious(): ?Throwable
 
 
 #### Returns
-`?Throwable`
+?Throwable
 
 ### getTrace
 
@@ -92,7 +92,7 @@ public function getTrace(): array
 
 
 #### Returns
-`array`
+array
 
 ### getTraceAsString
 
@@ -104,19 +104,19 @@ public function getTraceAsString(): string
 
 
 #### Returns
-`string`
+string
 
 ### kind
 
 
 ```php
-public function kind(): ClientError | AuthenticationError | ConfigurationError | NetworkError | SerializationError
+public function kind(): OpenFGA\Exceptions\ClientError|OpenFGA\Exceptions\AuthenticationError|OpenFGA\Exceptions\ConfigurationError|OpenFGA\Exceptions\NetworkError|OpenFGA\Exceptions\SerializationError
 ```
 
 
 
 #### Returns
-`ClientError | AuthenticationError | ConfigurationError | NetworkError | SerializationError`
+ClientError | AuthenticationError | ConfigurationError | NetworkError | SerializationError
 
 ### request
 
@@ -128,7 +128,7 @@ public function request(): ?Psr\Http\Message\RequestInterface
 
 
 #### Returns
-`?Psr\Http\Message\RequestInterface`
+?Psr\Http\Message\RequestInterface
 
 ### response
 
@@ -140,5 +140,5 @@ public function response(): ?Psr\Http\Message\ResponseInterface
 
 
 #### Returns
-`?Psr\Http\Message\ResponseInterface`
+?Psr\Http\Message\ResponseInterface
 

@@ -20,13 +20,13 @@
 
 
 ```php
-public function getRoot(): [NodeInterface](Models/NodeInterface.md)
+public function getRoot(): OpenFGA\Models\NodeInterface
 ```
 
 
 
 #### Returns
-`[NodeInterface](Models/NodeInterface.md)`
+[NodeInterface](Models/NodeInterface.md)
 
 ### jsonSerialize
 
@@ -38,18 +38,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\UsersetTreeInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

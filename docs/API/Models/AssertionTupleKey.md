@@ -26,7 +26,7 @@ public function getObject(): string
 
 
 #### Returns
-`string`
+string
 
 ### getRelation
 
@@ -38,7 +38,7 @@ public function getRelation(): string
 
 
 #### Returns
-`string`
+string
 
 ### getUser
 
@@ -50,7 +50,7 @@ public function getUser(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -62,18 +62,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\AssertionTupleKeyInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

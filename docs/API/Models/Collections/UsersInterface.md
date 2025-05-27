@@ -26,10 +26,10 @@ public function add(T $item): static
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$item` | `T` |  |
+| `$item` | T |  |
 
 #### Returns
-`static`
+static
 
 ### clear
 
@@ -41,7 +41,7 @@ public function clear(): void
 
 
 #### Returns
-`void`
+void
 
 ### count
 
@@ -53,7 +53,7 @@ public function count(): int
 
 
 #### Returns
-`int`
+int
 
 ### current
 
@@ -65,7 +65,7 @@ public function current(): T
 
 
 #### Returns
-`T`
+T
 
 ### every
 
@@ -79,10 +79,10 @@ Checks if all items match the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `callable` |  |
+| `$callback` | callable |  |
 
 #### Returns
-`bool`
+bool
 
 ### filter
 
@@ -96,16 +96,16 @@ Filters the collection using a callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `callable` |  |
+| `$callback` | callable |  |
 
 #### Returns
-`static<T>`
+static&lt;T&gt;
 
 ### first
 
 
 ```php
-public function first(?callable $callback = NULL): null | T
+public function first(?callable $callback = NULL): null|T
 ```
 
 Returns the first item that matches the callback.
@@ -113,26 +113,26 @@ Returns the first item that matches the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `?callable` |  |
+| `$callback` | ?callable |  |
 
 #### Returns
-`null | T`
+null | T
 
 ### get
 
 
 ```php
-public function get(int $offset): null | T
+public function get(int $offset): null|T
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `int` |  |
+| `$offset` | int |  |
 
 #### Returns
-`null | T`
+null | T
 
 ### jsonSerialize
 
@@ -144,7 +144,7 @@ public function jsonSerialize(): array<int, array{object?: mixed, userset?: arra
 
 
 #### Returns
-`array<int, array{object?: mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}>`
+array&lt;int, array{object?: mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}&gt;
 
 ### key
 
@@ -156,7 +156,7 @@ public function key(): int
 
 
 #### Returns
-`int`
+int
 
 ### next
 
@@ -168,7 +168,7 @@ public function next(): void
 
 
 #### Returns
-`void`
+void
 
 ### offsetExists
 
@@ -181,43 +181,43 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`bool`
+bool
 
 ### offsetGet
 
 
 ```php
-public function offsetGet(mixed $offset): null | T
+public function offsetGet(mixed $offset): null|T
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`null | T`
+null | T
 
 ### offsetSet
 
 
 ```php
-public function offsetSet(null | int | string $offset, T $value): void
+public function offsetSet(null|int|string $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `null | int | string` |  |
-| `$value` | `T` |  |
+| `$offset` | null | int | string |  |
+| `$value` | T |  |
 
 #### Returns
-`void`
+void
 
 ### offsetUnset
 
@@ -230,10 +230,10 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`void`
+void
 
 ### reduce
 
@@ -247,11 +247,11 @@ Reduces the collection to a single value.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | `U` |  |
-| `$callback` | `callable` |  |
+| `$initial` | U |  |
+| `$callback` | callable |  |
 
 #### Returns
-`U`
+U
 
 ### rewind
 
@@ -263,7 +263,7 @@ public function rewind(): void
 
 
 #### Returns
-`void`
+void
 
 ### some
 
@@ -277,22 +277,22 @@ Checks if any item matches the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `callable` |  |
+| `$callback` | callable |  |
 
 #### Returns
-`bool`
+bool
 
 ### toArray
 
 
 ```php
-public function toArray(): array<int | string, T>
+public function toArray(): array<int|string, T>
 ```
 
 
 
 #### Returns
-`array<int | string, T>`
+array&lt;int | string, T&gt;
 
 ### valid
 
@@ -304,7 +304,7 @@ public function valid(): bool
 
 
 #### Returns
-`bool`
+bool
 
 ### withItems
 
@@ -317,8 +317,8 @@ public function withItems(mixed $items): static<T>
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$items` | `mixed` |  |
+| `$items` | mixed |  |
 
 #### Returns
-`static<T>`
+static&lt;T&gt;
 

@@ -21,7 +21,7 @@ public function getComputed(): ComputedsInterface<ComputedInterface>
 
 
 #### Returns
-`ComputedsInterface<ComputedInterface>`
+ComputedsInterface&lt;[ComputedInterface](Models/ComputedInterface.md)&gt;
 
 ### getTupleset
 
@@ -33,7 +33,7 @@ public function getTupleset(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -45,5 +45,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

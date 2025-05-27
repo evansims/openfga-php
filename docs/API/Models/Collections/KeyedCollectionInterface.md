@@ -26,11 +26,11 @@ public function add(string $key, T $item): static
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
-| `$item` | `T` |  |
+| `$key` | string |  |
+| `$item` | T |  |
 
 #### Returns
-`static`
+static
 
 ### count
 
@@ -42,7 +42,7 @@ public function count(): int
 
 
 #### Returns
-`int`
+int
 
 ### current
 
@@ -54,23 +54,23 @@ public function current(): T
 
 
 #### Returns
-`T`
+T
 
 ### get
 
 
 ```php
-public function get(string $key): null | T
+public function get(string $key): null|T
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
+| `$key` | string |  |
 
 #### Returns
-`null | T`
+null | T
 
 ### has
 
@@ -84,10 +84,10 @@ Check if a key exists in the collection.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
+| `$key` | string |  |
 
 #### Returns
-`bool`
+bool
 
 ### jsonSerialize
 
@@ -99,7 +99,7 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-`array<string, mixed>`
+array&lt;string, mixed&gt;
 
 ### key
 
@@ -111,7 +111,7 @@ public function key(): string
 
 
 #### Returns
-`string`
+string
 
 ### next
 
@@ -123,7 +123,7 @@ public function next(): void
 
 
 #### Returns
-`void`
+void
 
 ### offsetExists
 
@@ -136,10 +136,10 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`bool`
+bool
 
 ### offsetGet
 
@@ -152,25 +152,25 @@ public function offsetGet(mixed $offset)
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 
 ### offsetSet
 
 
 ```php
-public function offsetSet(null | string $offset, T $value): void
+public function offsetSet(null|string $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `null | string` |  |
-| `$value` | `T` |  |
+| `$offset` | null | string |  |
+| `$value` | T |  |
 
 #### Returns
-`void`
+void
 
 ### offsetUnset
 
@@ -183,10 +183,10 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`void`
+void
 
 ### rewind
 
@@ -198,7 +198,7 @@ public function rewind(): void
 
 
 #### Returns
-`void`
+void
 
 ### toArray
 
@@ -210,7 +210,7 @@ public function toArray(): array<string, T>
 
 
 #### Returns
-`array<string, T>`
+array&lt;string, T&gt;
 
 ### valid
 
@@ -222,5 +222,5 @@ public function valid(): bool
 
 
 #### Returns
-`bool`
+bool
 

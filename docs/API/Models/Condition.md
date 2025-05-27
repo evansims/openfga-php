@@ -26,19 +26,19 @@ public function getExpression(): string
 
 
 #### Returns
-`string`
+string
 
 ### getMetadata
 
 
 ```php
-public function getMetadata(): ?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
+public function getMetadata(): ?OpenFGA\Models\ConditionMetadataInterface
 ```
 
 
 
 #### Returns
-`?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)`
+?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
 
 ### getName
 
@@ -50,19 +50,19 @@ public function getName(): string
 
 
 #### Returns
-`string`
+string
 
 ### getParameters
 
 
 ```php
-public function getParameters(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+public function getParameters(): ?OpenFGA\Models\Collections\ConditionParametersInterface
 ```
 
 
 
 #### Returns
-`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)`
+?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 
 ### jsonSerialize
 
@@ -74,18 +74,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\ConditionInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

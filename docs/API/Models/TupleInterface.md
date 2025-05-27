@@ -15,13 +15,13 @@
 
 
 ```php
-public function getKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
+public function getKey(): OpenFGA\Models\TupleKeyInterface
 ```
 
 
 
 #### Returns
-`[TupleKeyInterface](Models/TupleKeyInterface.md)`
+[TupleKeyInterface](Models/TupleKeyInterface.md)
 
 ### getTimestamp
 
@@ -33,7 +33,7 @@ public function getTimestamp(): DateTimeImmutable
 
 
 #### Returns
-`DateTimeImmutable`
+DateTimeImmutable
 
 ### jsonSerialize
 
@@ -45,5 +45,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

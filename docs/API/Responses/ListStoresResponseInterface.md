@@ -20,7 +20,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getStores
 
@@ -32,5 +32,5 @@ public function getStores(): StoresInterface<StoreInterface>
 
 
 #### Returns
-`StoresInterface<StoreInterface>`
+StoresInterface&lt;StoreInterface&gt;
 

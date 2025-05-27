@@ -15,25 +15,25 @@
 
 
 ```php
-public function getMetadata(): ?[MetadataInterface](Models/MetadataInterface.md)
+public function getMetadata(): ?OpenFGA\Models\MetadataInterface
 ```
 
 
 
 #### Returns
-`?[MetadataInterface](Models/MetadataInterface.md)`
+?[MetadataInterface](Models/MetadataInterface.md)
 
 ### getRelations
 
 
 ```php
-public function getRelations(): null | TypeDefinitionRelationsInterface<UsersetInterface>
+public function getRelations(): null|TypeDefinitionRelationsInterface<UsersetInterface>
 ```
 
 
 
 #### Returns
-`null | TypeDefinitionRelationsInterface<UsersetInterface>`
+null | TypeDefinitionRelationsInterface&lt;[UsersetInterface](Models/UsersetInterface.md)&gt;
 
 ### getType
 
@@ -45,7 +45,7 @@ public function getType(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -57,5 +57,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 

@@ -23,10 +23,10 @@ public function fromResponse(Psr\Http\Message\ResponseInterface $response): self
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | `Psr\Http\Message\ResponseInterface` |  |
+| `$response` | Psr\Http\Message\ResponseInterface |  |
 
 #### Returns
-`self`
+self
 
 ### getExpires
 
@@ -38,7 +38,7 @@ public function getExpires(): int
 
 
 #### Returns
-`int`
+int
 
 ### getScope
 
@@ -50,7 +50,7 @@ public function getScope(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getToken
 
@@ -62,7 +62,7 @@ public function getToken(): string
 
 
 #### Returns
-`string`
+string
 
 ### isExpired
 
@@ -74,5 +74,5 @@ public function isExpired(): bool
 
 
 #### Returns
-`bool`
+bool
 

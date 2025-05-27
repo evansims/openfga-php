@@ -14,13 +14,13 @@
 
 
 ```php
-public function getDeletes(): null | TupleKeysInterface<TupleKeyInterface>
+public function getDeletes(): null|TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`null | TupleKeysInterface<TupleKeyInterface>`
+null | TupleKeysInterface&lt;TupleKeyInterface&gt;
 
 ### getModel
 
@@ -32,23 +32,23 @@ public function getModel(): string
 
 
 #### Returns
-`string`
+string
 
 ### getRequest
 
 
 ```php
-public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
+public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | `StreamFactoryInterface` |  |
+| `$streamFactory` | StreamFactoryInterface |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)`
+[RequestContext](Network/RequestContext.md)
 
 ### getStore
 
@@ -60,17 +60,17 @@ public function getStore(): string
 
 
 #### Returns
-`string`
+string
 
 ### getWrites
 
 
 ```php
-public function getWrites(): null | TupleKeysInterface<TupleKeyInterface>
+public function getWrites(): null|TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`null | TupleKeysInterface<TupleKeyInterface>`
+null | TupleKeysInterface&lt;TupleKeyInterface&gt;
 

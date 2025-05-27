@@ -196,8 +196,8 @@ class DocumentationGenerator
             'namespace' => $reflection->getNamespaceName(),
             'isInterface' => $isInterface,
             'classDescription' => $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
-            'interfaces' => array_map(function($interface) {
-                return $this->convertToMarkdownLink($interface->getName());
+            'interfaces' => array_map(function($interface) use ($reflection) {
+                return $this->convertToMarkdownLink($interface->getName(), $reflection->getNamespaceName());
             }, $reflection->getInterfaces()),
             'methods' => [],
             'constants' => [],
@@ -239,7 +239,8 @@ class DocumentationGenerator
                 'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
                 'parameters' => [],
                 'return' => [
-                    'type' => $this->getReturnType($method),
+                    'type' => $this->getReturnType($method, $reflection->getNamespaceName()),
+                    'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $reflection->getNamespaceName())),
                     'description' => $this->extractReturnDescription($method->getDocComment() ?: ''),
                 ],
             ];
@@ -248,7 +249,8 @@ class DocumentationGenerator
             foreach ($method->getParameters() as $param) {
                 $methodData['parameters'][] = [
                     'name' => '$' . $param->getName(),
-                    'type' => $this->getParameterType($param),
+                    'type' => $this->getParameterType($param, $reflection->getNamespaceName()),
+                    'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $reflection->getNamespaceName())),
                     'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
                 ];
             }
@@ -363,7 +365,8 @@ class DocumentationGenerator
                         'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
                         'parameters' => [],
                         'return' => [
-                            'type' => $this->getReturnType($method),
+                            'type' => $this->getReturnType($method, $interface->getNamespaceName()),
+                            'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $interface->getNamespaceName())),
                             'description' => $this->extractReturnDescription($method->getDocComment() ?: ''),
                         ],
                         'fromInterface' => $interface->getName(),
@@ -373,7 +376,8 @@ class DocumentationGenerator
                     foreach ($method->getParameters() as $param) {
                         $methodData['parameters'][] = [
                             'name' => '$' . $param->getName(),
-                            'type' => $this->getParameterType($param),
+                            'type' => $this->getParameterType($param, $interface->getNamespaceName()),
+                            'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $interface->getNamespaceName())),
                             'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
                         ];
                     }
@@ -389,8 +393,11 @@ class DocumentationGenerator
     private function getMethodSignature(ReflectionMethod $method): string
     {
         $params = [];
+        $namespace = $method->getDeclaringClass()->getNamespaceName();
+        
         foreach ($method->getParameters() as $param) {
-            $paramStr = $this->getParameterType($param) . ' ';
+            // Get raw type without markdown links for the signature
+            $paramStr = $this->getParameterType($param, $namespace, false) . ' ';
             $paramStr .= ($param->isPassedByReference() ? '&' : '') . '$' . $param->getName();
 
             if ($param->isDefaultValueAvailable()) {
@@ -400,8 +407,8 @@ class DocumentationGenerator
                 if (is_object($default)) {
                     $defaultClassRef = new ReflectionClass(get_class($default));
                     if ($defaultClassRef->isEnum()) {
-                        $enumTypeLink = $this->convertToMarkdownLink($defaultClassRef->getName());
-                        $defaultValueStr = $enumTypeLink . '::' . $default->name;
+                        // Don't use markdown links in method signatures
+                        $defaultValueStr = $defaultClassRef->getName() . '::' . $default->name;
                     } else {
                         // Non-enum objects - default to var_export
                         $defaultValueStr = var_export($default, true);
@@ -415,8 +422,8 @@ class DocumentationGenerator
                         if (is_object($value)) {
                             $valueClassRef = new ReflectionClass(get_class($value));
                             if ($valueClassRef->isEnum()) {
-                                $enumTypeLink = $this->convertToMarkdownLink($valueClassRef->getName());
-                                $exportedValue = $enumTypeLink . '::' . $value->name;
+                                // Don't use markdown links in method signatures
+                                $exportedValue = $valueClassRef->getName() . '::' . $value->name;
                             } else {
                                 $exportedValue = var_export($value, true);
                             }
@@ -448,7 +455,8 @@ class DocumentationGenerator
             $params[] = $paramStr;
         }
 
-        $returnType = $this->getReturnType($method);
+        // Get raw return type without markdown links for the signature
+        $returnType = $this->getReturnType($method, $namespace, false);
         $returnTypeStr = $returnType ? ': ' . $returnType : '';
 
         return sprintf(
@@ -459,7 +467,7 @@ class DocumentationGenerator
         );
     }
 
-    private function getParameterType(ReflectionParameter $param): string
+    private function getParameterType(ReflectionParameter $param, string $namespace = 'OpenFGA', bool $withLinks = true): string
     {
         // Try to get the type from PHPDoc first
         $method = $param->getDeclaringFunction();
@@ -468,7 +476,7 @@ class DocumentationGenerator
             if ($docComment) {
                 $paramType = $this->extractParamTypeFromDocComment($docComment, $param->getName());
                 if ($paramType) {
-                    return $this->convertToMarkdownLink($paramType);
+                    return $withLinks ? $this->convertToMarkdownLink($paramType, $namespace) : $paramType;
                 }
             }
         }
@@ -478,25 +486,25 @@ class DocumentationGenerator
             $type = $param->getType();
             $typeStr = (string) $type;
 
-            // Handle nullable types
-            if ($type->allowsNull() && $typeStr !== 'mixed') {
+            // Handle nullable types - check if already nullable from string representation
+            if ($type->allowsNull() && $typeStr !== 'mixed' && !str_starts_with($typeStr, '?')) {
                 $typeStr = '?' . $typeStr;
             }
 
-            return $this->convertToMarkdownLink($typeStr);
+            return $withLinks ? $this->convertToMarkdownLink($typeStr, $namespace) : $typeStr;
         }
 
         return 'mixed';
     }
 
-    private function getReturnType(ReflectionMethod $method): string
+    private function getReturnType(ReflectionMethod $method, string $namespace = 'OpenFGA', bool $withLinks = true): string
     {
         // First, try to get the return type from PHPDoc
         $docComment = $method->getDocComment();
         if ($docComment) {
             $returnType = $this->extractReturnTypeFromDocComment($docComment);
             if ($returnType) {
-                return $this->convertToMarkdownLink($returnType);
+                return $withLinks ? $this->convertToMarkdownLink($returnType, $namespace) : $returnType;
             }
         }
 
@@ -505,23 +513,23 @@ class DocumentationGenerator
             $returnType = $method->getReturnType();
             $typeStr = (string) $returnType;
 
-            // Handle nullable return types
-            if ($returnType->allowsNull() && $typeStr !== 'mixed') {
+            // Handle nullable return types - check if already nullable from string representation
+            if ($returnType->allowsNull() && $typeStr !== 'mixed' && !str_starts_with($typeStr, '?')) {
                 $typeStr = '?' . $typeStr;
             }
 
-            return $this->convertToMarkdownLink($typeStr);
+            return $withLinks ? $this->convertToMarkdownLink($typeStr, $namespace) : $typeStr;
         }
 
         return '';
     }
 
-    private function convertToMarkdownLink(string $type): string
+    private function convertToMarkdownLink(string $type, string $currentNamespace = 'OpenFGA'): string
     {
         // Handle union types
         if (str_contains($type, '|')) {
             $types = array_map('trim', explode('|', $type));
-            $convertedTypes = array_map([$this, 'convertToMarkdownLink'], $types);
+            $convertedTypes = array_map(fn($t) => $this->convertToMarkdownLink($t, $currentNamespace), $types);
             return implode(' | ', $convertedTypes); // Added spaces around |
         }
 
@@ -541,7 +549,7 @@ class DocumentationGenerator
         if (preg_match('/([^<]*)<(.+)>/', $type, $matches)) {
             $type = $matches[1];
             $genericParams = array_map('trim', explode(',', $matches[2]));
-            $convertedParams = array_map([$this, 'convertToMarkdownLink'], $genericParams);
+            $convertedParams = array_map(fn($p) => $this->convertToMarkdownLink($p, $currentNamespace), $genericParams);
             $genericSuffix = '<' . implode(', ', $convertedParams) . '>';
         }
 
@@ -614,8 +622,7 @@ class DocumentationGenerator
         }
         // Handle relative class names with namespace parts
         else {
-            // Try to find the class in the current namespace
-            $currentNamespace = $this->getCurrentNamespace();
+            // Try to find the class in the provided namespace
             $possibleFullName = $currentNamespace . '\\' . $type;
             if (array_key_exists($possibleFullName, $this->classMap)) {
                 $isInternalClass = true;
@@ -803,6 +810,15 @@ class DocumentationGenerator
         }
         
         return null;
+    }
+
+    /**
+     * Escape angle brackets for display in markdown tables
+     */
+    private function escapeForTable(string $type): string
+    {
+        // Replace angle brackets with HTML entities to prevent markdown interpretation
+        return str_replace(['<', '>'], ['&lt;', '&gt;'], $type);
     }
 
     public static function deleteDir(string $dir): void

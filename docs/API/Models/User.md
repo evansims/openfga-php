@@ -22,31 +22,31 @@ public function getObject(): ?object
 
 
 #### Returns
-`?object`
+?object
 
 ### getUserset
 
 
 ```php
-public function getUserset(): ?[UsersetUserInterface](Models/UsersetUserInterface.md)
+public function getUserset(): ?OpenFGA\Models\UsersetUserInterface
 ```
 
 
 
 #### Returns
-`?[UsersetUserInterface](Models/UsersetUserInterface.md)`
+?[UsersetUserInterface](Models/UsersetUserInterface.md)
 
 ### getWildcard
 
 
 ```php
-public function getWildcard(): ?[TypedWildcardInterface](Models/TypedWildcardInterface.md)
+public function getWildcard(): ?OpenFGA\Models\TypedWildcardInterface
 ```
 
 
 
 #### Returns
-`?[TypedWildcardInterface](Models/TypedWildcardInterface.md)`
+?[TypedWildcardInterface](Models/TypedWildcardInterface.md)
 
 ### jsonSerialize
 
@@ -58,18 +58,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
+array
 
 ### schema
 
 *<small>Implements Models\UserInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

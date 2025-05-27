@@ -21,7 +21,7 @@ public function getCreatedAt(): DateTimeInterface
 
 
 #### Returns
-`DateTimeInterface`
+DateTimeInterface
 
 ### getDeletedAt
 
@@ -33,7 +33,7 @@ public function getDeletedAt(): ?DateTimeInterface
 
 
 #### Returns
-`?DateTimeInterface`
+?DateTimeInterface
 
 ### getId
 
@@ -45,7 +45,7 @@ public function getId(): string
 
 
 #### Returns
-`string`
+string
 
 ### getName
 
@@ -57,7 +57,7 @@ public function getName(): string
 
 
 #### Returns
-`string`
+string
 
 ### getUpdatedAt
 
@@ -69,17 +69,17 @@ public function getUpdatedAt(): DateTimeInterface
 
 
 #### Returns
-`DateTimeInterface`
+DateTimeInterface
 
 ### jsonSerialize
 
 
 ```php
-public function jsonSerialize(): array<'created_at' | 'deleted_at' | 'id' | 'name' | 'updated_at', string>
+public function jsonSerialize(): array<'created_at'|'deleted_at'|'id'|'name'|'updated_at', string>
 ```
 
 
 
 #### Returns
-`array<'created_at' | 'deleted_at' | 'id' | 'name' | 'updated_at', string>`
+array&lt;'created_at' | 'deleted_at' | 'id' | 'name' | 'updated_at', string&gt;
 

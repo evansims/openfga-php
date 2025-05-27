@@ -14,13 +14,13 @@
 
 
 ```php
-public function getAssertions(): null | AssertionsInterface<AssertionInterface>
+public function getAssertions(): null|AssertionsInterface<AssertionInterface>
 ```
 
 
 
 #### Returns
-`null | AssertionsInterface<AssertionInterface>`
+null | AssertionsInterface&lt;AssertionInterface&gt;
 
 ### getModel
 
@@ -32,5 +32,5 @@ public function getModel(): string
 
 
 #### Returns
-`string`
+string
 
