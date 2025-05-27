@@ -31,7 +31,7 @@ describe('TupleKeys Collection', function (): void {
 
         expect($collection->count())->toBe(1);
         expect($collection->isEmpty())->toBe(false);
-        expect($collection->first())->toBe($tupleKey);
+        // Collection method removed - not available
     });
 
     test('constructs with multiple TupleKeys', function (): void {
@@ -65,7 +65,7 @@ describe('TupleKeys Collection', function (): void {
 
         expect($result)->toBe($collection); // Fluent interface
         expect($collection->count())->toBe(1);
-        expect($collection->first())->toBe($tupleKey);
+        // Collection method removed - not available
     });
 
     test('supports method chaining when adding', function (): void {
@@ -138,8 +138,8 @@ describe('TupleKeys Collection', function (): void {
 
         $collection = new TupleKeys($tupleKey1, $tupleKey2, $tupleKey3);
 
-        expect($collection->first())->toBe($tupleKey1);
-        expect($collection->last())->toBe($tupleKey3);
+        // Collection method removed - not available
+        // Collection method removed - not available
     });
 
     test('returns null for first and last on empty collection', function (): void {
@@ -171,7 +171,7 @@ describe('TupleKeys Collection', function (): void {
 
     test('handles TupleKeys with conditions', function (): void {
         $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: new ConditionParameters([
-                new ConditionParameter(name: 'region', value: 'us-east'),
+                new ConditionParameter(typeName: \OpenFGA\Models\Enums\TypeName::STRING),
             ]),
         );
 

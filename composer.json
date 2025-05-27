@@ -102,7 +102,7 @@
     ],
     "pest:integration": [
       "@pest:integration:build",
-      "docker compose -f docker-compose.integration.yml run test"
+      "docker compose -f docker-compose.integration.yml run --rm test"
     ],
     "pest:integration:build": [
       "docker compose -f docker-compose.integration.yml build test"

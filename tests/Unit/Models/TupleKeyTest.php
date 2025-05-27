@@ -31,7 +31,7 @@ describe('TupleKey Model', function (): void {
     });
 
     test('constructs with condition', function (): void {
-        $param = new ConditionParameter(name: 'region', value: 'string');
+        $param = new ConditionParameter(typeName: \OpenFGA\Models\Enums\TypeName::STRING);
         $params = new ConditionParameters([$param]);
         $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: $params);
 
@@ -66,7 +66,7 @@ describe('TupleKey Model', function (): void {
     });
 
     test('serializes to JSON with condition', function (): void {
-        $param = new ConditionParameter(name: 'region', value: 'string');
+        $param = new ConditionParameter(typeName: \OpenFGA\Models\Enums\TypeName::STRING);
         $params = new ConditionParameters([$param]);
         $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: $params);
 

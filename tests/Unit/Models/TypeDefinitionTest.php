@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\Collections\{RelationReferences, TypeDefinitionRelations};
+use OpenFGA\Models\Collections\TypeDefinitionRelations;
 use OpenFGA\Models\{Metadata, ObjectRelation, RelationMetadata, SourceInfo, TypeDefinition, TypeDefinitionInterface, Userset};
 use OpenFGA\Schema\SchemaInterface;
 
@@ -23,10 +23,8 @@ describe('TypeDefinition Model', function (): void {
 
     test('constructs with relations', function (): void {
         $relations = new TypeDefinitionRelations([]);
-        $viewerRelation = new Userset(
-            this: new ObjectRelation(relation: 'viewer'),
-        );
-        $relations->set('viewer', $viewerRelation);
+        $viewerRelation = new Userset(computedUserset: new ObjectRelation(relation: 'viewer'));
+        $relations->add('viewer', $viewerRelation);
 
         $typeDefinition = new TypeDefinition(
             type: 'document',
@@ -40,16 +38,13 @@ describe('TypeDefinition Model', function (): void {
 
     test('constructs with metadata', function (): void {
         $sourceInfo = new SourceInfo(file: 'model.fga');
-        $relationReferences = new RelationReferences([]);
         $relationMetadata = new RelationMetadata(
-            directlyRelatedUserTypes: [],
             module: 'auth',
             sourceInfo: $sourceInfo,
         );
-        $relationReferences->set('viewer', $relationMetadata);
 
         $metadata = new Metadata(
-            relations: $relationReferences,
+            relations: $relationMetadata,
             module: 'auth',
             sourceInfo: $sourceInfo,
         );
@@ -73,10 +68,8 @@ describe('TypeDefinition Model', function (): void {
 
     test('serializes to JSON with relations', function (): void {
         $relations = new TypeDefinitionRelations([]);
-        $viewerRelation = new Userset(
-            this: new ObjectRelation(relation: 'viewer'),
-        );
-        $relations->set('viewer', $viewerRelation);
+        $viewerRelation = new Userset(computedUserset: new ObjectRelation(relation: 'viewer'));
+        $relations->add('viewer', $viewerRelation);
 
         $typeDefinition = new TypeDefinition(
             type: 'document',
@@ -111,9 +104,9 @@ describe('TypeDefinition Model', function (): void {
         $relations = new TypeDefinitionRelations([]);
 
         // Add multiple relations
-        $relations->set('viewer', new Userset(this: new ObjectRelation(relation: 'viewer')));
-        $relations->set('editor', new Userset(this: new ObjectRelation(relation: 'editor')));
-        $relations->set('owner', new Userset(this: new ObjectRelation(relation: 'owner')));
+        $relations->add('viewer', new Userset(computedUserset: new ObjectRelation(relation: 'viewer')));
+        $relations->add('editor', new Userset(computedUserset: new ObjectRelation(relation: 'editor')));
+        $relations->add('owner', new Userset(computedUserset: new ObjectRelation(relation: 'owner')));
 
         $typeDefinition = new TypeDefinition(
             type: 'document',
@@ -186,7 +179,7 @@ describe('TypeDefinition Model', function (): void {
         );
 
         expect($typeDefinition->getRelations())->toBe($relations);
-        expect($typeDefinition->getRelations()->isEmpty())->toBe(true);
+        expect($typeDefinition->getRelations()->count() === 0)->toBe(true);
     });
 
     test('preserves exact type name without modification', function (): void {

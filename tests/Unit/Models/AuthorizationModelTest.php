@@ -58,10 +58,8 @@ describe('AuthorizationModel Model', function (): void {
 
         // Create a type definition for 'document' with a viewer relation
         $documentRelations = new TypeDefinitionRelations([]);
-        $viewerRelation = new Userset(
-            this: new ObjectRelation(relation: 'viewer'),
-        );
-        $documentRelations->set('viewer', $viewerRelation);
+        $viewerRelation = new Userset(computedUserset: new ObjectRelation(relation: 'viewer'));
+        $documentRelations->add('viewer', $viewerRelation);
 
         $documentType = new TypeDefinition(
             type: 'document',
@@ -79,8 +77,8 @@ describe('AuthorizationModel Model', function (): void {
         );
 
         expect($model->getTypeDefinitions()->count())->toBe(2);
-        expect($model->getTypeDefinitions()->get('user'))->toBe($userType);
-        expect($model->getTypeDefinitions()->get('document'))->toBe($documentType);
+        expect($model->getTypeDefinitions()->get(0))->toBe($userType);
+        expect($model->getTypeDefinitions()->get(1))->toBe($documentType);
     });
 
     test('serializes to JSON without conditions', function (): void {
@@ -105,10 +103,7 @@ describe('AuthorizationModel Model', function (): void {
     test('serializes to JSON with conditions', function (): void {
         $typeDefinitions = new TypeDefinitions([]);
 
-        $conditionParam = new ConditionParameter(
-            name: 'region',
-            value: 'string',
-        );
+        $conditionParam = new ConditionParameter(typeName: \OpenFGA\Models\Enums\TypeName::STRING);
         $conditionParams = new ConditionParameters([$conditionParam]);
 
         $condition = new Condition(
@@ -247,8 +242,8 @@ describe('AuthorizationModel Model', function (): void {
         );
 
         $retrievedTypes = $model->getTypeDefinitions();
-        expect($retrievedTypes->get('user'))->toBe($userType);
-        expect($retrievedTypes->get('document'))->toBe($documentType);
-        expect($retrievedTypes->get('folder'))->toBe($folderType);
+        expect($retrievedTypes->get(0))->toBe($userType);
+        expect($retrievedTypes->get(1))->toBe($documentType);
+        expect($retrievedTypes->get(2))->toBe($folderType);
     });
 });

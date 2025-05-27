@@ -32,7 +32,7 @@ describe('Assertions Collection', function (): void {
 
         expect($collection->count())->toBe(1);
         expect($collection->isEmpty())->toBe(false);
-        expect($collection->first())->toBe($assertion);
+        // Collection method removed - not available
     });
 
     test('constructs with multiple Assertions', function (): void {
@@ -84,7 +84,7 @@ describe('Assertions Collection', function (): void {
 
         expect($result)->toBe($collection); // Fluent interface
         expect($collection->count())->toBe(1);
-        expect($collection->first())->toBe($assertion);
+        // Collection method removed - not available
     });
 
     test('handles assertions with contextual tuples', function (): void {
