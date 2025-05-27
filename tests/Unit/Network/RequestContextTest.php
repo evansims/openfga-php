@@ -6,13 +6,6 @@ use OpenFGA\Network\RequestContext;
 use Psr\Http\Message\StreamInterface;
 
 describe('RequestContext', function (): void {
-    beforeEach(function (): void {
-        // Load RequestMethod enum from RequestManager file
-        if (! enum_exists(OpenFGA\Network\RequestMethod::class)) {
-            require_once __DIR__ . '/../../../src/Network/RequestManager.php';
-        }
-    });
-
     test('constructs with required parameters', function (): void {
         $context = new RequestContext(
             method: OpenFGA\Network\RequestMethod::GET,

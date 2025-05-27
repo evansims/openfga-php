@@ -187,8 +187,8 @@ describe('Tuples Collection', function (): void {
         $schema1 = Tuples::schema();
         $schema2 = Tuples::schema();
 
+        expect($schema1)->toBe($schema2);
         expect($schema1)->toBeInstanceOf(CollectionSchemaInterface::class);
-        expect($schema2)->toBeInstanceOf(CollectionSchemaInterface::class);
     });
 
     test('filters tuples by user', function (): void {

@@ -7,13 +7,6 @@ use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\ListAuthorizationModelsRequest;
 use Psr\Http\Message\StreamFactoryInterface;
 
-beforeEach(function (): void {
-    // Load RequestMethod enum from RequestManager file
-    if (! enum_exists(RequestMethod::class)) {
-        require_once __DIR__ . '/../../../src/Network/RequestManager.php';
-    }
-});
-
 it('can be instantiated with required parameters', function (): void {
     $request = new ListAuthorizationModelsRequest(store: 'test-store');
 

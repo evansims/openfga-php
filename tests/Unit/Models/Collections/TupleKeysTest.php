@@ -190,7 +190,7 @@ describe('TupleKeys Collection', function (): void {
         $collection = new TupleKeys($tupleKey);
 
         expect($collection->count())->toBe(1);
-        expect($collection->first()->getCondition())->toBe($condition);
+        expect($collection->get(0)->getCondition())->toBe($condition);
     });
 
     test('throws TypeError when adding wrong type', function (): void {

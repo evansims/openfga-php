@@ -111,7 +111,7 @@ describe('Store Model', function (): void {
         expect($json['updated_at'])->toBe('2023-01-02T11:00:00+00:00');
     });
 
-    test('handles DateTime objects (not just DateTimeImmutable)', function (): void {
+    test('handles DateTimeImmutable objects in UTC', function (): void {
         $createdAt = new DateTimeImmutable('2023-01-01 10:00:00', new DateTimeZone('UTC'));
         $updatedAt = new DateTimeImmutable('2023-01-02 11:00:00', new DateTimeZone('UTC'));
 
