@@ -16,6 +16,7 @@ services:
 
   test:
     container_name: openfga-php-integration-tests
+    image: evansims/openfga-php-integration-tests:latest
     build:
       context: .
       dockerfile: Dockerfile.integration
