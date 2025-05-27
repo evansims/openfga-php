@@ -77,8 +77,8 @@ final class TypeDefinition implements TypeDefinitionInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'type', type: 'string', required: true),
-                new SchemaProperty(name: 'relations', type: TypeDefinitionRelations::class, required: false),
-                new SchemaProperty(name: 'metadata', type: Metadata::class, required: false),
+                new SchemaProperty(name: 'relations', type: 'object', className: TypeDefinitionRelations::class, required: false),
+                new SchemaProperty(name: 'metadata', type: 'object', className: Metadata::class, required: false),
             ],
         );
     }

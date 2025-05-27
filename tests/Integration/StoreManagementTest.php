@@ -12,7 +12,9 @@ it('creates and deletes a store', function (): void {
     $name = 'php-sdk-test-' . bin2hex(random_bytes(5));
 
     try {
-        $response = $client->createStore(name: $name);
+        $response = ($client->createStore(name: $name))
+            ->unwrap();
+
         $createdStoreId = $response->getId();
         expect($createdStoreId)->not()->toBe('');
         expect($response->getName())->toBe($name);
@@ -35,7 +37,7 @@ it('retrieves a created store', function (): void {
     $name = 'php-sdk-test-' . bin2hex(random_bytes(5));
 
     try {
-        $create = $client->createStore(name: $name);
+        $create = ($client->createStore(name: $name))->unwrap();
         $createdStoreId = $create->getId();
 
         $get = $client->getStore(store: $createdStoreId);

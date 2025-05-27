@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use Exception;
-use OpenFGA\Exceptions\ApiUnexpectedResponseException;
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
-
 use Override;
 
-use function is_array;
+use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
-final class CreateAuthorizationModelResponse implements CreateAuthorizationModelResponseInterface
+final class CreateAuthorizationModelResponse extends Response implements CreateAuthorizationModelResponseInterface
 {
     private static ?SchemaInterface $schema = null;
 
@@ -35,25 +32,24 @@ final class CreateAuthorizationModelResponse implements CreateAuthorizationModel
     /**
      * @inheritDoc
      */
-    public static function fromResponse(\Psr\Http\Message\ResponseInterface $response, SchemaValidator $validator): CreateAuthorizationModelResponseInterface
-    {
-        $json = (string) $response->getBody();
+    public static function fromResponse(
+        ResponseInterface $response,
+        RequestInterface $request,
+        SchemaValidator $validator,
+    ): CreateAuthorizationModelResponseInterface {
+        if (201 === $response->getStatusCode()) {
+            $data = self::parseResponse($response, $request);
 
-        try {
-            $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
-        } catch (Exception $exception) {
-            throw new ApiUnexpectedResponseException($exception->getMessage());
-        }
-
-        if (201 === $response->getStatusCode() && is_array($data)) {
             $validator->registerSchema(self::schema());
 
             return $validator->validateAndTransform($data, self::class);
         }
 
-        RequestManager::handleResponseException($response);
-
-        throw new ApiUnexpectedResponseException($json);
+        // Handle network errors
+        return RequestManager::handleResponseException(
+            response: $response,
+            request: $request,
+        );
     }
 
     #[Override]

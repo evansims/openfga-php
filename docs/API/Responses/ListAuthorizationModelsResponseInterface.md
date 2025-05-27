@@ -20,17 +20,17 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getModels
 
 
 ```php
-public function getModels(): [AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)
+public function getModels(): AuthorizationModelsInterface<AuthorizationModelInterface>
 ```
 
 
 
 #### Returns
-`[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)`
+AuthorizationModelsInterface&lt;AuthorizationModelInterface&gt;
 

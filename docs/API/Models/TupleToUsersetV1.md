@@ -20,25 +20,25 @@
 
 
 ```php
-public function getComputedUserset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
+public function getComputedUserset(): OpenFGA\Models\ObjectRelationInterface
 ```
 
 
 
 #### Returns
-`[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
+[ObjectRelationInterface](Models/ObjectRelationInterface.md)
 
 ### getTupleset
 
 
 ```php
-public function getTupleset(): [ObjectRelationInterface](Models/ObjectRelationInterface.md)
+public function getTupleset(): OpenFGA\Models\ObjectRelationInterface
 ```
 
 
 
 #### Returns
-`[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
+[ObjectRelationInterface](Models/ObjectRelationInterface.md)
 
 ### jsonSerialize
 
@@ -50,19 +50,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
- array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
+array
 
 ### schema
 
 *<small>Implements Models\TupleToUsersetV1Interface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\ConditionParameterInterface;
+use OpenFGA\Models\{ConditionParameter, ConditionParameterInterface};
 
 /**
  * @extends IndexedCollection<ConditionParameterInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\ConditionParameterInterface;
  */
 final class ConditionParameters extends IndexedCollection implements ConditionParametersInterface
 {
-    protected static string $itemType = ConditionParameterInterface::class;
+    protected static string $itemType = ConditionParameter::class;
 }

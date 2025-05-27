@@ -26,19 +26,19 @@ public function getModule(): string
 
 
 #### Returns
-`string`
+string
 
 ### getSourceInfo
 
 
 ```php
-public function getSourceInfo(): [SourceInfoInterface](Models/SourceInfoInterface.md)
+public function getSourceInfo(): OpenFGA\Models\SourceInfoInterface
 ```
 
 
 
 #### Returns
-`[SourceInfoInterface](Models/SourceInfoInterface.md)`
+[SourceInfoInterface](Models/SourceInfoInterface.md)
 
 ### jsonSerialize
 
@@ -50,19 +50,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
- string, source_info: array{file: string}}
+array
 
 ### schema
 
 *<small>Implements Models\ConditionMetadataInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

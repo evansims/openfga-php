@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Schema;
+
 use OpenFGA\Schema\{Schema, SchemaBuilder, SchemaRegistry};
+use ReflectionClass;
 
 beforeEach(function (): void {
     // Reset the static schemas array before each test

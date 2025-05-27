@@ -10,7 +10,6 @@ use Throwable;
 
 /**
  * @template T
- * @template E of Throwable
  *
  * @extends Result<T, never>
  *
@@ -28,8 +27,10 @@ final class Success extends Result implements ResultInterface
     #[Override]
     /**
      * @inheritDoc
+     *
+     * @return never
      */
-    public function getError(): never
+    public function err(): never
     {
         throw new LogicException('Success has no error');
     }
@@ -38,16 +39,7 @@ final class Success extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function getValue(): mixed
-    {
-        return $this->value;
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function isFailure(): bool
+    public function failed(): bool
     {
         return false;
     }
@@ -56,53 +48,46 @@ final class Success extends Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function isSuccess(): bool
+    public function failure(callable $fn): ResultInterface
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @psalm-suppress InvalidReturnStatement
+     * @psalm-suppress InvalidReturnType
+     */
+    #[Override]
+    public function recover(callable $fn): ResultInterface
+    {
+        return $this;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function rethrow(?Throwable $throwable = null): ResultInterface
+    {
+        return $this;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function succeeded(): bool
     {
         return true;
     }
 
     #[Override]
     /**
-     * @template U
-     *
-     * @param callable(T): U $fn
-     *
-     * @return Success<U, never>
-     */
-    public function map(callable $fn): ResultInterface
-    {
-        $mappedValue = $fn($this->value);
-
-        return new self($mappedValue);
-    }
-
-    #[Override]
-    /**
-     * @template F of Throwable
-     *
-     * @param callable(never): F $fn
-     *
-     * @return self<T, E>
-     */
-    public function mapError(callable $fn): ResultInterface
-    {
-        return $this;
-    }
-
-    #[Override]
-    /**
      * @inheritDoc
      */
-    public function onFailure(callable $fn): ResultInterface
-    {
-        return $this;
-    }
-
-    #[Override]
-    /**
-     * @inheritDoc
-     */
-    public function onSuccess(callable $fn): ResultInterface
+    public function success(callable $fn): ResultInterface
     {
         $fn($this->value);
 
@@ -111,14 +96,21 @@ final class Success extends Result implements ResultInterface
 
     #[Override]
     /**
-     * @template U
-     *
-     * @param callable(T): ResultInterface<U, E> $fn
-     *
-     * @return ResultInterface<U, E>
+     * @inheritDoc
      */
     public function then(callable $fn): ResultInterface
     {
-        return $fn($this->value);
+        return $fn($this->val());
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     *
+     * @return T
+     */
+    public function val(): mixed
+    {
+        return $this->value;
     }
 }

@@ -19,17 +19,17 @@
 
 
 ```php
-public function add(mixed $item): static
+public function add(T $item): static
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$item` | `mixed` |  |
+| `$item` | T |  |
 
 #### Returns
-`static`
+static
 
 ### clear
 
@@ -41,7 +41,7 @@ public function clear(): void
 
 
 #### Returns
-`void`
+void
 
 ### count
 
@@ -53,19 +53,19 @@ public function count(): int
 
 
 #### Returns
-`int`
+int
 
 ### current
 
 
 ```php
-public function current(): [ModelInterface](Models/ModelInterface.md)
+public function current(): T
 ```
 
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)`
+T
 
 ### every
 
@@ -79,16 +79,16 @@ Checks if all items match the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `callable` |  |
+| `$callback` | callable |  |
 
 #### Returns
-`bool`
+bool
 
 ### filter
 
 
 ```php
-public function filter(callable $callback): static
+public function filter(callable $callback): static<T>
 ```
 
 Filters the collection using a callback.
@@ -96,16 +96,16 @@ Filters the collection using a callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `callable` |  |
+| `$callback` | callable |  |
 
 #### Returns
-`static`
+static&lt;T&gt;
 
 ### first
 
 
 ```php
-public function first(?callable $callback = NULL)
+public function first(?callable $callback = NULL): null|T
 ```
 
 Returns the first item that matches the callback.
@@ -113,22 +113,26 @@ Returns the first item that matches the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `?callable` |  |
+| `$callback` | ?callable |  |
 
+#### Returns
+null | T
 
 ### get
 
 
 ```php
-public function get(int $offset)
+public function get(int $offset): null|T
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `int` |  |
+| `$offset` | int |  |
 
+#### Returns
+null | T
 
 ### jsonSerialize
 
@@ -140,16 +144,7 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
-```php
-array{
-id: string,
-name: string,
-created_at: string,
-updated_at: string,
-deleted_at?: string,
-}&gt;
-```
+array
 
 ### key
 
@@ -161,7 +156,7 @@ public function key(): int
 
 
 #### Returns
-`int`
+int
 
 ### next
 
@@ -173,7 +168,7 @@ public function next(): void
 
 
 #### Returns
-`void`
+void
 
 ### offsetExists
 
@@ -186,43 +181,43 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`bool`
+bool
 
 ### offsetGet
 
 
 ```php
-public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterface.md)
+public function offsetGet(mixed $offset): null|T
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`?[ModelInterface](Models/ModelInterface.md)`
+null | T
 
 ### offsetSet
 
 
 ```php
-public function offsetSet(mixed $offset, mixed $value): void
+public function offsetSet(null|int|string $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
-| `$value` | `mixed` |  |
+| `$offset` | null | int | string |  |
+| `$value` | T |  |
 
 #### Returns
-`void`
+void
 
 ### offsetUnset
 
@@ -235,16 +230,16 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`void`
+void
 
 ### reduce
 
 
 ```php
-public function reduce(mixed $initial, callable $callback): mixed
+public function reduce(U $initial, callable $callback): U
 ```
 
 Reduces the collection to a single value.
@@ -252,11 +247,11 @@ Reduces the collection to a single value.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | `mixed` |  |
-| `$callback` | `callable` |  |
+| `$initial` | U |  |
+| `$callback` | callable |  |
 
 #### Returns
-`mixed`
+U
 
 ### rewind
 
@@ -268,7 +263,7 @@ public function rewind(): void
 
 
 #### Returns
-`void`
+void
 
 ### some
 
@@ -282,23 +277,22 @@ Checks if any item matches the callback.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | `callable` |  |
+| `$callback` | callable |  |
 
 #### Returns
-`bool`
+bool
 
 ### toArray
 
 
 ```php
-public function toArray(): array
+public function toArray(): array<int|string, T>
 ```
 
 
 
 #### Returns
-`array`
- T&gt;
+array&lt;int | string, T&gt;
 
 ### valid
 
@@ -310,21 +304,21 @@ public function valid(): bool
 
 
 #### Returns
-`bool`
+bool
 
 ### withItems
 
 
 ```php
-public function withItems(mixed $items): static
+public function withItems(mixed $items): static<T>
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$items` | `mixed` |  |
+| `$items` | mixed |  |
 
 #### Returns
-`static`
+static&lt;T&gt;
 

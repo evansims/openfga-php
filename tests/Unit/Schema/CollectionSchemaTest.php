@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Schema;
+
+use InvalidArgumentException;
 use OpenFGA\Schema\CollectionSchema;
 
 test('CollectionSchema can be created with valid class and item type', function (): void {

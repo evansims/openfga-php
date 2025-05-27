@@ -21,7 +21,7 @@ public function getRelation(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getType
 
@@ -33,18 +33,17 @@ public function getType(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<'relation'|'type', string>
 ```
 
 
 
 #### Returns
-`array`
- string&gt;
+array&lt;'relation' | 'type', string&gt;
 

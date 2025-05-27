@@ -20,13 +20,13 @@
 
 
 ```php
-public function getComputed(): [ComputedsInterface](Models/Collections/ComputedsInterface.md)
+public function getComputed(): OpenFGA\Models\Collections\ComputedsInterface
 ```
 
 
 
 #### Returns
-`[ComputedsInterface](Models/Collections/ComputedsInterface.md)`
+[ComputedsInterface](Models/Collections/ComputedsInterface.md)
 
 ### getTupleset
 
@@ -38,7 +38,7 @@ public function getTupleset(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -50,19 +50,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
- string, computed: array&lt;int, array{userset: string}&gt;}
+array
 
 ### schema
 
 *<small>Implements Models\UsersetTreeTupleToUsersetInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

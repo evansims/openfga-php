@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use InvalidArgumentException;
-use OpenFGA\Exceptions\ModelException;
+use OpenFGA\Exceptions\SerializationError;
 use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use OutOfBoundsException;
@@ -257,11 +257,11 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     public static function schema(): CollectionSchemaInterface
     {
         if (! isset(static::$itemType)) {
-            throw ModelException::undefinedItemType(static::class);
+            throw SerializationError::UndefinedItemType->exception();
         }
 
         if (! is_a(static::$itemType, ModelInterface::class, true)) {
-            throw ModelException::invalidItemType(static::$itemType);
+            throw SerializationError::InvalidItemType->exception();
         }
 
         return new CollectionSchema(

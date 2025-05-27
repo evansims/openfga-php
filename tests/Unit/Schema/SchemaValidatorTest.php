@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Exceptions\SchemaValidationException;
+namespace OpenFGA\Tests\Unit\Schema;
+
+use OpenFGA\Exceptions\SerializationException;
 use OpenFGA\Schema\{SchemaBuilder, SchemaRegistry, SchemaValidator};
 use OpenFGA\Tests\Support\Schema\{
     Address,
@@ -20,6 +22,8 @@ use OpenFGA\Tests\Support\Schema\{
     TreeNode,
     User,
 };
+
+use ReflectionClass;
 
 beforeEach(function (): void {
     $this->validator = new SchemaValidator();
@@ -47,7 +51,7 @@ test('validates simple object with required fields', function (): void {
         ->age->toBe(30);
 });
 
-test('throws SchemaValidationException when required field is missing', function (): void {
+test('throws SerializationException when required field is missing', function (): void {
     $schema = (new SchemaBuilder(TestObject::class))
         ->string('name', required: true)
         ->integer('age', required: true)
@@ -55,7 +59,7 @@ test('throws SchemaValidationException when required field is missing', function
 
     $this->validator->registerSchema($schema);
 
-    $this->expectException(SchemaValidationException::class);
+    $this->expectException(SerializationException::class);
     $this->validator->validateAndTransform(['name' => 'John'], TestObject::class);
 });
 
@@ -147,7 +151,7 @@ test('validates enum values', function (): void {
         ->status->toBe('active');
 
     // Test invalid enum value
-    $this->expectException(SchemaValidationException::class);
+    $this->expectException(SerializationException::class);
     $this->validator->validateAndTransform(
         ['status' => 'invalid'],
         Status::class,
@@ -172,7 +176,7 @@ test('validates date format strings', function (): void {
         ->dateField->format('Y-m-d')->toBe('2023-01-01');
 
     // Test invalid date format
-    $this->expectException(SchemaValidationException::class);
+    $this->expectException(SerializationException::class);
     $this->validator->validateAndTransform(
         ['dateField' => 'not-a-date'],
         Event::class,
@@ -219,7 +223,7 @@ test('validates array items', function (array $input, bool $shouldPass, ?array $
     $this->validator->registerSchema($schema);
 
     if (! $shouldPass) {
-        $this->expectException(SchemaValidationException::class);
+        $this->expectException(SerializationException::class);
     }
 
     $result = $this->validator->validateAndTransform($input, TestArray::class);
@@ -258,7 +262,7 @@ test('validates recursive object structures', function (array $input, bool $shou
     $this->validator->registerSchema($treeNodeSchema);
 
     if (! $shouldPass) {
-        $this->expectException(SchemaValidationException::class);
+        $this->expectException(SerializationException::class);
     }
 
     $result = $this->validator->validateAndTransform($input, TreeNode::class);
@@ -334,7 +338,7 @@ test('validates arrays with complex object items', function (array $input, bool 
     $this->validator->registerSchema($containerSchema);
 
     if (! $shouldPass) {
-        $this->expectException(SchemaValidationException::class);
+        $this->expectException(SerializationException::class);
     }
 
     $result = $this->validator->validateAndTransform($input, ArrayContainer::class);
@@ -385,21 +389,16 @@ test('validates arrays with complex object items', function (array $input, bool 
     ],
 ]);
 
-test('throws exception for invalid input types', function (mixed $input, string $expectedException, string $expectedMessage): void {
-    $this->expectException($expectedException);
-    $this->expectExceptionMessage($expectedMessage);
+test('throws exception for invalid input types', function (mixed $input): void {
+    $this->expectException(SerializationException::class);
 
     $this->validator->validateAndTransform($input, 'SomeClass');
 })->with([
     'non-array input' => [
         'not-an-array',
-        InvalidArgumentException::class,
-        'Data must be an array',
     ],
     'unregistered class' => [
         [],
-        InvalidArgumentException::class,
-        'No schema registered for class: SomeClass',
     ],
 ]);
 
@@ -416,7 +415,7 @@ test('handles nested object validation with errors', function (array $input, boo
     $this->validator->registerSchema($parentSchema);
 
     if (! $shouldPass) {
-        $this->expectException(SchemaValidationException::class);
+        $this->expectException(SerializationException::class);
     }
 
     $result = $this->validator->validateAndTransform($input, NestedParent::class);

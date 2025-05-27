@@ -18,32 +18,31 @@ public function getBody(): ?Psr\Http\Message\StreamInterface
 
 
 #### Returns
-`?Psr\Http\Message\StreamInterface`
+?Psr\Http\Message\StreamInterface
 
 ### getHeaders
 
 
 ```php
-public function getHeaders(): array
+public function getHeaders(): array<string, string>
 ```
 
 
 
 #### Returns
-`array`
- string&gt;
+array&lt;string, string&gt;
 
 ### getMethod
 
 
 ```php
-public function getMethod(): RequestMethod
+public function getMethod(): OpenFGA\Network\RequestMethod
 ```
 
 
 
 #### Returns
-`RequestMethod`
+RequestMethod
 
 ### getUrl
 
@@ -55,7 +54,7 @@ public function getUrl(): string
 
 
 #### Returns
-`string`
+string
 
 ### useApiUrl
 
@@ -67,5 +66,5 @@ public function useApiUrl(): bool
 
 
 #### Returns
-`bool`
+bool
 

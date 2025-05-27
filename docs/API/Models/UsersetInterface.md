@@ -15,25 +15,25 @@
 
 
 ```php
-public function getComputedUserset(): ?[ObjectRelationInterface](Models/ObjectRelationInterface.md)
+public function getComputedUserset(): ?OpenFGA\Models\ObjectRelationInterface
 ```
 
 
 
 #### Returns
-`?[ObjectRelationInterface](Models/ObjectRelationInterface.md)`
+?[ObjectRelationInterface](Models/ObjectRelationInterface.md)
 
 ### getDifference
 
 
 ```php
-public function getDifference(): ?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
+public function getDifference(): ?OpenFGA\Models\DifferenceV1Interface
 ```
 
 
 
 #### Returns
-`?[DifferenceV1Interface](Models/DifferenceV1Interface.md)`
+?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
 
 ### getDirect
 
@@ -45,43 +45,43 @@ public function getDirect(): ?object
 
 
 #### Returns
-`?object`
+?object
 
 ### getIntersection
 
 
 ```php
-public function getIntersection(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+public function getIntersection(): null|UsersetsInterface<UsersetInterface>
 ```
 
 
 
 #### Returns
-`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)`
+null | UsersetsInterface&lt;[UsersetInterface](Models/UsersetInterface.md)&gt;
 
 ### getTupleToUserset
 
 
 ```php
-public function getTupleToUserset(): ?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
+public function getTupleToUserset(): ?OpenFGA\Models\TupleToUsersetV1Interface
 ```
 
 
 
 #### Returns
-`?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)`
+?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
 
 ### getUnion
 
 
 ```php
-public function getUnion(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+public function getUnion(): null|UsersetsInterface<UsersetInterface>
 ```
 
 
 
 #### Returns
-`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)`
+null | UsersetsInterface&lt;[UsersetInterface](Models/UsersetInterface.md)&gt;
 
 ### jsonSerialize
 
@@ -93,14 +93,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
-```php
-computed_userset?: array{object?: string, relation?: string},
-tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-union?: array&lt;mixed&gt;,
-intersection?: array&lt;mixed&gt;,
-difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
-direct?: object,
-}
-```
+array
 

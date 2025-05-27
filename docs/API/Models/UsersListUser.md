@@ -23,7 +23,7 @@ public function getUser(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -35,18 +35,18 @@ public function jsonSerialize(): string
 
 
 #### Returns
-`string`
+string
 
 ### schema
 
 *<small>Implements Models\UsersListUserInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

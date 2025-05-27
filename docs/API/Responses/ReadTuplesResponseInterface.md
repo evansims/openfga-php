@@ -20,17 +20,17 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getTuples
 
 
 ```php
-public function getTuples(): [TuplesInterface](Models/Collections/TuplesInterface.md)
+public function getTuples(): TuplesInterface<TupleInterface>
 ```
 
 
 
 #### Returns
-`[TuplesInterface](Models/Collections/TuplesInterface.md)`
+TuplesInterface&lt;TupleInterface&gt;
 

@@ -14,11 +14,11 @@
 
 
 ```php
-public function getTree(): ?[UsersetTreeInterface](Models/UsersetTreeInterface.md)
+public function getTree(): ?OpenFGA\Models\UsersetTreeInterface
 ```
 
 
 
 #### Returns
-`?[UsersetTreeInterface](Models/UsersetTreeInterface.md)`
+?[UsersetTreeInterface](Models/UsersetTreeInterface.md)
 

@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Language;
+
 use OpenFGA\Language\DslTransformer;
-use OpenFGA\Models\AuthorizationModelInterface;
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, ObjectRelation, TypeDefinition, Userset};
+use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitions, Usersets};
 use OpenFGA\Schema\SchemaValidator;
 
 it('transforms DSL to model and back', function (): void {
@@ -23,13 +26,13 @@ it('transforms DSL to model and back', function (): void {
 
     // Register schemas used by AuthorizationModel
     $validator
-        ->registerSchema(OpenFGA\Models\AuthorizationModel::schema())
-        ->registerSchema(OpenFGA\Models\Collections\TypeDefinitions::schema())
-        ->registerSchema(OpenFGA\Models\TypeDefinition::schema())
-        ->registerSchema(OpenFGA\Models\Collections\TypeDefinitionRelations::schema())
-        ->registerSchema(OpenFGA\Models\Userset::schema())
-        ->registerSchema(OpenFGA\Models\Collections\Usersets::schema())
-        ->registerSchema(OpenFGA\Models\ObjectRelation::schema());
+        ->registerSchema(AuthorizationModel::schema())
+        ->registerSchema(TypeDefinitions::schema())
+        ->registerSchema(TypeDefinition::schema())
+        ->registerSchema(TypeDefinitionRelations::schema())
+        ->registerSchema(Userset::schema())
+        ->registerSchema(Usersets::schema())
+        ->registerSchema(ObjectRelation::schema());
 
     $model = DslTransformer::fromDsl($dsl, $validator);
 

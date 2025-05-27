@@ -107,6 +107,7 @@ final class DslTransformer implements DslTransformerInterface
         $lines = [];
         $lines[] = 'model';
         $lines[] = '  schema ' . $model->getSchemaVersion()->value;
+        $lines[] = ''; // Blank line after schema
 
         foreach ($model->getTypeDefinitions() as $typeDefinition) {
             $lines[] = 'type ' . $typeDefinition->getType();
@@ -119,6 +120,13 @@ final class DslTransformer implements DslTransformerInterface
                     $lines[] = '    define ' . $name . ': ' . self::renderExpression($userset);
                 }
             }
+
+            $lines[] = ''; // Blank line after each type definition
+        }
+
+        // Remove the trailing blank line
+        if ('' === end($lines)) {
+            array_pop($lines);
         }
 
         return implode("\n", $lines);

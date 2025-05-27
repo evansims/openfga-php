@@ -22,7 +22,7 @@ public function getUser(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -34,5 +34,5 @@ public function jsonSerialize(): string
 
 
 #### Returns
-`string`
+string
 

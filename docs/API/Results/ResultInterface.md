@@ -8,203 +8,157 @@
 
 
 ## Methods
-### fold
+### err
 
 
 ```php
-public function fold(callable $onSuccess, callable $onFailure): mixed
+public function err(): Throwable
 ```
 
+Return the unwrapped error of a `Failure`.
+
+
+#### Returns
+Throwable
+
+### failed
+
+
+```php
+public function failed(): bool
+```
+
+Return `true` if this is a `Failure`.
+
+
+#### Returns
+bool
+
+### failure
+
+
+```php
+public function failure(callable $fn): ResultInterface<T, E>
+```
+
+Execute on `Failure` and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$onSuccess` | `callable` |  |
-| `$onFailure` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`mixed`
+[ResultInterface](Results/ResultInterface.md)&lt;T, E&gt;
 
-### getError
+### recover
 
 
 ```php
-public function getError(): Throwable
+public function recover(callable $fn): ResultInterface<U, F>
 ```
 
-
-
-#### Returns
-`Throwable`
-
-### getValue
-
-
-```php
-public function getValue(): mixed
-```
-
-
-
-#### Returns
-`mixed`
-
-### isFailure
-
-
-```php
-public function isFailure(): bool
-```
-
-
-
-#### Returns
-`bool`
-
-### isSuccess
-
-
-```php
-public function isSuccess(): bool
-```
-
-
-
-#### Returns
-`bool`
-
-### map
-
-
-```php
-public function map(callable $fn): self
-```
-
+Execute on `Failure`, mutate the result, and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`self`
- E&gt;
+[ResultInterface](Results/ResultInterface.md)&lt;U, F&gt;
 
-### mapError
+### rethrow
 
 
 ```php
-public function mapError(callable $fn): self
+public function rethrow(?Throwable $throwable = NULL): ResultInterface<T, E>
 ```
 
+Throw the error of a `Failure`, or continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$throwable` | ?Throwable |  |
 
 #### Returns
-`self`
- F&gt;
+[ResultInterface](Results/ResultInterface.md)&lt;T, E&gt;
 
-### onFailure
+### succeeded
 
 
 ```php
-public function onFailure(callable $fn): self
+public function succeeded(): bool
 ```
 
+Return `true` if this is a `Success`.
+
+
+#### Returns
+bool
+
+### success
+
+
+```php
+public function success(callable $fn): ResultInterface<T, E>
+```
+
+Execute on `Success` and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`self`
- E&gt;
-
-### onSuccess
-
-
-```php
-public function onSuccess(callable $fn): self
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
-
-#### Returns
-`self`
- E&gt;
-
-### tap
-
-
-```php
-public function tap(callable $fn): self
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
-
-#### Returns
-`self`
- E&gt;
-
-### tapError
-
-
-```php
-public function tapError(callable $fn): self
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
-
-#### Returns
-`self`
- E&gt;
+[ResultInterface](Results/ResultInterface.md)&lt;T, E&gt;
 
 ### then
 
 
 ```php
-public function then(callable $fn): self
+public function then(callable $fn): ResultInterface<U, F>
 ```
 
+Execute on `Success`, mutate the result, and continue the chain.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | `callable` |  |
+| `$fn` | callable |  |
 
 #### Returns
-`self`
- E&gt;
+[ResultInterface](Results/ResultInterface.md)&lt;U, F&gt;
 
 ### unwrap
 
 
 ```php
-public function unwrap(mixed $default = NULL): mixed
+public function unwrap(R $default = NULL): R|T
 ```
 
+Return the unwrapped value of a `Success`, or a default value.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$default` | `mixed` |  |
+| `$default` | R |  |
 
 #### Returns
-`mixed`
+R | T
+
+### val
+
+
+```php
+public function val(): mixed
+```
+
+Return the unwrapped value of a `Success`.
+
+
+#### Returns
+mixed
 

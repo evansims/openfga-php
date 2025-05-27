@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace OpenFGA\Schema;
 
 use ArrayAccess;
+use BackedEnum;
 use DateTimeImmutable;
-use InvalidArgumentException;
-use OpenFGA\Exceptions\SchemaValidationException;
+use OpenFGA\Exceptions\{SerializationError, SerializationException};
 use ReflectionClass;
 use ReflectionException;
+
 use ReflectionNamedType;
-use RuntimeException;
+use ReflectionParameter;
 
 use function array_key_exists;
 use function count;
@@ -60,26 +61,25 @@ final class SchemaValidator
      * @param mixed           $data
      * @param class-string<T> $className
      *
-     * @throws SchemaValidationException If validation fails
-     * @throws InvalidArgumentException  If no schema is registered for the class or invalid data type
-     * @throws RuntimeException          If there's an error creating the instance
+     * @throws SerializationException If validation fails, missing required constructor parameter, or could not add items to collection
      *
      * @return T
      */
     public function validateAndTransform(mixed $data, string $className): object
     {
         if (! is_array($data)) {
-            throw new InvalidArgumentException('Data must be an array');
+            throw SerializationError::InvalidItemType->exception(context: ['className' => $className]);
         }
 
         if (! isset($this->schemas[$className])) {
-            throw new InvalidArgumentException('No schema registered for class: ' . $className);
+            throw SerializationError::UndefinedItemType->exception(context: ['className' => $className]);
         }
 
         $schema = $this->schemas[$className];
 
         if ($schema instanceof CollectionSchemaInterface) {
-            if (! array_is_list($data)) {
+            // Only convert to list for IndexedCollections, preserve keys for KeyedCollections
+            if (! array_is_list($data) && ! is_subclass_of($className, \OpenFGA\Models\Collections\KeyedCollection::class)) {
                 $data = array_values($data);
             }
 
@@ -116,61 +116,39 @@ final class SchemaValidator
 
             $value = $data[$name];
 
-            // Type validation
-            if (! $this->validateType($value, $type, $format, $enum)) {
-                $errors[] = sprintf("Property '%s' has invalid type, expected %s", $name, $type);
-
-                continue;
+            // Type validation (skip for object types with className as they're handled recursively)
+            if (! ('object' === $type && null !== $propClassName) && ! $this->validateType($value, $type, $format, $enum)) {
+                throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
             }
 
             // Handle nested objects and arrays
             if ('object' === $type && null !== $propClassName) {
                 if (! is_array($value)) {
-                    $errors[] = sprintf("Property '%s' must be an object", $name);
-
-                    continue;
+                    throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
                 }
 
-                try {
-                    $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
-                } catch (SchemaValidationException $e) {
-                    foreach ($e->getErrors() as $error) {
-                        $errors[] = sprintf('%s.%s', $name, $error);
-                    }
-                }
+                $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
+            } elseif ('object' === $type && null === $propClassName) {
+                // Plain object without specific class - accept as-is
+                $transformedData[$name] = $value;
             } elseif ('array' === $type && null !== $items) {
                 $itemType = $items['type'] ?? null;
                 $itemClassName = $items['className'] ?? null;
 
                 if (! is_array($value)) {
-                    $errors[] = sprintf("Property '%s' must be an array", $name);
-
-                    continue;
+                    throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
                 }
 
                 $transformedArray = [];
 
                 /** @var array<int, mixed> $value */
-                foreach ($value as $i => $item) {
+                foreach ($value as $item) {
                     if ('object' === $itemType && null !== $itemClassName) {
-                        try {
-                            $transformedItem = $this->validateAndTransform($item, $itemClassName);
-                            $transformedArray[] = $transformedItem;
-                        } catch (SchemaValidationException $e) {
-                            // On any error in nested validation, fail the entire array
-                            foreach ($e->getErrors() as $error) {
-                                $errors[] = sprintf('%s[%s].%s', $name, $i, $error);
-                            }
-
-                            // Skip adding to transformedArray to prevent partial population
-                            continue;
-                        }
+                        $transformedItem = $this->validateAndTransform($item, $itemClassName);
+                        $transformedArray[] = $transformedItem;
                     } else {
                         if (! $this->validateType($item, $itemType)) {
-                            $errors[] = sprintf("Item %s in array '%s' has invalid type, expected %s", $i, $name, $itemType);
-
-                            // Skip adding to transformedArray to prevent partial population
-                            continue;
+                            throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $itemType]);
                         }
                         $transformedArray[] = $item;
                     }
@@ -190,12 +168,25 @@ final class SchemaValidator
             }
         }
 
+        // Check if there were any errors and throw exception if needed
         if ([] !== $errors) {
-            throw new SchemaValidationException($errors);
+            throw SerializationError::InvalidItemType->exception(context: ['errors' => implode(', ', $errors)]);
         }
 
         // Create data class instance using reflection
         return $this->createInstance($className, $transformedData);
+    }
+
+    /**
+     * Convert camelCase to snake_case.
+     *
+     * @param string $input
+     */
+    private function camelToSnakeCase(string $input): string
+    {
+        $result = preg_replace('/([a-z])([A-Z])/', '$1_$2', $input);
+
+        return strtolower($result ?? $input);
     }
 
     /**
@@ -247,7 +238,7 @@ final class SchemaValidator
                 }
             }
         } else {
-            throw new RuntimeException('Could not add items to collection: ' . $className);
+            throw SerializationError::CouldNotAddItemsToCollection->exception(context: ['className' => $className]);
         }
 
         return $instance;
@@ -261,7 +252,7 @@ final class SchemaValidator
      * @param array<string, mixed> $data
      * @param class-string<T>      $className
      *
-     * @throws SchemaValidationException
+     * @throws SerializationException
      * @throws ReflectionException
      *
      * @return T
@@ -276,12 +267,16 @@ final class SchemaValidator
             $params = [];
             foreach ($constructor->getParameters() as $parameter) {
                 $paramName = $parameter->getName();
+                $snakeCaseName = $this->camelToSnakeCase($paramName);
+
                 if (array_key_exists($paramName, $data)) {
-                    $params[$paramName] = $data[$paramName];
+                    $params[$paramName] = $this->transformParameterValue($data[$paramName], $parameter);
+                } elseif (array_key_exists($snakeCaseName, $data)) {
+                    $params[$paramName] = $this->transformParameterValue($data[$snakeCaseName], $parameter);
                 } elseif ($parameter->isDefaultValueAvailable()) {
                     $params[$paramName] = $parameter->getDefaultValue();
                 } else {
-                    throw new RuntimeException('Missing required constructor parameter: ' . $paramName);
+                    throw SerializationError::MissingRequiredConstructorParameter->exception(context: ['className' => $className, 'paramName' => $paramName]);
                 }
             }
 
@@ -291,20 +286,43 @@ final class SchemaValidator
             $instance = $reflection->newInstanceWithoutConstructor();
         }
 
-        // Set public properties
+        // Set public properties (skip readonly properties)
         foreach ($data as $name => $value) {
             if ($reflection->hasProperty($name)) {
                 $property = $reflection->getProperty($name);
 
-                // if (! $property->isPublic()) {
-                //     $property->setAccessible(true);
-                // }
-
-                $property->setValue($instance, $value);
+                if (! $property->isReadOnly()) {
+                    $property->setValue($instance, $value);
+                }
             }
         }
 
         return $instance;
+    }
+
+    /**
+     * Transform a parameter value to match the expected type.
+     *
+     * @param mixed               $value
+     * @param ReflectionParameter $parameter
+     */
+    private function transformParameterValue(mixed $value, ReflectionParameter $parameter): mixed
+    {
+        $type = $parameter->getType();
+
+        if ($type instanceof ReflectionNamedType) {
+            $typeName = $type->getName();
+
+            // Handle enum types
+            if (enum_exists($typeName) && is_string($value)) {
+                /** @var class-string<BackedEnum> $enumClass */
+                $enumClass = $typeName;
+
+                return $enumClass::from($value);
+            }
+        }
+
+        return $value;
     }
 
     /**
@@ -399,17 +417,16 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param array<int, mixed>         $data      Array of items
+     * @param array<int|string, mixed>  $data      Array of items
      * @param CollectionSchemaInterface $schema    Collection schema
      * @param class-string<T>           $className
      *
-     * @throws SchemaValidationException If validation fails
+     * @throws SerializationException If validation fails
      *
      * @return T
      */
     private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema, string $className): object
     {
-        $errors = [];
         $transformedItems = [];
         $itemType = $schema->getItemType();
 
@@ -417,22 +434,12 @@ final class SchemaValidator
 
         // Check if collection requires items
         if ($schema->requiresItems() && [] === $data) {
-            throw new SchemaValidationException(['Collection requires at least one item']);
+            throw SerializationError::EmptyCollection->exception();
         }
 
         // Validate each item in the array
-        foreach ($data as $index => $item) {
-            try {
-                $transformedItems[] = $this->validateAndTransform($item, $itemType);
-            } catch (SchemaValidationException $e) {
-                foreach ($e->getErrors() as $error) {
-                    $errors[] = sprintf('[%d].%s', $index, $error);
-                }
-            }
-        }
-
-        if ([] !== $errors) {
-            throw new SchemaValidationException($errors);
+        foreach ($data as $key => $item) {
+            $transformedItems[$key] = $this->validateAndTransform($item, $itemType);
         }
 
         return $this->createCollectionInstance($className, $transformedItems);
@@ -481,16 +488,19 @@ final class SchemaValidator
                 return is_array($value);
 
             case 'object':
-                if (! is_array($value)) {
-                    return false;
-                }
-                if ([] === $value) {
-                    return false;
+                // Accept actual objects
+                if (is_object($value)) {
+                    return true;
                 }
                 // Accept associative arrays (at least one non-numeric key)
-                foreach (array_keys($value) as $k) {
-                    if (! is_int($k)) {
-                        return true;
+                if (is_array($value)) {
+                    if ([] === $value) {
+                        return false;
+                    }
+                    foreach (array_keys($value) as $k) {
+                        if (! is_int($k)) {
+                            return true;
+                        }
                     }
                 }
 

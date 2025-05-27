@@ -26,7 +26,7 @@ This tool generates API documentation from the OpenFGA PHP SDK source code.
 Run the documentation generator:
 
 ```bash
-php generate-docs.php [--src=path/to/src] [--out=path/to/output] [--clean]
+php generate.php [--src=path/to/src] [--out=path/to/output] [--clean]
 ```
 
 `--src` and `--out` let you override the default source and output folders. The optional `--clean` flag removes the output directory before generating files.

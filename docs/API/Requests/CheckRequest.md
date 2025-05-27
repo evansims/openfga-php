@@ -21,19 +21,19 @@ public function getAuthorizationModel(): string
 
 
 #### Returns
-`string`
+string
 
 ### getConsistency
 
 
 ```php
-public function getConsistency(): ?Consistency
+public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
 ```
 
 
 
 #### Returns
-`?Consistency`
+?Consistency
 
 ### getContext
 
@@ -45,35 +45,35 @@ public function getContext(): ?object
 
 
 #### Returns
-`?object`
+?object
 
 ### getContextualTuples
 
 
 ```php
-public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 
 ### getRequest
 
 
 ```php
-public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
+public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | `StreamFactoryInterface` |  |
+| `$streamFactory` | StreamFactoryInterface |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)`
+[RequestContext](Network/RequestContext.md)
 
 ### getStore
 
@@ -85,7 +85,7 @@ public function getStore(): string
 
 
 #### Returns
-`string`
+string
 
 ### getTrace
 
@@ -97,17 +97,17 @@ public function getTrace(): ?bool
 
 
 #### Returns
-`?bool`
+?bool
 
 ### getTupleKey
 
 
 ```php
-public function getTupleKey(): [TupleKeyInterface](Models/TupleKeyInterface.md)
+public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
 ```
 
 
 
 #### Returns
-`[TupleKeyInterface](Models/TupleKeyInterface.md)`
+[TupleKeyInterface](Models/TupleKeyInterface.md)
 

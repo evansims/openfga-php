@@ -14,41 +14,41 @@
 
 
 ```php
-public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+public function getConditions(): ConditionsInterface<ConditionInterface>
 ```
 
 
 
 #### Returns
-`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)`
+ConditionsInterface&lt;ConditionInterface&gt;
 
 ### getRequest
 
 
 ```php
-public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
+public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | `StreamFactoryInterface` |  |
+| `$streamFactory` | StreamFactoryInterface |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)`
+[RequestContext](Network/RequestContext.md)
 
 ### getSchemaVersion
 
 
 ```php
-public function getSchemaVersion(): SchemaVersion
+public function getSchemaVersion(): OpenFGA\Models\Enums\SchemaVersion
 ```
 
 
 
 #### Returns
-`SchemaVersion`
+SchemaVersion
 
 ### getStore
 
@@ -60,17 +60,17 @@ public function getStore(): string
 
 
 #### Returns
-`string`
+string
 
 ### getTypeDefinitions
 
 
 ```php
-public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
+public function getTypeDefinitions(): TypeDefinitionsInterface<TypeDefinitionInterface>
 ```
 
 
 
 #### Returns
-`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)`
+TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt;
 

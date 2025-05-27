@@ -20,37 +20,37 @@
 
 
 ```php
-public function getComputed(): ?[ComputedInterface](Models/ComputedInterface.md)
+public function getComputed(): ?OpenFGA\Models\ComputedInterface
 ```
 
 
 
 #### Returns
-`?[ComputedInterface](Models/ComputedInterface.md)`
+?[ComputedInterface](Models/ComputedInterface.md)
 
 ### getTupleToUserset
 
 
 ```php
-public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
+public function getTupleToUserset(): ?OpenFGA\Models\UsersetTreeTupleToUsersetInterface
 ```
 
 
 
 #### Returns
-`?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)`
+?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
 
 ### getUsers
 
 
 ```php
-public function getUsers(): ?[UsersListInterface](Models/Collections/UsersListInterface.md)
+public function getUsers(): ?OpenFGA\Models\Collections\UsersListInterface
 ```
 
 
 
 #### Returns
-`?[UsersListInterface](Models/Collections/UsersListInterface.md)`
+?[UsersListInterface](Models/Collections/UsersListInterface.md)
 
 ### jsonSerialize
 
@@ -62,19 +62,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
- array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}
+array
 
 ### schema
 
 *<small>Implements Models\LeafInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

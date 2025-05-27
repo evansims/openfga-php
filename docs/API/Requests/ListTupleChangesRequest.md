@@ -21,7 +21,7 @@ public function getContinuationToken(): ?string
 
 
 #### Returns
-`?string`
+?string
 
 ### getPageSize
 
@@ -33,23 +33,23 @@ public function getPageSize(): ?int
 
 
 #### Returns
-`?int`
+?int
 
 ### getRequest
 
 
 ```php
-public function getRequest(StreamFactoryInterface $streamFactory): [RequestContext](Network/RequestContext.md)
+public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | `StreamFactoryInterface` |  |
+| `$streamFactory` | StreamFactoryInterface |  |
 
 #### Returns
-`[RequestContext](Network/RequestContext.md)`
+[RequestContext](Network/RequestContext.md)
 
 ### getStartTime
 
@@ -61,7 +61,7 @@ public function getStartTime(): ?DateTimeImmutable
 
 
 #### Returns
-`?DateTimeImmutable`
+?DateTimeImmutable
 
 ### getStore
 
@@ -73,7 +73,7 @@ public function getStore(): string
 
 
 #### Returns
-`string`
+string
 
 ### getType
 
@@ -85,5 +85,5 @@ public function getType(): ?string
 
 
 #### Returns
-`?string`
+?string
 

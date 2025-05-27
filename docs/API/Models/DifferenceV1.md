@@ -20,25 +20,25 @@
 
 
 ```php
-public function getBase(): [UsersetInterface](Models/UsersetInterface.md)
+public function getBase(): OpenFGA\Models\UsersetInterface
 ```
 
 
 
 #### Returns
-`[UsersetInterface](Models/UsersetInterface.md)`
+[UsersetInterface](Models/UsersetInterface.md)
 
 ### getSubtract
 
 
 ```php
-public function getSubtract(): [UsersetInterface](Models/UsersetInterface.md)
+public function getSubtract(): OpenFGA\Models\UsersetInterface
 ```
 
 
 
 #### Returns
-`[UsersetInterface](Models/UsersetInterface.md)`
+[UsersetInterface](Models/UsersetInterface.md)
 
 ### jsonSerialize
 
@@ -50,35 +50,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
-```php
-array{
-computed_userset?: array{object?: string, relation?: string},
-tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-union?: array&lt;mixed&gt;,
-intersection?: array&lt;mixed&gt;,
-difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
-direct?: object,
-}, subtract: array{
-computed_userset?: array{object?: string, relation?: string},
-tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-union?: array&lt;mixed&gt;,
-intersection?: array&lt;mixed&gt;,
-difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
-direct?: object,
-}}
-```
+array
 
 ### schema
 
 *<small>Implements Models\DifferenceV1Interface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

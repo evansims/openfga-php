@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\ComputedInterface;
+use OpenFGA\Models\{Computed, ComputedInterface};
 
 /**
  * @extends IndexedCollection<ComputedInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\ComputedInterface;
  */
 final class Computeds extends IndexedCollection implements ComputedsInterface
 {
-    protected static string $itemType = ComputedInterface::class;
+    protected static string $itemType = Computed::class;
 }

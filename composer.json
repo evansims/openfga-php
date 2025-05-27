@@ -23,7 +23,8 @@
     "psr-discovery/all": "^1",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
-    "psr/http-message-implementation": "^1"
+    "psr/http-message-implementation": "^1",
+    "symfony/translation": "^7.2"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2",
@@ -116,24 +117,23 @@
     "rector:fix": "@php vendor/bin/rector process src",
     "lint": [
       "@phpstan",
+      "@psalm",
       "@rector",
       "@phpcs"
     ],
     "test:integration": [
-      "@lint",
       "@pest:integration"
     ],
     "test:unit": [
-      "@lint",
       "@pest:unit"
     ],
     "test:contract": [
-      "@lint",
       "@pest:contract"
     ],
     "test": [
+      "@lint",
       "@pest:unit"
     ],
-    "openapi": "scripts/openapi.sh"
+    "docs": "@php tools/docs/generate.php"
   }
 }

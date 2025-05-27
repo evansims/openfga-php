@@ -14,49 +14,49 @@
 
 
 ```php
-public function getHttpClient(): ClientInterface
+public function getHttpClient(): Psr\Http\Client\ClientInterface
 ```
 
 
 
 #### Returns
-`ClientInterface`
+ClientInterface
 
 ### getHttpRequestFactory
 
 
 ```php
-public function getHttpRequestFactory(): RequestFactoryInterface
+public function getHttpRequestFactory(): Psr\Http\Message\RequestFactoryInterface
 ```
 
 
 
 #### Returns
-`RequestFactoryInterface`
+RequestFactoryInterface
 
 ### getHttpResponseFactory
 
 
 ```php
-public function getHttpResponseFactory(): ResponseFactoryInterface
+public function getHttpResponseFactory(): Psr\Http\Message\ResponseFactoryInterface
 ```
 
 
 
 #### Returns
-`ResponseFactoryInterface`
+ResponseFactoryInterface
 
 ### getHttpStreamFactory
 
 
 ```php
-public function getHttpStreamFactory(): StreamFactoryInterface
+public function getHttpStreamFactory(): Psr\Http\Message\StreamFactoryInterface
 ```
 
 
 
 #### Returns
-`StreamFactoryInterface`
+StreamFactoryInterface
 
 ### handleResponseException
 
@@ -70,26 +70,26 @@ public function handleResponseException(Psr\Http\Message\ResponseInterface $resp
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | `Psr\Http\Message\ResponseInterface` |  |
+| `$response` | Psr\Http\Message\ResponseInterface |  |
 
 #### Returns
-`void`
+void
 
 ### request
 
 
 ```php
-public function request([RequestInterface](Requests/RequestInterface.md) $request): Psr\Http\Message\RequestInterface
+public function request(OpenFGA\Requests\RequestInterface $request): Psr\Http\Message\RequestInterface
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `request` | `Psr\Http\Message\RequestInterface` |  |
+| `request` | Psr\Http\Message\RequestInterface |  |
 
 #### Returns
-`Psr\Http\Message\RequestInterface`
+Psr\Http\Message\RequestInterface
 
 ### send
 
@@ -102,8 +102,8 @@ public function send(Psr\Http\Message\RequestInterface $request): Psr\Http\Messa
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | `Psr\Http\Message\RequestInterface` |  |
+| `$request` | Psr\Http\Message\RequestInterface |  |
 
 #### Returns
-`Psr\Http\Message\ResponseInterface`
+Psr\Http\Message\ResponseInterface
 

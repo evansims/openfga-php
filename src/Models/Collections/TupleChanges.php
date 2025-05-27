@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\TupleChangeInterface;
+use OpenFGA\Models\{TupleChange, TupleChangeInterface};
 
 /**
  * @extends IndexedCollection<TupleChangeInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\TupleChangeInterface;
  */
 final class TupleChanges extends IndexedCollection implements TupleChangesInterface
 {
-    protected static string $itemType = TupleChangeInterface::class;
+    protected static string $itemType = TupleChange::class;
 }

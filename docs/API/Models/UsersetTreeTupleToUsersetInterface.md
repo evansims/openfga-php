@@ -15,13 +15,13 @@
 
 
 ```php
-public function getComputed(): [ComputedsInterface](Models/Collections/ComputedsInterface.md)
+public function getComputed(): ComputedsInterface<ComputedInterface>
 ```
 
 
 
 #### Returns
-`[ComputedsInterface](Models/Collections/ComputedsInterface.md)`
+ComputedsInterface&lt;[ComputedInterface](Models/ComputedInterface.md)&gt;
 
 ### getTupleset
 
@@ -33,7 +33,7 @@ public function getTupleset(): string
 
 
 #### Returns
-`string`
+string
 
 ### jsonSerialize
 
@@ -45,6 +45,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
- string, computed: array&lt;int, array{userset: string}&gt;}
+array
 

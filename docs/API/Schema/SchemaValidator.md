@@ -12,21 +12,20 @@
 
 
 ```php
-public function getSchemas(): array
+public function getSchemas(): array<string, SchemaInterface>
 ```
 
 Get all registered schemas.
 
 
 #### Returns
-`array`
- SchemaInterface&gt;
+array&lt;string, [SchemaInterface](Schema/SchemaInterface.md)&gt;
 
 ### registerSchema
 
 
 ```php
-public function registerSchema([SchemaInterface](Schema/SchemaInterface.md) $schema): self
+public function registerSchema(SchemaInterface $schema): self
 ```
 
 Register a schema.
@@ -34,25 +33,25 @@ Register a schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | `[SchemaInterface](Schema/SchemaInterface.md)` |  |
+| `$schema` | [SchemaInterface](Schema/SchemaInterface.md) |  |
 
 #### Returns
-`self`
+self
 
 ### validateAndTransform
 
 
 ```php
-public function validateAndTransform(mixed $data, string $className): object
+public function validateAndTransform(mixed $data, string $className): T
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$data` | `mixed` |  |
-| `$className` | `string` |  |
+| `$data` | mixed |  |
+| `$className` | string |  |
 
 #### Returns
-`object`
+T
 

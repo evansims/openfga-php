@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UsersListUserInterface;
+use OpenFGA\Models\{UsersListUser, UsersListUserInterface};
 
 /**
  * @extends IndexedCollection<UsersListUserInterface>
@@ -13,5 +13,5 @@ use OpenFGA\Models\UsersListUserInterface;
  */
 final class UsersList extends IndexedCollection implements UsersListInterface
 {
-    protected static string $itemType = UsersListUserInterface::class;
+    protected static string $itemType = UsersListUser::class;
 }

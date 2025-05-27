@@ -26,20 +26,19 @@ public function getContext(): ?array
 
 
 #### Returns
-`?array`
- mixed&gt;
+?array
 
 ### getContextualTuples
 
 
 ```php
-public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 
 ### getExpectation
 
@@ -51,19 +50,19 @@ public function getExpectation(): bool
 
 
 #### Returns
-`bool`
+bool
 
 ### getTupleKey
 
 
 ```php
-public function getTupleKey(): [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
+public function getTupleKey(): OpenFGA\Models\AssertionTupleKeyInterface
 ```
 
 
 
 #### Returns
-`[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)`
+[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
 
 ### jsonSerialize
 
@@ -75,25 +74,18 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
-```php
-tuple_key: array&lt;string, mixed&gt;,
-expectation: bool,
-contextual_tuples?: array&lt;array-key, mixed&gt;,
-context?: array&lt;array-key, mixed&gt;
-}
-```
+array
 
 ### schema
 
 *<small>Implements Models\AssertionInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

@@ -19,18 +19,18 @@
 
 
 ```php
-public function add(string $key, [ModelInterface](Models/ModelInterface.md) $item): static
+public function add(string $key, T $item): static
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
-| `$item` | `[ModelInterface](Models/ModelInterface.md)` |  |
+| `$key` | string |  |
+| `$item` | T |  |
 
 #### Returns
-`static`
+static
 
 ### count
 
@@ -42,33 +42,35 @@ public function count(): int
 
 
 #### Returns
-`int`
+int
 
 ### current
 
 
 ```php
-public function current(): [ModelInterface](Models/ModelInterface.md)
+public function current(): T
 ```
 
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)`
+T
 
 ### get
 
 
 ```php
-public function get(string $key)
+public function get(string $key): null|T
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
+| `$key` | string |  |
 
+#### Returns
+null | T
 
 ### has
 
@@ -82,10 +84,10 @@ Check if a key exists in the collection.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | `string` |  |
+| `$key` | string |  |
 
 #### Returns
-`bool`
+bool
 
 ### jsonSerialize
 
@@ -98,17 +100,7 @@ Serialize the collection to an array.
 
 
 #### Returns
-`array`
-```php
-array{
-computed_userset?: array{object?: string, relation?: string},
-tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-union?: array&lt;mixed&gt;,
-intersection?: array&lt;mixed&gt;,
-difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
-direct?: object,
-}&gt;
-```
+array
 
 ### key
 
@@ -120,7 +112,7 @@ public function key(): string
 
 
 #### Returns
-`string`
+string
 
 ### next
 
@@ -132,7 +124,7 @@ public function next(): void
 
 
 #### Returns
-`void`
+void
 
 ### offsetExists
 
@@ -145,10 +137,10 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`bool`
+bool
 
 ### offsetGet
 
@@ -161,25 +153,25 @@ public function offsetGet(mixed $offset)
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 
 ### offsetSet
 
 
 ```php
-public function offsetSet(mixed $offset, mixed $value): void
+public function offsetSet(null|string $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
-| `$value` | `mixed` |  |
+| `$offset` | null | string |  |
+| `$value` | T |  |
 
 #### Returns
-`void`
+void
 
 ### offsetUnset
 
@@ -192,10 +184,10 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
+| `$offset` | mixed |  |
 
 #### Returns
-`void`
+void
 
 ### rewind
 
@@ -207,20 +199,19 @@ public function rewind(): void
 
 
 #### Returns
-`void`
+void
 
 ### toArray
 
 
 ```php
-public function toArray(): array
+public function toArray(): array<string, T>
 ```
 
 
 
 #### Returns
-`array`
- T&gt;
+array&lt;string, T&gt;
 
 ### valid
 
@@ -232,5 +223,5 @@ public function valid(): bool
 
 
 #### Returns
-`bool`
+bool
 

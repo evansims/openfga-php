@@ -21,19 +21,19 @@ public function getExpression(): string
 
 
 #### Returns
-`string`
+string
 
 ### getMetadata
 
 
 ```php
-public function getMetadata(): ?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
+public function getMetadata(): ?OpenFGA\Models\ConditionMetadataInterface
 ```
 
 
 
 #### Returns
-`?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)`
+?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
 
 ### getName
 
@@ -45,19 +45,19 @@ public function getName(): string
 
 
 #### Returns
-`string`
+string
 
 ### getParameters
 
 
 ```php
-public function getParameters(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+public function getParameters(): null|ConditionParametersInterface<ConditionParameterInterface>
 ```
 
 
 
 #### Returns
-`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)`
+null | ConditionParametersInterface&lt;[ConditionParameterInterface](Models/ConditionParameterInterface.md)&gt;
 
 ### jsonSerialize
 
@@ -69,6 +69,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
- string, expression: string, parameters?: list&lt;array{type_name: string, generic_types?: mixed}&gt;, metadata?: array{module: string, source_info: array{file: string}}}
+array
 

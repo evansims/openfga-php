@@ -20,7 +20,7 @@ public function getClassName(): string
 
 
 #### Returns
-`string`
+string
 
 ### getProperties
 
@@ -32,22 +32,21 @@ public function getProperties(): array
 
 
 #### Returns
-`array`
- SchemaProperty&gt;
+array
 
 ### getProperty
 
 
 ```php
-public function getProperty(string $name): ?[SchemaProperty](Schema/SchemaProperty.md)
+public function getProperty(string $name): ?OpenFGA\Schema\SchemaProperty
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | `string` |  |
+| `$name` | string |  |
 
 #### Returns
-`?[SchemaProperty](Schema/SchemaProperty.md)`
+?[SchemaProperty](Schema/SchemaProperty.md)
 

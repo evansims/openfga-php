@@ -16,18 +16,19 @@
 *<small>Implements Responses\ListObjectsResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, [SchemaValidator](Schema/SchemaValidator.md) $validator): self
+public function fromResponse(Psr\Http\Message\ResponseInterface $response, Psr\Http\Message\RequestInterface $request, OpenFGA\Schema\SchemaValidator $validator): self
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | `Psr\Http\Message\ResponseInterface` |  |
-| `$validator` | `[SchemaValidator](Schema/SchemaValidator.md)` |  |
+| `$response` | Psr\Http\Message\ResponseInterface |  |
+| `$request` | Psr\Http\Message\RequestInterface |  |
+| `$validator` | [SchemaValidator](Schema/SchemaValidator.md) |  |
 
 #### Returns
-`self`
+self
 
 ### getObjects
 
@@ -39,19 +40,18 @@ public function getObjects(): array
 
 
 #### Returns
-`array`
- string&gt;
+array
 
 ### schema
 
 *<small>Implements Responses\ListObjectsResponseInterface</small>*  
 
 ```php
-public function schema(): [SchemaInterface](Schema/SchemaInterface.md)
+public function schema(): OpenFGA\Schema\SchemaInterface
 ```
 
 
 
 #### Returns
-`[SchemaInterface](Schema/SchemaInterface.md)`
+[SchemaInterface](Schema/SchemaInterface.md)
 

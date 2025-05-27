@@ -15,13 +15,13 @@
 
 
 ```php
-public function getDifference(): ?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)
+public function getDifference(): ?OpenFGA\Models\UsersetTreeDifferenceInterface
 ```
 
 
 
 #### Returns
-`?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)`
+?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)
 
 ### getIntersection
 
@@ -33,19 +33,19 @@ public function getIntersection(): ?self
 
 
 #### Returns
-`?self`
+?self
 
 ### getLeaf
 
 
 ```php
-public function getLeaf(): ?[LeafInterface](Models/LeafInterface.md)
+public function getLeaf(): ?OpenFGA\Models\LeafInterface
 ```
 
 
 
 #### Returns
-`?[LeafInterface](Models/LeafInterface.md)`
+?[LeafInterface](Models/LeafInterface.md)
 
 ### getName
 
@@ -57,7 +57,7 @@ public function getName(): string
 
 
 #### Returns
-`string`
+string
 
 ### getUnion
 
@@ -69,7 +69,7 @@ public function getUnion(): ?self
 
 
 #### Returns
-`?self`
+?self
 
 ### jsonSerialize
 
@@ -81,6 +81,5 @@ public function jsonSerialize(): array
 
 
 #### Returns
-`array`
- string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}
+array
 

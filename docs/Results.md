@@ -1,199 +1,211 @@
-# Results
+# Working with Results: Success and Failure
 
-Results are returned by client methods as either a `Success` or `Failure` object with identical interfaces. Results are used to represent the outcome of an operation, and can be used to handle errors in a more structured way. A number of helper functions are provided to make working with Results easier.
+The OpenFGA PHP SDK uses a **Result pattern** for operations that can either succeed or fail. Instead of throwing exceptions directly for many expected operational outcomes (like "not found" from the server, or invalid input that the server might reject), SDK methods that interact with the OpenFGA API typically return either:
 
-## Guidance
+- A `Success` object, containing the successfully retrieved value or response.
+- A `Failure` object, containing an error, which is usually an `Exception` or `Throwable` instance detailing what went wrong.
 
-- Your application is responsible for handling `Failure` states.
-- Use the `fold()` [helper](#helpers) when you need to resolve a Result to a value.
-- Use the `success()` and `failure()` [helpers](#helpers) when you need to perform side effects based on the result.
-- For transformations, use the `map()`, `mapError()`, `then()`, `tap()`, and `tapError()` [Result methods](#result-methods).
+This approach encourages more explicit and robust error handling in your application.
 
-## Example
+## Benefits of the Result Pattern
+
+- **Explicit Error Handling:** It makes the possibility of failure a first-class citizen. Your code is naturally guided to consider both the success path and the failure path, leading to more resilient applications.
+- **Type Safety (with static analysis):** Tools like PHPStan can often infer the type of the value within a `Success` object or the type of the error within a `Failure` object, improving code quality.
+- **Reduced Try-Catch Boilerplate:** For many non-exceptional failures (e.g., an entity not found, a validation error from the server), you don't need to litter your code with `try-catch` blocks. Instead, you handle the `Failure` type directly. Critical runtime exceptions (e.g., network issues if not caught by the HTTP client, internal SDK errors) might still be thrown.
+- **Functional Chaining:** `Result` objects often come with methods that allow you to chain operations in a clean, readable way, transforming data or performing side effects only if the previous step was successful.
+
+## The `ResultInterface`
+
+Both `Success<TValue>` and `Failure<TError>` objects implement the `OpenFGA\Results\ResultInterface<TValue, TError>`. This interface provides a common set of methods to work with the outcome of an operation. Key methods include:
+
+- `succeeded(): bool`: Returns `true` if the result is a `Success`, `false` otherwise.
+- `failed(): bool`: Returns `true` if the result is a `Failure`, `false` otherwise.
+
+- `recover(callable $fn): ResultInterface`: When a `Failure` chains an operation that itself returns a `ResultInterface`.
+- `failure(callable $fn): ResultInterface`: Performs a side effect if the Result is `Failure`.
+- `rethrow(?Throwable $throwable = null): ResultInterface`: Throws the error of a `Failure`, or continues the chain.
+
+- `then(callable $fn): ResultInterface`: When a `Success` chains an operation that itself returns a `ResultInterface`.
+- `success(callable $fn): ResultInterface`: Performs a side effect if the Result is `Success`.
+- `unwrap(mixed $default = null): mixed`: Extracts the value from `Success` or returns a default if it's a `Failure`.
+
+- `val(): mixed`: Returns the value of the `Success` or throws an exception if the result is a `Failure`.
+- `err(): mixed`: Returns the error of the `Failure` or throws an exception if the result is a `Success`.
+
+The SDK also provides helper functions (e.g., `OpenFGA\Results\result()`, `OpenFGA\Results\success()`, `OpenFGA\Results\failure()`, `OpenFGA\Results\unwrap()`, `OpenFGA\Results\ok()`, `OpenFGA\Results\err()`) that can make working with `Result` objects more straightforward in some contexts.
+
+## Guidance: Choosing How to Handle Results
+
+Here's practical advice on when to use different approaches for handling `Result` objects:
+
+**1. Using `unwrap()` (Method on `ResultInterface`)**
+
+- **When:**
+  - When you have a sensible default value to fall back on, and the failure case doesn't require complex logic.
+- **Behavior:**
+  - `$result->unwrap($defaultValue)`: If `Success`, returns its value. If `Failure`, returns `$defaultValue`.
+  - `$result->unwrap()`: If `Success`, returns its value. If `Failure`, it returns `null`.
 
 ```php
-use OpenFGA\{Client, Authentication};
-use OpenFGA\Responses\CreateStoreResponseInterface;
-
-use function OpenFGA\Result\{fold, success, failure};
-
-$client = new Client(
-    url: $_ENV['FGA_API_URL'],
-);
-
-$store = $client->createStore(name: 'my-store');
-
-$message = fold(
-    $store,
-    fn(CreateStoreResponseInterface $store) => "Store created: {$store->getId()}",
-    fn(Throwable $err) => "Store creation failed: {$err->getMessage()}"
-);
-
-failure($store, fn(Throwable $error) => {
-    // Store creation failed. Log or gracefully handle the error.
-    throw $error;
-});
-
-success($store, fn(CreateStoreResponseInterface $store) => {
-    // Delete the store we created with our `createStore()` call above.
-    $client->deleteStore(store: $store->getId());
-});
-```
-
-## Helpers
-
-### fold()
-
-Resolves a Result to a value.
-
-```php
+<?php
 use OpenFGA\Results\Success;
-use function OpenFGA\Result\fold;
-
-$result = new Success('We did it!');
-
-$value = fold(
-    result: $result,
-    onSuccess: fn($value) => "Yay! $value",
-    onFailure: fn($err) => "Nay! $err"
-);
-
-// $value === 'Yay! We did it!'
-```
-
-### success()
-
-```php
-use OpenFGA\Results\Success;
-use function OpenFGA\Result\success;
-
-$result = new Success('We did it!');
-
-success($result, fn($value) => {
-    echo "Yay! $value";
-});
-```
-
-### failure()
-
-```php
 use OpenFGA\Results\Failure;
-use function OpenFGA\Result\failure;
 
-$result = new Failure(new Exception('We failed!'));
+use Exception;
 
-failure($result, fn(Throwable $error) => {
-    throw $error; // We failed!
-});
+$successResult = new Success("Operation succeeded!");
+echo $successResult->unwrap("Default value") . "\n"; // Output: Operation succeeded!
+
+$failureResult = new Failure(new Exception("Something went wrong"));
+echo $failureResult->unwrap("Default value for failure") . "\n"; // Output: Default value for failure
+?>
 ```
 
-## Result Methods
+**2. Using `success()` and `failure()` (Helper Functions)**
 
-Results can also be manipulated using a number of built-in methods.
+- **When:** Use these for performing **side effects** based on the outcome, when you don't necessarily need to transform the `Result`'s inner value into something else to be returned.
+- **Behavior:**
+  - `success($result, $callable)`: Executes `$callable` (passing the success value) only if `$result` is `Success`.
+  - `failure($result, $callable)`: Executes `$callable` (passing the error/exception) only if `$result` is `Failure`.
 
-| Method        | Purpose                | Works On  |
-| ------------- | ---------------------- | --------- |
-| then(fn)      | Transform result       | Both      |
-| map(fn)       | Transform value        | `Success` |
-| mapError(fn)  | Transform error        | `Failure` |
-| tap(fn)       | Side-effect            | `Success` |
-| tapError(fn)  | Side-effect            | `Failure` |
-| onSuccess(fn) | Fluent branching       | Both      |
-| onFailure(fn) | Fluent branching       | Both      |
-| fold(...)     | Resolve into one value | Both      |
-| unwrap()      | Return value           | Both      |
+```php
+<?php
+use OpenFGA\Client; // Assuming $client is an instance
+use OpenFGA\Responses\CreateStoreResponseInterface;
+use function OpenFGA\Results\{recover, then, success, failure, unwrap, ok, err};
 
-### Usage
+use Exception;
 
-- `then(callable $fn): ResultInterface` transforms the value into another Result.
+// $createStoreResult = $client->createStore(name: 'another-store');
+// For demonstration:
+$createStoreResult = new Failure(new Exception("Network timeout"));
 
-  ```php
-  function findUser(int $id): ResultInterface {
-      return $id > 0
-          ? new Success(['id' => $id, 'name' => 'Alice'])
-          : new Failure(new RuntimeException('User not found'));
-  }
+success($createStoreResult, function(CreateStoreResponseInterface $response) {
+    // Log success, update frontend, etc.
+    error_log("Store creation successful: " . $response->getId());
+});
 
-  $result = (new Success(5))
-      ->then('findUser'); // ResultInterface<array, Throwable>
-  ```
+failure($createStoreResult, function(Throwable $error) {
+    // Log error, show error message to user, re-throw as application-specific exception
+    error_log("Store creation failed: " . $error->getMessage());
+    // throw new MyApplicationException("Failed to create store", 0, $error);
+});
+?>
+```
 
-- `map(callable $fn): ResultInterface` transforms the value when a `Success`.
+**3. Using `Result` Methods (`recover`, `then`, `success`, `failure`, etc.)**
 
-  ```php
-  $result = new Success(['id' => 123]);
-  // $result is Success<array<string, int>>
+- **When:** Ideal for creating **fluent processing pipelines**, transforming the `Result` or its contents, or conditionally chaining operations.
+- **Behavior:** These methods are called directly on the `Result` object. See detailed explanations below.
 
-  $transformed = $result->map(fn(array $data) => $data['id']);
-  // $transformed is Success<int>
+```php
+<?php
+use OpenFGA\Results\{success, failure};
+use Exception;
 
-  ```
+// Mini-scenario:
+// $apiResponseResult = $client->someOperation(); // Returns ResultInterface<HttpResponseInterface, ApiError>
+// For demonstration:
+$apiResponseResult = success(['body' => '{"id": 123, "name": "Test"}', 'statusCode' => 200]);
 
-- `mapError(callable $fn): ResultInterface` transforms the error value when a `Failure`.
+$processedResult = $apiResponseResult
+    ->then(function(array $response) { // Assuming $response is like ['body' => string, 'statusCode' => int]
+        if ($response['statusCode'] !== 200) {
+            throw new Exception("Non-200 status code: " . $response['statusCode']);
+        }
 
-  ```php
-  $result = new Failure(new Exception('We failed!'));
-  // $result is Failure<Throwable>
+        return success(json_decode($response['body'], true, 512, JSON_THROW_ON_ERROR));
+    }) // Now ResultInterface<array, Exception|JsonException>
+    ->success(fn(array $data) => print("Successfully decoded data for ID: " . ($data['id'] ?? 'unknown')))
+    ->failure(fn(Throwable $error) => print("Processing failed: " . $error->getMessage()));
 
-  $transformed = $result->mapError(fn(Throwable $error) => $error->getMessage());
-  // $transformed is Failure<string>
-  ```
+// Handle the final outcome
+match ($processedResult) {
+    success($data) => print_r($data),
+    failure($error) => error_log($error->getMessage()),
+};
+?>
+```
 
-- `tap(callable $fn): ResultInterface` performs a side-effect when a `Success`, without altering the result.
+## Detailed `ResultInterface` Methods
 
-  ```php
-  $result = new Success(['id' => 123]);
-  // $result is Success<array<string, int>>
+Here's a closer look at the key methods available on `ResultInterface` objects:
 
-  $result->tap(fn(array $data) => print "ID: {$data['id']}\n");
-  // $result is still Success<array<string, int>>
-  ```
+- **`success(): bool`**
 
-- `tapError(callable $fn): ResultInterface` performs a side-effect when a `Failure`, without altering the result.
+  - **Purpose:** Checks if the result is a `Success`.
+  - **Works On:** Both `Success` and `Failure`.
 
-  ```php
-  $result = new Failure(new Exception('We failed!'));
-  // $result is Failure<Throwable>
+  - ```php
+    $result = new Success("It worked!");
+    if ($result->success()) { echo "Success!\n"; }
+    ```
 
-  $result->tapError(fn(Throwable $error) => print "Error: {$error->getMessage()}\n");
-  // $result is still Failure<Throwable>
-  ```
+- **`failure(): bool`**
 
-- `onSuccess(callable $fn): ResultInterface` branches on `Success`, without altering the result.
+  - **Purpose:** Checks if the result is a `Failure`.
+  - **Works On:** Both `Success` and `Failure`.
 
-  ```php
-  $result = new Success(['id' => 123]);
-  // $result is Success<array<string, int>>
+  - ```php
+    $result = new Failure(new \Exception("It failed."));
+    if ($result->failure()) { echo "Failure!\n"; }
+    ```
 
-  $result->onSuccess(fn(array $data) => print "ID: {$data['id']}");
-  // $result is still Success<array<string, int>>
-  ```
+- **`unwrap(mixed $default = null): mixed`** (Already covered in Guidance)
 
-- `onFailure(callable $fn): ResultInterface` branches on `Failure`, without altering the result.
+- **`recover(callable $fn): ResultInterface`**
 
-  ```php
-  $result = new Failure(new Exception('We failed!'));
-  // $result is Failure<Throwable>
+  - **Purpose:** Transforms the error inside a `Failure` object using `$fn`. If it's a `Success`, it remains `Success`. `$fn` receives the error and should return the new error.
+  - **Works On:** `Failure` (transforms its error), `Success` (passes through).
 
-  $result->onFailure(fn(Throwable $error) => print "Error: {$error->getMessage()}");
-  // $result is still Failure<Throwable>
-  ```
+  - ```php
+    $result = new Failure(new Exception("Account Already Exists"));
+    $caught = $result->recover(function (Throwable $err) {
+        $userDetails = $this->getUserDetails($err->getMessage());
+        return success($userDetails); // Success($userDetails)
+    });
+    ```
 
-- `unwrap(mixed $default = null): mixed` returns the success value, or a default value if the result is a `Failure`.
+- **`then(callable $fn): ResultInterface`**
 
-  ```php
-  $success = new Success(['id' => 123]);
-  $value = $success->unwrap([]); // Returns ['id' => 123]
+  - **Purpose:** Chains an operation where the callable `$fn` itself returns a `ResultInterface`. This is crucial for sequencing multiple operations that can each succeed or fail. If the original result is `Success`, `$fn` is called with its value. If `Failure`, `$fn` is not called, and the original `Failure` is passed through.
+  - **Works On:** `Success` (applies `$fn`), `Failure` (passes through).
 
-  $failure = new Failure(new Exception('We failed!'));
-  $value = $failure->unwrap([]); // Returns []
-  ```
+  - ```php
+    function step1(int $value): ResultInterface {
+        return new Success($value + 1);
+    }
+    function step2_can_fail(int $value): ResultInterface {
+        if ($value > 5) {
+            return new Success("Value $value is large enough.");
+        }
+        return new Failure(new \InvalidArgumentException("Value $value is too small."));
+    }
 
-### Feature Comparisons
+    $initialResult = new Success(3);
+    $finalResult = $initialResult
+        ->then('step1')       // Success(4)
+        ->then('step2_can_fail'); // Failure(InvalidArgumentException("Value 4 is too small."))
 
-| Feature      | `tap()` / `tapError()`           | `onSuccess()` / `onFailure()`       |
-| ------------ | -------------------------------- | ----------------------------------- |
-| Return value | Original `ResultInterface<T, E>` | Usually `void`                      |
-| Chainable?   | ✅ Yes                           | ❌ Usually not                      |
-| Side-effect  | ✅ Yes                           | ✅ Yes                              |
-| Control flow | ❌ No branching                  | ✅ Yes — used to act based on state |
+    echo $finalResult->unwrap("default") . "\n"; // Output: default
+    ```
+
+- **`success(callable $fn): ResultInterface`**
+
+  - **Purpose:** Executes the callable `$fn` if the result is `Success`. Similar to `tap`, but often used more for explicit branching logic rather than just a passthrough side effect in a chain. The original `Result` is returned.
+  - **Works On:** `Success` (executes `$fn`), `Failure` (passes through).
+
+  - ```php
+    $result = new Success("Success payload");
+    $result->success(fn($value) => echo "Operation successful with: $value\n");
+    ```
+
+- **`failure(callable $fn): ResultInterface`**
+
+  - **Purpose:** Executes the callable `$fn` if the result is `Failure`. Similar to `tapError`. The original `Result` is returned.
+  - **Works On:** `Failure` (executes `$fn`), `Success` (passes through).
+
+  - ```php
+    $result = new Failure(new \Exception("Something failed"));
+    $result->failure(fn(Throwable $err) => echo "Operation failed: " . $err->getMessage() . "\n");
+    ```
