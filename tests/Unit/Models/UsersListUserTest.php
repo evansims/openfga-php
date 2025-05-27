@@ -20,7 +20,7 @@ describe('UsersListUser Model', function (): void {
 
     test('serializes to string', function (): void {
         $user = new UsersListUser(user: 'user:alice');
-        
+
         expect($user->jsonSerialize())->toBe('user:alice');
     });
 
@@ -60,17 +60,17 @@ describe('UsersListUser Model', function (): void {
         $simpleUser = new UsersListUser(user: 'user:alice');
         expect($simpleUser->getUser())->toBe('user:alice');
         expect($simpleUser->jsonSerialize())->toBe('user:alice');
-        
+
         // User with wildcard
         $wildcardUser = new UsersListUser(user: 'user:*');
         expect($wildcardUser->getUser())->toBe('user:*');
         expect($wildcardUser->jsonSerialize())->toBe('user:*');
-        
+
         // Group member
         $groupMember = new UsersListUser(user: 'group:engineering#member');
         expect($groupMember->getUser())->toBe('group:engineering#member');
         expect($groupMember->jsonSerialize())->toBe('group:engineering#member');
-        
+
         // Userset reference
         $usersetRef = new UsersListUser(user: 'document:budget#viewer');
         expect($usersetRef->getUser())->toBe('document:budget#viewer');
@@ -81,15 +81,15 @@ describe('UsersListUser Model', function (): void {
         // User with email-like ID
         $emailUser = new UsersListUser(user: 'user:alice@example.com');
         expect($emailUser->getUser())->toBe('user:alice@example.com');
-        
+
         // User with UUID
         $uuidUser = new UsersListUser(user: 'user:550e8400-e29b-41d4-a716-446655440000');
         expect($uuidUser->getUser())->toBe('user:550e8400-e29b-41d4-a716-446655440000');
-        
+
         // Nested relation
         $nestedRelation = new UsersListUser(user: 'team:engineering#parent#member');
         expect($nestedRelation->getUser())->toBe('team:engineering#parent#member');
-        
+
         // Special characters in type
         $specialType = new UsersListUser(user: 'user_group:admin-team#member');
         expect($specialType->getUser())->toBe('user_group:admin-team#member');
@@ -106,7 +106,7 @@ describe('UsersListUser Model', function (): void {
             'document:report#viewer',
             'folder:shared#editor',
         ];
-        
+
         foreach ($testCases as $testCase) {
             $user = new UsersListUser(user: $testCase);
             expect($user->getUser())->toBe($testCase);
@@ -119,12 +119,12 @@ describe('UsersListUser Model', function (): void {
         $emptyUser = new UsersListUser(user: '');
         expect($emptyUser->getUser())->toBe('');
         expect($emptyUser->jsonSerialize())->toBe('');
-        
+
         // Very long user string
         $longId = str_repeat('a', 1000);
-        $longUser = new UsersListUser(user: "user:$longId");
-        expect($longUser->getUser())->toBe("user:$longId");
-        
+        $longUser = new UsersListUser(user: "user:{$longId}");
+        expect($longUser->getUser())->toBe("user:{$longId}");
+
         // User with spaces (though this might be invalid in practice)
         $spacedUser = new UsersListUser(user: 'user:alice smith');
         expect($spacedUser->getUser())->toBe('user:alice smith');

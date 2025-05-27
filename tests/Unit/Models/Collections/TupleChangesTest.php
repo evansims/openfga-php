@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{TupleChange, TupleKey};
 use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
 use OpenFGA\Models\Enums\TupleOperation;
-use OpenFGA\Schema\{SchemaInterface, CollectionSchemaInterface};
+use OpenFGA\Models\{TupleChange, TupleKey};
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('TupleChanges Collection', function (): void {
     test('implements TupleChangesInterface', function (): void {
@@ -23,7 +23,7 @@ describe('TupleChanges Collection', function (): void {
 
     test('constructs with array of tuple changes', function (): void {
         $now = new DateTimeImmutable();
-        
+
         $change1 = new TupleChange(
             tupleKey: new TupleKey(
                 user: 'user:alice',
@@ -33,7 +33,7 @@ describe('TupleChanges Collection', function (): void {
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
             timestamp: $now->modify('-5 minutes'),
         );
-        
+
         $change2 = new TupleChange(
             tupleKey: new TupleKey(
                 user: 'user:bob',
@@ -43,7 +43,7 @@ describe('TupleChanges Collection', function (): void {
             operation: TupleOperation::TUPLE_OPERATION_DELETE,
             timestamp: $now->modify('-2 minutes'),
         );
-        
+
         $collection = new TupleChanges([$change1, $change2]);
 
         expect($collection->count())->toBe(2);
@@ -52,7 +52,7 @@ describe('TupleChanges Collection', function (): void {
 
     test('adds tuple changes', function (): void {
         $collection = new TupleChanges();
-        
+
         $change = new TupleChange(
             tupleKey: new TupleKey(
                 user: 'user:charlie',
@@ -62,9 +62,9 @@ describe('TupleChanges Collection', function (): void {
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
             timestamp: new DateTimeImmutable(),
         );
-        
+
         $collection->add($change);
-        
+
         expect($collection->count())->toBe(1);
         expect($collection->get(0))->toBe($change);
     });
@@ -79,16 +79,16 @@ describe('TupleChanges Collection', function (): void {
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
             timestamp: new DateTimeImmutable(),
         );
-        
+
         $collection = new TupleChanges([$change]);
-        
+
         expect(isset($collection[0]))->toBeTrue();
         expect(isset($collection[1]))->toBeFalse();
     });
 
     test('iterates over tuple changes', function (): void {
         $now = new DateTimeImmutable();
-        
+
         $change1 = new TupleChange(
             tupleKey: new TupleKey(user: 'user:1', relation: 'read', object: 'doc:1'),
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
@@ -104,20 +104,20 @@ describe('TupleChanges Collection', function (): void {
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
             timestamp: $now,
         );
-        
+
         $collection = new TupleChanges([$change1, $change2, $change3]);
-        
+
         $operations = [];
         foreach ($collection as $change) {
             $operations[] = $change->getOperation()->value;
         }
-        
+
         expect($operations)->toBe(['TUPLE_OPERATION_WRITE', 'TUPLE_OPERATION_DELETE', 'TUPLE_OPERATION_WRITE']);
     });
 
     test('converts to array', function (): void {
         $now = new DateTimeImmutable();
-        
+
         $change1 = new TupleChange(
             tupleKey: new TupleKey(user: 'user:a', relation: 'viewer', object: 'file:a'),
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
@@ -128,10 +128,10 @@ describe('TupleChanges Collection', function (): void {
             operation: TupleOperation::TUPLE_OPERATION_DELETE,
             timestamp: $now,
         );
-        
+
         $collection = new TupleChanges([$change1, $change2]);
         $array = $collection->toArray();
-        
+
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
         expect($array[0])->toBe($change1);
@@ -140,7 +140,7 @@ describe('TupleChanges Collection', function (): void {
 
     test('serializes to JSON', function (): void {
         $timestamp = new DateTimeImmutable('2024-01-15 10:00:00');
-        
+
         $change = new TupleChange(
             tupleKey: new TupleKey(
                 user: 'user:alice',
@@ -150,10 +150,10 @@ describe('TupleChanges Collection', function (): void {
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
             timestamp: $timestamp,
         );
-        
+
         $collection = new TupleChanges([$change]);
         $json = $collection->jsonSerialize();
-        
+
         expect($json)->toBeArray();
         expect($json)->toHaveCount(1);
         expect($json[0])->toBe([
@@ -185,7 +185,7 @@ describe('TupleChanges Collection', function (): void {
 
     test('filters changes by operation', function (): void {
         $now = new DateTimeImmutable();
-        
+
         $collection = new TupleChanges([
             new TupleChange(
                 tupleKey: new TupleKey(user: 'user:1', relation: 'viewer', object: 'doc:1'),
@@ -208,21 +208,21 @@ describe('TupleChanges Collection', function (): void {
                 timestamp: $now,
             ),
         ]);
-        
+
         // Filter WRITE operations
         $writes = [];
         foreach ($collection as $change) {
-            if ($change->getOperation() === TupleOperation::TUPLE_OPERATION_WRITE) {
+            if (TupleOperation::TUPLE_OPERATION_WRITE === $change->getOperation()) {
                 $writes[] = $change->getTupleKey()->getUser();
             }
         }
-        
+
         expect($writes)->toBe(['user:1', 'user:3']);
     });
 
     test('finds changes by time range', function (): void {
         $baseTime = new DateTimeImmutable('2024-01-15 12:00:00');
-        
+
         $collection = new TupleChanges([
             new TupleChange(
                 tupleKey: new TupleKey(user: 'user:early', relation: 'viewer', object: 'doc:1'),
@@ -245,23 +245,23 @@ describe('TupleChanges Collection', function (): void {
                 timestamp: $baseTime,
             ),
         ]);
-        
+
         // Find changes within last hour
         $oneHourAgo = $baseTime->modify('-1 hour');
         $recentChanges = [];
-        
+
         foreach ($collection as $change) {
             if ($change->getTimestamp() >= $oneHourAgo) {
                 $recentChanges[] = $change->getTupleKey()->getUser();
             }
         }
-        
+
         expect($recentChanges)->toBe(['user:recent1', 'user:recent2', 'user:latest']);
     });
 
     test('groups changes by object', function (): void {
         $now = new DateTimeImmutable();
-        
+
         $collection = new TupleChanges([
             new TupleChange(
                 tupleKey: new TupleKey(user: 'user:alice', relation: 'viewer', object: 'doc:report'),
@@ -284,17 +284,17 @@ describe('TupleChanges Collection', function (): void {
                 timestamp: $now,
             ),
         ]);
-        
+
         // Group by object
         $byObject = [];
         foreach ($collection as $change) {
             $object = $change->getTupleKey()->getObject();
-            if (!isset($byObject[$object])) {
+            if (! isset($byObject[$object])) {
                 $byObject[$object] = [];
             }
             $byObject[$object][] = $change->getTupleKey()->getUser();
         }
-        
+
         expect($byObject)->toHaveKey('doc:report');
         expect($byObject['doc:report'])->toBe(['user:alice', 'user:charlie']);
         expect($byObject['doc:budget'])->toBe(['user:bob', 'user:david']);
@@ -302,7 +302,7 @@ describe('TupleChanges Collection', function (): void {
 
     test('tracks audit trail', function (): void {
         $startTime = new DateTimeImmutable('2024-01-15 09:00:00');
-        
+
         // Simulate a series of permission changes
         $collection = new TupleChanges([
             // User gains initial access
@@ -329,32 +329,32 @@ describe('TupleChanges Collection', function (): void {
                 timestamp: $startTime->modify('+3 hours'),
             ),
         ]);
-        
+
         expect($collection->count())->toBe(4);
-        
+
         // Verify chronological order
         $times = [];
         foreach ($collection as $change) {
             $times[] = $change->getTimestamp()->format('H:i');
         }
-        
+
         expect($times)->toBe(['09:00', '10:00', '10:00', '12:00']);
     });
 
     test('handles empty collection edge cases', function (): void {
         $collection = new TupleChanges();
-        
+
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);
         expect($collection->jsonSerialize())->toBe([]);
-        
+
         // Test iteration on empty collection
         $count = 0;
         foreach ($collection as $item) {
-            $count++;
+            ++$count;
         }
         expect($count)->toBe(0);
-        
+
         // Test get on empty collection
         expect($collection->get(0))->toBeNull();
     });

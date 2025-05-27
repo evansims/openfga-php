@@ -31,7 +31,7 @@ describe('UserTypeFilter Model', function (): void {
 
     test('serializes to JSON with only type', function (): void {
         $filter = new UserTypeFilter(type: 'user');
-        
+
         expect($filter->jsonSerialize())->toBe([
             'type' => 'user',
         ]);
@@ -42,7 +42,7 @@ describe('UserTypeFilter Model', function (): void {
             type: 'group',
             relation: 'member',
         );
-        
+
         expect($filter->jsonSerialize())->toBe([
             'type' => 'group',
             'relation' => 'member',
@@ -90,7 +90,7 @@ describe('UserTypeFilter Model', function (): void {
         // Pattern 1: Simple user type filter
         $userFilter = new UserTypeFilter(type: 'user');
         expect($userFilter->jsonSerialize())->toBe(['type' => 'user']);
-        
+
         // Pattern 2: Group member filter
         $groupMemberFilter = new UserTypeFilter(
             type: 'group',
@@ -100,7 +100,7 @@ describe('UserTypeFilter Model', function (): void {
             'type' => 'group',
             'relation' => 'member',
         ]);
-        
+
         // Pattern 3: Organization admin filter
         $orgAdminFilter = new UserTypeFilter(
             type: 'organization',
@@ -110,7 +110,7 @@ describe('UserTypeFilter Model', function (): void {
             'type' => 'organization',
             'relation' => 'admin',
         ]);
-        
+
         // Pattern 4: Team lead filter
         $teamLeadFilter = new UserTypeFilter(
             type: 'team',
@@ -126,11 +126,11 @@ describe('UserTypeFilter Model', function (): void {
         // Standard type
         $standardFilter = new UserTypeFilter(type: 'document');
         expect($standardFilter->getType())->toBe('document');
-        
+
         // Type with namespace
         $namespacedFilter = new UserTypeFilter(type: 'company:department');
         expect($namespacedFilter->getType())->toBe('company:department');
-        
+
         // Type with special characters
         $specialFilter = new UserTypeFilter(type: 'user_group');
         expect($specialFilter->getType())->toBe('user_group');
@@ -141,7 +141,7 @@ describe('UserTypeFilter Model', function (): void {
         $noRelationFilter = new UserTypeFilter(type: 'user');
         expect($noRelationFilter->getRelation())->toBeNull();
         expect($noRelationFilter->jsonSerialize())->not->toHaveKey('relation');
-        
+
         // Empty relation is still included
         $emptyRelationFilter = new UserTypeFilter(
             type: 'user',

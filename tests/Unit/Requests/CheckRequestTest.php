@@ -5,11 +5,10 @@ declare(strict_types=1);
 use Mockery\MockInterface;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
-use OpenFGA\Models\{TupleKey, TupleKeyInterface};
+use OpenFGA\Models\{TupleKeyInterface};
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\CheckRequest;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
 it('can be instantiated with required parameters', function (): void {
     $tupleKey = Mockery::mock(TupleKeyInterface::class);
@@ -17,7 +16,7 @@ it('can be instantiated with required parameters', function (): void {
     $request = new CheckRequest(
         store: 'test-store',
         model: 'test-model',
-        tupleKey: $tupleKey
+        tupleKey: $tupleKey,
     );
 
     expect($request)->toBeInstanceOf(CheckRequest::class);
@@ -42,7 +41,7 @@ it('can be instantiated with all parameters', function (): void {
         trace: true,
         context: $context,
         contextualTuples: $contextualTuples,
-        consistency: Consistency::HIGHER_CONSISTENCY
+        consistency: Consistency::HIGHER_CONSISTENCY,
     );
 
     expect($request->getStore())->toBe('test-store');
@@ -62,7 +61,7 @@ it('generates correct request context with minimal parameters', function (): voi
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -75,7 +74,7 @@ it('generates correct request context with minimal parameters', function (): voi
     $request = new CheckRequest(
         store: 'test-store',
         model: 'test-model',
-        tupleKey: $tupleKey
+        tupleKey: $tupleKey,
     );
 
     $context = $request->getRequest($streamFactory);
@@ -100,7 +99,7 @@ it('generates correct request context with all parameters', function (): void {
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -121,7 +120,7 @@ it('generates correct request context with all parameters', function (): void {
         trace: true,
         context: $context,
         contextualTuples: $contextualTuples,
-        consistency: Consistency::HIGHER_CONSISTENCY
+        consistency: Consistency::HIGHER_CONSISTENCY,
     );
 
     $requestContext = $request->getRequest($streamFactory);
@@ -139,7 +138,7 @@ it('filters out null values from request body', function (): void {
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -157,7 +156,7 @@ it('filters out null values from request body', function (): void {
         trace: false,
         context: null,
         contextualTuples: null,
-        consistency: null
+        consistency: null,
     );
 
     $context = $request->getRequest($streamFactory);
@@ -175,7 +174,7 @@ it('handles different consistency values', function (): void {
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     // Test each consistency value
@@ -193,7 +192,7 @@ it('handles different consistency values', function (): void {
             store: 'test-store',
             model: 'test-model',
             tupleKey: $tupleKey,
-            consistency: $consistency
+            consistency: $consistency,
         );
 
         $context = $request->getRequest($streamFactory);

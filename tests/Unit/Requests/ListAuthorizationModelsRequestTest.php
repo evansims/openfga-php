@@ -9,14 +9,14 @@ use Psr\Http\Message\StreamFactoryInterface;
 
 beforeEach(function (): void {
     // Load RequestMethod enum from RequestManager file
-    if (!enum_exists(\OpenFGA\Network\RequestMethod::class)) {
+    if (! enum_exists(RequestMethod::class)) {
         require_once __DIR__ . '/../../../src/Network/RequestManager.php';
     }
 });
 
 it('can be instantiated with required parameters', function (): void {
     $request = new ListAuthorizationModelsRequest(store: 'test-store');
-    
+
     expect($request)->toBeInstanceOf(ListAuthorizationModelsRequest::class);
     expect($request->getStore())->toBe('test-store');
     expect($request->getContinuationToken())->toBeNull();
@@ -27,21 +27,21 @@ it('can be instantiated with all parameters', function (): void {
     $request = new ListAuthorizationModelsRequest(
         store: 'test-store',
         continuationToken: 'next-page-token',
-        pageSize: 50
+        pageSize: 50,
     );
-    
+
     expect($request->getStore())->toBe('test-store');
     expect($request->getContinuationToken())->toBe('next-page-token');
     expect($request->getPageSize())->toBe(50);
 });
 
 it('generates correct request context without pagination', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    
+
     $request = new ListAuthorizationModelsRequest(store: 'my-store');
     $context = $request->getRequest($streamFactory);
-    
+
     expect($context->getMethod())->toBe(RequestMethod::GET);
     expect($context->getUrl())->toBe('/stores/my-store/authorization-models');
     expect($context->getBody())->toBeNull();
@@ -49,74 +49,74 @@ it('generates correct request context without pagination', function (): void {
 });
 
 it('generates correct request context with continuation token', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    
+
     $request = new ListAuthorizationModelsRequest(
         store: 'my-store',
-        continuationToken: 'token123'
+        continuationToken: 'token123',
     );
     $context = $request->getRequest($streamFactory);
-    
+
     expect($context->getMethod())->toBe(RequestMethod::GET);
     expect($context->getUrl())->toBe('/stores/my-store/authorization-models?continuation_token=token123');
 });
 
 it('generates correct request context with page size', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    
+
     $request = new ListAuthorizationModelsRequest(
         store: 'my-store',
-        pageSize: 25
+        pageSize: 25,
     );
     $context = $request->getRequest($streamFactory);
-    
+
     expect($context->getMethod())->toBe(RequestMethod::GET);
     expect($context->getUrl())->toBe('/stores/my-store/authorization-models?page_size=25');
 });
 
 it('generates correct request context with all pagination parameters', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    
+
     $request = new ListAuthorizationModelsRequest(
         store: 'my-store',
         continuationToken: 'next-token',
-        pageSize: 100
+        pageSize: 100,
     );
     $context = $request->getRequest($streamFactory);
-    
+
     expect($context->getMethod())->toBe(RequestMethod::GET);
     expect($context->getUrl())->toBe('/stores/my-store/authorization-models?continuation_token=next-token&page_size=100');
 });
 
 it('handles special characters in continuation token', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    
+
     $token = 'token with spaces & special=chars';
     $request = new ListAuthorizationModelsRequest(
         store: 'my-store',
-        continuationToken: $token
+        continuationToken: $token,
     );
     $context = $request->getRequest($streamFactory);
-    
+
     expect($context->getMethod())->toBe(RequestMethod::GET);
     expect($context->getUrl())->toBe('/stores/my-store/authorization-models?continuation_token=' . urlencode($token));
 });
 
 it('filters out null values from query parameters', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    
+
     $request = new ListAuthorizationModelsRequest(
         store: 'my-store',
         continuationToken: null,
-        pageSize: null
+        pageSize: null,
     );
     $context = $request->getRequest($streamFactory);
-    
+
     expect($context->getMethod())->toBe(RequestMethod::GET);
     expect($context->getUrl())->toBe('/stores/my-store/authorization-models');
 });

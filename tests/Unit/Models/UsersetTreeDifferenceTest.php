@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{UsersetTreeDifference, UsersetTreeDifferenceInterface, Node, Leaf, Computed};
+use OpenFGA\Models\{Computed, Leaf, Node, UsersetTreeDifference, UsersetTreeDifferenceInterface};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('UsersetTreeDifference Model', function (): void {
@@ -17,13 +17,13 @@ describe('UsersetTreeDifference Model', function (): void {
     test('constructs with base and subtract nodes', function (): void {
         $base = new Node(
             name: 'all_users',
-            leaf: new Leaf(computed: new Computed(userset: 'user:*'))
+            leaf: new Leaf(computed: new Computed(userset: 'user:*')),
         );
         $subtract = new Node(
             name: 'blocked_users',
-            leaf: new Leaf(computed: new Computed(userset: 'blocked'))
+            leaf: new Leaf(computed: new Computed(userset: 'blocked')),
         );
-        
+
         $difference = new UsersetTreeDifference(base: $base, subtract: $subtract);
 
         expect($difference->getBase())->toBe($base);
@@ -33,15 +33,15 @@ describe('UsersetTreeDifference Model', function (): void {
     test('serializes to JSON', function (): void {
         $base = new Node(
             name: 'all_users',
-            leaf: new Leaf(computed: new Computed(userset: 'user:*'))
+            leaf: new Leaf(computed: new Computed(userset: 'user:*')),
         );
         $subtract = new Node(
             name: 'blocked_users',
-            leaf: new Leaf(computed: new Computed(userset: 'blocked'))
+            leaf: new Leaf(computed: new Computed(userset: 'blocked')),
         );
-        
+
         $difference = new UsersetTreeDifference(base: $base, subtract: $subtract);
-        
+
         expect($difference->jsonSerialize())->toBe([
             'base' => [
                 'name' => 'all_users',
@@ -62,25 +62,25 @@ describe('UsersetTreeDifference Model', function (): void {
         // Base: users who are owners OR editors
         $ownerNode = new Node(
             name: 'owner',
-            leaf: new Leaf(computed: new Computed(userset: 'owner'))
+            leaf: new Leaf(computed: new Computed(userset: 'owner')),
         );
         $editorNode = new Node(
             name: 'editor',
-            leaf: new Leaf(computed: new Computed(userset: 'editor'))
+            leaf: new Leaf(computed: new Computed(userset: 'editor')),
         );
         $baseNode = new Node(
             name: 'owner_or_editor',
-            union: $ownerNode
+            union: $ownerNode,
         );
-        
+
         // Subtract: suspended users
         $suspendedNode = new Node(
             name: 'suspended',
-            leaf: new Leaf(computed: new Computed(userset: 'suspended'))
+            leaf: new Leaf(computed: new Computed(userset: 'suspended')),
         );
-        
+
         $difference = new UsersetTreeDifference(base: $baseNode, subtract: $suspendedNode);
-        
+
         $json = $difference->jsonSerialize();
         expect($json['base']['name'])->toBe('owner_or_editor');
         expect($json['base'])->toHaveKey('union');
@@ -128,59 +128,59 @@ describe('UsersetTreeDifference Model', function (): void {
         // Pattern 1: All users except blocked
         $allUsersNode = new Node(
             name: 'all_users',
-            leaf: new Leaf(computed: new Computed(userset: 'user:*'))
+            leaf: new Leaf(computed: new Computed(userset: 'user:*')),
         );
         $blockedNode = new Node(
             name: 'blocked',
-            leaf: new Leaf(computed: new Computed(userset: 'blocked'))
+            leaf: new Leaf(computed: new Computed(userset: 'blocked')),
         );
         $activeUsersDiff = new UsersetTreeDifference(base: $allUsersNode, subtract: $blockedNode);
-        
+
         $json = $activeUsersDiff->jsonSerialize();
         expect($json['base']['leaf']['computed']['userset'])->toBe('user:*');
         expect($json['subtract']['leaf']['computed']['userset'])->toBe('blocked');
-        
+
         // Pattern 2: Members except those in restricted group
         $membersNode = new Node(
             name: 'members',
-            leaf: new Leaf(computed: new Computed(userset: 'group:all_members#member'))
+            leaf: new Leaf(computed: new Computed(userset: 'group:all_members#member')),
         );
         $restrictedNode = new Node(
             name: 'restricted',
-            leaf: new Leaf(computed: new Computed(userset: 'group:restricted#member'))
+            leaf: new Leaf(computed: new Computed(userset: 'group:restricted#member')),
         );
         $allowedMembersDiff = new UsersetTreeDifference(base: $membersNode, subtract: $restrictedNode);
-        
+
         $json2 = $allowedMembersDiff->jsonSerialize();
         expect($json2['base']['name'])->toBe('members');
         expect($json2['subtract']['name'])->toBe('restricted');
-        
+
         // Pattern 3: Complex difference with nested structures
         // Base: viewers (which includes owners and editors)
         $viewerOwnerNode = new Node(
             name: 'owner',
-            leaf: new Leaf(computed: new Computed(userset: 'owner'))
+            leaf: new Leaf(computed: new Computed(userset: 'owner')),
         );
         $viewerEditorNode = new Node(
             name: 'editor',
-            leaf: new Leaf(computed: new Computed(userset: 'editor'))
+            leaf: new Leaf(computed: new Computed(userset: 'editor')),
         );
         $viewersNode = new Node(
             name: 'viewers',
-            union: $viewerOwnerNode
+            union: $viewerOwnerNode,
         );
-        
+
         // Subtract: users in review_required status
         $reviewRequiredNode = new Node(
             name: 'review_required',
-            leaf: new Leaf(computed: new Computed(userset: 'review_required'))
+            leaf: new Leaf(computed: new Computed(userset: 'review_required')),
         );
-        
+
         $approvedViewersDiff = new UsersetTreeDifference(
             base: $viewersNode,
-            subtract: $reviewRequiredNode
+            subtract: $reviewRequiredNode,
         );
-        
+
         $json3 = $approvedViewersDiff->jsonSerialize();
         expect($json3['base']['name'])->toBe('viewers');
         expect($json3['base'])->toHaveKey('union');

@@ -15,7 +15,7 @@ it('can be instantiated', function (): void {
 });
 
 it('generates correct request context', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     $request = new DeleteStoreRequest(store: 'store-to-delete');
@@ -28,7 +28,7 @@ it('generates correct request context', function (): void {
 });
 
 it('handles store IDs with special characters', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     $storeId = 'store-123-with-special_chars';
@@ -41,7 +41,7 @@ it('handles store IDs with special characters', function (): void {
 });
 
 it('handles empty store ID', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     $request = new DeleteStoreRequest(store: '');

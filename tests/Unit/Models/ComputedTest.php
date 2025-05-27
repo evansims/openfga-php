@@ -26,7 +26,7 @@ describe('Computed Model', function (): void {
 
     test('serializes to JSON', function (): void {
         $computed = new Computed(userset: 'viewer');
-        
+
         expect($computed->jsonSerialize())->toBe([
             'userset' => 'viewer',
         ]);
@@ -34,7 +34,7 @@ describe('Computed Model', function (): void {
 
     test('serializes complex userset string', function (): void {
         $computed = new Computed(userset: 'group:engineering#member');
-        
+
         expect($computed->jsonSerialize())->toBe([
             'userset' => 'group:engineering#member',
         ]);
@@ -75,15 +75,15 @@ describe('Computed Model', function (): void {
         // Pattern 1: Simple relation
         $viewerComputed = new Computed(userset: 'viewer');
         expect($viewerComputed->jsonSerialize())->toBe(['userset' => 'viewer']);
-        
+
         // Pattern 2: Userset with type
         $userComputed = new Computed(userset: 'user:*');
         expect($userComputed->jsonSerialize())->toBe(['userset' => 'user:*']);
-        
+
         // Pattern 3: Userset with relation
         $memberComputed = new Computed(userset: 'group:engineering#member');
         expect($memberComputed->jsonSerialize())->toBe(['userset' => 'group:engineering#member']);
-        
+
         // Pattern 4: Complex relation path
         $nestedComputed = new Computed(userset: 'parent#viewer');
         expect($nestedComputed->jsonSerialize())->toBe(['userset' => 'parent#viewer']);

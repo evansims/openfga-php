@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Mockery\MockInterface;
-use OpenFGA\Network\RequestManager;
 use OpenFGA\Responses\CheckResponse;
 use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
@@ -11,7 +10,7 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 it('can be instantiated with all parameters', function (): void {
     $response = new CheckResponse(
         allowed: true,
-        resolution: 'direct'
+        resolution: 'direct',
     );
 
     expect($response)->toBeInstanceOf(CheckResponse::class);
@@ -69,7 +68,7 @@ it('creates response from successful HTTP response', function (): void {
         ->once()
         ->andReturn(json_encode($responseData));
 
-    /** @var ResponseInterface&MockInterface $httpResponse */
+    /** @var MockInterface&ResponseInterface $httpResponse */
     $httpResponse = Mockery::mock(ResponseInterface::class);
     $httpResponse->shouldReceive('getStatusCode')
         ->once()
@@ -78,7 +77,7 @@ it('creates response from successful HTTP response', function (): void {
         ->once()
         ->andReturn($stream);
 
-    /** @var RequestInterface&MockInterface $request */
+    /** @var MockInterface&RequestInterface $request */
     $request = Mockery::mock(RequestInterface::class);
 
     // Use a real SchemaValidator instance
@@ -97,7 +96,7 @@ it('handles non-200 status codes', function (): void {
         ->once()
         ->andReturn('{"error": "Not Found"}');
 
-    /** @var ResponseInterface&MockInterface $httpResponse */
+    /** @var MockInterface&ResponseInterface $httpResponse */
     $httpResponse = Mockery::mock(ResponseInterface::class);
     $httpResponse->shouldReceive('getStatusCode')
         ->atLeast()->once()
@@ -106,11 +105,11 @@ it('handles non-200 status codes', function (): void {
         ->once()
         ->andReturn($stream);
 
-    /** @var RequestInterface&MockInterface $request */
+    /** @var MockInterface&RequestInterface $request */
     $request = Mockery::mock(RequestInterface::class);
 
     $validator = new SchemaValidator();
 
-    expect(fn() => CheckResponse::fromResponse($httpResponse, $request, $validator))
+    expect(fn () => CheckResponse::fromResponse($httpResponse, $request, $validator))
         ->toThrow(Exception::class);
 });

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{RelationReference, TypedWildcard};
 use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface};
-use OpenFGA\Schema\{SchemaInterface, CollectionSchemaInterface};
+use OpenFGA\Models\{RelationReference, TypedWildcard};
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('RelationReferences Collection', function (): void {
     test('implements RelationReferencesInterface', function (): void {
@@ -33,7 +33,7 @@ describe('RelationReferences Collection', function (): void {
             type: 'organization',
             relation: 'member',
         );
-        
+
         // KeyedCollection uses numeric string keys by default when given indexed array
         $collection = new RelationReferences([
             $ref1,
@@ -64,9 +64,9 @@ describe('RelationReferences Collection', function (): void {
             relation: 'member',
             wildcard: new TypedWildcard(type: 'user'),
         );
-        
+
         $collection = new RelationReferences(['group_member' => $ref]);
-        
+
         expect($collection->count())->toBe(1);
         expect($collection->get('group_member'))->toBe($ref);
     });
@@ -74,7 +74,7 @@ describe('RelationReferences Collection', function (): void {
     test('checks if reference exists', function (): void {
         $ref = new RelationReference(type: 'project', relation: 'owner');
         $collection = new RelationReferences(['project_owner' => $ref]);
-        
+
         expect($collection->has('project_owner'))->toBeTrue();
         expect($collection->has('non_existent'))->toBeFalse();
     });
@@ -85,14 +85,14 @@ describe('RelationReferences Collection', function (): void {
             'write_perm' => new RelationReference(type: 'doc', relation: 'write'),
             'delete_perm' => new RelationReference(type: 'doc', relation: 'delete'),
         ]);
-        
+
         $relations = [];
         $keys = [];
         foreach ($collection as $key => $ref) {
             $keys[] = $key;
             $relations[] = $ref->getRelation();
         }
-        
+
         expect($keys)->toBe(['read_perm', 'write_perm', 'delete_perm']);
         expect($relations)->toBe(['read', 'write', 'delete']);
     });
@@ -100,13 +100,13 @@ describe('RelationReferences Collection', function (): void {
     test('converts to array', function (): void {
         $ref1 = new RelationReference(type: 'file', relation: 'viewer');
         $ref2 = new RelationReference(type: 'file', relation: 'editor');
-        
+
         $collection = new RelationReferences([
             'viewer_ref' => $ref1,
             'editor_ref' => $ref2,
         ]);
         $array = $collection->toArray();
-        
+
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
         expect($array['viewer_ref'])->toBe($ref1);
@@ -123,14 +123,14 @@ describe('RelationReferences Collection', function (): void {
             type: 'team',
             wildcard: new TypedWildcard(type: 'user'),
         );
-        
+
         // When using indexed array, keys are converted to strings
         $collection = new RelationReferences([$ref1, $ref2, $ref3]);
         $json = $collection->jsonSerialize();
-        
+
         expect($json)->toBeArray();
         expect($json)->toHaveCount(3);
-        
+
         // For indexed arrays, jsonSerialize returns array values
         $values = array_values($json);
         expect($values[0])->toBe(['type' => 'user']);
@@ -178,17 +178,17 @@ describe('RelationReferences Collection', function (): void {
                 condition: 'is_active',
             ),
         ]);
-        
+
         expect($collection->count())->toBe(5);
-        
+
         // Verify different patterns
         $directUser = $collection->get('direct_user');
         expect($directUser->getType())->toBe('user');
         expect($directUser->getRelation())->toBeNull();
-        
+
         $withCondition = $collection->get('resource_condition');
         expect($withCondition->getCondition())->toBe('in_business_hours');
-        
+
         $complete = $collection->get('project_complete');
         expect($complete->getType())->toBe('project');
         expect($complete->getRelation())->toBe('member');
@@ -204,15 +204,15 @@ describe('RelationReferences Collection', function (): void {
             'ref4' => new RelationReference(type: 'project', relation: 'member'),
             'ref5' => new RelationReference(type: 'document', relation: 'commenter'),
         ]);
-        
+
         // Filter references for 'document' type
         $documentRefs = [];
         foreach ($collection as $ref) {
-            if ($ref->getType() === 'document') {
+            if ('document' === $ref->getType()) {
                 $documentRefs[] = $ref->getRelation();
             }
         }
-        
+
         expect($documentRefs)->toBe(['viewer', 'owner', 'commenter']);
     });
 
@@ -220,11 +220,11 @@ describe('RelationReferences Collection', function (): void {
         // This is how it's actually used in the codebase
         $userRef = new RelationReference(type: 'user');
         $groupRef = new RelationReference(type: 'group', relation: 'member');
-        
+
         $collection = new RelationReferences([$userRef, $groupRef]);
-        
+
         expect($collection->count())->toBe(2);
-        
+
         // Access by string key (converted from numeric)
         expect($collection->get('0'))->toBe($userRef);
         expect($collection->get('1'))->toBe($groupRef);
@@ -232,18 +232,18 @@ describe('RelationReferences Collection', function (): void {
 
     test('handles empty collection edge cases', function (): void {
         $collection = new RelationReferences([]);
-        
+
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);
         expect($collection->jsonSerialize())->toBe([]);
-        
+
         // Test iteration on empty collection
         $count = 0;
         foreach ($collection as $item) {
-            $count++;
+            ++$count;
         }
         expect($count)->toBe(0);
-        
+
         // Test get on empty collection
         expect($collection->get('any_key'))->toBeNull();
     });

@@ -10,7 +10,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 it('can be instantiated', function (): void {
     $request = new GetAuthorizationModelRequest(
         store: 'test-store',
-        model: 'test-model'
+        model: 'test-model',
     );
 
     expect($request)->toBeInstanceOf(GetAuthorizationModelRequest::class);
@@ -19,12 +19,12 @@ it('can be instantiated', function (): void {
 });
 
 it('generates correct request context', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     $request = new GetAuthorizationModelRequest(
         store: 'my-store',
-        model: 'model-123'
+        model: 'model-123',
     );
     $context = $request->getRequest($streamFactory);
 
@@ -35,7 +35,7 @@ it('generates correct request context', function (): void {
 });
 
 it('handles special characters in store and model IDs', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     $storeId = 'store-with-special_chars';
@@ -43,7 +43,7 @@ it('handles special characters in store and model IDs', function (): void {
 
     $request = new GetAuthorizationModelRequest(
         store: $storeId,
-        model: $modelId
+        model: $modelId,
     );
     $context = $request->getRequest($streamFactory);
 
@@ -54,7 +54,7 @@ it('handles special characters in store and model IDs', function (): void {
 });
 
 it('handles empty store and model IDs', function (): void {
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     $request = new GetAuthorizationModelRequest(store: '', model: '');

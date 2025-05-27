@@ -2,8 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{Node, NodeInterface, Leaf, Computed, UsersetTreeDifference};
-use OpenFGA\Models\Collections\{UsersList};
+use OpenFGA\Models\{Computed, Leaf, Node, NodeInterface, UsersetTreeDifference};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('Node Model', function (): void {
@@ -25,7 +24,7 @@ describe('Node Model', function (): void {
 
     test('constructs with name and leaf', function (): void {
         $leaf = new Leaf(
-            computed: new Computed(userset: 'owner')
+            computed: new Computed(userset: 'owner'),
         );
         $node = new Node(name: 'viewer', leaf: $leaf);
 
@@ -40,7 +39,7 @@ describe('Node Model', function (): void {
         $baseNode = new Node(name: 'all_users');
         $subtractNode = new Node(name: 'blocked_users');
         $difference = new UsersetTreeDifference(base: $baseNode, subtract: $subtractNode);
-        
+
         $node = new Node(name: 'allowed_users', difference: $difference);
 
         expect($node->getName())->toBe('allowed_users');
@@ -53,7 +52,7 @@ describe('Node Model', function (): void {
     test('constructs with name and union', function (): void {
         // Union is a single node, not a collection
         $unionNode = new Node(name: 'owner_or_editor');
-        
+
         $node = new Node(name: 'viewer', union: $unionNode);
 
         expect($node->getName())->toBe('viewer');
@@ -66,7 +65,7 @@ describe('Node Model', function (): void {
     test('constructs with name and intersection', function (): void {
         // Intersection is a single node, not a collection
         $intersectionNode = new Node(name: 'member_and_verified');
-        
+
         $node = new Node(name: 'verified_member', intersection: $intersectionNode);
 
         expect($node->getName())->toBe('verified_member');
@@ -83,7 +82,7 @@ describe('Node Model', function (): void {
 
         // Node with leaf
         $leaf = new Leaf(
-            computed: new Computed(userset: 'owner')
+            computed: new Computed(userset: 'owner'),
         );
         $node = new Node(name: 'viewer', leaf: $leaf);
         expect($node->jsonSerialize())->toBe([
@@ -96,7 +95,7 @@ describe('Node Model', function (): void {
         // Node with union
         $unionNode = new Node(name: 'owner_or_editor');
         $node = new Node(name: 'viewer', union: $unionNode);
-        
+
         expect($node->jsonSerialize())->toBe([
             'name' => 'viewer',
             'union' => ['name' => 'owner_or_editor'],
@@ -163,27 +162,27 @@ describe('Node Model', function (): void {
         $simpleNode = new Node(
             name: 'owner',
             leaf: new Leaf(
-                computed: new Computed(userset: 'owner')
-            )
+                computed: new Computed(userset: 'owner'),
+            ),
         );
-        
+
         expect($simpleNode->jsonSerialize())->toBe([
             'name' => 'owner',
             'leaf' => [
                 'computed' => ['userset' => 'owner'],
             ],
         ]);
-        
+
         // Pattern 2: Union of permissions (viewer has union of owner_or_editor)
         $unionNode = new Node(
             name: 'owner_or_editor',
-            leaf: new Leaf(computed: new Computed(userset: 'owner'))
+            leaf: new Leaf(computed: new Computed(userset: 'owner')),
         );
         $viewerNode = new Node(
             name: 'viewer',
-            union: $unionNode
+            union: $unionNode,
         );
-        
+
         expect($viewerNode->jsonSerialize())->toBe([
             'name' => 'viewer',
             'union' => [
@@ -193,21 +192,21 @@ describe('Node Model', function (): void {
                 ],
             ],
         ]);
-        
+
         // Pattern 3: Difference (all users except blocked)
         $allUsersNode = new Node(
             name: 'all_users',
-            leaf: new Leaf(computed: new Computed(userset: 'user:*'))
+            leaf: new Leaf(computed: new Computed(userset: 'user:*')),
         );
         $blockedNode = new Node(
             name: 'blocked_users',
-            leaf: new Leaf(computed: new Computed(userset: 'blocked'))
+            leaf: new Leaf(computed: new Computed(userset: 'blocked')),
         );
         $allowedNode = new Node(
             name: 'allowed_users',
-            difference: new UsersetTreeDifference(base: $allUsersNode, subtract: $blockedNode)
+            difference: new UsersetTreeDifference(base: $allUsersNode, subtract: $blockedNode),
         );
-        
+
         $json3 = $allowedNode->jsonSerialize();
         expect($json3['name'])->toBe('allowed_users');
         expect($json3)->toHaveKey('difference');
@@ -219,23 +218,23 @@ describe('Node Model', function (): void {
         // Create a complex nested structure
         $ownerLeaf = new Leaf(computed: new Computed(userset: 'owner'));
         $ownerNode = new Node(name: 'owner', leaf: $ownerLeaf);
-        
+
         $editorLeaf = new Leaf(computed: new Computed(userset: 'editor'));
         $editorNode = new Node(name: 'editor', leaf: $editorLeaf);
-        
+
         // Create an intersection node that combines owner and editor
         $editorWithIntersection = new Node(
             name: 'editor_node',
             leaf: $editorLeaf,
-            intersection: $ownerNode
+            intersection: $ownerNode,
         );
-        
+
         // Create the main viewer node with a union
         $viewerNode = new Node(
             name: 'viewer',
-            union: $editorWithIntersection
+            union: $editorWithIntersection,
         );
-        
+
         $json = $viewerNode->jsonSerialize();
         expect($json['name'])->toBe('viewer');
         expect($json)->toHaveKey('union');

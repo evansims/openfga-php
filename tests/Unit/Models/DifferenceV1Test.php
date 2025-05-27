@@ -17,9 +17,9 @@ describe('DifferenceV1 Model', function (): void {
     test('constructs with base and subtract usersets', function (): void {
         $base = new Userset(direct: new stdClass());
         $subtract = new Userset(
-            computedUserset: new ObjectRelation(relation: 'blocked')
+            computedUserset: new ObjectRelation(relation: 'blocked'),
         );
-        
+
         $difference = new DifferenceV1(base: $base, subtract: $subtract);
 
         expect($difference->getBase())->toBe($base);
@@ -29,19 +29,19 @@ describe('DifferenceV1 Model', function (): void {
     test('serializes to JSON', function (): void {
         $base = new Userset(direct: new stdClass());
         $subtract = new Userset(
-            computedUserset: new ObjectRelation(relation: 'blocked')
+            computedUserset: new ObjectRelation(relation: 'blocked'),
         );
-        
+
         $difference = new DifferenceV1(base: $base, subtract: $subtract);
         $json = $difference->jsonSerialize();
 
         expect($json)->toHaveKey('base');
         expect($json)->toHaveKey('subtract');
-        
+
         // Check base has direct
         expect($json['base'])->toHaveKey('direct');
         expect($json['base']['direct'])->toBeInstanceOf(stdClass::class);
-        
+
         // Check subtract has computed_userset
         expect($json['subtract'])->toBe([
             'computed_userset' => ['relation' => 'blocked'],
@@ -51,23 +51,23 @@ describe('DifferenceV1 Model', function (): void {
     test('handles complex nested differences', function (): void {
         // Base: users who are owners OR editors
         $ownerUserset = new Userset(
-            computedUserset: new ObjectRelation(relation: 'owner')
+            computedUserset: new ObjectRelation(relation: 'owner'),
         );
         $editorUserset = new Userset(
-            computedUserset: new ObjectRelation(relation: 'editor')
+            computedUserset: new ObjectRelation(relation: 'editor'),
         );
         $base = new Userset(
-            union: new OpenFGA\Models\Collections\Usersets([$ownerUserset, $editorUserset])
+            union: new OpenFGA\Models\Collections\Usersets([$ownerUserset, $editorUserset]),
         );
-        
+
         // Subtract: blocked users
         $subtract = new Userset(
-            computedUserset: new ObjectRelation(relation: 'blocked')
+            computedUserset: new ObjectRelation(relation: 'blocked'),
         );
-        
+
         $difference = new DifferenceV1(base: $base, subtract: $subtract);
         $json = $difference->jsonSerialize();
-        
+
         expect($json['base'])->toHaveKey('union');
         expect($json['base']['union'])->toHaveCount(2);
         expect($json['subtract'])->toBe([
@@ -116,23 +116,23 @@ describe('DifferenceV1 Model', function (): void {
         // Pattern 1: All users except blocked ones
         $allUsers = new Userset(direct: new stdClass());
         $blockedUsers = new Userset(
-            computedUserset: new ObjectRelation(relation: 'blocked')
+            computedUserset: new ObjectRelation(relation: 'blocked'),
         );
         $activeUsers = new DifferenceV1(base: $allUsers, subtract: $blockedUsers);
-        
+
         $json = $activeUsers->jsonSerialize();
         expect($json['base'])->toHaveKey('direct');
         expect($json['subtract']['computed_userset']['relation'])->toBe('blocked');
-        
+
         // Pattern 2: Editors except those in specific group
         $editors = new Userset(
-            computedUserset: new ObjectRelation(relation: 'editor')
+            computedUserset: new ObjectRelation(relation: 'editor'),
         );
         $restrictedGroup = new Userset(
-            computedUserset: new ObjectRelation(relation: 'restricted_editors')
+            computedUserset: new ObjectRelation(relation: 'restricted_editors'),
         );
         $allowedEditors = new DifferenceV1(base: $editors, subtract: $restrictedGroup);
-        
+
         $json2 = $allowedEditors->jsonSerialize();
         expect($json2['base']['computed_userset']['relation'])->toBe('editor');
         expect($json2['subtract']['computed_userset']['relation'])->toBe('restricted_editors');

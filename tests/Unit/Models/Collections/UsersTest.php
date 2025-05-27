@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{User, UsersetUser, TypedWildcard};
 use OpenFGA\Models\Collections\{Users, UsersInterface};
-use OpenFGA\Schema\{SchemaInterface, CollectionSchemaInterface};
+use OpenFGA\Models\{TypedWildcard, User, UsersetUser};
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Users Collection', function (): void {
     test('implements UsersInterface', function (): void {
@@ -21,14 +21,14 @@ describe('Users Collection', function (): void {
     });
 
     test('constructs with array of users', function (): void {
-        $user1 = new User(object: new \stdClass());
+        $user1 = new User(object: new stdClass());
         $user2 = new User(wildcard: new TypedWildcard(type: 'user'));
         $user3 = new User(userset: new UsersetUser(
             type: 'group',
             id: 'engineering',
-            relation: 'member'
+            relation: 'member',
         ));
-        
+
         $collection = new Users([$user1, $user2, $user3]);
 
         expect($collection->count())->toBe(3);
@@ -37,62 +37,62 @@ describe('Users Collection', function (): void {
 
     test('adds users', function (): void {
         $collection = new Users([]);
-        
-        $user = new User(object: new \stdClass());
-        
+
+        $user = new User(object: new stdClass());
+
         $collection->add($user);
-        
+
         expect($collection->count())->toBe(1);
         expect($collection->get(0))->toBe($user);
     });
 
     test('gets users by index', function (): void {
-        $user1 = new User(object: new \stdClass());
+        $user1 = new User(object: new stdClass());
         $user2 = new User(wildcard: new TypedWildcard(type: 'user'));
-        
+
         $collection = new Users([$user1, $user2]);
-        
+
         expect($collection->get(0))->toBe($user1);
         expect($collection->get(1))->toBe($user2);
         expect($collection->get(2))->toBeNull();
     });
 
     test('checks if user exists', function (): void {
-        $user = new User(object: new \stdClass());
-        
+        $user = new User(object: new stdClass());
+
         $collection = new Users([$user]);
-        
+
         expect(isset($collection[0]))->toBeTrue();
         expect(isset($collection[1]))->toBeFalse();
     });
 
     test('iterates over users', function (): void {
-        $user1 = new User(object: new \stdClass());
+        $user1 = new User(object: new stdClass());
         $user2 = new User(wildcard: new TypedWildcard(type: 'user'));
         $user3 = new User(userset: new UsersetUser(
             type: 'team',
             id: 'platform',
-            relation: 'owner'
+            relation: 'owner',
         ));
-        
+
         $collection = new Users([$user1, $user2, $user3]);
-        
+
         $count = 0;
         foreach ($collection as $user) {
             expect($user)->toBeInstanceOf(User::class);
-            $count++;
+            ++$count;
         }
-        
+
         expect($count)->toBe(3);
     });
 
     test('converts to array', function (): void {
-        $user1 = new User(object: new \stdClass());
+        $user1 = new User(object: new stdClass());
         $user2 = new User(wildcard: new TypedWildcard(type: 'group'));
-        
+
         $collection = new Users([$user1, $user2]);
         $array = $collection->toArray();
-        
+
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
         expect($array[0])->toBe($user1);
@@ -101,28 +101,28 @@ describe('Users Collection', function (): void {
 
     test('serializes to JSON', function (): void {
         $collection = new Users([
-            new User(object: new \stdClass()),
+            new User(object: new stdClass()),
             new User(wildcard: new TypedWildcard(type: 'user')),
             new User(userset: new UsersetUser(
                 type: 'group',
                 id: 'engineering',
-                relation: 'member'
+                relation: 'member',
             )),
         ]);
-        
+
         $json = $collection->jsonSerialize();
-        
+
         expect($json)->toBeArray();
         expect($json)->toHaveCount(3);
-        
+
         // Check first user (object)
         expect($json[0])->toHaveKey('object');
         expect($json[0]['object'])->toBe([]);
-        
+
         // Check second user (wildcard)
         expect($json[1])->toHaveKey('wildcard');
         expect($json[1]['wildcard'])->toBe(['type' => 'user']);
-        
+
         // Check third user (userset)
         expect($json[2])->toHaveKey('userset');
         expect($json[2]['userset'])->toBe([
@@ -135,42 +135,42 @@ describe('Users Collection', function (): void {
     test('handles different user types', function (): void {
         $collection = new Users([
             // Object user
-            new User(object: new \stdClass()),
-            
+            new User(object: new stdClass()),
+
             // Wildcard users
             new User(wildcard: new TypedWildcard(type: 'user')),
             new User(wildcard: new TypedWildcard(type: 'group')),
-            
+
             // Userset users
             new User(userset: new UsersetUser(
                 type: 'group',
                 id: 'engineering',
-                relation: 'member'
+                relation: 'member',
             )),
             new User(userset: new UsersetUser(
                 type: 'team',
                 id: 'platform',
-                relation: 'owner'
+                relation: 'owner',
             )),
         ]);
-        
+
         expect($collection->count())->toBe(5);
-        
+
         // Count each type
         $objectCount = 0;
         $wildcardCount = 0;
         $usersetCount = 0;
-        
+
         foreach ($collection as $user) {
-            if ($user->getObject() !== null) {
-                $objectCount++;
-            } elseif ($user->getWildcard() !== null) {
-                $wildcardCount++;
-            } elseif ($user->getUserset() !== null) {
-                $usersetCount++;
+            if (null !== $user->getObject()) {
+                ++$objectCount;
+            } elseif (null !== $user->getWildcard()) {
+                ++$wildcardCount;
+            } elseif (null !== $user->getUserset()) {
+                ++$usersetCount;
             }
         }
-        
+
         expect($objectCount)->toBe(1);
         expect($wildcardCount)->toBe(2);
         expect($usersetCount)->toBe(2);
@@ -194,18 +194,18 @@ describe('Users Collection', function (): void {
 
     test('handles empty collection edge cases', function (): void {
         $collection = new Users([]);
-        
+
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);
         expect($collection->jsonSerialize())->toBe([]);
-        
+
         // Test iteration on empty collection
         $count = 0;
         foreach ($collection as $_) {
-            $count++;
+            ++$count;
         }
         expect($count)->toBe(0);
-        
+
         // Test get on empty collection
         expect($collection->get(0))->toBeNull();
     });

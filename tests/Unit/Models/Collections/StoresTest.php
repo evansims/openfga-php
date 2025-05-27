@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\Store;
 use OpenFGA\Models\Collections\{Stores, StoresInterface};
-use OpenFGA\Schema\{SchemaInterface, CollectionSchemaInterface};
+use OpenFGA\Models\Store;
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Stores Collection', function (): void {
     test('implements StoresInterface', function (): void {
@@ -22,28 +22,28 @@ describe('Stores Collection', function (): void {
 
     test('constructs with array of stores', function (): void {
         $now = new DateTimeImmutable();
-        
+
         $store1 = new Store(
             id: 'store-1',
             name: 'Production Store',
             createdAt: $now->modify('-10 days'),
             updatedAt: $now->modify('-2 days'),
         );
-        
+
         $store2 = new Store(
             id: 'store-2',
             name: 'Development Store',
             createdAt: $now->modify('-5 days'),
             updatedAt: $now->modify('-1 day'),
         );
-        
+
         $store3 = new Store(
             id: 'store-3',
             name: 'Test Store',
             createdAt: $now->modify('-3 days'),
             updatedAt: $now,
         );
-        
+
         $collection = new Stores([$store1, $store2, $store3]);
 
         expect($collection->count())->toBe(3);
@@ -53,16 +53,16 @@ describe('Stores Collection', function (): void {
     test('adds stores', function (): void {
         $collection = new Stores();
         $now = new DateTimeImmutable();
-        
+
         $store = new Store(
             id: 'store-123',
             name: 'My Store',
             createdAt: $now,
             updatedAt: $now,
         );
-        
+
         $collection->add($store);
-        
+
         expect($collection->count())->toBe(1);
         expect($collection->get(0))->toBe($store);
     });
@@ -76,7 +76,7 @@ describe('Stores Collection', function (): void {
             updatedAt: $now,
         );
         $collection = new Stores([$store]);
-        
+
         expect(isset($collection[0]))->toBeTrue();
         expect(isset($collection[1]))->toBeFalse();
     });
@@ -101,16 +101,16 @@ describe('Stores Collection', function (): void {
             createdAt: $now,
             updatedAt: $now,
         );
-        
+
         $collection = new Stores([$store1, $store2, $store3]);
-        
+
         $ids = [];
         $names = [];
         foreach ($collection as $store) {
             $ids[] = $store->getId();
             $names[] = $store->getName();
         }
-        
+
         expect($ids)->toBe(['store-1', 'store-2', 'store-3']);
         expect($names)->toBe(['Store One', 'Store Two', 'Store Three']);
     });
@@ -129,10 +129,10 @@ describe('Stores Collection', function (): void {
             createdAt: $now,
             updatedAt: $now,
         );
-        
+
         $collection = new Stores([$store1, $store2]);
         $array = $collection->toArray();
-        
+
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
         expect($array[0])->toBe($store1);
@@ -142,7 +142,7 @@ describe('Stores Collection', function (): void {
     test('serializes to JSON', function (): void {
         $createdAt = new DateTimeImmutable('2024-01-15 10:00:00');
         $updatedAt = new DateTimeImmutable('2024-01-16 15:30:00');
-        
+
         $store1 = new Store(
             id: 'store-1',
             name: 'First Store',
@@ -155,20 +155,20 @@ describe('Stores Collection', function (): void {
             createdAt: $createdAt,
             updatedAt: $updatedAt,
         );
-        
+
         $collection = new Stores([$store1, $store2]);
         $json = $collection->jsonSerialize();
-        
+
         expect($json)->toBeArray();
         expect($json)->toHaveCount(2);
-        
+
         expect($json[0])->toBe([
             'id' => 'store-1',
             'name' => 'First Store',
             'created_at' => $createdAt->format(DateTimeInterface::ATOM),
             'updated_at' => $createdAt->format(DateTimeInterface::ATOM),
         ]);
-        
+
         expect($json[1])->toBe([
             'id' => 'store-2',
             'name' => 'Second Store',
@@ -197,7 +197,7 @@ describe('Stores Collection', function (): void {
         $oldDate = new DateTimeImmutable('2023-01-01');
         $recentDate = new DateTimeImmutable('2024-06-01');
         $newDate = new DateTimeImmutable('2024-12-01');
-        
+
         $collection = new Stores([
             new Store(
                 id: 'old-store',
@@ -218,17 +218,17 @@ describe('Stores Collection', function (): void {
                 updatedAt: $newDate,
             ),
         ]);
-        
+
         // Filter stores created in 2024
         $stores2024 = [];
         $cutoffDate = new DateTimeImmutable('2024-01-01');
-        
+
         foreach ($collection as $store) {
             if ($store->getCreatedAt() >= $cutoffDate) {
                 $stores2024[] = $store->getId();
             }
         }
-        
+
         expect($stores2024)->toBe(['recent-store', 'new-store']);
     });
 
@@ -237,7 +237,7 @@ describe('Stores Collection', function (): void {
         $date2 = new DateTimeImmutable('2024-01-10');
         $date3 = new DateTimeImmutable('2024-01-15');
         $date4 = new DateTimeImmutable('2024-01-05');
-        
+
         $collection = new Stores([
             new Store(
                 id: 'store-1',
@@ -258,17 +258,17 @@ describe('Stores Collection', function (): void {
                 updatedAt: $date4,
             ),
         ]);
-        
+
         $mostRecent = null;
         $mostRecentDate = null;
-        
+
         foreach ($collection as $store) {
-            if ($mostRecentDate === null || $store->getUpdatedAt() > $mostRecentDate) {
+            if (null === $mostRecentDate || $store->getUpdatedAt() > $mostRecentDate) {
                 $mostRecent = $store;
                 $mostRecentDate = $store->getUpdatedAt();
             }
         }
-        
+
         expect($mostRecent)->not->toBeNull();
         expect($mostRecent->getId())->toBe('store-2');
     });
@@ -282,9 +282,9 @@ describe('Stores Collection', function (): void {
             new Store(id: '01HXF7M9KW', name: 'QA Environment', createdAt: $now, updatedAt: $now),
             new Store(id: '01HXF7M9KX', name: 'Demo Environment', createdAt: $now, updatedAt: $now),
         ]);
-        
+
         expect($collection->count())->toBe(5);
-        
+
         // Find environments containing 'Environment'
         $environmentStores = [];
         foreach ($collection as $store) {
@@ -292,7 +292,7 @@ describe('Stores Collection', function (): void {
                 $environmentStores[] = $store->getName();
             }
         }
-        
+
         expect($environmentStores)->toHaveCount(5);
     });
 
@@ -300,14 +300,14 @@ describe('Stores Collection', function (): void {
         $createdAt = new DateTimeImmutable('2024-01-01');
         $updatedAt = new DateTimeImmutable('2024-01-15');
         $deletedAt = new DateTimeImmutable('2024-01-20');
-        
+
         $activeStore = new Store(
             id: 'active-store',
             name: 'Active Store',
             createdAt: $createdAt,
             updatedAt: $updatedAt,
         );
-        
+
         $deletedStore = new Store(
             id: 'deleted-store',
             name: 'Deleted Store',
@@ -315,37 +315,37 @@ describe('Stores Collection', function (): void {
             updatedAt: $updatedAt,
             deletedAt: $deletedAt,
         );
-        
+
         $collection = new Stores([$activeStore, $deletedStore]);
-        
+
         // Count active stores
         $activeCount = 0;
         foreach ($collection as $store) {
-            if ($store->getDeletedAt() === null) {
-                $activeCount++;
+            if (null === $store->getDeletedAt()) {
+                ++$activeCount;
             }
         }
-        
+
         expect($activeCount)->toBe(1);
-        
+
         // Verify deleted store has deletedAt
         expect($deletedStore->getDeletedAt())->toBe($deletedAt);
     });
 
     test('handles empty collection edge cases', function (): void {
         $collection = new Stores();
-        
+
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);
         expect($collection->jsonSerialize())->toBe([]);
-        
+
         // Test iteration on empty collection
         $count = 0;
         foreach ($collection as $item) {
-            $count++;
+            ++$count;
         }
         expect($count)->toBe(0);
-        
+
         // Test get on empty collection
         expect($collection->get(0))->toBeNull();
     });

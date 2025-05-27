@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{UsersetTreeTupleToUserset, UsersetTreeTupleToUsersetInterface, Computed};
 use OpenFGA\Models\Collections\Computeds;
+use OpenFGA\Models\{Computed, UsersetTreeTupleToUserset, UsersetTreeTupleToUsersetInterface};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('UsersetTreeTupleToUserset Model', function (): void {
@@ -24,7 +24,7 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
             new Computed(userset: 'viewer'),
             new Computed(userset: 'editor'),
         ]);
-        
+
         $tupleToUserset = new UsersetTreeTupleToUserset(
             tupleset: 'parent',
             computed: $computeds,
@@ -38,12 +38,12 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
         $computeds = new Computeds([
             new Computed(userset: 'viewer'),
         ]);
-        
+
         $tupleToUserset = new UsersetTreeTupleToUserset(
             tupleset: 'parent',
             computed: $computeds,
         );
-        
+
         expect($tupleToUserset->jsonSerialize())->toBe([
             'tupleset' => 'parent',
             'computed' => [
@@ -58,12 +58,12 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
             new Computed(userset: 'editor'),
             new Computed(userset: 'owner'),
         ]);
-        
+
         $tupleToUserset = new UsersetTreeTupleToUserset(
             tupleset: 'organization',
             computed: $computeds,
         );
-        
+
         $json = $tupleToUserset->jsonSerialize();
         expect($json['tupleset'])->toBe('organization');
         expect($json['computed'])->toHaveCount(3);
@@ -115,13 +115,13 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
             tupleset: 'parent',
             computed: new Computeds([
                 new Computed(userset: 'viewer'),
-            ])
+            ]),
         );
-        
+
         $json = $folderViewers->jsonSerialize();
         expect($json['tupleset'])->toBe('parent');
         expect($json['computed'][0]['userset'])->toBe('viewer');
-        
+
         // Pattern 2: Organization members have multiple roles
         $orgMembers = new UsersetTreeTupleToUserset(
             tupleset: 'organization',
@@ -129,22 +129,22 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
                 new Computed(userset: 'member'),
                 new Computed(userset: 'admin'),
                 new Computed(userset: 'owner'),
-            ])
+            ]),
         );
-        
+
         $json2 = $orgMembers->jsonSerialize();
         expect($json2['tupleset'])->toBe('organization');
         expect($json2['computed'])->toHaveCount(3);
-        
+
         // Pattern 3: Team hierarchy permissions
         $teamHierarchy = new UsersetTreeTupleToUserset(
             tupleset: 'team#parent',
             computed: new Computeds([
                 new Computed(userset: 'lead'),
                 new Computed(userset: 'member'),
-            ])
+            ]),
         );
-        
+
         $json3 = $teamHierarchy->jsonSerialize();
         expect($json3['tupleset'])->toBe('team#parent');
         expect($json3['computed'])->toHaveCount(2);
@@ -155,9 +155,9 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
             tupleset: 'department#organization#parent',
             computed: new Computeds([
                 new Computed(userset: 'executive'),
-            ])
+            ]),
         );
-        
+
         expect($complexPath->getTupleset())->toBe('department#organization#parent');
         expect($complexPath->jsonSerialize()['tupleset'])->toBe('department#organization#parent');
     });

@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\AuthorizationModel;
+use OpenFGA\Models\{AuthorizationModel, TypeDefinition};
 use OpenFGA\Models\Collections\{AuthorizationModels, AuthorizationModelsInterface, TypeDefinitions};
-use OpenFGA\Models\TypeDefinition;
 use OpenFGA\Models\Enums\SchemaVersion;
-use OpenFGA\Schema\{SchemaInterface, CollectionSchemaInterface};
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('AuthorizationModels Collection', function (): void {
     test('implements AuthorizationModelsInterface', function (): void {
@@ -29,17 +28,17 @@ describe('AuthorizationModels Collection', function (): void {
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
                 new TypeDefinition(type: 'document'),
-            ])
+            ]),
         );
-        
+
         $model2 = new AuthorizationModel(
             id: 'model-2',
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'group'),
-            ])
+            ]),
         );
-        
+
         $collection = new AuthorizationModels([$model1, $model2]);
 
         expect($collection->count())->toBe(2);
@@ -48,17 +47,17 @@ describe('AuthorizationModels Collection', function (): void {
 
     test('adds authorization models', function (): void {
         $collection = new AuthorizationModels();
-        
+
         $model = new AuthorizationModel(
             id: 'model-1',
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
-            ])
+            ]),
         );
-        
+
         $collection->add($model);
-        
+
         expect($collection->count())->toBe(1);
         expect($collection->get(0))->toBe($model);
     });
@@ -69,11 +68,11 @@ describe('AuthorizationModels Collection', function (): void {
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
-            ])
+            ]),
         );
-        
+
         $collection = new AuthorizationModels([$model]);
-        
+
         expect(isset($collection[0]))->toBeTrue();
         expect(isset($collection[1]))->toBeFalse();
     });
@@ -84,24 +83,24 @@ describe('AuthorizationModels Collection', function (): void {
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
-            ])
+            ]),
         );
-        
+
         $model2 = new AuthorizationModel(
             id: 'model-2',
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'group'),
-            ])
+            ]),
         );
-        
+
         $collection = new AuthorizationModels([$model1, $model2]);
-        
+
         $ids = [];
         foreach ($collection as $model) {
             $ids[] = $model->getId();
         }
-        
+
         expect($ids)->toBe(['model-1', 'model-2']);
     });
 
@@ -111,20 +110,20 @@ describe('AuthorizationModels Collection', function (): void {
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
-            ])
+            ]),
         );
-        
+
         $model2 = new AuthorizationModel(
             id: 'model-2',
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'group'),
-            ])
+            ]),
         );
-        
+
         $collection = new AuthorizationModels([$model1, $model2]);
         $array = $collection->toArray();
-        
+
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
         expect($array[0])->toBe($model1);
@@ -137,12 +136,12 @@ describe('AuthorizationModels Collection', function (): void {
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
-            ])
+            ]),
         );
-        
+
         $collection = new AuthorizationModels([$model]);
         $json = $collection->jsonSerialize();
-        
+
         expect($json)->toBeArray();
         expect($json)->toHaveCount(1);
         expect($json[0])->toHaveKey('id');
@@ -175,67 +174,68 @@ describe('AuthorizationModels Collection', function (): void {
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
                 new TypeDefinition(type: 'document'),
-            ])
+            ]),
         );
-        
+
         $model2 = new AuthorizationModel(
             id: 'model-2',
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'group'),
-            ])
+            ]),
         );
-        
+
         $model3 = new AuthorizationModel(
             id: 'model-3',
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'team'),
                 new TypeDefinition(type: 'user'),
-            ])
+            ]),
         );
-        
+
         $collection = new AuthorizationModels([$model1, $model2, $model3]);
-        
+
         // Filter models that have 'user' type definition
         $filtered = [];
         foreach ($collection as $model) {
             foreach ($model->getTypeDefinitions() as $typeDef) {
-                if ($typeDef->getType() === 'user') {
+                if ('user' === $typeDef->getType()) {
                     $filtered[] = $model->getId();
+
                     break;
                 }
             }
         }
-        
+
         expect($filtered)->toBe(['model-1', 'model-3']);
     });
 
     test('handles model history scenarios', function (): void {
         // Create a series of models representing version history
         $models = [];
-        
-        for ($i = 1; $i <= 5; $i++) {
+
+        for ($i = 1; $i <= 5; ++$i) {
             $models[] = new AuthorizationModel(
                 id: "01HXF7M9KTEQR{$i}NBPW96PDTV",
                 schemaVersion: SchemaVersion::V1_1,
                 typeDefinitions: new TypeDefinitions([
                     new TypeDefinition(type: 'user'),
                     new TypeDefinition(type: 'document'),
-                ])
+                ]),
             );
         }
-        
+
         $collection = new AuthorizationModels($models);
-        
+
         expect($collection->count())->toBe(5);
-        
+
         // Get the latest model (last in the collection)
         $latest = null;
         foreach ($collection as $model) {
             $latest = $model;
         }
-        
+
         expect($latest)->not->toBeNull();
         expect($latest->getId())->toBe('01HXF7M9KTEQR5NBPW96PDTV');
     });
@@ -246,25 +246,25 @@ describe('AuthorizationModels Collection', function (): void {
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'user'),
-            ])
+            ]),
         );
-        
+
         $model2 = new AuthorizationModel(
             id: 'model-2',
             schemaVersion: SchemaVersion::V1_1,
             typeDefinitions: new TypeDefinitions([
                 new TypeDefinition(type: 'group'),
-            ])
+            ]),
         );
-        
+
         $collection = new AuthorizationModels([$model1, $model2]);
-        
+
         // Check all models have the same version
         $versions = [];
         foreach ($collection as $model) {
             $versions[] = $model->getSchemaVersion()->value;
         }
-        
+
         expect(array_unique($versions))->toHaveCount(1);
         expect($versions[0])->toBe('1.1');
     });

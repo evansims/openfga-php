@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset, UsersetInterface};
 use OpenFGA\Models\Collections\Usersets;
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset, UsersetInterface};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('Userset Model', function (): void {
@@ -67,7 +67,7 @@ describe('Userset Model', function (): void {
         $child1 = new Userset(direct: new stdClass());
         $child2 = new Userset(computedUserset: new ObjectRelation(relation: 'viewer'));
         $union = new Usersets([$child1, $child2]);
-        
+
         $userset = new Userset(union: $union);
 
         expect($userset->getDirect())->toBeNull();
@@ -82,7 +82,7 @@ describe('Userset Model', function (): void {
         $child1 = new Userset(direct: new stdClass());
         $child2 = new Userset(computedUserset: new ObjectRelation(relation: 'viewer'));
         $intersection = new Usersets([$child1, $child2]);
-        
+
         $userset = new Userset(intersection: $intersection);
 
         expect($userset->getDirect())->toBeNull();
@@ -97,7 +97,7 @@ describe('Userset Model', function (): void {
         $base = new Userset(direct: new stdClass());
         $subtract = new Userset(computedUserset: new ObjectRelation(relation: 'blocked'));
         $difference = new DifferenceV1(base: $base, subtract: $subtract);
-        
+
         $userset = new Userset(difference: $difference);
 
         expect($userset->getDirect())->toBeNull();
@@ -127,20 +127,20 @@ describe('Userset Model', function (): void {
     test('serializes complex nested userset', function (): void {
         $child1 = new Userset(direct: new stdClass());
         $child2 = new Userset(
-            computedUserset: new ObjectRelation(relation: 'viewer')
+            computedUserset: new ObjectRelation(relation: 'viewer'),
         );
         $union = new Usersets([$child1, $child2]);
-        
+
         $userset = new Userset(union: $union);
-        
+
         $json = $userset->jsonSerialize();
         expect($json)->toHaveKey('union');
         expect($json['union'])->toHaveCount(2);
-        
+
         // Check first child has direct
         expect($json['union'][0])->toHaveKey('direct');
         expect($json['union'][0]['direct'])->toBeInstanceOf(stdClass::class);
-        
+
         // Check second child has computed_userset
         expect($json['union'][1])->toHaveKey('computed_userset');
         expect($json['union'][1]['computed_userset'])->toBe(['relation' => 'viewer']);
@@ -238,7 +238,7 @@ describe('Userset Model', function (): void {
 
         // Computed from relation
         $computedUserset = new Userset(
-            computedUserset: new ObjectRelation(relation: 'owner')
+            computedUserset: new ObjectRelation(relation: 'owner'),
         );
         expect($computedUserset->jsonSerialize())->toBe([
             'computed_userset' => ['relation' => 'owner'],
@@ -246,15 +246,15 @@ describe('Userset Model', function (): void {
 
         // Union of multiple usersets (e.g., viewers are owners OR editors)
         $ownerUserset = new Userset(
-            computedUserset: new ObjectRelation(relation: 'owner')
+            computedUserset: new ObjectRelation(relation: 'owner'),
         );
         $editorUserset = new Userset(
-            computedUserset: new ObjectRelation(relation: 'editor')
+            computedUserset: new ObjectRelation(relation: 'editor'),
         );
         $viewerUserset = new Userset(
-            union: new Usersets([$ownerUserset, $editorUserset])
+            union: new Usersets([$ownerUserset, $editorUserset]),
         );
-        
+
         $json = $viewerUserset->jsonSerialize();
         expect($json)->toHaveKey('union');
         expect($json['union'])->toHaveCount(2);

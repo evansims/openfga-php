@@ -7,15 +7,14 @@ use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\CreateAuthorizationModelRequest;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
 it('can be instantiated with required parameters', function (): void {
     $typeDefinitions = Mockery::mock(TypeDefinitionsInterface::class);
 
     $request = new CreateAuthorizationModelRequest(
         store: 'test-store',
-        typeDefinitions: $typeDefinitions
+        typeDefinitions: $typeDefinitions,
     );
 
     expect($request)->toBeInstanceOf(CreateAuthorizationModelRequest::class);
@@ -33,7 +32,7 @@ it('can be instantiated with all parameters', function (): void {
         store: 'test-store',
         typeDefinitions: $typeDefinitions,
         schemaVersion: SchemaVersion::V1_0,
-        conditions: $conditions
+        conditions: $conditions,
     );
 
     expect($request->getStore())->toBe('test-store');
@@ -48,19 +47,19 @@ it('generates correct request context with minimal parameters', function (): voi
         ->once()
         ->andReturn([
             ['type' => 'user'],
-            ['type' => 'document', 'relations' => ['viewer' => 'user']]
+            ['type' => 'document', 'relations' => ['viewer' => 'user']],
         ]);
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
         ->with(json_encode([
             'type_definitions' => [
                 ['type' => 'user'],
-                ['type' => 'document', 'relations' => ['viewer' => 'user']]
+                ['type' => 'document', 'relations' => ['viewer' => 'user']],
             ],
             'schema_version' => '1.1',
         ]))
@@ -68,7 +67,7 @@ it('generates correct request context with minimal parameters', function (): voi
 
     $request = new CreateAuthorizationModelRequest(
         store: 'test-store',
-        typeDefinitions: $typeDefinitions
+        typeDefinitions: $typeDefinitions,
     );
 
     $context = $request->getRequest($streamFactory);
@@ -84,30 +83,30 @@ it('generates correct request context with all parameters', function (): void {
         ->once()
         ->andReturn([
             ['type' => 'user'],
-            ['type' => 'document', 'relations' => ['viewer' => 'user']]
+            ['type' => 'document', 'relations' => ['viewer' => 'user']],
         ]);
 
     $conditions = Mockery::mock(ConditionsInterface::class);
     $conditions->shouldReceive('jsonSerialize')
         ->once()
         ->andReturn([
-            'condition1' => ['name' => 'condition1', 'expression' => 'user.id == "123"']
+            'condition1' => ['name' => 'condition1', 'expression' => 'user.id == "123"'],
         ]);
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
         ->with(json_encode([
             'type_definitions' => [
                 ['type' => 'user'],
-                ['type' => 'document', 'relations' => ['viewer' => 'user']]
+                ['type' => 'document', 'relations' => ['viewer' => 'user']],
             ],
             'schema_version' => '1.0',
             'conditions' => [
-                'condition1' => ['name' => 'condition1', 'expression' => 'user.id == "123"']
+                'condition1' => ['name' => 'condition1', 'expression' => 'user.id == "123"'],
             ],
         ]))
         ->andReturn($stream);
@@ -116,7 +115,7 @@ it('generates correct request context with all parameters', function (): void {
         store: 'test-store',
         typeDefinitions: $typeDefinitions,
         schemaVersion: SchemaVersion::V1_0,
-        conditions: $conditions
+        conditions: $conditions,
     );
 
     $context = $request->getRequest($streamFactory);
@@ -134,7 +133,7 @@ it('handles different schema versions', function (): void {
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     // Test each schema version
@@ -150,7 +149,7 @@ it('handles different schema versions', function (): void {
         $request = new CreateAuthorizationModelRequest(
             store: 'test-store',
             typeDefinitions: $typeDefinitions,
-            schemaVersion: $schemaVersion
+            schemaVersion: $schemaVersion,
         );
 
         $context = $request->getRequest($streamFactory);
@@ -169,7 +168,7 @@ it('filters out null conditions from request body', function (): void {
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -183,7 +182,7 @@ it('filters out null conditions from request body', function (): void {
         store: 'test-store',
         typeDefinitions: $typeDefinitions,
         schemaVersion: SchemaVersion::V1_1,
-        conditions: null
+        conditions: null,
     );
 
     $context = $request->getRequest($streamFactory);

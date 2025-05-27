@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{Leaf, LeafInterface, Computed, UsersetTreeTupleToUserset, UsersListUser};
-use OpenFGA\Models\Collections\{UsersList, Computeds};
+use OpenFGA\Models\Collections\{Computeds, UsersList};
+use OpenFGA\Models\{Computed, Leaf, LeafInterface, UsersListUser, UsersetTreeTupleToUserset};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('Leaf Model', function (): void {
@@ -17,7 +17,7 @@ describe('Leaf Model', function (): void {
     });
 
     test('requires at least one parameter', function (): void {
-        expect(fn() => new Leaf())->toThrow(InvalidArgumentException::class);
+        expect(fn () => new Leaf())->toThrow(InvalidArgumentException::class);
     });
 
     test('constructs with users', function (): void {
@@ -25,7 +25,7 @@ describe('Leaf Model', function (): void {
             new UsersListUser(user: 'user:alice'),
             new UsersListUser(user: 'user:bob'),
         ]);
-        
+
         $leaf = new Leaf(users: $users);
 
         expect($leaf->getUsers())->toBe($users);
@@ -35,7 +35,7 @@ describe('Leaf Model', function (): void {
 
     test('constructs with computed', function (): void {
         $computed = new Computed(userset: 'viewer');
-        
+
         $leaf = new Leaf(computed: $computed);
 
         expect($leaf->getUsers())->toBeNull();
@@ -51,7 +51,7 @@ describe('Leaf Model', function (): void {
             tupleset: 'parent',
             computed: $computeds,
         );
-        
+
         $leaf = new Leaf(tupleToUserset: $tupleToUserset);
 
         expect($leaf->getUsers())->toBeNull();
@@ -169,7 +169,7 @@ describe('Leaf Model', function (): void {
             new UsersListUser(user: 'group:engineering#member'),
         ]);
         $directLeaf = new Leaf(users: $users);
-        
+
         $json = $directLeaf->jsonSerialize();
         expect($json)->toHaveKey('users');
         expect($json['users'])->toHaveCount(3);
@@ -178,16 +178,16 @@ describe('Leaf Model', function (): void {
             'user:bob',
             'group:engineering#member',
         ]);
-        
+
         // Pattern 2: Computed from relation
         $computedLeaf = new Leaf(
-            computed: new Computed(userset: 'owner')
+            computed: new Computed(userset: 'owner'),
         );
-        
+
         expect($computedLeaf->jsonSerialize())->toBe([
             'computed' => ['userset' => 'owner'],
         ]);
-        
+
         // Pattern 3: Tuple to userset for hierarchical permissions
         $computeds = new Computeds([
             new Computed(userset: 'viewer'),
@@ -196,9 +196,9 @@ describe('Leaf Model', function (): void {
             tupleToUserset: new UsersetTreeTupleToUserset(
                 tupleset: 'parent',
                 computed: $computeds,
-            )
+            ),
         );
-        
+
         expect($hierarchicalLeaf->jsonSerialize())->toBe([
             'tupleToUserset' => [
                 'tupleset' => 'parent',

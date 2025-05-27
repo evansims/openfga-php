@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\UserTypeFilter;
 use OpenFGA\Models\Collections\{UserTypeFilters, UserTypeFiltersInterface};
-use OpenFGA\Schema\{SchemaInterface, CollectionSchemaInterface};
+use OpenFGA\Models\UserTypeFilter;
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('UserTypeFilters Collection', function (): void {
     test('implements UserTypeFiltersInterface', function (): void {
@@ -24,17 +24,17 @@ describe('UserTypeFilters Collection', function (): void {
         $filter1 = new UserTypeFilter(
             type: 'user',
         );
-        
+
         $filter2 = new UserTypeFilter(
             type: 'group',
             relation: 'member',
         );
-        
+
         $filter3 = new UserTypeFilter(
             type: 'organization',
             relation: 'admin',
         );
-        
+
         $collection = new UserTypeFilters([$filter1, $filter2, $filter3]);
 
         expect($collection->count())->toBe(3);
@@ -43,13 +43,13 @@ describe('UserTypeFilters Collection', function (): void {
 
     test('adds user type filters', function (): void {
         $collection = new UserTypeFilters([]);
-        
+
         $filter = new UserTypeFilter(
             type: 'service_account',
         );
-        
+
         $collection->add($filter);
-        
+
         expect($collection->count())->toBe(1);
         expect($collection->get(0))->toBe($filter);
     });
@@ -57,9 +57,9 @@ describe('UserTypeFilters Collection', function (): void {
     test('gets filters by index', function (): void {
         $filter1 = new UserTypeFilter(type: 'user');
         $filter2 = new UserTypeFilter(type: 'group', relation: 'member');
-        
+
         $collection = new UserTypeFilters([$filter1, $filter2]);
-        
+
         expect($collection->get(0))->toBe($filter1);
         expect($collection->get(1))->toBe($filter2);
         expect($collection->get(2))->toBeNull();
@@ -67,9 +67,9 @@ describe('UserTypeFilters Collection', function (): void {
 
     test('checks if filter exists', function (): void {
         $filter = new UserTypeFilter(type: 'user');
-        
+
         $collection = new UserTypeFilters([$filter]);
-        
+
         expect(isset($collection[0]))->toBeTrue();
         expect(isset($collection[1]))->toBeFalse();
     });
@@ -78,24 +78,24 @@ describe('UserTypeFilters Collection', function (): void {
         $filter1 = new UserTypeFilter(type: 'user');
         $filter2 = new UserTypeFilter(type: 'group', relation: 'member');
         $filter3 = new UserTypeFilter(type: 'team', relation: 'owner');
-        
+
         $collection = new UserTypeFilters([$filter1, $filter2, $filter3]);
-        
+
         $types = [];
         foreach ($collection as $filter) {
             $types[] = $filter->getType();
         }
-        
+
         expect($types)->toBe(['user', 'group', 'team']);
     });
 
     test('converts to array', function (): void {
         $filter1 = new UserTypeFilter(type: 'user');
         $filter2 = new UserTypeFilter(type: 'group', relation: 'member');
-        
+
         $collection = new UserTypeFilters([$filter1, $filter2]);
         $array = $collection->toArray();
-        
+
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
         expect($array[0])->toBe($filter1);
@@ -108,21 +108,21 @@ describe('UserTypeFilters Collection', function (): void {
             new UserTypeFilter(type: 'group', relation: 'member'),
             new UserTypeFilter(type: 'organization', relation: 'admin'),
         ]);
-        
+
         $json = $collection->jsonSerialize();
-        
+
         expect($json)->toBeArray();
         expect($json)->toHaveCount(3);
-        
+
         expect($json[0])->toBe([
             'type' => 'user',
         ]);
-        
+
         expect($json[1])->toBe([
             'type' => 'group',
             'relation' => 'member',
         ]);
-        
+
         expect($json[2])->toBe([
             'type' => 'organization',
             'relation' => 'admin',
@@ -137,15 +137,15 @@ describe('UserTypeFilters Collection', function (): void {
             new UserTypeFilter(type: 'organization', relation: 'owner'),
             new UserTypeFilter(type: 'group', relation: 'admin'),
         ]);
-        
+
         // Filter only 'group' types
         $groupFilters = [];
         foreach ($collection as $filter) {
-            if ($filter->getType() === 'group') {
+            if ('group' === $filter->getType()) {
                 $groupFilters[] = $filter->getRelation();
             }
         }
-        
+
         expect($groupFilters)->toBe(['member', 'admin']);
     });
 
@@ -156,18 +156,18 @@ describe('UserTypeFilters Collection', function (): void {
             new UserTypeFilter(type: 'service_account'),
             new UserTypeFilter(type: 'team', relation: 'owner'),
         ]);
-        
+
         $withRelation = 0;
         $withoutRelation = 0;
-        
+
         foreach ($collection as $filter) {
-            if ($filter->getRelation() !== null) {
-                $withRelation++;
+            if (null !== $filter->getRelation()) {
+                ++$withRelation;
             } else {
-                $withoutRelation++;
+                ++$withoutRelation;
             }
         }
-        
+
         expect($withRelation)->toBe(2);
         expect($withoutRelation)->toBe(2);
     });
@@ -190,18 +190,18 @@ describe('UserTypeFilters Collection', function (): void {
 
     test('handles empty collection edge cases', function (): void {
         $collection = new UserTypeFilters([]);
-        
+
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);
         expect($collection->jsonSerialize())->toBe([]);
-        
+
         // Test iteration on empty collection
         $count = 0;
         foreach ($collection as $_) {
-            $count++;
+            ++$count;
         }
         expect($count)->toBe(0);
-        
+
         // Test get on empty collection
         expect($collection->get(0))->toBeNull();
     });
@@ -211,28 +211,28 @@ describe('UserTypeFilters Collection', function (): void {
         $collection = new UserTypeFilters([
             // Direct user access
             new UserTypeFilter(type: 'user'),
-            
+
             // Group membership access
             new UserTypeFilter(type: 'group', relation: 'member'),
-            
+
             // Organization admin access
             new UserTypeFilter(type: 'organization', relation: 'admin'),
-            
+
             // Team owner access
             new UserTypeFilter(type: 'team', relation: 'owner'),
-            
+
             // Service account access (no relation needed)
             new UserTypeFilter(type: 'service_account'),
         ]);
-        
+
         expect($collection->count())->toBe(5);
-        
+
         // Verify the configuration
         $config = [];
         foreach ($collection as $filter) {
             $config[] = $filter->getType() . ($filter->getRelation() ? '#' . $filter->getRelation() : '');
         }
-        
+
         expect($config)->toBe([
             'user',
             'group#member',

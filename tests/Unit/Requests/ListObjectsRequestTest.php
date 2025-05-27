@@ -7,15 +7,14 @@ use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\ListObjectsRequest;
-use Psr\Http\Message\StreamFactoryInterface;
-use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
 it('can be instantiated with required parameters', function (): void {
     $request = new ListObjectsRequest(
         store: 'test-store',
         type: 'document',
         relation: 'viewer',
-        user: 'user:1'
+        user: 'user:1',
     );
 
     expect($request)->toBeInstanceOf(ListObjectsRequest::class);
@@ -41,7 +40,7 @@ it('can be instantiated with all parameters', function (): void {
         model: 'test-model',
         context: $context,
         contextualTuples: $contextualTuples,
-        consistency: Consistency::HIGHER_CONSISTENCY
+        consistency: Consistency::HIGHER_CONSISTENCY,
     );
 
     expect($request->getStore())->toBe('test-store');
@@ -57,7 +56,7 @@ it('can be instantiated with all parameters', function (): void {
 it('generates correct request context with minimal parameters', function (): void {
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -72,7 +71,7 @@ it('generates correct request context with minimal parameters', function (): voi
         store: 'test-store',
         type: 'document',
         relation: 'viewer',
-        user: 'user:1'
+        user: 'user:1',
     );
 
     $context = $request->getRequest($streamFactory);
@@ -91,7 +90,7 @@ it('generates correct request context with all parameters', function (): void {
 
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -114,7 +113,7 @@ it('generates correct request context with all parameters', function (): void {
         model: 'test-model',
         context: $contextObj,
         contextualTuples: $contextualTuples,
-        consistency: Consistency::HIGHER_CONSISTENCY
+        consistency: Consistency::HIGHER_CONSISTENCY,
     );
 
     $context = $request->getRequest($streamFactory);
@@ -127,7 +126,7 @@ it('generates correct request context with all parameters', function (): void {
 it('handles complex user identifiers', function (): void {
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -142,7 +141,7 @@ it('handles complex user identifiers', function (): void {
         store: 'test-store',
         type: 'group',
         relation: 'member',
-        user: 'group:engineering#member'
+        user: 'group:engineering#member',
     );
 
     $context = $request->getRequest($streamFactory);
@@ -154,7 +153,7 @@ it('handles complex user identifiers', function (): void {
 it('filters out null values from request body', function (): void {
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
     $streamFactory->shouldReceive('createStream')
         ->once()
@@ -173,7 +172,7 @@ it('filters out null values from request body', function (): void {
         model: null,
         context: null,
         contextualTuples: null,
-        consistency: null
+        consistency: null,
     );
 
     $context = $request->getRequest($streamFactory);
@@ -186,7 +185,7 @@ it('filters out null values from request body', function (): void {
 it('handles different consistency values', function (): void {
     $stream = Mockery::mock(StreamInterface::class);
 
-    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    /** @var MockInterface&StreamFactoryInterface $streamFactory */
     $streamFactory = Mockery::mock(StreamFactoryInterface::class);
 
     // Test each consistency value
@@ -206,7 +205,7 @@ it('handles different consistency values', function (): void {
             type: 'document',
             relation: 'viewer',
             user: 'user:1',
-            consistency: $consistency
+            consistency: $consistency,
         );
 
         $context = $request->getRequest($streamFactory);

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{Metadata, RelationMetadata, Userset, TypedWildcard, ObjectRelation, RelationReference, TupleToUsersetV1, DifferenceV1};
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitionRelationsInterface, Usersets};
-use OpenFGA\Schema\{SchemaInterface, CollectionSchemaInterface};
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset};
+use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('TypeDefinitionRelations Collection', function (): void {
     test('implements TypeDefinitionRelationsInterface', function (): void {
@@ -23,17 +23,17 @@ describe('TypeDefinitionRelations Collection', function (): void {
     test('constructs with array of relations', function (): void {
         $relations = [
             'viewer' => new Userset(
-                direct: new \stdClass(),
+                direct: new stdClass(),
             ),
             'editor' => new Userset(
-                direct: new \stdClass(),
+                direct: new stdClass(),
                 computedUserset: new ObjectRelation(relation: 'viewer'),
             ),
             'owner' => new Userset(
-                direct: new \stdClass(),
+                direct: new stdClass(),
             ),
         ];
-        
+
         $collection = new TypeDefinitionRelations($relations);
 
         expect($collection->count())->toBe(3);
@@ -41,14 +41,14 @@ describe('TypeDefinitionRelations Collection', function (): void {
     });
 
     test('gets relations by key', function (): void {
-        $viewerRelation = new Userset(direct: new \stdClass());
-        $editorRelation = new Userset(direct: new \stdClass());
-        
+        $viewerRelation = new Userset(direct: new stdClass());
+        $editorRelation = new Userset(direct: new stdClass());
+
         $collection = new TypeDefinitionRelations([
             'viewer' => $viewerRelation,
             'editor' => $editorRelation,
         ]);
-        
+
         expect($collection->get('viewer'))->toBe($viewerRelation);
         expect($collection->get('editor'))->toBe($editorRelation);
         expect($collection->get('nonexistent'))->toBeNull();
@@ -56,33 +56,33 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
     test('iterates over relations', function (): void {
         $relations = [
-            'read' => new Userset(direct: new \stdClass()),
-            'write' => new Userset(direct: new \stdClass()),
-            'admin' => new Userset(direct: new \stdClass()),
+            'read' => new Userset(direct: new stdClass()),
+            'write' => new Userset(direct: new stdClass()),
+            'admin' => new Userset(direct: new stdClass()),
         ];
-        
+
         $collection = new TypeDefinitionRelations($relations);
-        
+
         $keys = [];
         foreach ($collection as $key => $relation) {
             $keys[] = $key;
             expect($relation)->toBeInstanceOf(Userset::class);
         }
-        
+
         expect($keys)->toBe(['read', 'write', 'admin']);
     });
 
     test('converts to array', function (): void {
-        $viewerRelation = new Userset(direct: new \stdClass());
-        $editorRelation = new Userset(direct: new \stdClass());
-        
+        $viewerRelation = new Userset(direct: new stdClass());
+        $editorRelation = new Userset(direct: new stdClass());
+
         $collection = new TypeDefinitionRelations([
             'viewer' => $viewerRelation,
             'editor' => $editorRelation,
         ]);
-        
+
         $array = $collection->toArray();
-        
+
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
         expect($array['viewer'])->toBe($viewerRelation);
@@ -92,26 +92,26 @@ describe('TypeDefinitionRelations Collection', function (): void {
     test('serializes to JSON', function (): void {
         $collection = new TypeDefinitionRelations([
             'viewer' => new Userset(
-                direct: new \stdClass(),
+                direct: new stdClass(),
             ),
             'editor' => new Userset(
                 union: new Usersets([
-                    new Userset(direct: new \stdClass()),
+                    new Userset(direct: new stdClass()),
                     new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
                 ]),
             ),
         ]);
-        
+
         $json = $collection->jsonSerialize();
-        
+
         expect($json)->toBeArray();
         expect($json)->toHaveKey('viewer');
         expect($json)->toHaveKey('editor');
-        
+
         // Check viewer structure
         expect($json['viewer'])->toHaveKey('direct');
-        expect($json['viewer']['direct'])->toBeInstanceOf(\stdClass::class);
-        
+        expect($json['viewer']['direct'])->toBeInstanceOf(stdClass::class);
+
         // Check editor structure
         expect($json['editor'])->toHaveKey('union');
         expect($json['editor']['union'])->toBeArray();
@@ -120,10 +120,10 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
     test('checks if key exists', function (): void {
         $collection = new TypeDefinitionRelations([
-            'viewer' => new Userset(direct: new \stdClass()),
-            'editor' => new Userset(direct: new \stdClass()),
+            'viewer' => new Userset(direct: new stdClass()),
+            'editor' => new Userset(direct: new stdClass()),
         ]);
-        
+
         expect(isset($collection['viewer']))->toBeTrue();
         expect(isset($collection['editor']))->toBeTrue();
         expect(isset($collection['owner']))->toBeFalse();
@@ -131,13 +131,13 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
     test('returns all keys', function (): void {
         $collection = new TypeDefinitionRelations([
-            'read' => new Userset(direct: new \stdClass()),
-            'write' => new Userset(direct: new \stdClass()),
-            'delete' => new Userset(direct: new \stdClass()),
+            'read' => new Userset(direct: new stdClass()),
+            'write' => new Userset(direct: new stdClass()),
+            'delete' => new Userset(direct: new stdClass()),
         ]);
-        
+
         $keys = array_keys($collection->toArray());
-        
+
         expect($keys)->toBeArray();
         expect($keys)->toBe(['read', 'write', 'delete']);
     });
@@ -145,16 +145,16 @@ describe('TypeDefinitionRelations Collection', function (): void {
     test('handles complex relation definitions', function (): void {
         $collection = new TypeDefinitionRelations([
             // Direct assignment
-            'viewer' => new Userset(direct: new \stdClass()),
-            
+            'viewer' => new Userset(direct: new stdClass()),
+
             // Union of direct and computed
             'editor' => new Userset(
                 union: new Usersets([
-                    new Userset(direct: new \stdClass()),
+                    new Userset(direct: new stdClass()),
                     new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
                 ]),
             ),
-            
+
             // Intersection
             'reviewer' => new Userset(
                 intersection: new Usersets([
@@ -165,7 +165,7 @@ describe('TypeDefinitionRelations Collection', function (): void {
                     )),
                 ]),
             ),
-            
+
             // Difference
             'commenter' => new Userset(
                 difference: new DifferenceV1(
@@ -174,7 +174,7 @@ describe('TypeDefinitionRelations Collection', function (): void {
                 ),
             ),
         ]);
-        
+
         expect($collection->count())->toBe(4);
         expect(isset($collection['viewer']))->toBeTrue();
         expect(isset($collection['editor']))->toBeTrue();
@@ -200,19 +200,19 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
     test('handles empty collection edge cases', function (): void {
         $collection = new TypeDefinitionRelations([]);
-        
+
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);
         expect($collection->jsonSerialize())->toBe([]);
         expect(array_keys($collection->toArray()))->toBe([]);
-        
+
         // Test iteration on empty collection
         $count = 0;
         foreach ($collection as $_) {
-            $count++;
+            ++$count;
         }
         expect($count)->toBe(0);
-        
+
         // Test get on empty collection
         expect($collection->get('any'))->toBeNull();
         expect(isset($collection['any']))->toBeFalse();
