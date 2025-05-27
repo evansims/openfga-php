@@ -138,15 +138,17 @@ describe('TupleKeys Collection', function (): void {
 
         $collection = new TupleKeys($tupleKey1, $tupleKey2, $tupleKey3);
 
-        // Collection method removed - not available
-        // Collection method removed - not available
+        // First and last methods not available - use get() instead
+        expect($collection->get(0))->toBe($tupleKey1);
+        expect($collection->get(2))->toBe($tupleKey3);
     });
 
     test('returns null for first and last on empty collection', function (): void {
         $collection = new TupleKeys();
 
-        // Method not available in collection
-        // Method not available in collection
+        // First and last methods not available - verify empty collection behavior
+        expect($collection->get(0))->toBeNull();
+        expect($collection->count())->toBe(0);
     });
 
     test('serializes to JSON', function (): void {
