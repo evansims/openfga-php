@@ -172,7 +172,7 @@ try {
 
     // 4. Perform an Authorization Check
     // "Can user:anne view document:readme?"
-    $checkResult = unwrap($client->check(tupleKey: $tuple));
+    $checkResult = unwrap($client->check(store: $store->getId(), model: $createdModel->getId(), tupleKey: $tuple));
 
     if ($checkResult->getIsAllowed()) {
         echo "SUCCESS: Anne CAN view document:readme!\n";
