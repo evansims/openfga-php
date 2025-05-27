@@ -289,7 +289,7 @@ class PermissionService
     public function checkPermission(string $user, string $relation, string $object): bool
     {
         return $this->client
-            ->check($this->storeId, $this->modelId, tuple($user, $relation, $object))
+            ->check(store: $this->storeId, model: $this->modelId, tupleKey: tuple($user, $relation, $object))
             ->then(fn($response) => $response->getIsAllowed())
             ->recover(function(Throwable $e) {
                 Log::error('Permission check failed', ['error' => $e->getMessage()]);
@@ -310,7 +310,7 @@ class FgaVoter extends Voter
         $user = $token->getUserIdentifier();
 
         return $this->client
-            ->check($this->store, $this->model, tuple($user, $attribute, $subject->getId()))
+            ->check(store: $this->store, model: $this->model, tupleKey: tuple($user, $attribute, $subject->getId()))
             ->then(fn($response) => $response->getIsAllowed())
             ->unwrap();
     }
