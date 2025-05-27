@@ -286,7 +286,7 @@ class PermissionService
     public function checkPermission(string $user, string $relation, string $object): bool
     {
         return $this->client
-            ->check($this->storeId, $this->modelId, tuple($user, $relation, $object))
+            ->check(store: $this->storeId, model: $this->modelId, tupleKey: tuple($user, $relation, $object))
             ->then(fn($response) => $response->getIsAllowed())
             ->recover(function(Throwable $e) {
                 Log::error('Permission check failed', ['error' => $e->getMessage()]);
