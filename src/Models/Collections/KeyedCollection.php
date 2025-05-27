@@ -40,6 +40,9 @@ abstract class KeyedCollection implements KeyedCollectionInterface
      */
     protected static string $itemType;
 
+    /** @var array<class-string, CollectionSchemaInterface> */
+    private static array $cachedSchemas = [];
+
     /**
      * @param array<string, T> $items
      *
@@ -265,6 +268,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
      */
     public static function schema(): CollectionSchemaInterface
     {
+        if (isset(self::$cachedSchemas[static::class])) {
+            return self::$cachedSchemas[static::class];
+        }
+
         if (! isset(static::$itemType)) {
             throw SerializationError::UndefinedItemType->exception();
         }
@@ -273,10 +280,13 @@ abstract class KeyedCollection implements KeyedCollectionInterface
             throw SerializationError::InvalidItemType->exception();
         }
 
-        return new CollectionSchema(
+        $schema = new CollectionSchema(
             className: static::class,
             itemType: static::$itemType,
             requireItems: false,
         );
+        self::$cachedSchemas[static::class] = $schema;
+
+        return $schema;
     }
 }

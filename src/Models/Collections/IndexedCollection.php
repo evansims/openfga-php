@@ -40,6 +40,9 @@ abstract class IndexedCollection implements IndexedCollectionInterface
      */
     protected static string $itemType;
 
+    /** @var array<class-string, CollectionSchemaInterface> */
+    private static array $cachedSchemas = [];
+
     /**
      * @param iterable<T>|T ...$items
      */
@@ -338,6 +341,10 @@ abstract class IndexedCollection implements IndexedCollectionInterface
      */
     public static function schema(): CollectionSchemaInterface
     {
+        if (isset(self::$cachedSchemas[static::class])) {
+            return self::$cachedSchemas[static::class];
+        }
+
         if (! isset(static::$itemType)) {
             throw SerializationError::UndefinedItemType->exception();
         }
@@ -346,11 +353,14 @@ abstract class IndexedCollection implements IndexedCollectionInterface
             throw SerializationError::InvalidItemType->exception();
         }
 
-        return new CollectionSchema(
+        $schema = new CollectionSchema(
             className: static::class,
             itemType: static::$itemType,
             requireItems: false,
         );
+        self::$cachedSchemas[static::class] = $schema;
+
+        return $schema;
     }
 
     /**
