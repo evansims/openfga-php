@@ -1,0 +1,53 @@
+<?php
+
+declare(strict_types=1);
+
+use Mockery\MockInterface;
+use OpenFGA\Network\RequestMethod;
+use OpenFGA\Requests\GetStoreRequest;
+use Psr\Http\Message\StreamFactoryInterface;
+
+it('can be instantiated', function (): void {
+    $request = new GetStoreRequest(store: 'test-store');
+
+    expect($request)->toBeInstanceOf(GetStoreRequest::class);
+    expect($request->getStore())->toBe('test-store');
+});
+
+it('generates correct request context', function (): void {
+    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+
+    $request = new GetStoreRequest(store: 'my-store');
+    $context = $request->getRequest($streamFactory);
+
+    expect($context->getMethod())->toBe(RequestMethod::GET);
+    expect($context->getUrl())->toBe('/stores/my-store');
+    expect($context->getBody())->toBeNull();
+    expect($context->getHeaders())->toBe([]);
+});
+
+it('handles store IDs with special characters', function (): void {
+    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+
+    $storeId = 'store-123-with-special_chars';
+    $request = new GetStoreRequest(store: $storeId);
+    $context = $request->getRequest($streamFactory);
+
+    expect($request->getStore())->toBe($storeId);
+    expect($context->getMethod())->toBe(RequestMethod::GET);
+    expect($context->getUrl())->toBe('/stores/' . $storeId);
+});
+
+it('handles empty store ID', function (): void {
+    /** @var StreamFactoryInterface&MockInterface $streamFactory */
+    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+
+    $request = new GetStoreRequest(store: '');
+    $context = $request->getRequest($streamFactory);
+
+    expect($request->getStore())->toBe('');
+    expect($context->getMethod())->toBe(RequestMethod::GET);
+    expect($context->getUrl())->toBe('/stores/');
+});

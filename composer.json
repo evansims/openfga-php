@@ -82,7 +82,6 @@
     "merge-plugin": {
       "ignore-duplicates": false,
       "include": [
-        "composer.dev.json",
         "composer.local.json"
       ],
       "merge-dev": true,
@@ -125,6 +124,10 @@
     "pest:unit": [
       "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
+    ],
+    "pest:debug": [
+      "@putenv XDEBUG_MODE=coverage",
+      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --debug"
     ],
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",

@@ -17,17 +17,6 @@ use PsrDiscovery\Discover;
 use function is_string;
 use function sprintf;
 
-enum RequestMethod: string
-{
-    case DELETE = 'DELETE';
-
-    case GET = 'GET';
-
-    case POST = 'POST';
-
-    case PUT = 'PUT';
-}
-
 final class RequestManager implements RequestManagerInterface
 {
     public function __construct(
