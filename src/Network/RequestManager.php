@@ -198,11 +198,6 @@ final class RequestManager implements RequestManagerInterface
         try {
             $error = trim((string) $response->getBody());
             $decoded = json_decode($error, true, 512, JSON_THROW_ON_ERROR);
-
-            if (is_array($decoded) || is_object($decoded)) {
-                return json_encode($decoded, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-            }
-
             return is_string($decoded) ? $decoded : $error;
         } catch (Exception) {
             if ('' !== $error) {
