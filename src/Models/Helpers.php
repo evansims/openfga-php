@@ -10,14 +10,11 @@ use function is_array;
 
 /**
  * Helper for creating a TupleKey.
-
  *
  * @param string                  $type
  * @param string                  $relation
  * @param string                  $object
  * @param null|ConditionInterface $condition
- *
- * @return TupleKey
  */
 function tuple(string $type, string $relation, string $object, ?ConditionInterface $condition = null): TupleKey
 {
@@ -26,11 +23,8 @@ function tuple(string $type, string $relation, string $object, ?ConditionInterfa
 
 /**
  * Helper for creating a TupleKeys collection.
-
  *
  * @param array<TupleKey>|TupleKey $tuples
- *
- * @return TupleKeys
  */
 function tuples(TupleKey | array $tuples): TupleKeys
 {
