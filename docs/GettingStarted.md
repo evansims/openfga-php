@@ -167,7 +167,7 @@ try {
     // 3. Write a Relationship Tuple
     // "user:anne is a viewer of document:readme"
     $tuple = tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme');
-    unwrap($client->writeTuples(writes: tuples($tuple)));
+    unwrap($client->writeTuples(store: $store->getId(), model: $createdModel->getId(), writes: tuples($tuple)));
     echo "Tuple written: user:anne is a viewer of document:readme\n";
 
     // 4. Perform an Authorization Check
