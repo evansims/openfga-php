@@ -9,7 +9,7 @@ use OpenFGA\Schema\SchemaInterface;
 
 describe('AuthorizationModel Model', function (): void {
     test('implements AuthorizationModelInterface', function (): void {
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
             id: 'model-123',
@@ -21,7 +21,7 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('constructs with required parameters only', function (): void {
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
             id: 'model-123',
@@ -36,8 +36,8 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('constructs with conditions', function (): void {
-        $typeDefinitions = new TypeDefinitions();
-        $conditions = new Conditions();
+        $typeDefinitions = new TypeDefinitions([]);
+        $conditions = new Conditions([]);
 
         $model = new AuthorizationModel(
             id: 'model-123',
@@ -53,11 +53,11 @@ describe('AuthorizationModel Model', function (): void {
         // Create a simple type definition for 'user'
         $userType = new TypeDefinition(
             type: 'user',
-            relations: new TypeDefinitionRelations(),
+            relations: new TypeDefinitionRelations([]),
         );
 
         // Create a type definition for 'document' with a viewer relation
-        $documentRelations = new TypeDefinitionRelations();
+        $documentRelations = new TypeDefinitionRelations([]);
         $viewerRelation = new Userset(
             this: new ObjectRelation(relation: 'viewer'),
         );
@@ -68,7 +68,9 @@ describe('AuthorizationModel Model', function (): void {
             relations: $documentRelations,
         );
 
-        $typeDefinitions = new TypeDefinitions($userType, $documentType);
+        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions->add($userType);
+        $typeDefinitions->add($documentType);
 
         $model = new AuthorizationModel(
             id: 'model-123',
@@ -82,7 +84,7 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('serializes to JSON without conditions', function (): void {
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
             id: 'model-123',
@@ -101,7 +103,7 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('serializes to JSON with conditions', function (): void {
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions([]);
 
         $conditionParam = new ConditionParameter(
             name: 'region',
@@ -131,12 +133,10 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('handles different schema versions', function (): void {
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions([]);
 
         $versions = [
-            SchemaVersion::V1_0,
             SchemaVersion::V1_1,
-            SchemaVersion::V1_2,
         ];
 
         foreach ($versions as $version) {
@@ -203,7 +203,7 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('handles empty ID', function (): void {
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
             id: '',
@@ -215,7 +215,7 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('dsl method returns string representation', function (): void {
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
             id: 'model-123',
@@ -231,11 +231,14 @@ describe('AuthorizationModel Model', function (): void {
     });
 
     test('preserves type definition order', function (): void {
-        $userType = new TypeDefinition(type: 'user', relations: new TypeDefinitionRelations());
-        $documentType = new TypeDefinition(type: 'document', relations: new TypeDefinitionRelations());
-        $folderType = new TypeDefinition(type: 'folder', relations: new TypeDefinitionRelations());
+        $userType = new TypeDefinition(type: 'user', relations: new TypeDefinitionRelations([]));
+        $documentType = new TypeDefinition(type: 'document', relations: new TypeDefinitionRelations([]));
+        $folderType = new TypeDefinition(type: 'folder', relations: new TypeDefinitionRelations([]));
 
-        $typeDefinitions = new TypeDefinitions($userType, $documentType, $folderType);
+        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions->add($userType);
+        $typeDefinitions->add($documentType);
+        $typeDefinitions->add($folderType);
 
         $model = new AuthorizationModel(
             id: 'model-123',

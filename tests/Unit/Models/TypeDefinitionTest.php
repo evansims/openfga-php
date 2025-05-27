@@ -22,7 +22,7 @@ describe('TypeDefinition Model', function (): void {
     });
 
     test('constructs with relations', function (): void {
-        $relations = new TypeDefinitionRelations();
+        $relations = new TypeDefinitionRelations([]);
         $viewerRelation = new Userset(
             this: new ObjectRelation(relation: 'viewer'),
         );
@@ -40,7 +40,7 @@ describe('TypeDefinition Model', function (): void {
 
     test('constructs with metadata', function (): void {
         $sourceInfo = new SourceInfo(file: 'model.fga');
-        $relationReferences = new RelationReferences();
+        $relationReferences = new RelationReferences([]);
         $relationMetadata = new RelationMetadata(
             directlyRelatedUserTypes: [],
             module: 'auth',
@@ -72,7 +72,7 @@ describe('TypeDefinition Model', function (): void {
     });
 
     test('serializes to JSON with relations', function (): void {
-        $relations = new TypeDefinitionRelations();
+        $relations = new TypeDefinitionRelations([]);
         $viewerRelation = new Userset(
             this: new ObjectRelation(relation: 'viewer'),
         );
@@ -108,7 +108,7 @@ describe('TypeDefinition Model', function (): void {
     });
 
     test('handles complex relations', function (): void {
-        $relations = new TypeDefinitionRelations();
+        $relations = new TypeDefinitionRelations([]);
 
         // Add multiple relations
         $relations->set('viewer', new Userset(this: new ObjectRelation(relation: 'viewer')));
@@ -178,7 +178,7 @@ describe('TypeDefinition Model', function (): void {
     });
 
     test('empty relations collection', function (): void {
-        $relations = new TypeDefinitionRelations();
+        $relations = new TypeDefinitionRelations([]);
 
         $typeDefinition = new TypeDefinition(
             type: 'document',

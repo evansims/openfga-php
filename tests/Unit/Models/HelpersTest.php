@@ -24,9 +24,7 @@ describe('Helper Functions', function (): void {
         });
 
         test('creates TupleKey with condition', function (): void {
-            $condition = new Condition(
-                name: 'inRegion',
-                context: new ConditionParameters([
+            $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: new ConditionParameters([
                     new ConditionParameter(name: 'region', value: 'us-east'),
                 ]),
             );
@@ -219,9 +217,7 @@ describe('Helper Functions', function (): void {
         });
 
         test('with conditions', function (): void {
-            $condition = new Condition(
-                name: 'inRegion',
-                context: new ConditionParameters([
+            $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: new ConditionParameters([
                     new ConditionParameter(name: 'region', value: 'us-east'),
                 ]),
             );
