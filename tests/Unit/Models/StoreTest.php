@@ -183,7 +183,7 @@ describe('Store Model', function (): void {
         $dateProps = ['created_at', 'updated_at', 'deleted_at'];
         foreach ($properties as $property) {
             if (\in_array($property->name, $dateProps, true)) {
-                expect($property->format)->toBe('date-time');
+                expect($property->format)->toBe('datetime');
             }
         }
     });

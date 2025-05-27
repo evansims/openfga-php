@@ -75,7 +75,7 @@ final class TupleChange implements TupleChangeInterface
             properties: [
                 new SchemaProperty(name: 'tuple_key', type: TupleKey::class, required: true),
                 new SchemaProperty(name: 'operation', type: TupleOperation::class, required: true),
-                new SchemaProperty(name: 'timestamp', type: 'string', format: 'date-time', required: true),
+                new SchemaProperty(name: 'timestamp', type: 'string', format: 'datetime', required: true),
             ],
         );
     }

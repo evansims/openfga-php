@@ -103,7 +103,7 @@ describe('Tuple Model', function (): void {
         $timestampProp = $properties[array_keys($properties)[1]];
         expect($timestampProp->name)->toBe('timestamp');
         expect($timestampProp->type)->toBe('string');
-        expect($timestampProp->format)->toBe('date-time');
+        expect($timestampProp->format)->toBe('datetime');
         expect($timestampProp->required)->toBe(true);
     });
 

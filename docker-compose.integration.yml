@@ -1,13 +1,37 @@
-version: '3.8'
 services:
   openfga:
+    container_name: openfga-integration-tests
     image: openfga/openfga:latest
     command: run
     ports:
       - "8080:8080"
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      test: ["CMD", "sh", "-c", "nc -z 127.0.0.1 8080"]
       interval: 5s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    networks:
+      - openfga-network
+
+  test:
+    container_name: openfga-php-integration-tests
+    build:
+      context: .
+      dockerfile: Dockerfile.integration
+    volumes:
+      - .:/app
+      - ${COMPOSER_HOME:-$HOME/.composer}:/tmp/composer
+    environment:
+      - OPENFGA_API_URL=http://openfga:8080
+      - COMPOSER_ALLOW_SUPERUSER=1
+    working_dir: /app
+    depends_on:
+      openfga:
+        condition: service_started
+    networks:
+      - openfga-network
+
+networks:
+  openfga-network:
+    driver: bridge

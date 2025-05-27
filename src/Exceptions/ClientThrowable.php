@@ -19,4 +19,6 @@ interface ClientThrowable extends Throwable
     public function request(): ?RequestInterface;
 
     public function response(): ?ResponseInterface;
+
+    public function previous(): ?Throwable;
 }

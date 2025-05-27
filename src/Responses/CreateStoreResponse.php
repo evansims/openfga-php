@@ -95,8 +95,8 @@ final class CreateStoreResponse extends Response implements CreateStoreResponseI
             properties: [
                 new SchemaProperty(name: 'id', type: 'string', required: true),
                 new SchemaProperty(name: 'name', type: 'string', required: true),
-                new SchemaProperty(name: 'created_at', type: 'string', required: true),
-                new SchemaProperty(name: 'updated_at', type: 'string', required: true),
+                new SchemaProperty(name: 'created_at', type: 'string', format: 'datetime', required: true),
+                new SchemaProperty(name: 'updated_at', type: 'string', format: 'datetime', required: true),
             ],
         );
     }

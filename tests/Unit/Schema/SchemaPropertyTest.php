@@ -28,7 +28,7 @@ test('SchemaProperty can be created with all fields', function (): void {
         type: 'array',
         required: true,
         default: ['default'],
-        format: 'date-time',
+        format: 'datetime',
         enum: ['a', 'b', 'c'],
         items: ['type' => 'string'],
         className: 'TestClass',
@@ -38,7 +38,7 @@ test('SchemaProperty can be created with all fields', function (): void {
         ->and($property->type)->toBe('array')
         ->and($property->required)->toBeTrue()
         ->and($property->default)->toBe(['default'])
-        ->and($property->format)->toBe('date-time')
+        ->and($property->format)->toBe('datetime')
         ->and($property->enum)->toBe(['a', 'b', 'c'])
         ->and($property->items)->toBe(['type' => 'string'])
         ->and($property->className)->toBe('TestClass');

@@ -40,6 +40,9 @@ final class CreateStoreRequest implements CreateStoreRequestInterface
             method: RequestMethod::POST,
             url: '/stores/',
             body: $stream,
+            headers: [
+                'Content-Type' => 'application/json',
+            ],
         );
     }
 }
