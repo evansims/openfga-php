@@ -26,11 +26,11 @@ public function getContinuationToken(): ?string
 
 
 ```php
-public function getTuples(): [TuplesInterface](Models/Collections/TuplesInterface.md)
+public function getTuples(): TuplesInterface<TupleInterface>
 ```
 
 
 
 #### Returns
-`[TuplesInterface](Models/Collections/TuplesInterface.md)`
+`TuplesInterface<TupleInterface>`
 

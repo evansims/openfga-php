@@ -50,7 +50,7 @@ Checks if a user has a specific relationship with an object.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the check request
+ The result of the check request
 
 ### createAuthorizationModel
 
@@ -71,7 +71,7 @@ Creates a new authorization model with the given type definitions and conditions
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the authorization model creation request
+ The result of the authorization model creation request
 
 ### createStore
 
@@ -89,7 +89,7 @@ Creates a new store with the given name.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the store creation request
+ The result of the store creation request
 
 ### deleteStore
 
@@ -107,7 +107,7 @@ Deletes a store.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the store deletion request
+ The result of the store deletion request
 
 ### dsl
 
@@ -125,7 +125,7 @@ Parses a DSL string and returns an AuthorizationModel.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the DSL transformation request
+ The result of the DSL transformation request
 
 ### expand
 
@@ -147,7 +147,7 @@ Expands a relationship tuple to show all users that have the relationship.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the expansion request
+ The result of the expansion request
 
 ### getAuthorizationModel
 
@@ -166,7 +166,7 @@ Retrieves an authorization model by ID.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the authorization model retrieval request
+ The result of the authorization model retrieval request
 
 ### getLastRequest
 
@@ -180,7 +180,6 @@ Retrieves the last HTTP request made by the client.
 
 #### Returns
 `?Psr\Http\Message\RequestInterface`
- The last request, or null if no request has been made
 
 ### getLastResponse
 
@@ -194,7 +193,6 @@ Retrieves the last HTTP response received by the client.
 
 #### Returns
 `?Psr\Http\Message\ResponseInterface`
- The last response, or null if no response has been received
 
 ### getStore
 
@@ -212,7 +210,7 @@ Retrieves store details by ID.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the store retrieval request
+ The result of the store retrieval request
 
 ### listAuthorizationModels
 
@@ -232,7 +230,7 @@ Lists authorization models in a store with pagination.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the authorization model listing request
+ The result of the authorization model listing request
 
 ### listObjects
 
@@ -257,7 +255,7 @@ Lists objects that have a specific relationship with a user.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the object listing request
+ The result of the object listing request
 
 ### listStores
 
@@ -276,7 +274,7 @@ Lists all stores with pagination.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the store listing request
+ The result of the store listing request
 
 ### listTupleChanges
 
@@ -292,13 +290,13 @@ Lists changes to relationship tuples in a store.
 |------|------|-------------|
 | `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to list changes for |
 | `$continuationToken` | `?string` | Token for pagination |
-| `$pageSize` | `?int` | Maximum number of changes to return |
+| `$pageSize` | `?int` |  |
 | `$type` | `?string` | Filter changes by type |
 | `consistency` | `?OpenFGA\Models\Enums\Consistency` |  |
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the tuple change listing request
+ The result of the tuple change listing request
 
 ### listUsers
 
@@ -323,7 +321,7 @@ Lists users that have a specific relationship with an object.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the user listing request
+ The result of the user listing request
 
 ### readAssertions
 
@@ -342,7 +340,7 @@ Retrieves assertions for an authorization model.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the assertions read request
+ The result of the assertions read request
 
 ### readTuples
 
@@ -359,12 +357,12 @@ Reads relationship tuples from a store with optional filtering and pagination.
 | `$store` | `[StoreInterface](Models/StoreInterface.md) | string` | The store to read from |
 | `$tupleKey` | `[TupleKeyInterface](Models/TupleKeyInterface.md)` | Filter tuples by this key (return all if null) |
 | `$continuationToken` | `?string` | Token for pagination |
-| `$pageSize` | `?int` | Maximum number of tuples to return |
+| `$pageSize` | `?int` |  |
 | `assertions` | `OpenFGA\Models\Collections\AssertionsInterface` |  |
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the tuple read request
+ The result of the tuple read request
 
 ### writeAssertions
 
@@ -384,7 +382,7 @@ Creates or updates assertions for an authorization model.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the assertion write request
+ The result of the assertion write request
 
 ### writeTuples
 
@@ -405,5 +403,5 @@ Writes or deletes relationship tuples in a store.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- Throwable&gt; The result of the tuple write request
+ The result of the tuple write request
 

@@ -27,7 +27,6 @@ public function getContext(): ?array
 
 #### Returns
 `?array`
- mixed&gt;
 
 ### getContextualTuples
 
@@ -76,13 +75,6 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
-```php
-tuple_key: array&lt;string, mixed&gt;,
-expectation: bool,
-contextual_tuples?: array&lt;array-key, mixed&gt;,
-context?: array&lt;array-key, mixed&gt;
-}
-```
 
 ### schema
 

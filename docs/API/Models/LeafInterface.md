@@ -39,13 +39,13 @@ public function getTupleToUserset(): ?[UsersetTreeTupleToUsersetInterface](Model
 
 
 ```php
-public function getUsers(): ?[UsersListInterface](Models/Collections/UsersListInterface.md)
+public function getUsers(): null | UsersListInterface<UsersListUserInterface>
 ```
 
 
 
 #### Returns
-`?[UsersListInterface](Models/Collections/UsersListInterface.md)`
+`null | UsersListInterface<UsersListUserInterface>`
 
 ### jsonSerialize
 
@@ -58,5 +58,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}
 

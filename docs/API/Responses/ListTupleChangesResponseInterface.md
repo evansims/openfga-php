@@ -14,13 +14,13 @@
 
 
 ```php
-public function getChanges(): [TupleChangesInterface](Models/Collections/TupleChangesInterface.md)
+public function getChanges(): TupleChangesInterface<TupleChangeInterface>
 ```
 
 
 
 #### Returns
-`[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)`
+`TupleChangesInterface<TupleChangeInterface>`
 
 ### getContinuationToken
 

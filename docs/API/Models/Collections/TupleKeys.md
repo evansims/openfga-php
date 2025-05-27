@@ -154,7 +154,6 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- mixed&gt;
 
 ### key
 
@@ -316,7 +315,6 @@ public function toArray(): array
 
 #### Returns
 `array`
- T&gt;
 
 ### valid
 

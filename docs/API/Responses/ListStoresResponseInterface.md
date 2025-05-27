@@ -26,11 +26,11 @@ public function getContinuationToken(): ?string
 
 
 ```php
-public function getStores(): [StoresInterface](Models/Collections/StoresInterface.md)
+public function getStores(): StoresInterface<StoreInterface>
 ```
 
 
 
 #### Returns
-`[StoresInterface](Models/Collections/StoresInterface.md)`
+`StoresInterface<StoreInterface>`
 

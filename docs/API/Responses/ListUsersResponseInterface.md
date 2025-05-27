@@ -14,11 +14,11 @@
 
 
 ```php
-public function getUsers(): [UsersInterface](Models/Collections/UsersInterface.md)
+public function getUsers(): UsersInterface<UserInterface>
 ```
 
 
 
 #### Returns
-`[UsersInterface](Models/Collections/UsersInterface.md)`
+`UsersInterface<UserInterface>`
 

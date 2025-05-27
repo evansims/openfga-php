@@ -87,7 +87,6 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string&gt;
 
 ### schema
 

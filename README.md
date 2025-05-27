@@ -44,12 +44,13 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use OpenFGA\Client;
-use OpenFGA\Models\{AuthorizationModel, tuple, tuples};
+use OpenFGA\Models\AuthorizationModel;
 use OpenFGA\Responses\{
     CreateStoreResponseInterface,
     CreateAuthorizationModelResponseInterface
 };
 
+use function OpenFGA\Models\{tuple, tuples};
 use function OpenFGA\Results\{success, failure, unwrap};
 
 define('STORE_NAME', 'my-php-store');
@@ -165,7 +166,7 @@ The SDK can be configured to use any of the authentication methods supported by 
 
 ## Error Handling and Results
 
-Client methods return `Result` objects representing either a `Success` or a `Failure` outcome. This pattern allows for explicit error handling. Helper functions like `unwrap()`, `fold()`, `success()`, and `failure()` are provided to simplify working with these results.
+Client methods return `Result` objects representing either a `Success` or a `Failure` outcome. This pattern allows for explicit error handling. Helper functions like `unwrap()`, `success()`, and `failure()` are provided to simplify working with these results.
 
 [Learn more about handling results and errors in `docs/Results.md`](docs/Results.md)
 

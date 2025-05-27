@@ -19,14 +19,14 @@ Represents a collection that is indexed by an integer, like a JSON array.
 
 
 ```php
-public function add(mixed $item): static
+public function add(T $item): static
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$item` | `mixed` |  |
+| `$item` | `T` |  |
 
 #### Returns
 `static`
@@ -59,13 +59,13 @@ public function count(): int
 
 
 ```php
-public function current(): [ModelInterface](Models/ModelInterface.md)
+public function current(): T
 ```
 
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)`
+`T`
 
 ### every
 
@@ -88,7 +88,7 @@ Checks if all items match the callback.
 
 
 ```php
-public function filter(callable $callback): static
+public function filter(callable $callback): static<T>
 ```
 
 Filters the collection using a callback.
@@ -99,13 +99,13 @@ Filters the collection using a callback.
 | `$callback` | `callable` |  |
 
 #### Returns
-`static`
+`static<T>`
 
 ### first
 
 
 ```php
-public function first(?callable $callback = NULL)
+public function first(?callable $callback = NULL): null | T
 ```
 
 Returns the first item that matches the callback.
@@ -115,12 +115,14 @@ Returns the first item that matches the callback.
 |------|------|-------------|
 | `$callback` | `?callable` |  |
 
+#### Returns
+`null | T`
 
 ### get
 
 
 ```php
-public function get(int $offset)
+public function get(int $offset): null | T
 ```
 
 
@@ -129,19 +131,20 @@ public function get(int $offset)
 |------|------|-------------|
 | `$offset` | `int` |  |
 
+#### Returns
+`null | T`
 
 ### jsonSerialize
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<int | string, mixed>
 ```
 
 
 
 #### Returns
-`array`
- mixed&gt;
+`array<int | string, mixed>`
 
 ### key
 
@@ -187,7 +190,7 @@ public function offsetExists(mixed $offset): bool
 
 
 ```php
-public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterface.md)
+public function offsetGet(mixed $offset): null | T
 ```
 
 
@@ -197,21 +200,21 @@ public function offsetGet(mixed $offset): ?[ModelInterface](Models/ModelInterfac
 | `$offset` | `mixed` |  |
 
 #### Returns
-`?[ModelInterface](Models/ModelInterface.md)`
+`null | T`
 
 ### offsetSet
 
 
 ```php
-public function offsetSet(mixed $offset, mixed $value): void
+public function offsetSet(null | int | string $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
-| `$value` | `mixed` |  |
+| `$offset` | `null | int | string` |  |
+| `$value` | `T` |  |
 
 #### Returns
 `void`
@@ -236,7 +239,7 @@ public function offsetUnset(mixed $offset): void
 
 
 ```php
-public function reduce(mixed $initial, callable $callback): mixed
+public function reduce(U $initial, callable $callback): U
 ```
 
 Reduces the collection to a single value.
@@ -244,11 +247,11 @@ Reduces the collection to a single value.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | `mixed` |  |
+| `$initial` | `U` |  |
 | `$callback` | `callable` |  |
 
 #### Returns
-`mixed`
+`U`
 
 ### rewind
 
@@ -283,14 +286,13 @@ Checks if any item matches the callback.
 
 
 ```php
-public function toArray(): array
+public function toArray(): array<int | string, T>
 ```
 
 
 
 #### Returns
-`array`
- T&gt;
+`array<int | string, T>`
 
 ### valid
 
@@ -308,7 +310,7 @@ public function valid(): bool
 
 
 ```php
-public function withItems(mixed $items): static
+public function withItems(mixed $items): static<T>
 ```
 
 
@@ -318,5 +320,5 @@ public function withItems(mixed $items): static
 | `$items` | `mixed` |  |
 
 #### Returns
-`static`
+`static<T>`
 

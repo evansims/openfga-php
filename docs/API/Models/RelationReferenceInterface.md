@@ -70,5 +70,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string, relation?: string, wildcard?: object, condition?: string}
 

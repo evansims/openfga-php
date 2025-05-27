@@ -82,5 +82,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string, leaf?: array{users?: array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}
 

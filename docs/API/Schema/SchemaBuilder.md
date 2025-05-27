@@ -32,7 +32,7 @@ Add an array property.
 
 
 ```php
-public function boolean(string $name, bool $required = false, mixed $default = NULL): self
+public function boolean(string $name, bool $required = false, null | mixed $default = NULL): self
 ```
 
 Add a boolean property.
@@ -42,7 +42,7 @@ Add a boolean property.
 |------|------|-------------|
 | `$name` | `string` |  |
 | `$required` | `bool` |  |
-| `$default` | `mixed` |  |
+| `$default` | `null | mixed` |  |
 
 #### Returns
 `self`
@@ -51,7 +51,7 @@ Add a boolean property.
 
 
 ```php
-public function date(string $name, bool $required = false, mixed $default = NULL): self
+public function date(string $name, bool $required = false, null | mixed $default = NULL): self
 ```
 
 Add a date property.
@@ -61,7 +61,7 @@ Add a date property.
 |------|------|-------------|
 | `$name` | `string` |  |
 | `$required` | `bool` |  |
-| `$default` | `mixed` |  |
+| `$default` | `null | mixed` |  |
 
 #### Returns
 `self`
@@ -70,7 +70,7 @@ Add a date property.
 
 
 ```php
-public function datetime(string $name, bool $required = false, mixed $default = NULL): self
+public function datetime(string $name, bool $required = false, null | mixed $default = NULL): self
 ```
 
 Add a datetime property.
@@ -80,7 +80,7 @@ Add a datetime property.
 |------|------|-------------|
 | `$name` | `string` |  |
 | `$required` | `bool` |  |
-| `$default` | `mixed` |  |
+| `$default` | `null | mixed` |  |
 
 #### Returns
 `self`
@@ -89,7 +89,7 @@ Add a datetime property.
 
 
 ```php
-public function integer(string $name, bool $required = false, mixed $default = NULL): self
+public function integer(string $name, bool $required = false, null | mixed $default = NULL): self
 ```
 
 Add an integer property.
@@ -99,7 +99,7 @@ Add an integer property.
 |------|------|-------------|
 | `$name` | `string` |  |
 | `$required` | `bool` |  |
-| `$default` | `mixed` |  |
+| `$default` | `null | mixed` |  |
 
 #### Returns
 `self`
@@ -108,7 +108,7 @@ Add an integer property.
 
 
 ```php
-public function number(string $name, bool $required = false, mixed $default = NULL): self
+public function number(string $name, bool $required = false, null | mixed $default = NULL): self
 ```
 
 Add a number (float) property.
@@ -118,7 +118,7 @@ Add a number (float) property.
 |------|------|-------------|
 | `$name` | `string` |  |
 | `$required` | `bool` |  |
-| `$default` | `mixed` |  |
+| `$default` | `null | mixed` |  |
 
 #### Returns
 `self`
@@ -159,7 +159,7 @@ Build and register the schema.
 
 
 ```php
-public function string(string $name, bool $required = false, ?string $format = NULL, ?array $enum = NULL, mixed $default = NULL): self
+public function string(string $name, bool $required = false, null | string $format = NULL, null | array<string> $enum = NULL, mixed $default = NULL): self
 ```
 
 Add a string property.
@@ -169,8 +169,8 @@ Add a string property.
 |------|------|-------------|
 | `$name` | `string` |  |
 | `$required` | `bool` |  |
-| `$format` | `?string` |  |
-| `$enum` | `?array` |  |
+| `$format` | `null | string` |  |
+| `$enum` | `null | array<string>` |  |
 | `$default` | `mixed` |  |
 
 #### Returns

@@ -14,12 +14,11 @@
 
 
 ```php
-public function getObjects(): array
+public function getObjects(): array<int, string>
 ```
 
 
 
 #### Returns
-`array`
- string&gt;
+`array<int, string>`
 

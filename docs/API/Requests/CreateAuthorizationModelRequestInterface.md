@@ -14,13 +14,13 @@
 
 
 ```php
-public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+public function getConditions(): ConditionsInterface<ConditionInterface>
 ```
 
 
 
 #### Returns
-`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)`
+`ConditionsInterface<ConditionInterface>`
 
 ### getRequest
 
@@ -66,11 +66,11 @@ public function getStore(): string
 
 
 ```php
-public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
+public function getTypeDefinitions(): TypeDefinitionsInterface<TypeDefinitionInterface>
 ```
 
 
 
 #### Returns
-`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)`
+`TypeDefinitionsInterface<TypeDefinitionInterface>`
 

@@ -33,7 +33,6 @@ public function getProperties(): array
 
 #### Returns
 `array`
- SchemaProperty&gt;
 
 ### getProperty
 

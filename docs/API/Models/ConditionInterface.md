@@ -51,13 +51,13 @@ public function getName(): string
 
 
 ```php
-public function getParameters(): ?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+public function getParameters(): null | ConditionParametersInterface<ConditionParameterInterface>
 ```
 
 
 
 #### Returns
-`?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)`
+`null | ConditionParametersInterface<ConditionParameterInterface>`
 
 ### jsonSerialize
 
@@ -70,5 +70,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string, expression: string, parameters?: list&lt;array{type_name: string, generic_types?: mixed}&gt;, metadata?: array{module: string, source_info: array{file: string}}}
 

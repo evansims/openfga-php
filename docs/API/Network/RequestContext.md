@@ -24,14 +24,13 @@ public function getBody(): ?Psr\Http\Message\StreamInterface
 
 
 ```php
-public function getHeaders(): array
+public function getHeaders(): array<string, string>
 ```
 
 
 
 #### Returns
-`array`
- string&gt;
+`array<string, string>`
 
 ### getMethod
 

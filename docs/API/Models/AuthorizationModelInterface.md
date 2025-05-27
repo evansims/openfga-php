@@ -28,14 +28,14 @@ Return a DSL representation of the model.
 
 
 ```php
-public function getConditions(): ?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+public function getConditions(): null | ConditionsInterface<ConditionInterface>
 ```
 
 Return the conditions of the model.
 
 
 #### Returns
-`?[ConditionsInterface](Models/Collections/ConditionsInterface.md)`
+`null | ConditionsInterface<ConditionInterface>`
 
 ### getId
 
@@ -67,14 +67,14 @@ Return the schema version of the model.
 
 
 ```php
-public function getTypeDefinitions(): [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
+public function getTypeDefinitions(): TypeDefinitionsInterface<TypeDefinitionInterface>
 ```
 
 Return the type definitions of the model.
 
 
 #### Returns
-`[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)`
+`TypeDefinitionsInterface<TypeDefinitionInterface>`
 
 ### jsonSerialize
 
@@ -88,11 +88,4 @@ Return a JSON representation of the model.
 
 #### Returns
 `array`
-```php
-id: string,
-schema_version: string,
-type_definitions: array&lt;int, array{type: string, relations?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;,
-conditions?: array&lt;int, array{name: string, expression: string, parameters?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;
-}
-```
 

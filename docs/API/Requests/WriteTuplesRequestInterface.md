@@ -14,13 +14,13 @@
 
 
 ```php
-public function getDeletes(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getDeletes(): null | TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+`null | TupleKeysInterface<TupleKeyInterface>`
 
 ### getModel
 
@@ -66,11 +66,11 @@ public function getStore(): string
 
 
 ```php
-public function getWrites(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getWrites(): null | TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+`null | TupleKeysInterface<TupleKeyInterface>`
 

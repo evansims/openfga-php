@@ -461,6 +461,19 @@ class DocumentationGenerator
 
     private function getParameterType(ReflectionParameter $param): string
     {
+        // Try to get the type from PHPDoc first
+        $method = $param->getDeclaringFunction();
+        if ($method instanceof ReflectionMethod) {
+            $docComment = $method->getDocComment();
+            if ($docComment) {
+                $paramType = $this->extractParamTypeFromDocComment($docComment, $param->getName());
+                if ($paramType) {
+                    return $this->convertToMarkdownLink($paramType);
+                }
+            }
+        }
+
+        // Fall back to reflection-based type
         if ($param->hasType()) {
             $type = $param->getType();
             $typeStr = (string) $type;
@@ -478,6 +491,16 @@ class DocumentationGenerator
 
     private function getReturnType(ReflectionMethod $method): string
     {
+        // First, try to get the return type from PHPDoc
+        $docComment = $method->getDocComment();
+        if ($docComment) {
+            $returnType = $this->extractReturnTypeFromDocComment($docComment);
+            if ($returnType) {
+                return $this->convertToMarkdownLink($returnType);
+            }
+        }
+
+        // Fall back to reflection-based return type
         if ($method->hasReturnType()) {
             $returnType = $method->getReturnType();
             $typeStr = (string) $returnType;
@@ -677,7 +700,7 @@ class DocumentationGenerator
         $capturing = false;
         // Regex to find the specific @param line for $paramName.
         // It ensures that $paramName is a whole word to avoid partial matches.
-        $paramRegex = '/@param\s+[^\s]+\s+\$' . preg_quote($paramName, '/') . '(?:\s+(.*))?$/';
+        $paramRegex = '/@param\s+[\w\\\\\[\]]+(?:<[^>]+>)?(?:\s*\|\s*[\w\\\\\[\]]+(?:<[^>]+>)?)*\s+\$' . preg_quote($paramName, '/') . '(?:\s+(.*))?$/';
 
         foreach ($lines as $line) {
             $trimmedLine = trim($line, "/* \t\n\r");
@@ -713,7 +736,7 @@ class DocumentationGenerator
         $lines = explode("\n", $docComment);
         $descriptionLines = [];
         $capturing = false;
-        $returnRegex = '/@return\s+[^\s]+(?:\s+(.*))?$/';
+        $returnRegex = '/@return\s+[\w\\\\\[\]]+(?:<[^>]+>)?(?:\s*\|\s*[\w\\\\\[\]]+(?:<[^>]+>)?)*(?:\s+(.*))?$/';
 
         foreach ($lines as $line) {
             $trimmedLine = trim($line, "/* \t\n\r");
@@ -738,6 +761,48 @@ class DocumentationGenerator
             }
         }
         return trim(implode("\n", $descriptionLines));
+    }
+
+    private function extractReturnTypeFromDocComment(string $docComment): ?string
+    {
+        if (empty($docComment)) {
+            return null;
+        }
+
+        $lines = explode("\n", $docComment);
+        foreach ($lines as $line) {
+            $trimmedLine = trim($line, "/* \t\n\r");
+            
+            // Match @return type - capture the full type including generics
+            // This regex matches: type or type<...> or type1|type2 etc
+            if (preg_match('/@return\s+([\w\\\\\[\]]+(?:<[^>]+>)?(?:\s*\|\s*[\w\\\\\[\]]+(?:<[^>]+>)?)*)(?:\s+.*)?$/', $trimmedLine, $matches)) {
+                return trim($matches[1]);
+            }
+        }
+        
+        return null;
+    }
+
+    private function extractParamTypeFromDocComment(string $docComment, string $paramName): ?string
+    {
+        if (empty($docComment) || empty($paramName)) {
+            return null;
+        }
+
+        $lines = explode("\n", $docComment);
+        // Create regex that matches @param type $paramName
+        // Support complex types like array<string, mixed>
+        $paramRegex = '/@param\s+([\w\\\\\[\]]+(?:<[^>]+>)?(?:\s*\|\s*[\w\\\\\[\]]+(?:<[^>]+>)?)*)\s+\$' . preg_quote($paramName, '/') . '\b/';
+        
+        foreach ($lines as $line) {
+            $trimmedLine = trim($line, "/* \t\n\r");
+            
+            if (preg_match($paramRegex, $trimmedLine, $matches)) {
+                return trim($matches[1]);
+            }
+        }
+        
+        return null;
     }
 
     public static function deleteDir(string $dir): void

@@ -38,13 +38,13 @@ public function getContext(): ?object
 
 
 ```php
-public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+`TupleKeysInterface<TupleKeyInterface>`
 
 ### getModel
 
@@ -114,11 +114,11 @@ public function getStore(): string
 
 
 ```php
-public function getUserFilters(): [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)
+public function getUserFilters(): UserTypeFiltersInterface<UserTypeFilterInterface>
 ```
 
 
 
 #### Returns
-`[UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)`
+`UserTypeFiltersInterface<UserTypeFilterInterface>`
 

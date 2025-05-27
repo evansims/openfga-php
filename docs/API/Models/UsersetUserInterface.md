@@ -58,5 +58,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string, id: string, relation: string}
 

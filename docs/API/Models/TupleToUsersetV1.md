@@ -51,7 +51,6 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
 
 ### schema
 

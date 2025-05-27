@@ -63,7 +63,6 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string, directly_related_user_types?: array&lt;string, array{type: string, relation?: string, wildcard?: object, condition?: string}&gt;, source_info?: array{file?: string}}
 
 ### schema
 

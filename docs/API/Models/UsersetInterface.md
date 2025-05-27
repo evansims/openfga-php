@@ -51,13 +51,13 @@ public function getDirect(): ?object
 
 
 ```php
-public function getIntersection(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+public function getIntersection(): null | UsersetsInterface<UsersetInterface>
 ```
 
 
 
 #### Returns
-`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)`
+`null | UsersetsInterface<UsersetInterface>`
 
 ### getTupleToUserset
 
@@ -75,13 +75,13 @@ public function getTupleToUserset(): ?[TupleToUsersetV1Interface](Models/TupleTo
 
 
 ```php
-public function getUnion(): ?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+public function getUnion(): null | UsersetsInterface<UsersetInterface>
 ```
 
 
 
 #### Returns
-`?[UsersetsInterface](Models/Collections/UsersetsInterface.md)`
+`null | UsersetsInterface<UsersetInterface>`
 
 ### jsonSerialize
 
@@ -94,13 +94,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
-```php
-computed_userset?: array{object?: string, relation?: string},
-tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-union?: array&lt;mixed&gt;,
-intersection?: array&lt;mixed&gt;,
-difference?: array{base: array&lt;mixed&gt;, subtract: array&lt;mixed&gt;},
-direct?: object,
-}
-```
 

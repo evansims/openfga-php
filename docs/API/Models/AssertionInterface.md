@@ -15,26 +15,25 @@
 
 
 ```php
-public function getContext(): ?array
+public function getContext(): null | array<string, mixed>
 ```
 
 
 
 #### Returns
-`?array`
- mixed&gt;
+`null | array<string, mixed>`
 
 ### getContextualTuples
 
 
 ```php
-public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getContextualTuples(): null | TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+`null | TupleKeysInterface<TupleKeyInterface>`
 
 ### getExpectation
 
@@ -71,11 +70,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
-```php
-tuple_key: array&lt;string, mixed&gt;,
-expectation: bool,
-contextual_tuples?: array&lt;array-key, mixed&gt;,
-context?: array&lt;array-key, mixed&gt;
-}
-```
 

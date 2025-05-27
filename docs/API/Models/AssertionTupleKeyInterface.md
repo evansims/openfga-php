@@ -58,10 +58,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
-```php
-user: string,
-relation: string,
-object: string,
-}
-```
 

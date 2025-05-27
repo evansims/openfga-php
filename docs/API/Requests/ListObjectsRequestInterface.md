@@ -38,13 +38,13 @@ public function getContext(): ?object
 
 
 ```php
-public function getContextualTuples(): ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>
 ```
 
 
 
 #### Returns
-`?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)`
+`TupleKeysInterface<TupleKeyInterface>`
 
 ### getModel
 

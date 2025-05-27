@@ -39,14 +39,13 @@ Get the type of each item in the collection.
 
 
 ```php
-public function getProperties(): array
+public function getProperties(): array<string, SchemaProperty>
 ```
 
 
 
 #### Returns
-`array`
- SchemaProperty&gt;
+`array<string, SchemaProperty>`
 
 ### getProperty
 

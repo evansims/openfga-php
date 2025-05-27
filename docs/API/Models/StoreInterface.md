@@ -75,12 +75,11 @@ public function getUpdatedAt(): DateTimeInterface
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<'created_at' | 'deleted_at' | 'id' | 'name' | 'updated_at', string>
 ```
 
 
 
 #### Returns
-`array`
- string&gt;
+`array<'created_at' | 'deleted_at' | 'id' | 'name' | 'updated_at', string>`
 

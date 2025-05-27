@@ -16,14 +16,13 @@
 
 
 ```php
-public function context(): array
+public function context(): array<string, mixed>
 ```
 
 
 
 #### Returns
-`array`
- mixed&gt;
+`array<string, mixed>`
 
 ### getCode
 

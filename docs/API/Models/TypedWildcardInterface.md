@@ -35,5 +35,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string}
 

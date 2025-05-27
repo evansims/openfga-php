@@ -52,7 +52,6 @@ Execute on `Failure` and continue the chain.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- E&gt;
 
 ### recover
 
@@ -70,7 +69,6 @@ Execute on `Failure`, mutate the result, and continue the chain.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- F&gt;
 
 ### rethrow
 
@@ -88,7 +86,6 @@ Throw the error of a `Failure`, or continue the chain.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- E&gt;
 
 ### succeeded
 
@@ -119,7 +116,6 @@ Execute on `Success` and continue the chain.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- E&gt;
 
 ### then
 
@@ -137,7 +133,6 @@ Execute on `Success`, mutate the result, and continue the chain.
 
 #### Returns
 `[ResultInterface](Results/ResultInterface.md)`
- F&gt;
 
 ### unwrap
 
@@ -160,12 +155,12 @@ Return the unwrapped value of a `Success`, or a default value.
 
 
 ```php
-public function val(): mixed
+public function val(): T
 ```
 
 Return the unwrapped value of a `Success`.
 
 
 #### Returns
-`mixed`
+`T`
 

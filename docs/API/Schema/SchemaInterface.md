@@ -24,14 +24,13 @@ public function getClassName(): string
 
 
 ```php
-public function getProperties(): array
+public function getProperties(): array<string, SchemaProperty>
 ```
 
 
 
 #### Returns
-`array`
- SchemaProperty&gt;
+`array<string, SchemaProperty>`
 
 ### getProperty
 

@@ -19,7 +19,7 @@ Represents a collection that is indexed by a string, like a JSON object.
 
 
 ```php
-public function add(string $key, [ModelInterface](Models/ModelInterface.md) $item): static
+public function add(string $key, T $item): static
 ```
 
 
@@ -27,7 +27,7 @@ public function add(string $key, [ModelInterface](Models/ModelInterface.md) $ite
 | Name | Type | Description |
 |------|------|-------------|
 | `$key` | `string` |  |
-| `$item` | `[ModelInterface](Models/ModelInterface.md)` |  |
+| `$item` | `T` |  |
 
 #### Returns
 `static`
@@ -48,19 +48,19 @@ public function count(): int
 
 
 ```php
-public function current(): [ModelInterface](Models/ModelInterface.md)
+public function current(): T
 ```
 
 
 
 #### Returns
-`[ModelInterface](Models/ModelInterface.md)`
+`T`
 
 ### get
 
 
 ```php
-public function get(string $key)
+public function get(string $key): null | T
 ```
 
 
@@ -69,6 +69,8 @@ public function get(string $key)
 |------|------|-------------|
 | `$key` | `string` |  |
 
+#### Returns
+`null | T`
 
 ### has
 
@@ -91,14 +93,13 @@ Check if a key exists in the collection.
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<string, mixed>
 ```
 
 
 
 #### Returns
-`array`
- mixed&gt;
+`array<string, mixed>`
 
 ### key
 
@@ -158,15 +159,15 @@ public function offsetGet(mixed $offset)
 
 
 ```php
-public function offsetSet(mixed $offset, mixed $value): void
+public function offsetSet(null | string $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | `mixed` |  |
-| `$value` | `mixed` |  |
+| `$offset` | `null | string` |  |
+| `$value` | `T` |  |
 
 #### Returns
 `void`
@@ -203,14 +204,13 @@ public function rewind(): void
 
 
 ```php
-public function toArray(): array
+public function toArray(): array<string, T>
 ```
 
 
 
 #### Returns
-`array`
- T&gt;
+`array<string, T>`
 
 ### valid
 

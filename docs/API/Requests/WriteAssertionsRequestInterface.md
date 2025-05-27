@@ -14,13 +14,13 @@
 
 
 ```php
-public function getAssertions(): [AssertionsInterface](Models/Collections/AssertionsInterface.md)
+public function getAssertions(): AssertionsInterface<AssertionInterface>
 ```
 
 
 
 #### Returns
-`[AssertionsInterface](Models/Collections/AssertionsInterface.md)`
+`AssertionsInterface<AssertionInterface>`
 
 ### getModel
 

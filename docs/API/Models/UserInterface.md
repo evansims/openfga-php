@@ -58,5 +58,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}
 

@@ -51,7 +51,6 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string, computed: array&lt;int, array{userset: string}&gt;}
 
 ### schema
 

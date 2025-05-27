@@ -46,5 +46,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- string, source_info: array{file: string}}
 

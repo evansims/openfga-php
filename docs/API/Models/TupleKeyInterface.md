@@ -70,5 +70,4 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- array{expression: string, metadata?: array{module: string, source_info: array{file: string}}, name: string, parameters?: list&lt;array{generic_types?: mixed, type_name: string}&gt;}|string&gt;
 

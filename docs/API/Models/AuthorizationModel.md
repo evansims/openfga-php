@@ -93,13 +93,6 @@ Return a JSON representation of the model.
 
 #### Returns
 `array`
-```php
-id: string,
-schema_version: string,
-type_definitions: array&lt;int, array{type: string, relations?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;,
-conditions?: array&lt;int, array{name: string, expression: string, parameters?: array&lt;string, mixed&gt;, metadata?: array&lt;string, mixed&gt;}&gt;
-}
-```
 
 ### schema
 

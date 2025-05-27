@@ -41,7 +41,6 @@ public function getObjects(): array
 
 #### Returns
 `array`
- string&gt;
 
 ### schema
 

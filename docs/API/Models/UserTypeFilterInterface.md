@@ -39,12 +39,11 @@ public function getType(): string
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<'relation' | 'type', string>
 ```
 
 
 
 #### Returns
-`array`
- string&gt;
+`array<'relation' | 'type', string>`
 

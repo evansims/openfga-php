@@ -63,7 +63,6 @@ public function jsonSerialize(): array
 
 #### Returns
 `array`
- array&lt;int, string&gt;, computed?: array{userset: string}, tupleToUserset?: mixed}
 
 ### schema
 
