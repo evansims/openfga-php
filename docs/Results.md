@@ -307,7 +307,7 @@ class FgaVoter extends Voter
         $user = $token->getUserIdentifier();
         
         return $this->client
-            ->check($this->store, $this->model, tuple($user, $attribute, $subject->getId()))
+            ->check(store: $this->store, model: $this->model, tupleKey: tuple($user, $attribute, $subject->getId()))
             ->then(fn($response) => $response->getIsAllowed())
             ->unwrap();
     }
