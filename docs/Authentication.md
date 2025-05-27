@@ -14,12 +14,7 @@ If your OpenFGA server does not require authentication, you only need to provide
 <?php
 use OpenFGA\Client;
 
-// Assumes $client is initialized as shown in GettingStarted.md
-// $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080'; // Default for local Docker
-// $client = new Client(url: $fgaApiUrl);
-
-// Example:
-$client = new Client(url: 'http://localhost:8080');
+$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 
 echo "Client configured for No Authentication, connecting to: " . $client->getUrl() . "\n";
 // You can now use $client for operations if the server allows anonymous access.

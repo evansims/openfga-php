@@ -122,9 +122,15 @@ Let's put some of the core concepts together in a simple, runnable example. This
 require_once __DIR__ . '/vendor/autoload.php'; // Adjust if your vendor dir is elsewhere
 
 use OpenFGA\Client;
-use OpenFGA\Models\{TupleKey, TupleKeys};
-
-use function OpenFGA\Results\{catch, then, success, failure, unwrap, ok, err};
+use OpenFGA\Models\AuthorizationModel;
+use OpenFGA\Responses\{
+    CreateStoreResponseInterface,
+    CreateAuthorizationModelResponseInterface,
+    WriteTuplesResponseInterface,
+    CheckResponseInterface
+};
+use function OpenFGA\Models\{tuple, tuples};
+use function OpenFGA\Results\{unwrap};
 
 // Initialize the client (ensure FGA_API_URL is set or use default)
 $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
@@ -160,14 +166,13 @@ try {
 
     // 3. Write a Relationship Tuple
     // "user:anne is a viewer of document:readme"
-    $tuple = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:readme');
-    unwrap($client->writeTuples(writes: new TupleKeys([$tuple])));
+    $tuple = tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme');
+    unwrap($client->writeTuples(store: $store->getId(), model: $createdModel->getId(), writes: tuples($tuple)));
     echo "Tuple written: user:anne is a viewer of document:readme\n";
 
     // 4. Perform an Authorization Check
     // "Can user:anne view document:readme?"
-    $checkTuple = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:readme');
-    $checkResult = unwrap($client->check(tupleKey: $checkTuple));
+    $checkResult = unwrap($client->check(store: $store->getId(), model: $createdModel->getId(), tupleKey: $tuple));
 
     if ($checkResult->getIsAllowed()) {
         echo "SUCCESS: Anne CAN view document:readme!\n";

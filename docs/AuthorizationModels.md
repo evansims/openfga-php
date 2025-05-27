@@ -99,11 +99,8 @@ use OpenFGA\Responses\ListAuthorizationModelsResponseInterface;
 
 use function OpenFGA\Results\unwrap;
 
-// Assuming $client is initialized and $storeId is set:
-// $fgaApiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
-// $storeId = $_ENV['FGA_STORE_ID'] ?? 'your_test_store_id'; // From store creation
-// $client = new Client(url: $fgaApiUrl);
-// $client->setStore($storeId); // Crucial: sets the store for subsequent operations
+// Assuming $client is initialized as shown in GettingStarted.md
+// $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ?>
 ```
 
@@ -174,6 +171,7 @@ if (!isset($typeDefinitions)) {
     try {
         /** @var CreateAuthorizationModelResponseInterface $response */
         $response = unwrap($client->createAuthorizationModel(
+            store: $storeId,
             typeDefinitions: $typeDefinitions,
             conditions: $conditions // Pass $conditions, even if empty
         ));
@@ -219,7 +217,7 @@ The `listAuthorizationModels()` method supports pagination.
 // Assumes client store is set: $client->setStore($storeId);
 try {
     /** @var ListAuthorizationModelsResponseInterface $response */
-    $response = unwrap($client->listAuthorizationModels(pageSize: 5)); // Get up to 5 models
+    $response = unwrap($client->listAuthorizationModels(store: $storeId, pageSize: 5)); // Get up to 5 models
 
     echo "Authorization Models in store '{$client->getStore()}':\n";
     if (empty($response->getModels())) {
@@ -259,7 +257,7 @@ if (empty($modelId)) {
 } else {
     try {
         /** @var GetAuthorizationModelResponseInterface $response */
-        $response = unwrap($client->getAuthorizationModel(model: $modelId));
+        $response = unwrap($client->getAuthorizationModel(store: $storeId, model: $modelId));
 
         $retrievedModel = $response->getModel();
 
