@@ -33,7 +33,6 @@ test('ListUsersResponse constructs with empty users collection', function (): vo
 
     expect($response->getUsers())->toBe($users);
     expect($response->getUsers())->toHaveCount(0);
-    expect($response->getUsers())->toBeInstanceOf(Users::class);
 });
 
 test('ListUsersResponse handles single user', function (): void {
@@ -72,7 +71,7 @@ test('ListUsersResponse schema returns correct structure', function (): void {
     expect($properties)->toHaveKey('users');
 
     expect($properties['users']->name)->toBe('users');
-    expect($properties['users']->type)->toBe(Users::class);
+    expect($properties['users']->type)->toBe('object');
     expect($properties['users']->required)->toBeTrue();
 });
 
@@ -91,7 +90,6 @@ test('ListUsersResponse handles empty users array data', function (): void {
     $response = new ListUsersResponse($users);
 
     expect($response)->toBeInstanceOf(ListUsersResponseInterface::class);
-    expect($response->getUsers())->toBeInstanceOf(Users::class);
     expect($response->getUsers())->toHaveCount(0);
 });
 

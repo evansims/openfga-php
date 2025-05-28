@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{DifferenceV1, TypedWildcard, User, UserInterface, UsersetUser};
+use OpenFGA\Models\{TypedWildcard, User, UserInterface, UsersetUser};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('User Model', function (): void {
@@ -130,19 +130,19 @@ describe('User Model', function (): void {
         // Userset property
         $usersetProp = $properties['userset'];
         expect($usersetProp->name)->toBe('userset');
-        expect($usersetProp->type)->toBe(UsersetUser::class);
+        expect($usersetProp->type)->toBe('object');
         expect($usersetProp->required)->toBe(false);
 
         // Wildcard property
         $wildcardProp = $properties['wildcard'];
         expect($wildcardProp->name)->toBe('wildcard');
-        expect($wildcardProp->type)->toBe(TypedWildcard::class);
+        expect($wildcardProp->type)->toBe('object');
         expect($wildcardProp->required)->toBe(false);
 
         // Difference property
         $differenceProp = $properties['difference'];
         expect($differenceProp->name)->toBe('difference');
-        expect($differenceProp->type)->toBe(DifferenceV1::class);
+        expect($differenceProp->type)->toBe('object');
         expect($differenceProp->required)->toBe(false);
     });
 

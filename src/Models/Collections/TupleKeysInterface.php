@@ -15,7 +15,7 @@ use Override;
 interface TupleKeysInterface extends IndexedCollectionInterface
 {
     /**
-     * @return array<int, array{user: string, relation: string, object: string, condition?: array<string, mixed>}>
+     * @return array<int|string, mixed>
      */
     #[Override]
     public function jsonSerialize(): array;

@@ -59,8 +59,8 @@ final class DifferenceV1 implements DifferenceV1Interface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'base', type: Userset::class, required: true),
-                new SchemaProperty(name: 'subtract', type: Userset::class, required: true),
+                new SchemaProperty(name: 'base', type: 'object', className: Userset::class, required: true),
+                new SchemaProperty(name: 'subtract', type: 'object', className: Userset::class, required: true),
             ],
         );
     }

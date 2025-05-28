@@ -28,13 +28,13 @@ public function getModule(): ?string
 
 
 ```php
-public function getRelations(): ?OpenFGA\Models\RelationMetadataInterface
+public function getRelations(): ?OpenFGA\Models\Collections\RelationMetadataCollection
 ```
 
 
 
 #### Returns
-?[RelationMetadataInterface](Models/RelationMetadataInterface.md)
+?[RelationMetadataCollection](Models/Collections/RelationMetadataCollection.md)
 
 ### getSourceInfo
 

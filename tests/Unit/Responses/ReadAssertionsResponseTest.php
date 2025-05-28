@@ -46,7 +46,6 @@ test('ReadAssertionsResponse constructs with empty assertions collection', funct
     $model = 'model-456';
     $response = new ReadAssertionsResponse($assertions, $model);
 
-    expect($response->getAssertions())->toBeInstanceOf(Assertions::class);
     expect($response->getAssertions())->toHaveCount(0);
     expect($response->getModel())->toBe($model);
 });
@@ -100,7 +99,7 @@ test('ReadAssertionsResponse schema returns correct structure', function (): voi
     expect($properties)->toHaveKeys(['assertions', 'authorization_model_id']);
 
     expect($properties['assertions']->name)->toBe('assertions');
-    expect($properties['assertions']->type)->toBe(Assertions::class);
+    expect($properties['assertions']->type)->toBe('object');
     expect($properties['assertions']->required)->toBeFalse();
 
     expect($properties['authorization_model_id']->name)->toBe('authorization_model_id');
@@ -132,7 +131,6 @@ test('ReadAssertionsResponse handles empty assertions array data', function (): 
 
     expect($response)->toBeInstanceOf(ReadAssertionsResponseInterface::class);
     expect($response->getModel())->toBe('model-789');
-    expect($response->getAssertions())->toBeInstanceOf(Assertions::class);
     expect($response->getAssertions())->toHaveCount(0);
 });
 

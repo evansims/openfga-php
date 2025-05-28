@@ -163,7 +163,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         $key = array_keys($this->models)[$this->position] ?? null;
 
         if (! is_string($key)) {
-            throw new OutOfBoundsException('Invalid key type; expected string.');
+            throw new OutOfBoundsException('Invalid key type; expected string, ' . get_debug_type($key) . ' given.');
         }
 
         return $key;

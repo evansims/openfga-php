@@ -106,13 +106,13 @@ describe('ConditionParameter Model', function (): void {
         // TypeName property
         $typeNameProp = $properties['type_name'];
         expect($typeNameProp->name)->toBe('type_name');
-        expect($typeNameProp->type)->toBe(TypeName::class);
+        expect($typeNameProp->type)->toBe('object');
         expect($typeNameProp->required)->toBe(true);
 
         // GenericTypes property
         $genericTypesProp = $properties['generic_types'];
         expect($genericTypesProp->name)->toBe('generic_types');
-        expect($genericTypesProp->type)->toBe(ConditionParameters::class);
+        expect($genericTypesProp->type)->toBe('object');
         expect($genericTypesProp->required)->toBe(false);
     });
 

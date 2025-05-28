@@ -61,7 +61,7 @@ final class Tuple implements TupleInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'key', type: TupleKey::class, required: true),
+                new SchemaProperty(name: 'key', type: 'object', className: TupleKey::class, required: true),
                 new SchemaProperty(name: 'timestamp', type: 'string', format: 'datetime', required: true),
             ],
         );

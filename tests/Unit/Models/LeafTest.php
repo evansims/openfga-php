@@ -116,19 +116,19 @@ describe('Leaf Model', function (): void {
         // Users property
         $usersProp = $properties['users'];
         expect($usersProp->name)->toBe('users');
-        expect($usersProp->type)->toBe('OpenFGA\Models\Collections\UsersList');
+        expect($usersProp->type)->toBe('object');
         expect($usersProp->required)->toBe(false);
 
         // Computed property
         $computedProp = $properties['computed'];
         expect($computedProp->name)->toBe('computed');
-        expect($computedProp->type)->toBe(Computed::class);
+        expect($computedProp->type)->toBe('object');
         expect($computedProp->required)->toBe(false);
 
         // TupleToUserset property
         $tupleToUsersetProp = $properties['tupleToUserset'];
         expect($tupleToUsersetProp->name)->toBe('tupleToUserset');
-        expect($tupleToUsersetProp->type)->toBe(UsersetTreeTupleToUserset::class);
+        expect($tupleToUsersetProp->type)->toBe('object');
         expect($tupleToUsersetProp->required)->toBe(false);
     });
 

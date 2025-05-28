@@ -108,14 +108,15 @@ describe('TypeDefinitionRelations Collection', function (): void {
         expect($json)->toHaveKey('viewer');
         expect($json)->toHaveKey('editor');
 
-        // Check viewer structure
-        expect($json['viewer'])->toHaveKey('direct');
-        expect($json['viewer']['direct'])->toBeInstanceOf(stdClass::class);
+        // Check viewer structure - 'direct' is serialized as 'this'
+        expect($json['viewer'])->toHaveKey('this');
+        expect($json['viewer']['this'])->toBeInstanceOf(stdClass::class);
 
-        // Check editor structure
+        // Check editor structure - union now uses {child: [...]} format
         expect($json['editor'])->toHaveKey('union');
-        expect($json['editor']['union'])->toBeArray();
-        expect($json['editor']['union'])->toHaveCount(2);
+        expect($json['editor']['union'])->toHaveKey('child');
+        expect($json['editor']['union']['child'])->toBeArray();
+        expect($json['editor']['union']['child'])->toHaveCount(2);
     });
 
     test('checks if key exists', function (): void {

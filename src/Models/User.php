@@ -17,6 +17,7 @@ final class User implements UserInterface
         private readonly ?object $object = null,
         private readonly ?UsersetUserInterface $userset = null,
         private readonly ?TypedWildcardInterface $wildcard = null,
+        private readonly ?DifferenceV1Interface $difference = null,
     ) {
     }
 
@@ -57,6 +58,7 @@ final class User implements UserInterface
             'object' => $this->serializeObject(),
             'userset' => $this->userset?->jsonSerialize(),
             'wildcard' => $this->wildcard?->jsonSerialize(),
+            'difference' => $this->difference?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
     }
 
@@ -70,9 +72,9 @@ final class User implements UserInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'object', type: 'object', required: false),
-                new SchemaProperty(name: 'userset', type: UsersetUser::class, required: false),
-                new SchemaProperty(name: 'wildcard', type: TypedWildcard::class, required: false),
-                new SchemaProperty(name: 'difference', type: DifferenceV1::class, required: false),
+                new SchemaProperty(name: 'userset', type: 'object', className: UsersetUser::class, required: false),
+                new SchemaProperty(name: 'wildcard', type: 'object', className: TypedWildcard::class, required: false),
+                new SchemaProperty(name: 'difference', type: 'object', className: DifferenceV1::class, required: false),
             ],
         );
     }

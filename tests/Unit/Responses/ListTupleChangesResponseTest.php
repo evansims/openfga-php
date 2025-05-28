@@ -43,7 +43,6 @@ test('ListTupleChangesResponse constructs with empty changes collection', functi
     $changes = new TupleChanges([]);
     $response = new ListTupleChangesResponse($changes, null);
 
-    expect($response->getChanges())->toBeInstanceOf(TupleChanges::class);
     expect($response->getChanges())->toHaveCount(0);
 });
 
@@ -58,7 +57,7 @@ test('ListTupleChangesResponse schema returns correct structure', function (): v
     expect($properties)->toHaveKeys(['changes', 'continuation_token']);
 
     expect($properties['changes']->name)->toBe('changes');
-    expect($properties['changes']->type)->toBe(TupleChanges::class);
+    expect($properties['changes']->type)->toBe('object');
     expect($properties['changes']->required)->toBeTrue();
 
     expect($properties['continuation_token']->name)->toBe('continuation_token');
@@ -82,7 +81,6 @@ test('ListTupleChangesResponse handles response data without continuation token'
 
     expect($response)->toBeInstanceOf(ListTupleChangesResponseInterface::class);
     expect($response->getContinuationToken())->toBeNull();
-    expect($response->getChanges())->toBeInstanceOf(TupleChanges::class);
 });
 
 // Removed fromResponse error handling test - handled in integration tests

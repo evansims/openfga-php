@@ -101,10 +101,15 @@ describe('TypeDefinitions Collection', function (): void {
 
         $json = $collection->jsonSerialize();
 
-        expect($json)->toBe([
-            ['type' => 'user'],
-            ['type' => 'document', 'relations' => []],
-        ]);
+        expect($json)->toHaveCount(2);
+
+        expect($json[0]['type'])->toBe('user');
+        expect($json[0]['relations'])->toBeInstanceOf(stdClass::class);
+        expect($json[0])->not->toHaveKey('metadata');
+
+        expect($json[1]['type'])->toBe('document');
+        expect($json[1]['relations'])->toBeInstanceOf(stdClass::class);
+        expect($json[1])->not->toHaveKey('metadata');
     });
 
     test('serializes empty collection to empty array', function (): void {

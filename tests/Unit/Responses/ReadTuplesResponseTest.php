@@ -110,7 +110,7 @@ test('ReadTuplesResponse schema returns expected structure', function (): void {
     expect($properties)->toHaveKeys(['tuples', 'continuation_token']);
 
     expect($properties['tuples']->name)->toBe('tuples');
-    expect($properties['tuples']->type)->toBe(Tuples::class);
+    expect($properties['tuples']->type)->toBe('object');
     expect($properties['tuples']->required)->toBeTrue();
 
     expect($properties['continuation_token']->name)->toBe('continuation_token');

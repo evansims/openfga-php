@@ -161,15 +161,17 @@ describe('TupleKeys Collection', function (): void {
         $json = $collection->jsonSerialize();
 
         expect($json)->toBe([
-            $tupleKey1->jsonSerialize(),
-            $tupleKey2->jsonSerialize(),
+            'tuple_keys' => [
+                $tupleKey1->jsonSerialize(),
+                $tupleKey2->jsonSerialize(),
+            ],
         ]);
     });
 
     test('serializes empty collection to empty array', function (): void {
         $collection = new TupleKeys();
 
-        expect($collection->jsonSerialize())->toBe([]);
+        expect($collection->jsonSerialize())->toBe(['tuple_keys' => []]);
     });
 
     test('handles TupleKeys with conditions', function (): void {

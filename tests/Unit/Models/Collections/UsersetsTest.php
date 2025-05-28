@@ -22,56 +22,56 @@ describe('Usersets Collection', function (): void {
 
     test('constructs with array of usersets', function (): void {
         $collection = new Usersets([
-            'direct' => new Userset(direct: new stdClass()),
-            'viewer' => new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
-            'editor' => new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
+            new Userset(direct: new stdClass()),
+            new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
+            new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
         ]);
 
         expect($collection->count())->toBe(3);
         expect($collection->isEmpty())->toBeFalse();
     });
 
-    test('adds usersets with key', function (): void {
+    test('adds usersets', function (): void {
         $collection = new Usersets([]);
 
         $userset = new Userset(direct: new stdClass());
 
-        $collection->add('users', $userset);
+        $collection->add($userset);
 
         expect($collection->count())->toBe(1);
-        expect($collection->get('users'))->toBe($userset);
+        expect($collection->get(0))->toBe($userset);
     });
 
-    test('gets usersets by key', function (): void {
+    test('gets usersets by index', function (): void {
         $userset1 = new Userset(direct: new stdClass());
         $userset2 = new Userset(computedUserset: new ObjectRelation(relation: 'owner'));
 
         $collection = new Usersets([
-            'direct' => $userset1,
-            'computed' => $userset2,
+            $userset1,
+            $userset2,
         ]);
 
-        expect($collection->get('direct'))->toBe($userset1);
-        expect($collection->get('computed'))->toBe($userset2);
-        expect($collection->get('nonexistent'))->toBeNull();
+        expect($collection->get(0))->toBe($userset1);
+        expect($collection->get(1))->toBe($userset2);
+        expect($collection->get(2))->toBeNull();
     });
 
-    test('checks if userset exists by key', function (): void {
+    test('checks if userset exists by index', function (): void {
         $userset = new Userset(direct: new stdClass());
 
         $collection = new Usersets([
-            'users' => $userset,
+            $userset,
         ]);
 
-        expect(isset($collection['users']))->toBeTrue();
-        expect(isset($collection['other']))->toBeFalse();
+        expect(isset($collection[0]))->toBeTrue();
+        expect(isset($collection[1]))->toBeFalse();
     });
 
     test('iterates over usersets', function (): void {
         $collection = new Usersets([
-            'direct' => new Userset(direct: new stdClass()),
-            'viewer' => new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
-            'editor' => new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
+            new Userset(direct: new stdClass()),
+            new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
+            new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
         ]);
 
         $keys = [];
@@ -80,7 +80,7 @@ describe('Usersets Collection', function (): void {
             expect($userset)->toBeInstanceOf(Userset::class);
         }
 
-        expect($keys)->toBe(['direct', 'viewer', 'editor']);
+        expect($keys)->toBe([0, 1, 2]);
     });
 
     test('converts to array', function (): void {
@@ -88,23 +88,23 @@ describe('Usersets Collection', function (): void {
         $userset2 = new Userset(computedUserset: new ObjectRelation(relation: 'viewer'));
 
         $collection = new Usersets([
-            'direct' => $userset1,
-            'computed' => $userset2,
+            $userset1,
+            $userset2,
         ]);
 
         $array = $collection->toArray();
 
         expect($array)->toBeArray();
         expect($array)->toHaveCount(2);
-        expect($array['direct'])->toBe($userset1);
-        expect($array['computed'])->toBe($userset2);
+        expect($array[0])->toBe($userset1);
+        expect($array[1])->toBe($userset2);
     });
 
-    test('serializes to JSON as object', function (): void {
+    test('serializes to JSON with child array', function (): void {
         $collection = new Usersets([
-            'direct' => new Userset(direct: new stdClass()),
-            'viewer' => new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
-            'difference' => new Userset(
+            new Userset(direct: new stdClass()),
+            new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
+            new Userset(
                 difference: new DifferenceV1(
                     base: new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
                     subtract: new Userset(computedUserset: new ObjectRelation(relation: 'blocked')),
@@ -115,51 +115,50 @@ describe('Usersets Collection', function (): void {
         $json = $collection->jsonSerialize();
 
         expect($json)->toBeArray();
-        expect($json)->toHaveCount(3);
+        expect($json)->toHaveKey('child');
+        expect($json['child'])->toBeArray();
+        expect($json['child'])->toHaveCount(3);
 
         // Check direct userset
-        expect($json)->toHaveKey('direct');
-        expect($json['direct'])->toHaveKey('direct');
-        expect($json['direct']['direct'])->toBeInstanceOf(stdClass::class);
+        expect($json['child'][0])->toHaveKey('this');
+        expect($json['child'][0]['this'])->toBeInstanceOf(stdClass::class);
 
         // Check viewer userset
-        expect($json)->toHaveKey('viewer');
-        expect($json['viewer'])->toHaveKey('computed_userset');
-        expect($json['viewer']['computed_userset'])->toBe(['relation' => 'viewer']);
+        expect($json['child'][1])->toHaveKey('computedUserset');
+        expect($json['child'][1]['computedUserset'])->toBe(['relation' => 'viewer']);
 
         // Check difference userset
-        expect($json)->toHaveKey('difference');
-        expect($json['difference'])->toHaveKey('difference');
-        expect($json['difference']['difference'])->toHaveKey('base');
-        expect($json['difference']['difference'])->toHaveKey('subtract');
+        expect($json['child'][2])->toHaveKey('difference');
+        expect($json['child'][2]['difference'])->toHaveKey('base');
+        expect($json['child'][2]['difference'])->toHaveKey('subtract');
     });
 
     test('handles different userset types', function (): void {
         $collection = new Usersets([
             // Direct assignment
-            'direct' => new Userset(direct: new stdClass()),
+            new Userset(direct: new stdClass()),
 
             // Computed userset
-            'computed' => new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
+            new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
 
             // Union of usersets
-            'union' => new Userset(
+            new Userset(
                 union: new Usersets([
-                    'u1' => new Userset(direct: new stdClass()),
-                    'u2' => new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
+                    new Userset(direct: new stdClass()),
+                    new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
                 ]),
             ),
 
             // Intersection of usersets
-            'intersection' => new Userset(
+            new Userset(
                 intersection: new Usersets([
-                    'i1' => new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
-                    'i2' => new Userset(computedUserset: new ObjectRelation(relation: 'active')),
+                    new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
+                    new Userset(computedUserset: new ObjectRelation(relation: 'active')),
                 ]),
             ),
 
             // Difference of usersets
-            'difference' => new Userset(
+            new Userset(
                 difference: new DifferenceV1(
                     base: new Userset(computedUserset: new ObjectRelation(relation: 'member')),
                     subtract: new Userset(computedUserset: new ObjectRelation(relation: 'banned')),
@@ -167,7 +166,7 @@ describe('Usersets Collection', function (): void {
             ),
 
             // Tuple to userset
-            'tupleToUserset' => new Userset(
+            new Userset(
                 tupleToUserset: new TupleToUsersetV1(
                     tupleset: new ObjectRelation(relation: 'parent'),
                     computedUserset: new ObjectRelation(relation: 'owner'),
@@ -177,13 +176,13 @@ describe('Usersets Collection', function (): void {
 
         expect($collection->count())->toBe(6);
 
-        // Verify we can access each by key
-        expect($collection->get('direct'))->toBeInstanceOf(Userset::class);
-        expect($collection->get('computed'))->toBeInstanceOf(Userset::class);
-        expect($collection->get('union'))->toBeInstanceOf(Userset::class);
-        expect($collection->get('intersection'))->toBeInstanceOf(Userset::class);
-        expect($collection->get('difference'))->toBeInstanceOf(Userset::class);
-        expect($collection->get('tupleToUserset'))->toBeInstanceOf(Userset::class);
+        // Verify we can access each by index
+        expect($collection->get(0))->toBeInstanceOf(Userset::class);
+        expect($collection->get(1))->toBeInstanceOf(Userset::class);
+        expect($collection->get(2))->toBeInstanceOf(Userset::class);
+        expect($collection->get(3))->toBeInstanceOf(Userset::class);
+        expect($collection->get(4))->toBeInstanceOf(Userset::class);
+        expect($collection->get(5))->toBeInstanceOf(Userset::class);
     });
 
     test('returns schema instance', function (): void {
@@ -208,7 +207,7 @@ describe('Usersets Collection', function (): void {
 
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);
-        expect($collection->jsonSerialize())->toBe([]);
+        expect($collection->jsonSerialize())->toBe(['child' => []]);
 
         // Test iteration on empty collection
         $count = 0;
@@ -218,6 +217,6 @@ describe('Usersets Collection', function (): void {
         expect($count)->toBe(0);
 
         // Test get on empty collection
-        expect($collection->get('any'))->toBeNull();
+        expect($collection->get(0))->toBeNull();
     });
 });

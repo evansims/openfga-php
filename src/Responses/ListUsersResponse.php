@@ -68,7 +68,7 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'users', type: Users::class, required: true),
+                new SchemaProperty(name: 'users', type: 'object', className: Users::class, required: true),
             ],
         );
     }

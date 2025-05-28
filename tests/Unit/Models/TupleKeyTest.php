@@ -148,7 +148,7 @@ describe('TupleKey Model', function (): void {
 
         $conditionProp = $properties['condition'];
         expect($conditionProp->name)->toBe('condition');
-        expect($conditionProp->type)->toBe(Condition::class);
+        expect($conditionProp->type)->toBe('object');
         expect($conditionProp->required)->toBe(false);
     });
 

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use OpenFGA\Models\Collections\RelationMetadataCollection;
 use OpenFGA\Models\{Metadata, MetadataInterface, RelationMetadata, SourceInfo};
 use OpenFGA\Schema\SchemaInterface;
 
@@ -35,9 +36,13 @@ describe('Metadata Model', function (): void {
             sourceInfo: $sourceInfo,
         );
 
-        $metadata = new Metadata(relations: $relationMetadata);
+        $relationCollection = new RelationMetadataCollection([
+            'viewer' => $relationMetadata,
+        ]);
 
-        expect($metadata->getRelations())->toBe($relationMetadata);
+        $metadata = new Metadata(relations: $relationCollection);
+
+        expect($metadata->getRelations())->toBe($relationCollection);
         expect($metadata->getModule())->toBeNull();
         expect($metadata->getSourceInfo())->toBeNull();
     });
@@ -58,14 +63,18 @@ describe('Metadata Model', function (): void {
             sourceInfo: $sourceInfo,
         );
 
+        $relationCollection = new RelationMetadataCollection([
+            'viewer' => $relationMetadata,
+        ]);
+
         $metadata = new Metadata(
             module: 'main_module',
-            relations: $relationMetadata,
+            relations: $relationCollection,
             sourceInfo: $sourceInfo,
         );
 
         expect($metadata->getModule())->toBe('main_module');
-        expect($metadata->getRelations())->toBe($relationMetadata);
+        expect($metadata->getRelations())->toBe($relationCollection);
         expect($metadata->getSourceInfo())->toBe($sourceInfo);
     });
 
@@ -90,9 +99,13 @@ describe('Metadata Model', function (): void {
             sourceInfo: $sourceInfo,
         );
 
+        $relationCollection = new RelationMetadataCollection([
+            'viewer' => $relationMetadata,
+        ]);
+
         $metadata = new Metadata(
             module: 'main_module',
-            relations: $relationMetadata,
+            relations: $relationCollection,
             sourceInfo: $sourceInfo,
         );
 
@@ -101,8 +114,10 @@ describe('Metadata Model', function (): void {
         expect($json)->toBe([
             'module' => 'main_module',
             'relations' => [
-                'module' => 'relation_module',
-                'source_info' => ['file' => 'model.fga'],
+                'viewer' => [
+                    'module' => 'relation_module',
+                    'source_info' => ['file' => 'model.fga'],
+                ],
             ],
             'source_info' => ['file' => 'model.fga'],
         ]);
@@ -134,13 +149,13 @@ describe('Metadata Model', function (): void {
         // Relations property
         $relationsProp = $properties['relations'];
         expect($relationsProp->name)->toBe('relations');
-        expect($relationsProp->type)->toBe(RelationMetadata::class);
+        expect($relationsProp->type)->toBe('object');
         expect($relationsProp->required)->toBe(false);
 
         // SourceInfo property
         $sourceInfoProp = $properties['source_info'];
         expect($sourceInfoProp->name)->toBe('source_info');
-        expect($sourceInfoProp->type)->toBe(SourceInfo::class);
+        expect($sourceInfoProp->type)->toBe('object');
         expect($sourceInfoProp->required)->toBe(false);
     });
 

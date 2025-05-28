@@ -96,7 +96,7 @@ test('ListAuthorizationModelsResponse schema returns expected structure', functi
     expect($properties)->toHaveKeys(['authorization_models', 'continuation_token']);
 
     expect($properties['authorization_models']->name)->toBe('authorization_models');
-    expect($properties['authorization_models']->type)->toBe(AuthorizationModels::class);
+    expect($properties['authorization_models']->type)->toBe('object');
     expect($properties['authorization_models']->required)->toBeTrue();
 
     expect($properties['continuation_token']->name)->toBe('continuation_token');

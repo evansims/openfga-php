@@ -35,7 +35,7 @@ test('ExpandResponse schema returns expected structure', function (): void {
     $properties = $schema->getProperties();
     expect($properties)->toHaveCount(1);
     expect($properties['tree']->name)->toBe('tree');
-    expect($properties['tree']->type)->toBe(UsersetTree::class);
+    expect($properties['tree']->type)->toBe('object');
     expect($properties['tree']->required)->toBeFalse();
 });
 

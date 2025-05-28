@@ -90,7 +90,7 @@ describe('UsersetTree Model', function (): void {
         // Root property
         $rootProp = $properties['root'];
         expect($rootProp->name)->toBe('root');
-        expect($rootProp->type)->toBe(Node::class);
+        expect($rootProp->type)->toBe('object');
         expect($rootProp->required)->toBe(true);
     });
 

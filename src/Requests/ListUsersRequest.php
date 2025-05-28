@@ -102,13 +102,14 @@ final class ListUsersRequest implements ListUsersRequestInterface
      */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
+        $contextualTuples = $this->contextualTuples?->jsonSerialize();
         $body = array_filter([
             'authorization_model_id' => $this->model,
             'object' => $this->object,
             'relation' => $this->relation,
             'user_filters' => $this->userFilters->jsonSerialize(),
             'context' => $this->context,
-            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
+            'contextual_tuples' => $contextualTuples['tuple_keys'] ?? $contextualTuples,
             'consistency' => $this->consistency?->value,
         ], static fn ($value): bool => null !== $value);
 

@@ -16,7 +16,7 @@ interface AssertionsInterface extends IndexedCollectionInterface
 {
     /**
      * @return array<int, array{
-     *     tuple_key: array<string, mixed>,
+     *     tuple_key: array{user: string, relation: string, object: string},
      *     expectation: bool,
      *     contextual_tuples?: array<array-key, mixed>,
      *     context?: array<array-key, mixed>

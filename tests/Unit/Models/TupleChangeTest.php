@@ -112,13 +112,15 @@ describe('TupleChange Model', function (): void {
         // TupleKey property
         $tupleKeyProp = $properties['tuple_key'];
         expect($tupleKeyProp->name)->toBe('tuple_key');
-        expect($tupleKeyProp->type)->toBe(TupleKey::class);
+        expect($tupleKeyProp->type)->toBe('object');
+        expect($tupleKeyProp->className)->toBe(TupleKey::class);
         expect($tupleKeyProp->required)->toBe(true);
 
         // Operation property
         $operationProp = $properties['operation'];
         expect($operationProp->name)->toBe('operation');
-        expect($operationProp->type)->toBe(TupleOperation::class);
+        expect($operationProp->type)->toBe('object');
+        expect($operationProp->className)->toBe(TupleOperation::class);
         expect($operationProp->required)->toBe(true);
 
         // Timestamp property

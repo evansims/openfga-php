@@ -60,7 +60,7 @@ final class ConditionMetadata implements ConditionMetadataInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'module', type: 'string', required: true),
-                new SchemaProperty(name: 'source_info', type: SourceInfo::class, required: true),
+                new SchemaProperty(name: 'source_info', type: 'object', className: SourceInfo::class, required: true),
             ],
         );
     }

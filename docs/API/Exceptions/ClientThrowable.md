@@ -117,6 +117,18 @@ public function kind(): OpenFGA\Exceptions\ClientError|OpenFGA\Exceptions\Authen
 #### Returns
 ClientError | AuthenticationError | ConfigurationError | NetworkError | SerializationError
 
+### previous
+
+
+```php
+public function previous(): ?Throwable
+```
+
+
+
+#### Returns
+?Throwable
+
 ### request
 
 

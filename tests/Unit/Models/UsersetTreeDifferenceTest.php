@@ -107,13 +107,13 @@ describe('UsersetTreeDifference Model', function (): void {
         // Base property
         $baseProp = $properties['base'];
         expect($baseProp->name)->toBe('base');
-        expect($baseProp->type)->toBe(Node::class);
+        expect($baseProp->type)->toBe('object');
         expect($baseProp->required)->toBe(true);
 
         // Subtract property
         $subtractProp = $properties['subtract'];
         expect($subtractProp->name)->toBe('subtract');
-        expect($subtractProp->type)->toBe(Node::class);
+        expect($subtractProp->type)->toBe('object');
         expect($subtractProp->required)->toBe(true);
     });
 

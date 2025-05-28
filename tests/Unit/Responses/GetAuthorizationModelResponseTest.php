@@ -45,7 +45,7 @@ test('GetAuthorizationModelResponse schema returns expected structure', function
     $properties = $schema->getProperties();
     expect($properties)->toHaveCount(1);
     expect($properties['authorization_model']->name)->toBe('authorization_model');
-    expect($properties['authorization_model']->type)->toBe(AuthorizationModel::class);
+    expect($properties['authorization_model']->type)->toBe('object');
     expect($properties['authorization_model']->required)->toBeFalse();
 });
 

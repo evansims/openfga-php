@@ -64,7 +64,7 @@ final class GetAuthorizationModelResponse extends Response implements GetAuthori
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'authorization_model', type: AuthorizationModel::class, required: false),
+                new SchemaProperty(name: 'authorization_model', type: 'object', className: AuthorizationModel::class, required: false),
             ],
         );
     }

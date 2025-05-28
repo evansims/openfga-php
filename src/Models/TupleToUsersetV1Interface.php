@@ -13,7 +13,7 @@ interface TupleToUsersetV1Interface extends ModelInterface
     public function getTupleset(): ObjectRelationInterface;
 
     /**
-     * @return array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}}
+     * @return array{tupleset: array{object?: string, relation?: string}, computedUserset: array{object?: string, relation?: string}}
      */
     #[Override]
     public function jsonSerialize(): array;
