@@ -1,6 +1,7 @@
 # OpenFGA PHP SDK
 
 [![codecov](https://codecov.io/gh/evansims/openfga-php/graph/badge.svg)](https://codecov.io/gh/evansims/openfga-php)
+[![Psalm Type Coverage](https://shepherd.dev/github/evansims/openfga-php/coverage.svg)](https://shepherd.dev/github/evansims/openfga-php)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/evansims/openfga-php/badge)](https://scorecard.dev/viewer/?uri=github.com/evansims/openfga-php)
 
 **The OpenFGA PHP SDK puts relationship-based access control at your fingertips.** Describe “who can do what” once in a human-friendly DSL, then let [OpenFGA](https://openfga.dev/) or [Auth0 FGA](https://auth0.com/fga) enforce it. No scattering of `if` statements across your codebase or brittle policy files. A fluent API with strict typing, and PSR-compatible networking makes all the plumbing disappear, unburdening you with cleaner code, sharper security boundaries, and room to grow.

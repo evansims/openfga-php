@@ -34,6 +34,11 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     private int $position = 0;
 
     /**
+     * @var array<class-string, CollectionSchemaInterface>
+     */
+    private static array $cachedSchemas = [];
+
+    /**
      * @phpstan-var class-string<ModelInterface>
      *
      * @var class-string<ModelInterface>
@@ -164,6 +169,10 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         return $this->models[$offset] ?? null;
     }
 
+    #[Override]
+    /**
+     * @inheritDoc
+     */
     public function isEmpty(): bool
     {
         return [] === $this->models;
@@ -334,6 +343,10 @@ abstract class IndexedCollection implements IndexedCollectionInterface
      */
     public static function schema(): CollectionSchemaInterface
     {
+        if (isset(self::$cachedSchemas[static::class])) {
+            return self::$cachedSchemas[static::class];
+        }
+
         if (! isset(static::$itemType)) {
             throw SerializationError::UndefinedItemType->exception();
         }
@@ -342,11 +355,15 @@ abstract class IndexedCollection implements IndexedCollectionInterface
             throw SerializationError::InvalidItemType->exception();
         }
 
-        return new CollectionSchema(
+        $schema = new CollectionSchema(
             className: static::class,
             itemType: static::$itemType,
             requireItems: false,
         );
+
+        self::$cachedSchemas[static::class] = $schema;
+
+        return $schema;
     }
 
     /**

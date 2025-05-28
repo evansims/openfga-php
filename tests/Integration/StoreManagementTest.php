@@ -4,54 +4,60 @@ declare(strict_types=1);
 
 use OpenFGA\Client;
 
+beforeEach(function (): void {
+    $this->responseFactory = new Nyholm\Psr7\Factory\Psr17Factory();
+    $this->httpClient = new Buzz\Client\FileGetContents($this->responseFactory);
+    $this->httpRequestFactory = $this->responseFactory;
+    $this->httpStreamFactory = $this->responseFactory;
+    $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+
+    $this->client = new Client(
+        url: $this->url,
+        httpClient: $this->httpClient,
+        httpResponseFactory: $this->responseFactory,
+        httpStreamFactory: $this->httpStreamFactory,
+        httpRequestFactory: $this->httpRequestFactory,
+    );
+});
+
 it('creates and deletes a store', function (): void {
-    $url = getenv('FGA_API_URL') ?: 'http://localhost:8080';
-    $client = new Client(url: $url);
-    $createdStoreId = null;
+    $store = null;
 
     $name = 'php-sdk-test-' . bin2hex(random_bytes(5));
 
-    try {
-        $response = ($client->createStore(name: $name))
-            ->unwrap();
+    $store = ($this->client->createStore(name: $name))
+        ->rethrow()
+        ->unwrap();
 
-        $createdStoreId = $response->getId();
-        expect($createdStoreId)->not()->toBe('');
-        expect($response->getName())->toBe($name);
+    expect($store->getId())->not()->toBe('');
+    expect($store->getName())->toBe($name);
 
-        $delete = $client->deleteStore(store: $createdStoreId);
-        expect($delete)->toBeInstanceOf(OpenFGA\Responses\DeleteStoreResponseInterface::class);
-    } finally {
-        // Clean up the store if it was created but not deleted
-        if (null !== $createdStoreId && null !== $client->getStore($createdStoreId)) {
-            $client->deleteStore(store: $createdStoreId);
-        }
-    }
+    $delete = $this->client->deleteStore(store: $store->getId());
+    expect($delete->succeeded())->toBeTrue();
 });
 
 it('retrieves a created store', function (): void {
-    $url = getenv('FGA_API_URL') ?: 'http://localhost:8080';
-    $client = new Client(url: $url);
     $createdStoreId = null;
 
     $name = 'php-sdk-test-' . bin2hex(random_bytes(5));
 
-    try {
-        $create = ($client->createStore(name: $name))->unwrap();
-        $createdStoreId = $create->getId();
+    $create = ($this->client->createStore(name: $name))->rethrow()->unwrap();
+    $createdStoreId = $create->getId();
 
-        $get = $client->getStore(store: $createdStoreId);
-        expect($get->getStore()->getName())->toBe($name);
+    $get = ($this->client->getStore(store: $createdStoreId))->rethrow()->unwrap();
+    expect($get->getStore()->getName())->toBe($name);
 
-        $list = $client->listStores();
-        $ids = [];
-        foreach ($list->getStores() as $store) {
-            $ids[] = $store->getId();
-        }
-        expect($ids)->toContain($createdStoreId);
-    } finally {
-        if (null !== $createdStoreId && null !== $client->getStore($createdStoreId)) {
-            $client->deleteStore(store: $createdStoreId);
-        }
+    $list = ($this->client->listStores())
+        ->rethrow()
+        ->unwrap();
+    $ids = [];
+
+    foreach ($list->getStores() as $store) {
+        $ids[] = $store->getId();
     }
+
+    expect($ids)->toContain($createdStoreId);
+
+    $delete = $this->client->deleteStore(store: $createdStoreId);
+    expect($delete->succeeded())->toBeTrue();
 });

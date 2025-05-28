@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\{ConditionInterface, TypeDefinitionInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
@@ -25,6 +26,9 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
         private SchemaVersion $schemaVersion = SchemaVersion::V1_1,
         private ?ConditionsInterface $conditions = null,
     ) {
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
     }
 
     #[Override]

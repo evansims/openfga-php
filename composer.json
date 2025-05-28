@@ -23,14 +23,15 @@
     "psr-discovery/all": "^1",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
-    "psr/http-message-implementation": "^1",
-    "symfony/translation": "^7.2"
+    "psr/http-message-implementation": "^1"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2",
     "friendsofphp/php-cs-fixer": "^3",
+    "kriswallsmith/buzz": "^1.3",
     "maglnet/composer-require-checker": "^4",
     "mockery/mockery": "^1",
+    "nyholm/psr7": "^1.8",
     "pestphp/pest": "^3",
     "phpro/grumphp": "^2",
     "phpstan/phpstan": "^2",
@@ -49,7 +50,11 @@
   "autoload": {
     "psr-4": {
       "OpenFGA\\": "src/"
-    }
+    },
+    "files": [
+      "src/Models/Helpers.php",
+      "src/Results/Helpers.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
@@ -65,6 +70,10 @@
       "wikimedia/composer-merge-plugin": true
     },
     "optimize-autoloader": true,
+    "platform": {
+      "php": "8.3.16"
+    },
+    "platform-check": false,
     "preferred-install": "dist",
     "process-timeout": 0,
     "sort-packages": true
@@ -84,8 +93,30 @@
     }
   },
   "scripts": {
-    "integration:start": "docker compose -f docker-compose.integration.yml up -d",
-    "integration:stop": "docker compose -f docker-compose.integration.yml down -v",
+    "docs": "@php tools/docs/generate.php",
+    "lint": [
+      "@phpstan",
+      "@psalm",
+      "@rector",
+      "@phpcs"
+    ],
+    "pest:contract": [
+      "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning"
+    ],
+    "pest:integration": [
+      "@pest:integration:build",
+      "docker compose -f docker-compose.integration.yml run --rm test"
+    ],
+    "pest:integration:build": [
+      "docker compose -f docker-compose.integration.yml build test"
+    ],
+    "pest:integration:build-force": [
+      "docker compose -f docker-compose.integration.yml build test --no-cache --progress=plain"
+    ],
+    "pest:integration:run": [
+      "@putenv XDEBUG_MODE=coverage",
+      "@php vendor/bin/pest --testsuite integration"
+    ],
     "pest:tools": [
       "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
@@ -94,16 +125,10 @@
       "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
     ],
-    "pest:integration": [
-      "@integration:start",
+    "pest:debug": [
       "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact",
-      "@integration:stop"
+      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --debug"
     ],
-    "pest:contract": [
-      "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning"
-    ],
-    "psalm": "@php vendor/bin/psalm",
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
       "@php vendor/bin/php-cs-fixer fix --dry-run --diff"
@@ -113,27 +138,21 @@
       "@php vendor/bin/php-cs-fixer fix"
     ],
     "phpstan": "@php vendor/bin/phpstan analyze",
+    "psalm": "@php vendor/bin/psalm",
     "rector": "@php vendor/bin/rector process src --dry-run",
     "rector:fix": "@php vendor/bin/rector process src",
-    "lint": [
-      "@phpstan",
-      "@psalm",
-      "@rector",
-      "@phpcs"
+    "test": [
+      "@lint",
+      "@pest:unit"
+    ],
+    "test:contract": [
+      "@pest:contract"
     ],
     "test:integration": [
       "@pest:integration"
     ],
     "test:unit": [
       "@pest:unit"
-    ],
-    "test:contract": [
-      "@pest:contract"
-    ],
-    "test": [
-      "@lint",
-      "@pest:unit"
-    ],
-    "docs": "@php tools/docs/generate.php"
+    ]
   }
 }

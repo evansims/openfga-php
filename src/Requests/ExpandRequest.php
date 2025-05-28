@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+
+use function assert;
 
 final class ExpandRequest implements ExpandRequestInterface
 {
@@ -27,6 +30,7 @@ final class ExpandRequest implements ExpandRequestInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
+        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
     }
 
     #[Override]

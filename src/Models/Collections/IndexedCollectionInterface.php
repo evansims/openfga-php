@@ -74,6 +74,8 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function get(int $offset);
 
+    public function isEmpty(): bool;
+
     /**
      * @return array<int|string, mixed>
      */

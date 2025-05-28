@@ -34,6 +34,11 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     private int $position = 0;
 
     /**
+     * @var array<class-string, CollectionSchemaInterface>
+     */
+    private static array $cachedSchemas = [];
+
+    /**
      * @phpstan-var class-string<ModelInterface>
      *
      * @var class-string<ModelInterface>
@@ -122,6 +127,15 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     public function has(string $key): bool
     {
         return isset($this->models[$key]);
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function isEmpty(): bool
+    {
+        return [] === $this->models;
     }
 
     #[Override]
@@ -256,6 +270,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
      */
     public static function schema(): CollectionSchemaInterface
     {
+        if (isset(self::$cachedSchemas[static::class])) {
+            return self::$cachedSchemas[static::class];
+        }
+
         if (! isset(static::$itemType)) {
             throw SerializationError::UndefinedItemType->exception();
         }
@@ -264,10 +282,13 @@ abstract class KeyedCollection implements KeyedCollectionInterface
             throw SerializationError::InvalidItemType->exception();
         }
 
-        return new CollectionSchema(
+        $schema = new CollectionSchema(
             className: static::class,
             itemType: static::$itemType,
             requireItems: false,
         );
+        self::$cachedSchemas[static::class] = $schema;
+
+        return $schema;
     }
 }

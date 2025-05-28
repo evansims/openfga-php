@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\Collections\{Stores, StoresInterface};
-use OpenFGA\Models\StoreInterface;
+use OpenFGA\Models\{Store, StoreInterface};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
@@ -57,6 +57,7 @@ final class ListStoresResponse extends Response implements ListStoresResponseInt
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
+            $validator->registerSchema(Store::schema());
             $validator->registerSchema(Stores::schema());
             $validator->registerSchema(self::schema());
 
@@ -64,7 +65,7 @@ final class ListStoresResponse extends Response implements ListStoresResponseInt
         }
 
         // Handle network errors
-        return RequestManager::handleResponseException(
+        RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );
@@ -79,7 +80,7 @@ final class ListStoresResponse extends Response implements ListStoresResponseInt
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'stores', type: Stores::class, required: true),
+                new SchemaProperty(name: 'stores', type: 'object', className: Stores::class, required: true),
                 new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
             ],
         );

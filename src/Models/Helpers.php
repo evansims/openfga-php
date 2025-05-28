@@ -11,14 +11,14 @@ use function is_array;
 /**
  * Helper for creating a TupleKey.
  *
- * @param string                  $type
+ * @param string                  $user
  * @param string                  $relation
  * @param string                  $object
  * @param null|ConditionInterface $condition
  */
-function tuple(string $type, string $relation, string $object, ?ConditionInterface $condition = null): TupleKey
+function tuple(string $user, string $relation, string $object, ?ConditionInterface $condition = null): TupleKey
 {
-    return new TupleKey($type, $relation, $object, $condition);
+    return new TupleKey($user, $relation, $object, $condition);
 }
 
 /**

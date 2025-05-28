@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -13,6 +14,9 @@ final class CreateStoreRequest implements CreateStoreRequestInterface
     public function __construct(
         private string $name,
     ) {
+        if ('' === $this->name) {
+            throw new InvalidArgumentException('Store name cannot be empty');
+        }
     }
 
     #[Override]
@@ -40,6 +44,9 @@ final class CreateStoreRequest implements CreateStoreRequestInterface
             method: RequestMethod::POST,
             url: '/stores/',
             body: $stream,
+            headers: [
+                'Content-Type' => 'application/json',
+            ],
         );
     }
 }

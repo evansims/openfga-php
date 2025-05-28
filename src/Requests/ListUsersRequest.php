@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\{TupleKeysInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\{TupleKeyInterface, UserTypeFilterInterface};
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+
+use function assert;
 
 final class ListUsersRequest implements ListUsersRequestInterface
 {
@@ -33,6 +36,10 @@ final class ListUsersRequest implements ListUsersRequestInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
+        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
+        assert('' !== $this->model, new InvalidArgumentException('Authorization model ID cannot be empty'));
+        assert('' !== $this->object, new InvalidArgumentException('Object ID cannot be empty'));
+        assert('' !== $this->relation, new InvalidArgumentException('Relation cannot be empty'));
     }
 
     #[Override]

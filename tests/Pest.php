@@ -8,4 +8,6 @@ use OpenFGA\Tests\TestCase;
 
 require_once implode(DIRECTORY_SEPARATOR, [OPENFGA_TESTS_DIR, '..', 'vendor', 'autoload.php']);
 
+// RequestMethod enum is now auto-loaded via composer
+
 pest()->extend(TestCase::class)->in(__DIR__);

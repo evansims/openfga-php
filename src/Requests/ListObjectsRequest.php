@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
@@ -33,6 +34,22 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+        if ('' === $this->type) {
+            throw new InvalidArgumentException('Type cannot be empty');
+        }
+        if ('' === $this->relation) {
+            throw new InvalidArgumentException('Relation cannot be empty');
+        }
+        if ('' === $this->user) {
+            throw new InvalidArgumentException('User cannot be empty');
+        }
+
+        if (null !== $this->model && '' === $this->model) {
+            throw new InvalidArgumentException('Authorization Model ID cannot be empty');
+        }
     }
 
     #[Override]

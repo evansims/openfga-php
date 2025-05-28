@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+
+use function assert;
 
 final class DeleteStoreRequest implements DeleteStoreRequestInterface
 {
     public function __construct(
         private string $store,
     ) {
+        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
     }
 
     #[Override]

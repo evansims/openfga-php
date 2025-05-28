@@ -110,6 +110,79 @@ test('SchemaBuilder can add enum property', function (): void {
         ->and($property->default)->toBe('pending');
 });
 
+test('SchemaBuilder can add datetime property', function (): void {
+    $builder = new SchemaBuilder('TestClass');
+    $date = new DateTimeImmutable('2023-01-01T10:30:00Z');
+    $schema = $builder->datetime('updatedAt', required: true, default: $date)->register();
+
+    $property = $schema->getProperty('updatedAt');
+
+    expect($property)->not->toBeNull()
+        ->and($property->type)->toBe('string')
+        ->and($property->format)->toBe('datetime')
+        ->and($property->required)->toBeTrue()
+        ->and($property->default)->toBe($date);
+});
+
+test('SchemaBuilder string method supports format parameter', function (): void {
+    $builder = new SchemaBuilder('TestClass');
+    $schema = $builder->string('email', required: true, format: 'email', default: 'test@example.com')->register();
+
+    $property = $schema->getProperty('email');
+
+    expect($property)->not->toBeNull()
+        ->and($property->type)->toBe('string')
+        ->and($property->format)->toBe('email')
+        ->and($property->required)->toBeTrue()
+        ->and($property->default)->toBe('test@example.com');
+});
+
+test('SchemaBuilder array method supports object className', function (): void {
+    $builder = new SchemaBuilder('TestClass');
+    $schema = $builder->array('items', ['type' => 'object', 'className' => 'ItemClass'], required: true)->register();
+
+    $property = $schema->getProperty('items');
+
+    expect($property)->not->toBeNull()
+        ->and($property->type)->toBe('array')
+        ->and($property->items)->toBe(['type' => 'object', 'className' => 'ItemClass'])
+        ->and($property->required)->toBeTrue();
+});
+
+test('SchemaBuilder maintains fluent interface for all methods', function (): void {
+    $builder = new SchemaBuilder('TestClass');
+
+    $result = $builder
+        ->string('name')
+        ->integer('age')
+        ->number('price')
+        ->boolean('active')
+        ->array('tags', ['type' => 'string'])
+        ->object('address', 'AddressClass')
+        ->date('createdAt')
+        ->datetime('updatedAt');
+
+    expect($result)->toBe($builder);
+});
+
+test('SchemaBuilder properties have correct default values', function (): void {
+    $builder = new SchemaBuilder('TestClass');
+    $schema = $builder
+        ->string('optional_string')
+        ->integer('optional_int')
+        ->number('optional_number')
+        ->boolean('optional_bool')
+        ->object('optional_object', 'SomeClass')
+        ->register();
+
+    $properties = $schema->getProperties();
+
+    foreach ($properties as $property) {
+        expect($property->required)->toBeFalse();
+        expect($property->default)->toBeNull();
+    }
+});
+
 test('SchemaBuilder can add multiple properties', function (): void {
     $builder = new SchemaBuilder('TestClass');
     $schema = $builder

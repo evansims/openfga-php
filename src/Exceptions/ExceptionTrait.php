@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Exceptions;
 
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
+use Throwable;
 
 trait ExceptionTrait
 {
@@ -19,6 +20,11 @@ trait ExceptionTrait
     public function kind(): ClientError | AuthenticationError | ConfigurationError | NetworkError | SerializationError
     {
         return $this->kind;
+    }
+
+    public function previous(): ?Throwable
+    {
+        return $this->previous;
     }
 
     public function request(): ?RequestInterface

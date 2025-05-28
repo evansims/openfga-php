@@ -7,11 +7,13 @@ namespace OpenFGA\Schema;
 use ArrayAccess;
 use BackedEnum;
 use DateTimeImmutable;
+use Exception;
 use OpenFGA\Exceptions\{SerializationError, SerializationException};
 use ReflectionClass;
-use ReflectionException;
 
+use ReflectionException;
 use ReflectionNamedType;
+
 use ReflectionParameter;
 
 use function array_key_exists;
@@ -118,7 +120,7 @@ final class SchemaValidator
 
             // Type validation (skip for object types with className as they're handled recursively)
             if (! ('object' === $type && null !== $propClassName) && ! $this->validateType($value, $type, $format, $enum)) {
-                throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
+                throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type, 'format' => $format, 'expected' => $schemaProperty->type, 'value' => $value]);
             }
 
             // Handle nested objects and arrays
@@ -381,10 +383,11 @@ final class SchemaValidator
                     if ($value instanceof DateTimeImmutable) {
                         return $value;
                     }
+
                     if (is_string($value)) {
-                        $date = DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value);
-                        if (false !== $date) {
-                            return $date;
+                        try {
+                            return new DateTimeImmutable($value);
+                        } catch (Exception) {
                         }
                     }
 
@@ -466,7 +469,17 @@ final class SchemaValidator
                 }
 
                 if ('datetime' === $format) {
-                    return is_string($value) && false !== DateTimeImmutable::createFromFormat('Y-m-d\TH:i:s\Z', $value);
+                    if (! is_string($value)) {
+                        return false;
+                    }
+
+                    try {
+                        new DateTimeImmutable($value);
+                    } catch (Exception) {
+                        return false;
+                    }
+
+                    return true;
                 }
 
                 if (null !== $enum) {

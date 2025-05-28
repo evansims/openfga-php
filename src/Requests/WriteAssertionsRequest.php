@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Models\AssertionInterface;
 use OpenFGA\Models\Collections\AssertionsInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
@@ -22,6 +23,13 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         private string $store,
         private string $model,
     ) {
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+
+        if ('' === $this->model) {
+            throw new InvalidArgumentException('Authorization model ID cannot be empty');
+        }
     }
 
     #[Override]

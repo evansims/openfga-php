@@ -7,6 +7,7 @@ namespace OpenFGA\Requests;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
+use InvalidArgumentException;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -20,6 +21,13 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
         private ?string $type = null,
         private ?DateTimeImmutable $startTime = null,
     ) {
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+
+        if (null !== $this->continuationToken && '' === $this->continuationToken) {
+            throw new InvalidArgumentException('Continuation token cannot be empty');
+        }
     }
 
     #[Override]

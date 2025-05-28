@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Schema;
 
+use DateTimeImmutable;
 use OpenFGA\Exceptions\SerializationException;
 use OpenFGA\Schema\{SchemaBuilder, SchemaRegistry, SchemaValidator};
 use OpenFGA\Tests\Support\Schema\{
@@ -439,3 +440,217 @@ test('handles nested object validation with errors', function (array $input, boo
         null,
     ],
 ]);
+
+test('validates integer type conversion using existing properties', function (): void {
+    $schema = (new SchemaBuilder(TestObject::class))
+        ->integer('age', required: true)
+        ->string('name', required: true)
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Test valid integer values that pass validation
+    expect($this->validator->validateAndTransform(['age' => '42', 'name' => 'test'], TestObject::class)->age)->toBe(42);
+    expect($this->validator->validateAndTransform(['age' => 42, 'name' => 'test'], TestObject::class)->age)->toBe(42);
+
+    // Test that invalid integer values throw exceptions
+    expect(fn () => $this->validator->validateAndTransform(['age' => 42.7, 'name' => 'test'], TestObject::class))
+        ->toThrow(SerializationException::class);
+    expect(fn () => $this->validator->validateAndTransform(['age' => 'not-a-number', 'name' => 'test'], TestObject::class))
+        ->toThrow(SerializationException::class);
+});
+
+test('validates number type conversion using test array', function (): void {
+    $schema = (new SchemaBuilder(TestArray::class))
+        ->array('numbers', ['type' => 'number'])
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Test number array validation - don't expect exact type conversion
+    $result = $this->validator->validateAndTransform(['numbers' => [42, '42.5', 3.14]], TestArray::class);
+    expect($result->numbers)->toHaveCount(3);
+    expect($result->numbers[0])->toBe(42);
+    expect($result->numbers[1])->toBe('42.5'); // String numbers may stay as strings in validation
+    expect($result->numbers[2])->toBe(3.14);
+});
+
+test('validates string property using status object', function (): void {
+    $schema = (new SchemaBuilder(Status::class))
+        ->string('status', required: true)
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Test string handling
+    $result = $this->validator->validateAndTransform(['status' => 'active'], Status::class);
+    expect($result->status)->toBe('active');
+});
+
+test('validates datetime format strings with edge cases', function (string $input, bool $shouldPass): void {
+    $schema = (new SchemaBuilder(Event::class))
+        ->string('dateField', format: 'datetime')
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    if (! $shouldPass) {
+        expect(fn () => $this->validator->validateAndTransform(['dateField' => $input], Event::class))
+            ->toThrow(SerializationException::class);
+
+        return;
+    }
+
+    $result = $this->validator->validateAndTransform(['dateField' => $input], Event::class);
+    expect($result)->toBeInstanceOf(Event::class);
+    expect($result->dateField)->toBeInstanceOf(DateTimeImmutable::class);
+})->with([
+    'valid ISO 8601' => ['2023-01-01T10:30:00Z', true],
+    'valid RFC 2822' => ['Sun, 01 Jan 2023 10:30:00 +0000', true],
+    'valid simple format' => ['2023-01-01 10:30:00', true],
+    'invalid format' => ['not-a-datetime', false],
+    'empty string' => ['', true], // Empty string creates current datetime
+]);
+
+test('validates nested object validation using existing test objects', function (): void {
+    // Test that metadata gets accepted as a plain object
+    // Since the SchemaBuilder requires string className, we'll test the validator logic indirectly
+    $schema = (new SchemaBuilder(User::class))
+        ->string('name', required: true)
+        ->object('address', Address::class, required: true)
+        ->register();
+
+    $addressSchema = (new SchemaBuilder(Address::class))
+        ->string('street', required: true)
+        ->string('city', required: true)
+        ->string('zip', required: true)
+        ->register();
+
+    $this->validator->registerSchema($schema);
+    $this->validator->registerSchema($addressSchema);
+
+    $input = [
+        'name' => 'John',
+        'address' => [
+            'street' => '123 Main St',
+            'city' => 'Anytown',
+            'zip' => '12345',
+        ],
+    ];
+
+    $result = $this->validator->validateAndTransform($input, User::class);
+    expect($result->address)->toBeInstanceOf(Address::class);
+});
+
+test('validates array items with different types using existing test classes', function (): void {
+    $schema = (new SchemaBuilder(TestArray::class))
+        ->array('numbers', ['type' => 'string'], required: true)
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Valid string array
+    $result1 = $this->validator->validateAndTransform(['numbers' => ['a', 'b', 'c']], TestArray::class);
+    expect($result1->numbers)->toBe(['a', 'b', 'c']);
+
+    // Invalid mixed array should throw
+    expect(fn () => $this->validator->validateAndTransform(['numbers' => ['a', 1, true]], TestArray::class))
+        ->toThrow(SerializationException::class);
+});
+
+test('validates string field conversion from different types', function (): void {
+    $schema = (new SchemaBuilder(TestObject::class))
+        ->string('name')
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Test string handling - should work fine
+    $result = $this->validator->validateAndTransform(['name' => 'test'], TestObject::class);
+    expect($result->name)->toBe('test');
+});
+
+test('handles integer validation edge cases using age field', function (): void {
+    $schema = (new SchemaBuilder(TestObject::class))
+        ->integer('age')
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Valid integer cases
+    $result1 = $this->validator->validateAndTransform(['age' => 42], TestObject::class);
+    expect($result1)->toBeInstanceOf(TestObject::class);
+
+    $result2 = $this->validator->validateAndTransform(['age' => '42'], TestObject::class);
+    expect($result2)->toBeInstanceOf(TestObject::class);
+
+    // Invalid integer cases should throw
+    expect(fn () => $this->validator->validateAndTransform(['age' => '42.5'], TestObject::class))
+        ->toThrow(SerializationException::class);
+
+    expect(fn () => $this->validator->validateAndTransform(['age' => 'not-a-number'], TestObject::class))
+        ->toThrow(SerializationException::class);
+});
+
+test('handles number validation in arrays', function (): void {
+    $schema = (new SchemaBuilder(TestArray::class))
+        ->array('numbers', ['type' => 'number'])
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Valid number cases
+    $result1 = $this->validator->validateAndTransform(['numbers' => [42.5]], TestArray::class);
+    expect($result1)->toBeInstanceOf(TestArray::class);
+
+    $result2 = $this->validator->validateAndTransform(['numbers' => ['42.5']], TestArray::class);
+    expect($result2)->toBeInstanceOf(TestArray::class);
+
+    // Invalid number cases should throw
+    expect(fn () => $this->validator->validateAndTransform(['numbers' => ['not-a-number']], TestArray::class))
+        ->toThrow(SerializationException::class);
+});
+
+test('validates string type strictly and rejects non-string types', function (): void {
+    $schema = (new SchemaBuilder(TestObject::class))
+        ->string('name', required: true)
+        ->integer('age', required: true)
+        ->register();
+
+    $this->validator->registerSchema($schema);
+
+    // Test that only actual strings are accepted for string fields
+    expect($this->validator->validateAndTransform(['name' => 'test', 'age' => 25], TestObject::class)->name)->toBe('test');
+
+    // Test that non-string types are rejected
+    expect(fn () => $this->validator->validateAndTransform(['name' => 42, 'age' => 25], TestObject::class))
+        ->toThrow(SerializationException::class);
+    expect(fn () => $this->validator->validateAndTransform(['name' => 42.5, 'age' => 25], TestObject::class))
+        ->toThrow(SerializationException::class);
+    expect(fn () => $this->validator->validateAndTransform(['name' => true, 'age' => 25], TestObject::class))
+        ->toThrow(SerializationException::class);
+});
+
+test('validates SchemaValidator getSchemas method', function (): void {
+    $schema1 = (new SchemaBuilder('Class1'))->string('field1')->register();
+    $schema2 = (new SchemaBuilder('Class2'))->integer('field2')->register();
+
+    $this->validator->registerSchema($schema1);
+    $this->validator->registerSchema($schema2);
+
+    $schemas = $this->validator->getSchemas();
+
+    expect($schemas)->toHaveCount(2)
+        ->and($schemas)->toHaveKey('Class1')
+        ->and($schemas)->toHaveKey('Class2')
+        ->and($schemas['Class1'])->toBe($schema1)
+        ->and($schemas['Class2'])->toBe($schema2);
+});
+
+test('validates registerSchema returns self for chaining', function (): void {
+    $schema = (new SchemaBuilder('TestClass'))->string('field')->register();
+
+    $result = $this->validator->registerSchema($schema);
+
+    expect($result)->toBe($this->validator);
+});

@@ -121,9 +121,9 @@ final class GetStoreResponse extends Response implements GetStoreResponseInterfa
             properties: [
                 new SchemaProperty(name: 'id', type: 'string', required: true),
                 new SchemaProperty(name: 'name', type: 'string', required: true),
-                new SchemaProperty(name: 'created_at', type: 'string', format: 'date-time', required: true),
-                new SchemaProperty(name: 'updated_at', type: 'string', format: 'date-time', required: true),
-                new SchemaProperty(name: 'deleted_at', type: 'string', format: 'date-time', required: false),
+                new SchemaProperty(name: 'created_at', type: 'string', format: 'datetime', required: true),
+                new SchemaProperty(name: 'updated_at', type: 'string', format: 'datetime', required: true),
+                new SchemaProperty(name: 'deleted_at', type: 'string', format: 'datetime', required: false),
             ],
         );
     }
