@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Network;
 
-use OpenFGA\Network\RequestContext;
-use OpenFGA\Network\RequestMethod;
-use Psr\Http\Message\StreamInterface;
 use Mockery;
+use OpenFGA\Network\{RequestContext, RequestMethod};
+use Psr\Http\Message\StreamInterface;
 
 describe('RequestContext', function (): void {
     test('constructs with required parameters', function (): void {

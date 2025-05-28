@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionParameter, ObjectRelation, TypeDefinition, Userset};
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, TypeDefinitionRelations, TypeDefinitions};
-use OpenFGA\Models\Enums\SchemaVersion;
+use OpenFGA\Models\Enums\{SchemaVersion, TypeName};
 use OpenFGA\Schema\SchemaInterface;
-use OpenFGA\Models\Enums\TypeName;
 
 describe('AuthorizationModel Model', function (): void {
     test('implements AuthorizationModelInterface', function (): void {

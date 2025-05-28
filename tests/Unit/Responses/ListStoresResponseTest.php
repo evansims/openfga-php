@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Responses;
 
+use DateTimeImmutable;
 use OpenFGA\Models\Collections\Stores;
 use OpenFGA\Models\{Store};
 use OpenFGA\Responses\{ListStoresResponse, ListStoresResponseInterface};
 use OpenFGA\Schema\SchemaInterface;
-use DateTimeImmutable;
 
 test('ListStoresResponse implements ListStoresResponseInterface', function (): void {
     $stores = new Stores();

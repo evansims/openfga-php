@@ -38,6 +38,6 @@ it('handles store IDs with special characters', function (): void {
 });
 
 it('throws when store ID is empty', function (): void {
-    expect(fn() => new DeleteStoreRequest(store: ''))
+    expect(fn () => new DeleteStoreRequest(store: ''))
         ->toThrow(InvalidArgumentException::class);
- });
+});

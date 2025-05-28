@@ -186,6 +186,6 @@ it('filters out null conditions from request body', function (): void {
 });
 
 it('throws when store ID is empty', function (): void {
-    expect(fn() => new CreateAuthorizationModelRequest(store: '', typeDefinitions: test()->createMock(TypeDefinitionsInterface::class)))
+    expect(fn () => new CreateAuthorizationModelRequest(store: '', typeDefinitions: test()->createMock(TypeDefinitionsInterface::class)))
         ->toThrow(InvalidArgumentException::class);
- });
+});

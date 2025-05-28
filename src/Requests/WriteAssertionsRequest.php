@@ -11,8 +11,6 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
 final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
 {
     /**

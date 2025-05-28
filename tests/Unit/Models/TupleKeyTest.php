@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey, TupleKeyInterface};
-use OpenFGA\Schema\SchemaInterface;
 use OpenFGA\Models\Enums\TypeName;
+use OpenFGA\Schema\SchemaInterface;
 
 describe('TupleKey Model', function (): void {
     test('implements TupleKeyInterface', function (): void {

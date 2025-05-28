@@ -9,8 +9,6 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
 final class CreateStoreRequest implements CreateStoreRequestInterface
 {
     public function __construct(
