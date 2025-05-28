@@ -1,10 +1,10 @@
-# OpenFGA PHP SDK Documentation Generator
+# Documentation Generator
 
-This tool generates API documentation from the OpenFGA PHP SDK source code.
+Automatically generates comprehensive API documentation from the OpenFGA PHP SDK source code.
 
 ## Requirements
 
-- PHP 8.0 or higher
+- PHP 8.3 or higher
 - Composer
 
 ## Installation
@@ -23,15 +23,23 @@ This tool generates API documentation from the OpenFGA PHP SDK source code.
 
 ## Usage
 
-Run the documentation generator:
+Generate fresh API documentation:
 
 ```bash
 php generate.php [--src=path/to/src] [--out=path/to/output] [--clean]
 ```
 
-`--src` and `--out` let you override the default source and output folders. The optional `--clean` flag removes the output directory before generating files.
+**Options:**
+- `--src`: Override the default source directory (defaults to `../../src/`)  
+- `--out`: Override the default output directory (defaults to `../../docs/API/`)  
+- `--clean`: Remove existing output directory before generating new files
 
-This will parse all PHP files in the `src/` directory and generate Markdown documentation in the `docs/API/` directory by default.
+**Example with clean regeneration:**
+```bash
+php generate.php --clean
+```
+
+This parses all PHP files in the `src/` directory and generates comprehensive Markdown documentation in the `docs/API/` directory.
 
 ## Customizing the Output
 

@@ -56,17 +56,64 @@ test('Success err throws LogicException', function (): void {
         ->toThrow(LogicException::class, 'Success has no error');
 });
 
-test('Success unwrap returns value when no default provided', function (): void {
+test('Success unwrap returns value when no callback provided', function (): void {
     $success = new Success($this->testValue);
 
     expect($success->unwrap())->toBe($this->testValue);
 });
 
-test('Success unwrap returns value when default provided', function (): void {
+test('Success unwrap with callback transforms the value', function (): void {
     $success = new Success($this->testValue);
-    $default = 'default-value';
 
-    expect($success->unwrap($default))->toBe($this->testValue);
+    $result = $success->unwrap(function ($value) {
+        expect($value)->toBe($this->testValue);
+
+        return strtoupper($value);
+    });
+
+    expect($result)->toBe('TEST-VALUE');
+});
+
+test('Success unwrap callback receives correct value type', function (): void {
+    $success = new Success($this->testObject);
+
+    $result = $success->unwrap(function ($value) {
+        expect($value)->toBeObject();
+        expect($value->name)->toBe('test');
+        expect($value->value)->toBe(123);
+
+        return $value->name;
+    });
+
+    expect($result)->toBe('test');
+});
+
+test('Success unwrap callback can return different type', function (): void {
+    $success = new Success($this->testArray);
+
+    $result = $success->unwrap(function ($value) {
+        expect($value)->toBeArray();
+
+        return \count($value); // Return int instead of array
+    });
+
+    expect($result)->toBe(3);
+});
+
+test('Success unwrap callback can return null', function (): void {
+    $success = new Success($this->testValue);
+
+    $result = $success->unwrap(fn ($value) => null);
+
+    expect($result)->toBeNull();
+});
+
+test('Success unwrap callback can throw exception', function (): void {
+    $success = new Success($this->testValue);
+
+    expect(fn () => $success->unwrap(function ($value): void {
+        throw new RuntimeException('Transform failed');
+    }))->toThrow(RuntimeException::class, 'Transform failed');
 });
 
 test('Success success executes callback and returns self', function (): void {
@@ -119,6 +166,44 @@ test('Success then can return Failure', function (): void {
     expect($result)->toBeInstanceOf(Failure::class);
     expect($result->err())->toBe($error);
     expect($result->err())->toBe($error);
+});
+
+test('Success then wraps non-Result return values', function (): void {
+    $success = new Success($this->testValue);
+
+    // Test with string
+    $result = $success->then(fn ($value) => strtoupper($value));
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe('TEST-VALUE');
+
+    // Test with array
+    $result = $success->then(fn () => ['wrapped']);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe(['wrapped']);
+
+    // Test with null
+    $result = $success->then(fn () => null);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBeNull();
+
+    // Test with object
+    $obj = (object) ['test' => true];
+    $result = $success->then(fn () => $obj);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe($obj);
+});
+
+test('Success then preserves Result return values', function (): void {
+    $success = new Success($this->testValue);
+
+    // Test that existing Result instances are preserved
+    $successResult = new Success('already-success');
+    $result = $success->then(fn () => $successResult);
+    expect($result)->toBe($successResult);
+
+    $failureResult = new Failure(ClientError::Validation->exception());
+    $result = $success->then(fn () => $failureResult);
+    expect($result)->toBe($failureResult);
 });
 
 test('Success recover does not execute callback and returns self', function (): void {
@@ -174,7 +259,11 @@ test('Success works with null values', function (): void {
 
     expect($success->val())->toBeNull();
     expect($success->succeeded())->toBeTrue();
-    expect($success->unwrap('default'))->toBeNull();
+    expect($success->unwrap())->toBeNull();
+
+    // Test with callback
+    $result = $success->unwrap(fn ($value) => $value ?? 'default');
+    expect($result)->toBe('default');
 });
 
 test('Success works with falsy values', function (): void {
@@ -185,7 +274,11 @@ test('Success works with falsy values', function (): void {
 
         expect($success->val())->toBe($value);
         expect($success->succeeded())->toBeTrue();
-        expect($success->unwrap('default'))->toBe($value);
+        expect($success->unwrap())->toBe($value);
+
+        // Test with callback
+        $result = $success->unwrap(fn ($v) => false === $v ? 'false' : $v);
+        expect($result)->toBe(false === $value ? 'false' : $value);
     }
 });
 

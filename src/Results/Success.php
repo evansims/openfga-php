@@ -100,7 +100,9 @@ final class Success extends Result implements ResultInterface
      */
     public function then(callable $fn): ResultInterface
     {
-        return $fn($this->val());
+        $result = $fn($this->val());
+
+        return $result instanceof ResultInterface ? $result : new self($result);
     }
 
     #[Override]

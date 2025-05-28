@@ -1,13 +1,19 @@
 # Performing Relationship Queries in OpenFGA
 
-Once you have an [Authorization Model](AuthorizationModels.md) in place and have populated it with [Relationship Tuples](RelationshipTuples.md), the next step is to ask OpenFGA about effective permissions. This is done through **Relationship Queries**. These queries allow you to determine what actions users can take on which resources based on the defined model and stored tuples.
+Once you have an [Authorization Model](AuthorizationModels.md) in place and have populated it with [Relationship Tuples](RelationshipTuples.md), the next step is to ask OpenFGA about effective permissions. This is the moment where all your setup pays off - **querying the actual permissions**.
 
-This guide will walk you through the main types of queries:
+**🔍 The Four Query Types:**
 
-- **`check()`**: Answers: "Does user X have permission Y on object Z?"
-- **`expand()`**: Answers: "How does user X have permission Y on object Z?" (by showing the relationship tree).
-- **`listUsers()`**: Answers: "Which users have permission Y on object Z?"
-- **`listObjects()`**: Answers: "What objects of type T can user X access with permission Y?"
+- **`check()`** - "Can Alice edit Document123?" (Boolean answer)
+- **`listObjects()`** - "What documents can Alice edit?" (List of objects)  
+- **`listUsers()`** - "Who can edit Document123?" (List of users)
+- **`expand()`** - "How does Alice have edit access?" (Relationship tree)
+
+**Quick Navigation:** [✅ check()](#1-check-clientcheck) • [📋 listObjects()](#4-listobjects-clientlistobjects) • [👥 listUsers()](#3-listusers-clientlistusers) • [🌳 expand()](#2-expand-clientexpand) • [🔧 Advanced Patterns](#contextual-tuples-what-if-scenarios)
+
+**New to querying?** Start with `check()` - it's the most common and straightforward.
+
+**Building complex apps?** You'll likely use `listObjects()` and `listUsers()` for displaying UI elements based on permissions.
 
 ## Prerequisites
 

@@ -40,7 +40,7 @@ interface ResultInterface
      * @template U
      * @template F of Throwable
      *
-     * @param callable(Throwable): ResultInterface<U, F> $fn
+     * @param callable(Throwable): (ResultInterface<U, F>|U) $fn
      *
      * @return ResultInterface<U, F>
      */
@@ -75,22 +75,19 @@ interface ResultInterface
      * @template U
      * @template F of Throwable
      *
-     * @param callable(T): ResultInterface<U, F> $fn
+     * @param callable(T): (ResultInterface<U, F>|U) $fn
      *
      * @return ResultInterface<U, F>
      */
     public function then(callable $fn): self;
 
     /**
-     * Return the unwrapped value of a `Success`, or a default value.
+     * Return the unwrapped value of a `Success`, or throws the error of a `Failure`.
+     * When a callable is provided, it is called with the value of the `Success` or `Failure`, and its return value is returned.
      *
-     * @template R
-     *
-     * @param R $default
-     *
-     * @return R|T
+     * @param null|callable(E|T): mixed $fn
      */
-    public function unwrap(mixed $default = null): mixed;
+    public function unwrap(?callable $fn = null): mixed;
 
     /**
      * Return the unwrapped value of a `Success`.
