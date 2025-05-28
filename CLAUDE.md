@@ -6,16 +6,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Testing
 
-- `composer test` - Run all unit tests
-- `composer test:unit` - Run unit tests with coverage and linting
+- `composer test` - Run unit tests with coverage and linting
+- `composer test:unit` - Run unit tests with coverage
 - `composer test:integration` - Run integration tests (requires Docker containers: `composer integration:start`)
 - `composer test:contract` - Run OpenAPI contract tests
 - Run a single test: `./vendor/bin/pest tests/Unit/Path/To/Test.php --filter="test name"`
+- If PEST exits with code 255, it means there is a syntax error in the test or codebase that needs fixed
 
 ### Code Quality
 
-- `composer lint` - Run all linters (PHPStan, Rector, PHP-CS-Fixer)
+- `composer lint` - Run all linters (PHPStan, Psalm, Rector, PHP-CS-Fixer)
 - `composer phpstan` - Static analysis at max level
+- `composer psalm` - Static analysis at max level
 - `composer phpcs:fix` - Auto-fix code style issues
 - `composer rector:fix` - Auto-modernize code
 

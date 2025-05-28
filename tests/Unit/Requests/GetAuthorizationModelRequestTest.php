@@ -7,7 +7,6 @@ use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\GetAuthorizationModelRequest;
 use Psr\Http\Message\StreamFactoryInterface;
 
-
 it('can be instantiated', function (): void {
     $request = new GetAuthorizationModelRequest(
         store: 'test-store',

@@ -9,7 +9,6 @@ use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\CreateAuthorizationModelRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
-
 it('can be instantiated with required parameters', function (): void {
     $typeDefinitions = Mockery::mock(TypeDefinitionsInterface::class);
 

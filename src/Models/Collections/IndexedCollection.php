@@ -34,14 +34,16 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     private int $position = 0;
 
     /**
+     * @var array<class-string, CollectionSchemaInterface>
+     */
+    private static array $cachedSchemas = [];
+
+    /**
      * @phpstan-var class-string<ModelInterface>
      *
      * @var class-string<ModelInterface>
      */
     protected static string $itemType;
-
-    /** @var array<class-string, CollectionSchemaInterface> */
-    private static array $cachedSchemas = [];
 
     /**
      * @param iterable<T>|T ...$items
@@ -358,6 +360,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
             itemType: static::$itemType,
             requireItems: false,
         );
+
         self::$cachedSchemas[static::class] = $schema;
 
         return $schema;

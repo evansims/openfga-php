@@ -1,0 +1,90 @@
+<?php
+
+declare(strict_types=1);
+
+use OpenFGA\Requests\{ReadAssertionsRequest, ReadAssertionsRequestInterface};
+use Psr\Http\Message\StreamFactoryInterface;
+
+beforeEach(function (): void {
+    $this->streamFactory = $this->createMock(StreamFactoryInterface::class);
+});
+
+test('ReadAssertionsRequest implements ReadAssertionsRequestInterface', function (): void {
+    $request = new ReadAssertionsRequest('store', 'model');
+    expect($request)->toBeInstanceOf(ReadAssertionsRequestInterface::class);
+});
+
+test('ReadAssertionsRequest constructs with required parameters', function (): void {
+    $request = new ReadAssertionsRequest(
+        store: 'test-store-id',
+        model: 'model-id-123',
+    );
+
+    expect($request->getStore())->toBe('test-store-id');
+    expect($request->getModel())->toBe('model-id-123');
+});
+
+test('ReadAssertionsRequest getRequest returns RequestContext', function (): void {
+    $request = new ReadAssertionsRequest(
+        store: 'test-store',
+        model: 'model-xyz',
+    );
+
+    $context = $request->getRequest($this->streamFactory);
+
+    expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::GET);
+    expect($context->getUrl())->toBe('/stores/test-store/assertions/model-xyz');
+    expect($context->getBody())->toBeNull();
+    expect($context->useApiUrl())->toBeTrue();
+});
+
+test('ReadAssertionsRequest handles UUID format IDs', function (): void {
+    $storeId = '550e8400-e29b-41d4-a716-446655440000';
+    $modelId = '660e8400-e29b-41d4-a716-446655440001';
+
+    $request = new ReadAssertionsRequest(
+        store: $storeId,
+        model: $modelId,
+    );
+
+    $context = $request->getRequest($this->streamFactory);
+
+    expect($context->getUrl())->toBe("/stores/{$storeId}/assertions/{$modelId}");
+});
+
+test('ReadAssertionsRequest handles empty strings', function (): void {
+    $request = new ReadAssertionsRequest(
+        store: '',
+        model: '',
+    );
+
+    expect($request->getStore())->toBe('');
+    expect($request->getModel())->toBe('');
+
+    $context = $request->getRequest($this->streamFactory);
+    expect($context->getUrl())->toBe('/stores//assertions/');
+});
+
+test('ReadAssertionsRequest handles special characters in IDs', function (): void {
+    $request = new ReadAssertionsRequest(
+        store: 'store-with-special_chars.123',
+        model: 'model-with-special_chars.456',
+    );
+
+    $context = $request->getRequest($this->streamFactory);
+
+    expect($context->getUrl())->toBe('/stores/store-with-special_chars.123/assertions/model-with-special_chars.456');
+});
+
+test('ReadAssertionsRequest preserves exact parameter values', function (): void {
+    $request = new ReadAssertionsRequest(
+        store: '  store-with-spaces  ',
+        model: '  model-with-spaces  ',
+    );
+
+    expect($request->getStore())->toBe('  store-with-spaces  ');
+    expect($request->getModel())->toBe('  model-with-spaces  ');
+
+    $context = $request->getRequest($this->streamFactory);
+    expect($context->getUrl())->toBe('/stores/  store-with-spaces  /assertions/  model-with-spaces  ');
+});

@@ -7,7 +7,6 @@ use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\DeleteStoreRequest;
 use Psr\Http\Message\StreamFactoryInterface;
 
-
 it('can be instantiated', function (): void {
     $request = new DeleteStoreRequest(store: 'test-store');
 

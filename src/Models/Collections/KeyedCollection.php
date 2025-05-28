@@ -34,14 +34,16 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     private int $position = 0;
 
     /**
+     * @var array<class-string, CollectionSchemaInterface>
+     */
+    private static array $cachedSchemas = [];
+
+    /**
      * @phpstan-var class-string<ModelInterface>
      *
      * @var class-string<ModelInterface>
      */
     protected static string $itemType;
-
-    /** @var array<class-string, CollectionSchemaInterface> */
-    private static array $cachedSchemas = [];
 
     /**
      * @param array<string, T> $items
