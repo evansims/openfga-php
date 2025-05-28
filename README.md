@@ -6,11 +6,27 @@
 
 **The OpenFGA PHP SDK puts relationship-based access control at your fingertips.** Describe “who can do what” once in a human-friendly DSL, then let [OpenFGA](https://openfga.dev/) or [Auth0 FGA](https://auth0.com/fga) enforce it. No scattering of `if` statements across your codebase or brittle policy files. A fluent API with strict typing, and PSR-compatible networking makes all the plumbing disappear, unburdening you with cleaner code, sharper security boundaries, and room to grow.
 
-- **Strictly-typed API** — Native type hinting and linter-friendly generics.
-- **Standards first** — Built for interoperability and minimal dependency overhead.
-- **Human-friendly DSL** — Parse and commit authorization model changes using plain text.
-- **Ready to scale** — One solution for a weekend project or an enterprise app with millions of tuples.
-- **Community-maintained** — Stewarded by seasoned PHP contributors; dedicated to stability and security.
+**Quick Navigation:** [⚡ Installation](#installation) • [🚀 Quick Start](#quick-start) • [📚 Full Documentation](docs/GettingStarted.md) • [🔧 API Reference](docs/API)
+
+## Why Choose This SDK?
+
+- **Strictly-typed API** — Native type hinting and linter-friendly generics catch errors before they reach production
+- **Standards first** — Built for interoperability with any PSR-compatible HTTP library you prefer
+- **Human-friendly DSL** — Parse and commit authorization model changes using plain text instead of complex JSON
+- **Ready to scale** — One solution from weekend projects to enterprise apps with millions of tuples
+- **Community-maintained** — Stewarded by seasoned PHP contributors; dedicated to stability and security
+- **Battle-tested** — Comprehensive test coverage and used in production by teams worldwide
+
+## Common Use Cases
+
+Perfect for applications that need fine-grained permissions:
+
+- **Document Management** — Control who can view, edit, or share specific documents and folders
+- **Multi-tenant SaaS** — Isolate customer data while allowing flexible team permissions
+- **Enterprise Apps** — Model complex organizational hierarchies and role-based access
+- **Admin Panels** — Gate access to sensitive operations based on user roles and context
+- **Social Platforms** — Manage privacy settings, content visibility, and user interactions
+- **B2B Platforms** — Handle partner access, client portals, and vendor permissions
 
 ## Requirements
 
@@ -21,21 +37,19 @@
 
 ## Installation
 
-You can install the SDK via Composer:
+Install the SDK via Composer:
 
 ```bash
 composer require evansims/openfga-php
 ```
 
-Composer may require you to install a PSR-7, PSR-17 (HTTP Factories), and PSR-18 (HTTP Client) implementation. Any libraries you prefer to use are fine, as long as they implement those interfaces. For example, to use Guzzle:
-
-```bash
-composer require guzzlehttp/guzzle guzzlehttp/psr7
-```
+You'll also need PSR-7, PSR-17, and PSR-18 implementations. Any PSR-compatible networking libraries will work. The SDK adapts to whatever you're already using, so choose what works best for your project.
 
 ## Quick Start
 
-Here's a quick example to get you up and running. This demonstrates creating a client, setting up a store, defining an authorization model, writing a relationship tuple, and performing an authorization check.
+Ready to see it in action? This 5-minute example shows you the complete flow: setup → define permissions → check access.
+
+**What you'll build:** A simple document system where users can be viewers or editors.
 
 ```php
 <?php
@@ -112,7 +126,7 @@ $tuple = tuple(
 );
 
 ($client->writeTuples(store: $store, model: $model, writes: tuples($tuple)))
-    ->success(fn(WriteTuplesResponseInterface $response) => print "Anne is now allowed to view the roadmap document\n")
+    ->success(fn(WriteTuplesResponseInterface $response) => print "Anne can now view the roadmap document\n")
     ->unwrap();
 
 /**
@@ -155,13 +169,27 @@ The SDK provides a fluent interface for interacting with all the core features o
 
 ## Authentication
 
-The SDK can be configured to use any of the authentication methods supported by OpenFGA and Auth0 FGA:
+Secure your connection to OpenFGA with any supported authentication method:
 
-- No authentication (default)
-- Pre-shared key authentication (token)
-- OIDC (client credentials flow)
+- **🔓 No authentication** — Perfect for local development and testing
+- **🔑 API Token** — Simple pre-shared key authentication for internal services
+- **🛡️ OAuth2 Client Credentials** — Enterprise-grade security for production (Auth0 FGA, etc.)
 
-[Learn more about configuring authentication in `docs/Authentication.md`](docs/Authentication.md)
+**Quick Setup:**
+
+```php
+// For production with Auth0 FGA
+$client = new Client(
+    url: 'https://api.us1.fga.dev',
+    authentication: Authentication::CLIENT_CREDENTIALS,
+    clientId: $_ENV['FGA_CLIENT_ID'],
+    clientSecret: $_ENV['FGA_CLIENT_SECRET'],
+    issuer: $_ENV['FGA_ISSUER'],
+    audience: $_ENV['FGA_AUDIENCE']
+);
+```
+
+[Complete authentication guide →](docs/Authentication.md)
 
 ## Error Handling and Results
 
@@ -171,20 +199,29 @@ Client methods return `Result` objects representing either a `Success` or a `Fai
 
 ## Documentation
 
-For more detailed information, please refer to the following resources:
+### 📖 Getting Started
 
-- **SDK Documentation** can be found in the `docs` directory.
-  - [Getting Started](docs/GettingStarted.md)
-  - [Authentication](docs/Authentication.md)
-  - [Stores](docs/Stores.md)
-  - [Authorization Models](docs/AuthorizationModels.md)
-  - [Relationship Tuples](docs/RelationshipTuples.md)
-  - [Queries](docs/Queries.md)
-  - [Assertions](docs/Assertions.md)
-  - [Results (Error Handling)](docs/Results.md)
-  - [Generated API Documentation](docs/API)
-- **SDK Examples** can be found in the `examples` directory.
-- **OpenFGA** provides [comprehensive server documentation](https://openfga.dev/docs).
+- **[Getting Started Guide](docs/GettingStarted.md)** — Complete walkthrough from installation to first auth check
+- **[Core Concepts](docs/AuthorizationModels.md)** — Understanding models, stores, and relationships
+- **[Common Patterns](examples/)** — Real-world examples and use cases
+
+### 🔧 Implementation Guides
+
+- **[Authentication Setup](docs/Authentication.md)** — Connect securely to OpenFGA/Auth0 FGA
+- **[Managing Stores](docs/Stores.md)** — Multi-tenant and environment isolation
+- **[Writing Queries](docs/Queries.md)** — Check permissions and list resources
+- **[Error Handling](docs/Results.md)** — Robust production patterns
+
+### 🔍 Advanced Topics
+
+- **[Relationship Tuples](docs/RelationshipTuples.md)** — Managing permissions at scale
+- **[Testing Models](docs/Assertions.md)** — Validate your authorization logic
+- **[API Reference](docs/API)** — Complete class and method documentation
+
+### 🌐 External Resources
+
+- **[OpenFGA Documentation](https://openfga.dev/docs)** — Server setup and concepts
+- **[Auth0 FGA](https://auth0.com/docs/fga)** — Managed service documentation
 
 ## Contributing
 
