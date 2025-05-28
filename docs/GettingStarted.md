@@ -1,8 +1,10 @@
 # Getting Started with the OpenFGA PHP SDK
 
-Welcome! This guide will walk you through the initial steps to integrate the OpenFGA PHP SDK into your project, enabling you to add powerful fine-grained authorization to your application. We'll cover setting up your environment, installing the SDK, initializing the client, and performing your first authorization check.
+Welcome! This guide will get you up and running with fine-grained authorization in minutes. You'll learn how to install the SDK, connect to OpenFGA, and perform your first authorization check.
 
-Our goal is to get you up and running as quickly as possible.
+**New to OpenFGA?** Think of it as a way to answer "Can user X do action Y on resource Z?" without scattering permission logic throughout your codebase. Define your authorization rules once, then query them anywhere.
+
+**Experienced with authorization systems?** Skip to [Quick Installation](#2-installing-the-sdk) if you already have OpenFGA running.
 
 ## Prerequisites
 
@@ -112,9 +114,15 @@ With the client initialized, the typical workflow in OpenFGA involves these step
 5. **(Optional) Test with Assertions:** You can write assertions to test your authorization model and ensure it behaves as expected.
    - [Learn more about Assertions](Assertions.md)
 
-## 5. Your First End-to-End Check
+## 5. Your First Complete Example
 
-Let's put some of the core concepts together in a simple, runnable example. This demonstrates creating a store, defining a model, writing a tuple, and performing a check.
+Let's put it all together! This example walks through the entire process from start to finish - perfect for beginners who want to see how everything connects.
+
+**What this example does:**
+- Creates a new store for your authorization data
+- Defines a simple authorization model (documents with viewers and editors)  
+- Adds a relationship tuple (Anne can view the roadmap)
+- Checks if Anne has permission to view the document
 
 ```php
 <?php
@@ -200,16 +208,19 @@ To run this:
 
 You should see output indicating the successful creation of the store, model, tuple, and a successful authorization check.
 
-## Next Steps
+## What's Next?
 
-Now that you have a basic understanding of the SDK and have performed your first check, you can dive deeper into specific areas:
+**Just getting started?** Focus on these essentials first:
+1. **[Authorization Models](AuthorizationModels.md)** - Learn to design more complex permission systems
+2. **[Queries](Queries.md)** - Master the different ways to check permissions  
+3. **[Results & Error Handling](Results.md)** - Build robust, production-ready integrations
 
-- **[Stores (`Stores.md`)](Stores.md):** Learn more about managing multiple stores.
-- **[Authorization Models (`AuthorizationModels.md`)](AuthorizationModels.md):** Explore the details of the DSL and model management.
-- **[Relationship Tuples (`RelationshipTuples.md`)](RelationshipTuples.md):** Understand how to read, write, and delete tuples at scale.
-- **[Queries (`Queries.md`)](Queries.md):** Master the different types of authorization queries.
-- **[Assertions (`Assertions.md`)](Assertions.md):** Learn how to test your authorization models effectively.
-- **[Authentication (`Authentication.md`)](Authentication.md):** Secure your connection to the OpenFGA server.
-- **[Results & Error Handling (`Results.md`)](Results.md):** Implement robust error handling for production applications.
+**Building for production?** You'll want these too:
+- **[Authentication](Authentication.md)** - Secure your OpenFGA connection
+- **[Relationship Tuples](RelationshipTuples.md)** - Manage permissions at scale
+- **[Assertions](Assertions.md)** - Test your authorization logic
 
-Refer to the main [README.md](../../README.md) for a general overview and other information. Happy coding!
+**Need more stores or complex scenarios?**
+- **[Stores](Stores.md)** - Multi-tenant and environment management
+
+For a complete overview and advanced patterns, see the main [README.md](../../README.md). Happy coding!
