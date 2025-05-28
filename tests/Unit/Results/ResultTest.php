@@ -12,54 +12,56 @@ test('Result unwrap returns value for Success', function (): void {
     expect($success->unwrap())->toBe($value);
 });
 
-test('Result unwrap returns value for Success with default provided', function (): void {
+test('Result unwrap returns value for Success with callback', function (): void {
     $value = 'test-value';
-    $default = 'default-value';
     $success = new Success($value);
 
-    expect($success->unwrap($default))->toBe($value);
+    $result = $success->unwrap(fn ($v) => strtoupper($v));
+    expect($result)->toBe('TEST-VALUE');
 });
 
-test('Result unwrap returns default for Failure with no default', function (): void {
+test('Result unwrap throws for Failure with no callback', function (): void {
     $error = ClientError::Validation->exception();
     $failure = new Failure($error);
 
-    expect($failure->unwrap())->toBeNull();
+    expect(fn () => $failure->unwrap())
+        ->toThrow($error::class);
 });
 
-test('Result unwrap returns default for Failure with default provided', function (): void {
-    $error = ClientError::Validation->exception();
-    $default = 'default-value';
-    $failure = new Failure($error);
-
-    expect($failure->unwrap($default))->toBe($default);
-});
-
-test('Result unwrap with various default types for Failure', function (mixed $default): void {
+test('Result unwrap returns callback result for Failure', function (): void {
     $error = ClientError::Validation->exception();
     $failure = new Failure($error);
 
-    expect($failure->unwrap($default))->toBe($default);
+    $result = $failure->unwrap(fn ($e) => 'handled: ' . $e->getMessage());
+    expect($result)->toStartWith('handled: ');
+});
+
+test('Result unwrap with various callback return types for Failure', function (mixed $returnValue): void {
+    $error = ClientError::Validation->exception();
+    $failure = new Failure($error);
+
+    $result = $failure->unwrap(fn () => $returnValue);
+    expect($result)->toBe($returnValue);
 })->with([
-    'string default' => ['default-string'],
-    'number default' => [42],
-    'array default' => [['a', 'b', 'c']],
-    'object default' => [(object) ['key' => 'value']],
-    'boolean true default' => [true],
-    'boolean false default' => [false],
-    'null default' => [null],
+    'string return' => ['default-string'],
+    'number return' => [42],
+    'array return' => [['a', 'b', 'c']],
+    'object return' => [(object) ['key' => 'value']],
+    'boolean true return' => [true],
+    'boolean false return' => [false],
+    'null return' => [null],
 ]);
 
-test('Result unwrap with falsy defaults for Failure', function (): void {
+test('Result unwrap with falsy callback returns for Failure', function (): void {
     $error = ClientError::Validation->exception();
     $failure = new Failure($error);
 
-    // Test various falsy values
-    expect($failure->unwrap(false))->toBeFalse();
-    expect($failure->unwrap(0))->toBe(0);
-    expect($failure->unwrap(''))->toBe('');
-    expect($failure->unwrap([]))->toBe([]);
-    expect($failure->unwrap(null))->toBeNull();
+    // Test various falsy return values
+    expect($failure->unwrap(fn () => false))->toBeFalse();
+    expect($failure->unwrap(fn () => 0))->toBe(0);
+    expect($failure->unwrap(fn () => ''))->toBe('');
+    expect($failure->unwrap(fn () => []))->toBe([]);
+    expect($failure->unwrap(fn () => null))->toBeNull();
 });
 
 test('Result unwrap preserves Success value type', function (): void {
@@ -75,7 +77,9 @@ test('Result unwrap preserves Success value type', function (): void {
 
     foreach ($values as $value) {
         $success = new Success($value);
-        expect($success->unwrap('default'))->toBe($value);
+        expect($success->unwrap())->toBe($value);
+        // Test with callback that doesn't transform
+        expect($success->unwrap(fn ($v) => $v))->toBe($value);
     }
 });
 
@@ -97,9 +101,9 @@ test('Result abstract class behavior through concrete implementations', function
         expect($result)->toBeInstanceOf(Result::class);
         // unwrap should work on both
         if ($result instanceof Success) {
-            expect($result->unwrap('default'))->toBe($value);
+            expect($result->unwrap())->toBe($value);
         } else {
-            expect($result->unwrap('default'))->toBe('default');
+            expect($result->unwrap(fn () => 'default'))->toBe('default');
         }
     }
 });
@@ -113,8 +117,8 @@ test('Result unwrap method is inherited correctly', function (): void {
     expect(method_exists($failure, 'unwrap'))->toBeTrue();
 
     // Verify it calls the correct internal methods
-    expect($success->unwrap('default'))->toBe('success-value');
-    expect($failure->unwrap('default'))->toBe('default');
+    expect($success->unwrap())->toBe('success-value');
+    expect($failure->unwrap(fn () => 'default'))->toBe('default');
 });
 
 test('Result concrete classes maintain interface contract', function (): void {
@@ -150,12 +154,12 @@ test('Result unwrap handles complex object structures', function (): void {
     $failure = new Failure(ClientError::Validation->exception());
 
     expect($success->unwrap())->toBe($complexObject);
-    expect($failure->unwrap($complexObject))->toBe($complexObject);
+    expect($failure->unwrap(fn () => $complexObject))->toBe($complexObject);
 });
 
-test('Result unwrap with closure as default', function (): void {
-    $closure = fn () => 'closure result';
+test('Result unwrap with closure callback', function (): void {
     $failure = new Failure(ClientError::Validation->exception());
 
-    expect($failure->unwrap($closure))->toBe($closure);
+    $result = $failure->unwrap(fn () => 'closure result');
+    expect($result)->toBe('closure result');
 });

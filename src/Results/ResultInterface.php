@@ -85,7 +85,7 @@ interface ResultInterface
      * Return the unwrapped value of a `Success`, or throws the error of a `Failure`.
      * When a callable is provided, it is called with the value of the `Success` or `Failure`, and its return value is returned.
      *
-     * @param callable(T|E): mixed $fn
+     * @param null|callable(E|T): mixed $fn
      */
     public function unwrap(?callable $fn = null): mixed;
 

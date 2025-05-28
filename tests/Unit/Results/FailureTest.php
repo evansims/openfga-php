@@ -49,26 +49,81 @@ test('Failure val throws LogicException', function (): void {
         ->toThrow(LogicException::class, 'Failure has no value');
 });
 
-test('Failure unwrap returns default when no default provided', function (): void {
+test('Failure unwrap throws error when no callback provided', function (): void {
     $failure = new Failure($this->testError);
 
-    expect($failure->unwrap())->toBeNull();
+    expect(fn () => $failure->unwrap())
+        ->toThrow($this->testError::class);
 });
 
-test('Failure unwrap returns default when default provided', function (): void {
+test('Failure unwrap with callback receives error and returns callback result', function (): void {
     $failure = new Failure($this->testError);
-    $default = 'default-value';
 
-    expect($failure->unwrap($default))->toBe($default);
+    $result = $failure->unwrap(function ($error) {
+        expect($error)->toBe($this->testError);
+
+        return 'handled-error';
+    });
+
+    expect($result)->toBe('handled-error');
 });
 
-test('Failure unwrap with different default types', function (): void {
+test('Failure unwrap callback can transform error to different types', function (): void {
     $failure = new Failure($this->testError);
 
-    expect($failure->unwrap('string'))->toBe('string');
-    expect($failure->unwrap(42))->toBe(42);
-    expect($failure->unwrap(['array']))->toBe(['array']);
-    expect($failure->unwrap(false))->toBeFalse();
+    // Transform to string
+    $stringResult = $failure->unwrap(fn ($error) => $error->getMessage());
+    expect($stringResult)->toBeString();
+
+    // Transform to array
+    $arrayResult = $failure->unwrap(fn ($error) => ['error' => $error->getMessage()]);
+    expect($arrayResult)->toBeArray()
+        ->toHaveKey('error');
+
+    // Transform to number
+    $numberResult = $failure->unwrap(fn ($error) => $error->getCode());
+    expect($numberResult)->toBeInt();
+
+    // Transform to boolean
+    $boolResult = $failure->unwrap(fn () => false);
+    expect($boolResult)->toBeFalse();
+});
+
+test('Failure unwrap callback can return null', function (): void {
+    $failure = new Failure($this->testError);
+
+    $result = $failure->unwrap(fn () => null);
+
+    expect($result)->toBeNull();
+});
+
+test('Failure unwrap callback receives correct error type', function (): void {
+    $clientFailure = new Failure($this->testError);
+    $networkFailure = new Failure($this->networkError);
+
+    $clientResult = $clientFailure->unwrap(function ($error) {
+        expect($error)->toBeInstanceOf(OpenFGA\Exceptions\ClientException::class);
+
+        return 'client-error';
+    });
+
+    $networkResult = $networkFailure->unwrap(function ($error) {
+        expect($error)->toBeInstanceOf(OpenFGA\Exceptions\NetworkException::class);
+
+        return 'network-error';
+    });
+
+    expect($clientResult)->toBe('client-error');
+    expect($networkResult)->toBe('network-error');
+});
+
+test('Failure unwrap callback can itself throw an exception', function (): void {
+    $failure = new Failure($this->testError);
+    $customException = new RuntimeException('Custom exception from callback');
+
+    expect(fn () => $failure->unwrap(function () use ($customException): void {
+        throw $customException;
+    }))->toThrow(RuntimeException::class, 'Custom exception from callback');
 });
 
 test('Failure success does not execute callback and returns self', function (): void {
@@ -228,7 +283,9 @@ test('Failure works with standard PHP exceptions', function (): void {
 
     expect($failure->err())->toBe($standardError);
     expect($failure->failed())->toBeTrue();
-    expect($failure->unwrap('default'))->toBe('default');
+
+    $result = $failure->unwrap(fn () => 'handled');
+    expect($result)->toBe('handled');
 });
 
 test('Failure works with custom exceptions', function (): void {

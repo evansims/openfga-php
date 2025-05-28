@@ -59,7 +59,7 @@ test('AccessToken isExpired returns true for current time', function (): void {
 
     // At exact expiration time, token is expired (expires < time())
     expect($token->isExpired())->toBeFalse();
-    
+
     // One second past expiration, token should be expired
     $expiredToken = new AccessToken('token', $currentTime - 1);
     expect($expiredToken->isExpired())->toBeTrue();

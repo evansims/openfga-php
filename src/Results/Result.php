@@ -22,15 +22,21 @@ abstract class Result implements ResultInterface
     public function unwrap(?callable $fn = null): mixed
     {
         if ($this->failed()) {
-            if ($fn !== null) {
-                return $fn($this->err());
+            if (null !== $fn) {
+                /** @var E $error */
+                $error = $this->err();
+
+                return $fn($error);
             }
 
             throw $this->err();
         }
 
-        if ($fn !== null) {
-            return $fn($this->val());
+        if (null !== $fn) {
+            /** @var T $value */
+            $value = $this->val();
+
+            return $fn($value);
         }
 
         return $this->val();

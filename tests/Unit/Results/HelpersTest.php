@@ -127,21 +127,19 @@ test('unwrap function returns value from Success', function (): void {
     expect($result)->toBe($this->testValue);
 });
 
-test('unwrap function returns default from Failure', function (): void {
+test('unwrap function returns callback result from Failure', function (): void {
     $failure = new Failure($this->testError);
-    $default = 'default-value';
 
-    $result = unwrap($failure, $default);
+    $result = unwrap($failure, fn () => 'default-value');
 
-    expect($result)->toBe($default);
+    expect($result)->toBe('default-value');
 });
 
-test('unwrap function returns null from Failure when no default', function (): void {
+test('unwrap function throws from Failure when no callback', function (): void {
     $failure = new Failure($this->testError);
 
-    $result = unwrap($failure);
-
-    expect($result)->toBeNull();
+    expect(fn () => unwrap($failure))
+        ->toThrow($this->testError::class);
 });
 
 // Tests for success() function
@@ -324,8 +322,8 @@ test('helpers work together in complex scenarios', function (): void {
     expect($finalValue)->toBe('success value');
     expect($errorOccurred)->toBeFalse();
 
-    // Use unwrap() with default
-    $unwrappedValue = unwrap($result1, 'default');
+    // Use unwrap() without callback since it's a Success
+    $unwrappedValue = unwrap($result1);
     expect($unwrappedValue)->toBe($finalValue);
 });
 

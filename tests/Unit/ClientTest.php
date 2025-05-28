@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use OpenFGA\{Authentication, Client, ClientInterface};
 use OpenFGA\Authentication\AccessToken;
-use OpenFGA\Models\{Store, TupleKey};
+use OpenFGA\{Authentication, Client, ClientInterface};
 use OpenFGA\Models\Collections\{Assertions, Conditions, TupleKeys, TypeDefinitions, UserTypeFilters};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
+use OpenFGA\Models\{Store, TupleKey};
 use OpenFGA\Results\{Failure, ResultInterface};
 
 test('Client implements ClientInterface', function (): void {
@@ -60,7 +60,7 @@ test('Client constructs with token authentication', function (): void {
 
 test('Client constructs with AccessToken object', function (): void {
     $accessToken = new AccessToken('token_value', time() + 3600);
-    
+
     $client = new Client(
         url: 'https://api.example.com',
         authentication: Authentication::CLIENT_CREDENTIALS,
@@ -79,7 +79,7 @@ test('Client assertLastRequest throws when no request exists', function (): void
 
 test('Client check returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $store = 'store-123';
     $model = 'model-456';
     $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
@@ -93,7 +93,7 @@ test('Client check returns Result interface', function (): void {
 
 test('Client check accepts Store object', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $store = new Store(
         id: 'store-123',
         name: 'Test Store',
@@ -110,7 +110,7 @@ test('Client check accepts Store object', function (): void {
 
 test('Client check accepts optional parameters', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $store = 'store-123';
     $model = 'model-456';
     $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
@@ -133,7 +133,7 @@ test('Client check accepts optional parameters', function (): void {
 
 test('Client createStore returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->createStore('My Test Store');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -142,7 +142,7 @@ test('Client createStore returns Result interface', function (): void {
 
 test('Client createStore trims name', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->createStore('  My Test Store  ');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -150,7 +150,7 @@ test('Client createStore trims name', function (): void {
 
 test('Client deleteStore returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->deleteStore('store-123');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -158,7 +158,7 @@ test('Client deleteStore returns Result interface', function (): void {
 
 test('Client dsl returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $dsl = 'model
   schema 1.1
 
@@ -175,7 +175,7 @@ type document
 
 test('Client expand returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $store = 'store-123';
     $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
 
@@ -186,7 +186,7 @@ test('Client expand returns Result interface', function (): void {
 
 test('Client getAuthorizationModel returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->getAuthorizationModel('store-123', 'model-456');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -194,7 +194,7 @@ test('Client getAuthorizationModel returns Result interface', function (): void 
 
 test('Client getStore returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->getStore('store-123');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -202,7 +202,7 @@ test('Client getStore returns Result interface', function (): void {
 
 test('Client listAuthorizationModels returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->listAuthorizationModels('store-123');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -210,7 +210,7 @@ test('Client listAuthorizationModels returns Result interface', function (): voi
 
 test('Client listAuthorizationModels handles pagination', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->listAuthorizationModels(
         store: 'store-123',
         continuationToken: 'token-abc',
@@ -222,7 +222,7 @@ test('Client listAuthorizationModels handles pagination', function (): void {
 
 test('Client listAuthorizationModels clamps page size', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     // Test max page size clamping
     $result1 = $client->listAuthorizationModels('store-123', null, 5000);
     expect($result1)->toBeInstanceOf(ResultInterface::class);
@@ -234,7 +234,7 @@ test('Client listAuthorizationModels clamps page size', function (): void {
 
 test('Client listObjects returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->listObjects(
         store: 'store-123',
         model: 'model-456',
@@ -248,7 +248,7 @@ test('Client listObjects returns Result interface', function (): void {
 
 test('Client listStores returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->listStores();
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -256,7 +256,7 @@ test('Client listStores returns Result interface', function (): void {
 
 test('Client listStores handles pagination', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->listStores(
         continuationToken: 'token-xyz',
         pageSize: 25,
@@ -267,7 +267,7 @@ test('Client listStores handles pagination', function (): void {
 
 test('Client listTupleChanges returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->listTupleChanges('store-123');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -275,7 +275,7 @@ test('Client listTupleChanges returns Result interface', function (): void {
 
 test('Client listTupleChanges with all parameters', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->listTupleChanges(
         store: 'store-123',
         continuationToken: 'token-123',
@@ -289,9 +289,9 @@ test('Client listTupleChanges with all parameters', function (): void {
 
 test('Client listUsers returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $userFilters = new UserTypeFilters([]);
-    
+
     $result = $client->listUsers(
         store: 'store-123',
         model: 'model-456',
@@ -305,7 +305,7 @@ test('Client listUsers returns Result interface', function (): void {
 
 test('Client readAssertions returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $result = $client->readAssertions('store-123', 'model-456');
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -313,10 +313,10 @@ test('Client readAssertions returns Result interface', function (): void {
 
 test('Client readTuples returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     // TupleKey for reading can have empty strings to read all tuples
     $tupleKey = new TupleKey('', '', '');
-    
+
     $result = $client->readTuples('store-123', $tupleKey);
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -324,9 +324,9 @@ test('Client readTuples returns Result interface', function (): void {
 
 test('Client writeAssertions returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $assertions = new Assertions([]);
-    
+
     $result = $client->writeAssertions('store-123', 'model-456', $assertions);
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -334,11 +334,11 @@ test('Client writeAssertions returns Result interface', function (): void {
 
 test('Client writeTuples returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $writes = new TupleKeys([
         new TupleKey('user:alice', 'viewer', 'document:readme'),
     ]);
-    
+
     $result = $client->writeTuples('store-123', 'model-456', $writes);
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -346,14 +346,14 @@ test('Client writeTuples returns Result interface', function (): void {
 
 test('Client writeTuples with deletes', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $writes = new TupleKeys([
         new TupleKey('user:alice', 'viewer', 'document:readme'),
     ]);
     $deletes = new TupleKeys([
         new TupleKey('user:bob', 'viewer', 'document:readme'),
     ]);
-    
+
     $result = $client->writeTuples('store-123', 'model-456', $writes, $deletes);
 
     expect($result)->toBeInstanceOf(ResultInterface::class);
@@ -361,10 +361,10 @@ test('Client writeTuples with deletes', function (): void {
 
 test('Client createAuthorizationModel returns Result interface', function (): void {
     $client = new Client('https://api.example.com');
-    
+
     $typeDefinitions = new TypeDefinitions([]);
     $conditions = new Conditions([]);
-    
+
     $result = $client->createAuthorizationModel(
         store: 'store-123',
         typeDefinitions: $typeDefinitions,

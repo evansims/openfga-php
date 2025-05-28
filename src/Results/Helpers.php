@@ -50,8 +50,8 @@ function result(ResultInterface | Closure $context): mixed
  * @template T
  * @template E of Throwable
  *
- * @param ResultInterface<T, E> $result
- * @param null|callable(T|E): mixed $fn
+ * @param ResultInterface<T, E>     $result
+ * @param null|callable(E|T): mixed $fn
  *
  * @return T
  */
