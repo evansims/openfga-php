@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use InvalidArgumentException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\DeleteStoreRequest;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -39,6 +38,6 @@ it('handles store IDs with special characters', function (): void {
 });
 
 it('throws when store ID is empty', function (): void {
-    $this->expectException(InvalidArgumentException::class);
-    new DeleteStoreRequest(store: '');
-});
+    expect(fn() => new DeleteStoreRequest(store: ''))
+        ->toThrow(InvalidArgumentException::class);
+ });

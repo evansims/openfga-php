@@ -5,6 +5,7 @@ declare(strict_types=1);
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey, TupleKeyInterface};
 use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Models\Enums\TypeName;
 
 describe('TupleKey Model', function (): void {
     test('implements TupleKeyInterface', function (): void {
@@ -31,7 +32,7 @@ describe('TupleKey Model', function (): void {
     });
 
     test('constructs with condition', function (): void {
-        $param = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
+        $param = new ConditionParameter(typeName: TypeName::STRING);
         $params = new ConditionParameters([$param]);
         $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: $params);
 
@@ -66,7 +67,7 @@ describe('TupleKey Model', function (): void {
     });
 
     test('serializes to JSON with condition', function (): void {
-        $param = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
+        $param = new ConditionParameter(typeName: TypeName::STRING);
         $params = new ConditionParameters([$param]);
         $condition = new Condition(name: 'inRegion', expression: 'params.region == "us-east"', parameters: $params);
 

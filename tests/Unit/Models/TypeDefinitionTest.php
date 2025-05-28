@@ -137,20 +137,20 @@ describe('TypeDefinition Model', function (): void {
         $properties = $schema->getProperties();
 
         // Type property
-        $typeProp = $properties[array_keys($properties)[0]];
+        $typeProp = $properties['type'];
         expect($typeProp->name)->toBe('type');
         expect($typeProp->type)->toBe('string');
         expect($typeProp->required)->toBe(true);
 
         // Relations property
-        $relationsProp = $properties[array_keys($properties)[1]];
+        $relationsProp = $properties['relations'];
         expect($relationsProp->name)->toBe('relations');
         expect($relationsProp->type)->toBe('object');
         expect($relationsProp->className)->toBe(TypeDefinitionRelations::class);
         expect($relationsProp->required)->toBe(false);
 
         // Metadata property
-        $metadataProp = $properties[array_keys($properties)[2]];
+        $metadataProp = $properties['metadata'];
         expect($metadataProp->name)->toBe('metadata');
         expect($metadataProp->type)->toBe('object');
         expect($metadataProp->className)->toBe(Metadata::class);

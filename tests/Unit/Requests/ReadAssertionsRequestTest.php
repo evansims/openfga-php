@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use InvalidArgumentException;
 use OpenFGA\Requests\{ReadAssertionsRequest, ReadAssertionsRequestInterface};
 use Psr\Http\Message\StreamFactoryInterface;
 

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, ConditionsInterface};
 use OpenFGA\Models\{Condition, ConditionMetadata, SourceInfo};
 use OpenFGA\Models\{ConditionParameter};

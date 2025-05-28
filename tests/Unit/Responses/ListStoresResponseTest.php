@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit\Responses;
+
 use OpenFGA\Models\Collections\Stores;
 use OpenFGA\Models\{Store};
 use OpenFGA\Responses\{ListStoresResponse, ListStoresResponseInterface};
+use OpenFGA\Schema\SchemaInterface;
+use DateTimeImmutable;
 
 test('ListStoresResponse implements ListStoresResponseInterface', function (): void {
     $stores = new Stores();
@@ -110,7 +114,7 @@ test('ListStoresResponse handles stores with deletedAt', function (): void {
 test('ListStoresResponse schema returns expected structure', function (): void {
     $schema = ListStoresResponse::schema();
 
-    expect($schema)->toBeInstanceOf(OpenFGA\Schema\SchemaInterface::class);
+    expect($schema)->toBeInstanceOf(SchemaInterface::class);
     expect($schema->getClassName())->toBe(ListStoresResponse::class);
 
     $properties = $schema->getProperties();

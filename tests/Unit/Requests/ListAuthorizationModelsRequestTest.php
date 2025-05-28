@@ -108,6 +108,6 @@ it('filters out null values from query parameters', function (): void {
 });
 
 it('throws when store ID is empty', function (): void {
-    $this->expectException(InvalidArgumentException::class);
-    new ListAuthorizationModelsRequest(store: '');
+    expect(fn() => new ListAuthorizationModelsRequest(store: ''))
+        ->toThrow(InvalidArgumentException::class);
 });

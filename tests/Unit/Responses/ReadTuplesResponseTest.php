@@ -68,7 +68,7 @@ test('ReadTuplesResponse handles large tuples collection', function (): void {
 });
 
 test('ReadTuplesResponse handles tuples with conditions', function (): void {
-    $condition = $this->createMock(OpenFGA\Models\ConditionInterface::class);
+    $condition = mock(OpenFGA\Models\ConditionInterface::class);
 
     $tupleKey = new TupleKey(
         user: 'user:charlie',

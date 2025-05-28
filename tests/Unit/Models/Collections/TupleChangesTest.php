@@ -179,6 +179,7 @@ describe('TupleChanges Collection', function (): void {
         $schema1 = TupleChanges::schema();
         $schema2 = TupleChanges::schema();
 
+        expect($schema1)->toBe($schema2, 'Expected the same schema instance to be returned on subsequent calls');
         expect($schema1)->toBeInstanceOf(CollectionSchemaInterface::class);
         expect($schema2)->toBeInstanceOf(CollectionSchemaInterface::class);
     });

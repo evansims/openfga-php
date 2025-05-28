@@ -38,6 +38,6 @@ it('handles store IDs with special characters', function (): void {
 });
 
 it('throws when store ID is empty', function (): void {
-    $this->expectException(InvalidArgumentException::class);
-    new GetStoreRequest(store: '');
-});
+    expect(fn() => new GetStoreRequest(store: ''))
+        ->toThrow(InvalidArgumentException::class);
+ });

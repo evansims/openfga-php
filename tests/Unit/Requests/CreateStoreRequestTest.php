@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use InvalidArgumentException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\CreateStoreRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};

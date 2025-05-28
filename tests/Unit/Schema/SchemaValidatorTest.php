@@ -512,7 +512,7 @@ test('validates datetime format strings with edge cases', function (string $inpu
     'empty string' => ['', true], // Empty string creates current datetime
 ]);
 
-test('validates plain object type without className using existing test objects', function (): void {
+test('validates nested object validation using existing test objects', function (): void {
     // Test that metadata gets accepted as a plain object
     // Since the SchemaBuilder requires string className, we'll test the validator logic indirectly
     $schema = (new SchemaBuilder(User::class))

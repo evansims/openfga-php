@@ -16,7 +16,9 @@ final class CreateStoreRequest implements CreateStoreRequestInterface
     public function __construct(
         private string $name,
     ) {
-        assert('' !== $this->name, new InvalidArgumentException('Store name cannot be empty'));
+        if ('' === $this->name) {
+            throw new InvalidArgumentException('Store name cannot be empty');
+        }
     }
 
     #[Override]

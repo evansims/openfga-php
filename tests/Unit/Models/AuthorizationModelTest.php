@@ -6,6 +6,7 @@ use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, 
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, TypeDefinitionRelations, TypeDefinitions};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Models\Enums\TypeName;
 
 describe('AuthorizationModel Model', function (): void {
     test('implements AuthorizationModelInterface', function (): void {
@@ -103,7 +104,7 @@ describe('AuthorizationModel Model', function (): void {
     test('serializes to JSON with conditions', function (): void {
         $typeDefinitions = new TypeDefinitions([]);
 
-        $conditionParam = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
+        $conditionParam = new ConditionParameter(typeName: TypeName::STRING);
         $conditionParams = new ConditionParameters([$conditionParam]);
 
         $condition = new Condition(

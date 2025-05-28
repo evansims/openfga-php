@@ -2,17 +2,21 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit\Network;
+
 use OpenFGA\Network\RequestContext;
+use OpenFGA\Network\RequestMethod;
 use Psr\Http\Message\StreamInterface;
+use Mockery;
 
 describe('RequestContext', function (): void {
     test('constructs with required parameters', function (): void {
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::GET,
+            method: RequestMethod::GET,
             url: '/stores',
         );
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::GET);
+        expect($context->getMethod())->toBe(RequestMethod::GET);
         expect($context->getUrl())->toBe('/stores');
         expect($context->getBody())->toBeNull();
         expect($context->getHeaders())->toBe([]);
@@ -24,14 +28,14 @@ describe('RequestContext', function (): void {
         $headers = ['Content-Type' => 'application/json', 'X-Custom' => 'value'];
 
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::POST,
+            method: RequestMethod::POST,
             url: '/stores/123',
             body: $body,
             headers: $headers,
             useApiUrl: false,
         );
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($context->getMethod())->toBe(RequestMethod::POST);
         expect($context->getUrl())->toBe('/stores/123');
         expect($context->getBody())->toBe($body);
         expect($context->getHeaders())->toBe($headers);
@@ -40,10 +44,10 @@ describe('RequestContext', function (): void {
 
     test('handles different HTTP methods', function (): void {
         $methods = [
-            OpenFGA\Network\RequestMethod::GET,
-            OpenFGA\Network\RequestMethod::POST,
-            OpenFGA\Network\RequestMethod::PUT,
-            OpenFGA\Network\RequestMethod::DELETE,
+            RequestMethod::GET,
+            RequestMethod::POST,
+            RequestMethod::PUT,
+            RequestMethod::DELETE,
         ];
 
         foreach ($methods as $method) {
@@ -70,7 +74,7 @@ describe('RequestContext', function (): void {
 
         foreach ($urls as $url) {
             $context = new RequestContext(
-                method: OpenFGA\Network\RequestMethod::GET,
+                method: RequestMethod::GET,
                 url: $url,
             );
 
@@ -88,7 +92,7 @@ describe('RequestContext', function (): void {
         ];
 
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::POST,
+            method: RequestMethod::POST,
             url: '/test',
             headers: $headers,
         );
@@ -98,7 +102,7 @@ describe('RequestContext', function (): void {
 
     test('handles empty headers array', function (): void {
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::GET,
+            method: RequestMethod::GET,
             url: '/test',
             headers: [],
         );
@@ -108,7 +112,7 @@ describe('RequestContext', function (): void {
 
     test('useApiUrl defaults to true', function (): void {
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::GET,
+            method: RequestMethod::GET,
             url: '/test',
         );
 
@@ -117,7 +121,7 @@ describe('RequestContext', function (): void {
 
     test('useApiUrl can be set to false', function (): void {
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::GET,
+            method: RequestMethod::GET,
             url: 'https://external.com/webhook',
             useApiUrl: false,
         );
@@ -127,7 +131,7 @@ describe('RequestContext', function (): void {
 
     test('body can be null', function (): void {
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::GET,
+            method: RequestMethod::GET,
             url: '/test',
             body: null,
         );
@@ -139,7 +143,7 @@ describe('RequestContext', function (): void {
         $body = Mockery::mock(StreamInterface::class);
 
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::POST,
+            method: RequestMethod::POST,
             url: '/test',
             body: $body,
         );
@@ -149,11 +153,11 @@ describe('RequestContext', function (): void {
 
     test('represents typical GET request', function (): void {
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::GET,
+            method: RequestMethod::GET,
             url: '/stores/01GXSA8YR785C4FYS3C0RTG7B1/authorization-models',
         );
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::GET);
+        expect($context->getMethod())->toBe(RequestMethod::GET);
         expect($context->getUrl())->toBe('/stores/01GXSA8YR785C4FYS3C0RTG7B1/authorization-models');
         expect($context->getBody())->toBeNull();
         expect($context->useApiUrl())->toBeTrue();
@@ -163,7 +167,7 @@ describe('RequestContext', function (): void {
         $body = Mockery::mock(StreamInterface::class);
 
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::POST,
+            method: RequestMethod::POST,
             url: '/stores',
             body: $body,
             headers: [
@@ -171,7 +175,7 @@ describe('RequestContext', function (): void {
             ],
         );
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($context->getMethod())->toBe(RequestMethod::POST);
         expect($context->getUrl())->toBe('/stores');
         expect($context->getBody())->toBe($body);
         expect($context->getHeaders())->toHaveKey('Content-Type');
@@ -180,14 +184,14 @@ describe('RequestContext', function (): void {
 
     test('handles webhook or external URL', function (): void {
         $context = new RequestContext(
-            method: OpenFGA\Network\RequestMethod::POST,
+            method: RequestMethod::POST,
             url: 'https://webhook.site/unique-id',
             body: null,
             headers: ['X-Event-Type' => 'store.created'],
             useApiUrl: false,
         );
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($context->getMethod())->toBe(RequestMethod::POST);
         expect($context->getUrl())->toBe('https://webhook.site/unique-id');
         expect($context->getHeaders())->toBe(['X-Event-Type' => 'store.created']);
         expect($context->useApiUrl())->toBeFalse();

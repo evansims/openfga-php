@@ -24,7 +24,7 @@ trait ExceptionTrait
 
     public function previous(): ?Throwable
     {
-        return $this->previous;
+        return property_exists($this, 'previous') ? $this->previous : null;
     }
 
     public function request(): ?RequestInterface

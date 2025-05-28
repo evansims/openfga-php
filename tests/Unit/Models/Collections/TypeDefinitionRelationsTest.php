@@ -196,6 +196,7 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
         expect($schema1)->toBeInstanceOf(CollectionSchemaInterface::class);
         expect($schema2)->toBeInstanceOf(CollectionSchemaInterface::class);
+        expect($schema1)->toBe($schema2);
     });
 
     test('handles empty collection edge cases', function (): void {

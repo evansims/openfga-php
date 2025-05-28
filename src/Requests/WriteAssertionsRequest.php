@@ -25,8 +25,13 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         private string $store,
         private string $model,
     ) {
-        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
-        assert('' !== $this->model, new InvalidArgumentException('Authorization model ID cannot be empty'));
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+
+        if ('' === $this->model) {
+            throw new InvalidArgumentException('Authorization model ID cannot be empty');
+        }
     }
 
     #[Override]
