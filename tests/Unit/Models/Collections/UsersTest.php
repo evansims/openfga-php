@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\Collections\{Users, UsersInterface};
+use OpenFGA\Models\Collections\{Users, UsersInterface, UsersList};
 use OpenFGA\Models\{TypedWildcard, User, UsersetUser};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
@@ -188,8 +188,17 @@ describe('Users Collection', function (): void {
         $schema1 = Users::schema();
         $schema2 = Users::schema();
 
-        expect($schema1)->toBeInstanceOf(CollectionSchemaInterface::class);
-        expect($schema2)->toBeInstanceOf(CollectionSchemaInterface::class);
+        expect($schema1)
+            ->toBeInstanceOf(CollectionSchemaInterface::class)
+            ->toBe($schema2, 'Expected the same schema instance to be returned on subsequent calls');
+    });
+
+    test('schemas from different collection classes are different instances', function (): void {
+        $usersSchema = Users::schema();
+        $usersListSchema = UsersList::schema();
+
+        expect($usersSchema)
+            ->not->toBe($usersListSchema, 'Expected different collection classes to have different schema instances');
     });
 
     test('handles empty collection edge cases', function (): void {

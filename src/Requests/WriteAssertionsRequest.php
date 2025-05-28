@@ -11,6 +11,8 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
+use function assert;
+
 final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
 {
     /**
@@ -23,8 +25,8 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         private string $store,
         private string $model,
     ) {
-        assert($this->store !== '', new InvalidArgumentException('Store ID cannot be empty'));
-        assert($this->model !== '', new InvalidArgumentException('Authorization model ID cannot be empty'));
+        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
+        assert('' !== $this->model, new InvalidArgumentException('Authorization model ID cannot be empty'));
     }
 
     #[Override]

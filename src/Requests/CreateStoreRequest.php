@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
-use InvalidArgumentException;
+
+use function assert;
 
 final class CreateStoreRequest implements CreateStoreRequestInterface
 {
     public function __construct(
         private string $name,
     ) {
-        assert($this->name !== '', new InvalidArgumentException('Store name cannot be empty'));
+        assert('' !== $this->name, new InvalidArgumentException('Store name cannot be empty'));
     }
 
     #[Override]

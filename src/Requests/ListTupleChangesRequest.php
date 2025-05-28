@@ -12,6 +12,8 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
+use function assert;
+
 final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
 {
     public function __construct(
@@ -21,10 +23,10 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
         private ?string $type = null,
         private ?DateTimeImmutable $startTime = null,
     ) {
-        assert($this->store !== '', new InvalidArgumentException('Store ID cannot be empty'));
+        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
 
         if (null !== $this->continuationToken) {
-            assert($this->continuationToken !== '', new InvalidArgumentException('Continuation token cannot be empty'));
+            assert('' !== $this->continuationToken, new InvalidArgumentException('Continuation token cannot be empty'));
         }
     }
 

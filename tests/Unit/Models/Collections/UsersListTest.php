@@ -191,8 +191,9 @@ describe('UsersList Collection', function (): void {
         $schema1 = UsersList::schema();
         $schema2 = UsersList::schema();
 
-        expect($schema1)->toBeInstanceOf(CollectionSchemaInterface::class);
-        expect($schema2)->toBeInstanceOf(CollectionSchemaInterface::class);
+        expect($schema1)
+            ->toBeInstanceOf(CollectionSchemaInterface::class)
+            ->toBe($schema2, 'Expected the same schema instance to be returned on subsequent calls');
     });
 
     test('handles empty collection edge cases', function (): void {

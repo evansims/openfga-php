@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
-use InvalidArgumentException;
+
+use function assert;
 
 final class ListAuthorizationModelsRequest implements ListAuthorizationModelsRequestInterface
 {
@@ -16,7 +18,7 @@ final class ListAuthorizationModelsRequest implements ListAuthorizationModelsReq
         private ?string $continuationToken = null,
         private ?int $pageSize = null,
     ) {
-        assert($this->store !== '', new InvalidArgumentException('Store ID cannot be empty'));
+        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
     }
 
     #[Override]
