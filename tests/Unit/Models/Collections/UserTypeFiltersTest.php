@@ -184,6 +184,7 @@ describe('UserTypeFilters Collection', function (): void {
         $schema1 = UserTypeFilters::schema();
         $schema2 = UserTypeFilters::schema();
 
+        expect($schema1)->toBe($schema2);
         expect($schema1)->toBeInstanceOf(CollectionSchemaInterface::class);
         expect($schema2)->toBeInstanceOf(CollectionSchemaInterface::class);
     });

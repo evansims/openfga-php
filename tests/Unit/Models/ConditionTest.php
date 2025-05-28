@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionInterface, ConditionMetadata, ConditionParameter, SourceInfo};
+use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\SchemaInterface;
 
 describe('Condition Model', function (): void {
@@ -29,8 +30,8 @@ describe('Condition Model', function (): void {
     });
 
     test('constructs with parameters', function (): void {
-        $param1 = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
-        $param2 = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
+        $param1 = new ConditionParameter(typeName: TypeName::STRING);
+        $param2 = new ConditionParameter(typeName: TypeName::STRING);
         $parameters = new ConditionParameters([$param1, $param2]);
 
         $condition = new Condition(
@@ -95,7 +96,7 @@ describe('Condition Model', function (): void {
     });
 
     test('serializes to JSON with all fields', function (): void {
-        $param = new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING);
+        $param = new ConditionParameter(typeName: TypeName::STRING);
         $parameters = new ConditionParameters([$param]);
 
         $sourceInfo = new SourceInfo(file: 'conditions.fga');

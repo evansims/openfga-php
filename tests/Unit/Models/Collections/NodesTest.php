@@ -116,6 +116,7 @@ describe('Nodes Collection', function (): void {
 
         expect($schema1)->toBeInstanceOf(CollectionSchemaInterface::class);
         expect($schema2)->toBeInstanceOf(CollectionSchemaInterface::class);
+        expect($schema1)->toBe($schema2, 'Expected the same schema instance to be returned on subsequent calls');
     });
 
     test('handles complex node hierarchies', function (): void {

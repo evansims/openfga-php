@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use OpenFGA\Models\Collections\{ConditionParameters, TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey};
+use OpenFGA\Models\Enums\TypeName;
 
 describe('TupleKeys Collection', function (): void {
     test('implements TupleKeysInterface', function (): void {
@@ -176,7 +177,7 @@ describe('TupleKeys Collection', function (): void {
             name: 'inRegion',
             expression: 'params.region == "us-east"',
             parameters: new ConditionParameters([
-                new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING),
+                new ConditionParameter(typeName: TypeName::STRING),
             ]),
         );
 

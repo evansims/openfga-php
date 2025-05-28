@@ -11,8 +11,6 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
 final class WriteTuplesRequest implements WriteTuplesRequestInterface
 {
     /**
@@ -27,8 +25,12 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
         private ?TupleKeysInterface $writes = null,
         private ?TupleKeysInterface $deletes = null,
     ) {
-        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
-        assert('' !== $this->model, new InvalidArgumentException('Authorization model ID cannot be empty'));
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+        if ('' === $this->model) {
+            throw new InvalidArgumentException('Authorization model ID cannot be empty');
+        }
     }
 
     #[Override]

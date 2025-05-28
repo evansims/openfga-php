@@ -12,8 +12,6 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
 final class ListObjectsRequest implements ListObjectsRequestInterface
 {
     /**
@@ -36,13 +34,21 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
-        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
-        assert('' !== $this->type, new InvalidArgumentException('Type cannot be empty'));
-        assert('' !== $this->relation, new InvalidArgumentException('Relation cannot be empty'));
-        assert('' !== $this->user, new InvalidArgumentException('User cannot be empty'));
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+        if ('' === $this->type) {
+            throw new InvalidArgumentException('Type cannot be empty');
+        }
+        if ('' === $this->relation) {
+            throw new InvalidArgumentException('Relation cannot be empty');
+        }
+        if ('' === $this->user) {
+            throw new InvalidArgumentException('User cannot be empty');
+        }
 
-        if (null !== $this->model) {
-            assert('' !== $this->model, new InvalidArgumentException('Authorization Model ID cannot be empty'));
+        if (null !== $this->model && '' === $this->model) {
+            throw new InvalidArgumentException('Authorization Model ID cannot be empty');
         }
     }
 

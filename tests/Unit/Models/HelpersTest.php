@@ -100,7 +100,6 @@ describe('Helper Functions', function (): void {
 
             expect($collection)->toBeInstanceOf(TupleKeys::class);
             expect($collection->count())->toBe(1);
-            // Collection method removed - not available
         });
 
         test('creates TupleKeys collection from array of TupleKeys', function (): void {

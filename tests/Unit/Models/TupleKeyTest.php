@@ -131,22 +131,22 @@ describe('TupleKey Model', function (): void {
         $schema = TupleKey::schema();
         $properties = $schema->getProperties();
 
-        $userProp = $properties[array_keys($properties)[0]];
+        $userProp = $properties['user'];
         expect($userProp->name)->toBe('user');
         expect($userProp->type)->toBe('string');
         expect($userProp->required)->toBe(true);
 
-        $relationProp = $properties[array_keys($properties)[1]];
+        $relationProp = $properties['relation'];
         expect($relationProp->name)->toBe('relation');
         expect($relationProp->type)->toBe('string');
         expect($relationProp->required)->toBe(true);
 
-        $objectProp = $properties[array_keys($properties)[2]];
+        $objectProp = $properties['object'];
         expect($objectProp->name)->toBe('object');
         expect($objectProp->type)->toBe('string');
         expect($objectProp->required)->toBe(true);
 
-        $conditionProp = $properties[array_keys($properties)[3]];
+        $conditionProp = $properties['condition'];
         expect($conditionProp->name)->toBe('condition');
         expect($conditionProp->type)->toBe(Condition::class);
         expect($conditionProp->required)->toBe(false);

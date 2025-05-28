@@ -9,16 +9,14 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
 final class ListStoresRequest implements ListStoresRequestInterface
 {
     public function __construct(
         private ?string $continuationToken = null,
         private ?int $pageSize = null,
     ) {
-        if (null !== $this->continuationToken) {
-            assert('' !== $this->continuationToken, new InvalidArgumentException('Continuation token cannot be empty'));
+        if (null !== $this->continuationToken && '' === $this->continuationToken) {
+            throw new InvalidArgumentException('Continuation token cannot be empty');
         }
     }
 

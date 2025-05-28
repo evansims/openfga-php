@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
 use OpenFGA\Responses\{ListObjectsResponse, ListObjectsResponseInterface};
+use OpenFGA\Schema\SchemaInterface;
 
 test('ListObjectsResponse implements ListObjectsResponseInterface', function (): void {
     $response = new ListObjectsResponse([]);
@@ -108,7 +111,7 @@ test('ListObjectsResponse handles duplicate objects', function (): void {
 test('ListObjectsResponse schema returns expected structure', function (): void {
     $schema = ListObjectsResponse::schema();
 
-    expect($schema)->toBeInstanceOf(OpenFGA\Schema\SchemaInterface::class);
+    expect($schema)->toBeInstanceOf(SchemaInterface::class);
     expect($schema->getClassName())->toBe(ListObjectsResponse::class);
 
     $properties = $schema->getProperties();

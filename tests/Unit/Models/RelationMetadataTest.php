@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\Collections\RelationReferences;
 use OpenFGA\Models\{RelationMetadata, RelationMetadataInterface, RelationReference, SourceInfo};
 use OpenFGA\Schema\SchemaInterface;

@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\{TupleKeys, UserTypeFilters};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\{TupleKey, UserTypeFilter};
+use OpenFGA\Network\{RequestMethod};
 use OpenFGA\Requests\{ListUsersRequest, ListUsersRequestInterface};
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
@@ -86,7 +90,7 @@ test('ListUsersRequest getRequest returns RequestContext with minimal body', fun
 
     $context = $request->getRequest($this->streamFactory);
 
-    expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+    expect($context->getMethod())->toBe(RequestMethod::POST);
     expect($context->getUrl())->toBe('/stores/test-store/list-users');
     expect($context->getBody())->toBe($this->stream);
     expect($context->useApiUrl())->toBeTrue();

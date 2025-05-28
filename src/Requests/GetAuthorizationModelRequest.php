@@ -9,16 +9,19 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
 final class GetAuthorizationModelRequest implements GetAuthorizationModelRequestInterface
 {
     public function __construct(
         private string $store,
         private string $model,
     ) {
-        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
-        assert('' !== $this->model, new InvalidArgumentException('Authorization Model ID cannot be empty'));
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+
+        if ('' === $this->model) {
+            throw new InvalidArgumentException('Authorization Model ID cannot be empty');
+        }
     }
 
     #[Override]
