@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use InvalidArgumentException;
 use OpenFGA\Models\{TypedWildcard, TypedWildcardInterface};
 use OpenFGA\Schema\SchemaInterface;
 

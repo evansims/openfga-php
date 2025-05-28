@@ -7,6 +7,7 @@ use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\ListStoresRequest;
 use Psr\Http\Message\StreamFactoryInterface;
 
+
 it('can be instantiated without parameters', function (): void {
     $request = new ListStoresRequest();
 

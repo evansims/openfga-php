@@ -10,6 +10,7 @@ use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\CheckRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
+
 it('can be instantiated with required parameters', function (): void {
     $tupleKey = Mockery::mock(TupleKeyInterface::class);
 

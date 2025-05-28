@@ -7,6 +7,7 @@ use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\GetStoreRequest;
 use Psr\Http\Message\StreamFactoryInterface;
 
+
 it('can be instantiated', function (): void {
     $request = new GetStoreRequest(store: 'test-store');
 
