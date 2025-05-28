@@ -55,6 +55,9 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
 
+      - name: Install docs dependencies
+        run: cd tools/docs && composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi && cd ../../
+
       - name: Execute PEST tests
         run: vendor/bin/pest --coverage --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage-cobertura --log-junit
 
