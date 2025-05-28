@@ -56,7 +56,7 @@ jobs:
         run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
 
       - name: Execute PEST tests
-        run: vendor/bin/pest --coverage --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage-cobertura
+        run: vendor/bin/pest --coverage --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage-cobertura --log-junit junit.xml
 
       - if: matrix.php == '8.4' && !cancelled()
         name: Upload coverage reports to Codecov
