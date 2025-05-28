@@ -21,13 +21,13 @@ Both `Success<TValue>` and `Failure<TError>` objects implement the `OpenFGA\Resu
 - `succeeded(): bool`: Returns `true` if the result is a `Success`, `false` otherwise.
 - `failed(): bool`: Returns `true` if the result is a `Failure`, `false` otherwise.
 
-- `recover(callable $fn): ResultInterface`: When a `Failure` chains an operation that itself returns a `ResultInterface`.
+- `recover(callable $fn): ResultInterface`: When a `Failure` chains an operation that can return any value; non-Result values are automatically wrapped in `Success`.
 - `failure(callable $fn): ResultInterface`: Performs a side effect if the Result is `Failure`.
 - `rethrow(?Throwable $throwable = null): ResultInterface`: Throws the error of a `Failure`, or continues the chain.
 
-- `then(callable $fn): ResultInterface`: When a `Success` chains an operation that itself returns a `ResultInterface`.
+- `then(callable $fn): ResultInterface`: When a `Success` chains an operation that can return any value; non-Result values are automatically wrapped in `Success`.
 - `success(callable $fn): ResultInterface`: Performs a side effect if the Result is `Success`.
-- `unwrap(mixed $default = null): mixed`: Extracts the value from `Success` or returns a default if it's a `Failure`.
+- `unwrap(?callable $fn = null): mixed`: Extracts the value from `Success`, throws the error from `Failure`, or transforms the value/error using the provided callback.
 
 - `val(): mixed`: Returns the value of the `Success` or throws an exception if the result is a `Failure`.
 - `err(): mixed`: Returns the error of the `Failure` or throws an exception if the result is a `Success`.
@@ -41,10 +41,11 @@ Here's practical advice on when to use different approaches for handling `Result
 **1. Using `unwrap()` (Method on `ResultInterface`)**
 
 - **When:**
-  - When you have a sensible default value to fall back on, and the failure case doesn't require complex logic.
+  - When you want to extract the value directly and are prepared to handle exceptions.
+  - When you need to transform the value or error using a callback function.
 - **Behavior:**
-  - `$result->unwrap($defaultValue)`: If `Success`, returns its value. If `Failure`, returns `$defaultValue`.
-  - `$result->unwrap()`: If `Success`, returns its value. If `Failure`, it returns `null`.
+  - `$result->unwrap()`: If `Success`, returns its value. If `Failure`, throws the error.
+  - `$result->unwrap($callback)`: Calls `$callback` with the value (for `Success`) or error (for `Failure`) and returns the callback's result.
 
 ```php
 <?php
@@ -54,10 +55,20 @@ use OpenFGA\Results\Failure;
 use Exception;
 
 $successResult = new Success("Operation succeeded!");
-echo $successResult->unwrap("Default value") . "\n"; // Output: Operation succeeded!
+echo $successResult->unwrap() . "\n"; // Output: Operation succeeded!
+
+// Transform the value with a callback
+$transformed = $successResult->unwrap(fn($value) => strtoupper($value));
+echo $transformed . "\n"; // Output: OPERATION SUCCEEDED!
 
 $failureResult = new Failure(new Exception("Something went wrong"));
-echo $failureResult->unwrap("Default value for failure") . "\n"; // Output: Default value for failure
+
+// This would throw the exception:
+// $failureResult->unwrap(); // Throws Exception
+
+// Handle the error with a callback
+$handled = $failureResult->unwrap(fn($error) => "Error: " . $error->getMessage());
+echo $handled . "\n"; // Output: Error: Something went wrong
 ?>
 ```
 
@@ -151,43 +162,44 @@ Here's a closer look at the key methods available on `ResultInterface` objects:
     if ($result->failure()) { echo "Failure!\n"; }
     ```
 
-- **`unwrap(mixed $default = null): mixed`** (Already covered in Guidance)
+- **`unwrap(?callable $fn = null): mixed`** (Already covered in Guidance)
 
 - **`recover(callable $fn): ResultInterface`**
 
-  - **Purpose:** Transforms the error inside a `Failure` object using `$fn`. If it's a `Success`, it remains `Success`. `$fn` receives the error and should return the new error.
+  - **Purpose:** Transforms the error inside a `Failure` object using `$fn`. If it's a `Success`, it remains `Success`. `$fn` receives the error and can return any value (automatically wrapped in `Success` if not already a `Result`).
   - **Works On:** `Failure` (transforms its error), `Success` (passes through).
 
   - ```php
     $result = new Failure(new Exception("Account Already Exists"));
-    $caught = $result->recover(function (Throwable $err) {
-        $userDetails = $this->getUserDetails($err->getMessage());
-        return success($userDetails); // Success($userDetails)
+    $recovered = $result->recover(function (Throwable $err) {
+        // Can return a plain value - automatically wrapped in Success
+        return $this->getUserDetails($err->getMessage());
+    });
+    
+    // Or explicitly return a Result
+    $recoveredExplicit = $result->recover(function (Throwable $err) {
+        return new Success($this->getUserDetails($err->getMessage()));
     });
     ```
 
 - **`then(callable $fn): ResultInterface`**
 
-  - **Purpose:** Chains an operation where the callable `$fn` itself returns a `ResultInterface`. This is crucial for sequencing multiple operations that can each succeed or fail. If the original result is `Success`, `$fn` is called with its value. If `Failure`, `$fn` is not called, and the original `Failure` is passed through.
+  - **Purpose:** Chains an operation where the callable `$fn` can return any value. If it returns a `ResultInterface`, it's used as-is. If it returns any other value, it's automatically wrapped in a `Success`. If the original result is `Success`, `$fn` is called with its value. If `Failure`, `$fn` is not called, and the original `Failure` is passed through.
   - **Works On:** `Success` (applies `$fn`), `Failure` (passes through).
 
   - ```php
-    function step1(int $value): ResultInterface {
-        return new Success($value + 1);
-    }
-    function step2_can_fail(int $value): ResultInterface {
-        if ($value > 5) {
-            return new Success("Value $value is large enough.");
-        }
-        return new Failure(new \InvalidArgumentException("Value $value is too small."));
-    }
-
     $initialResult = new Success(3);
     $finalResult = $initialResult
-        ->then('step1')       // Success(4)
-        ->then('step2_can_fail'); // Failure(InvalidArgumentException("Value 4 is too small."))
+        ->then(fn($value) => $value + 1)       // Returns 4, wrapped in Success(4)
+        ->then(function($value) {              // $value is 4
+            if ($value > 5) {
+                return "Value $value is large enough."; // Wrapped in Success
+            }
+            return new Failure(new \InvalidArgumentException("Value $value is too small."));
+        }); // Failure(InvalidArgumentException("Value 4 is too small."))
 
-    echo $finalResult->unwrap("default") . "\n"; // Output: default
+    echo $finalResult->unwrap(fn($error) => "Error: " . $error->getMessage()) . "\n"; 
+    // Output: Error: Value 4 is too small.
     ```
 
 - **`success(callable $fn): ResultInterface`**
