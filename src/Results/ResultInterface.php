@@ -40,11 +40,9 @@ interface ResultInterface
      * @template U
      * @template F of Throwable
      *
-     * @param callable(Throwable): ResultInterface<U, F> $fn
+     * @param callable(Throwable): (ResultInterface<U, F>|U) $fn
      *
      * @return ResultInterface<U, F>
-     *
-     * @psalm-suppress DocblockTypeContradiction
      */
     public function recover(callable $fn): self;
 
@@ -77,11 +75,9 @@ interface ResultInterface
      * @template U
      * @template F of Throwable
      *
-     * @param callable(T): ResultInterface<U, F> $fn
+     * @param callable(T): (ResultInterface<U, F>|U) $fn
      *
      * @return ResultInterface<U, F>
-     *
-     * @psalm-suppress DocblockTypeContradiction
      */
     public function then(callable $fn): self;
 

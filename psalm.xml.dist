@@ -24,7 +24,18 @@
         <MissingParamType errorLevel="info" />
         <MissingPropertyType errorLevel="info" />
 
-        <InvalidReturnType errorLevel="error" />
+        <InvalidReturnType errorLevel="error">
+            <errorLevel type="suppress">
+                <file name="src/Results/Success.php" />
+                <file name="src/Results/Failure.php" />
+            </errorLevel>
+        </InvalidReturnType>
+        <InvalidReturnStatement errorLevel="error">
+            <errorLevel type="suppress">
+                <file name="src/Results/Success.php" />
+                <file name="src/Results/Failure.php" />
+            </errorLevel>
+        </InvalidReturnStatement>
         <InvalidArgument errorLevel="error" />
         <DocblockTypeContradiction errorLevel="error" />
         <RedundantCondition errorLevel="info" />

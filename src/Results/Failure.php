@@ -63,7 +63,6 @@ final class Failure extends Result implements ResultInterface
     {
         $result = $fn($this->err());
 
-        // @phpstan-ignore-next-line
         return $result instanceof ResultInterface ? $result : new Success($result);
     }
 

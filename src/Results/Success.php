@@ -102,8 +102,7 @@ final class Success extends Result implements ResultInterface
     {
         $result = $fn($this->val());
 
-        // @phpstan-ignore-next-line
-        return $result instanceof ResultInterface ? $result : new Success($result);
+        return $result instanceof ResultInterface ? $result : new self($result);
     }
 
     #[Override]
