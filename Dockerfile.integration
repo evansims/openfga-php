@@ -1,5 +1,5 @@
 # Use the official PHP image with XML extensions pre-installed
-FROM php:8.3.16-cli-alpine3.20 AS builder
+FROM php:8.3.16-cli-alpine3.20@sha256:f23cfcc1769efd8fd6731def171edf5ee2cd880617b356147033ddd20f5cf02d AS builder
 
 # Install Composer
 COPY --from=composer:2.7 /usr/bin/composer /usr/bin/composer

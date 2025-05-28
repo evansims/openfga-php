@@ -51,13 +51,13 @@ function result(ResultInterface | Closure $context): mixed
  * @template E of Throwable
  *
  * @param ResultInterface<T, E> $result
- * @param T                     $default
+ * @param null|callable(T|E): mixed $fn
  *
  * @return T
  */
-function unwrap(ResultInterface $result, mixed $default = null): mixed
+function unwrap(ResultInterface $result, ?callable $fn = null): mixed
 {
-    return $result->unwrap($default);
+    return $result->unwrap($fn);
 }
 
 /**

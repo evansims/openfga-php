@@ -74,7 +74,6 @@ $client = new Client(
  */
 
 $store = ($client->createStore(name: STORE_NAME))
-    ->failure(fn(Throwable $error) => throw $error)
     ->then(fn(CreateStoreResponseInterface $store) => $store->getId())
     ->success(fn($id) => print "Store created! ID: {$id}\n")
     ->unwrap();
@@ -93,13 +92,11 @@ $dsl = <<<DSL
 DSL;
 
 $model = ($client->dsl($dsl))
-    ->failure(fn(Throwable $error) => throw $error)
     ->then(fn(AuthorizationModel $model) => $client->createAuthorizationModel(
         store: $store,
         typeDefinitions: $model->getTypeDefinitions(),
         conditions: $model->getConditions(),
     ))
-    ->failure(fn(Throwable $error) => throw $error)
     ->then(fn(CreateAuthorizationModelResponseInterface $model) => $model->getId())
     ->success(fn($id) => print "Authorization Model created! ID: {$id}\n")
     ->unwrap();
@@ -116,7 +113,6 @@ $tuple = tuple(
 
 ($client->writeTuples(store: $store, model: $model, writes: tuples($tuple)))
     ->success(fn(WriteTuplesResponseInterface $response) => print "Anne is now allowed to view the roadmap document\n")
-    ->failure(fn(Throwable $error) => throw $error)
     ->unwrap();
 
 /**

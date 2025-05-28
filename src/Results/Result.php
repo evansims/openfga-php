@@ -19,8 +19,20 @@ abstract class Result implements ResultInterface
     /**
      * @inheritDoc
      */
-    public function unwrap(mixed $default = null): mixed
+    public function unwrap(?callable $fn = null): mixed
     {
-        return $this->succeeded() ? $this->val() : $default;
+        if ($this->failed()) {
+            if ($fn !== null) {
+                return $fn($this->err());
+            }
+
+            throw $this->err();
+        }
+
+        if ($fn !== null) {
+            return $fn($this->val());
+        }
+
+        return $this->val();
     }
 }
