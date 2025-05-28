@@ -50,14 +50,12 @@ it('handles special characters in store and model IDs', function (): void {
     expect($context->getUrl())->toBe('/stores/' . $storeId . '/authorization-models/' . $modelId);
 });
 
-it('handles empty store and model IDs', function (): void {
-    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+it('throws when store ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new GetAuthorizationModelRequest(store: '', model: 'model-123');
+});
 
-    $request = new GetAuthorizationModelRequest(store: '', model: '');
-    $context = $request->getRequest($streamFactory);
-
-    expect($request->getStore())->toBe('');
-    expect($request->getModel())->toBe('');
-    expect($context->getMethod())->toBe(RequestMethod::GET);
-    expect($context->getUrl())->toBe('/stores//authorization-models/');
+it('throws when model ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new GetAuthorizationModelRequest(store: 'store-123', model: '');
 });

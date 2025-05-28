@@ -173,3 +173,8 @@ it('handles different consistency values', function (): void {
         expect($context->getBody())->toBe($stream);
     }
 });
+
+it('throws when store ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ExpandRequest(store: '', tupleKey: test()->createMock(TupleKeyInterface::class));
+});

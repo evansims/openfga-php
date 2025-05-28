@@ -10,6 +10,7 @@ use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use InvalidArgumentException;
 
 final class ListObjectsRequest implements ListObjectsRequestInterface
 {
@@ -33,6 +34,14 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
+        assert($this->store !== '', new InvalidArgumentException('Store ID cannot be empty'));
+        assert($this->type !== '', new InvalidArgumentException('Type cannot be empty'));
+        assert($this->relation !== '', new InvalidArgumentException('Relation cannot be empty'));
+        assert($this->user !== '', new InvalidArgumentException('User cannot be empty'));
+
+        if (null !== $this->model) {
+            assert($this->model !== '', new InvalidArgumentException('Authorization Model ID cannot be empty'));
+        }
     }
 
     #[Override]

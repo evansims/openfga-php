@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use OpenFGA\Requests\{ReadAssertionsRequest, ReadAssertionsRequestInterface};
 use Psr\Http\Message\StreamFactoryInterface;
+use InvalidArgumentException;
 
 beforeEach(function (): void {
     $this->streamFactory = $this->createMock(StreamFactoryInterface::class);
@@ -52,19 +53,6 @@ test('ReadAssertionsRequest handles UUID format IDs', function (): void {
     expect($context->getUrl())->toBe("/stores/{$storeId}/assertions/{$modelId}");
 });
 
-test('ReadAssertionsRequest handles empty strings', function (): void {
-    $request = new ReadAssertionsRequest(
-        store: '',
-        model: '',
-    );
-
-    expect($request->getStore())->toBe('');
-    expect($request->getModel())->toBe('');
-
-    $context = $request->getRequest($this->streamFactory);
-    expect($context->getUrl())->toBe('/stores//assertions/');
-});
-
 test('ReadAssertionsRequest handles special characters in IDs', function (): void {
     $request = new ReadAssertionsRequest(
         store: 'store-with-special_chars.123',
@@ -87,4 +75,14 @@ test('ReadAssertionsRequest preserves exact parameter values', function (): void
 
     $context = $request->getRequest($this->streamFactory);
     expect($context->getUrl())->toBe('/stores/  store-with-spaces  /assertions/  model-with-spaces  ');
+});
+
+it('throws when store is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ReadAssertionsRequest(store: '', model: 'model');
+});
+
+it('throws when model is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ReadAssertionsRequest(store: 'store', model: '');
 });

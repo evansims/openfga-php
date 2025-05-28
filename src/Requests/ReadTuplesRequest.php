@@ -20,6 +20,8 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
         private ?int $pageSize = null,
         private ?Consistency $consistency = null,
     ) {
+        assert($this->store !== '', new InvalidArgumentException('Store ID cannot be empty'));
+
         if (null !== $pageSize && $pageSize <= 0) {
             throw new InvalidArgumentException('$pageSize must be a positive integer.');
         }

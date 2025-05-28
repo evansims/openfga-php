@@ -37,13 +37,7 @@ it('handles store IDs with special characters', function (): void {
     expect($context->getUrl())->toBe('/stores/' . $storeId);
 });
 
-it('handles empty store ID', function (): void {
-    $streamFactory = test()->createMock(StreamFactoryInterface::class);
-
-    $request = new GetStoreRequest(store: '');
-    $context = $request->getRequest($streamFactory);
-
-    expect($request->getStore())->toBe('');
-    expect($context->getMethod())->toBe(RequestMethod::GET);
-    expect($context->getUrl())->toBe('/stores/');
+it('throws when store ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new GetStoreRequest(store: '');
 });

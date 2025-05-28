@@ -202,16 +202,7 @@ test('ReadTuplesRequest handles wildcard in tuple key', function (): void {
     expect($capturedBody['tuple_key']['user'])->toBe('user:*');
 });
 
-test('ReadTuplesRequest preserves empty store string', function (): void {
-    $tupleKey = new TupleKey('user:test', 'reader', 'doc:1');
-
-    $request = new ReadTuplesRequest(
-        store: '',
-        tupleKey: $tupleKey,
-    );
-
-    expect($request->getStore())->toBe('');
-
-    $context = $request->getRequest($this->streamFactory);
-    expect($context->getUrl())->toBe('/stores//read');
+it('throws when store is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ReadTuplesRequest(store: '', tupleKey: new TupleKey('user:test', 'reader', 'doc:1'));
 });

@@ -220,3 +220,13 @@ test('CheckRequest handles different consistency values', function (): void {
         expect($capturedBody['consistency'])->toBe($consistency->value);
     }
 });
+
+it('throws when store ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new CheckRequest(store: '', model: 'test-model', tupleKey: new TupleKey('user:test', 'viewer', 'doc:1'));
+});
+
+it('throws when model ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new CheckRequest(store: 'test-store', model: '', tupleKey: new TupleKey('user:test', 'viewer', 'doc:1'));
+});

@@ -298,15 +298,18 @@ test('WriteTuplesRequest handles UUID format IDs', function (): void {
     expect($context->getUrl())->toBe("/stores/{$storeId}/write");
 });
 
-test('WriteTuplesRequest handles empty strings', function (): void {
-    $request = new WriteTuplesRequest(
+test('WriteTuplesRequest throws when store is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new WriteTuplesRequest(
         store: '',
+        model: 'model-id',
+    );
+});
+
+test('WriteTuplesRequest throws when model is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new WriteTuplesRequest(
+        store: 'store-id',
         model: '',
     );
-
-    expect($request->getStore())->toBe('');
-    expect($request->getModel())->toBe('');
-
-    $context = $request->getRequest($this->streamFactory);
-    expect($context->getUrl())->toBe('/stores//write');
 });

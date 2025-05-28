@@ -7,6 +7,7 @@ namespace OpenFGA\Requests;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use InvalidArgumentException;
 
 final class ListStoresRequest implements ListStoresRequestInterface
 {
@@ -14,6 +15,9 @@ final class ListStoresRequest implements ListStoresRequestInterface
         private ?string $continuationToken = null,
         private ?int $pageSize = null,
     ) {
+        if (null !== $this->continuationToken) {
+            assert($this->continuationToken !== '', new InvalidArgumentException('Continuation token cannot be empty'));
+        }
     }
 
     #[Override]

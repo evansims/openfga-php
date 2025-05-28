@@ -10,6 +10,7 @@ use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use InvalidArgumentException;
 
 final class CreateAuthorizationModelRequest implements CreateAuthorizationModelRequestInterface
 {
@@ -25,6 +26,7 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
         private SchemaVersion $schemaVersion = SchemaVersion::V1_1,
         private ?ConditionsInterface $conditions = null,
     ) {
+        assert($this->store !== '', new InvalidArgumentException('Store ID cannot be empty'));
     }
 
     #[Override]

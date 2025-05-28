@@ -211,3 +211,28 @@ it('handles different consistency values', function (): void {
         expect($context->getBody())->toBe($stream);
     }
 });
+
+it('throws when store ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListObjectsRequest(store: '', type: 'document', relation: 'viewer', user: 'user:1');
+});
+
+it('throws when type is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListObjectsRequest(store: 'test-store', type: '', relation: 'viewer', user: 'user:1');
+});
+
+it('throws when relation is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListObjectsRequest(store: 'test-store', type: 'document', relation: '', user: 'user:1');
+});
+
+it('throws when user is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListObjectsRequest(store: 'test-store', type: 'document', relation: 'viewer', user: '');
+});
+
+it('throws when model is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListObjectsRequest(store: 'test-store', type: 'document', relation: 'viewer', user: 'user:1', model: '');
+});

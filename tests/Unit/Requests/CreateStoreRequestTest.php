@@ -5,6 +5,7 @@ declare(strict_types=1);
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\CreateStoreRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
+use InvalidArgumentException;
 
 it('can be instantiated', function (): void {
     $request = new CreateStoreRequest(name: 'test-store');
@@ -50,19 +51,7 @@ it('handles store names with special characters', function (): void {
     expect($context->getBody())->toBe($stream);
 });
 
-it('handles empty store name', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-
-    $streamFactory = test()->createMock(StreamFactoryInterface::class);
-    $streamFactory->expects(test()->once())
-        ->method('createStream')
-        ->with(json_encode(['name' => '']))
-        ->willReturn($stream);
-
-    $request = new CreateStoreRequest(name: '');
-    $context = $request->getRequest($streamFactory);
-
-    expect($request->getName())->toBe('');
-    expect($context->getMethod())->toBe(RequestMethod::POST);
-    expect($context->getUrl())->toBe('/stores/');
+it('throws when store name is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new CreateStoreRequest(name: '');
 });

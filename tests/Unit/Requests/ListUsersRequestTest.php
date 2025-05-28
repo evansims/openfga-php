@@ -228,22 +228,22 @@ test('ListUsersRequest handles complex context objects', function (): void {
     ]);
 });
 
-test('ListUsersRequest handles empty strings', function (): void {
-    $userFilters = new UserTypeFilters(new UserTypeFilter(''));
+it('throws when store is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListUsersRequest(store: '', model: 'model', object: 'object', relation: 'relation', userFilters: new UserTypeFilters());
+});
 
-    $request = new ListUsersRequest(
-        store: '',
-        model: '',
-        object: '',
-        relation: '',
-        userFilters: $userFilters,
-    );
+it('throws when model is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListUsersRequest(store: 'store', model: '', object: 'object', relation: 'relation', userFilters: new UserTypeFilters());
+});
 
-    expect($request->getStore())->toBe('');
-    expect($request->getModel())->toBe('');
-    expect($request->getObject())->toBe('');
-    expect($request->getRelation())->toBe('');
+it('throws when object is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListUsersRequest(store: 'store', model: 'model', object: '', relation: 'relation', userFilters: new UserTypeFilters());
+});
 
-    $context = $request->getRequest($this->streamFactory);
-    expect($context->getUrl())->toBe('/stores//list-users');
+it('throws when relation is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListUsersRequest(store: 'store', model: 'model', object: 'object', relation: '', userFilters: new UserTypeFilters());
 });

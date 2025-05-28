@@ -184,3 +184,8 @@ it('filters out null conditions from request body', function (): void {
     expect($context->getUrl())->toBe('/stores/test-store/authorization-models');
     expect($context->getBody())->toBe($stream);
 });
+
+it('throws when store ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new CreateAuthorizationModelRequest(store: '', typeDefinitions: test()->createMock(TypeDefinitionsInterface::class));
+});

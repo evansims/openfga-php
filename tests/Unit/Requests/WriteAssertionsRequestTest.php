@@ -181,20 +181,22 @@ test('WriteAssertionsRequest handles UUID format IDs', function (): void {
     expect($context->getUrl())->toBe("/stores/{$storeId}/assertions/{$modelId}");
 });
 
-test('WriteAssertionsRequest handles empty strings', function (): void {
-    $assertions = new Assertions();
-
-    $request = new WriteAssertionsRequest(
-        assertions: $assertions,
+test('WriteAssertionsRequest throws when store is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new WriteAssertionsRequest(
+        assertions: new Assertions(),
         store: '',
+        model: 'model-id',
+    );
+});
+
+test('WriteAssertionsRequest throws when model is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new WriteAssertionsRequest(
+        assertions: new Assertions(),
+        store: 'store-id',
         model: '',
     );
-
-    expect($request->getStore())->toBe('');
-    expect($request->getModel())->toBe('');
-
-    $context = $request->getRequest($this->streamFactory);
-    expect($context->getUrl())->toBe('/stores//assertions/');
 });
 
 test('WriteAssertionsRequest preserves assertion order', function (): void {

@@ -125,3 +125,13 @@ test('ListTupleChangesRequest handles special characters in parameters', functio
     expect($context->getUrl())->toContain('continuation_token=' . urlencode('token/with+special=chars'));
     expect($context->getUrl())->toContain('type=' . urlencode('type&with=special'));
 });
+
+it('throws when store is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListTupleChangesRequest(store: '');
+});
+
+it('throws when continuation token is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListTupleChangesRequest(store: 'test-store', continuationToken: '');
+});

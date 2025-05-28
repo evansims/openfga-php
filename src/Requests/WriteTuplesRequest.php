@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
@@ -24,6 +25,8 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
         private ?TupleKeysInterface $writes = null,
         private ?TupleKeysInterface $deletes = null,
     ) {
+        assert($this->store !== '', new InvalidArgumentException('Store ID cannot be empty'));
+        assert($this->model !== '', new InvalidArgumentException('Authorization model ID cannot be empty'));
     }
 
     #[Override]

@@ -106,3 +106,8 @@ it('filters out null values from query parameters', function (): void {
     expect($context->getMethod())->toBe(RequestMethod::GET);
     expect($context->getUrl())->toBe('/stores/my-store/authorization-models');
 });
+
+it('throws when store ID is empty', function (): void {
+    $this->expectException(InvalidArgumentException::class);
+    new ListAuthorizationModelsRequest(store: '');
+});
