@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Mockery\MockInterface;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\ListStoresRequest;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -26,8 +25,7 @@ it('can be instantiated with all parameters', function (): void {
 });
 
 it('generates correct request context without pagination', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new ListStoresRequest();
     $context = $request->getRequest($streamFactory);
@@ -39,8 +37,7 @@ it('generates correct request context without pagination', function (): void {
 });
 
 it('generates correct request context with continuation token', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new ListStoresRequest(continuationToken: 'token123');
     $context = $request->getRequest($streamFactory);
@@ -50,8 +47,7 @@ it('generates correct request context with continuation token', function (): voi
 });
 
 it('generates correct request context with page size', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new ListStoresRequest(pageSize: 50);
     $context = $request->getRequest($streamFactory);
@@ -61,8 +57,7 @@ it('generates correct request context with page size', function (): void {
 });
 
 it('generates correct request context with all pagination parameters', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new ListStoresRequest(
         continuationToken: 'next-token',
@@ -75,8 +70,7 @@ it('generates correct request context with all pagination parameters', function 
 });
 
 it('handles special characters in continuation token', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $token = 'token with spaces & special=chars';
     $request = new ListStoresRequest(continuationToken: $token);
@@ -87,8 +81,7 @@ it('handles special characters in continuation token', function (): void {
 });
 
 it('filters out null values from query parameters', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new ListStoresRequest(
         continuationToken: null,

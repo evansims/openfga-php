@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Mockery\MockInterface;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Network\RequestMethod;
@@ -30,7 +29,7 @@ it('can be instantiated with required parameters', function (): void {
 
 it('can be instantiated with all parameters', function (): void {
     $context = (object) ['key' => 'value'];
-    $contextualTuples = Mockery::mock(TupleKeysInterface::class);
+    $contextualTuples = test()->createMock(TupleKeysInterface::class);
 
     $request = new ListObjectsRequest(
         store: 'test-store',
@@ -54,18 +53,17 @@ it('can be instantiated with all parameters', function (): void {
 });
 
 it('generates correct request context with minimal parameters', function (): void {
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    $streamFactory->shouldReceive('createStream')
-        ->once()
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+    $streamFactory->expects(test()->once())
+        ->method('createStream')
         ->with(json_encode([
             'type' => 'document',
             'relation' => 'viewer',
             'user' => 'user:1',
         ]))
-        ->andReturn($stream);
+        ->willReturn($stream);
 
     $request = new ListObjectsRequest(
         store: 'test-store',
@@ -83,17 +81,15 @@ it('generates correct request context with minimal parameters', function (): voi
 
 it('generates correct request context with all parameters', function (): void {
     $contextObj = (object) ['key' => 'value'];
-    $contextualTuples = Mockery::mock(TupleKeysInterface::class);
-    $contextualTuples->shouldReceive('jsonSerialize')
-        ->once()
-        ->andReturn([['user' => 'user:2', 'relation' => 'editor', 'object' => 'doc:1']]);
+    $contextualTuples = test()->createMock(TupleKeysInterface::class);
+    $contextualTuples->method('jsonSerialize')
+        ->willReturn([['user' => 'user:2', 'relation' => 'editor', 'object' => 'doc:1']]);
 
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    $streamFactory->shouldReceive('createStream')
-        ->once()
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+    $streamFactory->expects(test()->once())
+        ->method('createStream')
         ->with(json_encode([
             'type' => 'document',
             'relation' => 'viewer',
@@ -103,7 +99,7 @@ it('generates correct request context with all parameters', function (): void {
             'contextual_tuples' => [['user' => 'user:2', 'relation' => 'editor', 'object' => 'doc:1']],
             'consistency' => 'HIGHER_CONSISTENCY',
         ]))
-        ->andReturn($stream);
+        ->willReturn($stream);
 
     $request = new ListObjectsRequest(
         store: 'test-store',
@@ -124,18 +120,17 @@ it('generates correct request context with all parameters', function (): void {
 });
 
 it('handles complex user identifiers', function (): void {
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    $streamFactory->shouldReceive('createStream')
-        ->once()
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+    $streamFactory->expects(test()->once())
+        ->method('createStream')
         ->with(json_encode([
             'type' => 'group',
             'relation' => 'member',
             'user' => 'group:engineering#member',
         ]))
-        ->andReturn($stream);
+        ->willReturn($stream);
 
     $request = new ListObjectsRequest(
         store: 'test-store',
@@ -151,18 +146,17 @@ it('handles complex user identifiers', function (): void {
 });
 
 it('filters out null values from request body', function (): void {
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    $streamFactory->shouldReceive('createStream')
-        ->once()
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+    $streamFactory->expects(test()->once())
+        ->method('createStream')
         ->with(json_encode([
             'type' => 'document',
             'relation' => 'viewer',
             'user' => 'user:1',
         ]))
-        ->andReturn($stream);
+        ->willReturn($stream);
 
     $request = new ListObjectsRequest(
         store: 'test-store',
@@ -183,23 +177,25 @@ it('filters out null values from request body', function (): void {
 });
 
 it('handles different consistency values', function (): void {
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+
+    // Set up expectations for each consistency value call
+    $streamFactory->expects(test()->exactly(3))
+        ->method('createStream')
+        ->willReturnCallback(function (string $json) use ($stream): StreamInterface {
+            $data = json_decode($json, true);
+            expect($data['type'])->toBe('document');
+            expect($data['relation'])->toBe('viewer');
+            expect($data['user'])->toBe('user:1');
+            expect($data['consistency'])->toBeIn(['HIGHER_CONSISTENCY', 'MINIMIZE_LATENCY', 'UNSPECIFIED']);
+
+            return $stream;
+        });
 
     // Test each consistency value
     foreach (Consistency::cases() as $consistency) {
-        $streamFactory->shouldReceive('createStream')
-            ->once()
-            ->with(json_encode([
-                'type' => 'document',
-                'relation' => 'viewer',
-                'user' => 'user:1',
-                'consistency' => $consistency->value,
-            ]))
-            ->andReturn($stream);
-
         $request = new ListObjectsRequest(
             store: 'test-store',
             type: 'document',

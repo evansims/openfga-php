@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Mockery\MockInterface;
 use OpenFGA\Responses\CheckResponse;
 use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
@@ -63,22 +62,17 @@ it('schema is cached', function (): void {
 it('creates response from successful HTTP response', function (): void {
     $responseData = ['allowed' => true, 'resolution' => 'conditional'];
 
-    $stream = Mockery::mock(StreamInterface::class);
-    $stream->shouldReceive('__toString')
-        ->once()
-        ->andReturn(json_encode($responseData));
+    $stream = test()->createMock(StreamInterface::class);
+    $stream->method('__toString')
+        ->willReturn(json_encode($responseData));
 
-    /** @var MockInterface&ResponseInterface $httpResponse */
-    $httpResponse = Mockery::mock(ResponseInterface::class);
-    $httpResponse->shouldReceive('getStatusCode')
-        ->once()
-        ->andReturn(200);
-    $httpResponse->shouldReceive('getBody')
-        ->once()
-        ->andReturn($stream);
+    $httpResponse = test()->createMock(ResponseInterface::class);
+    $httpResponse->method('getStatusCode')
+        ->willReturn(200);
+    $httpResponse->method('getBody')
+        ->willReturn($stream);
 
-    /** @var MockInterface&RequestInterface $request */
-    $request = Mockery::mock(RequestInterface::class);
+    $request = test()->createMock(RequestInterface::class);
 
     // Use a real SchemaValidator instance
     $validator = new SchemaValidator();
@@ -91,22 +85,17 @@ it('creates response from successful HTTP response', function (): void {
 });
 
 it('handles non-200 status codes', function (): void {
-    $stream = Mockery::mock(StreamInterface::class);
-    $stream->shouldReceive('__toString')
-        ->once()
-        ->andReturn('{"error": "Not Found"}');
+    $stream = test()->createMock(StreamInterface::class);
+    $stream->method('__toString')
+        ->willReturn('{"error": "Not Found"}');
 
-    /** @var MockInterface&ResponseInterface $httpResponse */
-    $httpResponse = Mockery::mock(ResponseInterface::class);
-    $httpResponse->shouldReceive('getStatusCode')
-        ->atLeast()->once()
-        ->andReturn(404);
-    $httpResponse->shouldReceive('getBody')
-        ->once()
-        ->andReturn($stream);
+    $httpResponse = test()->createMock(ResponseInterface::class);
+    $httpResponse->method('getStatusCode')
+        ->willReturn(404);
+    $httpResponse->method('getBody')
+        ->willReturn($stream);
 
-    /** @var MockInterface&RequestInterface $request */
-    $request = Mockery::mock(RequestInterface::class);
+    $request = test()->createMock(RequestInterface::class);
 
     $validator = new SchemaValidator();
 

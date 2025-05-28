@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Mockery\MockInterface;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\GetAuthorizationModelRequest;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -19,8 +18,7 @@ it('can be instantiated', function (): void {
 });
 
 it('generates correct request context', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new GetAuthorizationModelRequest(
         store: 'my-store',
@@ -35,8 +33,7 @@ it('generates correct request context', function (): void {
 });
 
 it('handles special characters in store and model IDs', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $storeId = 'store-with-special_chars';
     $modelId = 'model_with-123-special';
@@ -54,8 +51,7 @@ it('handles special characters in store and model IDs', function (): void {
 });
 
 it('handles empty store and model IDs', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new GetAuthorizationModelRequest(store: '', model: '');
     $context = $request->getRequest($streamFactory);

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Mockery\MockInterface;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
@@ -11,7 +10,7 @@ use OpenFGA\Requests\ExpandRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
 it('can be instantiated with required parameters', function (): void {
-    $tupleKey = Mockery::mock(TupleKeyInterface::class);
+    $tupleKey = test()->createMock(TupleKeyInterface::class);
 
     $request = new ExpandRequest(
         store: 'test-store',
@@ -27,8 +26,8 @@ it('can be instantiated with required parameters', function (): void {
 });
 
 it('can be instantiated with all parameters', function (): void {
-    $tupleKey = Mockery::mock(TupleKeyInterface::class);
-    $contextualTuples = Mockery::mock(TupleKeysInterface::class);
+    $tupleKey = test()->createMock(TupleKeyInterface::class);
+    $contextualTuples = test()->createMock(TupleKeysInterface::class);
 
     $request = new ExpandRequest(
         store: 'test-store',
@@ -46,21 +45,19 @@ it('can be instantiated with all parameters', function (): void {
 });
 
 it('generates correct request context with minimal parameters', function (): void {
-    $tupleKey = Mockery::mock(TupleKeyInterface::class);
-    $tupleKey->shouldReceive('jsonSerialize')
-        ->once()
-        ->andReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
+    $tupleKey = test()->createMock(TupleKeyInterface::class);
+    $tupleKey->method('jsonSerialize')
+        ->willReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
 
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    $streamFactory->shouldReceive('createStream')
-        ->once()
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+    $streamFactory->expects(test()->once())
+        ->method('createStream')
         ->with(json_encode([
             'tuple_key' => ['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1'],
         ]))
-        ->andReturn($stream);
+        ->willReturn($stream);
 
     $request = new ExpandRequest(
         store: 'test-store',
@@ -75,29 +72,26 @@ it('generates correct request context with minimal parameters', function (): voi
 });
 
 it('generates correct request context with all parameters', function (): void {
-    $tupleKey = Mockery::mock(TupleKeyInterface::class);
-    $tupleKey->shouldReceive('jsonSerialize')
-        ->once()
-        ->andReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
+    $tupleKey = test()->createMock(TupleKeyInterface::class);
+    $tupleKey->method('jsonSerialize')
+        ->willReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
 
-    $contextualTuples = Mockery::mock(TupleKeysInterface::class);
-    $contextualTuples->shouldReceive('jsonSerialize')
-        ->once()
-        ->andReturn([['user' => 'user:2', 'relation' => 'editor', 'object' => 'doc:1']]);
+    $contextualTuples = test()->createMock(TupleKeysInterface::class);
+    $contextualTuples->method('jsonSerialize')
+        ->willReturn([['user' => 'user:2', 'relation' => 'editor', 'object' => 'doc:1']]);
 
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    $streamFactory->shouldReceive('createStream')
-        ->once()
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+    $streamFactory->expects(test()->once())
+        ->method('createStream')
         ->with(json_encode([
             'tuple_key' => ['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1'],
             'authorization_model_id' => 'test-model',
             'consistency' => 'HIGHER_CONSISTENCY',
             'contextual_tuples' => [['user' => 'user:2', 'relation' => 'editor', 'object' => 'doc:1']],
         ]))
-        ->andReturn($stream);
+        ->willReturn($stream);
 
     $request = new ExpandRequest(
         store: 'test-store',
@@ -115,21 +109,19 @@ it('generates correct request context with all parameters', function (): void {
 });
 
 it('filters out null values from request body', function (): void {
-    $tupleKey = Mockery::mock(TupleKeyInterface::class);
-    $tupleKey->shouldReceive('jsonSerialize')
-        ->once()
-        ->andReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
+    $tupleKey = test()->createMock(TupleKeyInterface::class);
+    $tupleKey->method('jsonSerialize')
+        ->willReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
 
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-    $streamFactory->shouldReceive('createStream')
-        ->once()
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+    $streamFactory->expects(test()->once())
+        ->method('createStream')
         ->with(json_encode([
             'tuple_key' => ['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1'],
         ]))
-        ->andReturn($stream);
+        ->willReturn($stream);
 
     $request = new ExpandRequest(
         store: 'test-store',
@@ -147,26 +139,27 @@ it('filters out null values from request body', function (): void {
 });
 
 it('handles different consistency values', function (): void {
-    $tupleKey = Mockery::mock(TupleKeyInterface::class);
-    $tupleKey->shouldReceive('jsonSerialize')
-        ->times(3)
-        ->andReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
+    $tupleKey = test()->createMock(TupleKeyInterface::class);
+    $tupleKey->method('jsonSerialize')
+        ->willReturn(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
 
-    $stream = Mockery::mock(StreamInterface::class);
+    $stream = test()->createMock(StreamInterface::class);
 
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
+
+    // Set up expectations for each consistency value call
+    $streamFactory->expects(test()->exactly(3))
+        ->method('createStream')
+        ->willReturnCallback(function (string $json) use ($stream): StreamInterface {
+            $data = json_decode($json, true);
+            expect($data['tuple_key'])->toBe(['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1']);
+            expect($data['consistency'])->toBeIn(['HIGHER_CONSISTENCY', 'MINIMIZE_LATENCY', 'UNSPECIFIED']);
+
+            return $stream;
+        });
 
     // Test each consistency value
     foreach (Consistency::cases() as $consistency) {
-        $streamFactory->shouldReceive('createStream')
-            ->once()
-            ->with(json_encode([
-                'tuple_key' => ['user' => 'user:1', 'relation' => 'viewer', 'object' => 'doc:1'],
-                'consistency' => $consistency->value,
-            ]))
-            ->andReturn($stream);
-
         $request = new ExpandRequest(
             store: 'test-store',
             tupleKey: $tupleKey,

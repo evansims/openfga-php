@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-use Mockery\MockInterface;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\GetStoreRequest;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -15,8 +14,7 @@ it('can be instantiated', function (): void {
 });
 
 it('generates correct request context', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new GetStoreRequest(store: 'my-store');
     $context = $request->getRequest($streamFactory);
@@ -28,8 +26,7 @@ it('generates correct request context', function (): void {
 });
 
 it('handles store IDs with special characters', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $storeId = 'store-123-with-special_chars';
     $request = new GetStoreRequest(store: $storeId);
@@ -41,8 +38,7 @@ it('handles store IDs with special characters', function (): void {
 });
 
 it('handles empty store ID', function (): void {
-    /** @var MockInterface&StreamFactoryInterface $streamFactory */
-    $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+    $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
     $request = new GetStoreRequest(store: '');
     $context = $request->getRequest($streamFactory);
