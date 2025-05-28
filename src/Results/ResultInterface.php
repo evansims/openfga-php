@@ -43,6 +43,8 @@ interface ResultInterface
      * @param callable(Throwable): ResultInterface<U, F> $fn
      *
      * @return ResultInterface<U, F>
+     *
+     * @psalm-suppress DocblockTypeContradiction
      */
     public function recover(callable $fn): self;
 
@@ -78,6 +80,8 @@ interface ResultInterface
      * @param callable(T): ResultInterface<U, F> $fn
      *
      * @return ResultInterface<U, F>
+     *
+     * @psalm-suppress DocblockTypeContradiction
      */
     public function then(callable $fn): self;
 

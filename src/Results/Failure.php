@@ -61,7 +61,10 @@ final class Failure extends Result implements ResultInterface
      */
     public function recover(callable $fn): ResultInterface
     {
-        return $fn($this->err());
+        $result = $fn($this->err());
+
+        // @phpstan-ignore-next-line
+        return $result instanceof ResultInterface ? $result : new Success($result);
     }
 
     #[Override]

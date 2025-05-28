@@ -191,6 +191,49 @@ test('Failure recover can return another Failure', function (): void {
     expect($result->err())->toBe($newError);
 });
 
+test('Failure recover wraps non-Result return values', function (): void {
+    $failure = new Failure($this->testError);
+
+    // Test with string
+    $result = $failure->recover(fn ($error) => 'recovered: ' . $error->getMessage());
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toStartWith('recovered: ');
+
+    // Test with array
+    $result = $failure->recover(fn () => ['recovered' => true]);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe(['recovered' => true]);
+
+    // Test with null
+    $result = $failure->recover(fn () => null);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBeNull();
+
+    // Test with number
+    $result = $failure->recover(fn () => 42);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe(42);
+
+    // Test with object
+    $obj = (object) ['recovered' => true];
+    $result = $failure->recover(fn () => $obj);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe($obj);
+});
+
+test('Failure recover preserves Result return values', function (): void {
+    $failure = new Failure($this->testError);
+
+    // Test that existing Result instances are preserved
+    $successResult = new Success('recovered-success');
+    $result = $failure->recover(fn () => $successResult);
+    expect($result)->toBe($successResult);
+
+    $failureResult = new Failure(NetworkError::Server->exception());
+    $result = $failure->recover(fn () => $failureResult);
+    expect($result)->toBe($failureResult);
+});
+
 test('Failure rethrow throws the wrapped error when no throwable provided', function (): void {
     $failure = new Failure($this->testError);
 

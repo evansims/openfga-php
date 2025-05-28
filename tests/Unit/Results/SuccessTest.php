@@ -168,6 +168,44 @@ test('Success then can return Failure', function (): void {
     expect($result->err())->toBe($error);
 });
 
+test('Success then wraps non-Result return values', function (): void {
+    $success = new Success($this->testValue);
+
+    // Test with string
+    $result = $success->then(fn ($value) => strtoupper($value));
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe('TEST-VALUE');
+
+    // Test with array
+    $result = $success->then(fn () => ['wrapped']);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe(['wrapped']);
+
+    // Test with null
+    $result = $success->then(fn () => null);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBeNull();
+
+    // Test with object
+    $obj = (object) ['test' => true];
+    $result = $success->then(fn () => $obj);
+    expect($result)->toBeInstanceOf(Success::class);
+    expect($result->val())->toBe($obj);
+});
+
+test('Success then preserves Result return values', function (): void {
+    $success = new Success($this->testValue);
+
+    // Test that existing Result instances are preserved
+    $successResult = new Success('already-success');
+    $result = $success->then(fn () => $successResult);
+    expect($result)->toBe($successResult);
+
+    $failureResult = new Failure(ClientError::Validation->exception());
+    $result = $success->then(fn () => $failureResult);
+    expect($result)->toBe($failureResult);
+});
+
 test('Success recover does not execute callback and returns self', function (): void {
     $success = new Success($this->testValue);
     $callbackExecuted = false;
