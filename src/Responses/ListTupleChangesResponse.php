@@ -79,7 +79,7 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'changes', type: TupleChanges::class, required: true),
+                new SchemaProperty(name: 'changes', type: 'object', className: TupleChanges::class, required: true),
                 new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
             ],
         );

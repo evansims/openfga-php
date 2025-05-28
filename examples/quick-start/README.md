@@ -1,4 +1,4 @@
-# Basic Example
+# Quick Start Example
 
 1. Install the dependencies:
 
@@ -6,12 +6,10 @@
 composer install
 ```
 
-2. Configure your `.env`.
-
-3. Run the example:
+2. Run the example:
 
 ```bash
 php example.php
 ```
 
-4. Check the output.
+3. Check the output.

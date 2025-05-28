@@ -21,7 +21,7 @@ final class WriteTuplesResponse extends Response implements WriteTuplesResponseI
         SchemaValidator $validator,
     ): WriteTuplesResponseInterface {
         // Handle successful responses
-        if (204 === $response->getStatusCode()) {
+        if (200 === $response->getStatusCode() || 204 === $response->getStatusCode()) {
             return new self();
         }
 

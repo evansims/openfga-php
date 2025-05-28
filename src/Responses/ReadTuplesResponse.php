@@ -80,7 +80,7 @@ final class ReadTuplesResponse extends Response implements ReadTuplesResponseInt
             self::$schema = new Schema(
                 className: self::class,
                 properties: [
-                    new SchemaProperty(name: 'tuples', type: Tuples::class, required: true),
+                    new SchemaProperty(name: 'tuples', type: 'object', className: Tuples::class, required: true),
                     new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
                 ],
             );

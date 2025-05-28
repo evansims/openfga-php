@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\Collections\TypeDefinitionRelations;
+use OpenFGA\Models\Collections\{RelationMetadataCollection, TypeDefinitionRelations};
 use OpenFGA\Models\{Metadata, ObjectRelation, RelationMetadata, SourceInfo, TypeDefinition, TypeDefinitionInterface, Userset};
 use OpenFGA\Schema\SchemaInterface;
 
@@ -43,8 +43,12 @@ describe('TypeDefinition Model', function (): void {
             sourceInfo: $sourceInfo,
         );
 
+        $relationCollection = new RelationMetadataCollection([
+            'viewer' => $relationMetadata,
+        ]);
+
         $metadata = new Metadata(
-            relations: $relationMetadata,
+            relations: $relationCollection,
             module: 'auth',
             sourceInfo: $sourceInfo,
         );
@@ -62,8 +66,11 @@ describe('TypeDefinition Model', function (): void {
 
         $json = $typeDefinition->jsonSerialize();
 
-        expect($json)->toBe(['type' => 'document']);
-        expect($json)->not->toHaveKeys(['relations', 'metadata']);
+        expect($json)->toHaveKey('type');
+        expect($json['type'])->toBe('document');
+        expect($json)->toHaveKey('relations');
+        expect($json['relations'])->toBeInstanceOf(stdClass::class);
+        expect($json)->not->toHaveKey('metadata');
     });
 
     test('serializes to JSON with relations', function (): void {
@@ -201,5 +208,156 @@ describe('TypeDefinition Model', function (): void {
             $typeDefinition = new TypeDefinition(type: $typeName);
             expect($typeDefinition->getType())->toBe($typeName);
         }
+    });
+
+    test('serializes metadata when type is not user and metadata implements MetadataInterface', function (): void {
+        $sourceInfo = new SourceInfo(file: 'model.fga');
+        $relationMetadata = new RelationMetadata(
+            module: 'auth',
+            sourceInfo: $sourceInfo,
+        );
+
+        $relationCollection = new RelationMetadataCollection([
+            'viewer' => $relationMetadata,
+        ]);
+
+        $metadata = new Metadata(
+            relations: $relationCollection,
+            module: 'auth',
+            sourceInfo: $sourceInfo,
+        );
+
+        $typeDefinition = new TypeDefinition(
+            type: 'document',
+            metadata: $metadata,
+        );
+
+        $json = $typeDefinition->jsonSerialize();
+
+        expect($json)->toHaveKey('metadata');
+        expect($json['metadata'])->toBe($metadata->jsonSerialize());
+    });
+
+    test('omits metadata when type is user even with valid metadata', function (): void {
+        $sourceInfo = new SourceInfo(file: 'model.fga');
+        $relationMetadata = new RelationMetadata(
+            module: 'auth',
+            sourceInfo: $sourceInfo,
+        );
+
+        $relationCollection = new RelationMetadataCollection([
+            'viewer' => $relationMetadata,
+        ]);
+
+        $metadata = new Metadata(
+            relations: $relationCollection,
+            module: 'auth',
+            sourceInfo: $sourceInfo,
+        );
+
+        $typeDefinition = new TypeDefinition(
+            type: 'user',
+            metadata: $metadata,
+        );
+
+        $json = $typeDefinition->jsonSerialize();
+
+        expect($json)->not->toHaveKey('metadata');
+        expect($json)->toHaveKeys(['type', 'relations']);
+        expect($json['type'])->toBe('user');
+    });
+
+    test('omits metadata when metadata is null', function (): void {
+        $typeDefinition = new TypeDefinition(
+            type: 'document',
+            metadata: null,
+        );
+
+        $json = $typeDefinition->jsonSerialize();
+
+        expect($json)->not->toHaveKey('metadata');
+        expect($json)->toHaveKeys(['type', 'relations']);
+    });
+
+    test('includes metadata for various non-user types', function (): void {
+        $sourceInfo = new SourceInfo(file: 'test.fga');
+        $metadata = new Metadata(
+            module: 'test',
+            sourceInfo: $sourceInfo,
+        );
+
+        $nonUserTypes = ['document', 'folder', 'organization', 'resource', 'api-key'];
+
+        foreach ($nonUserTypes as $typeName) {
+            $typeDefinition = new TypeDefinition(
+                type: $typeName,
+                metadata: $metadata,
+            );
+
+            $json = $typeDefinition->jsonSerialize();
+
+            expect($json)->toHaveKey('metadata');
+            expect($json['metadata'])->toBe($metadata->jsonSerialize());
+            expect($json['type'])->toBe($typeName);
+        }
+    });
+
+    test('metadata serialization includes expected structure', function (): void {
+        $sourceInfo = new SourceInfo(file: 'auth.fga');
+        $relationMetadata = new RelationMetadata(
+            module: 'permissions',
+            sourceInfo: $sourceInfo,
+        );
+
+        $relationCollection = new RelationMetadataCollection([
+            'viewer' => $relationMetadata,
+            'editor' => $relationMetadata,
+        ]);
+
+        $metadata = new Metadata(
+            relations: $relationCollection,
+            module: 'auth',
+            sourceInfo: $sourceInfo,
+        );
+
+        $typeDefinition = new TypeDefinition(
+            type: 'document',
+            metadata: $metadata,
+        );
+
+        $json = $typeDefinition->jsonSerialize();
+
+        expect($json)->toHaveKey('metadata');
+        expect($json['metadata'])->toBeArray();
+
+        $metadataJson = $json['metadata'];
+        expect($metadataJson)->toHaveKey('module');
+        expect($metadataJson['module'])->toBe('auth');
+        expect($metadataJson)->toHaveKey('source_info');
+        expect($metadataJson['source_info'])->toHaveKey('file');
+        expect($metadataJson['source_info']['file'])->toBe('auth.fga');
+    });
+
+    test('metadata serialization conditional logic coverage', function (): void {
+        // Test case 1: Non-user type with metadata (should include)
+        $metadata = new Metadata(module: 'test');
+        $typeDefinition1 = new TypeDefinition(type: 'document', metadata: $metadata);
+        $json1 = $typeDefinition1->jsonSerialize();
+        expect($json1)->toHaveKey('metadata');
+
+        // Test case 2: User type with metadata (should omit)
+        $typeDefinition2 = new TypeDefinition(type: 'user', metadata: $metadata);
+        $json2 = $typeDefinition2->jsonSerialize();
+        expect($json2)->not->toHaveKey('metadata');
+
+        // Test case 3: Non-user type without metadata (should omit)
+        $typeDefinition3 = new TypeDefinition(type: 'document', metadata: null);
+        $json3 = $typeDefinition3->jsonSerialize();
+        expect($json3)->not->toHaveKey('metadata');
+
+        // Test case 4: User type without metadata (should omit)
+        $typeDefinition4 = new TypeDefinition(type: 'user', metadata: null);
+        $json4 = $typeDefinition4->jsonSerialize();
+        expect($json4)->not->toHaveKey('metadata');
     });
 });

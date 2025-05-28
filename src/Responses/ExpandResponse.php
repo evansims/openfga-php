@@ -64,7 +64,7 @@ final class ExpandResponse extends Response implements ExpandResponseInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'tree', type: UsersetTree::class, required: false),
+                new SchemaProperty(name: 'tree', type: 'object', className: UsersetTree::class, required: false),
             ],
         );
     }

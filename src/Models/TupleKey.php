@@ -84,7 +84,7 @@ final class TupleKey implements TupleKeyInterface
                 new SchemaProperty(name: 'user', type: 'string', required: true),
                 new SchemaProperty(name: 'relation', type: 'string', required: true),
                 new SchemaProperty(name: 'object', type: 'string', required: true),
-                new SchemaProperty(name: 'condition', type: Condition::class, required: false),
+                new SchemaProperty(name: 'condition', type: 'object', className: Condition::class, required: false),
             ],
         );
     }

@@ -64,8 +64,8 @@ final class ConditionParameter implements ConditionParameterInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'type_name', type: TypeName::class, required: true),
-                new SchemaProperty(name: 'generic_types', type: ConditionParameters::class, required: false),
+                new SchemaProperty(name: 'type_name', type: 'object', className: TypeName::class, required: true),
+                new SchemaProperty(name: 'generic_types', type: 'object', className: ConditionParameters::class, required: false),
             ],
         );
     }

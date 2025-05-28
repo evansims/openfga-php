@@ -114,13 +114,13 @@ describe('Userset Model', function (): void {
 
         $userset = new Userset(direct: new stdClass());
         $json = $userset->jsonSerialize();
-        expect($json)->toHaveKey('direct');
-        expect($json['direct'])->toBeInstanceOf(stdClass::class);
+        expect($json)->toHaveKey('this');
+        expect($json['this'])->toBeInstanceOf(stdClass::class);
 
         $computedUserset = new ObjectRelation(relation: 'viewer');
         $userset = new Userset(computedUserset: $computedUserset);
         expect($userset->jsonSerialize())->toBe([
-            'computed_userset' => ['relation' => 'viewer'],
+            'computedUserset' => ['relation' => 'viewer'],
         ]);
     });
 
@@ -135,15 +135,16 @@ describe('Userset Model', function (): void {
 
         $json = $userset->jsonSerialize();
         expect($json)->toHaveKey('union');
-        expect($json['union'])->toHaveCount(2);
+        expect($json['union'])->toHaveKey('child');
+        expect($json['union']['child'])->toHaveCount(2);
 
-        // Check first child has direct
-        expect($json['union'][0])->toHaveKey('direct');
-        expect($json['union'][0]['direct'])->toBeInstanceOf(stdClass::class);
+        // Check first child has 'this' (not 'direct')
+        expect($json['union']['child'][0])->toHaveKey('this');
+        expect($json['union']['child'][0]['this'])->toBeInstanceOf(stdClass::class);
 
-        // Check second child has computed_userset
-        expect($json['union'][1])->toHaveKey('computed_userset');
-        expect($json['union'][1]['computed_userset'])->toBe(['relation' => 'viewer']);
+        // Check second child has computedUserset
+        expect($json['union']['child'][1])->toHaveKey('computedUserset');
+        expect($json['union']['child'][1]['computedUserset'])->toBe(['relation' => 'viewer']);
     });
 
     test('returns schema instance', function (): void {
@@ -157,9 +158,9 @@ describe('Userset Model', function (): void {
 
         $propertyNames = array_keys($properties);
         expect($propertyNames)->toBe([
-            'direct',
-            'computed_userset',
-            'tuple_to_userset',
+            'this',
+            'computedUserset',
+            'tupleToUserset',
             'union',
             'intersection',
             'difference',
@@ -170,22 +171,22 @@ describe('Userset Model', function (): void {
         $schema = Userset::schema();
         $properties = $schema->getProperties();
 
-        // Direct property
-        $directProp = $properties['direct'];
-        expect($directProp->name)->toBe('direct');
-        expect($directProp->type)->toBe('object');
-        expect($directProp->required)->toBe(false);
+        // This property (formerly 'direct')
+        $thisProp = $properties['this'];
+        expect($thisProp->name)->toBe('this');
+        expect($thisProp->type)->toBe('object');
+        expect($thisProp->required)->toBe(false);
 
         // ComputedUserset property
-        $computedUsersetProp = $properties['computed_userset'];
-        expect($computedUsersetProp->name)->toBe('computed_userset');
+        $computedUsersetProp = $properties['computedUserset'];
+        expect($computedUsersetProp->name)->toBe('computedUserset');
         expect($computedUsersetProp->type)->toBe('object');
         expect($computedUsersetProp->className)->toBe(ObjectRelation::class);
         expect($computedUsersetProp->required)->toBe(false);
 
         // TupleToUserset property
-        $tupleToUsersetProp = $properties['tuple_to_userset'];
-        expect($tupleToUsersetProp->name)->toBe('tuple_to_userset');
+        $tupleToUsersetProp = $properties['tupleToUserset'];
+        expect($tupleToUsersetProp->name)->toBe('tupleToUserset');
         expect($tupleToUsersetProp->type)->toBe('object');
         expect($tupleToUsersetProp->className)->toBe(TupleToUsersetV1::class);
         expect($tupleToUsersetProp->required)->toBe(false);
@@ -233,15 +234,15 @@ describe('Userset Model', function (): void {
         // Direct assignment
         $directUserset = new Userset(direct: new stdClass());
         $json = $directUserset->jsonSerialize();
-        expect($json)->toHaveKey('direct');
-        expect($json['direct'])->toBeInstanceOf(stdClass::class);
+        expect($json)->toHaveKey('this');
+        expect($json['this'])->toBeInstanceOf(stdClass::class);
 
         // Computed from relation
         $computedUserset = new Userset(
             computedUserset: new ObjectRelation(relation: 'owner'),
         );
         expect($computedUserset->jsonSerialize())->toBe([
-            'computed_userset' => ['relation' => 'owner'],
+            'computedUserset' => ['relation' => 'owner'],
         ]);
 
         // Union of multiple usersets (e.g., viewers are owners OR editors)
@@ -257,6 +258,93 @@ describe('Userset Model', function (): void {
 
         $json = $viewerUserset->jsonSerialize();
         expect($json)->toHaveKey('union');
-        expect($json['union'])->toHaveCount(2);
+        expect($json['union'])->toHaveKey('child');
+        expect($json['union']['child'])->toHaveCount(2);
+    });
+
+    test('jsonSerialize includes tupleToUserset when present', function (): void {
+        $tupleToUserset = new TupleToUsersetV1(
+            tupleset: new ObjectRelation(relation: 'parent'),
+            computedUserset: new ObjectRelation(relation: 'viewer'),
+        );
+        $userset = new Userset(tupleToUserset: $tupleToUserset);
+
+        $json = $userset->jsonSerialize();
+
+        expect($json)->toHaveKey('tupleToUserset');
+        expect($json['tupleToUserset'])->toBe([
+            'tupleset' => ['relation' => 'parent'],
+            'computedUserset' => ['relation' => 'viewer'],
+        ]);
+        expect($json)->toHaveCount(1); // Only tupleToUserset should be present
+    });
+
+    test('jsonSerialize includes intersection when present', function (): void {
+        $child1 = new Userset(direct: new stdClass());
+        $child2 = new Userset(computedUserset: new ObjectRelation(relation: 'member'));
+        $intersection = new Usersets([$child1, $child2]);
+
+        $userset = new Userset(intersection: $intersection);
+
+        $json = $userset->jsonSerialize();
+
+        expect($json)->toHaveKey('intersection');
+        expect($json['intersection'])->toHaveKey('child');
+        expect($json['intersection']['child'])->toHaveCount(2);
+
+        // Verify first child has 'this'
+        expect($json['intersection']['child'][0])->toHaveKey('this');
+        expect($json['intersection']['child'][0]['this'])->toBeInstanceOf(stdClass::class);
+
+        // Verify second child has computedUserset
+        expect($json['intersection']['child'][1])->toHaveKey('computedUserset');
+        expect($json['intersection']['child'][1]['computedUserset'])->toBe(['relation' => 'member']);
+
+        expect($json)->toHaveCount(1); // Only intersection should be present
+    });
+
+    test('jsonSerialize includes union when present', function (): void {
+        $child1 = new Userset(direct: new stdClass());
+        $child2 = new Userset(computedUserset: new ObjectRelation(relation: 'admin'));
+        $union = new Usersets([$child1, $child2]);
+
+        $userset = new Userset(union: $union);
+
+        $json = $userset->jsonSerialize();
+
+        expect($json)->toHaveKey('union');
+        expect($json['union'])->toHaveKey('child');
+        expect($json['union']['child'])->toHaveCount(2);
+
+        // Verify serialization structure
+        expect($json['union']['child'][0])->toHaveKey('this');
+        expect($json['union']['child'][1])->toHaveKey('computedUserset');
+        expect($json['union']['child'][1]['computedUserset'])->toBe(['relation' => 'admin']);
+
+        expect($json)->toHaveCount(1); // Only union should be present
+    });
+
+    test('jsonSerialize includes difference when present', function (): void {
+        $base = new Userset(direct: new stdClass());
+        $subtract = new Userset(computedUserset: new ObjectRelation(relation: 'blocked'));
+        $difference = new DifferenceV1(base: $base, subtract: $subtract);
+
+        $userset = new Userset(difference: $difference);
+
+        $json = $userset->jsonSerialize();
+
+        expect($json)->toHaveKey('difference');
+        expect($json['difference'])->toHaveKey('base');
+        expect($json['difference'])->toHaveKey('subtract');
+
+        // Verify base has 'this'
+        expect($json['difference']['base'])->toHaveKey('this');
+        expect($json['difference']['base']['this'])->toBeInstanceOf(stdClass::class);
+
+        // Verify subtract has computedUserset
+        expect($json['difference']['subtract'])->toHaveKey('computedUserset');
+        expect($json['difference']['subtract']['computedUserset'])->toBe(['relation' => 'blocked']);
+
+        expect($json)->toHaveCount(1); // Only difference should be present
     });
 });

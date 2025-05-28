@@ -188,13 +188,13 @@ describe('Condition Model', function (): void {
         // Parameters property
         $paramsProp = $properties[array_keys($properties)[2]];
         expect($paramsProp->name)->toBe('parameters');
-        expect($paramsProp->type)->toBe(ConditionParameters::class);
+        expect($paramsProp->type)->toBe('object');
         expect($paramsProp->required)->toBe(false);
 
         // Metadata property
         $metadataProp = $properties[array_keys($properties)[3]];
         expect($metadataProp->name)->toBe('metadata');
-        expect($metadataProp->type)->toBe(ConditionMetadata::class);
+        expect($metadataProp->type)->toBe('object');
         expect($metadataProp->required)->toBe(false);
     });
 

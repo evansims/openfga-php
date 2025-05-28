@@ -54,11 +54,11 @@ it('generates correct request context with minimal parameters', function (): voi
     $streamFactory->expects(test()->once())
         ->method('createStream')
         ->with(json_encode([
+            'schema_version' => '1.1',
             'type_definitions' => [
                 ['type' => 'user'],
                 ['type' => 'document', 'relations' => ['viewer' => 'user']],
             ],
-            'schema_version' => '1.1',
         ]))
         ->willReturn($stream);
 
@@ -83,6 +83,8 @@ it('generates correct request context with all parameters', function (): void {
         ]);
 
     $conditions = test()->createMock(ConditionsInterface::class);
+    $conditions->method('count')
+        ->willReturn(1);
     $conditions->method('jsonSerialize')
         ->willReturn([
             'condition1' => ['name' => 'condition1', 'expression' => 'user.id == "123"'],
@@ -94,11 +96,11 @@ it('generates correct request context with all parameters', function (): void {
     $streamFactory->expects(test()->once())
         ->method('createStream')
         ->with(json_encode([
+            'schema_version' => '1.0',
             'type_definitions' => [
                 ['type' => 'user'],
                 ['type' => 'document', 'relations' => ['viewer' => 'user']],
             ],
-            'schema_version' => '1.0',
             'conditions' => [
                 'condition1' => ['name' => 'condition1', 'expression' => 'user.id == "123"'],
             ],
@@ -166,8 +168,8 @@ it('filters out null conditions from request body', function (): void {
     $streamFactory->expects(test()->once())
         ->method('createStream')
         ->with(json_encode([
-            'type_definitions' => [['type' => 'user']],
             'schema_version' => '1.1',
+            'type_definitions' => [['type' => 'user']],
         ]))
         ->willReturn($stream);
 

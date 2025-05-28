@@ -5,7 +5,7 @@
 `OpenFGA\Models\Collections`
 
 ## Implements
-* [KeyedCollectionInterface](Models/Collections/KeyedCollectionInterface.md)
+* [IndexedCollectionInterface](Models/Collections/IndexedCollectionInterface.md)
 * Traversable
 * JsonSerializable
 * Iterator
@@ -20,18 +20,29 @@
 
 
 ```php
-public function add(string $key, OpenFGA\Models\ModelInterface $item): static
+public function add(mixed $item): static
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string |  |
-| `key` | string |  |
+| `callback` | callable |  |
 
 #### Returns
 static
+
+### clear
+
+
+```php
+public function clear(): void
+```
+
+
+
+#### Returns
+void
 
 ### count
 
@@ -57,33 +68,77 @@ public function current(): OpenFGA\Models\ModelInterface
 #### Returns
 [ModelInterface](Models/ModelInterface.md)
 
-### get
+### every
 
 
 ```php
-public function get(string $key)
+public function every(callable $callback): bool
 ```
 
+Checks if all items match the callback.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `key` | string |  |
+| `callback` | callable |  |
 
+#### Returns
+bool
 
-### has
+### filter
 
 
 ```php
-public function has(string $key): bool
+public function filter(callable $callback): static
 ```
 
-Check if a key exists in the collection.
+Filters the collection using a callback.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `callback` | ?callable |  |
+
+#### Returns
+static
+
+### first
+
+
+```php
+public function first(?callable $callback = NULL)
+```
+
+Returns the first item that matches the callback.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `offset` | int |  |
+
+
+### get
+
+
+```php
+public function get(int $offset)
+```
+
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
 | `offset` | mixed |  |
+
+
+### isEmpty
+
+
+```php
+public function isEmpty(): bool
+```
+
+
 
 #### Returns
 bool
@@ -104,13 +159,13 @@ array
 
 
 ```php
-public function key(): string
+public function key(): int
 ```
 
 
 
 #### Returns
-string
+int
 
 ### next
 
@@ -144,7 +199,7 @@ bool
 
 
 ```php
-public function offsetGet(mixed $offset)
+public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 ```
 
 
@@ -153,6 +208,8 @@ public function offsetGet(mixed $offset)
 |------|------|-------------|
 | `value` | mixed |  |
 
+#### Returns
+?[ModelInterface](Models/ModelInterface.md)
 
 ### offsetSet
 
@@ -182,10 +239,28 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
+| `callback` | callable |  |
 
 #### Returns
 void
+
+### reduce
+
+
+```php
+public function reduce(mixed $initial, callable $callback): mixed
+```
+
+Reduces the collection to a single value.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$initial` | mixed |  |
+| `callback` | callable |  |
+
+#### Returns
+mixed
 
 ### rewind
 
@@ -201,7 +276,7 @@ void
 
 ### schema
 
-*<small>Implements Models\Collections\KeyedCollectionInterface</small>*  
+*<small>Implements Models\Collections\IndexedCollectionInterface</small>*  
 
 ```php
 public function schema(): OpenFGA\Schema\CollectionSchemaInterface
@@ -211,6 +286,23 @@ public function schema(): OpenFGA\Schema\CollectionSchemaInterface
 
 #### Returns
 [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
+
+### some
+
+
+```php
+public function some(callable $callback): bool
+```
+
+Checks if any item matches the callback.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `items` |  |  |
+
+#### Returns
+bool
 
 ### toArray
 
@@ -235,4 +327,20 @@ public function valid(): bool
 
 #### Returns
 bool
+
+### withItems
+
+
+```php
+public function withItems(mixed $items): static
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$items` | mixed |  |
+
+#### Returns
+static
 

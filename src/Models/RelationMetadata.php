@@ -60,11 +60,21 @@ final class RelationMetadata implements RelationMetadataInterface
      */
     public function jsonSerialize(): array
     {
-        return array_filter([
-            'module' => $this->module,
-            'directly_related_user_types' => $this->directlyRelatedUserTypes?->jsonSerialize(),
-            'source_info' => $this->sourceInfo?->jsonSerialize(),
-        ], static fn ($value): bool => null !== $value);
+        $result = [];
+
+        if (null !== $this->module && '' !== $this->module) {
+            $result['module'] = $this->module;
+        }
+
+        if ($this->directlyRelatedUserTypes instanceof RelationReferencesInterface) {
+            $result['directly_related_user_types'] = $this->directlyRelatedUserTypes->jsonSerialize();
+        }
+
+        if ($this->sourceInfo instanceof SourceInfoInterface) {
+            $result['source_info'] = $this->sourceInfo->jsonSerialize();
+        }
+
+        return $result;
     }
 
     #[Override]
@@ -77,8 +87,8 @@ final class RelationMetadata implements RelationMetadataInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'module', type: 'string', required: false),
-                new SchemaProperty(name: 'directly_related_user_types', type: RelationReferences::class, required: false),
-                new SchemaProperty(name: 'source_info', type: SourceInfo::class, required: false),
+                new SchemaProperty(name: 'directly_related_user_types', type: 'object', className: RelationReferences::class, required: false),
+                new SchemaProperty(name: 'source_info', type: 'object', className: SourceInfo::class, required: false),
             ],
         );
     }

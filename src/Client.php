@@ -8,8 +8,8 @@ use DateTimeImmutable;
 use LogicException;
 use OpenFGA\Authentication\{AccessToken, AccessTokenInterface, ClientCredentialAuthentication};
 use OpenFGA\Language\DslTransformer;
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, ObjectRelation, StoreInterface, TupleKeyInterface, TypeDefinition, Userset};
-use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, StoreInterface, TupleKeyInterface, TupleToUsersetV1, TypeDefinition, Userset};
+use OpenFGA\Models\Collections\{AssertionsInterface, Conditions, ConditionsInterface, RelationReferences, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, WriteAssertionsRequest, WriteTuplesRequest};
@@ -144,7 +144,7 @@ final class Client implements ClientInterface
     public function createAuthorizationModel(
         StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
-        ConditionsInterface $conditions,
+        ?ConditionsInterface $conditions = null,
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
     ): ResultInterface {
         $request = new CreateAuthorizationModelRequest(
@@ -215,7 +215,15 @@ final class Client implements ClientInterface
                 ->registerSchema(TypeDefinitionRelations::schema())
                 ->registerSchema(Userset::schema())
                 ->registerSchema(Usersets::schema())
-                ->registerSchema(ObjectRelation::schema());
+                ->registerSchema(ObjectRelation::schema())
+                ->registerSchema(TupleToUsersetV1::schema())
+                ->registerSchema(DifferenceV1::schema())
+                ->registerSchema(Metadata::schema())
+                ->registerSchema(RelationMetadata::schema())
+                ->registerSchema(RelationReference::schema())
+                ->registerSchema(RelationReferences::schema())
+                ->registerSchema(SourceInfo::schema())
+                ->registerSchema(Conditions::schema());
 
             return new Success(DslTransformer::fromDsl($dsl, $validator));
         } catch (Throwable $throwable) {
@@ -603,7 +611,29 @@ final class Client implements ClientInterface
      */
     private function getValidator(): SchemaValidator
     {
-        return $this->validator ??= new SchemaValidator();
+        if (! $this->validator instanceof SchemaValidator) {
+            $this->validator = new SchemaValidator();
+
+            // Register all schemas required for AuthorizationModel and related objects
+            $this->validator
+                ->registerSchema(AuthorizationModel::schema())
+                ->registerSchema(TypeDefinitions::schema())
+                ->registerSchema(TypeDefinition::schema())
+                ->registerSchema(TypeDefinitionRelations::schema())
+                ->registerSchema(Userset::schema())
+                ->registerSchema(Usersets::schema())
+                ->registerSchema(ObjectRelation::schema())
+                ->registerSchema(TupleToUsersetV1::schema())
+                ->registerSchema(DifferenceV1::schema())
+                ->registerSchema(Metadata::schema())
+                ->registerSchema(RelationMetadata::schema())
+                ->registerSchema(RelationReference::schema())
+                ->registerSchema(RelationReferences::schema())
+                ->registerSchema(SourceInfo::schema())
+                ->registerSchema(Conditions::schema());
+        }
+
+        return $this->validator;
     }
 
     /**

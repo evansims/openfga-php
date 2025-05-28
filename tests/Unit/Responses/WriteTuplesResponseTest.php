@@ -27,18 +27,18 @@ test('WriteTuplesResponse is a simple response class', function (): void {
     $response = new WriteTuplesResponse();
 
     // WriteTuplesResponse is a simple response with no data
-    // It represents a successful write operation (204 No Content)
+    // It represents a successful write operation (200 OK)
     expect($response)->toBeInstanceOf(WriteTuplesResponseInterface::class);
 });
 
-test('WriteTuplesResponse fromResponse handles successful 204 response', function (): void {
+test('WriteTuplesResponse fromResponse handles successful 200 response', function (): void {
     $stream = test()->createMock(StreamInterface::class);
     $stream->method('__toString')
-        ->willReturn(''); // 204 responses typically have empty body
+        ->willReturn('{}'); // 200 responses may have empty JSON body
 
     $httpResponse = test()->createMock(ResponseInterface::class);
     $httpResponse->method('getStatusCode')
-        ->willReturn(204);
+        ->willReturn(200);
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
@@ -48,14 +48,14 @@ test('WriteTuplesResponse fromResponse handles successful 204 response', functio
     expect($response)->toBeInstanceOf(WriteTuplesResponse::class);
 });
 
-test('WriteTuplesResponse fromResponse handles 204 with empty body', function (): void {
+test('WriteTuplesResponse fromResponse handles 200 with empty body', function (): void {
     $stream = test()->createMock(StreamInterface::class);
     $stream->method('__toString')
         ->willReturn('');
 
     $httpResponse = test()->createMock(ResponseInterface::class);
     $httpResponse->method('getStatusCode')
-        ->willReturn(204);
+        ->willReturn(200);
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
@@ -64,14 +64,14 @@ test('WriteTuplesResponse fromResponse handles 204 with empty body', function ()
     expect($response)->toBeInstanceOf(WriteTuplesResponse::class);
 });
 
-test('WriteTuplesResponse fromResponse handles 204 with whitespace body', function (): void {
+test('WriteTuplesResponse fromResponse handles 200 with whitespace body', function (): void {
     $stream = test()->createMock(StreamInterface::class);
     $stream->method('__toString')
         ->willReturn('   '); // Some servers might return whitespace
 
     $httpResponse = test()->createMock(ResponseInterface::class);
     $httpResponse->method('getStatusCode')
-        ->willReturn(204);
+        ->willReturn(200);
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
@@ -80,7 +80,7 @@ test('WriteTuplesResponse fromResponse handles 204 with whitespace body', functi
     expect($response)->toBeInstanceOf(WriteTuplesResponse::class);
 });
 
-test('WriteTuplesResponse fromResponse handles non-204 status codes', function (): void {
+test('WriteTuplesResponse fromResponse handles non-200 status codes', function (): void {
     $stream = test()->createMock(StreamInterface::class);
     $stream->method('__toString')
         ->willReturn('{"error": "Bad Request"}');
@@ -155,24 +155,26 @@ test('WriteTuplesResponse fromResponse handles 422 Unprocessable Entity', functi
         ->toThrow(Exception::class);
 });
 
-test('WriteTuplesResponse fromResponse handles 200 status code as non-success', function (): void {
-    // WriteTuples should return 204, not 200
+test('WriteTuplesResponse fromResponse handles 204 status code as success', function (): void {
+    // WriteTuples can also return 204 No Content
     $stream = test()->createMock(StreamInterface::class);
     $stream->method('__toString')
-        ->willReturn('{"unexpected": "success response"}');
+        ->willReturn('');
 
     $httpResponse = test()->createMock(ResponseInterface::class);
     $httpResponse->method('getStatusCode')
-        ->willReturn(200);
+        ->willReturn(204);
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $response = WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
+
+    expect($response)->toBeInstanceOf(WriteTuplesResponseInterface::class);
+    expect($response)->toBeInstanceOf(WriteTuplesResponse::class);
 });
 
 test('WriteTuplesResponse fromResponse handles 201 status code as non-success', function (): void {
-    // WriteTuples should return 204, not 201
+    // WriteTuples should return 200, not 201
     $stream = test()->createMock(StreamInterface::class);
     $stream->method('__toString')
         ->willReturn('{"created": "resource"}');
@@ -199,11 +201,11 @@ test('WriteTuplesResponse multiple instances are independent', function (): void
 test('WriteTuplesResponse fromResponse maintains consistency', function (): void {
     $stream = test()->createMock(StreamInterface::class);
     $stream->method('__toString')
-        ->willReturn('');
+        ->willReturn('{}');
 
     $httpResponse = test()->createMock(ResponseInterface::class);
     $httpResponse->method('getStatusCode')
-        ->willReturn(204);
+        ->willReturn(200);
     $httpResponse->method('getBody')
         ->willReturn($stream);
 

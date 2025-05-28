@@ -65,7 +65,7 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'tupleset', type: 'string', required: true),
-                new SchemaProperty(name: 'computed', type: Computeds::class, required: true),
+                new SchemaProperty(name: 'computed', type: 'object', className: Computeds::class, required: true),
             ],
         );
     }

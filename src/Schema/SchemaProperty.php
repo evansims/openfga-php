@@ -15,6 +15,7 @@ final class SchemaProperty
      * @param null|array<string>                                 $enum
      * @param null|array{type: string, className?: class-string} $items
      * @param null|class-string                                  $className
+     * @param null|string                                        $parameterName
      */
     public function __construct(
         public readonly string $name,
@@ -25,6 +26,7 @@ final class SchemaProperty
         public readonly ?array $enum = null,
         public readonly ?array $items = null,
         public readonly ?string $className = null,
+        public readonly ?string $parameterName = null,
     ) {
     }
 }

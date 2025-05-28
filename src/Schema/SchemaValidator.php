@@ -80,11 +80,19 @@ final class SchemaValidator
         $schema = $this->schemas[$className];
 
         if ($schema instanceof CollectionSchemaInterface) {
+            // Special handling for Usersets with {child: [...]} structure
+            if (\OpenFGA\Models\Collections\Usersets::class === $className
+                && array_key_exists('child', $data)
+                && is_array($data['child'])) {
+                $data = $data['child'];
+            }
+
             // Only convert to list for IndexedCollections, preserve keys for KeyedCollections
             if (! array_is_list($data) && ! is_subclass_of($className, \OpenFGA\Models\Collections\KeyedCollection::class)) {
                 $data = array_values($data);
             }
 
+            /** @var T */
             return $this->validateAndTransformCollection($data, $schema, $className);
         }
 
@@ -267,11 +275,32 @@ final class SchemaValidator
         // If there's a constructor, try to use it with named parameters
         if (null !== $constructor) {
             $params = [];
+
+            // Get schema if available to check for parameter mappings
+            $schema = $this->schemas[$className] ?? SchemaRegistry::get($className);
+            $parameterMappings = [];
+            if (null !== $schema) {
+                foreach ($schema->getProperties() as $schemaProperty) {
+                    if (null !== $schemaProperty->parameterName) {
+                        $parameterMappings[$schemaProperty->parameterName] = $schemaProperty->name;
+                    }
+                }
+            }
+
             foreach ($constructor->getParameters() as $parameter) {
                 $paramName = $parameter->getName();
                 $snakeCaseName = $this->camelToSnakeCase($paramName);
 
-                if (array_key_exists($paramName, $data)) {
+                // Check if there's a custom mapping for this parameter
+                $mappedFieldName = $parameterMappings[$paramName] ?? null;
+
+                // Special handling for Userset 'this' -> 'direct' mapping
+                if (\OpenFGA\Models\Userset::class === $className && 'direct' === $paramName && array_key_exists('this', $data)) {
+                    $params[$paramName] = $this->transformParameterValue($data['this'], $parameter);
+                } elseif (null !== $mappedFieldName && array_key_exists($mappedFieldName, $data)) {
+                    // Use the mapped field name
+                    $params[$paramName] = $this->transformParameterValue($data[$mappedFieldName], $parameter);
+                } elseif (array_key_exists($paramName, $data)) {
                     $params[$paramName] = $this->transformParameterValue($data[$paramName], $parameter);
                 } elseif (array_key_exists($snakeCaseName, $data)) {
                     $params[$paramName] = $this->transformParameterValue($data[$snakeCaseName], $parameter);
@@ -291,10 +320,10 @@ final class SchemaValidator
         // Set public properties (skip readonly properties)
         foreach ($data as $name => $value) {
             if ($reflection->hasProperty($name)) {
-                $property = $reflection->getProperty($name);
+                $schemaProperty = $reflection->getProperty($name);
 
-                if (! $property->isReadOnly()) {
-                    $property->setValue($instance, $value);
+                if (! $schemaProperty->isReadOnly()) {
+                    $schemaProperty->setValue($instance, $value);
                 }
             }
         }

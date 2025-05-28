@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{DifferenceV1, TypedWildcard, User, UserInterface, UsersetUser};
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TypedWildcard, User, UserInterface, Userset, UsersetUser};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('User Model', function (): void {
@@ -18,6 +18,7 @@ describe('User Model', function (): void {
         expect($user->getObject())->toBeNull();
         expect($user->getUserset())->toBeNull();
         expect($user->getWildcard())->toBeNull();
+        expect($user->getDifference())->toBeNull();
     });
 
     test('constructs with object', function (): void {
@@ -46,6 +47,19 @@ describe('User Model', function (): void {
         expect($user->getObject())->toBeNull();
         expect($user->getUserset())->toBeNull();
         expect($user->getWildcard())->toBe($wildcard);
+        expect($user->getDifference())->toBeNull();
+    });
+
+    test('constructs with difference', function (): void {
+        $base = new Userset(computedUserset: new ObjectRelation(relation: 'editor'));
+        $subtract = new Userset(computedUserset: new ObjectRelation(relation: 'blocked'));
+        $difference = new DifferenceV1(base: $base, subtract: $subtract);
+        $user = new User(difference: $difference);
+
+        expect($user->getObject())->toBeNull();
+        expect($user->getUserset())->toBeNull();
+        expect($user->getWildcard())->toBeNull();
+        expect($user->getDifference())->toBe($difference);
     });
 
     test('serializes to JSON with null fields', function (): void {
@@ -104,6 +118,20 @@ describe('User Model', function (): void {
         expect($json['wildcard'])->toBe(['type' => 'user']);
     });
 
+    test('serializes to JSON with difference', function (): void {
+        $base = new Userset(computedUserset: new ObjectRelation(relation: 'editor'));
+        $subtract = new Userset(computedUserset: new ObjectRelation(relation: 'blocked'));
+        $difference = new DifferenceV1(base: $base, subtract: $subtract);
+        $user = new User(difference: $difference);
+
+        $json = $user->jsonSerialize();
+        expect($json)->toHaveKey('difference');
+        expect($json['difference'])->toBe([
+            'base' => ['computedUserset' => ['relation' => 'editor']],
+            'subtract' => ['computedUserset' => ['relation' => 'blocked']],
+        ]);
+    });
+
     test('returns schema instance', function (): void {
         $schema = User::schema();
 
@@ -130,19 +158,19 @@ describe('User Model', function (): void {
         // Userset property
         $usersetProp = $properties['userset'];
         expect($usersetProp->name)->toBe('userset');
-        expect($usersetProp->type)->toBe(UsersetUser::class);
+        expect($usersetProp->type)->toBe('object');
         expect($usersetProp->required)->toBe(false);
 
         // Wildcard property
         $wildcardProp = $properties['wildcard'];
         expect($wildcardProp->name)->toBe('wildcard');
-        expect($wildcardProp->type)->toBe(TypedWildcard::class);
+        expect($wildcardProp->type)->toBe('object');
         expect($wildcardProp->required)->toBe(false);
 
         // Difference property
         $differenceProp = $properties['difference'];
         expect($differenceProp->name)->toBe('difference');
-        expect($differenceProp->type)->toBe(DifferenceV1::class);
+        expect($differenceProp->type)->toBe('object');
         expect($differenceProp->required)->toBe(false);
     });
 
@@ -158,9 +186,15 @@ describe('User Model', function (): void {
         $user2 = new User(userset: new UsersetUser(type: 'group', id: 'admins', relation: 'member'));
         $user3 = new User(wildcard: new TypedWildcard(type: 'user'));
 
+        $base = new Userset(computedUserset: new ObjectRelation(relation: 'editor'));
+        $subtract = new Userset(computedUserset: new ObjectRelation(relation: 'blocked'));
+        $difference = new DifferenceV1(base: $base, subtract: $subtract);
+        $user4 = new User(difference: $difference);
+
         expect($user1->jsonSerialize())->toHaveCount(1);
         expect($user2->jsonSerialize())->toHaveCount(1);
         expect($user3->jsonSerialize())->toHaveCount(1);
+        expect($user4->jsonSerialize())->toHaveCount(1);
     });
 
     test('handles object with no serialization methods', function (): void {

@@ -128,13 +128,13 @@ describe('Node Model', function (): void {
         // Leaf property
         $leafProp = $properties['leaf'];
         expect($leafProp->name)->toBe('leaf');
-        expect($leafProp->type)->toBe(Leaf::class);
+        expect($leafProp->type)->toBe('object');
         expect($leafProp->required)->toBe(false);
 
         // Difference property
         $differenceProp = $properties['difference'];
         expect($differenceProp->name)->toBe('difference');
-        expect($differenceProp->type)->toBe(UsersetTreeDifference::class);
+        expect($differenceProp->type)->toBe('object');
         expect($differenceProp->required)->toBe(false);
 
         // Union property

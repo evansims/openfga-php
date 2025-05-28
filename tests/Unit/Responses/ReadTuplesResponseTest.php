@@ -5,6 +5,9 @@ declare(strict_types=1);
 use OpenFGA\Models\Collections\Tuples;
 use OpenFGA\Models\{Tuple, TupleKey};
 use OpenFGA\Responses\{ReadTuplesResponse, ReadTuplesResponseInterface};
+use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Tests\Support\Responses\SimpleResponse;
+use Psr\Http\Message\RequestInterface;
 
 test('ReadTuplesResponse implements ReadTuplesResponseInterface', function (): void {
     $tuples = new Tuples();
@@ -110,7 +113,7 @@ test('ReadTuplesResponse schema returns expected structure', function (): void {
     expect($properties)->toHaveKeys(['tuples', 'continuation_token']);
 
     expect($properties['tuples']->name)->toBe('tuples');
-    expect($properties['tuples']->type)->toBe(Tuples::class);
+    expect($properties['tuples']->type)->toBe('object');
     expect($properties['tuples']->required)->toBeTrue();
 
     expect($properties['continuation_token']->name)->toBe('continuation_token');
@@ -155,4 +158,31 @@ test('ReadTuplesResponse handles tuples with different timestamps', function ():
 
     expect($tupleArray[0]->getTimestamp()->format('Y-m-d H:i:s.u'))->toBe('2024-01-01 10:00:00.123456');
     expect($tupleArray[1]->getTimestamp()->format('Y-m-d H:i:s.u'))->toBe('2024-01-01 10:00:00.654321');
+});
+
+test('fromResponse handles error responses with non-200 status', function (): void {
+    $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ReadTuplesResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 401 unauthorized error', function (): void {
+    $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ReadTuplesResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 500 internal server error', function (): void {
+    $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ReadTuplesResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
 });

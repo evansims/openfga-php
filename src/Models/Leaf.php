@@ -79,9 +79,9 @@ final class Leaf implements LeafInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'users', type: UsersList::class, required: false),
-                new SchemaProperty(name: 'computed', type: Computed::class, required: false),
-                new SchemaProperty(name: 'tupleToUserset', type: UsersetTreeTupleToUserset::class, required: false),
+                new SchemaProperty(name: 'users', type: 'object', className: UsersList::class, required: false),
+                new SchemaProperty(name: 'computed', type: 'object', className: Computed::class, required: false),
+                new SchemaProperty(name: 'tupleToUserset', type: 'object', className: UsersetTreeTupleToUserset::class, required: false),
             ],
         );
     }

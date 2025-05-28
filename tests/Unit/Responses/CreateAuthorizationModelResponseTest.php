@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use OpenFGA\Responses\{CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface};
+use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Tests\Support\Responses\SimpleResponse;
+use Psr\Http\Message\RequestInterface;
 
 test('CreateAuthorizationModelResponse implements CreateAuthorizationModelResponseInterface', function (): void {
     $response = new CreateAuthorizationModelResponse('model-id-123');
@@ -52,4 +55,31 @@ test('CreateAuthorizationModelResponse preserves exact model ID format', functio
     $modelId = '  model-with-spaces  ';
     $response = new CreateAuthorizationModelResponse($modelId);
     expect($response->getModel())->toBe($modelId);
+});
+
+test('fromResponse handles error responses with non-200 status', function (): void {
+    $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => CreateAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 401 unauthorized', function (): void {
+    $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => CreateAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 500 internal server error', function (): void {
+    $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => CreateAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
 });

@@ -5,7 +5,9 @@ declare(strict_types=1);
 use OpenFGA\Models\{Assertion, AssertionTupleKey};
 use OpenFGA\Models\Collections\Assertions;
 use OpenFGA\Responses\{ReadAssertionsResponse, ReadAssertionsResponseInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Tests\Support\Responses\SimpleResponse;
+use Psr\Http\Message\RequestInterface;
 
 test('ReadAssertionsResponse implements ReadAssertionsResponseInterface', function (): void {
     $assertions = new Assertions([]);
@@ -46,7 +48,6 @@ test('ReadAssertionsResponse constructs with empty assertions collection', funct
     $model = 'model-456';
     $response = new ReadAssertionsResponse($assertions, $model);
 
-    expect($response->getAssertions())->toBeInstanceOf(Assertions::class);
     expect($response->getAssertions())->toHaveCount(0);
     expect($response->getModel())->toBe($model);
 });
@@ -100,7 +101,7 @@ test('ReadAssertionsResponse schema returns correct structure', function (): voi
     expect($properties)->toHaveKeys(['assertions', 'authorization_model_id']);
 
     expect($properties['assertions']->name)->toBe('assertions');
-    expect($properties['assertions']->type)->toBe(Assertions::class);
+    expect($properties['assertions']->type)->toBe('object');
     expect($properties['assertions']->required)->toBeFalse();
 
     expect($properties['authorization_model_id']->name)->toBe('authorization_model_id');
@@ -132,7 +133,6 @@ test('ReadAssertionsResponse handles empty assertions array data', function (): 
 
     expect($response)->toBeInstanceOf(ReadAssertionsResponseInterface::class);
     expect($response->getModel())->toBe('model-789');
-    expect($response->getAssertions())->toBeInstanceOf(Assertions::class);
     expect($response->getAssertions())->toHaveCount(0);
 });
 
@@ -190,4 +190,31 @@ test('ReadAssertionsResponse handles complex assertion expectations', function (
     expect($response->getAssertions())->toHaveCount(2);
     expect($response->getAssertions()->first()->getExpectation())->toBeTrue();
     expect($response->getAssertions()->toArray()[1]->getExpectation())->toBeFalse();
+});
+
+test('fromResponse handles error responses with non-200 status', function (): void {
+    $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 401 unauthorized error', function (): void {
+    $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 500 internal server error', function (): void {
+    $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
 });

@@ -64,12 +64,21 @@ final class RelationReference implements RelationReferenceInterface
      */
     public function jsonSerialize(): array
     {
-        return array_filter([
-            'type' => $this->type,
-            'relation' => $this->relation,
-            'wildcard' => $this->wildcard,
-            'condition' => $this->condition,
-        ], static fn ($v): bool => null !== $v);
+        $result = ['type' => $this->type];
+
+        if (null !== $this->relation && '' !== $this->relation) {
+            $result['relation'] = $this->relation;
+        }
+
+        if (null !== $this->wildcard) {
+            $result['wildcard'] = $this->wildcard;
+        }
+
+        if (null !== $this->condition && '' !== $this->condition) {
+            $result['condition'] = $this->condition;
+        }
+
+        return $result;
     }
 
     #[Override]

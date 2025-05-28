@@ -6,7 +6,9 @@ use OpenFGA\Models\Collections\TupleChanges;
 use OpenFGA\Models\Enums\TupleOperation;
 use OpenFGA\Models\{TupleChange, TupleKey};
 use OpenFGA\Responses\{ListTupleChangesResponse, ListTupleChangesResponseInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Tests\Support\Responses\SimpleResponse;
+use Psr\Http\Message\RequestInterface;
 
 test('ListTupleChangesResponse implements ListTupleChangesResponseInterface', function (): void {
     $changes = new TupleChanges([]);
@@ -43,7 +45,6 @@ test('ListTupleChangesResponse constructs with empty changes collection', functi
     $changes = new TupleChanges([]);
     $response = new ListTupleChangesResponse($changes, null);
 
-    expect($response->getChanges())->toBeInstanceOf(TupleChanges::class);
     expect($response->getChanges())->toHaveCount(0);
 });
 
@@ -58,7 +59,7 @@ test('ListTupleChangesResponse schema returns correct structure', function (): v
     expect($properties)->toHaveKeys(['changes', 'continuation_token']);
 
     expect($properties['changes']->name)->toBe('changes');
-    expect($properties['changes']->type)->toBe(TupleChanges::class);
+    expect($properties['changes']->type)->toBe('object');
     expect($properties['changes']->required)->toBeTrue();
 
     expect($properties['continuation_token']->name)->toBe('continuation_token');
@@ -82,7 +83,6 @@ test('ListTupleChangesResponse handles response data without continuation token'
 
     expect($response)->toBeInstanceOf(ListTupleChangesResponseInterface::class);
     expect($response->getContinuationToken())->toBeNull();
-    expect($response->getChanges())->toBeInstanceOf(TupleChanges::class);
 });
 
 // Removed fromResponse error handling test - handled in integration tests
@@ -111,4 +111,31 @@ test('ListTupleChangesResponse handles empty string continuation token', functio
     $response = new ListTupleChangesResponse($changes, '');
 
     expect($response->getContinuationToken())->toBe('');
+});
+
+test('fromResponse handles error responses with non-200 status', function (): void {
+    $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ListTupleChangesResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 401 unauthorized error', function (): void {
+    $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ListTupleChangesResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 500 internal server error', function (): void {
+    $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ListTupleChangesResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
 });

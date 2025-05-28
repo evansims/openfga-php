@@ -129,7 +129,7 @@ Execute on `Success`, mutate the result, and continue the chain.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `default` | mixed |  |
+| `fn` | ?callable |  |
 
 #### Returns
 [ResultInterface](Results/ResultInterface.md)
@@ -138,15 +138,15 @@ Execute on `Success`, mutate the result, and continue the chain.
 
 
 ```php
-public function unwrap(mixed $default = NULL): mixed
+public function unwrap(?callable $fn = NULL): mixed
 ```
 
-Return the unwrapped value of a `Success`, or a default value.
+Return the unwrapped value of a `Success`, or throws the error of a `Failure`. When a callable is provided, it is called with the value of the `Success` or `Failure`, and its return value is returned.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$default` | mixed |  |
+| `$fn` | ?callable |  |
 
 #### Returns
 mixed

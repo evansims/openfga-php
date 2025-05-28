@@ -76,7 +76,7 @@ describe('ConditionMetadata Model', function (): void {
         // SourceInfo property
         $sourceInfoProp = $properties['source_info'];
         expect($sourceInfoProp->name)->toBe('source_info');
-        expect($sourceInfoProp->type)->toBe(SourceInfo::class);
+        expect($sourceInfoProp->type)->toBe('object');
         expect($sourceInfoProp->required)->toBe(true);
     });
 

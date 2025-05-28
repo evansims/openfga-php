@@ -97,7 +97,8 @@ describe('Tuple Model', function (): void {
 
         $keyProp = $properties[array_keys($properties)[0]];
         expect($keyProp->name)->toBe('key');
-        expect($keyProp->type)->toBe(TupleKey::class);
+        expect($keyProp->type)->toBe('object');
+        expect($keyProp->className)->toBe(TupleKey::class);
         expect($keyProp->required)->toBe(true);
 
         $timestampProp = $properties[array_keys($properties)[1]];

@@ -5,7 +5,9 @@ declare(strict_types=1);
 use OpenFGA\Models\Collections\Users;
 use OpenFGA\Models\User;
 use OpenFGA\Responses\{ListUsersResponse, ListUsersResponseInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Tests\Support\Responses\SimpleResponse;
+use Psr\Http\Message\RequestInterface;
 
 test('ListUsersResponse implements ListUsersResponseInterface', function (): void {
     $users = new Users([]);
@@ -33,7 +35,6 @@ test('ListUsersResponse constructs with empty users collection', function (): vo
 
     expect($response->getUsers())->toBe($users);
     expect($response->getUsers())->toHaveCount(0);
-    expect($response->getUsers())->toBeInstanceOf(Users::class);
 });
 
 test('ListUsersResponse handles single user', function (): void {
@@ -72,7 +73,7 @@ test('ListUsersResponse schema returns correct structure', function (): void {
     expect($properties)->toHaveKey('users');
 
     expect($properties['users']->name)->toBe('users');
-    expect($properties['users']->type)->toBe(Users::class);
+    expect($properties['users']->type)->toBe('object');
     expect($properties['users']->required)->toBeTrue();
 });
 
@@ -91,7 +92,6 @@ test('ListUsersResponse handles empty users array data', function (): void {
     $response = new ListUsersResponse($users);
 
     expect($response)->toBeInstanceOf(ListUsersResponseInterface::class);
-    expect($response->getUsers())->toBeInstanceOf(Users::class);
     expect($response->getUsers())->toHaveCount(0);
 });
 
@@ -137,4 +137,31 @@ test('ListUsersResponse handles users with complex object identifiers', function
 
     expect($response->getUsers())->toHaveCount(3);
     expect($response->getUsers()->toArray())->toBe([$user1, $user2, $user3]);
+});
+
+test('fromResponse handles error responses with non-200 status', function (): void {
+    $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ListUsersResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 401 unauthorized', function (): void {
+    $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ListUsersResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+});
+
+test('fromResponse handles 500 internal server error', function (): void {
+    $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
+    $request = Mockery::mock(RequestInterface::class);
+    $validator = new SchemaValidator();
+
+    expect(fn () => ListUsersResponse::fromResponse($httpResponse, $request, $validator))
+        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
 });
