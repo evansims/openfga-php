@@ -17,7 +17,7 @@ test('WriteTuplesResponse can be instantiated', function (): void {
 test('WriteTuplesResponse creates new instances', function (): void {
     $response1 = new WriteTuplesResponse();
     $response2 = new WriteTuplesResponse();
-    
+
     expect($response1)->not->toBe($response2);
     expect($response1)->toBeInstanceOf(WriteTuplesResponse::class);
     expect($response2)->toBeInstanceOf(WriteTuplesResponse::class);

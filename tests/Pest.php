@@ -8,9 +8,6 @@ use OpenFGA\Tests\TestCase;
 
 require_once implode(DIRECTORY_SEPARATOR, [OPENFGA_TESTS_DIR, '..', 'vendor', 'autoload.php']);
 
-// Load RequestMethod enum for tests
-if (! enum_exists(OpenFGA\Network\RequestMethod::class)) {
-    require_once implode(DIRECTORY_SEPARATOR, [OPENFGA_TESTS_DIR, '..', 'src', 'Network', 'RequestManager.php']);
-}
+// RequestMethod enum is now auto-loaded via composer
 
 pest()->extend(TestCase::class)->in(__DIR__);
