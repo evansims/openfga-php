@@ -42,7 +42,7 @@ final class Client implements ClientInterface
     /**
      * The version of the OpenFGA PHP SDK.
      */
-    public const VERSION = '0.2.0';
+    public const VERSION = '1.0.0';
 
     /**
      * The last HTTP request made by the client.

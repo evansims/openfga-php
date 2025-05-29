@@ -7,3 +7,4 @@
 composer.local.json
 coverage
 vendor
+/wiki-repo

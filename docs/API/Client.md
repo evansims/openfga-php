@@ -10,7 +10,7 @@
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `VERSION` | `&#039;0.2.0&#039;` | The version of the OpenFGA PHP SDK. |
+| `VERSION` | `&#039;1.0.0&#039;` | The version of the OpenFGA PHP SDK. |
 
 
 ## Methods
