@@ -5,7 +5,7 @@ Once you have an [Authorization Model](AuthorizationModels.md) in place and have
 **🔍 The Four Query Types:**
 
 - **`check()`** - "Can Alice edit Document123?" (Boolean answer)
-- **`listObjects()`** - "What documents can Alice edit?" (List of objects)  
+- **`listObjects()`** - "What documents can Alice edit?" (List of objects)
 - **`listUsers()`** - "Who can edit Document123?" (List of users)
 - **`expand()`** - "How does Alice have edit access?" (Relationship tree)
 
@@ -20,9 +20,7 @@ Once you have an [Authorization Model](AuthorizationModels.md) in place and have
 These examples assume:
 
 1. You have initialized the SDK client as `$client`.
-2. You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
-3. You have a `modelId` (Authorization Model ID) and have set it on the client: `$client->setModel($modelId);`.
-4. Refer to [Getting Started](GettingStarted.md), [Stores](Stores.md), and [Understanding Authorization Models](AuthorizationModels.md) for these initial setup steps.
+2. Refer to [Getting Started](GettingStarted.md), [Stores](Stores.md), and [Understanding Authorization Models](AuthorizationModels.md) for these initial setup steps.
 
 For robust error handling beyond the `unwrap()` helper shown in these examples, please see our guide on [Results and Error Handling](Results.md). All client methods return `Result` objects.
 

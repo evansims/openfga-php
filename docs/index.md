@@ -62,7 +62,7 @@ $client = new Client($config);
 // Check if a user can read a document
 $result = $client->check([
     'user' => 'user:alice',
-    'relation' => 'reader', 
+    'relation' => 'reader',
     'object' => 'document:readme'
 ]);
 
@@ -79,4 +79,4 @@ $result->success(fn($response) => $response->getAllowed())
 
 ---
 
-*This SDK is community-maintained and not officially supported by OpenFGA.*
+_This SDK is community-maintained and not officially supported by OpenFGA._
