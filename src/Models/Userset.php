@@ -133,7 +133,7 @@ final class Userset implements UsersetInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'this', type: 'object', required: false),
+                new SchemaProperty(name: 'this', type: 'object', required: false, parameterName: 'direct'),
                 new SchemaProperty(name: 'computedUserset', type: 'object', className: ObjectRelation::class, required: false),
                 new SchemaProperty(name: 'tupleToUserset', type: 'object', className: TupleToUsersetV1::class, required: false),
                 new SchemaProperty(name: 'union', type: 'object', className: Usersets::class, required: false),

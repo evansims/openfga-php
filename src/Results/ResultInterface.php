@@ -95,4 +95,9 @@ interface ResultInterface
      * @throws LogicException if called on Failure
      */
     public function val(): mixed;
+
+    /**
+     * Debug a Failure by dismantling the error. Really only intended for internal debugging use.
+     */
+    public function debug(): self;
 }

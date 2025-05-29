@@ -117,7 +117,7 @@ describe('Assertion Model', function (): void {
         expect($json)->toHaveKeys(['tuple_key', 'expectation', 'contextual_tuples', 'context']);
         expect($json['tuple_key'])->toBe($tupleKey->jsonSerialize());
         expect($json['expectation'])->toBe(false);
-        expect($json['contextual_tuples'])->toBe($contextualTuples->jsonSerialize()['tuple_keys']);
+        expect($json['contextual_tuples'])->toBe($contextualTuples->jsonSerialize());
         expect($json['context'])->toBe($context);
     });
 
@@ -222,8 +222,8 @@ describe('Assertion Model', function (): void {
         expect($contextualTuplesJson)->toHaveKey('tuple_keys');
 
         // Verify that the logic extracts the 'tuple_keys' value specifically
-        expect($json['contextual_tuples'])->toBe($contextualTuplesJson['tuple_keys']);
-        expect($json['contextual_tuples'])->not->toBe($contextualTuplesJson);
+        expect($json['contextual_tuples'])->toBe($contextualTuplesJson);
+        expect($json['contextual_tuples'])->not->toBe($contextualTuplesJson['tuple_keys']);
     });
 
     test('jsonSerialize conditional logic covers both branches of tuple_keys extraction', function (): void {
@@ -256,11 +256,11 @@ describe('Assertion Model', function (): void {
         // The contextual_tuples should be the unwrapped content, not the wrapped version
         $wrappedVersion = $contextualTuples->jsonSerialize();
         expect($wrappedVersion)->toHaveKey('tuple_keys');
-        expect($json['contextual_tuples'])->toBe($wrappedVersion['tuple_keys']);
+        expect($json['contextual_tuples'])->toBe($wrappedVersion);
 
         // Verify structure: the contextual_tuples in assertion should be an array of tuple objects
         expect($json['contextual_tuples'])->toBeArray();
         expect($json['contextual_tuples'])->toHaveCount(1);
-        expect($json['contextual_tuples'][0])->toHaveKeys(['user', 'relation', 'object']);
+        expect($json['contextual_tuples']['tuple_keys'][0])->toHaveKeys(['user', 'relation', 'object']);
     });
 });

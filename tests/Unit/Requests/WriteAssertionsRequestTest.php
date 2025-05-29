@@ -154,7 +154,7 @@ test('WriteAssertionsRequest handles multiple assertions with context', function
 
     // First assertion with contextual tuples
     expect($capturedBody['assertions'][0])->toHaveKeys(['tuple_key', 'expectation', 'contextual_tuples']);
-    expect($capturedBody['assertions'][0]['contextual_tuples'])->toHaveCount(2);
+    expect($capturedBody['assertions'][0]['contextual_tuples']['tuple_keys'])->toHaveCount(2);
 
     // Second assertion with context
     expect($capturedBody['assertions'][1])->toHaveKeys(['tuple_key', 'expectation', 'context']);

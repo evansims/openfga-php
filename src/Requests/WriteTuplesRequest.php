@@ -59,8 +59,8 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
     {
         $body = array_filter([
             'authorization_model_id' => $this->model,
-            'writes' => $this->writes?->jsonSerialize()['tuple_keys'] ?? null,
-            'deletes' => $this->deletes?->jsonSerialize()['tuple_keys'] ?? null,
+            'writes' => $this->writes?->jsonSerialize(),
+            'deletes' => $this->deletes?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));

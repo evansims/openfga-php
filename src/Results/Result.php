@@ -51,6 +51,7 @@ abstract class Result implements ResultInterface
 
             if ($err instanceof NetworkException) {
                 var_dump($err->request());
+                var_dump((string) $err->request()->getBody());
                 var_dump((string) $err->response()->getBody());
             }
 

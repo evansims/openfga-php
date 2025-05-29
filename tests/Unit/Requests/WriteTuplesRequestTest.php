@@ -143,13 +143,13 @@ test('WriteTuplesRequest getRequest returns RequestContext with writes', functio
 
     expect($capturedBody)->toHaveKeys(['authorization_model_id', 'writes']);
     expect($capturedBody)->not->toHaveKey('deletes');
-    expect($capturedBody['writes'])->toHaveCount(2);
-    expect($capturedBody['writes'][0])->toBe([
+    expect($capturedBody['writes']['tuple_keys'])->toHaveCount(2);
+    expect($capturedBody['writes']['tuple_keys'][0])->toBe([
         'user' => 'user:test',
         'relation' => 'reader',
         'object' => 'doc:1',
     ]);
-    expect($capturedBody['writes'][1])->toBe([
+    expect($capturedBody['writes']['tuple_keys'][1])->toBe([
         'user' => 'user:test2',
         'relation' => 'writer',
         'object' => 'doc:2',
@@ -181,7 +181,7 @@ test('WriteTuplesRequest getRequest returns RequestContext with deletes', functi
     expect($capturedBody)->toHaveKeys(['authorization_model_id', 'deletes']);
     expect($capturedBody)->not->toHaveKey('writes');
     expect($capturedBody['deletes'])->toHaveCount(1);
-    expect($capturedBody['deletes'][0])->toBe([
+    expect($capturedBody['deletes']['tuple_keys'][0])->toBe([
         'user' => 'user:remove',
         'relation' => 'viewer',
         'object' => 'doc:old',
@@ -242,8 +242,8 @@ test('WriteTuplesRequest handles empty TupleKeys collections', function (): void
 
     $request->getRequest($this->streamFactory);
 
-    expect($capturedBody['writes'])->toBe([]);
-    expect($capturedBody['deletes'])->toBe([]);
+    expect($capturedBody['writes']['tuple_keys'])->toBe([]);
+    expect($capturedBody['deletes']['tuple_keys'])->toBe([]);
 });
 
 test('WriteTuplesRequest handles tuple keys with conditions', function (): void {
@@ -276,7 +276,7 @@ test('WriteTuplesRequest handles tuple keys with conditions', function (): void 
 
     $request->getRequest($this->streamFactory);
 
-    expect($capturedBody['writes'][0])->toBe([
+    expect($capturedBody['writes']['tuple_keys'][0])->toBe([
         'user' => 'user:helen',
         'relation' => 'can_approve',
         'object' => 'expense:12345',

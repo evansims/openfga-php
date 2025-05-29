@@ -73,16 +73,10 @@ final class Assertion implements AssertionInterface
      */
     public function jsonSerialize(): array
     {
-        $contextualTuples = $this->contextualTuples?->jsonSerialize();
-
         return array_filter([
             'tuple_key' => $this->tupleKey->jsonSerialize(),
             'expectation' => $this->expectation,
-            'contextual_tuples' => null !== $contextualTuples
-                ? (is_array($contextualTuples['tuple_keys'] ?? null)
-                    ? $contextualTuples['tuple_keys']
-                    : $contextualTuples)
-                : null,
+            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
             'context' => $this->context,
         ], static fn ($value): bool => null !== $value);
     }
