@@ -9,8 +9,6 @@ use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
-use function is_array;
-
 final class Assertion implements AssertionInterface
 {
     public const OPENAPI_MODEL = 'Assertion';

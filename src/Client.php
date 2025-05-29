@@ -9,7 +9,7 @@ use LogicException;
 use OpenFGA\Authentication\{AccessToken, AccessTokenInterface, ClientCredentialAuthentication};
 use OpenFGA\Language\DslTransformer;
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, StoreInterface, TupleKeyInterface, TupleToUsersetV1, TypeDefinition, Userset};
-use OpenFGA\Models\Collections\{RelationMetadataCollection, AssertionsInterface, Conditions, ConditionsInterface, RelationReferences, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
+use OpenFGA\Models\Collections\{AssertionsInterface, Conditions, ConditionsInterface, RelationMetadataCollection, RelationReferences, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Requests\{CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, WriteAssertionsRequest, WriteTuplesRequest};
