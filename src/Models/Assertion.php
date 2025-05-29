@@ -9,6 +9,8 @@ use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+use function is_array;
+
 final class Assertion implements AssertionInterface
 {
     public const OPENAPI_MODEL = 'Assertion';
@@ -71,10 +73,16 @@ final class Assertion implements AssertionInterface
      */
     public function jsonSerialize(): array
     {
+        $contextualTuples = $this->contextualTuples?->jsonSerialize();
+
         return array_filter([
             'tuple_key' => $this->tupleKey->jsonSerialize(),
             'expectation' => $this->expectation,
-            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
+            'contextual_tuples' => null !== $contextualTuples
+                ? (is_array($contextualTuples['tuple_keys'] ?? null)
+                    ? $contextualTuples['tuple_keys']
+                    : $contextualTuples)
+                : null,
             'context' => $this->context,
         ], static fn ($value): bool => null !== $value);
     }
