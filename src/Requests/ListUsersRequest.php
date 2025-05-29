@@ -13,6 +13,8 @@ use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
 use function assert;
+use function count;
+use function is_array;
 
 final class ListUsersRequest implements ListUsersRequestInterface
 {
@@ -42,76 +44,83 @@ final class ListUsersRequest implements ListUsersRequestInterface
         assert('' !== $this->relation, new InvalidArgumentException('Relation cannot be empty'));
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContext(): ?object
     {
         return $this->context;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getModel(): string
     {
         return $this->model;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getObject(): string
     {
         return $this->object;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRelation(): string
     {
         return $this->relation;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
-        $contextualTuples = $this->contextualTuples?->jsonSerialize();
+        // Parse the object string into type and id
+        $objectParts = explode(':', $this->object, 2);
+        $objectData = 2 === count($objectParts)
+            ? ['type' => $objectParts[0], 'id' => $objectParts[1]]
+            : $this->object;
+
+        $contextualTuples = $this->contextualTuples?->jsonSerialize()['tuple_keys'] ?? null;
+
         $body = array_filter([
             'authorization_model_id' => $this->model,
-            'object' => $this->object,
+            'object' => $objectData,
             'relation' => $this->relation,
             'user_filters' => $this->userFilters->jsonSerialize(),
             'context' => $this->context,
-            'contextual_tuples' => $contextualTuples['tuple_keys'] ?? $contextualTuples,
+            'contextual_tuples' => $contextualTuples,
             'consistency' => $this->consistency?->value,
-        ], static fn ($value): bool => null !== $value);
+        ], static fn ($value): bool => null !== $value && (! is_array($value) || [] !== $value));
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
@@ -122,19 +131,19 @@ final class ListUsersRequest implements ListUsersRequestInterface
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getUserFilters(): UserTypeFiltersInterface
     {
         return $this->userFilters;

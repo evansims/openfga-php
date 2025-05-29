@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\Collections\{Users, UsersInterface};
-use OpenFGA\Models\UserInterface;
+use OpenFGA\Models\Collections\Usersets;
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, TypedWildcard, User, UserInterface, UserObject, Userset, UsersetUser};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
@@ -24,19 +25,19 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getUsers(): UsersInterface
     {
         return $this->users;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -46,6 +47,15 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
+            $validator->registerSchema(UserObject::schema());
+            $validator->registerSchema(UsersetUser::schema());
+            $validator->registerSchema(TypedWildcard::schema());
+            $validator->registerSchema(ObjectRelation::schema());
+            $validator->registerSchema(TupleToUsersetV1::schema());
+            $validator->registerSchema(Usersets::schema());
+            $validator->registerSchema(Userset::schema());
+            $validator->registerSchema(DifferenceV1::schema());
+            $validator->registerSchema(User::schema());
             $validator->registerSchema(Users::schema());
             $validator->registerSchema(self::schema());
 
@@ -59,10 +69,10 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

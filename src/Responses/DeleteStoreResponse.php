@@ -11,10 +11,10 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 final class DeleteStoreResponse implements DeleteStoreResponseInterface
 {
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,

@@ -28,37 +28,37 @@ final class TypeDefinition implements TypeDefinitionInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getMetadata(): ?MetadataInterface
     {
         return $this->metadata;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRelations(): ?TypeDefinitionRelationsInterface
     {
         return $this->relations;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getType(): string
     {
         return $this->type;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         $data = [
@@ -80,10 +80,10 @@ final class TypeDefinition implements TypeDefinitionInterface
         return $data;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

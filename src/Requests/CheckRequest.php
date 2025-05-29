@@ -12,6 +12,8 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
+use function is_array;
+
 final class CheckRequest implements CheckRequestInterface
 {
     /**
@@ -41,56 +43,58 @@ final class CheckRequest implements CheckRequestInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getAuthorizationModel(): string
     {
         return $this->model;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContext(): ?object
     {
         return $this->context;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
+        $contextualTuples = $this->contextualTuples?->jsonSerialize();
+
         $body = array_filter([
             'tuple_key' => $this->tupleKey->jsonSerialize(),
             'authorization_model_id' => $this->model,
             'trace' => $this->trace,
             'context' => $this->context,
             'consistency' => $this->consistency?->value,
-            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
-        ], static fn ($value): bool => null !== $value);
+            'contextual_tuples' => $contextualTuples,
+        ], static fn ($value): bool => null !== $value && (! is_array($value) || [] !== $value));
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
@@ -101,28 +105,28 @@ final class CheckRequest implements CheckRequestInterface
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getTrace(): ?bool
     {
         return $this->trace;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getTupleKey(): TupleKeyInterface
     {
         return $this->tupleKey;

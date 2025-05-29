@@ -26,46 +26,46 @@ final class AccessToken implements AccessTokenInterface
         return $this->token;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getExpires(): int
     {
         return $this->expires;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getScope(): ?string
     {
         return $this->scope;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getToken(): string
     {
         return $this->token;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function isExpired(): bool
     {
         return $this->expires < time();
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(\Psr\Http\Message\ResponseInterface $response): self
     {
         $body = $response->getBody()->getContents();

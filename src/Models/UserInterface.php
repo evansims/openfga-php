@@ -10,7 +10,7 @@ interface UserInterface extends ModelInterface
 {
     public function getDifference(): ?DifferenceV1Interface;
 
-    public function getObject(): ?object;
+    public function getObject(): null | UserObjectInterface | string;
 
     public function getUserset(): ?UsersetUserInterface;
 

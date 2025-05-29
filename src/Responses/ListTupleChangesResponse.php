@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
-use OpenFGA\Models\TupleChangeInterface;
+use OpenFGA\Models\{TupleChange, TupleChangeInterface, TupleKey};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
@@ -26,28 +26,28 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getChanges(): TupleChangesInterface
     {
         return $this->changes;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -57,6 +57,8 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
+            $validator->registerSchema(TupleKey::schema());
+            $validator->registerSchema(TupleChange::schema());
             $validator->registerSchema(TupleChanges::schema());
             $validator->registerSchema(self::schema());
 
@@ -70,10 +72,10 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

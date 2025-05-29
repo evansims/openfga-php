@@ -19,19 +19,19 @@ final class CreateStoreRequest implements CreateStoreRequestInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = [

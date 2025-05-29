@@ -30,28 +30,28 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getPageSize(): ?int
     {
         return $this->pageSize;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $params = array_filter([
@@ -69,28 +69,28 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStartTime(): ?DateTimeImmutable
     {
         return $this->startTime;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getType(): ?string
     {
         return $this->type;

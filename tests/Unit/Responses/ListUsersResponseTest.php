@@ -122,7 +122,7 @@ describe('ListUsersResponse', function (): void {
         $response = new ListUsersResponse($usersCollection);
 
         expect($response->getUsers())->toHaveCount(100);
-        expect($response->getUsers()->first()->getObject()->id)->toBe('user:user0');
+        expect($response->getUsers()->first()->getObject())->toBe('user:user0');
     });
 
     test('handles users with complex object identifiers', function (): void {

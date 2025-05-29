@@ -22,28 +22,28 @@ final class Tuple implements TupleInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getKey(): TupleKeyInterface
     {
         return $this->key;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getTimestamp(): DateTimeImmutable
     {
         return $this->timestamp;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -52,10 +52,10 @@ final class Tuple implements TupleInterface
         ];
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

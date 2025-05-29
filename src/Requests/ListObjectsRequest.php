@@ -12,6 +12,8 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
+use function is_array;
+
 final class ListObjectsRequest implements ListObjectsRequestInterface
 {
     /**
@@ -52,66 +54,68 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getConsistency(): ?Consistency
     {
         return $this->consistency;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContext(): ?object
     {
         return $this->context;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getModel(): ?string
     {
         return $this->model;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRelation(): string
     {
         return $this->relation;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
+        $contextualTuples = $this->contextualTuples?->jsonSerialize();
+
         $body = array_filter([
             'type' => $this->type,
             'relation' => $this->relation,
             'user' => $this->user,
             'authorization_model_id' => $this->model,
             'context' => $this->context,
-            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
+            'contextual_tuples' => $contextualTuples,
             'consistency' => $this->consistency?->value,
-        ], static fn ($value): bool => null !== $value);
+        ], static fn ($value): bool => null !== $value && (! is_array($value) || [] !== $value));
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));
 
@@ -122,28 +126,28 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getType(): string
     {
         return $this->type;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getUser(): string
     {
         return $this->user;

@@ -119,8 +119,7 @@ describe('TupleChange Model', function (): void {
         // Operation property
         $operationProp = $properties['operation'];
         expect($operationProp->name)->toBe('operation');
-        expect($operationProp->type)->toBe('object');
-        expect($operationProp->className)->toBe(TupleOperation::class);
+        expect($operationProp->type)->toBe('string');
         expect($operationProp->required)->toBe(true);
 
         // Timestamp property
@@ -204,5 +203,83 @@ describe('TupleChange Model', function (): void {
         expect($tupleChange->getTupleKey())->toBe($tupleKey);
         expect($tupleChange->getOperation())->toBe($operation);
         expect($tupleChange->getTimestamp())->toBe($timestamp);
+    });
+
+    test('creates from array with write operation', function (): void {
+        $tupleKey = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
+        $timestamp = new DateTimeImmutable('2024-01-01 12:00:00');
+
+        $data = [
+            'tuple_key' => $tupleKey,
+            'operation' => 'TUPLE_OPERATION_WRITE',
+            'timestamp' => $timestamp,
+        ];
+
+        $tupleChange = TupleChange::fromArray($data);
+
+        expect($tupleChange)->toBeInstanceOf(TupleChange::class);
+        expect($tupleChange->getTupleKey())->toBe($tupleKey);
+        expect($tupleChange->getOperation())->toBe(TupleOperation::TUPLE_OPERATION_WRITE);
+        expect($tupleChange->getTimestamp())->toBe($timestamp);
+    });
+
+    test('creates from array with delete operation', function (): void {
+        $tupleKey = new TupleKey(user: 'user:bob', relation: 'editor', object: 'document:2');
+        $timestamp = new DateTimeImmutable('2024-01-02 15:30:00');
+
+        $data = [
+            'tuple_key' => $tupleKey,
+            'operation' => 'TUPLE_OPERATION_DELETE',
+            'timestamp' => $timestamp,
+        ];
+
+        $tupleChange = TupleChange::fromArray($data);
+
+        expect($tupleChange)->toBeInstanceOf(TupleChange::class);
+        expect($tupleChange->getTupleKey())->toBe($tupleKey);
+        expect($tupleChange->getOperation())->toBe(TupleOperation::TUPLE_OPERATION_DELETE);
+        expect($tupleChange->getTimestamp())->toBe($timestamp);
+    });
+
+    test('fromArray preserves tuple key with condition', function (): void {
+        $condition = new OpenFGA\Models\Condition(
+            name: 'inRegion',
+            expression: 'params.region == "us-east"',
+        );
+        $tupleKey = new TupleKey(
+            user: 'user:anne',
+            relation: 'viewer',
+            object: 'document:1',
+            condition: $condition,
+        );
+        $timestamp = new DateTimeImmutable('2024-01-01 12:00:00');
+
+        $data = [
+            'tuple_key' => $tupleKey,
+            'operation' => 'TUPLE_OPERATION_WRITE',
+            'timestamp' => $timestamp,
+        ];
+
+        $tupleChange = TupleChange::fromArray($data);
+
+        expect($tupleChange->getTupleKey())->toBe($tupleKey);
+        expect($tupleChange->getTupleKey()->getCondition())->toBe($condition);
+    });
+
+    test('fromArray throws error on invalid operation', function (): void {
+        $tupleKey = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
+        $timestamp = new DateTimeImmutable();
+
+        $data = [
+            'tuple_key' => $tupleKey,
+            'operation' => 'INVALID_OPERATION',
+            'timestamp' => $timestamp,
+        ];
+
+        expect(fn () => TupleChange::fromArray($data))->toThrow(ValueError::class);
+    });
+
+    test('has correct OpenAPI type constant', function (): void {
+        expect(TupleChange::OPENAPI_TYPE)->toBe('TupleChange');
     });
 });

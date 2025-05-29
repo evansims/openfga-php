@@ -32,28 +32,28 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getAssertions(): AssertionsInterface
     {
         return $this->assertions;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getModel(): string
     {
         return $this->model;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $body = ['assertions' => $this->assertions->jsonSerialize()];
@@ -67,10 +67,10 @@ final class WriteAssertionsRequest implements WriteAssertionsRequestInterface
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;

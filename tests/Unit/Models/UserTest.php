@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{DifferenceV1, ObjectRelation, TypedWildcard, User, UserInterface, Userset, UsersetUser};
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TypedWildcard, User, UserInterface, UserObject, Userset, UsersetUser};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('User Model', function (): void {
@@ -26,7 +26,7 @@ describe('User Model', function (): void {
         $object->id = 'user:anne';
         $user = new User(object: $object);
 
-        expect($user->getObject())->toBe($object);
+        expect($user->getObject())->toBe('user:anne');
         expect($user->getUserset())->toBeNull();
         expect($user->getWildcard())->toBeNull();
     });
@@ -209,5 +209,115 @@ describe('User Model', function (): void {
 
         expect($json['object'])->toBe(['name' => 'anne']);
         expect($json['object'])->not->toHaveKey('secret');
+    });
+
+    test('getObject returns UserObject when object has type and id properties', function (): void {
+        $object = new class() {
+            public string $id = '123';
+
+            public string $type = 'user';
+        };
+
+        $user = new User(object: $object);
+        $result = $user->getObject();
+
+        expect($result)->toBeInstanceOf(UserObject::class);
+        expect($result->getType())->toBe('user');
+        expect($result->getId())->toBe('123');
+    });
+
+    test('getObject returns UserObject when object is array with type and id', function (): void {
+        $object = [
+            'type' => 'group',
+            'id' => 'admins',
+        ];
+
+        $user = new User(object: $object);
+        $result = $user->getObject();
+
+        expect($result)->toBeInstanceOf(UserObject::class);
+        expect($result->getType())->toBe('group');
+        expect($result->getId())->toBe('admins');
+    });
+
+    test('getObject returns string when object has toString method', function (): void {
+        $object = new class() {
+            public function __toString(): string
+            {
+                return 'user:anne';
+            }
+        };
+
+        $user = new User(object: $object);
+        $result = $user->getObject();
+
+        expect($result)->toBe('user:anne');
+    });
+
+    test('getObject returns null when object cannot be converted', function (): void {
+        // Object without type/id, toString, or valid structure
+        $object = new class() {
+            public string $name = 'invalid';
+
+            public int $value = 42;
+        };
+
+        $user = new User(object: $object);
+        $result = $user->getObject();
+
+        expect($result)->toBeNull();
+    });
+
+    test('getObject returns string directly when object is string', function (): void {
+        $user = new User(object: 'user:anne');
+        $result = $user->getObject();
+
+        expect($result)->toBe('user:anne');
+    });
+
+    test('getObject returns UserObjectInterface directly', function (): void {
+        $userObject = new UserObject(type: 'user', id: '456');
+        $user = new User(object: $userObject);
+        $result = $user->getObject();
+
+        expect($result)->toBe($userObject);
+    });
+
+    test('getObject handles array with missing id', function (): void {
+        $object = [
+            'type' => 'user',
+            // missing 'id'
+        ];
+
+        $user = new User(object: $object);
+        $result = $user->getObject();
+
+        expect($result)->toBeNull();
+    });
+
+    test('getObject handles array with missing type', function (): void {
+        $object = [
+            'id' => '123',
+            // missing 'type'
+        ];
+
+        $user = new User(object: $object);
+        $result = $user->getObject();
+
+        expect($result)->toBeNull();
+    });
+
+    test('getObject handles object with non-string type or id', function (): void {
+        $object = new class() {
+            public string $id = 'test';
+
+            public int $type = 123;
+        };
+
+        $user = new User(object: $object);
+        $result = $user->getObject();
+
+        // Since it has an id property that is string, it returns that
+        expect($result)->toBe('test');
     });
 });

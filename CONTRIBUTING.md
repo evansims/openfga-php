@@ -14,6 +14,7 @@ Please review these guidelines before submitting any pull requests.
 
 - Please ensure the coding style running `composer lint`.
 - Send a coherent commit history, making sure each individual commit in your pull request is meaningful.
+- If your commit history is long, please squash your commits.
 - You may need to [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) to avoid merge conflicts.
 - Please remember that we follow [SemVer](http://semver.org/).
 
@@ -38,7 +39,7 @@ composer lint
 Unit tests:
 
 ```bash
-composer test
+composer test:unit
 ```
 
 Integration tests require Docker. The container starts automatically:
@@ -52,3 +53,19 @@ Contract tests download the OpenAPI spec and validate the SDK's models against i
 ```bash
 composer test:contract
 ```
+
+## Documentation
+
+Update the documentation:
+
+```bash
+composer docs
+```
+
+Update the wiki:
+
+```bash
+composer wiki
+```
+
+Note: You must have maintainer priviledges to update the wiki.

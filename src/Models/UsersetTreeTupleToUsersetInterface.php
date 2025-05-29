@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Models\Collections\ComputedsInterface;
 use Override;
 
 interface UsersetTreeTupleToUsersetInterface extends ModelInterface
 {
     /**
-     * @return ComputedsInterface<ComputedInterface>
+     * @return array<int, ComputedInterface>
      */
-    public function getComputed(): ComputedsInterface;
+    public function getComputed(): array;
 
     public function getTupleset(): string;
 

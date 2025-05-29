@@ -23,46 +23,46 @@ final class CreateStoreResponse extends Response implements CreateStoreResponseI
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getId(): string
     {
         return $this->id;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getUpdatedAt(): DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -84,10 +84,10 @@ final class CreateStoreResponse extends Response implements CreateStoreResponseI
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

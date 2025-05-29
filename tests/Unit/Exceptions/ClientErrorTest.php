@@ -43,4 +43,25 @@ describe('ClientError', function (): void {
             ->and($exception->context())->toBe([])
             ->and($exception->getPrevious())->toBeNull();
     })->with(ClientError::cases());
+
+    /*
+     * @param ClientError $clientErrorCase
+     */
+    test('ClientError exception previous() method returns previous throwable', function (ClientError $clientErrorCase): void {
+        $previousThrowable = new RuntimeException('Previous error');
+        $exception = $clientErrorCase->exception(prev: $previousThrowable);
+
+        // Test both getPrevious() and previous() methods
+        expect($exception->getPrevious())->toBe($previousThrowable)
+            ->and($exception->previous())->toBe($previousThrowable);
+    })->with(ClientError::cases());
+
+    /*
+     * @param ClientError $clientErrorCase
+     */
+    test('ClientError exception previous() method returns null when no previous exception', function (ClientError $clientErrorCase): void {
+        $exception = $clientErrorCase->exception();
+
+        expect($exception->previous())->toBeNull();
+    })->with(ClientError::cases());
 });

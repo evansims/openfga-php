@@ -66,7 +66,8 @@ describe('ClientCredentialAuthentication', function (): void {
 
         expect($requestContext)->toBeInstanceOf(RequestContext::class);
         expect($requestContext->getMethod())->toBe(RequestMethod::POST);
-        expect($requestContext->getUrl())->toBe('/oauth/token');
+        expect($requestContext->getUrl())->toBe('https://auth.example.com/oauth/token');
+        expect($requestContext->useApiUrl())->toBe(false);
         expect($requestContext->getBody())->toBe($stream);
         expect($requestContext->getHeaders())->toBe([
             'Accept' => 'application/json',

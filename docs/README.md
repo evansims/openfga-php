@@ -1,11 +1,13 @@
 ---
-title: OpenFGA PHP SDK Documentation
+title: OpenFGA PHP SDK
 description: Official PHP SDK for OpenFGA - Fine-grained authorization made simple
 ---
 
-# OpenFGA PHP SDK Documentation
+# OpenFGA PHP SDK
 
 The OpenFGA PHP SDK provides a convenient way to interact with [OpenFGA](https://openfga.dev), a high-performance and flexible authorization/permission engine built on Google Zanzibar.
+
+The project is available on GitHub at [evansims/openfga-php](https://github.com/evansims/openfga-php).
 
 ## Quick Start
 
@@ -75,8 +77,3 @@ $result->success(fn($response) => $response->getAllowed())
 
 - 📖 **[OpenFGA Documentation](https://openfga.dev/docs)** - Learn authorization concepts
 - 🐛 **[Report Issues](https://github.com/evansims/openfga-php/issues)** - Found a bug or need a feature?
-- 💬 **[Community Discord](https://discord.gg/8naAwQfWN6)** - Join the OpenFGA community
-
----
-
-_This SDK is community-maintained and not officially supported by OpenFGA._

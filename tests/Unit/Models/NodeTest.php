@@ -140,14 +140,16 @@ describe('Node Model', function (): void {
         // Union property
         $unionProp = $properties['union'];
         expect($unionProp->name)->toBe('union');
-        expect($unionProp->type)->toBe('self');
+        expect($unionProp->type)->toBe('object');
         expect($unionProp->required)->toBe(false);
+        expect($unionProp->className)->toBe(OpenFGA\Models\NodeUnion::class);
 
         // Intersection property
         $intersectionProp = $properties['intersection'];
         expect($intersectionProp->name)->toBe('intersection');
-        expect($intersectionProp->type)->toBe('self');
+        expect($intersectionProp->type)->toBe('object');
         expect($intersectionProp->required)->toBe(false);
+        expect($intersectionProp->className)->toBe(OpenFGA\Models\NodeUnion::class);
     });
 
     test('schema is cached', function (): void {

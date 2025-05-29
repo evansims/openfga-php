@@ -112,6 +112,12 @@ final class SchemaValidator
             $items = $schemaProperty->items;
             $propClassName = $schemaProperty->className;
 
+            // Handle 'self' type - it's a recursive reference to the same class
+            if ('self' === $type) {
+                $type = 'object';
+                $propClassName = $className;
+            }
+
             // Check if required property exists
             if (! isset($data[$name])) {
                 if ($required) {
@@ -131,7 +137,13 @@ final class SchemaValidator
 
             // Type validation (skip for object types with className as they're handled recursively)
             if (! ('object' === $type && null !== $propClassName) && ! $this->validateType($value, $type, $format, $enum)) {
-                throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type, 'format' => $format, 'expected' => $schemaProperty->type, 'value' => $value]);
+                // Add more context to help debug
+                $valueType = gettype($value);
+                if (is_object($value)) {
+                    $valueType = $value::class;
+                }
+
+                throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type, 'format' => $format, 'expected' => $schemaProperty->type, 'value' => $value, 'actual_type' => $valueType, 'className' => $className]);
             }
 
             // Handle nested objects and arrays
@@ -273,6 +285,15 @@ final class SchemaValidator
     private function createInstance(string $className, array $data): object
     {
         $reflection = new ReflectionClass($className);
+
+        // Check if the class has a static fromArray method
+        if ($reflection->hasMethod('fromArray') && $reflection->getMethod('fromArray')->isStatic()) {
+            $method = $reflection->getMethod('fromArray');
+
+            /** @var T */
+            return $method->invoke(null, $data);
+        }
+
         $constructor = $reflection->getConstructor();
 
         // If there's a constructor, try to use it with named parameters
@@ -350,6 +371,11 @@ final class SchemaValidator
                 $enumClass = $typeName;
 
                 return $enumClass::from($value);
+            }
+
+            // Handle object types - convert empty arrays to stdClass
+            if ('object' === $typeName && is_array($value)) {
+                return (object) $value;
             }
         }
 
@@ -471,7 +497,12 @@ final class SchemaValidator
 
         // Validate each item in the array
         foreach ($data as $key => $item) {
-            $transformedItems[$key] = $this->validateAndTransform($item, $itemType);
+            // Special handling for UsersListUser - API returns strings directly
+            if (\OpenFGA\Models\UsersListUser::class === $itemType && is_string($item)) {
+                $transformedItems[$key] = $this->validateAndTransform(['user' => $item], $itemType);
+            } else {
+                $transformedItems[$key] = $this->validateAndTransform($item, $itemType);
+            }
         }
 
         return $this->createCollectionInstance($className, $transformedItems);
@@ -534,16 +565,22 @@ final class SchemaValidator
                 if (is_object($value)) {
                     return true;
                 }
-                // Accept associative arrays (at least one non-numeric key)
+                // Accept arrays as objects (PHP's json_decode converts JSON objects to arrays)
+                // Empty objects {} in JSON become empty arrays [] in PHP
                 if (is_array($value)) {
+                    // Empty array is valid for empty object
                     if ([] === $value) {
-                        return false;
+                        return true;
                     }
+                    // Check if it's an associative array (object-like)
                     foreach (array_keys($value) as $k) {
                         if (! is_int($k)) {
                             return true;
                         }
                     }
+
+                    // Numeric arrays are not valid objects
+                    return false;
                 }
 
                 return false;

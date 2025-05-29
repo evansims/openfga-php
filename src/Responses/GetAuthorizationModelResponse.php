@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface};
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Collections\Conditions, Collections\Nodes, Collections\TypeDefinitionRelations, Collections\TypeDefinitions, Collections\Usersets, Metadata, Node, RelationMetadata, TypeDefinition, Userset};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
@@ -20,19 +20,19 @@ final class GetAuthorizationModelResponse extends Response implements GetAuthori
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getModel(): ?AuthorizationModelInterface
     {
         return $this->model;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -42,6 +42,17 @@ final class GetAuthorizationModelResponse extends Response implements GetAuthori
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
+            // Register all schemas needed for AuthorizationModel
+            $validator->registerSchema(Node::schema());
+            $validator->registerSchema(Nodes::schema());
+            $validator->registerSchema(Userset::schema());
+            $validator->registerSchema(Usersets::schema());
+            $validator->registerSchema(RelationMetadata::schema());
+            $validator->registerSchema(Metadata::schema());
+            $validator->registerSchema(TypeDefinitionRelations::schema());
+            $validator->registerSchema(TypeDefinition::schema());
+            $validator->registerSchema(TypeDefinitions::schema());
+            $validator->registerSchema(Conditions::schema());
             $validator->registerSchema(AuthorizationModel::schema());
             $validator->registerSchema(self::schema());
 
@@ -55,16 +66,16 @@ final class GetAuthorizationModelResponse extends Response implements GetAuthori
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'authorization_model', type: 'object', className: AuthorizationModel::class, required: false),
+                new SchemaProperty(name: 'authorization_model', type: 'object', className: AuthorizationModel::class, required: false, parameterName: 'model'),
             ],
         );
     }

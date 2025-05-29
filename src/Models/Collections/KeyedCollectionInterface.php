@@ -31,6 +31,9 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
      */
     public function add(string $key, ModelInterface $item): static;
 
+    /**
+     * @return int<0, max>
+     */
     #[Override]
     public function count(): int;
 
@@ -69,6 +72,9 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
     #[Override]
     public function next(): void;
 
+    /**
+     * @param mixed $offset
+     */
     #[Override]
     public function offsetExists(mixed $offset): bool;
 
@@ -79,6 +85,9 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
     #[Override]
     public function offsetSet(mixed $offset, mixed $value): void;
 
+    /**
+     * @param mixed $offset
+     */
     #[Override]
     public function offsetUnset(mixed $offset): void;
 

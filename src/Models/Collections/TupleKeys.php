@@ -16,10 +16,10 @@ final class TupleKeys extends IndexedCollection implements TupleKeysInterface
 {
     protected static string $itemType = TupleKey::class;
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [

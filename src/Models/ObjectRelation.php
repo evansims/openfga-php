@@ -18,28 +18,28 @@ final class ObjectRelation implements ObjectRelationInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getObject(): ?string
     {
         return $this->object;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRelation(): ?string
     {
         return $this->relation;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -48,10 +48,10 @@ final class ObjectRelation implements ObjectRelationInterface
         ], static fn ($value): bool => null !== $value && '' !== $value);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

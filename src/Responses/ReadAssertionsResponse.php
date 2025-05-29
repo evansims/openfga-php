@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\{AssertionInterface};
-use OpenFGA\Models\Collections\{Assertions, AssertionsInterface};
+use OpenFGA\Models\{Assertion, AssertionInterface, AssertionTupleKey, TupleKey};
+use OpenFGA\Models\Collections\{Assertions, AssertionsInterface, TupleKeys};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
@@ -26,28 +26,28 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getAssertions(): ?AssertionsInterface
     {
         return $this->assertions;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getModel(): string
     {
         return $this->model;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -57,6 +57,11 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
+            // Register all required schemas
+            $validator->registerSchema(AssertionTupleKey::schema());
+            $validator->registerSchema(TupleKey::schema());
+            $validator->registerSchema(TupleKeys::schema());
+            $validator->registerSchema(Assertion::schema());
             $validator->registerSchema(Assertions::schema());
             $validator->registerSchema(self::schema());
 
@@ -70,10 +75,10 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

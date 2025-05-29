@@ -14,6 +14,8 @@ use Psr\Http\Message\{RequestFactoryInterface, RequestInterface, ResponseFactory
 
 use PsrDiscovery\Discover;
 
+use Throwable;
+
 use function is_string;
 use function sprintf;
 
@@ -30,10 +32,10 @@ final class RequestManager implements RequestManagerInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getHttpClient(): ClientInterface
     {
         if (! $this->httpClient instanceof ClientInterface) {
@@ -49,10 +51,10 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpClient;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getHttpRequestFactory(): RequestFactoryInterface
     {
         if (! $this->httpRequestFactory instanceof RequestFactoryInterface) {
@@ -68,10 +70,10 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpRequestFactory;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getHttpResponseFactory(): ResponseFactoryInterface
     {
         if (! $this->httpResponseFactory instanceof ResponseFactoryInterface) {
@@ -87,10 +89,10 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpResponseFactory;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getHttpStreamFactory(): StreamFactoryInterface
     {
         if (! $this->httpStreamFactory instanceof StreamFactoryInterface) {
@@ -106,10 +108,10 @@ final class RequestManager implements RequestManagerInterface
         return $this->httpStreamFactory;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function request(ClientRequestInterface $request): RequestInterface
     {
         $request = $request->getRequest($this->getHttpStreamFactory());
@@ -124,6 +126,7 @@ final class RequestManager implements RequestManagerInterface
         }
 
         $headers['User-Agent'] = sprintf('openfga-sdk php/%s', Client::VERSION);
+        $headers['Content-Type'] ??= 'application/json';
 
         if (null !== $this->authorizationHeader) {
             $headers['Authorization'] = $this->authorizationHeader;
@@ -145,19 +148,24 @@ final class RequestManager implements RequestManagerInterface
         return $request;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function send(RequestInterface $request): ResponseInterface
     {
-        return $this->getHttpClient()->sendRequest($request);
+        try {
+            return $this->getHttpClient()->sendRequest($request);
+        } catch (Throwable $throwable) {
+            // Wrap any network-related exceptions in our NetworkException
+            throw NetworkError::Request->exception(request: $request, context: ['message' => 'Network error: ' . $throwable->getMessage()], prev: $throwable);
+        }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function handleResponseException(
         ResponseInterface $response,
         ?RequestInterface $request = null,

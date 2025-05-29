@@ -231,4 +231,67 @@ describe('CheckRequest', function (): void {
         $this->expectException(InvalidArgumentException::class);
         new CheckRequest(store: 'test-store', model: '', tupleKey: new TupleKey('user:test', 'viewer', 'doc:1'));
     });
+
+    test('omits empty contextual tuples from request body', function (): void {
+        $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
+        $emptyTuples = new TupleKeys(); // Empty collection
+
+        $request = new CheckRequest(
+            store: 'test-store',
+            model: 'test-model',
+            tupleKey: $tupleKey,
+            contextualTuples: $emptyTuples,
+        );
+
+        $capturedBody = null;
+        $this->streamFactory->expects($this->once())
+            ->method('createStream')
+            ->with($this->callback(function ($body) use (&$capturedBody) {
+                $capturedBody = json_decode($body, true);
+
+                return true;
+            }));
+
+        $context = $request->getRequest($this->streamFactory);
+
+        // Empty contextual_tuples is included but with empty tuple_keys array
+        expect($capturedBody)->toHaveKey('contextual_tuples');
+        expect($capturedBody['contextual_tuples'])->toBe(['tuple_keys' => []]);
+    });
+
+    test('contextual tuples are included as array not object', function (): void {
+        $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
+        $contextualTuples = new TupleKeys(
+            new TupleKey('user:alice', 'member', 'group:engineering'),
+        );
+
+        $request = new CheckRequest(
+            store: 'test-store',
+            model: 'test-model',
+            tupleKey: $tupleKey,
+            contextualTuples: $contextualTuples,
+        );
+
+        $capturedBody = null;
+        $this->streamFactory->expects($this->once())
+            ->method('createStream')
+            ->with($this->callback(function ($body) use (&$capturedBody) {
+                $capturedBody = json_decode($body, true);
+
+                return true;
+            }));
+
+        $context = $request->getRequest($this->streamFactory);
+
+        // contextual_tuples should be an object with tuple_keys according to API spec
+        expect($capturedBody)->toHaveKey('contextual_tuples');
+        expect($capturedBody['contextual_tuples'])->toBeArray();
+        expect($capturedBody['contextual_tuples'])->toHaveKey('tuple_keys');
+        expect($capturedBody['contextual_tuples']['tuple_keys'])->toHaveCount(1);
+        expect($capturedBody['contextual_tuples']['tuple_keys'][0])->toBe([
+            'user' => 'user:alice',
+            'relation' => 'member',
+            'object' => 'group:engineering',
+        ]);
+    });
 });

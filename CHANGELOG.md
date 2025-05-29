@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.1.0] - 2025-05-30
+
+### Added
+
+- OpenTelemetry tracing support
+
+### Fixed
+
+- Fixes to schema validation to handle more edge cases
+
 ## [1.0.0] - 2025-05-29
 
 > _Fine-grained auth flows,_

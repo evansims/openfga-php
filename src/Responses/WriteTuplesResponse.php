@@ -11,10 +11,10 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface};
 
 final class WriteTuplesResponse extends Response implements WriteTuplesResponseInterface
 {
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,

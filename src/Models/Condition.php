@@ -29,46 +29,46 @@ final class Condition implements ConditionInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getExpression(): string
     {
         return $this->expression;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getMetadata(): ?ConditionMetadataInterface
     {
         return $this->metadata;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getParameters(): ?ConditionParametersInterface
     {
         return $this->parameters;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -79,10 +79,10 @@ final class Condition implements ConditionInterface
         ], static fn ($value): bool => null !== $value);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

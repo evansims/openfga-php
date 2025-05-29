@@ -21,37 +21,37 @@ final class AssertionTupleKey implements AssertionTupleKeyInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getObject(): string
     {
         return $this->object;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRelation(): string
     {
         return $this->relation;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getUser(): string
     {
         return $this->user;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -61,10 +61,10 @@ final class AssertionTupleKey implements AssertionTupleKeyInterface
         ];
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

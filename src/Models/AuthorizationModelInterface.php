@@ -17,7 +17,6 @@ interface AuthorizationModelInterface extends ModelInterface
 
     /**
      * Return the conditions of the model.
-
      *
      * @return null|ConditionsInterface<ConditionInterface>
      */
@@ -35,7 +34,6 @@ interface AuthorizationModelInterface extends ModelInterface
 
     /**
      * Return the type definitions of the model.
-
      *
      * @return TypeDefinitionsInterface<TypeDefinitionInterface>
      */
@@ -43,7 +41,6 @@ interface AuthorizationModelInterface extends ModelInterface
 
     /**
      * Return a JSON representation of the model.
-
      *
      * @return array{
      *     id: string,

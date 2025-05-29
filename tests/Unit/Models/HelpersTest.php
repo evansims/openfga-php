@@ -115,7 +115,7 @@ describe('Helper Functions', function (): void {
         });
 
         test('creates empty collection from empty array', function (): void {
-            $collection = tuples([]);
+            $collection = tuples();
 
             expect($collection)->toBeInstanceOf(TupleKeys::class);
             expect($collection->count())->toBe(0);
@@ -142,7 +142,7 @@ describe('Helper Functions', function (): void {
                 tuple(user: 'user:charlie', relation: 'owner', object: 'document:3'),
             ];
 
-            $collection = tuples($tupleKeys);
+            $collection = tuples(...$tupleKeys);
 
             expect($collection->count())->toBe(3);
             expect($collection->get(0)->getUser())->toBe('user:anne');
@@ -160,7 +160,7 @@ describe('Helper Functions', function (): void {
                 );
             }
 
-            $collection = tuples($tupleKeys);
+            $collection = tuples(...$tupleKeys);
 
             expect($collection->count())->toBe(10);
             for ($i = 0; $i < 10; ++$i) {
@@ -176,7 +176,7 @@ describe('Helper Functions', function (): void {
                 new TupleKey(user: 'user:charlie', relation: 'owner', object: 'document:3'),
             ];
 
-            $collection = tuples($tupleKeys);
+            $collection = tuples(...$tupleKeys);
 
             expect($collection->count())->toBe(3);
             expect($collection->get(0)->getUser())->toBe('user:anne');

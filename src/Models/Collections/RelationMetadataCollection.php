@@ -8,8 +8,10 @@ use OpenFGA\Models\{RelationMetadata, RelationMetadataInterface};
 
 /**
  * @extends KeyedCollection<RelationMetadataInterface>
+ *
+ * @implements RelationMetadataCollectionInterface<RelationMetadataInterface>
  */
-final class RelationMetadataCollection extends KeyedCollection
+final class RelationMetadataCollection extends KeyedCollection implements RelationMetadataCollectionInterface
 {
     protected static string $itemType = RelationMetadata::class;
 }

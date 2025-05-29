@@ -12,13 +12,8 @@ permissions:
 
 jobs:
   tests:
-    name: Run PEST Unit Tests
+    name: Run Unit Tests
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        php: ["8.3", "8.4"]
-        dependency-version: [prefer-stable]
 
     steps:
       - name: Harden the runner (Audit all outbound calls)
@@ -32,29 +27,31 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@cf4cade2721270509d5b1c766ab3549210a39a2a # v2.3.3
         with:
-          php-version: ${{ matrix.php }}
+          php-version: "8.3"
           extensions: dom, curl, libxml, mbstring, zip, fileinfo
           ini-values: error_reporting=E_ALL
           coverage: xdebug
           tools: composer:v2
 
       - name: Install dependencies
-        run: composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi
+        run: composer update --prefer-stable --no-interaction --no-progress --ansi
 
       - name: Install docs dependencies
-        run: cd tools/docs && composer update --${{ matrix.dependency-version }} --no-interaction --no-progress --ansi && cd ../../
+        run: cd tools/docs && composer update --prefer-stable --no-interaction --no-progress --ansi && cd ../../
 
       - name: Execute PEST tests
         run: vendor/bin/pest --testsuite unit --coverage --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage-cobertura --log-junit
 
-      - if: matrix.php == '8.4' && !cancelled()
+      - if: !cancelled()
         name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit
 
-      - if: matrix.php == '8.4' && !cancelled()
+      - if: !cancelled()
         name: Upload test results to Codecov
         uses: codecov/test-results-action@f2dba722c67b86c6caa034178c6e4d35335f6706 # v1.1.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\Collections\TupleKeysInterface;
+use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\Enums\Consistency;
-use OpenFGA\Models\TupleKeyInterface;
+use OpenFGA\Models\{TupleKey, TupleKeyInterface};
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\ExpandRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
@@ -178,4 +178,35 @@ describe('ExpandRequest', function (): void {
     test('throws when store ID is empty', function (): void {
         new ExpandRequest(store: '', tupleKey: test()->createMock(TupleKeyInterface::class));
     })->throws(InvalidArgumentException::class);
+
+    test('omits empty contextual tuples from request body', function (): void {
+        $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
+        $emptyTuples = new TupleKeys();
+
+        $stream = test()->createMock(StreamInterface::class);
+        $streamFactory = test()->createMock(StreamFactoryInterface::class);
+
+        $capturedBody = null;
+        $streamFactory->expects(test()->once())
+            ->method('createStream')
+            ->with(test()->callback(function ($body) use (&$capturedBody) {
+                $capturedBody = json_decode($body, true);
+
+                return true;
+            }))
+            ->willReturn($stream);
+
+        $request = new ExpandRequest(
+            store: 'test-store',
+            model: 'test-model',
+            tupleKey: $tupleKey,
+            contextualTuples: $emptyTuples,
+        );
+
+        $request->getRequest($streamFactory);
+
+        // Empty contextual_tuples is included but with empty tuple_keys array
+        expect($capturedBody)->toHaveKey('contextual_tuples');
+        expect($capturedBody['contextual_tuples'])->toBe(['tuple_keys' => []]);
+    });
 });

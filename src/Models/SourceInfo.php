@@ -22,19 +22,19 @@ final class SourceInfo implements SourceInfoInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getFile(): string
     {
         return $this->file;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -42,10 +42,10 @@ final class SourceInfo implements SourceInfoInterface
         ];
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
