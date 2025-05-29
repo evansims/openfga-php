@@ -102,20 +102,20 @@ jobs:
         run: |
           mkdir -p wiki-content
           cp -r docs/* wiki-content/
-          
+
           # Create wiki-compatible files
           cd wiki-content
-          
+
           # Rename index.md to Home.md (Wiki homepage)
           if [ -f "index.md" ]; then
             mv index.md Home.md
           fi
-          
+
           # Convert directory structure to wiki-friendly format
           find . -name "*.md" -type f | while read file; do
             # Remove .md extension from internal links
             sed -i 's/\.md)/)/g' "$file"
-            
+
             # Convert relative paths to wiki links
             sed -i 's|\[\([^]]*\)\](\([^)]*\)/\([^)]*\))|\[\1\](\3)|g' "$file"
           done
@@ -129,10 +129,11 @@ jobs:
             echo "Wiki repository doesn't exist, initializing new one"
             mkdir wiki-repo
             cd wiki-repo
-            git init
+            git init --initial-branch=main
             git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git"
+            cd ..
           fi
-          
+
           cd wiki-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -140,29 +141,29 @@ jobs:
       - name: Sync to Wiki
         run: |
           cd wiki-repo
-          
+
           # Clear existing wiki content (except .git)
           find . -type f -not -path "./.git/*" -delete 2>/dev/null || true
-          
+
           # Copy new content
           cp -r ../wiki-content/* .
-          
+
           # Add and commit changes
           git add .
-          
+
           if git diff --staged --quiet; then
             echo "No changes to Wiki"
           else
             git commit -m "Auto-sync documentation from main branch
-            
+
             Generated from commit: ${{ github.sha }}
             🤖 Automated update via GitHub Actions"
-            
-            # Push to master branch (create if first push)
-            if git ls-remote --heads origin master | grep -q master; then
-              git push origin master
+
+            # Push to main branch (create if first push)
+            if git ls-remote --heads origin main | grep -q main; then
+              git push origin main
             else
-              git push -u origin master
+              git push -u origin main
             fi
             echo "Wiki updated successfully"
           fi
