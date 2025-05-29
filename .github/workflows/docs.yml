@@ -51,10 +51,16 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
 
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6e2151cc1716697e # v1.0.13
+        with:
+          source: "./docs"
+          destination: "./_site"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
         with:
-          path: "./docs"
+          path: "./_site"
 
   deploy:
     environment:
