@@ -453,13 +453,29 @@ describe('SchemaValidator', function (): void {
         // Test valid integer values that pass validation
         expect($this->validator->validateAndTransform(['age' => '42', 'name' => 'test'], TestObject::class)->age)->toBe(42);
         expect($this->validator->validateAndTransform(['age' => 42, 'name' => 'test'], TestObject::class)->age)->toBe(42);
-
-        // Test that invalid integer values throw exceptions
-        $this->expectException(SerializationException::class);
-        $this->validator->validateAndTransform(['age' => 42.7, 'name' => 'test'], TestObject::class);
-        $this->expectException(SerializationException::class);
-        $this->validator->validateAndTransform(['age' => 'not-a-number', 'name' => 'test'], TestObject::class);
     });
+
+    test('throws exception for float value when integer expected in existing properties', function (): void {
+        $schema = (new SchemaBuilder(TestObject::class))
+            ->integer('age', required: true)
+            ->string('name', required: true)
+            ->register();
+
+        $this->validator->registerSchema($schema);
+
+        $this->validator->validateAndTransform(['age' => 42.7, 'name' => 'test'], TestObject::class);
+    })->throws(SerializationException::class);
+
+    test('throws exception for string value when integer expected in existing properties', function (): void {
+        $schema = (new SchemaBuilder(TestObject::class))
+            ->integer('age', required: true)
+            ->string('name', required: true)
+            ->register();
+
+        $this->validator->registerSchema($schema);
+
+        $this->validator->validateAndTransform(['age' => 'not-a-number', 'name' => 'test'], TestObject::class);
+    })->throws(SerializationException::class);
 
     test('validates number type conversion using test array', function (): void {
         $schema = (new SchemaBuilder(TestArray::class))

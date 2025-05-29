@@ -18,6 +18,7 @@ use ReflectionParameter;
 
 use function array_key_exists;
 use function count;
+use function gettype;
 use function in_array;
 use function is_array;
 use function is_bool;
@@ -80,11 +81,13 @@ final class SchemaValidator
         $schema = $this->schemas[$className];
 
         if ($schema instanceof CollectionSchemaInterface) {
-            // Special handling for Usersets with {child: [...]} structure
-            if (\OpenFGA\Models\Collections\Usersets::class === $className
-                && array_key_exists('child', $data)
-                && is_array($data['child'])) {
-                $data = $data['child'];
+            // Check if the collection expects data wrapped in a specific key
+            $wrapperKey = $schema->getWrapperKey();
+            if (null !== $wrapperKey && array_key_exists($wrapperKey, $data)) {
+                if (! is_array($data[$wrapperKey])) {
+                    throw SerializationError::InvalidItemType->exception(context: ['className' => $className, 'property' => $wrapperKey, 'expected' => 'array', 'actual' => gettype($data[$wrapperKey])]);
+                }
+                $data = $data[$wrapperKey];
             }
 
             // Only convert to list for IndexedCollections, preserve keys for KeyedCollections
@@ -294,10 +297,7 @@ final class SchemaValidator
                 // Check if there's a custom mapping for this parameter
                 $mappedFieldName = $parameterMappings[$paramName] ?? null;
 
-                // Special handling for Userset 'this' -> 'direct' mapping
-                if (\OpenFGA\Models\Userset::class === $className && 'direct' === $paramName && array_key_exists('this', $data)) {
-                    $params[$paramName] = $this->transformParameterValue($data['this'], $parameter);
-                } elseif (null !== $mappedFieldName && array_key_exists($mappedFieldName, $data)) {
+                if (null !== $mappedFieldName && array_key_exists($mappedFieldName, $data)) {
                     // Use the mapped field name
                     $params[$paramName] = $this->transformParameterValue($data[$mappedFieldName], $parameter);
                 } elseif (array_key_exists($paramName, $data)) {

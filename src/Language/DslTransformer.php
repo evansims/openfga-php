@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Language;
 
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1Interface, Metadata, ObjectRelationInterface, RelationMetadataInterface, TupleToUsersetV1Interface, UsersetInterface};
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1Interface, ObjectRelationInterface, RelationMetadataInterface, TupleToUsersetV1Interface, UsersetInterface};
 use OpenFGA\Models\Collections\{RelationReferencesInterface, UsersetsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\SchemaValidator;
@@ -246,7 +246,7 @@ final class DslTransformer implements DslTransformerInterface
      */
     private static function parseIntersectionExpression(string $expr): array
     {
-        $andTerms = array_map('trim', self::splitRespectingParentheses($expr, ' and '));
+        $andTerms = array_map('trim', self::splitRespectingParenthesesWithRegex($expr, '/\s+and\s+/i'));
 
         if (1 === count($andTerms)) {
             return self::parseExclusionExpression($andTerms[0]);
@@ -493,69 +493,6 @@ final class DslTransformer implements DslTransformerInterface
         }
 
         return 'self';
-    }
-
-    /**
-     * Split a string by a delimiter, but respect parentheses.
-     *
-     * @param string $str
-     * @param string $delimiter
-     *
-     * @throws RuntimeException if input is invalid or parentheses are unbalanced
-     *
-     * @return array<string>
-     */
-    private static function splitRespectingParentheses(string $str, string $delimiter): array
-    {
-        // Validate inputs
-        if ('' === $str) {
-            throw new RuntimeException('Input string cannot be empty');
-        }
-
-        if ('' === $delimiter) {
-            throw new RuntimeException('Delimiter cannot be empty');
-        }
-
-        $parts = [];
-        $current = '';
-        $depth = 0;
-        $len = strlen($str);
-        $delimLen = strlen($delimiter);
-
-        for ($i = 0; $i < $len; ++$i) {
-            if ('(' === $str[$i]) {
-                ++$depth;
-            } elseif (')' === $str[$i]) {
-                --$depth;
-
-                // Check for too many closing parentheses
-                if ($depth < 0) {
-                    throw new RuntimeException('Unbalanced parentheses: too many closing parentheses at position ' . $i);
-                }
-            }
-
-            // Check if we're at the delimiter and not inside parentheses
-            if (0 === $depth && $i + $delimLen <= $len && substr($str, $i, $delimLen) === $delimiter) {
-                $parts[] = $current;
-                $current = '';
-                $i += $delimLen - 1; // Skip the delimiter
-
-                continue;
-            }
-
-            $current .= $str[$i];
-        }
-
-        // Check for unbalanced parentheses after processing
-        if (0 !== $depth) {
-            throw new RuntimeException('Unbalanced parentheses: ' . $depth . ' unclosed opening ' . (1 === $depth ? 'parenthesis' : 'parentheses'));
-        }
-
-        if ('' !== $current) {
-            $parts[] = $current;
-        }
-
-        return $parts;
     }
 
     /**
