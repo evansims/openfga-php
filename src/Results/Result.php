@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Results;
 
+use OpenFGA\Exceptions\NetworkException;
+use OpenFGA\Exceptions\SerializationException;
 use Override;
 use Throwable;
 
@@ -40,5 +42,26 @@ abstract class Result implements ResultInterface
         }
 
         return $this->val();
+    }
+
+    public function debug(): self
+    {
+        if ($this->failed()) {
+            $err = $this->err();
+
+            if ($err instanceof NetworkException) {
+                var_dump($err->request());
+                var_dump((string) $err->response()->getBody());
+            }
+
+            if ($err instanceof SerializationException) {
+                var_dump($err->context());
+            }
+
+            var_dump($err->getMessage());
+            exit;
+        }
+
+        return $this;
     }
 }

@@ -175,6 +175,6 @@ it('handles different consistency values', function (): void {
 });
 
 it('throws when store ID is empty', function (): void {
-    expect(fn () => new ExpandRequest(store: '', tupleKey: test()->createMock(TupleKeyInterface::class)))
-        ->toThrow(InvalidArgumentException::class);
+    $this->expectException(InvalidArgumentException::class);
+    new ExpandRequest(store: '', tupleKey: test()->createMock(TupleKeyInterface::class));
 });

@@ -24,8 +24,8 @@ test('Result unwrap throws for Failure with no callback', function (): void {
     $error = ClientError::Validation->exception();
     $failure = new Failure($error);
 
-    expect(fn () => $failure->unwrap())
-        ->toThrow($error::class);
+    $this->expectException($error::class);
+    $failure->unwrap();
 });
 
 test('Result unwrap returns callback result for Failure', function (): void {

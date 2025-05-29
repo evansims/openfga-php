@@ -227,7 +227,8 @@ describe('Assertions Collection', function (): void {
         $collection = new Assertions();
         $wrongType = new stdClass();
 
-        expect(fn () => $collection->add($wrongType))->toThrow(TypeError::class);
+        $this->expectException(TypeError::class);
+        $collection->add($wrongType);
     });
 
     test('maintains insertion order', function (): void {

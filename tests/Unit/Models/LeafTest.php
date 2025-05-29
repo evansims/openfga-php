@@ -17,7 +17,8 @@ describe('Leaf Model', function (): void {
     });
 
     test('requires at least one parameter', function (): void {
-        expect(fn () => new Leaf())->toThrow(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
+        new Leaf();
     });
 
     test('constructs with users', function (): void {

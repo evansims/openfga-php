@@ -91,8 +91,8 @@ test('WriteTuplesResponse fromResponse handles non-200 status codes', function (
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteTuplesResponse fromResponse handles 403 Forbidden', function (): void {
@@ -106,8 +106,8 @@ test('WriteTuplesResponse fromResponse handles 403 Forbidden', function (): void
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteTuplesResponse fromResponse handles 404 Not Found', function (): void {
@@ -121,8 +121,8 @@ test('WriteTuplesResponse fromResponse handles 404 Not Found', function (): void
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteTuplesResponse fromResponse handles 500 Internal Server Error', function (): void {
@@ -136,8 +136,8 @@ test('WriteTuplesResponse fromResponse handles 500 Internal Server Error', funct
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteTuplesResponse fromResponse handles 422 Unprocessable Entity', function (): void {
@@ -151,8 +151,8 @@ test('WriteTuplesResponse fromResponse handles 422 Unprocessable Entity', functi
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteTuplesResponse fromResponse handles 204 status code as success', function (): void {
@@ -185,8 +185,8 @@ test('WriteTuplesResponse fromResponse handles 201 status code as non-success', 
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteTuplesResponse multiple instances are independent', function (): void {

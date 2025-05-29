@@ -102,6 +102,6 @@ it('handles non-200 status codes', function (): void {
 
     $validator = new SchemaValidator();
 
-    expect(fn () => CheckResponse::fromResponse($httpResponse, $request, $validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    CheckResponse::fromResponse($httpResponse, $request, $validator);
 });

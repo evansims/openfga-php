@@ -64,8 +64,9 @@ it('throws exception for unbalanced opening parentheses', function (): void {
             define viewer: (user or admin
         DSL;
 
-    expect(fn () => DslTransformer::fromDsl($dsl, $this->validator))
-        ->toThrow(RuntimeException::class, 'Unbalanced parentheses: 1 unclosed opening parenthesis');
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Unbalanced parentheses: 1 unclosed opening parenthesis');
+    DslTransformer::fromDsl($dsl, $this->validator);
 });
 
 it('throws exception for unbalanced closing parentheses', function (): void {
@@ -80,8 +81,9 @@ it('throws exception for unbalanced closing parentheses', function (): void {
             define viewer: user or admin)
         DSL;
 
-    expect(fn () => DslTransformer::fromDsl($dsl, $this->validator))
-        ->toThrow(RuntimeException::class, 'Unbalanced parentheses: too many closing parentheses');
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Unbalanced parentheses: too many closing parentheses');
+    DslTransformer::fromDsl($dsl, $this->validator);
 });
 
 it('throws exception for multiple unbalanced opening parentheses', function (): void {
@@ -96,8 +98,9 @@ it('throws exception for multiple unbalanced opening parentheses', function (): 
             define viewer: ((user or admin
         DSL;
 
-    expect(fn () => DslTransformer::fromDsl($dsl, $this->validator))
-        ->toThrow(RuntimeException::class, 'Unbalanced parentheses: 2 unclosed opening parentheses');
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Unbalanced parentheses: 2 unclosed opening parentheses');
+    DslTransformer::fromDsl($dsl, $this->validator);
 });
 
 it('handles properly balanced nested parentheses', function (): void {
@@ -163,8 +166,9 @@ it('throws exception for deeply nested unbalanced parentheses', function (): voi
             define viewer: (user and (admin or (editor))
         DSL;
 
-    expect(fn () => DslTransformer::fromDsl($dslUnbalanced, $this->validator))
-        ->toThrow(RuntimeException::class, 'Unbalanced parentheses: 1 unclosed opening parenthesis');
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Unbalanced parentheses: 1 unclosed opening parenthesis');
+    DslTransformer::fromDsl($dslUnbalanced, $this->validator);
 });
 
 it('handles complex expressions with multiple operators and parentheses', function (): void {
@@ -201,8 +205,9 @@ it('throws exception for mismatched parentheses in middle of expression', functi
             define viewer: user or (admin)) and editor
         DSL;
 
-    expect(fn () => DslTransformer::fromDsl($dsl, $this->validator))
-        ->toThrow(RuntimeException::class, 'Unbalanced parentheses: too many closing parentheses');
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Unbalanced parentheses: too many closing parentheses');
+    DslTransformer::fromDsl($dsl, $this->validator);
 });
 
 it('handles empty parentheses gracefully', function (): void {
@@ -218,8 +223,9 @@ it('handles empty parentheses gracefully', function (): void {
         DSL;
 
     // This should fail during parsing because () is not a valid expression
-    expect(fn () => DslTransformer::fromDsl($dsl, $this->validator))
-        ->toThrow(RuntimeException::class, 'Input string cannot be empty');
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Input string cannot be empty');
+    DslTransformer::fromDsl($dsl, $this->validator);
 });
 
 it('validates parentheses in tuple-to-userset expressions', function (): void {
@@ -258,6 +264,7 @@ it('validates parentheses in tuple-to-userset expressions', function (): void {
             define viewer: (member from parent or [user]
         DSL;
 
-    expect(fn () => DslTransformer::fromDsl($dslUnbalanced, $this->validator))
-        ->toThrow(RuntimeException::class, 'Unbalanced parentheses: 1 unclosed opening parenthesis');
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Unbalanced parentheses: 1 unclosed opening parenthesis');
+    DslTransformer::fromDsl($dslUnbalanced, $this->validator);
 });

@@ -87,29 +87,29 @@ test('Response parseResponse handles JSON with null values', function (): void {
 test('Response parseResponse handles empty string response', function (): void {
     $this->stream->method('__toString')->willReturn('');
 
-    expect(fn () => ResponseTest::parseResponsePublic($this->response, $this->request))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    ResponseTest::parseResponsePublic($this->response, $this->request);
 });
 
 test('Response parseResponse handles invalid JSON', function (): void {
     $this->stream->method('__toString')->willReturn('{"invalid": json}');
 
-    expect(fn () => ResponseTest::parseResponsePublic($this->response, $this->request))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    ResponseTest::parseResponsePublic($this->response, $this->request);
 });
 
 test('Response parseResponse handles malformed JSON', function (): void {
     $this->stream->method('__toString')->willReturn('{"unclosed": "object"');
 
-    expect(fn () => ResponseTest::parseResponsePublic($this->response, $this->request))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    ResponseTest::parseResponsePublic($this->response, $this->request);
 });
 
 test('Response parseResponse handles JSON with trailing comma', function (): void {
     $this->stream->method('__toString')->willReturn('{"key": "value",}');
 
-    expect(fn () => ResponseTest::parseResponsePublic($this->response, $this->request))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    ResponseTest::parseResponsePublic($this->response, $this->request);
 });
 
 test('Response parseResponse handles non-array JSON types', function (): void {

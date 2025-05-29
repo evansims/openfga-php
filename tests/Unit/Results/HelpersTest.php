@@ -138,8 +138,8 @@ test('unwrap function returns callback result from Failure', function (): void {
 test('unwrap function throws from Failure when no callback', function (): void {
     $failure = new Failure($this->testError);
 
-    expect(fn () => unwrap($failure))
-        ->toThrow($this->testError::class);
+    $this->expectException($this->testError::class);
+    unwrap($failure);
 });
 
 // Tests for success() function

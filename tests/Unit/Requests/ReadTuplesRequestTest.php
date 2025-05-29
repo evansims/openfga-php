@@ -122,27 +122,33 @@ test('ReadTuplesRequest getRequest returns RequestContext with full body', funct
 test('ReadTuplesRequest throws exception for invalid pageSize', function (): void {
     $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
 
-    expect(fn () => new ReadTuplesRequest(
+    $this->expectException(InvalidArgumentException::class);
+    $this->expectExceptionMessage('$pageSize must be a positive integer.');
+    new ReadTuplesRequest(
         store: 'store',
         tupleKey: $tupleKey,
         pageSize: 0,
-    ))->toThrow(InvalidArgumentException::class, '$pageSize must be a positive integer.');
+    );
 
-    expect(fn () => new ReadTuplesRequest(
+    $this->expectException(InvalidArgumentException::class);
+    $this->expectExceptionMessage('$pageSize must be a positive integer.');
+    new ReadTuplesRequest(
         store: 'store',
         tupleKey: $tupleKey,
         pageSize: -10,
-    ))->toThrow(InvalidArgumentException::class, '$pageSize must be a positive integer.');
+    );
 });
 
 test('ReadTuplesRequest throws exception for empty continuationToken', function (): void {
     $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
 
-    expect(fn () => new ReadTuplesRequest(
+    $this->expectException(InvalidArgumentException::class);
+    $this->expectExceptionMessage('$continuationToken cannot be an empty string.');
+    new ReadTuplesRequest(
         store: 'store',
         tupleKey: $tupleKey,
         continuationToken: '',
-    ))->toThrow(InvalidArgumentException::class, '$continuationToken cannot be an empty string.');
+    );
 });
 
 test('ReadTuplesRequest handles tuple key with condition', function (): void {

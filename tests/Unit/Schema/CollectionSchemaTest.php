@@ -22,13 +22,15 @@ test('CollectionSchema can be created with valid class and item type', function 
 });
 
 test('CollectionSchema throws exception for invalid class name', function (): void {
-    expect(static fn () => new CollectionSchema('NonexistentClass', 'DateTime'))
-        ->toThrow(InvalidArgumentException::class, 'Class "NonexistentClass" does not exist or cannot be autoloaded');
+    $this->expectException(InvalidArgumentException::class);
+    $this->expectExceptionMessage('Class "NonexistentClass" does not exist or cannot be autoloaded');
+    new CollectionSchema('NonexistentClass', 'DateTime');
 });
 
 test('CollectionSchema throws exception for invalid item type', function (): void {
-    expect(static fn () => new CollectionSchema('ArrayObject', 'NonexistentType'))
-        ->toThrow(InvalidArgumentException::class, 'Item type "NonexistentType" does not exist or cannot be autoloaded');
+    $this->expectException(InvalidArgumentException::class);
+    $this->expectExceptionMessage('Item type "NonexistentType" does not exist or cannot be autoloaded');
+    new CollectionSchema('ArrayObject', 'NonexistentType');
 });
 
 test('CollectionSchema has default requireItems as false', function (): void {

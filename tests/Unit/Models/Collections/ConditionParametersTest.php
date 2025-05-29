@@ -169,10 +169,9 @@ describe('ConditionParameters Collection', function (): void {
     });
 
     test('throws exception for invalid item type', function (): void {
-        expect(function (): void {
-            $collection = new ConditionParameters([]);
-            $collection->add(new stdClass());
-        })->toThrow(TypeError::class);
+        $this->expectException(TypeError::class);
+        $collection = new ConditionParameters([]);
+        $collection->add(new stdClass());
     });
 
     test('uses first() method', function (): void {

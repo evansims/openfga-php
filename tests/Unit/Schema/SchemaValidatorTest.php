@@ -454,10 +454,10 @@ test('validates integer type conversion using existing properties', function ():
     expect($this->validator->validateAndTransform(['age' => 42, 'name' => 'test'], TestObject::class)->age)->toBe(42);
 
     // Test that invalid integer values throw exceptions
-    expect(fn () => $this->validator->validateAndTransform(['age' => 42.7, 'name' => 'test'], TestObject::class))
-        ->toThrow(SerializationException::class);
-    expect(fn () => $this->validator->validateAndTransform(['age' => 'not-a-number', 'name' => 'test'], TestObject::class))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['age' => 42.7, 'name' => 'test'], TestObject::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['age' => 'not-a-number', 'name' => 'test'], TestObject::class);
 });
 
 test('validates number type conversion using test array', function (): void {
@@ -495,8 +495,8 @@ test('validates datetime format strings with edge cases', function (string $inpu
     $this->validator->registerSchema($schema);
 
     if (! $shouldPass) {
-        expect(fn () => $this->validator->validateAndTransform(['dateField' => $input], Event::class))
-            ->toThrow(SerializationException::class);
+        $this->expectException(SerializationException::class);
+        $this->validator->validateAndTransform(['dateField' => $input], Event::class);
 
         return;
     }
@@ -554,8 +554,8 @@ test('validates array items with different types using existing test classes', f
     expect($result1->numbers)->toBe(['a', 'b', 'c']);
 
     // Invalid mixed array should throw
-    expect(fn () => $this->validator->validateAndTransform(['numbers' => ['a', 1, true]], TestArray::class))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['numbers' => ['a', 1, true]], TestArray::class);
 });
 
 test('validates string field conversion from different types', function (): void {
@@ -585,11 +585,11 @@ test('handles integer validation edge cases using age field', function (): void 
     expect($result2)->toBeInstanceOf(TestObject::class);
 
     // Invalid integer cases should throw
-    expect(fn () => $this->validator->validateAndTransform(['age' => '42.5'], TestObject::class))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['age' => '42.5'], TestObject::class);
 
-    expect(fn () => $this->validator->validateAndTransform(['age' => 'not-a-number'], TestObject::class))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['age' => 'not-a-number'], TestObject::class);
 });
 
 test('handles number validation in arrays', function (): void {
@@ -607,8 +607,8 @@ test('handles number validation in arrays', function (): void {
     expect($result2)->toBeInstanceOf(TestArray::class);
 
     // Invalid number cases should throw
-    expect(fn () => $this->validator->validateAndTransform(['numbers' => ['not-a-number']], TestArray::class))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['numbers' => ['not-a-number']], TestArray::class);
 });
 
 test('validates string type strictly and rejects non-string types', function (): void {
@@ -623,12 +623,12 @@ test('validates string type strictly and rejects non-string types', function ():
     expect($this->validator->validateAndTransform(['name' => 'test', 'age' => 25], TestObject::class)->name)->toBe('test');
 
     // Test that non-string types are rejected
-    expect(fn () => $this->validator->validateAndTransform(['name' => 42, 'age' => 25], TestObject::class))
-        ->toThrow(SerializationException::class);
-    expect(fn () => $this->validator->validateAndTransform(['name' => 42.5, 'age' => 25], TestObject::class))
-        ->toThrow(SerializationException::class);
-    expect(fn () => $this->validator->validateAndTransform(['name' => true, 'age' => 25], TestObject::class))
-        ->toThrow(SerializationException::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['name' => 42, 'age' => 25], TestObject::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['name' => 42.5, 'age' => 25], TestObject::class);
+    $this->expectException(SerializationException::class);
+    $this->validator->validateAndTransform(['name' => true, 'age' => 25], TestObject::class);
 });
 
 test('validates SchemaValidator getSchemas method', function (): void {

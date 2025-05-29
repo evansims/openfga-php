@@ -91,8 +91,8 @@ test('DeleteStoreResponse fromResponse handles non-204 status codes', function (
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('DeleteStoreResponse fromResponse handles 403 Forbidden', function (): void {
@@ -106,8 +106,8 @@ test('DeleteStoreResponse fromResponse handles 403 Forbidden', function (): void
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('DeleteStoreResponse fromResponse handles 404 Not Found', function (): void {
@@ -121,8 +121,8 @@ test('DeleteStoreResponse fromResponse handles 404 Not Found', function (): void
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('DeleteStoreResponse fromResponse handles 500 Internal Server Error', function (): void {
@@ -136,8 +136,8 @@ test('DeleteStoreResponse fromResponse handles 500 Internal Server Error', funct
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('DeleteStoreResponse fromResponse handles 422 Unprocessable Entity', function (): void {
@@ -151,8 +151,8 @@ test('DeleteStoreResponse fromResponse handles 422 Unprocessable Entity', functi
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('DeleteStoreResponse fromResponse handles 200 status code as non-success', function (): void {
@@ -167,8 +167,8 @@ test('DeleteStoreResponse fromResponse handles 200 status code as non-success', 
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('DeleteStoreResponse fromResponse handles 409 Conflict', function (): void {
@@ -182,8 +182,8 @@ test('DeleteStoreResponse fromResponse handles 409 Conflict', function (): void 
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('DeleteStoreResponse multiple instances are independent', function (): void {

@@ -173,10 +173,9 @@ describe('TypeDefinitions Collection', function (): void {
     });
 
     test('throws exception for invalid item type', function (): void {
-        expect(function (): void {
-            $collection = new TypeDefinitions([]);
-            $collection->add(new stdClass());
-        })->toThrow(TypeError::class);
+        $this->expectException(TypeError::class);
+        $collection = new TypeDefinitions([]);
+        $collection->add(new stdClass());
     });
 
     test('uses first() method', function (): void {

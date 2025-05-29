@@ -32,8 +32,8 @@ describe('UsersetUnion Collection', function (): void {
         $union = new UsersetUnion();
         $invalidItem = new stdClass();
 
-        expect(fn () => $union->add($invalidItem))
-            ->toThrow(TypeError::class);
+        $this->expectException(TypeError::class);
+        $union->add($invalidItem);
     });
 
     test('jsonSerialize returns empty child array for empty collection', function (): void {

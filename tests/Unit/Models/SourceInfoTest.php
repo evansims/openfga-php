@@ -19,8 +19,9 @@ describe('SourceInfo Model', function (): void {
     });
 
     test('throws exception for empty file string', function (): void {
-        expect(fn () => new SourceInfo(file: ''))
-            ->toThrow(InvalidArgumentException::class, 'SourceInfo::$file cannot be empty.');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('SourceInfo::$file cannot be empty.');
+        new SourceInfo(file: '');
     });
 
     test('handles various file paths', function (): void {

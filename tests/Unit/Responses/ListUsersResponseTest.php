@@ -144,8 +144,8 @@ test('fromResponse handles error responses with non-200 status', function (): vo
     $request = Mockery::mock(RequestInterface::class);
     $validator = new SchemaValidator();
 
-    expect(fn () => ListUsersResponse::fromResponse($httpResponse, $request, $validator))
-        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+    $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+    ListUsersResponse::fromResponse($httpResponse, $request, $validator);
 });
 
 test('fromResponse handles 401 unauthorized', function (): void {
@@ -153,8 +153,8 @@ test('fromResponse handles 401 unauthorized', function (): void {
     $request = Mockery::mock(RequestInterface::class);
     $validator = new SchemaValidator();
 
-    expect(fn () => ListUsersResponse::fromResponse($httpResponse, $request, $validator))
-        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+    $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+    ListUsersResponse::fromResponse($httpResponse, $request, $validator);
 });
 
 test('fromResponse handles 500 internal server error', function (): void {
@@ -162,6 +162,6 @@ test('fromResponse handles 500 internal server error', function (): void {
     $request = Mockery::mock(RequestInterface::class);
     $validator = new SchemaValidator();
 
-    expect(fn () => ListUsersResponse::fromResponse($httpResponse, $request, $validator))
-        ->toThrow(OpenFGA\Exceptions\NetworkException::class);
+    $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+    ListUsersResponse::fromResponse($httpResponse, $request, $validator);
 });

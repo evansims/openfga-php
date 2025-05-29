@@ -91,8 +91,8 @@ test('WriteAssertionsResponse fromResponse handles non-204 status codes', functi
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteAssertionsResponse fromResponse handles 403 Forbidden', function (): void {
@@ -106,8 +106,8 @@ test('WriteAssertionsResponse fromResponse handles 403 Forbidden', function (): 
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteAssertionsResponse fromResponse handles 404 Not Found', function (): void {
@@ -121,8 +121,8 @@ test('WriteAssertionsResponse fromResponse handles 404 Not Found', function (): 
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteAssertionsResponse fromResponse handles 500 Internal Server Error', function (): void {
@@ -136,8 +136,8 @@ test('WriteAssertionsResponse fromResponse handles 500 Internal Server Error', f
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteAssertionsResponse fromResponse handles 422 Unprocessable Entity', function (): void {
@@ -151,8 +151,8 @@ test('WriteAssertionsResponse fromResponse handles 422 Unprocessable Entity', fu
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteAssertionsResponse fromResponse handles 200 status code as non-success', function (): void {
@@ -167,8 +167,8 @@ test('WriteAssertionsResponse fromResponse handles 200 status code as non-succes
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteAssertionsResponse fromResponse handles 201 status code as non-success', function (): void {
@@ -183,8 +183,8 @@ test('WriteAssertionsResponse fromResponse handles 201 status code as non-succes
     $httpResponse->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
+    $this->expectException(Exception::class);
+    WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 });
 
 test('WriteAssertionsResponse multiple instances are independent', function (): void {

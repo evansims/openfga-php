@@ -200,7 +200,8 @@ describe('TupleKeys Collection', function (): void {
         $collection = new TupleKeys();
         $wrongType = new stdClass();
 
-        expect(fn () => $collection->add($wrongType))->toThrow(TypeError::class);
+        $this->expectException(TypeError::class);
+        $collection->add($wrongType);
     });
 
     test('mixed TupleKey formats in same collection', function (): void {

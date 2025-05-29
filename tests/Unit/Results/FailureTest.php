@@ -45,15 +45,16 @@ test('Failure err returns the wrapped error', function (): void {
 test('Failure val throws LogicException', function (): void {
     $failure = new Failure($this->testError);
 
-    expect(fn () => $failure->val())
-        ->toThrow(LogicException::class, 'Failure has no value');
+    $this->expectException(LogicException::class);
+    $this->expectExceptionMessage('Failure has no value');
+    $failure->val();
 });
 
 test('Failure unwrap throws error when no callback provided', function (): void {
     $failure = new Failure($this->testError);
 
-    expect(fn () => $failure->unwrap())
-        ->toThrow($this->testError::class);
+    $this->expectException($this->testError::class);
+    $failure->unwrap();
 });
 
 test('Failure unwrap with callback receives error and returns callback result', function (): void {
@@ -121,9 +122,11 @@ test('Failure unwrap callback can itself throw an exception', function (): void 
     $failure = new Failure($this->testError);
     $customException = new RuntimeException('Custom exception from callback');
 
-    expect(fn () => $failure->unwrap(function () use ($customException): void {
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Custom exception from callback');
+    $failure->unwrap(function () use ($customException): void {
         throw $customException;
-    }))->toThrow(RuntimeException::class, 'Custom exception from callback');
+    });
 });
 
 test('Failure success does not execute callback and returns self', function (): void {

@@ -53,7 +53,7 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
         }
 
         $body = array_filter([
-            'schema_version' => (string) $this->getSchemaVersion()->value,
+            'schema_version' => $this->getSchemaVersion()->value,
             'type_definitions' => $this->getTypeDefinitions()->jsonSerialize(),
             'conditions' => $conditions,
         ], static fn ($value): bool => null !== $value);

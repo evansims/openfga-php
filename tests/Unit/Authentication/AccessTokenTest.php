@@ -120,8 +120,8 @@ test('AccessToken fromResponse throws on invalid JSON', function (): void {
     $response->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => AccessToken::fromResponse($response))
-        ->toThrow(JsonException::class);
+    $this->expectException(JsonException::class);
+    AccessToken::fromResponse($response);
 });
 
 test('AccessToken fromResponse throws on non-array response', function (): void {
@@ -133,8 +133,9 @@ test('AccessToken fromResponse throws on non-array response', function (): void 
     $response->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => AccessToken::fromResponse($response))
-        ->toThrow(Exception::class, 'Invalid response format');
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('Invalid response format');
+    AccessToken::fromResponse($response);
 });
 
 test('AccessToken fromResponse throws on missing access_token', function (): void {
@@ -150,8 +151,9 @@ test('AccessToken fromResponse throws on missing access_token', function (): voi
     $response->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => AccessToken::fromResponse($response))
-        ->toThrow(Exception::class, 'Missing required fields in response');
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('Missing required fields in response');
+    AccessToken::fromResponse($response);
 });
 
 test('AccessToken fromResponse throws on missing expires_in', function (): void {
@@ -167,8 +169,9 @@ test('AccessToken fromResponse throws on missing expires_in', function (): void 
     $response->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => AccessToken::fromResponse($response))
-        ->toThrow(Exception::class, 'Missing required fields in response');
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('Missing required fields in response');
+    AccessToken::fromResponse($response);
 });
 
 test('AccessToken fromResponse throws on non-string access_token', function (): void {
@@ -185,8 +188,9 @@ test('AccessToken fromResponse throws on non-string access_token', function (): 
     $response->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => AccessToken::fromResponse($response))
-        ->toThrow(Exception::class, 'access_token must be a string');
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('access_token must be a string');
+    AccessToken::fromResponse($response);
 });
 
 test('AccessToken fromResponse throws on non-integer expires_in', function (): void {
@@ -203,8 +207,9 @@ test('AccessToken fromResponse throws on non-integer expires_in', function (): v
     $response->method('getBody')
         ->willReturn($stream);
 
-    expect(fn () => AccessToken::fromResponse($response))
-        ->toThrow(Exception::class, 'expires_in must be an integer');
+    $this->expectException(Exception::class);
+    $this->expectExceptionMessage('expires_in must be an integer');
+    AccessToken::fromResponse($response);
 });
 
 test('AccessToken fromResponse handles non-string scope gracefully', function (): void {

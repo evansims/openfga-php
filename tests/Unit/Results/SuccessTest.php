@@ -52,8 +52,9 @@ test('Success val returns the wrapped value', function (): void {
 test('Success err throws LogicException', function (): void {
     $success = new Success($this->testValue);
 
-    expect(fn () => $success->err())
-        ->toThrow(LogicException::class, 'Success has no error');
+    $this->expectException(LogicException::class);
+    $this->expectExceptionMessage('Success has no error');
+    $success->err();
 });
 
 test('Success unwrap returns value when no callback provided', function (): void {
@@ -111,9 +112,11 @@ test('Success unwrap callback can return null', function (): void {
 test('Success unwrap callback can throw exception', function (): void {
     $success = new Success($this->testValue);
 
-    expect(fn () => $success->unwrap(function ($value): void {
+    $this->expectException(RuntimeException::class);
+    $this->expectExceptionMessage('Transform failed');
+    $success->unwrap(function ($value): void {
         throw new RuntimeException('Transform failed');
-    }))->toThrow(RuntimeException::class, 'Transform failed');
+    });
 });
 
 test('Success success executes callback and returns self', function (): void {

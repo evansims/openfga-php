@@ -26,13 +26,15 @@ final class InvalidTypeKeyedCollection extends KeyedCollection
 
 describe('KeyedCollection', function (): void {
     test('throws TypeError when $itemType is not defined', function (): void {
-        expect(fn () => new InvalidKeyedCollection([]))
-            ->toThrow(TypeError::class, 'Undefined item type for InvalidKeyedCollection. Define the $itemType property or override the constructor.');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('Undefined item type for InvalidKeyedCollection. Define the $itemType property or override the constructor.');
+        new InvalidKeyedCollection([]);
     });
 
     test('throws TypeError when $itemType does not implement ModelInterface', function (): void {
-        expect(fn () => new InvalidTypeKeyedCollection([]))
-            ->toThrow(TypeError::class, 'Expected item type to implement OpenFGA\Models\ModelInterface, stdClass given');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('Expected item type to implement OpenFGA\Models\ModelInterface, stdClass given');
+        new InvalidTypeKeyedCollection([]);
     });
 
     test('constructs with valid $itemType and empty array', function (): void {
@@ -75,8 +77,8 @@ describe('KeyedCollection', function (): void {
         $collection = new TestKeyedCollection([]);
         $wrongType = new stdClass();
 
-        expect(fn () => $collection->add('key', $wrongType))
-            ->toThrow(TypeError::class);
+        $this->expectException(TypeError::class);
+        $collection->add('key', $wrongType);
     });
 
     test('add() adds item with string key', function (): void {
@@ -106,8 +108,9 @@ describe('KeyedCollection', function (): void {
     test('key() throws OutOfBoundsException when position is invalid', function (): void {
         $collection = new TestKeyedCollection([]);
 
-        expect(fn () => $collection->key())
-            ->toThrow(OutOfBoundsException::class, 'Invalid key type; expected string, null given.');
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Invalid key type; expected string, null given.');
+        $collection->key();
     });
 
     test('key() throws OutOfBoundsException with invalid key type', function (): void {
@@ -118,8 +121,9 @@ describe('KeyedCollection', function (): void {
         $modelsProperty->setAccessible(true);
         $modelsProperty->setValue($collection, [123 => new TupleKey('user:test', 'viewer', 'doc:1')]);
 
-        expect(fn () => $collection->key())
-            ->toThrow(OutOfBoundsException::class, 'Invalid key type; expected string, int given.');
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Invalid key type; expected string, int given.');
+        $collection->key();
     });
 
     test('key() throws OutOfBoundsException with integer key using expectExceptionMessageMatches', function (): void {
@@ -168,16 +172,18 @@ describe('KeyedCollection', function (): void {
         $collection = new TestKeyedCollection([]);
         $wrongType = new stdClass();
 
-        expect(fn () => $collection->offsetSet('key', $wrongType))
-            ->toThrow(InvalidArgumentException::class, 'Expected instance of OpenFGA\Models\TupleKey, stdClass given.');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected instance of OpenFGA\Models\TupleKey, stdClass given.');
+        $collection->offsetSet('key', $wrongType);
     });
 
     test('offsetSet() throws InvalidArgumentException with non-string key', function (): void {
         $collection = new TestKeyedCollection([]);
         $tuple = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
 
-        expect(fn () => $collection->offsetSet(123, $tuple))
-            ->toThrow(InvalidArgumentException::class, 'Key must be a string.');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Key must be a string.');
+        $collection->offsetSet(123, $tuple);
     });
 
     test('offsetSet() sets item with string key', function (): void {
@@ -300,13 +306,13 @@ describe('KeyedCollection', function (): void {
     });
 
     test('schema() throws exception when $itemType is not defined', function (): void {
-        expect(fn () => InvalidKeyedCollection::schema())
-            ->toThrow(OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(OpenFGA\Exceptions\SerializationException::class);
+        InvalidKeyedCollection::schema();
     });
 
     test('schema() throws exception when $itemType is invalid', function (): void {
-        expect(fn () => InvalidTypeKeyedCollection::schema())
-            ->toThrow(OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(OpenFGA\Exceptions\SerializationException::class);
+        InvalidTypeKeyedCollection::schema();
     });
 
     test('schema() returns valid schema for concrete collection', function (): void {

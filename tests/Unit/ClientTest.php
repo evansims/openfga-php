@@ -73,8 +73,9 @@ test('Client constructs with AccessToken object', function (): void {
 test('Client assertLastRequest throws when no request exists', function (): void {
     $client = new Client('https://api.example.com');
 
-    expect(fn () => $client->assertLastRequest())
-        ->toThrow(LogicException::class, 'No last request found');
+    $this->expectException(LogicException::class);
+    $this->expectExceptionMessage('No last request found');
+    $client->assertLastRequest();
 });
 
 test('Client check returns Result interface', function (): void {

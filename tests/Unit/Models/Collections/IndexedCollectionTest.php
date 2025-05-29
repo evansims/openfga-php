@@ -26,13 +26,15 @@ final class InvalidTypeIndexedCollection extends IndexedCollection
 
 describe('IndexedCollection', function (): void {
     test('throws TypeError when $itemType is not defined', function (): void {
-        expect(fn () => new InvalidIndexedCollection())
-            ->toThrow(TypeError::class, 'Undefined item type for InvalidIndexedCollection. Define the $itemType property or override the constructor.');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('Undefined item type for InvalidIndexedCollection. Define the $itemType property or override the constructor.');
+        new InvalidIndexedCollection();
     });
 
     test('throws TypeError when $itemType does not implement ModelInterface', function (): void {
-        expect(fn () => new InvalidTypeIndexedCollection())
-            ->toThrow(TypeError::class, 'Expected item type to implement OpenFGA\Models\ModelInterface, stdClass given');
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('Expected item type to implement OpenFGA\Models\ModelInterface, stdClass given');
+        new InvalidTypeIndexedCollection();
     });
 
     test('constructs with valid $itemType', function (): void {
@@ -124,16 +126,18 @@ describe('IndexedCollection', function (): void {
     test('key() throws OutOfBoundsException when position is invalid', function (): void {
         $collection = new TestIndexedCollection();
 
-        expect(fn () => $collection->key())
-            ->toThrow(OutOfBoundsException::class, 'Invalid position');
+        $this->expectException(OutOfBoundsException::class);
+        $this->expectExceptionMessage('Invalid position');
+        $collection->key();
     });
 
     test('offsetSet() throws InvalidArgumentException with wrong type', function (): void {
         $collection = new TestIndexedCollection();
         $wrongType = new stdClass();
 
-        expect(fn () => $collection->offsetSet(0, $wrongType))
-            ->toThrow(InvalidArgumentException::class, 'Expected instance of OpenFGA\Models\TupleKey, stdClass given.');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected instance of OpenFGA\Models\TupleKey, stdClass given.');
+        $collection->offsetSet(0, $wrongType);
     });
 
     test('offsetSet() with null offset appends item', function (): void {
@@ -253,13 +257,13 @@ describe('IndexedCollection', function (): void {
     });
 
     test('schema() throws exception when $itemType is not defined', function (): void {
-        expect(fn () => InvalidIndexedCollection::schema())
-            ->toThrow(OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(OpenFGA\Exceptions\SerializationException::class);
+        InvalidIndexedCollection::schema();
     });
 
     test('schema() throws exception when $itemType is invalid', function (): void {
-        expect(fn () => InvalidTypeIndexedCollection::schema())
-            ->toThrow(OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(OpenFGA\Exceptions\SerializationException::class);
+        InvalidTypeIndexedCollection::schema();
     });
 
     test('schema() returns valid schema for concrete collection', function (): void {
