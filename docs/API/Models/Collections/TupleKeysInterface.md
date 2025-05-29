@@ -150,13 +150,13 @@ bool
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<int|string, mixed>
 ```
 
 
 
 #### Returns
-array
+array&lt;int | string, mixed&gt;
 
 ### key
 
