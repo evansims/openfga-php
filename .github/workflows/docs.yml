@@ -120,18 +120,29 @@ jobs:
             sed -i 's|\[\([^]]*\)\](\([^)]*\)/\([^)]*\))|\[\1\](\3)|g' "$file"
           done
 
-      - name: Clone Wiki repository
+      - name: Initialize or clone Wiki repository
         run: |
-          git clone "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git" wiki-repo
+          # Try to clone the wiki repository
+          if git clone "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git" wiki-repo 2>/dev/null; then
+            echo "Wiki repository exists, cloned successfully"
+          else
+            echo "Wiki repository doesn't exist, initializing new one"
+            mkdir wiki-repo
+            cd wiki-repo
+            git init
+            git remote add origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git"
+          fi
+          
           cd wiki-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Sync to Wiki
         run: |
-          # Clear existing wiki content (except .git)
           cd wiki-repo
-          find . -type f -not -path "./.git/*" -delete
+          
+          # Clear existing wiki content (except .git)
+          find . -type f -not -path "./.git/*" -delete 2>/dev/null || true
           
           # Copy new content
           cp -r ../wiki-content/* .
@@ -146,6 +157,12 @@ jobs:
             
             Generated from commit: ${{ github.sha }}
             🤖 Automated update via GitHub Actions"
-            git push origin master
+            
+            # Push to master branch (create if first push)
+            if git ls-remote --heads origin master | grep -q master; then
+              git push origin master
+            else
+              git push -u origin master
+            fi
             echo "Wiki updated successfully"
           fi
