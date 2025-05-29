@@ -94,6 +94,7 @@
   },
   "scripts": {
     "docs": "@php tools/docs/generate.php",
+    "wiki": "./tools/sync-wiki.sh",
     "lint": [
       "@phpstan",
       "@psalm",
