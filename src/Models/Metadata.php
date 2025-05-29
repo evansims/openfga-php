@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use OpenFGA\Models\Collections\RelationMetadataCollection;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 use Override;
@@ -14,7 +15,7 @@ final class Metadata implements MetadataInterface
 
     public function __construct(
         private readonly ?string $module = null,
-        private readonly ?RelationMetadataInterface $relations = null,
+        private readonly ?RelationMetadataCollection $relations = null,
         private readonly ?SourceInfoInterface $sourceInfo = null,
     ) {
     }
@@ -32,7 +33,7 @@ final class Metadata implements MetadataInterface
     /**
      * @inheritDoc
      */
-    public function getRelations(): ?RelationMetadataInterface
+    public function getRelations(): ?RelationMetadataCollection
     {
         return $this->relations;
     }
@@ -52,11 +53,21 @@ final class Metadata implements MetadataInterface
      */
     public function jsonSerialize(): array
     {
-        return array_filter([
-            'module' => $this->module,
-            'relations' => $this->relations?->jsonSerialize(),
-            'source_info' => $this->sourceInfo?->jsonSerialize(),
-        ], static fn ($value): bool => null !== $value);
+        $result = [];
+
+        if (null !== $this->module && '' !== $this->module) {
+            $result['module'] = $this->module;
+        }
+
+        if ($this->relations instanceof RelationMetadataCollection) {
+            $result['relations'] = $this->relations->jsonSerialize();
+        }
+
+        if ($this->sourceInfo instanceof SourceInfoInterface) {
+            $result['source_info'] = $this->sourceInfo->jsonSerialize();
+        }
+
+        return $result;
     }
 
     #[Override]
@@ -69,8 +80,8 @@ final class Metadata implements MetadataInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'module', type: 'string', required: false),
-                new SchemaProperty(name: 'relations', type: RelationMetadata::class, required: false),
-                new SchemaProperty(name: 'source_info', type: SourceInfo::class, required: false),
+                new SchemaProperty(name: 'relations', type: 'object', className: RelationMetadataCollection::class, required: false),
+                new SchemaProperty(name: 'source_info', type: 'object', className: SourceInfo::class, required: false),
             ],
         );
     }

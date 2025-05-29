@@ -20,7 +20,7 @@ beforeEach(function (): void {
     );
 });
 
-it('creates and deletes a store', function (): void {
+test('creates and deletes a store', function (): void {
     $store = null;
 
     $name = 'php-sdk-test-' . bin2hex(random_bytes(5));
@@ -36,7 +36,7 @@ it('creates and deletes a store', function (): void {
     expect($delete->succeeded())->toBeTrue();
 });
 
-it('retrieves a created store', function (): void {
+test('retrieves a created store', function (): void {
     $createdStoreId = null;
 
     $name = 'php-sdk-test-' . bin2hex(random_bytes(5));

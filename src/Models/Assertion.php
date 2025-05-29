@@ -88,9 +88,9 @@ final class Assertion implements AssertionInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'tuple_key', type: AssertionTupleKey::class, required: true),
+                new SchemaProperty(name: 'tuple_key', type: 'object', className: AssertionTupleKey::class, required: true),
                 new SchemaProperty(name: 'expectation', type: 'bool', required: true),
-                new SchemaProperty(name: 'contextual_tuples', type: TupleKeys::class, required: false),
+                new SchemaProperty(name: 'contextual_tuples', type: 'object', className: TupleKeys::class, required: false),
                 new SchemaProperty(name: 'context', type: 'array', required: false),
             ],
         );

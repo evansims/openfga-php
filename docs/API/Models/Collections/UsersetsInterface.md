@@ -5,7 +5,7 @@
 `OpenFGA\Models\Collections`
 
 ## Implements
-* [KeyedCollectionInterface](Models/Collections/KeyedCollectionInterface.md)
+* [IndexedCollectionInterface](Models/Collections/IndexedCollectionInterface.md)
 * Traversable
 * JsonSerializable
 * Iterator
@@ -19,18 +19,29 @@
 
 
 ```php
-public function add(string $key, T $item): static
+public function add(T $item): static
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string |  |
 | `$item` | T |  |
 
 #### Returns
 static
+
+### clear
+
+
+```php
+public function clear(): void
+```
+
+
+
+#### Returns
+void
 
 ### count
 
@@ -56,35 +67,81 @@ public function current(): T
 #### Returns
 T
 
-### get
+### every
 
 
 ```php
-public function get(string $key): null|T
+public function every(callable $callback): bool
 ```
 
+Checks if all items match the callback.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string |  |
+| `$callback` | callable |  |
+
+#### Returns
+bool
+
+### filter
+
+
+```php
+public function filter(callable $callback): static<T>
+```
+
+Filters the collection using a callback.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$callback` | callable |  |
+
+#### Returns
+static&lt;T&gt;
+
+### first
+
+
+```php
+public function first(?callable $callback = NULL): null|T
+```
+
+Returns the first item that matches the callback.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$callback` | ?callable |  |
 
 #### Returns
 null | T
 
-### has
+### get
 
 
 ```php
-public function has(string $key): bool
+public function get(int $offset): null|T
 ```
 
-Check if a key exists in the collection.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string |  |
+| `$offset` | int |  |
+
+#### Returns
+null | T
+
+### isEmpty
+
+
+```php
+public function isEmpty(): bool
+```
+
+
 
 #### Returns
 bool
@@ -105,13 +162,13 @@ array
 
 
 ```php
-public function key(): string
+public function key(): int
 ```
 
 
 
 #### Returns
-string
+int
 
 ### next
 
@@ -145,7 +202,7 @@ bool
 
 
 ```php
-public function offsetGet(mixed $offset)
+public function offsetGet(mixed $offset): null|T
 ```
 
 
@@ -154,19 +211,21 @@ public function offsetGet(mixed $offset)
 |------|------|-------------|
 | `$offset` | mixed |  |
 
+#### Returns
+null | T
 
 ### offsetSet
 
 
 ```php
-public function offsetSet(null|string $offset, T $value): void
+public function offsetSet(null|int|string $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | null | string |  |
+| `$offset` | null | int | string |  |
 | `$value` | T |  |
 
 #### Returns
@@ -188,6 +247,24 @@ public function offsetUnset(mixed $offset): void
 #### Returns
 void
 
+### reduce
+
+
+```php
+public function reduce(U $initial, callable $callback): U
+```
+
+Reduces the collection to a single value.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$initial` | U |  |
+| `$callback` | callable |  |
+
+#### Returns
+U
+
 ### rewind
 
 
@@ -200,17 +277,34 @@ public function rewind(): void
 #### Returns
 void
 
+### some
+
+
+```php
+public function some(callable $callback): bool
+```
+
+Checks if any item matches the callback.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$callback` | callable |  |
+
+#### Returns
+bool
+
 ### toArray
 
 
 ```php
-public function toArray(): array<string, T>
+public function toArray(): array<int|string, T>
 ```
 
 
 
 #### Returns
-array&lt;string, T&gt;
+array&lt;int | string, T&gt;
 
 ### valid
 
@@ -223,4 +317,20 @@ public function valid(): bool
 
 #### Returns
 bool
+
+### withItems
+
+
+```php
+public function withItems(mixed $items): static<T>
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$items` | mixed |  |
+
+#### Returns
+static&lt;T&gt;
 

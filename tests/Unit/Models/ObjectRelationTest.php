@@ -150,10 +150,8 @@ describe('ObjectRelation Model', function (): void {
 
         expect($objectRelation->getObject())->toBe('');
         expect($objectRelation->getRelation())->toBe('');
-        expect($objectRelation->jsonSerialize())->toBe([
-            'object' => '',
-            'relation' => '',
-        ]);
+        // Empty strings are omitted from JSON serialization
+        expect($objectRelation->jsonSerialize())->toBe([]);
     });
 
     test('preserves whitespace', function (): void {

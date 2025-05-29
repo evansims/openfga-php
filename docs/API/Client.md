@@ -56,7 +56,7 @@ Checks if a user has a specific relationship with an object.
 
 
 ```php
-public function createAuthorizationModel(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\Collections\TypeDefinitionsInterface $typeDefinitions, OpenFGA\Models\Collections\ConditionsInterface $conditions, OpenFGA\Models\Enums\SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): OpenFGA\Results\ResultInterface
+public function createAuthorizationModel(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\Collections\TypeDefinitionsInterface $typeDefinitions, ?OpenFGA\Models\Collections\ConditionsInterface $conditions = NULL, OpenFGA\Models\Enums\SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): OpenFGA\Results\ResultInterface
 ```
 
 Creates a new authorization model with the given type definitions and conditions.
@@ -66,7 +66,7 @@ Creates a new authorization model with the given type definitions and conditions
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) | string | The store to create the model in |
 | `$typeDefinitions` | [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md) | The type definitions for the model |
-| `$conditions` | [ConditionsInterface](Models/Collections/ConditionsInterface.md) | The conditions for the model |
+| `$conditions` | ?[ConditionsInterface](Models/Collections/ConditionsInterface.md) | The conditions for the model |
 | `name` | string |  |
 
 #### Returns

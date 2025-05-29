@@ -10,9 +10,9 @@ use Override;
 /**
  * @template T of RelationReferenceInterface
  *
- * @extends KeyedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<T>
  */
-interface RelationReferencesInterface extends KeyedCollectionInterface
+interface RelationReferencesInterface extends IndexedCollectionInterface
 {
     /**
      * Serialize the collection to an array.

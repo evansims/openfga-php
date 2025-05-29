@@ -79,8 +79,8 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'assertions', type: Assertions::class, required: false),
-                new SchemaProperty(name: 'authorization_model_id', type: 'string', required: true),
+                new SchemaProperty(name: 'assertions', type: 'object', className: Assertions::class, required: false),
+                new SchemaProperty(name: 'authorization_model_id', type: 'string', required: true, parameterName: 'model'),
             ],
         );
     }

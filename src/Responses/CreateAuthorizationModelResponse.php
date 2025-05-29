@@ -61,7 +61,7 @@ final class CreateAuthorizationModelResponse extends Response implements CreateA
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'authorization_model_id', type: 'string', required: true),
+                new SchemaProperty(name: 'authorization_model_id', type: 'string', required: true, parameterName: 'model'),
             ],
         );
     }

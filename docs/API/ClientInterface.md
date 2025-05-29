@@ -50,7 +50,7 @@ ResultInterface&lt;CheckResponseInterface, Throwable&gt;
 
 
 ```php
-public function createAuthorizationModel(StoreInterface|string $store, TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions, ConditionsInterface<ConditionInterface> $conditions, SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): ResultInterface<CreateAuthorizationModelResponseInterface, Throwable>
+public function createAuthorizationModel(StoreInterface|string $store, TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions, null|ConditionsInterface<ConditionInterface> $conditions = NULL, SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): ResultInterface<CreateAuthorizationModelResponseInterface, Throwable>
 ```
 
 Creates a new authorization model with the given type definitions and conditions.
@@ -60,7 +60,7 @@ Creates a new authorization model with the given type definitions and conditions
 |------|------|-------------|
 | `$store` | StoreInterface | string | The store to create the model in |
 | `$typeDefinitions` | TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt; | The type definitions for the model |
-| `$conditions` | ConditionsInterface&lt;ConditionInterface&gt; | The conditions for the model |
+| `$conditions` | null | ConditionsInterface&lt;ConditionInterface&gt; | The conditions for the model |
 | `$schemaVersion` | SchemaVersion | The schema version to use (default: 1.1) |
 
 #### Returns

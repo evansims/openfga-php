@@ -54,7 +54,7 @@ interface ClientInterface
      *
      * @param StoreInterface|string                             $store           The store to create the model in
      * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions The type definitions for the model
-     * @param ConditionsInterface<ConditionInterface>           $conditions      The conditions for the model
+     * @param null|ConditionsInterface<ConditionInterface>      $conditions      The conditions for the model
      * @param SchemaVersion                                     $schemaVersion   The schema version to use (default: 1.1)
      *
      * @return ResultInterface<CreateAuthorizationModelResponseInterface, Throwable> The result of the authorization model creation request
@@ -62,7 +62,7 @@ interface ClientInterface
     public function createAuthorizationModel(
         StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
-        ConditionsInterface $conditions,
+        ?ConditionsInterface $conditions = null,
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
     ): ResultInterface;
 

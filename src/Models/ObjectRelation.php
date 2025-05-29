@@ -45,7 +45,7 @@ final class ObjectRelation implements ObjectRelationInterface
         return array_filter([
             'object' => $this->object,
             'relation' => $this->relation,
-        ], static fn ($value): bool => null !== $value);
+        ], static fn ($value): bool => null !== $value && '' !== $value);
     }
 
     #[Override]

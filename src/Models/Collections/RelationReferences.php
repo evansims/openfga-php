@@ -7,11 +7,11 @@ namespace OpenFGA\Models\Collections;
 use OpenFGA\Models\{RelationReference, RelationReferenceInterface};
 
 /**
- * @extends KeyedCollection<RelationReferenceInterface>
+ * @extends IndexedCollection<RelationReferenceInterface>
  *
  * @implements RelationReferencesInterface<RelationReferenceInterface>
  */
-final class RelationReferences extends KeyedCollection implements RelationReferencesInterface
+final class RelationReferences extends IndexedCollection implements RelationReferencesInterface
 {
     protected static string $itemType = RelationReference::class;
 }

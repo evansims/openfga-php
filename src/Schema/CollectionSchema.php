@@ -16,6 +16,7 @@ final class CollectionSchema implements CollectionSchemaInterface
      * @param class-string $className    The collection class name
      * @param class-string $itemType     The type of each item in the collection
      * @param bool         $requireItems Whether the collection requires at least one item
+     * @param null|string  $wrapperKey   The wrapper key for collection data (e.g., 'child' for Usersets)
      *
      * @throws InvalidArgumentException If className or itemType are not valid, autoloadable classes
      */
@@ -23,6 +24,7 @@ final class CollectionSchema implements CollectionSchemaInterface
         private readonly string $className,
         private readonly string $itemType,
         private readonly bool $requireItems = false,
+        private readonly ?string $wrapperKey = null,
     ) {
         if (! class_exists($this->className)) {
             throw new InvalidArgumentException(sprintf('Class "%s" does not exist or cannot be autoloaded', $this->className));
@@ -69,6 +71,15 @@ final class CollectionSchema implements CollectionSchemaInterface
     {
         // Collection schemas don't have properties in the traditional sense
         return null;
+    }
+
+    #[Override]
+    /**
+     * @inheritDoc
+     */
+    public function getWrapperKey(): ?string
+    {
+        return $this->wrapperKey;
     }
 
     #[Override]

@@ -38,13 +38,12 @@ describe('DifferenceV1 Model', function (): void {
         expect($json)->toHaveKey('base');
         expect($json)->toHaveKey('subtract');
 
-        // Check base has direct
-        expect($json['base'])->toHaveKey('direct');
-        expect($json['base']['direct'])->toBeInstanceOf(stdClass::class);
+        // Check base has 'this' (not 'direct')
+        expect($json['base'])->toHaveKey('this');
+        expect($json['base']['this'])->toBeInstanceOf(stdClass::class);
 
-        // Check subtract has computed_userset
         expect($json['subtract'])->toBe([
-            'computed_userset' => ['relation' => 'blocked'],
+            'computedUserset' => ['relation' => 'blocked'],
         ]);
     });
 
@@ -69,9 +68,10 @@ describe('DifferenceV1 Model', function (): void {
         $json = $difference->jsonSerialize();
 
         expect($json['base'])->toHaveKey('union');
-        expect($json['base']['union'])->toHaveCount(2);
+        expect($json['base']['union'])->toHaveKey('child');
+        expect($json['base']['union']['child'])->toHaveCount(2);
         expect($json['subtract'])->toBe([
-            'computed_userset' => ['relation' => 'blocked'],
+            'computedUserset' => ['relation' => 'blocked'],
         ]);
     });
 
@@ -95,13 +95,13 @@ describe('DifferenceV1 Model', function (): void {
         // Base property
         $baseProp = $properties['base'];
         expect($baseProp->name)->toBe('base');
-        expect($baseProp->type)->toBe(Userset::class);
+        expect($baseProp->type)->toBe('object');
         expect($baseProp->required)->toBe(true);
 
         // Subtract property
         $subtractProp = $properties['subtract'];
         expect($subtractProp->name)->toBe('subtract');
-        expect($subtractProp->type)->toBe(Userset::class);
+        expect($subtractProp->type)->toBe('object');
         expect($subtractProp->required)->toBe(true);
     });
 
@@ -121,8 +121,8 @@ describe('DifferenceV1 Model', function (): void {
         $activeUsers = new DifferenceV1(base: $allUsers, subtract: $blockedUsers);
 
         $json = $activeUsers->jsonSerialize();
-        expect($json['base'])->toHaveKey('direct');
-        expect($json['subtract']['computed_userset']['relation'])->toBe('blocked');
+        expect($json['base'])->toHaveKey('this');
+        expect($json['subtract']['computedUserset']['relation'])->toBe('blocked');
 
         // Pattern 2: Editors except those in specific group
         $editors = new Userset(
@@ -134,7 +134,7 @@ describe('DifferenceV1 Model', function (): void {
         $allowedEditors = new DifferenceV1(base: $editors, subtract: $restrictedGroup);
 
         $json2 = $allowedEditors->jsonSerialize();
-        expect($json2['base']['computed_userset']['relation'])->toBe('editor');
-        expect($json2['subtract']['computed_userset']['relation'])->toBe('restricted_editors');
+        expect($json2['base']['computedUserset']['relation'])->toBe('editor');
+        expect($json2['subtract']['computedUserset']['relation'])->toBe('restricted_editors');
     });
 });

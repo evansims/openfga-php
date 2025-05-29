@@ -46,10 +46,16 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
      */
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
+        $conditions = null;
+
+        if ($this->getConditions() instanceof ConditionsInterface && $this->getConditions()->count() > 0) {
+            $conditions = $this->getConditions()->jsonSerialize();
+        }
+
         $body = array_filter([
+            'schema_version' => $this->getSchemaVersion()->value,
             'type_definitions' => $this->getTypeDefinitions()->jsonSerialize(),
-            'schema_version' => (string) $this->getSchemaVersion()->value,
-            'conditions' => $this->getConditions()?->jsonSerialize(),
+            'conditions' => $conditions,
         ], static fn ($value): bool => null !== $value);
 
         $stream = $streamFactory->createStream(json_encode($body, JSON_THROW_ON_ERROR));

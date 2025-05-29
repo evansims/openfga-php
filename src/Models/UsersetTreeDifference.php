@@ -59,8 +59,8 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'base', type: Node::class, required: true),
-                new SchemaProperty(name: 'subtract', type: Node::class, required: true),
+                new SchemaProperty(name: 'base', type: 'object', className: Node::class, required: true),
+                new SchemaProperty(name: 'subtract', type: 'object', className: Node::class, required: true),
             ],
         );
     }

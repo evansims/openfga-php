@@ -134,17 +134,29 @@ public function get(int $offset): null|T
 #### Returns
 null | T
 
-### jsonSerialize
+### isEmpty
 
 
 ```php
-public function jsonSerialize(): array
+public function isEmpty(): bool
 ```
 
 
 
 #### Returns
-array
+bool
+
+### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array<int|string, mixed>
+```
+
+
+
+#### Returns
+array&lt;int | string, mixed&gt;
 
 ### key
 

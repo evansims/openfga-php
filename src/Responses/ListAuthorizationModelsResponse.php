@@ -79,7 +79,7 @@ final class ListAuthorizationModelsResponse extends Response implements ListAuth
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'authorization_models', type: AuthorizationModels::class, required: true),
+                new SchemaProperty(name: 'authorization_models', type: 'object', className: AuthorizationModels::class, required: true),
                 new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
             ],
         );

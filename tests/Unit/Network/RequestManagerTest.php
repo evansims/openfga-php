@@ -205,24 +205,32 @@ describe('RequestManager', function (): void {
         $response->shouldReceive('getStatusCode')->andReturn(400);
         $response->shouldReceive('getBody->getContents')->andReturn('{"error": "Invalid request"}');
 
-        expect(fn () => RequestManager::handleResponseException($response, $request))
-            ->toThrow(NetworkException::class);
+        $this->expectException(NetworkException::class);
+        RequestManager::handleResponseException($response, $request);
+    });
+
+    test('handleResponseException throws error for 401', function (): void {
+        $request = Mockery::mock(RequestInterface::class);
 
         // Test 401 error
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getStatusCode')->andReturn(401);
         $response->shouldReceive('getBody->getContents')->andReturn('');
 
-        expect(fn () => RequestManager::handleResponseException($response, $request))
-            ->toThrow(NetworkException::class);
+        $this->expectException(NetworkException::class);
+        RequestManager::handleResponseException($response, $request);
+    });
+
+    test('handleResponseException throws error for unknown status', function (): void {
+        $request = Mockery::mock(RequestInterface::class);
 
         // Test unknown status code
         $response = Mockery::mock(ResponseInterface::class);
         $response->shouldReceive('getStatusCode')->andReturn(418);
         $response->shouldReceive('getBody->getContents')->andReturn('');
 
-        expect(fn () => RequestManager::handleResponseException($response, $request))
-            ->toThrow(NetworkException::class);
+        $this->expectException(NetworkException::class);
+        RequestManager::handleResponseException($response, $request);
     });
 
     test('send throws exception on network failure', function (): void {
@@ -240,8 +248,9 @@ describe('RequestManager', function (): void {
             httpClient: $httpClient,
         );
 
-        expect(fn () => $manager->send($psrRequest))
-            ->toThrow(Exception::class, 'Network error');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Network error');
+        $manager->send($psrRequest);
     });
 
     test('RequestMethod enum has correct values', function (): void {

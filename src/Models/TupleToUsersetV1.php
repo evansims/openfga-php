@@ -46,7 +46,7 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
     {
         return [
             'tupleset' => $this->tupleset->jsonSerialize(),
-            'computed_userset' => $this->computedUserset->jsonSerialize(),
+            'computedUserset' => $this->computedUserset->jsonSerialize(),
         ];
     }
 
@@ -59,8 +59,8 @@ final class TupleToUsersetV1 implements TupleToUsersetV1Interface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'tupleset', type: ObjectRelation::class, required: true),
-                new SchemaProperty(name: 'computed_userset', type: ObjectRelation::class, required: true),
+                new SchemaProperty(name: 'tupleset', type: 'object', className: ObjectRelation::class, required: true),
+                new SchemaProperty(name: 'computedUserset', type: 'object', className: ObjectRelation::class, required: true),
             ],
         );
     }

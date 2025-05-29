@@ -8,7 +8,7 @@
 
 **Quick Navigation:** [⚡ Installation](#installation) • [🚀 Quick Start](#quick-start) • [📚 Full Documentation](docs/GettingStarted.md) • [🔧 API Reference](docs/API)
 
-## Why Choose This SDK?
+## Highlights
 
 - **Strictly-typed API** — Native type hinting and linter-friendly generics catch errors before they reach production
 - **Standards first** — Built for interoperability with any PSR-compatible HTTP library you prefer
@@ -16,17 +16,6 @@
 - **Ready to scale** — One solution from weekend projects to enterprise apps with millions of tuples
 - **Community-maintained** — Stewarded by seasoned PHP contributors; dedicated to stability and security
 - **Battle-tested** — Comprehensive test coverage and used in production by teams worldwide
-
-## Common Use Cases
-
-Perfect for applications that need fine-grained permissions:
-
-- **Document Management** — Control who can view, edit, or share specific documents and folders
-- **Multi-tenant SaaS** — Isolate customer data while allowing flexible team permissions
-- **Enterprise Apps** — Model complex organizational hierarchies and role-based access
-- **Admin Panels** — Gate access to sensitive operations based on user roles and context
-- **Social Platforms** — Manage privacy settings, content visibility, and user interactions
-- **B2B Platforms** — Handle partner access, client portals, and vendor permissions
 
 ## Requirements
 
@@ -63,43 +52,34 @@ use OpenFGA\Models\AuthorizationModel;
 use OpenFGA\Responses\{
     CreateStoreResponseInterface,
     CreateAuthorizationModelResponseInterface,
-    WriteTuplesResponseInterface,
     CheckResponseInterface
 };
 
 use function OpenFGA\Models\{tuple, tuples};
-use function OpenFGA\Results\{success, failure, unwrap};
 
 define('STORE_NAME', 'my-php-store');
 
-/**
- * 1. Initialize the SDK Client
- * ----------------------------
- * The only required parameter is the URL of your OpenFGA server.
- * See docs/Authentication.md for authentication options.
- */
+// 1. Initialize the SDK Client
 
 $client = new Client(
     url: 'http://localhost:8080',
 );
 
-/**
- * 2. Create a Store
- */
+// 2. Create a Store
 
 $store = ($client->createStore(name: STORE_NAME))
     ->then(fn(CreateStoreResponseInterface $store) => $store->getId())
     ->success(fn($id) => print "Store created! ID: {$id}\n")
     ->unwrap();
 
-/**
- * 3. Create an Authorization Model from a DSL
- */
+// 3. Create an Authorization Model from a DSL
 
 $dsl = <<<DSL
     model
         schema 1.1
+
     type user
+
     type document
         relations
         define viewer: [user]
@@ -111,13 +91,11 @@ $model = ($client->dsl($dsl))
         typeDefinitions: $model->getTypeDefinitions(),
         conditions: $model->getConditions(),
     ))
-    ->then(fn(CreateAuthorizationModelResponseInterface $model) => $model->getId())
+    ->then(fn(CreateAuthorizationModelResponseInterface $model) => $model->getModel())
     ->success(fn($id) => print "Authorization Model created! ID: {$id}\n")
     ->unwrap();
 
-/**
- * 4. Write a Relationship Tuple
- */
+// 4. Write a Relationship Tuple
 
 $tuple = tuple(
     user: 'user:anne',
@@ -125,17 +103,13 @@ $tuple = tuple(
     object: 'document:roadmap',
 );
 
-($client->writeTuples(store: $store, model: $model, writes: tuples($tuple)))
-    ->success(fn(WriteTuplesResponseInterface $response) => print "Anne can now view the roadmap document\n")
-    ->unwrap();
+$client->writeTuples(store: $store, model: $model, writes: tuples($tuple))
+    ->success(fn() => print "Anne can now view the roadmap document\n");
 
-/**
- * 5. Perform an Authorization Check
- */
+// 5. Perform an Authorization Check
 
-$allowed = ($client->check(store: $store, model: $model, tupleKey: $tuple))
-    ->then(fn(CheckResponseInterface $response) => $response->getIsAllowed())
-    ->unwrap();
+$allowed = $client->check(store: $store, model: $model, tupleKey: $tuple)
+    ->unwrap(fn(CheckResponseInterface $response) => $response->getAllowed());
 
 match ($allowed) {
     true => print "SUCCESS: Anne CAN view the roadmap!\n",
@@ -143,7 +117,6 @@ match ($allowed) {
 };
 
 // For a more detailed walkthrough, see docs/GettingStarted.md
-?>
 ```
 
 For robust error handling, explore the `Success`/`Failure` patterns described in [Error Handling and Results](docs/Results.md).

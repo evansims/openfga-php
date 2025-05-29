@@ -8,6 +8,8 @@ use Override;
 
 interface UserInterface extends ModelInterface
 {
+    public function getDifference(): ?DifferenceV1Interface;
+
     public function getObject(): ?object;
 
     public function getUserset(): ?UsersetUserInterface;
@@ -15,7 +17,7 @@ interface UserInterface extends ModelInterface
     public function getWildcard(): ?TypedWildcardInterface;
 
     /**
-     * @return array{object?: mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}}
+     * @return array{object?: mixed, userset?: array{type: string, id: string, relation: string}, wildcard?: array{type: string}, difference?: array<string, mixed>}
      */
     #[Override]
     public function jsonSerialize(): array;

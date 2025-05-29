@@ -48,7 +48,7 @@ final class UsersetTree implements UsersetTreeInterface
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
-                new SchemaProperty(name: 'root', type: Node::class, required: true),
+                new SchemaProperty(name: 'root', type: 'object', className: Node::class, required: true),
             ],
         );
     }

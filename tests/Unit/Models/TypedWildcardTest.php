@@ -77,8 +77,9 @@ describe('TypedWildcard Model', function (): void {
     });
 
     test('throws exception for empty string type', function (): void {
-        expect(fn () => new TypedWildcard(type: ''))
-            ->toThrow(InvalidArgumentException::class, 'TypedWildcard::$type cannot be empty.');
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('TypedWildcard::$type cannot be empty.');
+        new TypedWildcard(type: '');
     });
 
     test('trims and lowercases type', function (): void {

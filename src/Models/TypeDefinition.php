@@ -8,6 +8,7 @@ use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitionRelations
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
+use stdClass;
 
 final class TypeDefinition implements TypeDefinitionInterface
 {
@@ -60,11 +61,23 @@ final class TypeDefinition implements TypeDefinitionInterface
      */
     public function jsonSerialize(): array
     {
-        return array_filter([
+        $data = [
             'type' => $this->type,
-            'relations' => $this->relations?->jsonSerialize(),
-            'metadata' => $this->metadata?->jsonSerialize(),
-        ], static fn ($value): bool => null !== $value);
+        ];
+
+        // Always include relations (even if empty)
+        if ($this->relations instanceof TypeDefinitionRelationsInterface && $this->relations->count() > 0) {
+            $data['relations'] = $this->relations->jsonSerialize();
+        } else {
+            $data['relations'] = new stdClass(); // Empty object for empty relations
+        }
+
+        // Include metadata (not for user type)
+        if ('user' !== $this->type && $this->metadata instanceof MetadataInterface) {
+            $data['metadata'] = $this->metadata->jsonSerialize();
+        }
+
+        return $data;
     }
 
     #[Override]

@@ -194,15 +194,17 @@ describe('Helper Functions', function (): void {
 
             expect($collection->count())->toBe(2);
             expect($collection->jsonSerialize())->toBe([
-                [
-                    'user' => 'user:anne',
-                    'relation' => 'viewer',
-                    'object' => 'document:roadmap',
-                ],
-                [
-                    'user' => 'user:bob',
-                    'relation' => 'editor',
-                    'object' => 'document:roadmap',
+                'tuple_keys' => [
+                    [
+                        'user' => 'user:anne',
+                        'relation' => 'viewer',
+                        'object' => 'document:roadmap',
+                    ],
+                    [
+                        'user' => 'user:bob',
+                        'relation' => 'editor',
+                        'object' => 'document:roadmap',
+                    ],
                 ],
             ]);
         });

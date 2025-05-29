@@ -12,6 +12,18 @@
 
 
 ## Methods
+### getDifference
+
+
+```php
+public function getDifference(): ?OpenFGA\Models\DifferenceV1Interface
+```
+
+
+
+#### Returns
+?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
+
 ### getObject
 
 

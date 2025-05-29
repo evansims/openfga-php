@@ -17,7 +17,8 @@ describe('Leaf Model', function (): void {
     });
 
     test('requires at least one parameter', function (): void {
-        expect(fn () => new Leaf())->toThrow(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
+        new Leaf();
     });
 
     test('constructs with users', function (): void {
@@ -116,19 +117,19 @@ describe('Leaf Model', function (): void {
         // Users property
         $usersProp = $properties['users'];
         expect($usersProp->name)->toBe('users');
-        expect($usersProp->type)->toBe('OpenFGA\Models\Collections\UsersList');
+        expect($usersProp->type)->toBe('object');
         expect($usersProp->required)->toBe(false);
 
         // Computed property
         $computedProp = $properties['computed'];
         expect($computedProp->name)->toBe('computed');
-        expect($computedProp->type)->toBe(Computed::class);
+        expect($computedProp->type)->toBe('object');
         expect($computedProp->required)->toBe(false);
 
         // TupleToUserset property
         $tupleToUsersetProp = $properties['tupleToUserset'];
         expect($tupleToUsersetProp->name)->toBe('tupleToUserset');
-        expect($tupleToUsersetProp->type)->toBe(UsersetTreeTupleToUserset::class);
+        expect($tupleToUsersetProp->type)->toBe('object');
         expect($tupleToUsersetProp->required)->toBe(false);
     });
 

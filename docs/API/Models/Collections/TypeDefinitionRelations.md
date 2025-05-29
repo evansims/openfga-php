@@ -88,6 +88,18 @@ Check if a key exists in the collection.
 #### Returns
 bool
 
+### isEmpty
+
+
+```php
+public function isEmpty(): bool
+```
+
+
+
+#### Returns
+bool
+
 ### jsonSerialize
 
 

@@ -10,19 +10,12 @@ use Override;
 /**
  * @template T of UsersetInterface
  *
- * @extends KeyedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<T>
  */
-interface UsersetsInterface extends KeyedCollectionInterface
+interface UsersetsInterface extends IndexedCollectionInterface
 {
     /**
-     * @return array<string, array{
-     *     computed_userset?: array{object?: string, relation?: string},
-     *     tuple_to_userset?: array{tupleset: array{object?: string, relation?: string}, computed_userset: array{object?: string, relation?: string}},
-     *     union?: array<mixed>,
-     *     intersection?: array<mixed>,
-     *     difference?: array{base: array<mixed>, subtract: array<mixed>},
-     *     direct?: object,
-     * }>
+     * @return array{child: array<mixed>}
      */
     #[Override]
     public function jsonSerialize(): array;

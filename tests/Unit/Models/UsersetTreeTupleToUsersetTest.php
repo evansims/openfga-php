@@ -98,7 +98,7 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
         // Computed property
         $computedProp = $properties['computed'];
         expect($computedProp->name)->toBe('computed');
-        expect($computedProp->type)->toBe(Computeds::class);
+        expect($computedProp->type)->toBe('object');
         expect($computedProp->required)->toBe(true);
     });
 

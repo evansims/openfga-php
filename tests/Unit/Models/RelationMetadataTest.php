@@ -139,13 +139,13 @@ describe('RelationMetadata Model', function (): void {
         // DirectlyRelatedUserTypes property
         $userTypesProp = $properties['directly_related_user_types'];
         expect($userTypesProp->name)->toBe('directly_related_user_types');
-        expect($userTypesProp->type)->toBe(RelationReferences::class);
+        expect($userTypesProp->type)->toBe('object');
         expect($userTypesProp->required)->toBe(false);
 
         // SourceInfo property
         $sourceInfoProp = $properties['source_info'];
         expect($sourceInfoProp->name)->toBe('source_info');
-        expect($sourceInfoProp->type)->toBe(SourceInfo::class);
+        expect($sourceInfoProp->type)->toBe('object');
         expect($sourceInfoProp->required)->toBe(false);
     });
 
@@ -177,6 +177,7 @@ describe('RelationMetadata Model', function (): void {
         $metadata = new RelationMetadata(module: '');
 
         expect($metadata->getModule())->toBe('');
-        expect($metadata->jsonSerialize())->toBe(['module' => '']);
+        // Empty module string is omitted from JSON serialization
+        expect($metadata->jsonSerialize())->toBe([]);
     });
 });

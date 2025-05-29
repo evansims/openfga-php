@@ -6,211 +6,213 @@ use OpenFGA\Responses\{WriteAssertionsResponse, WriteAssertionsResponseInterface
 use OpenFGA\Schema\SchemaValidator;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
-beforeEach(function (): void {
-    $this->validator = new SchemaValidator();
-    $this->request = test()->createMock(RequestInterface::class);
-});
+describe('WriteAssertionsResponse', function (): void {
+    beforeEach(function (): void {
+        $this->validator = new SchemaValidator();
+        $this->request = test()->createMock(RequestInterface::class);
+    });
 
-test('WriteAssertionsResponse implements WriteAssertionsResponseInterface', function (): void {
-    $response = new WriteAssertionsResponse();
+    test('implements WriteAssertionsResponseInterface', function (): void {
+        $response = new WriteAssertionsResponse();
 
-    expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
-});
+        expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
+    });
 
-test('WriteAssertionsResponse can be instantiated without parameters', function (): void {
-    $response = new WriteAssertionsResponse();
+    test('can be instantiated without parameters', function (): void {
+        $response = new WriteAssertionsResponse();
 
-    expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
-});
+        expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
+    });
 
-test('WriteAssertionsResponse is a simple response class', function (): void {
-    $response = new WriteAssertionsResponse();
+    test('is a simple response class', function (): void {
+        $response = new WriteAssertionsResponse();
 
-    // WriteAssertionsResponse is a simple response with no data
-    // It represents a successful write operation (204 No Content)
-    expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
-});
+        // WriteAssertionsResponse is a simple response with no data
+        // It represents a successful write operation (204 No Content)
+        expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
+    });
 
-test('WriteAssertionsResponse fromResponse handles successful 204 response', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn(''); // 204 responses typically have empty body
+    test('fromResponse handles successful 204 response', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn(''); // 204 responses typically have empty body
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(204);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(204);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    $response = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+        $response = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 
-    expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
-    expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
-});
+        expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
+        expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 204 with empty body', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('');
+    test('fromResponse handles 204 with empty body', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(204);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(204);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    $response = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+        $response = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 
-    expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
-});
+        expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 204 with whitespace body', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('   '); // Some servers might return whitespace
+    test('fromResponse handles 204 with whitespace body', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('   '); // Some servers might return whitespace
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(204);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(204);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    $response = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+        $response = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 
-    expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
-});
+        expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
+    });
 
-test('WriteAssertionsResponse fromResponse handles non-204 status codes', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('{"error": "Bad Request"}');
+    test('fromResponse handles non-204 status codes', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('{"error": "Bad Request"}');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(400);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(400);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
-});
+        $this->expectException(Exception::class);
+        WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 403 Forbidden', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('{"error": "Forbidden"}');
+    test('fromResponse handles 403 Forbidden', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('{"error": "Forbidden"}');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(403);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(403);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
-});
+        $this->expectException(Exception::class);
+        WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 404 Not Found', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('{"error": "Not Found"}');
+    test('fromResponse handles 404 Not Found', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('{"error": "Not Found"}');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(404);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(404);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
-});
+        $this->expectException(Exception::class);
+        WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 500 Internal Server Error', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('{"error": "Internal Server Error"}');
+    test('fromResponse handles 500 Internal Server Error', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('{"error": "Internal Server Error"}');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(500);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(500);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
-});
+        $this->expectException(Exception::class);
+        WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 422 Unprocessable Entity', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('{"error": "Validation failed"}');
+    test('fromResponse handles 422 Unprocessable Entity', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('{"error": "Validation failed"}');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(422);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(422);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
-});
+        $this->expectException(Exception::class);
+        WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 200 status code as non-success', function (): void {
-    // WriteAssertions should return 204, not 200
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('{"unexpected": "success response"}');
+    test('fromResponse handles 200 status code as non-success', function (): void {
+        // WriteAssertions should return 204, not 200
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('{"unexpected": "success response"}');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(200);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(200);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
-});
+        $this->expectException(Exception::class);
+        WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+    });
 
-test('WriteAssertionsResponse fromResponse handles 201 status code as non-success', function (): void {
-    // WriteAssertions should return 204, not 201
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('{"created": "resource"}');
+    test('fromResponse handles 201 status code as non-success', function (): void {
+        // WriteAssertions should return 204, not 201
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('{"created": "resource"}');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(201);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(201);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    expect(fn () => WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator))
-        ->toThrow(Exception::class);
-});
+        $this->expectException(Exception::class);
+        WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+    });
 
-test('WriteAssertionsResponse multiple instances are independent', function (): void {
-    $response1 = new WriteAssertionsResponse();
-    $response2 = new WriteAssertionsResponse();
+    test('multiple instances are independent', function (): void {
+        $response1 = new WriteAssertionsResponse();
+        $response2 = new WriteAssertionsResponse();
 
-    expect($response1)->not->toBe($response2);
-    expect($response1)->toBeInstanceOf(WriteAssertionsResponse::class);
-    expect($response2)->toBeInstanceOf(WriteAssertionsResponse::class);
-});
+        expect($response1)->not->toBe($response2);
+        expect($response1)->toBeInstanceOf(WriteAssertionsResponse::class);
+        expect($response2)->toBeInstanceOf(WriteAssertionsResponse::class);
+    });
 
-test('WriteAssertionsResponse fromResponse maintains consistency', function (): void {
-    $stream = test()->createMock(StreamInterface::class);
-    $stream->method('__toString')
-        ->willReturn('');
+    test('fromResponse maintains consistency', function (): void {
+        $stream = test()->createMock(StreamInterface::class);
+        $stream->method('__toString')
+            ->willReturn('');
 
-    $httpResponse = test()->createMock(ResponseInterface::class);
-    $httpResponse->method('getStatusCode')
-        ->willReturn(204);
-    $httpResponse->method('getBody')
-        ->willReturn($stream);
+        $httpResponse = test()->createMock(ResponseInterface::class);
+        $httpResponse->method('getStatusCode')
+            ->willReturn(204);
+        $httpResponse->method('getBody')
+            ->willReturn($stream);
 
-    $response1 = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    $response2 = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+        $response1 = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
+        $response2 = WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
 
-    expect($response1)->not->toBe($response2);
-    expect($response1)->toBeInstanceOf(WriteAssertionsResponse::class);
-    expect($response2)->toBeInstanceOf(WriteAssertionsResponse::class);
+        expect($response1)->not->toBe($response2);
+        expect($response1)->toBeInstanceOf(WriteAssertionsResponse::class);
+        expect($response2)->toBeInstanceOf(WriteAssertionsResponse::class);
+    });
 });

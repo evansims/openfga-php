@@ -63,6 +63,20 @@ public function getProperty(string $name): ?OpenFGA\Schema\SchemaProperty
 #### Returns
 ?[SchemaProperty](Schema/SchemaProperty.md)
 
+### getWrapperKey
+
+
+```php
+public function getWrapperKey(): null|string
+```
+
+Get the wrapper key for the collection data if any. Some collections expect data wrapped in a specific key (e.g., Usersets uses &#039;child&#039;).
+
+
+#### Returns
+null | string
+ The wrapper key or null if data is not wrapped
+
 ### requiresItems
 
 

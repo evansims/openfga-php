@@ -93,8 +93,8 @@ final class Node implements NodeInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'name', type: 'string', required: true),
-                new SchemaProperty(name: 'leaf', type: Leaf::class, required: false),
-                new SchemaProperty(name: 'difference', type: UsersetTreeDifference::class, required: false),
+                new SchemaProperty(name: 'leaf', type: 'object', className: Leaf::class, required: false),
+                new SchemaProperty(name: 'difference', type: 'object', className: UsersetTreeDifference::class, required: false),
                 new SchemaProperty(name: 'union', type: 'self', required: false, className: self::class),
                 new SchemaProperty(name: 'intersection', type: 'self', required: false, className: self::class),
             ],

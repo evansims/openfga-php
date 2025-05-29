@@ -90,8 +90,8 @@ final class Condition implements ConditionInterface
             properties: [
                 new SchemaProperty(name: 'name', type: 'string', required: true),
                 new SchemaProperty(name: 'expression', type: 'string', required: true),
-                new SchemaProperty(name: 'parameters', type: ConditionParameters::class, required: false),
-                new SchemaProperty(name: 'metadata', type: ConditionMetadata::class, required: false),
+                new SchemaProperty(name: 'parameters', type: 'object', className: ConditionParameters::class, required: false),
+                new SchemaProperty(name: 'metadata', type: 'object', className: ConditionMetadata::class, required: false),
             ],
         );
     }

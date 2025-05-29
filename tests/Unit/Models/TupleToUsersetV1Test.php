@@ -41,7 +41,7 @@ describe('TupleToUsersetV1 Model', function (): void {
 
         expect($tupleToUserset->jsonSerialize())->toBe([
             'tupleset' => ['relation' => 'parent'],
-            'computed_userset' => ['relation' => 'viewer'],
+            'computedUserset' => ['relation' => 'viewer'],
         ]);
     });
 
@@ -68,7 +68,7 @@ describe('TupleToUsersetV1 Model', function (): void {
                 'object' => 'folder',
                 'relation' => 'parent',
             ],
-            'computed_userset' => [
+            'computedUserset' => [
                 'object' => 'document',
                 'relation' => 'owner',
             ],
@@ -85,7 +85,7 @@ describe('TupleToUsersetV1 Model', function (): void {
         expect($properties)->toHaveCount(2);
 
         $propertyNames = array_keys($properties);
-        expect($propertyNames)->toBe(['tupleset', 'computed_userset']);
+        expect($propertyNames)->toBe(['tupleset', 'computedUserset']);
     });
 
     test('schema properties have correct configuration', function (): void {
@@ -95,13 +95,13 @@ describe('TupleToUsersetV1 Model', function (): void {
         // Tupleset property
         $tuplesetProp = $properties['tupleset'];
         expect($tuplesetProp->name)->toBe('tupleset');
-        expect($tuplesetProp->type)->toBe(ObjectRelation::class);
+        expect($tuplesetProp->type)->toBe('object');
         expect($tuplesetProp->required)->toBe(true);
 
         // ComputedUserset property
-        $computedUsersetProp = $properties['computed_userset'];
-        expect($computedUsersetProp->name)->toBe('computed_userset');
-        expect($computedUsersetProp->type)->toBe(ObjectRelation::class);
+        $computedUsersetProp = $properties['computedUserset'];
+        expect($computedUsersetProp->name)->toBe('computedUserset');
+        expect($computedUsersetProp->type)->toBe('object');
         expect($computedUsersetProp->required)->toBe(true);
     });
 
@@ -121,7 +121,7 @@ describe('TupleToUsersetV1 Model', function (): void {
 
         $json = $folderViewers->jsonSerialize();
         expect($json['tupleset']['relation'])->toBe('parent');
-        expect($json['computed_userset']['relation'])->toBe('viewer');
+        expect($json['computedUserset']['relation'])->toBe('viewer');
 
         // Pattern 2: Owners of organization can manage projects
         $orgOwners = new TupleToUsersetV1(
@@ -131,7 +131,7 @@ describe('TupleToUsersetV1 Model', function (): void {
 
         $json2 = $orgOwners->jsonSerialize();
         expect($json2['tupleset']['relation'])->toBe('organization');
-        expect($json2['computed_userset']['relation'])->toBe('owner');
+        expect($json2['computedUserset']['relation'])->toBe('owner');
 
         // Pattern 3: Members of team can access resources
         $teamMembers = new TupleToUsersetV1(
@@ -141,6 +141,6 @@ describe('TupleToUsersetV1 Model', function (): void {
 
         $json3 = $teamMembers->jsonSerialize();
         expect($json3['tupleset']['relation'])->toBe('team');
-        expect($json3['computed_userset']['relation'])->toBe('member');
+        expect($json3['computedUserset']['relation'])->toBe('member');
     });
 });
