@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
+use InvalidArgumentException;
 use OpenFGA\Models\{TypedWildcard, TypedWildcardInterface};
 use OpenFGA\Schema\SchemaInterface;
 

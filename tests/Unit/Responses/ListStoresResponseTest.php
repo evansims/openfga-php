@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Responses;
+namespace OpenFGA\Tests\Unit\Responses;
 
 use DateTimeImmutable;
 use OpenFGA\Models\Collections\Stores;
@@ -108,9 +108,6 @@ describe('ListStoresResponse', function (): void {
         expect($storeArray[0]->getDeletedAt())->toBeNull();
         expect($storeArray[1]->getDeletedAt())->not->toBeNull();
     });
-
-    // Note: fromResponse method testing would require integration tests due to SchemaValidator being final
-    // These tests focus on the model's direct functionality
 
     test('schema returns expected structure', function (): void {
         $schema = ListStoresResponse::schema();

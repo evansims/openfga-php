@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{UserTypeFilters, UserTypeFiltersInterface};
 use OpenFGA\Models\UserTypeFilter;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};

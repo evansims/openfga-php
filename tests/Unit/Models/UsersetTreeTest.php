@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{Computed, Leaf, Node, UsersetTree, UsersetTreeInterface};
+namespace OpenFGA\Tests\Unit\Models;
+
+use OpenFGA\Models\{Computed, Leaf, Node, UsersetTree, UsersetTreeDifference, UsersetTreeInterface};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('UsersetTree Model', function (): void {
@@ -147,7 +149,7 @@ describe('UsersetTree Model', function (): void {
         );
         $allowedNode = new Node(
             name: 'allowed',
-            difference: new OpenFGA\Models\UsersetTreeDifference(
+            difference: new UsersetTreeDifference(
                 base: $allUsersNode,
                 subtract: $blockedNode,
             ),

@@ -39,7 +39,7 @@
 
   $store = store(
     client: $client,
-    name: STORE_NAME
+    name: 'my-php-store',
   );
   ```
 
@@ -70,7 +70,8 @@
 - Create [a relationship tuple](docs/Tuples.md) ↘
 
   ```php
-  use function OpenFGA\Models\{write, tuples, tuple};
+  use function OpenFGA\Models\tuple;
+  use function OpenFGA\Requests\write;
 
   $tuple = tuple('user:anne', 'viewer', 'document:roadmap');
 
@@ -79,21 +80,24 @@
     client: $client,
     store: $store,
     model: $model,
-    writes: tuples($tuple)
+    tuples: $tuple,
   );
   ```
 
 - [Query](docs/Queries.md) for a relationship ↘
 
   ```php
-  use function OpenFGA\Models\allowed;
+  use function OpenFGA\Models\tuple;
+  use function OpenFGA\Requests\allowed;
+
+  $tuple = tuple('user:anne', 'viewer', 'document:roadmap');
 
   // "Can Anne view the roadmap?"
   allowed(
     client: $client,
     store: $store,
     model: $model,
-    tuple: $tuple
+    tuples: $tuple,
   );
   ```
 

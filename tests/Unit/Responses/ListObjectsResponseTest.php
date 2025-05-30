@@ -106,9 +106,6 @@ describe('ListObjectsResponse', function (): void {
         expect($duplicateCount)->toBe(3);
     });
 
-    // Note: fromResponse method testing would require integration tests due to SchemaValidator being final
-    // These tests focus on the model's direct functionality
-
     test('schema returns expected structure', function (): void {
         $schema = ListObjectsResponse::schema();
 

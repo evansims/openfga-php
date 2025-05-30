@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{UsersetUnion, Usersets};
 use OpenFGA\Models\{ObjectRelation, Userset};
+use stdClass;
+use TypeError;
 
 describe('UsersetUnion Collection', function (): void {
     test('can be instantiated', function (): void {

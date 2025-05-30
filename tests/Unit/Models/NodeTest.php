@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{Computed, Leaf, Node, NodeInterface, UsersetTreeDifference};
+namespace OpenFGA\Tests\Unit\Models;
+
+use OpenFGA\Models\{Computed, Leaf, Node, NodeInterface, NodeUnion, UsersetTreeDifference};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('Node Model', function (): void {
@@ -142,14 +144,14 @@ describe('Node Model', function (): void {
         expect($unionProp->name)->toBe('union');
         expect($unionProp->type)->toBe('object');
         expect($unionProp->required)->toBe(false);
-        expect($unionProp->className)->toBe(OpenFGA\Models\NodeUnion::class);
+        expect($unionProp->className)->toBe(NodeUnion::class);
 
         // Intersection property
         $intersectionProp = $properties['intersection'];
         expect($intersectionProp->name)->toBe('intersection');
         expect($intersectionProp->type)->toBe('object');
         expect($intersectionProp->required)->toBe(false);
-        expect($intersectionProp->className)->toBe(OpenFGA\Models\NodeUnion::class);
+        expect($intersectionProp->className)->toBe(NodeUnion::class);
     });
 
     test('schema is cached', function (): void {

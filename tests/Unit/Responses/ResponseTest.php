@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
 use OpenFGA\Exceptions\SerializationException;
 use OpenFGA\Responses\Response;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};

@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{ConditionParameters, TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey};
 use OpenFGA\Models\Enums\TypeName;
+use stdClass;
+use TypeError;
 
 describe('TupleKeys Collection', function (): void {
     test('implements TupleKeysInterface', function (): void {

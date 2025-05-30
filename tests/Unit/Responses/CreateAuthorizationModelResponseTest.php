@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
+use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Responses\{CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 
@@ -18,13 +21,10 @@ describe('CreateAuthorizationModelResponse', function (): void {
         expect($response->getModel())->toBe('model-id-xyz-456');
     });
 
-    // Note: fromResponse method testing would require integration tests due to SchemaValidator being final
-    // These tests focus on the model's direct functionality
-
     test('schema returns expected structure', function (): void {
         $schema = CreateAuthorizationModelResponse::schema();
 
-        expect($schema)->toBeInstanceOf(OpenFGA\Schema\SchemaInterface::class);
+        expect($schema)->toBeInstanceOf(SchemaInterface::class);
         expect($schema->getClassName())->toBe(CreateAuthorizationModelResponse::class);
 
         $properties = $schema->getProperties();
@@ -60,28 +60,28 @@ describe('CreateAuthorizationModelResponse', function (): void {
 
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 401 unauthorized', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator);
     });
 });

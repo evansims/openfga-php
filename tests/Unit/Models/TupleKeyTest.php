@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey, TupleKeyInterface};
 use OpenFGA\Models\Enums\TypeName;

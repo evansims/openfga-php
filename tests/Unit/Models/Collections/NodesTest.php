@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{Nodes, NodesInterface};
 use OpenFGA\Models\{Computed, Leaf, Node};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};

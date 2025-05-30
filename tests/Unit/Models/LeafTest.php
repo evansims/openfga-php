@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\UsersList;
 use OpenFGA\Models\{Computed, Leaf, LeafInterface, UsersListUser, UsersetTreeTupleToUserset};
 use OpenFGA\Schema\SchemaInterface;

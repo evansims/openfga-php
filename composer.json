@@ -53,6 +53,7 @@
     },
     "files": [
       "src/Models/Helpers.php",
+      "src/Requests/Helpers.php",
       "src/Results/Helpers.php"
     ]
   },

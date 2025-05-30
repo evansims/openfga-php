@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\{Assertion, AssertionInterface, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\TupleKeys;
 use OpenFGA\Schema\SchemaInterface;

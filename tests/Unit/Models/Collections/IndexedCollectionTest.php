@@ -2,9 +2,16 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
+use InvalidArgumentException;
+use OpenFGA\Exceptions\SerializationException;
 use OpenFGA\Models\Collections\IndexedCollection;
 use OpenFGA\Models\TupleKey;
 use OpenFGA\Schema\CollectionSchemaInterface;
+use OutOfBoundsException;
+use stdClass;
+use TypeError;
 
 // Test concrete class extending IndexedCollection
 final class TestIndexedCollection extends IndexedCollection
@@ -27,7 +34,7 @@ final class InvalidTypeIndexedCollection extends IndexedCollection
 describe('IndexedCollection', function (): void {
     test('throws TypeError when $itemType is not defined', function (): void {
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Undefined item type for InvalidIndexedCollection. Define the $itemType property or override the constructor.');
+        $this->expectExceptionMessage('Undefined item type for OpenFGA\Tests\Unit\Models\Collections\InvalidIndexedCollection. Define the $itemType property or override the constructor.');
         new InvalidIndexedCollection();
     });
 
@@ -257,12 +264,12 @@ describe('IndexedCollection', function (): void {
     });
 
     test('schema() throws exception when $itemType is not defined', function (): void {
-        $this->expectException(OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(SerializationException::class);
         InvalidIndexedCollection::schema();
     });
 
     test('schema() throws exception when $itemType is invalid', function (): void {
-        $this->expectException(OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(SerializationException::class);
         InvalidTypeIndexedCollection::schema();
     });
 

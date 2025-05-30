@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
+use OpenFGA\Models\Collections\Usersets;
 use OpenFGA\Models\{DifferenceV1, DifferenceV1Interface, ObjectRelation, Userset};
 use OpenFGA\Schema\SchemaInterface;
+use stdClass;
 
 describe('DifferenceV1 Model', function (): void {
     test('implements DifferenceV1Interface', function (): void {
@@ -56,7 +60,7 @@ describe('DifferenceV1 Model', function (): void {
             computedUserset: new ObjectRelation(relation: 'editor'),
         );
         $base = new Userset(
-            union: new OpenFGA\Models\Collections\Usersets([$ownerUserset, $editorUserset]),
+            union: new Usersets([$ownerUserset, $editorUserset]),
         );
 
         // Subtract: blocked users

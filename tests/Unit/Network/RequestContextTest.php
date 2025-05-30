@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Network;
+namespace OpenFGA\Tests\Unit\Network;
 
-use Mockery;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\StreamInterface;
 
@@ -23,7 +22,7 @@ describe('RequestContext', function (): void {
     });
 
     test('constructs with all parameters', function (): void {
-        $body = Mockery::mock(StreamInterface::class);
+        $body = test()->createMock(StreamInterface::class);
         $headers = ['Content-Type' => 'application/json', 'X-Custom' => 'value'];
 
         $context = new RequestContext(
@@ -139,7 +138,7 @@ describe('RequestContext', function (): void {
     });
 
     test('body accepts StreamInterface', function (): void {
-        $body = Mockery::mock(StreamInterface::class);
+        $body = test()->createMock(StreamInterface::class);
 
         $context = new RequestContext(
             method: RequestMethod::POST,
@@ -163,7 +162,7 @@ describe('RequestContext', function (): void {
     });
 
     test('represents typical POST request with body', function (): void {
-        $body = Mockery::mock(StreamInterface::class);
+        $body = test()->createMock(StreamInterface::class);
 
         $context = new RequestContext(
             method: RequestMethod::POST,

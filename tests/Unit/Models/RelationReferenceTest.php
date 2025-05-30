@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\{RelationReference, RelationReferenceInterface};
 use OpenFGA\Schema\SchemaInterface;
+use stdClass;
 
 describe('RelationReference Model', function (): void {
     test('implements RelationReferenceInterface', function (): void {

@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit;
+
+use DateTimeImmutable;
+use LogicException;
 use OpenFGA\Authentication\AccessToken;
 use OpenFGA\{Authentication, Client, ClientInterface};
 use OpenFGA\Models\Collections\{Assertions, Conditions, TupleKeys, TypeDefinitions, UserTypeFilters};

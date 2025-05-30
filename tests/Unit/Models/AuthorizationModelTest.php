@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionParameter, ObjectRelation, TypeDefinition, Userset};
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, TypeDefinitionRelations, TypeDefinitions};
 use OpenFGA\Models\Enums\{SchemaVersion, TypeName};

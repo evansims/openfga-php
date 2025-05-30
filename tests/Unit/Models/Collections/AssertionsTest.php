@@ -2,8 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\{Assertion, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, AssertionsInterface, TupleKeys};
+use OpenFGA\Schema\CollectionSchemaInterface;
+use stdClass;
+use TypeError;
 
 describe('Assertions Collection', function (): void {
     test('implements AssertionsInterface', function (): void {
@@ -284,7 +289,7 @@ describe('Assertions Collection', function (): void {
     test('returns schema instance', function (): void {
         $schema = Assertions::schema();
 
-        expect($schema)->toBeInstanceOf(OpenFGA\Schema\CollectionSchemaInterface::class);
+        expect($schema)->toBeInstanceOf(CollectionSchemaInterface::class);
         expect($schema->getClassName())->toBe(Assertions::class);
         expect($schema->getItemType())->toBe(Assertion::class);
         // CollectionSchema doesn't have requireItems() method

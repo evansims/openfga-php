@@ -4,17 +4,105 @@
 
 ### Added
 
-- OpenTelemetry tracing support
+- DSL transformer enhancements
+- `store` model helper function
+
+  ```php
+  use function OpenFGA\Models\store;
+
+  $store = store(
+    client: $client,
+    name: 'my-php-store',
+  );
+  ```
+
+- `dsl` model helper function
+
+  ```php
+  use function OpenFGA\Models\dsl;
+
+  $dsl = dsl(<<<'DSL'
+    model
+    schema 1.1
+
+    type user
+
+    type document
+      relations
+        define viewer: [user]
+        define editor: [user] and viewer
+  DSL);
+  ```
+
+- `model` model helper function
+
+  ```php
+  use function OpenFGA\Models\model;
+
+  $model = model(
+    client: $client,
+    store: $store,
+    typeDefinitions: $dsl->getTypeDefinitions(),
+  );
+  ```
+
+- `write` request helper function
+
+  ```php
+  use function OpenFGA\Requests\write;
+
+  $tuple = tuple('user:anne', 'viewer', 'document:roadmap');
+
+  // "Anne has viewer access to roadmap"
+  write(
+    client: $client,
+    store: $store,
+    model: $model,
+    tuples: $tuple,
+  );
+  ```
+
+- `delete` request helper function
+
+  ```php
+  use function OpenFGA\Requests\delete;
+
+  $tuple = tuple('user:anne', 'viewer', 'document:roadmap');
+
+  // "Anne no longer has viewer access to roadmap"
+  delete(
+    client: $client,
+    store: $store,
+    model: $model,
+    tuples: $tuple,
+  );
+  ```
+
+- `allowed` request helper function
+
+  ```php
+  use function OpenFGA\Requests\allowed;
+
+  $tuple = tuple('user:anne', 'viewer', 'document:roadmap');
+
+  // "Can Anne view the roadmap?"
+  allowed(
+    client: $client,
+    store: $store,
+    model: $model,
+    tupleKey: $tuple,
+  );
+  ```
 
 ### Fixed
 
-- Fixes to schema validation to handle more edge cases
+- Various fixes to schema validation to better handle edge cases
 
 ## [1.0.0] - 2025-05-29
 
-> _Fine-grained auth flows,_
-> _PHP types guard each request—_
-> _Permissions granted._
+<i>Fine-grained auth flows,<br />
+PHP types guard each request,<br />
+Permissions granted.</i>
 
 ### Added
 

@@ -2,10 +2,16 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
 use OpenFGA\Models\{ConditionParameter};
 use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\CollectionSchemaInterface;
+use stdClass;
+use TypeError;
+
+use function count;
 
 describe('ConditionParameters Collection', function (): void {
     test('implements ConditionParametersInterface', function (): void {
@@ -151,7 +157,7 @@ describe('ConditionParameters Collection', function (): void {
 
         $collection = new ConditionParameters($params);
 
-        for ($i = 0; $i < \count($types); ++$i) {
+        for ($i = 0; $i < count($types); ++$i) {
             expect($collection->get($i)->getTypeName())->toBe($types[$i]);
         }
     });

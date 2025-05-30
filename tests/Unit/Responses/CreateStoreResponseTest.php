@@ -2,10 +2,18 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
+use DateTimeImmutable;
+use DateTimeZone;
+use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Responses\{CreateStoreResponse, CreateStoreResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
+
+use function in_array;
+use function strlen;
 
 describe('CreateStoreResponse', function (): void {
     test('implements CreateStoreResponseInterface', function (): void {
@@ -37,71 +45,71 @@ describe('CreateStoreResponse', function (): void {
 
     test('fromResponse handles error responses with non-201 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 401 unauthorized', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 403 forbidden', function (): void {
         $httpResponse = new SimpleResponse(403, json_encode(['code' => 'forbidden', 'message' => 'Access denied']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 409 conflict', function (): void {
         $httpResponse = new SimpleResponse(409, json_encode(['code' => 'store_already_exists', 'message' => 'Store already exists']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 422 unprocessable entity', function (): void {
         $httpResponse = new SimpleResponse(422, json_encode(['code' => 'validation_error', 'message' => 'Invalid store name']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 200 status (wrong status code)', function (): void {
         $httpResponse = new SimpleResponse(200, json_encode(['id' => 'store-123', 'name' => 'Test Store']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('schema returns expected structure', function (): void {
         $schema = CreateStoreResponse::schema();
 
-        expect($schema)->toBeInstanceOf(OpenFGA\Schema\SchemaInterface::class);
+        expect($schema)->toBeInstanceOf(SchemaInterface::class);
         expect($schema->getClassName())->toBe(CreateStoreResponse::class);
 
         $properties = $schema->getProperties();
@@ -111,7 +119,7 @@ describe('CreateStoreResponse', function (): void {
 
         foreach ($properties as $key => $property) {
             expect($property->required)->toBeTrue();
-            if (\in_array($key, ['created_at', 'updated_at'], true)) {
+            if (in_array($key, ['created_at', 'updated_at'], true)) {
                 expect($property->format)->toBe('datetime');
             }
         }
@@ -180,7 +188,7 @@ describe('CreateStoreResponse', function (): void {
             new DateTimeImmutable(),
         );
         expect($response->getName())->toBe($longName);
-        expect(\strlen($response->getName()))->toBe(1600);
+        expect(strlen($response->getName()))->toBe(1600);
     });
 
     test('handles timestamps in different timezones', function (): void {

@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{Usersets, UsersetsInterface};
 use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use stdClass;
 
 describe('Usersets Collection', function (): void {
     test('implements UsersetsInterface', function (): void {

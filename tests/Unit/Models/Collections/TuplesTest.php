@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
+use DateTimeImmutable;
 use OpenFGA\Models\Collections\{Tuples, TuplesInterface};
 use OpenFGA\Models\{Condition, Tuple, TupleKey};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};

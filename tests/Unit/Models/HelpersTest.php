@@ -2,10 +2,18 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
+use Exception;
+use OpenFGA\ClientInterface;
+use OpenFGA\Models\AuthorizationModelInterface;
 use OpenFGA\Models\Collections\{ConditionParameters, TupleKeys};
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey};
+use OpenFGA\Models\Enums\TypeName;
+use OpenFGA\Responses\CreateStoreResponseInterface;
+use OpenFGA\Results\{Failure, Success};
 
-use function OpenFGA\Models\{tuple, tuples};
+use function OpenFGA\Models\{dsl, store, tuple, tuples};
 
 describe('Helper Functions', function (): void {
     describe('tuple() function', function (): void {
@@ -28,7 +36,7 @@ describe('Helper Functions', function (): void {
                 name: 'inRegion',
                 expression: 'params.region == "us-east"',
                 parameters: new ConditionParameters([
-                    new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING),
+                    new ConditionParameter(typeName: TypeName::STRING),
                 ]),
             );
 
@@ -225,7 +233,7 @@ describe('Helper Functions', function (): void {
                 name: 'inRegion',
                 expression: 'params.region == "us-east"',
                 parameters: new ConditionParameters([
-                    new ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING),
+                    new ConditionParameter(typeName: TypeName::STRING),
                 ]),
             );
 
@@ -237,6 +245,150 @@ describe('Helper Functions', function (): void {
             expect($collection->count())->toBe(2);
             expect($collection->get(0)->getCondition())->toBeNull();
             expect($collection->get(1)->getCondition())->toBe($condition);
+        });
+    });
+
+    describe('store() function', function (): void {
+        test('creates store and returns store ID', function (): void {
+            $expectedStoreId = 'store-12345';
+
+            $response = test()->createMock(CreateStoreResponseInterface::class);
+            $response->method('getId')->willReturn($expectedStoreId);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('createStore')
+                ->with('My Test Store')
+                ->willReturn(new Success($response));
+
+            $storeId = store($client, 'My Test Store');
+
+            expect($storeId)->toBe($expectedStoreId);
+        });
+
+        test('throws exception when store creation fails', function (): void {
+            $exception = new Exception('Store creation failed');
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('createStore')
+                ->with('My Test Store')
+                ->willReturn(new Failure($exception));
+
+            expect(fn () => store($client, 'My Test Store'))
+                ->toThrow(Exception::class, 'Store creation failed');
+        });
+
+        test('handles different store names', function (): void {
+            $testCases = [
+                'Simple Store',
+                'Store-With-Dashes',
+                'Store_With_Underscores',
+                'Store With Spaces',
+                'Store123',
+                '🚀 Unicode Store 🎉',
+                '',
+            ];
+
+            foreach ($testCases as $storeName) {
+                $response = test()->createMock(CreateStoreResponseInterface::class);
+                $response->method('getId')->willReturn('store-id');
+
+                $client = test()->createMock(ClientInterface::class);
+                $client->expects($this->once())
+                    ->method('createStore')
+                    ->with($storeName)
+                    ->willReturn(new Success($response));
+
+                $storeId = store($client, $storeName);
+
+                expect($storeId)->toBe('store-id');
+            }
+        });
+    });
+
+    describe('dsl() function', function (): void {
+        test('creates authorization model from DSL', function (): void {
+            $dslString = 'model
+  schema 1.1
+
+type user
+
+type document
+  relations
+    define viewer: [user]
+    define editor: [user]
+    define owner: [user]';
+
+            $authModel = test()->createMock(AuthorizationModelInterface::class);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('dsl')
+                ->with($dslString)
+                ->willReturn(new Success($authModel));
+
+            $result = dsl($client, $dslString);
+
+            expect($result)->toBe($authModel);
+        });
+
+        test('throws exception when DSL parsing fails', function (): void {
+            $dslString = 'invalid dsl';
+            $exception = new Exception('Invalid DSL syntax');
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('dsl')
+                ->with($dslString)
+                ->willReturn(new Failure($exception));
+
+            expect(fn () => dsl($client, $dslString))
+                ->toThrow(Exception::class, 'Invalid DSL syntax');
+        });
+
+        test('handles empty DSL string', function (): void {
+            $dslString = '';
+            $authModel = test()->createMock(AuthorizationModelInterface::class);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('dsl')
+                ->with($dslString)
+                ->willReturn(new Success($authModel));
+
+            $result = dsl($client, $dslString);
+
+            expect($result)->toBe($authModel);
+        });
+
+        test('handles complex DSL with conditions', function (): void {
+            $dslString = 'model
+  schema 1.1
+
+type user
+
+type document
+  relations
+    define viewer: [user] with condition1
+    define editor: [user] and viewer
+    define owner: [user] and editor
+
+condition condition1(region: string) {
+  region == "us-east"
+}';
+
+            $authModel = test()->createMock(AuthorizationModelInterface::class);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('dsl')
+                ->with($dslString)
+                ->willReturn(new Success($authModel));
+
+            $result = dsl($client, $dslString);
+
+            expect($result)->toBe($authModel);
         });
     });
 });

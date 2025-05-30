@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\{ObjectRelation, ObjectRelationInterface};
 use OpenFGA\Schema\SchemaInterface;
 

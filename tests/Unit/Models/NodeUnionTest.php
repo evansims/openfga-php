@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\Collections\{Nodes, UsersList};
 use OpenFGA\Models\{Leaf, Node, NodeUnion, NodeUnionInterface};
 use OpenFGA\Schema\SchemaInterface;
+
+use function count;
 
 describe('NodeUnion Model', function (): void {
     test('implements NodeUnionInterface', function (): void {
@@ -19,7 +23,7 @@ describe('NodeUnion Model', function (): void {
         $nodeUnion = new NodeUnion(nodes: $nodes);
 
         expect($nodeUnion->getNodes())->toBe($nodes);
-        expect(\count($nodeUnion->getNodes()))->toBe(0);
+        expect(count($nodeUnion->getNodes()))->toBe(0);
     });
 
     test('constructs with single node', function (): void {
@@ -30,7 +34,7 @@ describe('NodeUnion Model', function (): void {
         $nodeUnion = new NodeUnion(nodes: $nodes);
 
         expect($nodeUnion->getNodes())->toBe($nodes);
-        expect(\count($nodeUnion->getNodes()))->toBe(1);
+        expect(count($nodeUnion->getNodes()))->toBe(1);
         expect($nodeUnion->getNodes()[0])->toBe($node);
     });
 
@@ -43,7 +47,7 @@ describe('NodeUnion Model', function (): void {
         $nodeUnion = new NodeUnion(nodes: $nodes);
 
         expect($nodeUnion->getNodes())->toBe($nodes);
-        expect(\count($nodeUnion->getNodes()))->toBe(3);
+        expect(count($nodeUnion->getNodes()))->toBe(3);
         expect($nodeUnion->getNodes())->toBe([$node1, $node2, $node3]);
     });
 
@@ -113,7 +117,7 @@ describe('NodeUnion Model', function (): void {
 
         $nodeUnion = new NodeUnion(nodes: $parentNodes);
 
-        expect(\count($nodeUnion->getNodes()))->toBe(1);
+        expect(count($nodeUnion->getNodes()))->toBe(1);
         expect($nodeUnion->getNodes()[0]->getName())->toBe('document:1#viewer');
         expect($nodeUnion->getNodes()[0]->getUnion())->toBe($childUnion);
     });
@@ -134,6 +138,6 @@ describe('NodeUnion Model', function (): void {
 
         // The union still has the original empty array
         expect($nodeUnion->getNodes())->toBe([]);
-        expect(\count($nodeUnion->getNodes()))->toBe(0);
+        expect(count($nodeUnion->getNodes()))->toBe(0);
     });
 });

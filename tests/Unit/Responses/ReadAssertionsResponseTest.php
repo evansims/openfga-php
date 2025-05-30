@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
+use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Models\{Assertion, AssertionTupleKey};
 use OpenFGA\Models\Collections\Assertions;
 use OpenFGA\Responses\{ReadAssertionsResponse, ReadAssertionsResponseInterface};
@@ -195,28 +198,28 @@ describe('ReadAssertionsResponse', function (): void {
 
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 401 unauthorized error', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
     });
 });

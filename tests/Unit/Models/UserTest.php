@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
+use JsonSerializable;
 use OpenFGA\Models\{DifferenceV1, ObjectRelation, TypedWildcard, User, UserInterface, UserObject, Userset, UsersetUser};
 use OpenFGA\Schema\SchemaInterface;
+use stdClass;
 
 describe('User Model', function (): void {
     test('implements UserInterface', function (): void {

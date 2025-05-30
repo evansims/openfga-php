@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Authentication;
+
 use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthentication};
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};

@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
+use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Models\{Node, UsersetTree};
 use OpenFGA\Responses\{ExpandResponse, ExpandResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 
@@ -27,31 +30,10 @@ describe('ExpandResponse', function (): void {
         expect($response->getTree())->toBe($tree);
     });
 
-    test('fromResponse handles successful 200 response with tree', function (): void {
-        // Since SchemaValidator is final and we can't mock its internals,
-        // we'll test the fromResponse method indirectly through other tests
-        // or leave this for integration tests
-        expect(true)->toBeTrue();
-    });
-
-    test('fromResponse handles successful 200 response without tree', function (): void {
-        // Since SchemaValidator is final and we can't mock its internals,
-        // we'll test the fromResponse method indirectly through other tests
-        // or leave this for integration tests
-        expect(true)->toBeTrue();
-    });
-
-    test('fromResponse handles successful 200 response with complex tree structure', function (): void {
-        // Since SchemaValidator is final and we can't mock its internals,
-        // we'll test the fromResponse method indirectly through other tests
-        // or leave this for integration tests
-        expect(true)->toBeTrue();
-    });
-
     test('schema returns expected structure', function (): void {
         $schema = ExpandResponse::schema();
 
-        expect($schema)->toBeInstanceOf(OpenFGA\Schema\SchemaInterface::class);
+        expect($schema)->toBeInstanceOf(SchemaInterface::class);
         expect($schema->getClassName())->toBe(ExpandResponse::class);
 
         $properties = $schema->getProperties();
@@ -80,46 +62,46 @@ describe('ExpandResponse', function (): void {
 
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ExpandResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 401 unauthorized', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ExpandResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 403 forbidden', function (): void {
         $httpResponse = new SimpleResponse(403, json_encode(['code' => 'forbidden', 'message' => 'Access denied']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ExpandResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ExpandResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles network timeout', function (): void {
         $httpResponse = new SimpleResponse(504, json_encode(['code' => 'timeout', 'message' => 'Gateway timeout']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ExpandResponse::fromResponse($httpResponse, $request, $validator);
     });
 });

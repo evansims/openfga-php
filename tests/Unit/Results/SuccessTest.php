@@ -2,8 +2,14 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Results;
+
+use LogicException;
 use OpenFGA\Exceptions\{ClientError, NetworkError};
 use OpenFGA\Results\{Failure, Success};
+use RuntimeException;
+
+use function count;
 
 describe('Success', function (): void {
     beforeEach(function (): void {
@@ -96,7 +102,7 @@ describe('Success', function (): void {
         $result = $success->unwrap(function ($value) {
             expect($value)->toBeArray();
 
-            return \count($value); // Return int instead of array
+            return count($value); // Return int instead of array
         });
 
         expect($result)->toBe(3);

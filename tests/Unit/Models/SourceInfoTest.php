@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
+use InvalidArgumentException;
 use OpenFGA\Models\{SourceInfo, SourceInfoInterface};
 use OpenFGA\Schema\SchemaInterface;
 

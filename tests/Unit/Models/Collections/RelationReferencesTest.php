@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface};
 use OpenFGA\Models\{RelationReference, TypedWildcard};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};

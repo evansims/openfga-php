@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionInterface, ConditionMetadata, ConditionParameter, SourceInfo};
 use OpenFGA\Models\Enums\TypeName;

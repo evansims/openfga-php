@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
+use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Models\{AuthorizationModel, TypeDefinition};
 use OpenFGA\Models\Collections\{AuthorizationModels, TypeDefinitions};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Responses\{ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
+
+use function strlen;
 
 describe('ListAuthorizationModelsResponse', function (): void {
     test('implements ListAuthorizationModelsResponseInterface', function (): void {
@@ -85,13 +90,10 @@ describe('ListAuthorizationModelsResponse', function (): void {
         expect($response->getContinuationToken())->toBe('pagination-token');
     });
 
-    // Note: fromResponse method testing would require integration tests due to SchemaValidator being final
-    // These tests focus on the model's direct functionality
-
     test('schema returns expected structure', function (): void {
         $schema = ListAuthorizationModelsResponse::schema();
 
-        expect($schema)->toBeInstanceOf(OpenFGA\Schema\SchemaInterface::class);
+        expect($schema)->toBeInstanceOf(SchemaInterface::class);
         expect($schema->getClassName())->toBe(ListAuthorizationModelsResponse::class);
 
         $properties = $schema->getProperties();
@@ -129,33 +131,33 @@ describe('ListAuthorizationModelsResponse', function (): void {
         $response = new ListAuthorizationModelsResponse($models, $longToken);
 
         expect($response->getContinuationToken())->toBe($longToken);
-        expect(\strlen($response->getContinuationToken()))->toBe(1000);
+        expect(strlen($response->getContinuationToken()))->toBe(1000);
     });
 
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ListAuthorizationModelsResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 401 unauthorized error', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ListAuthorizationModelsResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ListAuthorizationModelsResponse::fromResponse($httpResponse, $request, $validator);
     });
 });

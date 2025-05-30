@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{Users, UsersInterface, UsersList};
 use OpenFGA\Models\{TypedWildcard, User, UsersetUser};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use stdClass;
 
 describe('Users Collection', function (): void {
     test('implements UsersInterface', function (): void {

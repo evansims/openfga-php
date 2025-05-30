@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
+use DateTimeImmutable;
+use DateTimeInterface;
 use OpenFGA\Models\Collections\{Stores, StoresInterface};
 use OpenFGA\Models\Store;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};

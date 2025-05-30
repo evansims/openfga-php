@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\Collections\{RelationMetadataCollection, TypeDefinitionRelations};
 use OpenFGA\Models\{Metadata, ObjectRelation, RelationMetadata, SourceInfo, TypeDefinition, TypeDefinitionInterface, Userset};
 use OpenFGA\Schema\SchemaInterface;
+use stdClass;
 
 describe('TypeDefinition Model', function (): void {
     test('implements TypeDefinitionInterface', function (): void {

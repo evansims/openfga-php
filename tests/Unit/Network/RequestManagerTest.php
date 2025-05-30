@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Network;
+
+use Exception;
+use Mockery;
 use OpenFGA\Client;
 use OpenFGA\Exceptions\{NetworkException};
-use OpenFGA\Network\{RequestManager, RequestMethod};
+use OpenFGA\Network\{RequestContext, RequestManager, RequestMethod};
 use OpenFGA\Requests\RequestInterface as ClientRequestInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface, StreamInterface};
@@ -92,7 +96,7 @@ describe('RequestManager', function (): void {
         $psrRequest = Mockery::mock(RequestInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
 
-        $requestContext = new OpenFGA\Network\RequestContext(
+        $requestContext = new RequestContext(
             method: RequestMethod::POST,
             url: '/stores',
             body: $stream,
@@ -141,7 +145,7 @@ describe('RequestManager', function (): void {
         $psrRequest = Mockery::mock(RequestInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
 
-        $requestContext = new OpenFGA\Network\RequestContext(
+        $requestContext = new RequestContext(
             method: RequestMethod::GET,
             url: 'https://other.example.com/resource',
             body: $stream,
@@ -269,7 +273,7 @@ describe('RequestManager', function (): void {
         $psrRequest = Mockery::mock(RequestInterface::class);
         $stream = Mockery::mock(StreamInterface::class);
 
-        $requestContext = new OpenFGA\Network\RequestContext(
+        $requestContext = new RequestContext(
             method: RequestMethod::GET,
             url: '/stores/',
             body: $stream,

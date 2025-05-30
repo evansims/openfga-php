@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
+use Exception;
 use OpenFGA\Responses\{WriteAssertionsResponse, WriteAssertionsResponseInterface};
 use OpenFGA\Schema\SchemaValidator;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
@@ -27,15 +30,13 @@ describe('WriteAssertionsResponse', function (): void {
     test('is a simple response class', function (): void {
         $response = new WriteAssertionsResponse();
 
-        // WriteAssertionsResponse is a simple response with no data
-        // It represents a successful write operation (204 No Content)
         expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
     });
 
     test('fromResponse handles successful 204 response', function (): void {
         $stream = test()->createMock(StreamInterface::class);
         $stream->method('__toString')
-            ->willReturn(''); // 204 responses typically have empty body
+            ->willReturn('');
 
         $httpResponse = test()->createMock(ResponseInterface::class);
         $httpResponse->method('getStatusCode')
@@ -68,7 +69,7 @@ describe('WriteAssertionsResponse', function (): void {
     test('fromResponse handles 204 with whitespace body', function (): void {
         $stream = test()->createMock(StreamInterface::class);
         $stream->method('__toString')
-            ->willReturn('   '); // Some servers might return whitespace
+            ->willReturn('   ');
 
         $httpResponse = test()->createMock(ResponseInterface::class);
         $httpResponse->method('getStatusCode')

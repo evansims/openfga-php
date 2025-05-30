@@ -2,8 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Results;
+
+use Exception;
 use OpenFGA\Exceptions\{ClientError, NetworkError};
 use OpenFGA\Results\{Failure, Success};
+use RuntimeException;
+use Throwable;
 
 // Explicitly require the helpers file since autoloading doesn't work for functions
 require_once __DIR__ . '/../../../src/Results/Helpers.php';

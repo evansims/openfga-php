@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{UsersList, UsersListInterface};
 use OpenFGA\Models\UsersListUser;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};

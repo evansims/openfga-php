@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Authentication;
+
+use Exception;
+use JsonException;
 use OpenFGA\Authentication\{AccessToken, AccessTokenInterface};
 use Psr\Http\Message\{ResponseInterface, StreamInterface};
 

@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Responses;
+
+use DateTimeImmutable;
+use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Models\Collections\TupleChanges;
 use OpenFGA\Models\Enums\TupleOperation;
 use OpenFGA\Models\{TupleChange, TupleKey};
@@ -9,6 +13,8 @@ use OpenFGA\Responses\{ListTupleChangesResponse, ListTupleChangesResponseInterfa
 use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
+
+use function strlen;
 
 describe('ListTupleChangesResponse', function (): void {
     test('implements ListTupleChangesResponseInterface', function (): void {
@@ -96,7 +102,7 @@ describe('ListTupleChangesResponse', function (): void {
         $response = new ListTupleChangesResponse($changes, $largeToken);
 
         expect($response->getContinuationToken())->toBe($largeToken);
-        expect(\strlen($response->getContinuationToken()))->toBe(1000);
+        expect(strlen($response->getContinuationToken()))->toBe(1000);
     });
 
     test('handles special characters in continuation token', function (): void {
@@ -116,28 +122,28 @@ describe('ListTupleChangesResponse', function (): void {
 
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ListTupleChangesResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 401 unauthorized error', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ListTupleChangesResponse::fromResponse($httpResponse, $request, $validator);
     });
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
         $validator = new SchemaValidator();
 
-        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        $this->expectException(NetworkException::class);
         ListTupleChangesResponse::fromResponse($httpResponse, $request, $validator);
     });
 });

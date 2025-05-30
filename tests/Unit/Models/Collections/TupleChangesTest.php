@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
+use DateTimeImmutable;
+use DateTimeInterface;
 use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
 use OpenFGA\Models\Enums\TupleOperation;
 use OpenFGA\Models\{TupleChange, TupleKey};

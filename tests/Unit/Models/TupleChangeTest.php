@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
+use DateTimeImmutable;
+use OpenFGA\Models\{Condition, TupleChange, TupleChangeInterface, TupleKey};
 use OpenFGA\Models\Enums\TupleOperation;
-use OpenFGA\Models\{TupleChange, TupleChangeInterface, TupleKey};
 use OpenFGA\Schema\SchemaInterface;
+use ValueError;
 
 describe('TupleChange Model', function (): void {
     test('implements TupleChangeInterface', function (): void {
@@ -137,7 +141,7 @@ describe('TupleChange Model', function (): void {
     });
 
     test('preserves tuple key with condition', function (): void {
-        $condition = new OpenFGA\Models\Condition(
+        $condition = new Condition(
             name: 'inRegion',
             expression: 'params.region == "us-east"',
         );
@@ -242,7 +246,7 @@ describe('TupleChange Model', function (): void {
     });
 
     test('fromArray preserves tuple key with condition', function (): void {
-        $condition = new OpenFGA\Models\Condition(
+        $condition = new Condition(
             name: 'inRegion',
             expression: 'params.region == "us-east"',
         );

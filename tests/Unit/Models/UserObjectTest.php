@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models;
+
 use OpenFGA\Models\{UserObject, UserObjectInterface};
 use OpenFGA\Schema\SchemaInterface;
+
+use function strlen;
 
 describe('UserObject Model', function (): void {
     test('implements UserObjectInterface', function (): void {
@@ -143,7 +147,7 @@ describe('UserObject Model', function (): void {
         $userObject = new UserObject(type: 'user', id: $longId);
 
         expect($userObject->getId())->toBe($longId);
-        expect(\strlen((string) $userObject))->toBe(1005); // 'user:' + 1000 chars
+        expect(strlen((string) $userObject))->toBe(1005); // 'user:' + 1000 chars
     });
 
     test('properly represents different object types', function (): void {

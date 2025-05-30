@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\{AuthorizationModel, TypeDefinition};
 use OpenFGA\Models\Collections\{AuthorizationModels, AuthorizationModelsInterface, TypeDefinitions};
 use OpenFGA\Models\Enums\SchemaVersion;

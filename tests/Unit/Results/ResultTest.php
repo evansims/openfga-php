@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Results;
+
 use OpenFGA\Exceptions\ClientError;
-use OpenFGA\Results\{Failure, Result, Success};
+use OpenFGA\Results\{Failure, Result, ResultInterface, Success};
 
 describe('Result', function (): void {
     test('unwrap returns value for Success', function (): void {
@@ -127,8 +129,8 @@ describe('Result', function (): void {
         $failure = new Failure(ClientError::Validation->exception());
 
         // Both should implement ResultInterface
-        expect($success)->toBeInstanceOf(OpenFGA\Results\ResultInterface::class);
-        expect($failure)->toBeInstanceOf(OpenFGA\Results\ResultInterface::class);
+        expect($success)->toBeInstanceOf(ResultInterface::class);
+        expect($failure)->toBeInstanceOf(ResultInterface::class);
 
         // Test that all interface methods exist
         $interfaceMethods = [

@@ -2,8 +2,14 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Exceptions\{ClientError, NetworkError};
+namespace OpenFGA\Tests\Unit\Results;
+
+use Exception;
+use LogicException;
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
 use OpenFGA\Results\{Failure, Success};
+use RuntimeException;
+use Throwable;
 
 describe('Failure', function (): void {
     beforeEach(function (): void {
@@ -104,13 +110,13 @@ describe('Failure', function (): void {
         $networkFailure = new Failure($this->networkError);
 
         $clientResult = $clientFailure->unwrap(function ($error) {
-            expect($error)->toBeInstanceOf(OpenFGA\Exceptions\ClientException::class);
+            expect($error)->toBeInstanceOf(ClientException::class);
 
             return 'client-error';
         });
 
         $networkResult = $networkFailure->unwrap(function ($error) {
-            expect($error)->toBeInstanceOf(OpenFGA\Exceptions\NetworkException::class);
+            expect($error)->toBeInstanceOf(NetworkException::class);
 
             return 'network-error';
         });

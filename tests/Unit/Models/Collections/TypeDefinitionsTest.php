@@ -2,9 +2,16 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Models\Collections;
+
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface};
+use OpenFGA\Models\{ObjectRelation, Userset};
 use OpenFGA\Models\{TypeDefinition};
 use OpenFGA\Schema\CollectionSchemaInterface;
+use stdClass;
+use TypeError;
+
+use function count;
 
 describe('TypeDefinitions Collection', function (): void {
     test('implements TypeDefinitionsInterface', function (): void {
@@ -120,8 +127,8 @@ describe('TypeDefinitions Collection', function (): void {
 
     test('handles type definitions with relations', function (): void {
         $relations = new TypeDefinitionRelations([]);
-        $viewerRelation = new OpenFGA\Models\Userset(
-            computedUserset: new OpenFGA\Models\ObjectRelation(relation: 'viewer'),
+        $viewerRelation = new Userset(
+            computedUserset: new ObjectRelation(relation: 'viewer'),
         );
         $relations->add('viewer', $viewerRelation);
 
@@ -155,7 +162,7 @@ describe('TypeDefinitions Collection', function (): void {
 
         $collection = new TypeDefinitions($types);
 
-        for ($i = 0; $i < \count($typeNames); ++$i) {
+        for ($i = 0; $i < count($typeNames); ++$i) {
             expect($collection->get($i)->getType())->toBe($typeNames[$i]);
         }
     });
@@ -200,7 +207,7 @@ describe('TypeDefinitions Collection', function (): void {
 
         // Group type with member relation
         $groupRelations = new TypeDefinitionRelations([]);
-        $memberRelation = new OpenFGA\Models\Userset(
+        $memberRelation = new Userset(
             direct: new stdClass(),
         );
         $groupRelations->add('member', $memberRelation);
@@ -208,11 +215,11 @@ describe('TypeDefinitions Collection', function (): void {
 
         // Document type with viewer, editor relations
         $documentRelations = new TypeDefinitionRelations([]);
-        $viewerRelation = new OpenFGA\Models\Userset(
-            computedUserset: new OpenFGA\Models\ObjectRelation(relation: 'viewer'),
+        $viewerRelation = new Userset(
+            computedUserset: new ObjectRelation(relation: 'viewer'),
         );
-        $editorRelation = new OpenFGA\Models\Userset(
-            computedUserset: new OpenFGA\Models\ObjectRelation(relation: 'editor'),
+        $editorRelation = new Userset(
+            computedUserset: new ObjectRelation(relation: 'editor'),
         );
         $documentRelations->add('viewer', $viewerRelation);
         $documentRelations->add('editor', $editorRelation);

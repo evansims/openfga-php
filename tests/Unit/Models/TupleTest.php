@@ -2,7 +2,13 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{Tuple, TupleInterface, TupleKey};
+namespace OpenFGA\Tests\Unit\Models;
+
+use DateTimeImmutable;
+use DateTimeZone;
+use OpenFGA\Models\Collections\ConditionParameters;
+use OpenFGA\Models\{Condition, ConditionParameter, Tuple, TupleInterface, TupleKey};
+use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\SchemaInterface;
 
 describe('Tuple Model', function (): void {
@@ -149,11 +155,11 @@ describe('Tuple Model', function (): void {
             user: 'user:anne',
             relation: 'viewer',
             object: 'document:roadmap',
-            condition: new OpenFGA\Models\Condition(
+            condition: new Condition(
                 name: 'inRegion',
                 expression: 'true',
-                parameters: new OpenFGA\Models\Collections\ConditionParameters([
-                    new OpenFGA\Models\ConditionParameter(typeName: OpenFGA\Models\Enums\TypeName::STRING),
+                parameters: new ConditionParameters([
+                    new ConditionParameter(typeName: TypeName::STRING),
                 ]),
             ),
         );
