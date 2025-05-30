@@ -25,6 +25,7 @@ RUN set -eux; \
     libxml2 \
     # Build dependencies
     $PHPIZE_DEPS \
+    linux-headers \
     # For extensions
     libpng-dev \
     libjpeg-turbo-dev \
@@ -75,7 +76,7 @@ RUN set -eux; \
     # Clean up
     docker-php-source delete; \
     rm -rf /tmp/* \
-    && apk del $PHPIZE_DEPS \
+    && apk del $PHPIZE_DEPS linux-headers \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /app
