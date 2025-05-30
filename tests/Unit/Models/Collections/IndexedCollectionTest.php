@@ -6,35 +6,17 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\SerializationException;
-use OpenFGA\Models\Collections\IndexedCollection;
 use OpenFGA\Models\TupleKey;
 use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Tests\Support\Collections\{InvalidIndexedCollection, InvalidTypeIndexedCollection, TestIndexedCollection};
 use OutOfBoundsException;
 use stdClass;
 use TypeError;
 
-// Test concrete class extending IndexedCollection
-final class TestIndexedCollection extends IndexedCollection
-{
-    protected static string $itemType = TupleKey::class;
-}
-
-// Test class without $itemType defined
-final class InvalidIndexedCollection extends IndexedCollection
-{
-    // Missing $itemType property
-}
-
-// Test class with invalid $itemType
-final class InvalidTypeIndexedCollection extends IndexedCollection
-{
-    protected static string $itemType = stdClass::class;
-}
-
 describe('IndexedCollection', function (): void {
     test('throws TypeError when $itemType is not defined', function (): void {
         $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Undefined item type for OpenFGA\Tests\Unit\Models\Collections\InvalidIndexedCollection. Define the $itemType property or override the constructor.');
+        $this->expectExceptionMessage('Undefined item type for OpenFGA\Tests\Support\Collections\InvalidIndexedCollection. Define the $itemType property or override the constructor.');
         new InvalidIndexedCollection();
     });
 
