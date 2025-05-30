@@ -24,19 +24,19 @@ final class GetAuthorizationModelRequest implements GetAuthorizationModelRequest
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getModel(): string
     {
         return $this->model;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(
@@ -45,10 +45,10 @@ final class GetAuthorizationModelRequest implements GetAuthorizationModelRequest
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;

@@ -161,6 +161,9 @@ describe('RequestManager', function (): void {
         $psrRequest->shouldReceive('withHeader')
             ->with('User-Agent', 'openfga-sdk php/' . Client::VERSION)
             ->andReturn($psrRequest);
+        $psrRequest->shouldReceive('withHeader')
+            ->with('Content-Type', 'application/json')
+            ->andReturn($psrRequest);
         $psrRequest->shouldReceive('withBody')
             ->with($stream)
             ->andReturn($psrRequest);

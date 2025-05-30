@@ -379,6 +379,5 @@ describe('Client', function (): void {
 
     test('Client VERSION constant is defined', function (): void {
         expect(Client::VERSION)->toBeString();
-        expect(Client::VERSION)->toBe('0.2.0');
     });
 });

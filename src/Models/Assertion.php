@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
+use InvalidArgumentException;
 
+use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+
 use Override;
+
+use function is_array;
+use function is_string;
 
 final class Assertion implements AssertionInterface
 {
@@ -29,68 +34,151 @@ final class Assertion implements AssertionInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContext(): ?array
     {
         return $this->context;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContextualTuples(): ?TupleKeysInterface
     {
         return $this->contextualTuples;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getExpectation(): bool
     {
         return $this->expectation;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getTupleKey(): AssertionTupleKeyInterface
     {
         return $this->tupleKey;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
-        return array_filter([
+        $data = [
             'tuple_key' => $this->tupleKey->jsonSerialize(),
             'expectation' => $this->expectation,
-            'contextual_tuples' => $this->contextualTuples?->jsonSerialize(),
-            'context' => $this->context,
-        ], static fn ($value): bool => null !== $value);
+        ];
+
+        if ($this->contextualTuples instanceof TupleKeysInterface) {
+            $serialized = $this->contextualTuples->jsonSerialize();
+            if (isset($serialized['tuple_keys']) && is_array($serialized['tuple_keys'])) {
+                $data['contextual_tuples'] = $serialized['tuple_keys'];
+            }
+        }
+
+        if (null !== $this->context) {
+            $data['context'] = $this->context;
+        }
+
+        return $data;
     }
 
-    #[Override]
+    /**
+     * Create an Assertion from array data.
+     *
+     * @param array{
+     *     tuple_key: AssertionTupleKeyInterface|array{user: string, relation: string, object: string},
+     *     expectation: bool,
+     *     contextual_tuples?: array<TupleKeyInterface|array{user: string, relation: string, object: string, condition?: array<string, mixed>|null}>|null,
+     *     context?: array<string, mixed>|null
+     * } $data
+     */
+    public static function fromArray(array $data): self
+    {
+        $contextualTuples = null;
+
+        if (isset($data['contextual_tuples']) && is_array($data['contextual_tuples'])) {
+            $tupleKeys = new TupleKeys();
+
+            // Handle wrapped format (with tuple_keys key) or direct array
+            $tuplesArray = $data['contextual_tuples'];
+            if (isset($tuplesArray['tuple_keys']) && is_array($tuplesArray['tuple_keys'])) {
+                $tuplesArray = $tuplesArray['tuple_keys'];
+            }
+
+            foreach ($tuplesArray as $tupleArray) {
+                // Handle both cases: already-transformed TupleKey objects or raw arrays
+                if ($tupleArray instanceof TupleKeyInterface) {
+                    $tupleKeys[] = $tupleArray;
+                } elseif (is_array($tupleArray) && isset($tupleArray['user'], $tupleArray['relation'], $tupleArray['object'])) {
+                    // Skip tuples with conditions since we don't have the Condition::fromArray method
+                    if (isset($tupleArray['condition']) && is_array($tupleArray['condition'])) {
+                        continue;
+                    }
+
+                    $user = $tupleArray['user'];
+                    $relation = $tupleArray['relation'];
+                    $object = $tupleArray['object'];
+
+                    if (is_string($user) && is_string($relation) && is_string($object)) {
+                        $tupleKeys[] = new TupleKey(
+                            user: $user,
+                            relation: $relation,
+                            object: $object,
+                            condition: null,
+                        );
+                    }
+                }
+            }
+            $contextualTuples = $tupleKeys;
+        }
+
+        // Handle tuple_key - it might be an array that needs to be converted
+        $tupleKey = $data['tuple_key'];
+        if (is_array($tupleKey) && isset($tupleKey['user'], $tupleKey['relation'], $tupleKey['object'])) {
+            $tupleKey = new AssertionTupleKey(
+                user: $tupleKey['user'],
+                relation: $tupleKey['relation'],
+                object: $tupleKey['object'],
+            );
+        }
+
+        if (! $tupleKey instanceof AssertionTupleKeyInterface) {
+            throw new InvalidArgumentException('Invalid tuple_key provided to Assertion::fromArray');
+        }
+
+        return new self(
+            tupleKey: $tupleKey,
+            expectation: $data['expectation'],
+            contextualTuples: $contextualTuples,
+            context: $data['context'] ?? null,
+        );
+    }
+
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'tuple_key', type: 'object', className: AssertionTupleKey::class, required: true),
-                new SchemaProperty(name: 'expectation', type: 'bool', required: true),
-                new SchemaProperty(name: 'contextual_tuples', type: 'object', className: TupleKeys::class, required: false),
+                new SchemaProperty(name: 'expectation', type: 'boolean', required: true),
+                new SchemaProperty(name: 'contextual_tuples', type: 'array', items: ['type' => 'object', 'className' => TupleKey::class], required: false),
                 new SchemaProperty(name: 'context', type: 'array', required: false),
             ],
         );

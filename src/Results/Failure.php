@@ -24,30 +24,30 @@ final class Failure extends Result implements ResultInterface
     {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      *
      * @return E
      */
+    #[Override]
     public function err(): Throwable
     {
         return $this->error;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function failed(): bool
     {
         return true;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function failure(callable $fn): ResultInterface
     {
         $fn($this->error);
@@ -55,10 +55,10 @@ final class Failure extends Result implements ResultInterface
         return $this;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function recover(callable $fn): ResultInterface
     {
         $result = $fn($this->err());
@@ -66,28 +66,28 @@ final class Failure extends Result implements ResultInterface
         return $result instanceof ResultInterface ? $result : new Success($result);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function rethrow(?Throwable $throwable = null): ResultInterface
     {
         throw $throwable ?? $this->error;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function succeeded(): bool
     {
         return false;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function success(callable $fn): ResultInterface
     {
         return $this;
@@ -105,12 +105,10 @@ final class Failure extends Result implements ResultInterface
         return $this;
     }
 
-    #[Override]
     /**
      * @inheritDoc
-     *
-     * @return never
      */
+    #[Override]
     public function val(): never
     {
         throw new LogicException('Failure has no value');

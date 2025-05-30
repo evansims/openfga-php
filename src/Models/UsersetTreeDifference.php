@@ -20,28 +20,28 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getBase(): NodeInterface
     {
         return $this->base;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getSubtract(): NodeInterface
     {
         return $this->subtract;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -50,10 +50,10 @@ final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
         ];
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

@@ -20,28 +20,28 @@ final class DifferenceV1 implements DifferenceV1Interface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getBase(): UsersetInterface
     {
         return $this->base;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getSubtract(): UsersetInterface
     {
         return $this->subtract;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return [
@@ -50,10 +50,10 @@ final class DifferenceV1 implements DifferenceV1Interface
         ];
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

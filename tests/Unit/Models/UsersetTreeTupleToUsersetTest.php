@@ -2,46 +2,45 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\Collections\Computeds;
 use OpenFGA\Models\{Computed, UsersetTreeTupleToUserset, UsersetTreeTupleToUsersetInterface};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('UsersetTreeTupleToUserset Model', function (): void {
     test('implements UsersetTreeTupleToUsersetInterface', function (): void {
-        $computeds = new Computeds([
+        $computed = [
             new Computed(userset: 'viewer'),
-        ]);
+        ];
         $tupleToUserset = new UsersetTreeTupleToUserset(
             tupleset: 'parent',
-            computed: $computeds,
+            computed: $computed,
         );
 
         expect($tupleToUserset)->toBeInstanceOf(UsersetTreeTupleToUsersetInterface::class);
     });
 
     test('constructs with tupleset and computed', function (): void {
-        $computeds = new Computeds([
+        $computed = [
             new Computed(userset: 'viewer'),
             new Computed(userset: 'editor'),
-        ]);
+        ];
 
         $tupleToUserset = new UsersetTreeTupleToUserset(
             tupleset: 'parent',
-            computed: $computeds,
+            computed: $computed,
         );
 
         expect($tupleToUserset->getTupleset())->toBe('parent');
-        expect($tupleToUserset->getComputed())->toBe($computeds);
+        expect($tupleToUserset->getComputed())->toBe($computed);
     });
 
     test('serializes to JSON', function (): void {
-        $computeds = new Computeds([
+        $computed = [
             new Computed(userset: 'viewer'),
-        ]);
+        ];
 
         $tupleToUserset = new UsersetTreeTupleToUserset(
             tupleset: 'parent',
-            computed: $computeds,
+            computed: $computed,
         );
 
         expect($tupleToUserset->jsonSerialize())->toBe([
@@ -53,15 +52,15 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
     });
 
     test('handles multiple computed usersets', function (): void {
-        $computeds = new Computeds([
+        $computed = [
             new Computed(userset: 'viewer'),
             new Computed(userset: 'editor'),
             new Computed(userset: 'owner'),
-        ]);
+        ];
 
         $tupleToUserset = new UsersetTreeTupleToUserset(
             tupleset: 'organization',
-            computed: $computeds,
+            computed: $computed,
         );
 
         $json = $tupleToUserset->jsonSerialize();
@@ -98,7 +97,7 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
         // Computed property
         $computedProp = $properties['computed'];
         expect($computedProp->name)->toBe('computed');
-        expect($computedProp->type)->toBe('object');
+        expect($computedProp->type)->toBe('array');
         expect($computedProp->required)->toBe(true);
     });
 
@@ -113,9 +112,9 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
         // Pattern 1: Viewers of parent folder can view documents
         $folderViewers = new UsersetTreeTupleToUserset(
             tupleset: 'parent',
-            computed: new Computeds([
+            computed: [
                 new Computed(userset: 'viewer'),
-            ]),
+            ],
         );
 
         $json = $folderViewers->jsonSerialize();
@@ -125,11 +124,11 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
         // Pattern 2: Organization members have multiple roles
         $orgMembers = new UsersetTreeTupleToUserset(
             tupleset: 'organization',
-            computed: new Computeds([
+            computed: [
                 new Computed(userset: 'member'),
                 new Computed(userset: 'admin'),
                 new Computed(userset: 'owner'),
-            ]),
+            ],
         );
 
         $json2 = $orgMembers->jsonSerialize();
@@ -139,10 +138,10 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
         // Pattern 3: Team hierarchy permissions
         $teamHierarchy = new UsersetTreeTupleToUserset(
             tupleset: 'team#parent',
-            computed: new Computeds([
+            computed: [
                 new Computed(userset: 'lead'),
                 new Computed(userset: 'member'),
-            ]),
+            ],
         );
 
         $json3 = $teamHierarchy->jsonSerialize();
@@ -153,9 +152,9 @@ describe('UsersetTreeTupleToUserset Model', function (): void {
     test('handles complex tupleset paths', function (): void {
         $complexPath = new UsersetTreeTupleToUserset(
             tupleset: 'department#organization#parent',
-            computed: new Computeds([
+            computed: [
                 new Computed(userset: 'executive'),
-            ]),
+            ],
         );
 
         expect($complexPath->getTupleset())->toBe('department#organization#parent');

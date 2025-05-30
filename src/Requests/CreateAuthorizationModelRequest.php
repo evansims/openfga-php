@@ -31,19 +31,19 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getConditions(): ?ConditionsInterface
     {
         return $this->conditions;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $conditions = null;
@@ -67,28 +67,28 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getSchemaVersion(): SchemaVersion
     {
         return $this->schemaVersion;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getTypeDefinitions(): TypeDefinitionsInterface
     {
         return $this->typeDefinitions;

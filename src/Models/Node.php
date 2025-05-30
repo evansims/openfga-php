@@ -18,60 +18,60 @@ final class Node implements NodeInterface
         private readonly string $name,
         private readonly ?LeafInterface $leaf = null,
         private readonly ?UsersetTreeDifferenceInterface $difference = null,
-        private readonly ?NodeInterface $union = null,
-        private readonly ?NodeInterface $intersection = null,
+        private readonly null | NodeInterface | NodeUnionInterface $union = null,
+        private readonly null | NodeInterface | NodeUnionInterface $intersection = null,
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getDifference(): ?UsersetTreeDifferenceInterface
     {
         return $this->difference;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
-    public function getIntersection(): ?NodeInterface
+    #[Override]
+    public function getIntersection(): null | NodeInterface | NodeUnionInterface
     {
         return $this->intersection;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getLeaf(): ?LeafInterface
     {
         return $this->leaf;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getName(): string
     {
         return $this->name;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
-    public function getUnion(): ?NodeInterface
+    #[Override]
+    public function getUnion(): null | NodeInterface | NodeUnionInterface
     {
         return $this->union;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -83,10 +83,10 @@ final class Node implements NodeInterface
         ], static fn ($value): bool => null !== $value);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
@@ -95,8 +95,8 @@ final class Node implements NodeInterface
                 new SchemaProperty(name: 'name', type: 'string', required: true),
                 new SchemaProperty(name: 'leaf', type: 'object', className: Leaf::class, required: false),
                 new SchemaProperty(name: 'difference', type: 'object', className: UsersetTreeDifference::class, required: false),
-                new SchemaProperty(name: 'union', type: 'self', required: false, className: self::class),
-                new SchemaProperty(name: 'intersection', type: 'self', required: false, className: self::class),
+                new SchemaProperty(name: 'union', type: 'object', required: false, className: NodeUnion::class),
+                new SchemaProperty(name: 'intersection', type: 'object', required: false, className: NodeUnion::class),
             ],
         );
     }

@@ -109,7 +109,7 @@ describe('ListUsersRequest', function (): void {
 
         expect($capturedBody)->toHaveKeys(['authorization_model_id', 'object', 'relation', 'user_filters']);
         expect($capturedBody['authorization_model_id'])->toBe('model-123');
-        expect($capturedBody['object'])->toBe('doc:1');
+        expect($capturedBody['object'])->toBe(['type' => 'doc', 'id' => '1']);
         expect($capturedBody['relation'])->toBe('viewer');
         expect($capturedBody['user_filters'])->toBe([['type' => 'user']]);
     });
@@ -156,7 +156,7 @@ describe('ListUsersRequest', function (): void {
             'consistency',
         ]);
         expect($capturedBody['authorization_model_id'])->toBe('model-xyz');
-        expect($capturedBody['object'])->toBe('resource:456');
+        expect($capturedBody['object'])->toBe(['type' => 'resource', 'id' => '456']);
         expect($capturedBody['relation'])->toBe('owner');
         expect($capturedBody['user_filters'])->toBe([
             ['type' => 'user'],
@@ -191,7 +191,8 @@ describe('ListUsersRequest', function (): void {
 
         $request->getRequest($this->streamFactory);
 
-        expect($capturedBody['user_filters'])->toBe([]);
+        // Empty user_filters should be omitted from the request
+        expect($capturedBody)->not->toHaveKey('user_filters');
     });
 
     test('handles complex context objects', function (): void {

@@ -134,8 +134,8 @@ describe('Users Collection', function (): void {
 
     test('handles different user types', function (): void {
         $collection = new Users([
-            // Object user
-            new User(object: new stdClass()),
+            // Object user (string format)
+            new User(object: 'user:alice'),
 
             // Wildcard users
             new User(wildcard: new TypedWildcard(type: 'user')),

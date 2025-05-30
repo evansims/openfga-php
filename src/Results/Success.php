@@ -24,30 +24,28 @@ final class Success extends Result implements ResultInterface
     {
     }
 
-    #[Override]
     /**
      * @inheritDoc
-     *
-     * @return never
      */
+    #[Override]
     public function err(): never
     {
         throw new LogicException('Success has no error');
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function failed(): bool
     {
         return false;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function failure(callable $fn): ResultInterface
     {
         return $this;
@@ -65,28 +63,28 @@ final class Success extends Result implements ResultInterface
         return $this;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function rethrow(?Throwable $throwable = null): ResultInterface
     {
         return $this;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function succeeded(): bool
     {
         return true;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function success(callable $fn): ResultInterface
     {
         $fn($this->value);
@@ -94,10 +92,10 @@ final class Success extends Result implements ResultInterface
         return $this;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function then(callable $fn): ResultInterface
     {
         $result = $fn($this->val());
@@ -105,12 +103,12 @@ final class Success extends Result implements ResultInterface
         return $result instanceof ResultInterface ? $result : new self($result);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      *
      * @return T
      */
+    #[Override]
     public function val(): mixed
     {
         return $this->value;

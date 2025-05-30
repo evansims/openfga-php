@@ -14,9 +14,9 @@ use Override;
  */
 interface TupleKeysInterface extends IndexedCollectionInterface
 {
-    #[Override]
     /**
      * @return array<int|string, mixed>
      */
+    #[Override]
     public function jsonSerialize(): array;
 }

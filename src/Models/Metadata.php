@@ -20,37 +20,37 @@ final class Metadata implements MetadataInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getModule(): ?string
     {
         return $this->module;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRelations(): ?RelationMetadataCollection
     {
         return $this->relations;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getSourceInfo(): ?SourceInfoInterface
     {
         return $this->sourceInfo;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         $result = [];
@@ -70,10 +70,10 @@ final class Metadata implements MetadataInterface
         return $result;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

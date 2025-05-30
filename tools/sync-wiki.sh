@@ -19,10 +19,10 @@ cp -r docs/* wiki-content/
 
 cd wiki-content
 
-# Rename index.md to Home.md (Wiki homepage)
-if [ -f "index.md" ]; then
-    mv index.md Home.md
-    echo "✅ Renamed index.md to Home.md"
+# Rename README.md to Home.md (Wiki homepage)
+if [ -f "README.md" ]; then
+    mv README.md Home.md
+    echo "✅ Renamed README.md to Home.md"
 fi
 
 # Create custom sidebar
@@ -92,20 +92,20 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" | while read file; do
     if [[ "$file" == "./_Sidebar.md" ]]; then
         continue
     fi
-    
+
     # Remove YAML front matter (everything between --- lines at the start)
     sed -i.bak '/^---$/,/^---$/d' "$file"
-    
+
     # Remove the first H1 title (# Title) since Wiki generates its own title
     sed -i.bak '/^# /d' "$file"
-    
+
     # Remove .md extension from internal links
     sed -i.bak 's/\.md)/)/g' "$file"
-    
+
     # Convert relative paths to wiki links - flatten API paths
     sed -i.bak 's|\[\([^]]*\)\](API/\([^)]*\))|\[\1\](API-\2)|g' "$file"
     sed -i.bak 's|\[\([^]]*\)\](\([^)]*\)/\([^)]*\))|\[\1\](\2-\3)|g' "$file"
-    
+
     # Remove backup files
     rm -f "$file.bak"
 done
@@ -167,7 +167,7 @@ else
 
 📖 Updated documentation
 🤖 Generated automatically"
-    
+
     # Push changes
     echo "🚀 Pushing to Wiki..."
     git push origin master 2>/dev/null || git push origin main 2>/dev/null || git push -u origin master

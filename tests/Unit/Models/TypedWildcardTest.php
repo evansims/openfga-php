@@ -112,4 +112,22 @@ describe('TypedWildcard Model', function (): void {
             expect($wildcard->jsonSerialize())->toBe(['type' => $type]);
         }
     });
+
+    test('converts to string using __toString', function (): void {
+        $wildcard = new TypedWildcard(type: 'user');
+
+        expect((string) $wildcard)->toBe('user');
+        expect($wildcard->__toString())->toBe('user');
+    });
+
+    test('__toString returns lowercased type', function (): void {
+        $wildcard = new TypedWildcard(type: '  DOCUMENT  ');
+
+        expect((string) $wildcard)->toBe('document');
+        expect($wildcard->__toString())->toBe('document');
+    });
+
+    test('has correct OpenAPI type constant', function (): void {
+        expect(TypedWildcard::OPENAPI_TYPE)->toBe('TypedWildcard');
+    });
 });

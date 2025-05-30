@@ -119,8 +119,9 @@ With the client initialized, the typical workflow in OpenFGA involves these step
 Let's put it all together! This example walks through the entire process from start to finish - perfect for beginners who want to see how everything connects.
 
 **What this example does:**
+
 - Creates a new store for your authorization data
-- Defines a simple authorization model (documents with viewers and editors)  
+- Defines a simple authorization model (documents with viewers and editors)
 - Adds a relationship tuple (Anne can view the roadmap)
 - Checks if Anne has permission to view the document
 
@@ -151,9 +152,6 @@ try {
     $store = unwrap($client->createStore(name: $storeName));
     echo "Store '{$store->getName()}' created with ID: {$store->getId()}\n";
 
-    // Configure the client to use this store for subsequent calls
-    $client->setStore($store->getId());
-
     // 2. Define and Create an Authorization Model (DSL)
     $dsl = <<<DSL
     model
@@ -165,12 +163,10 @@ try {
     DSL;
     $model = unwrap($client->dsl($dsl)); // Transform DSL to model object
     $createdModel = unwrap($client->createAuthorizationModel(
+        store: $store->getId(),
         typeDefinitions: $model->getTypeDefinitions()
     ));
     echo "Authorization Model created with ID: {$createdModel->getId()}\n";
-
-    // Configure the client to use this model for subsequent calls
-    $client->setModel($createdModel->getId());
 
     // 3. Write a Relationship Tuple
     // "user:anne is a viewer of document:readme"
@@ -211,16 +207,19 @@ You should see output indicating the successful creation of the store, model, tu
 ## What's Next?
 
 **Just getting started?** Focus on these essentials first:
+
 1. **[Authorization Models](AuthorizationModels.md)** - Learn to design more complex permission systems
-2. **[Queries](Queries.md)** - Master the different ways to check permissions  
+2. **[Queries](Queries.md)** - Master the different ways to check permissions
 3. **[Results & Error Handling](Results.md)** - Build robust, production-ready integrations
 
 **Building for production?** You'll want these too:
+
 - **[Authentication](Authentication.md)** - Secure your OpenFGA connection
 - **[Relationship Tuples](RelationshipTuples.md)** - Manage permissions at scale
 - **[Assertions](Assertions.md)** - Test your authorization logic
 
 **Need more stores or complex scenarios?**
+
 - **[Stores](Stores.md)** - Multi-tenant and environment management
 
 For a complete overview and advanced patterns, see the main [README.md](../../README.md). Happy coding!

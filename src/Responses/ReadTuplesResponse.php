@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\Collections\{Tuples, TuplesInterface};
-use OpenFGA\Models\TupleInterface;
+use OpenFGA\Models\{Condition, ConditionMetadata, Tuple, TupleInterface, TupleKey};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
@@ -26,28 +27,28 @@ final class ReadTuplesResponse extends Response implements ReadTuplesResponseInt
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getContinuationToken(): ?string
     {
         return $this->continuationToken;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getTuples(): TuplesInterface
     {
         return $this->tuples;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -57,6 +58,11 @@ final class ReadTuplesResponse extends Response implements ReadTuplesResponseInt
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
+            $validator->registerSchema(ConditionMetadata::schema());
+            $validator->registerSchema(ConditionParameters::schema());
+            $validator->registerSchema(Condition::schema());
+            $validator->registerSchema(TupleKey::schema());
+            $validator->registerSchema(Tuple::schema());
             $validator->registerSchema(Tuples::schema());
             $validator->registerSchema(self::schema());
 
@@ -70,10 +76,10 @@ final class ReadTuplesResponse extends Response implements ReadTuplesResponseInt
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         if (! self::$schema instanceof SchemaInterface) {

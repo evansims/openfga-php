@@ -75,10 +75,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function add(string $key, ModelInterface $item): static
     {
         if (! $item instanceof static::$itemType) {
@@ -90,19 +90,21 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $this;
     }
 
-    #[Override]
     /**
      * @inheritDoc
+     *
+     * @return int<0, max>
      */
+    #[Override]
     public function count(): int
     {
         return count($this->models);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     #[ReturnTypeWillChange]
     public function current(): ModelInterface
     {
@@ -111,37 +113,37 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $this->models[$key];
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function get(string $key)
     {
         return $this->models[$key] ?? null;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function has(string $key): bool
     {
         return isset($this->models[$key]);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function isEmpty(): bool
     {
         return [] === $this->models;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         $result = [];
@@ -154,10 +156,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $result;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function key(): string
     {
         $key = array_keys($this->models)[$this->position] ?? null;
@@ -169,38 +171,38 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $key;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function next(): void
     {
         ++$this->position;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function offsetExists(mixed $offset): bool
     {
         return isset($this->models[$offset]);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     #[ReturnTypeWillChange]
     public function offsetGet(mixed $offset)
     {
         return $this->models[$offset] ?? null;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
@@ -214,10 +216,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         $this->models[$offset] = $value;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function offsetUnset(mixed $offset): void
     {
         if (isset($this->models[$offset])) {
@@ -225,19 +227,19 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function rewind(): void
     {
         $this->position = 0;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function toArray(): array
     {
         $copy = [];
@@ -253,10 +255,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return $copy;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function valid(): bool
     {
         $keys = array_keys($this->models);
@@ -264,10 +266,10 @@ abstract class KeyedCollection implements KeyedCollectionInterface
         return isset($keys[$this->position]);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): CollectionSchemaInterface
     {
         if (isset(self::$cachedSchemas[static::class])) {

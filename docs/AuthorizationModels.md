@@ -3,11 +3,13 @@
 An **Authorization Model** is like the DNA of your permission system - it defines the rules about who can do what, without specifying individual permissions. Think of it as creating the grammar for a language before writing the sentences.
 
 **🏗️ What does a model define?**
+
 - **Types of things** in your system (users, documents, teams)
-- **Relationships** between them (owner, viewer, member)  
+- **Relationships** between them (owner, viewer, member)
 - **Permission rules** (editors can also view, team members inherit folder access)
 
 **🔄 Model vs. Tuples:**
+
 - **Model:** "Documents can have viewers and editors" (the rules)
 - **Tuples:** "Alice is a viewer of Document123" (specific permissions)
 
@@ -20,31 +22,36 @@ An **Authorization Model** is like the DNA of your permission system - it define
 ## Core Components of an Authorization Model
 
 ### 📦 1. Type Definitions
+
 The "things" in your system that can have permissions:
 
 ```
 user     → Alice, Bob, Charlie
-document → Budget2024.pdf, ProjectPlan.doc  
+document → Budget2024.pdf, ProjectPlan.doc
 folder   → /Projects, /Archive
 team     → Engineering, Marketing
 ```
 
-### 🔗 2. Relations  
+### 🔗 2. Relations
+
 The "verbs" that connect types together:
 
 **Direct Relations:**
+
 ```
 define owner: [user]           → "Alice owns Budget2024.pdf"
-define member: [user]          → "Bob is a member of Engineering team"  
+define member: [user]          → "Bob is a member of Engineering team"
 ```
 
 **Computed Relations:**
+
 ```
 define viewer: editor          → "Anyone who can edit can also view"
 define viewer: owner or member → "Owners OR members can view"
 ```
 
 ### ⚡ 3. Conditions (Advanced)
+
 Context-based rules for dynamic permissions:
 
 ```
@@ -108,9 +115,7 @@ type document
 These examples assume:
 
 1. You have initialized the SDK client as `$client`.
-2. You have a `storeId` and have set it on the client: `$client->setStore($storeId);`.
-3. Refer to [Getting Started](GettingStarted.md) for client initialization and [Stores](Stores.md) for creating/managing stores and getting a `$storeId`.
-4. The variable `$modelId` in later examples refers to the unique identifier of an authorization model after it has been created on the server.
+2. The variable `$modelId` in later examples refers to the unique identifier of an authorization model after it has been created on the server.
 
 For robust error handling beyond the `unwrap()` helper shown, please see our guide on [Results and Error Handling](Results.md).
 
@@ -183,7 +188,7 @@ This step is purely client-side; no request is made to the OpenFGA server yet.
 
 ## 2. Creating an Authorization Model (Server-Side)
 
-Once you have the `typeDefinitions` (and optionally `conditions`) from your transformed DSL, you can create the model on the OpenFGA server using `Client::createAuthorizationModel()`. This action stores the model in the currently selected Store (as set by `$client->setStore()`).
+Once you have the `typeDefinitions` (and optionally `conditions`) from your transformed DSL, you can create the model on the OpenFGA server using `Client::createAuthorizationModel()`.
 
 The server will assign a unique ID to this model, which you'll need for most other operations.
 
@@ -218,23 +223,7 @@ if (!isset($typeDefinitions)) {
 ?>
 ```
 
-## 3. Setting the Active Model ID on the Client
-
-Similar to `Client::setStore()`, you can use `Client::setModel(string $modelId)` to tell the client which authorization model to use for subsequent operations like checks, writes, or listing objects. This is convenient as you won't have to pass the `$modelId` in every call.
-
-```php
-<?php
-// Assuming $modelId is available from the createAuthorizationModel step.
-if (empty($modelId)) {
-    echo "Please ensure a model is created and \$modelId is set to run this example.\n";
-} else {
-    $client->setModel($modelId);
-    echo "Client is now configured to use Model ID: {$modelId} for subsequent operations.\n";
-}
-?>
-```
-
-## 4. Listing Authorization Models
+## 3. Listing Authorization Models
 
 You can list all authorization models within the currently selected store. This is useful for finding existing model IDs or for management purposes.
 
@@ -242,7 +231,6 @@ The `listAuthorizationModels()` method supports pagination.
 
 ```php
 <?php
-// Assumes client store is set: $client->setStore($storeId);
 try {
     /** @var ListAuthorizationModelsResponseInterface $response */
     $response = unwrap($client->listAuthorizationModels(store: $storeId, pageSize: 5)); // Get up to 5 models
@@ -265,7 +253,7 @@ try {
 ?>
 ```
 
-## 5. Getting a Specific Authorization Model
+## 4. Getting a Specific Authorization Model
 
 If you have a model's ID, you can fetch its full definition from the server. This is useful for inspecting an existing model. The response includes the type definitions and conditions.
 
@@ -273,9 +261,6 @@ You can also convert the server-side model object back into its DSL representati
 
 ```php
 <?php
-// Assuming $modelId is known (e.g., from creation or listing)
-// and client store is set: $client->setStore($storeId);
-
 if (empty($modelId)) { // Use the one set on the client if available
     $modelId = $client->getModel();
 }

@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use OpenFGA\Responses\{CreateStoreResponse, CreateStoreResponseInterface};
+use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Tests\Support\Responses\SimpleResponse;
+use Psr\Http\Message\RequestInterface;
 
 describe('CreateStoreResponse', function (): void {
     test('implements CreateStoreResponseInterface', function (): void {
@@ -32,8 +35,68 @@ describe('CreateStoreResponse', function (): void {
         expect($response->getUpdatedAt())->toBe($updatedAt);
     });
 
-    // Note: fromResponse method testing would require integration tests due to SchemaValidator being final
-    // These tests focus on the model's direct functionality
+    test('fromResponse handles error responses with non-201 status', function (): void {
+        $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
+        $request = Mockery::mock(RequestInterface::class);
+        $validator = new SchemaValidator();
+
+        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
+    });
+
+    test('fromResponse handles 401 unauthorized', function (): void {
+        $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
+        $request = Mockery::mock(RequestInterface::class);
+        $validator = new SchemaValidator();
+
+        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
+    });
+
+    test('fromResponse handles 403 forbidden', function (): void {
+        $httpResponse = new SimpleResponse(403, json_encode(['code' => 'forbidden', 'message' => 'Access denied']));
+        $request = Mockery::mock(RequestInterface::class);
+        $validator = new SchemaValidator();
+
+        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
+    });
+
+    test('fromResponse handles 409 conflict', function (): void {
+        $httpResponse = new SimpleResponse(409, json_encode(['code' => 'store_already_exists', 'message' => 'Store already exists']));
+        $request = Mockery::mock(RequestInterface::class);
+        $validator = new SchemaValidator();
+
+        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
+    });
+
+    test('fromResponse handles 422 unprocessable entity', function (): void {
+        $httpResponse = new SimpleResponse(422, json_encode(['code' => 'validation_error', 'message' => 'Invalid store name']));
+        $request = Mockery::mock(RequestInterface::class);
+        $validator = new SchemaValidator();
+
+        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
+    });
+
+    test('fromResponse handles 500 internal server error', function (): void {
+        $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
+        $request = Mockery::mock(RequestInterface::class);
+        $validator = new SchemaValidator();
+
+        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
+    });
+
+    test('fromResponse handles 200 status (wrong status code)', function (): void {
+        $httpResponse = new SimpleResponse(200, json_encode(['id' => 'store-123', 'name' => 'Test Store']));
+        $request = Mockery::mock(RequestInterface::class);
+        $validator = new SchemaValidator();
+
+        $this->expectException(OpenFGA\Exceptions\NetworkException::class);
+        CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
+    });
 
     test('schema returns expected structure', function (): void {
         $schema = CreateStoreResponse::schema();
@@ -95,5 +158,43 @@ describe('CreateStoreResponse', function (): void {
 
         expect($response->getCreatedAt()->format('Y-m-d H:i:s.u'))->toBe('2024-01-01 10:00:00.123456');
         expect($response->getUpdatedAt()->format('Y-m-d H:i:s.u'))->toBe('2024-01-01 10:00:00.789012');
+    });
+
+    test('handles special characters in store name', function (): void {
+        $specialName = 'Test Store™ © 2024 - "Special" & Symbols!';
+        $response = new CreateStoreResponse(
+            'store-123',
+            $specialName,
+            new DateTimeImmutable(),
+            new DateTimeImmutable(),
+        );
+        expect($response->getName())->toBe($specialName);
+    });
+
+    test('handles very long store names', function (): void {
+        $longName = str_repeat('Long Store Name ', 100);
+        $response = new CreateStoreResponse(
+            'store-123',
+            $longName,
+            new DateTimeImmutable(),
+            new DateTimeImmutable(),
+        );
+        expect($response->getName())->toBe($longName);
+        expect(\strlen($response->getName()))->toBe(1600);
+    });
+
+    test('handles timestamps in different timezones', function (): void {
+        $createdAt = new DateTimeImmutable('2024-01-01 10:00:00', new DateTimeZone('America/New_York'));
+        $updatedAt = new DateTimeImmutable('2024-01-01 10:00:00', new DateTimeZone('Europe/London'));
+
+        $response = new CreateStoreResponse(
+            'store-id',
+            'Test Store',
+            $createdAt,
+            $updatedAt,
+        );
+
+        expect($response->getCreatedAt()->getTimezone()->getName())->toBe('America/New_York');
+        expect($response->getUpdatedAt()->getTimezone()->getName())->toBe('Europe/London');
     });
 });

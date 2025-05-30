@@ -9,58 +9,101 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 
 use Override;
 
+use function is_array;
+use function is_object;
+use function is_string;
+
 final class User implements UserInterface
 {
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private readonly ?object $object = null,
+        private readonly mixed $object = null,
         private readonly ?UsersetUserInterface $userset = null,
         private readonly ?TypedWildcardInterface $wildcard = null,
         private readonly ?DifferenceV1Interface $difference = null,
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getDifference(): ?DifferenceV1Interface
     {
         return $this->difference;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
-    public function getObject(): ?object
+    #[Override]
+    public function getObject(): null | UserObjectInterface | string
     {
-        return $this->object;
+        if (null === $this->object || is_string($this->object) || $this->object instanceof UserObjectInterface) {
+            return $this->object;
+        }
+
+        // Handle plain object with type and id properties
+        if (is_object($this->object) && property_exists($this->object, 'type') && property_exists($this->object, 'id')) {
+            $type = $this->object->type;
+            $id = $this->object->id;
+            if (is_string($type) && is_string($id)) {
+                return new UserObject(
+                    type: $type,
+                    id: $id,
+                );
+            }
+        }
+
+        // Handle array with type and id properties (from JSON decode)
+        if (is_array($this->object) && isset($this->object['type'], $this->object['id'])) {
+            $type = $this->object['type'];
+            $id = $this->object['id'];
+            if (is_string($type) && is_string($id)) {
+                return new UserObject(
+                    type: $type,
+                    id: $id,
+                );
+            }
+        }
+
+        // If it's an object that can be converted to string
+        if (is_object($this->object) && method_exists($this->object, '__toString')) {
+            return (string) $this->object;
+        }
+
+        // For legacy/test purposes, if it's a plain object with an id property, return it as a string
+        if (is_object($this->object) && property_exists($this->object, 'id') && is_string($this->object->id)) {
+            return $this->object->id;
+        }
+
+        // For any other case, return null since we can't convert it
+        return null;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getUserset(): ?UsersetUserInterface
     {
         return $this->userset;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getWildcard(): ?TypedWildcardInterface
     {
         return $this->wildcard;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -71,10 +114,10 @@ final class User implements UserInterface
         ], static fn ($value): bool => null !== $value);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(
@@ -98,10 +141,15 @@ final class User implements UserInterface
             return $this->object->jsonSerialize();
         }
 
-        if (method_exists($this->object, '__toString')) {
+        if (is_object($this->object) && method_exists($this->object, '__toString')) {
             return (string) $this->object;
         }
 
-        return get_object_vars($this->object);
+        if (is_object($this->object)) {
+            return get_object_vars($this->object);
+        }
+
+        // For arrays or other types, return as-is
+        return $this->object;
     }
 }

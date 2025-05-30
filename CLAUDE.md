@@ -24,6 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Documentation
 
 - `composer docs` - Regenerate API documentation from code
+- `composer wiki` - Regenerate and upload the GitHub repository's wiki documentation from code
 
 ## Architecture Overview
 

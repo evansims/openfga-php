@@ -175,7 +175,7 @@ Here's a closer look at the key methods available on `ResultInterface` objects:
         // Can return a plain value - automatically wrapped in Success
         return $this->getUserDetails($err->getMessage());
     });
-    
+
     // Or explicitly return a Result
     $recoveredExplicit = $result->recover(function (Throwable $err) {
         return new Success($this->getUserDetails($err->getMessage()));
@@ -198,7 +198,7 @@ Here's a closer look at the key methods available on `ResultInterface` objects:
             return new Failure(new \InvalidArgumentException("Value $value is too small."));
         }); // Failure(InvalidArgumentException("Value 4 is too small."))
 
-    echo $finalResult->unwrap(fn($error) => "Error: " . $error->getMessage()) . "\n"; 
+    echo $finalResult->unwrap(fn($error) => "Error: " . $error->getMessage()) . "\n";
     // Output: Error: Value 4 is too small.
     ```
 

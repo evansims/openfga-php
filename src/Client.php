@@ -45,6 +45,11 @@ final class Client implements ClientInterface
     public const VERSION = '1.0.0';
 
     /**
+     * Flag to prevent infinite loop during authentication.
+     */
+    private bool $isAuthenticating = false;
+
+    /**
      * The last HTTP request made by the client.
      */
     private ?\Psr\Http\Message\RequestInterface $lastRequest = null;
@@ -94,10 +99,10 @@ final class Client implements ClientInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function assertLastRequest(): \Psr\Http\Message\RequestInterface
     {
         if (! $this->lastRequest instanceof \Psr\Http\Message\RequestInterface) {
@@ -107,10 +112,10 @@ final class Client implements ClientInterface
         return $this->lastRequest;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function check(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -137,10 +142,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function createAuthorizationModel(
         StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
@@ -161,10 +166,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function createStore(
         string $name,
     ): ResultInterface {
@@ -181,10 +186,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function deleteStore(
         StoreInterface | string $store,
     ): ResultInterface {
@@ -199,10 +204,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function dsl(string $dsl): ResultInterface
     {
         try {
@@ -232,10 +237,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function expand(
         StoreInterface | string $store,
         TupleKeyInterface $tupleKey,
@@ -258,10 +263,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getAuthorizationModel(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -278,28 +283,28 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getLastRequest(): ?\Psr\Http\Message\RequestInterface
     {
         return $this->lastRequest;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getLastResponse(): ?\Psr\Http\Message\ResponseInterface
     {
         return $this->lastResponse;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(
         StoreInterface | string $store,
     ): ResultInterface {
@@ -314,10 +319,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listAuthorizationModels(
         StoreInterface | string $store,
         ?string $continuationToken = null,
@@ -338,10 +343,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listObjects(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -370,10 +375,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listStores(
         ?string $continuationToken = null,
         ?int $pageSize = null,
@@ -392,10 +397,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listTupleChanges(
         StoreInterface | string $store,
         ?string $continuationToken = null,
@@ -420,10 +425,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function listUsers(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -452,10 +457,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function readAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -472,10 +477,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function readTuples(
         StoreInterface | string $store,
         TupleKeyInterface $tupleKey,
@@ -500,10 +505,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function writeAssertions(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -522,10 +527,10 @@ final class Client implements ClientInterface
         }
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function writeTuples(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
@@ -590,17 +595,28 @@ final class Client implements ClientInterface
         }
 
         // Client Credentials / OIDC authentication configured
-        if (Authentication::CLIENT_CREDENTIALS === $this->authentication) {
+        if (Authentication::CLIENT_CREDENTIALS === $this->authentication && ! $this->isAuthenticating) {
             $clientId = is_string($this->clientId) && '' !== trim($this->clientId) ? trim($this->clientId) : null;
             $clientSecret = is_string($this->clientSecret) && '' !== trim($this->clientSecret) ? trim($this->clientSecret) : null;
             $issuer = is_string($this->issuer) && '' !== trim($this->issuer) ? trim($this->issuer) : null;
             $audience = is_string($this->audience) && '' !== trim($this->audience) ? trim($this->audience) : null;
 
             if (null !== $clientId && null !== $clientSecret && null !== $issuer && null !== $audience) {
-                $auth = new ClientCredentialAuthentication($clientId, $clientSecret, $audience, $issuer);
-                $this->token = AccessToken::fromResponse($this->sendRequest($auth));
+                $this->isAuthenticating = true;
 
-                return (string) $this->token;
+                try {
+                    $auth = new ClientCredentialAuthentication($clientId, $clientSecret, $audience, $issuer);
+                    $response = $this->sendRequest($auth);
+                    $this->token = AccessToken::fromResponse($response);
+
+                    return (string) $this->token;
+                } catch (Throwable $e) {
+                    // Log the exception details for diagnostics
+                    error_log('Authentication failed: ' . $e->getMessage());
+                    return null;
+                } finally {
+                    $this->isAuthenticating = false;
+                }
             }
         }
 

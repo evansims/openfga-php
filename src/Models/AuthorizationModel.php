@@ -30,55 +30,55 @@ final class AuthorizationModel implements AuthorizationModelInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function dsl(): string
     {
         return DslTransformer::toDsl($this);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getConditions(): ?ConditionsInterface
     {
         return $this->conditions;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getId(): string
     {
         return $this->id;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getSchemaVersion(): SchemaVersion
     {
         return $this->schemaVersion;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getTypeDefinitions(): TypeDefinitionsInterface
     {
         return $this->typeDefinitions;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         return array_filter([
@@ -89,10 +89,10 @@ final class AuthorizationModel implements AuthorizationModelInterface
         ], static fn ($value): bool => null !== $value);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

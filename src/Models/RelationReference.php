@@ -22,46 +22,46 @@ final class RelationReference implements RelationReferenceInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getCondition(): ?string
     {
         return $this->condition;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRelation(): ?string
     {
         return $this->relation;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getType(): string
     {
         return $this->type;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getWildcard(): ?object
     {
         return $this->wildcard;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function jsonSerialize(): array
     {
         $result = ['type' => $this->type];
@@ -81,10 +81,10 @@ final class RelationReference implements RelationReferenceInterface
         return $result;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

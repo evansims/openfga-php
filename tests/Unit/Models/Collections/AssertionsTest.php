@@ -280,4 +280,20 @@ describe('Assertions Collection', function (): void {
         expect($retrieved->getContextualTuples())->toBe($contextualTuples);
         expect($retrieved->getContext())->toBe($context);
     });
+
+    test('returns schema instance', function (): void {
+        $schema = Assertions::schema();
+
+        expect($schema)->toBeInstanceOf(OpenFGA\Schema\CollectionSchemaInterface::class);
+        expect($schema->getClassName())->toBe(Assertions::class);
+        expect($schema->getItemType())->toBe(Assertion::class);
+        // CollectionSchema doesn't have requireItems() method
+    });
+
+    test('schema is cached', function (): void {
+        $schema1 = Assertions::schema();
+        $schema2 = Assertions::schema();
+
+        expect($schema1)->toBe($schema2);
+    });
 });

@@ -20,28 +20,28 @@ final class CheckResponse extends Response implements CheckResponseInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getAllowed(): ?bool
     {
         return $this->allowed;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getResolution(): ?string
     {
         return $this->resolution;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -62,10 +62,10 @@ final class CheckResponse extends Response implements CheckResponseInterface
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

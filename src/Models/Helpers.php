@@ -6,8 +6,6 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\TupleKeys;
 
-use function is_array;
-
 /**
  * Helper for creating a TupleKey.
  *
@@ -24,13 +22,9 @@ function tuple(string $user, string $relation, string $object, ?ConditionInterfa
 /**
  * Helper for creating a TupleKeys collection.
  *
- * @param array<TupleKey>|TupleKey $tuples
+ * @param TupleKey ...$tuples
  */
-function tuples(TupleKey | array $tuples): TupleKeys
+function tuples(TupleKey ...$tuples): TupleKeys
 {
-    if (! is_array($tuples)) {
-        return new TupleKeys([$tuples]);
-    }
-
     return new TupleKeys($tuples);
 }

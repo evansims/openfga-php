@@ -15,10 +15,10 @@ use Throwable;
  */
 abstract class Result implements ResultInterface
 {
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function unwrap(?callable $fn = null): mixed
     {
         if ($this->failed()) {

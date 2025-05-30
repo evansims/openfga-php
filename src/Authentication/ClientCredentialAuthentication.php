@@ -18,15 +18,15 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(
             method: RequestMethod::POST,
-            url: '/oauth/token',
+            url: rtrim($this->issuer, '/') . '/oauth/token',
             body: $streamFactory->createStream(json_encode([
                 'grant_type' => 'client_credentials',
                 'client_id' => $this->clientId,
@@ -37,6 +37,7 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/x-www-form-urlencoded',
             ],
+            useApiUrl: false,
         );
     }
 }

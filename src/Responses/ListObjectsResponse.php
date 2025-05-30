@@ -22,19 +22,19 @@ final class ListObjectsResponse extends Response implements ListObjectsResponseI
     ) {
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getObjects(): array
     {
         return $this->objects;
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromResponse(
         ResponseInterface $response,
         RequestInterface $request,
@@ -56,10 +56,10 @@ final class ListObjectsResponse extends Response implements ListObjectsResponseI
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function schema(): SchemaInterface
     {
         return self::$schema ??= new Schema(

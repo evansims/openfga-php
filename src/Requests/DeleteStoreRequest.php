@@ -19,10 +19,10 @@ final class DeleteStoreRequest implements DeleteStoreRequestInterface
         assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         return new RequestContext(
@@ -31,10 +31,10 @@ final class DeleteStoreRequest implements DeleteStoreRequestInterface
         );
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public function getStore(): string
     {
         return $this->store;

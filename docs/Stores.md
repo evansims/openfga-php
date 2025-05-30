@@ -3,8 +3,9 @@
 Think of a **Store** as your own private universe for authorization rules. Just like how you might use separate databases for different projects, OpenFGA Stores let you completely isolate authorization systems from each other.
 
 **🏗️ What's in a Store?**
+
 - Your authorization models (the rules about who can do what)
-- Relationship tuples (the actual permission assignments)  
+- Relationship tuples (the actual permission assignments)
 - Assertions (tests to verify your rules work correctly)
 
 **🤔 Why Use Multiple Stores?**
@@ -51,8 +52,9 @@ use function OpenFGA\Results\unwrap;
 Creating a store is like setting up a new database - you give it a meaningful name, and OpenFGA returns a unique ID that you'll use for all future operations.
 
 **💡 Naming Tips:**
+
 - Use descriptive names: `acme-corp-production` not `store1`
-- Include environment: `myapp-staging` vs `myapp-production`  
+- Include environment: `myapp-staging` vs `myapp-production`
 - Consider your organization: `billing-service` vs `user-portal`
 
 **⚠️ Important:** Save the store ID! You'll need it for creating models, writing tuples, and checking permissions.
@@ -165,49 +167,19 @@ echo "Delete store example is commented out for safety. Please review and uncomm
 ?>
 ```
 
-## Using a Specific Store for Operations
-
-Once you have a `storeId` (either from creating a new store or by listing/getting an existing one), you need to tell the OpenFGA client which store you intend to operate on for subsequent calls like managing authorization models, writing tuples, or performing checks.
-
-You can do this using the `Client::setStore(string $storeId)` method.
-
-```php
-<?php
-// Example: Setting the active store on the client
-// $storeId = 'your_active_store_id'; // Replace with your actual store ID
-
-if (empty($storeId)) {
-    echo "Please set a \$storeId to run this example.\n";
-} else {
-    try {
-        $client->setStore($storeId); // Crucial step!
-        echo "Client is now configured to use Store ID: {$storeId}\n";
-
-        // Now, any calls like $client->createAuthorizationModel(...) or $client->check(...)
-        // will be performed within the context of this store.
-        // You can also override this on a per-call basis if needed,
-        // but setting it on the client is often more convenient.
-
-    } catch (Throwable $e) { // Though setStore itself doesn't throw, operations using it might.
-        echo "Error in operations after setting store '{$storeId}': " . $e->getMessage() . "\n";
-    }
-}
-?>
-```
-
-If you don't set a store ID on the client, you'll need to pass the `store` parameter in every relevant SDK method call. Setting it on the client simplifies your code if you're working primarily with one store at a time.
-
 ## Store Organization Best Practices
 
 **🎯 When to Use Multiple Stores**
 
 **Use separate stores for:**
+
 - **Different environments** (dev/staging/production) - keeps test data isolated
-- **Different tenants** in SaaS apps - complete data isolation 
+- **Different tenants** in SaaS apps - complete data isolation
 - **Different applications** that don't share permissions
 - **Compliance requirements** that mandate data separation
 
 **Use a single store for:**
+
 - **Different user roles** in the same app (use authorization models instead)
 - **Different features** in the same product (model them as different object types)
 - **Temporary testing** (just use different object IDs in your existing store)
@@ -218,11 +190,12 @@ Structure your store names for easy management:
 
 ```
 {product}-{environment}          → "billing-production"
-{customer}-{product}             → "acme-corp-platform"  
+{customer}-{product}             → "acme-corp-platform"
 {team}-{service}-{environment}   → "auth-team-iam-staging"
 ```
 
 **💡 Pro Tips:**
+
 - **Start simple:** One store per environment is usually enough initially
 - **Document ownership:** Keep track of who manages each store
 - **Plan for growth:** Consider how your store strategy scales with your architecture

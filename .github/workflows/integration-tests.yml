@@ -36,6 +36,20 @@ jobs:
       - name: Run integration tests
         run: composer test:integration
 
+      - if: !cancelled()
+        name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: integration
+
+      - if: !cancelled()
+        name: Upload test results to Codecov
+        uses: codecov/test-results-action@f2dba722c67b86c6caa034178c6e4d35335f6706 # v1.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: integration
+
       - name: Stop OpenFGA
         if: always()
         run: docker compose -f docker-compose.integration.yml down -v

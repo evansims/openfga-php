@@ -32,6 +32,9 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
 
     public function clear(): void;
 
+    /**
+     * @return int<0, max>
+     */
     #[Override]
     public function count(): int;
 
@@ -88,6 +91,9 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
     #[Override]
     public function next(): void;
 
+    /**
+     * @param mixed $offset
+     */
     #[Override]
     public function offsetExists(mixed $offset): bool;
 
@@ -107,6 +113,9 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
     #[Override]
     public function offsetSet(mixed $offset, mixed $value): void;
 
+    /**
+     * @param mixed $offset
+     */
     #[Override]
     public function offsetUnset(mixed $offset): void;
 

@@ -20,10 +20,10 @@ use function strlen;
 
 final class DslTransformer implements DslTransformerInterface
 {
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function fromDsl(string $dsl, SchemaValidator $validator): AuthorizationModelInterface
     {
         $lines = preg_split('/\r?\n/', $dsl);
@@ -98,10 +98,10 @@ final class DslTransformer implements DslTransformerInterface
         return $validator->validateAndTransform($data, AuthorizationModel::class);
     }
 
-    #[Override]
     /**
      * @inheritDoc
      */
+    #[Override]
     public static function toDsl(AuthorizationModelInterface $model): string
     {
         $lines = [];

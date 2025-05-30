@@ -15,6 +15,8 @@ enum NetworkError: string
 
     case Invalid = 'http_400';
 
+    case Request = 'request_failed';
+
     case Server = 'http_500';
 
     case Timeout = 'http_422';
