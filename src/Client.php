@@ -610,8 +610,9 @@ final class Client implements ClientInterface
                     $this->token = AccessToken::fromResponse($response);
 
                     return (string) $this->token;
-                } catch (Throwable) {
-                    // Authentication failed, return null
+                } catch (Throwable $e) {
+                    // Log the exception details for diagnostics
+                    error_log('Authentication failed: ' . $e->getMessage());
                     return null;
                 } finally {
                     $this->isAuthenticating = false;
