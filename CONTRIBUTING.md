@@ -68,4 +68,4 @@ Update the wiki:
 composer wiki
 ```
 
-Note: You must have maintainer priviledges to update the wiki.
+Note: You must have maintainer privileges to update the wiki.
