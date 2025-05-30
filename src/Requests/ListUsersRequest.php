@@ -12,7 +12,6 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
 use function count;
 use function is_array;
 
@@ -38,10 +37,21 @@ final class ListUsersRequest implements ListUsersRequestInterface
         private ?TupleKeysInterface $contextualTuples = null,
         private ?Consistency $consistency = null,
     ) {
-        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
-        assert('' !== $this->model, new InvalidArgumentException('Authorization model ID cannot be empty'));
-        assert('' !== $this->object, new InvalidArgumentException('Object ID cannot be empty'));
-        assert('' !== $this->relation, new InvalidArgumentException('Relation cannot be empty'));
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
+
+        if ('' === $this->model) {
+            throw new InvalidArgumentException('Authorization model ID cannot be empty');
+        }
+
+        if ('' === $this->object) {
+            throw new InvalidArgumentException('Object ID cannot be empty');
+        }
+
+        if ('' === $this->relation) {
+            throw new InvalidArgumentException('Relation cannot be empty');
+        }
     }
 
     /**

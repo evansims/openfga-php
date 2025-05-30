@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\RequestMethod;

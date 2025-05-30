@@ -235,22 +235,18 @@ describe('ListUsersRequest', function (): void {
     });
 
     test('throws when store is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ListUsersRequest(store: '', model: 'model', object: 'object', relation: 'relation', userFilters: new UserTypeFilters());
-    });
+    })->throws(InvalidArgumentException::class);
 
     test('throws when model is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ListUsersRequest(store: 'store', model: '', object: 'object', relation: 'relation', userFilters: new UserTypeFilters());
-    });
+    })->throws(InvalidArgumentException::class);
 
     test('throws when object is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ListUsersRequest(store: 'store', model: 'model', object: '', relation: 'relation', userFilters: new UserTypeFilters());
-    });
+    })->throws(InvalidArgumentException::class);
 
     test('throws when relation is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ListUsersRequest(store: 'store', model: 'model', object: 'object', relation: '', userFilters: new UserTypeFilters());
-    });
+    })->throws(InvalidArgumentException::class);
 });

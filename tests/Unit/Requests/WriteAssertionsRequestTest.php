@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
 use OpenFGA\Models\{Assertion, AssertionTupleKey};
 use OpenFGA\Models\Collections\{Assertions, TupleKeys};
 use OpenFGA\Models\TupleKey;
+use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{WriteAssertionsRequest, WriteAssertionsRequestInterface};
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
@@ -60,7 +64,7 @@ describe('WriteAssertionsRequest', function (): void {
 
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::PUT);
+        expect($context->getMethod())->toBe(RequestMethod::PUT);
         expect($context->getUrl())->toBe('/stores/test-store/assertions/model-xyz');
         expect($context->getBody())->toBe($this->stream);
         expect($context->useApiUrl())->toBeTrue();

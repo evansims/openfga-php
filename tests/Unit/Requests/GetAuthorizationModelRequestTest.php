@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\GetAuthorizationModelRequest;
 use Psr\Http\Message\StreamFactoryInterface;

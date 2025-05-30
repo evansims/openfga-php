@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
+use OpenFGA\Models\{ConditionInterface, TupleKey};
 use OpenFGA\Models\Enums\Consistency;
-use OpenFGA\Models\TupleKey;
+use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{ReadTuplesRequest, ReadTuplesRequestInterface};
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
@@ -63,7 +67,7 @@ describe('ReadTuplesRequest', function (): void {
 
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($context->getMethod())->toBe(RequestMethod::POST);
         expect($context->getUrl())->toBe('/stores/test-store/read');
         expect($context->getBody())->toBe($this->stream);
         expect($context->useApiUrl())->toBeTrue();
@@ -153,7 +157,7 @@ describe('ReadTuplesRequest', function (): void {
     });
 
     test('handles tuple key with condition', function (): void {
-        $condition = $this->createMock(OpenFGA\Models\ConditionInterface::class);
+        $condition = $this->createMock(ConditionInterface::class);
         $condition->method('jsonSerialize')->willReturn(['name' => 'in_department']);
 
         $tupleKey = new TupleKey(

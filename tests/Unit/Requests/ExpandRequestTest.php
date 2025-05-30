@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\{TupleKey, TupleKeyInterface};

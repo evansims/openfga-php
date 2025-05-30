@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use DateTimeImmutable;
+use DateTimeZone;
+use InvalidArgumentException;
+use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{ListTupleChangesRequest, ListTupleChangesRequestInterface};
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -47,7 +53,7 @@ describe('ListTupleChangesRequest', function (): void {
         $request = new ListTupleChangesRequest('test-store');
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::GET);
+        expect($context->getMethod())->toBe(RequestMethod::GET);
         expect($context->getUrl())->toBe('/stores/test-store/changes');
         expect($context->getBody())->toBeNull();
         expect($context->useApiUrl())->toBeTrue();
@@ -66,7 +72,7 @@ describe('ListTupleChangesRequest', function (): void {
 
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::GET);
+        expect($context->getMethod())->toBe(RequestMethod::GET);
         expect($context->getUrl())->toContain('/stores/test-store-id/changes?');
         expect($context->getUrl())->toContain('continuation_token=next-page-token');
         expect($context->getUrl())->toContain('page_size=50');

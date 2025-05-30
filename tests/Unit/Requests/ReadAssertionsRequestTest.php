@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
+use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{ReadAssertionsRequest, ReadAssertionsRequestInterface};
 use Psr\Http\Message\StreamFactoryInterface;
 
@@ -33,7 +37,7 @@ describe('ReadAssertionsRequest', function (): void {
 
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::GET);
+        expect($context->getMethod())->toBe(RequestMethod::GET);
         expect($context->getUrl())->toBe('/stores/test-store/assertions/model-xyz');
         expect($context->getBody())->toBeNull();
         expect($context->useApiUrl())->toBeTrue();

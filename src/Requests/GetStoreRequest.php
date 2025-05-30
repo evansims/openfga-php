@@ -9,14 +9,14 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
 
-use function assert;
-
 final class GetStoreRequest implements GetStoreRequestInterface
 {
     public function __construct(
         private string $store,
     ) {
-        assert('' !== $this->store, new InvalidArgumentException('Store ID cannot be empty'));
+        if ('' === $this->store) {
+            throw new InvalidArgumentException('Store ID cannot be empty');
+        }
     }
 
     /**

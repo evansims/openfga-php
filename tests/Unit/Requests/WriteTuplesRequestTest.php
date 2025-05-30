@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\TupleKeys;
-use OpenFGA\Models\TupleKey;
+use OpenFGA\Models\{ConditionInterface, TupleKey};
+use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{WriteTuplesRequest, WriteTuplesRequestInterface};
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
@@ -98,7 +102,7 @@ describe('WriteTuplesRequest', function (): void {
 
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($context->getMethod())->toBe(RequestMethod::POST);
         expect($context->getUrl())->toBe('/stores/test-store/write');
         expect($context->getBody())->toBe($this->stream);
         expect($context->useApiUrl())->toBeTrue();
@@ -248,7 +252,7 @@ describe('WriteTuplesRequest', function (): void {
     });
 
     test('handles tuple keys with conditions', function (): void {
-        $condition = $this->createMock(OpenFGA\Models\ConditionInterface::class);
+        $condition = $this->createMock(ConditionInterface::class);
         $condition->method('jsonSerialize')->willReturn(['name' => 'amount_under_limit']);
 
         $writes = new TupleKeys(

@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Unit\Requests;
+
+use InvalidArgumentException;
 use OpenFGA\Models\Collections\TupleKeys;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKey;
+use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{CheckRequest, CheckRequestInterface};
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
@@ -78,7 +82,7 @@ describe('CheckRequest', function (): void {
 
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($context->getMethod())->toBe(RequestMethod::POST);
         expect($context->getUrl())->toBe('/stores/test-store/check');
         expect($context->getBody())->toBe($this->stream);
         expect($context->useApiUrl())->toBeTrue();
@@ -131,7 +135,7 @@ describe('CheckRequest', function (): void {
 
         $requestContext = $request->getRequest($this->streamFactory);
 
-        expect($requestContext->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($requestContext->getMethod())->toBe(RequestMethod::POST);
         expect($requestContext->getUrl())->toBe('/stores/main-store/check');
         expect($requestContext->getBody())->toBe($this->stream);
 
@@ -179,7 +183,7 @@ describe('CheckRequest', function (): void {
 
         $context = $request->getRequest($this->streamFactory);
 
-        expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+        expect($context->getMethod())->toBe(RequestMethod::POST);
         expect($context->getUrl())->toBe('/stores/test-store/check');
         expect($context->getBody())->toBe($this->stream);
 
@@ -215,7 +219,7 @@ describe('CheckRequest', function (): void {
 
             $context = $request->getRequest($streamFactory);
 
-            expect($context->getMethod())->toBe(OpenFGA\Network\RequestMethod::POST);
+            expect($context->getMethod())->toBe(RequestMethod::POST);
             expect($context->getUrl())->toBe('/stores/test-store/check');
             expect($context->getBody())->toBe($stream);
             expect($capturedBody['consistency'])->toBe($consistency->value);
