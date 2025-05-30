@@ -12,6 +12,7 @@ jobs:
   integration:
     name: Run Integration Tests
     runs-on: ubuntu-latest
+
     steps:
       - name: Harden the runner (Audit all outbound calls)
         uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
@@ -30,23 +31,37 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-interaction --no-progress --ansi
+
+      - name: Create coverage directory
+        run: mkdir -p coverage
+
       - name: Start OpenFGA
         run: docker compose -f docker-compose.integration.yml up -d
 
       - name: Run integration tests
         run: composer test:integration
 
+      - name: List generated files
+        run: |
+          echo "Coverage directory contents:"
+          ls -la coverage/ || echo "Coverage directory not found"
+          echo "JUnit file:"
+          ls -la junit.xml || echo "JUnit file not found"
+
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: integration
+          files: ./coverage/cobertura.xml
+          fail_ci_if_error: true
 
       - name: Upload test results to Codecov
         uses: codecov/test-results-action@f2dba722c67b86c6caa034178c6e4d35335f6706 # v1.1.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: integration
+          file: ./junit.xml
 
       - name: Stop OpenFGA
         if: always()

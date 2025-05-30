@@ -102,7 +102,7 @@
       "@phpcs"
     ],
     "pest:contract": [
-      "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning"
+      "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "pest:integration": [
       "@pest:integration:build",
@@ -116,19 +116,19 @@
     ],
     "pest:integration:run": [
       "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --testsuite integration"
+      "@php vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "pest:tools": [
       "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
+      "@php vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "pest:unit": [
       "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact"
+      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "pest:debug": [
       "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --debug"
+      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --debug --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "phpcs": [
       "@putenv PHP_CS_FIXER_IGNORE_ENV=1",

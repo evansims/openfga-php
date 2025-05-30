@@ -40,7 +40,7 @@ jobs:
         run: cd tools/docs && composer update --prefer-stable --no-interaction --no-progress --ansi && cd ../../
 
       - name: Execute PEST tests
-        run: vendor/bin/pest --testsuite unit --coverage --colors=always --strict-global-state --fail-on-risky --fail-on-warning --coverage-cobertura --log-junit
+        run: composer test:unit
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@18283e04ce6e62d37312384ff67231eb8fd56d24 # v5.4.3
