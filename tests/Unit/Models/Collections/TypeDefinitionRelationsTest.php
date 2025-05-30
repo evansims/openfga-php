@@ -10,30 +10,30 @@ use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 use stdClass;
 
 describe('TypeDefinitionRelations Collection', function (): void {
-    test('implements TypeDefinitionRelationsInterface', function (): void {
+    test('implements interface', function (): void {
         $collection = new TypeDefinitionRelations([]);
 
         expect($collection)->toBeInstanceOf(TypeDefinitionRelationsInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
+    test('creates empty', function (): void {
         $collection = new TypeDefinitionRelations([]);
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of relations', function (): void {
+    test('creates with array of relations', function (): void {
         $relations = [
             'viewer' => new Userset(
-                direct: new stdClass(),
+                direct: new stdClass,
             ),
             'editor' => new Userset(
-                direct: new stdClass(),
+                direct: new stdClass,
                 computedUserset: new ObjectRelation(relation: 'viewer'),
             ),
             'owner' => new Userset(
-                direct: new stdClass(),
+                direct: new stdClass,
             ),
         ];
 
@@ -44,8 +44,8 @@ describe('TypeDefinitionRelations Collection', function (): void {
     });
 
     test('gets relations by key', function (): void {
-        $viewerRelation = new Userset(direct: new stdClass());
-        $editorRelation = new Userset(direct: new stdClass());
+        $viewerRelation = new Userset(direct: new stdClass);
+        $editorRelation = new Userset(direct: new stdClass);
 
         $collection = new TypeDefinitionRelations([
             'viewer' => $viewerRelation,
@@ -59,9 +59,9 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
     test('iterates over relations', function (): void {
         $relations = [
-            'read' => new Userset(direct: new stdClass()),
-            'write' => new Userset(direct: new stdClass()),
-            'admin' => new Userset(direct: new stdClass()),
+            'read' => new Userset(direct: new stdClass),
+            'write' => new Userset(direct: new stdClass),
+            'admin' => new Userset(direct: new stdClass),
         ];
 
         $collection = new TypeDefinitionRelations($relations);
@@ -75,9 +75,9 @@ describe('TypeDefinitionRelations Collection', function (): void {
         expect($keys)->toBe(['read', 'write', 'admin']);
     });
 
-    test('converts to array', function (): void {
-        $viewerRelation = new Userset(direct: new stdClass());
-        $editorRelation = new Userset(direct: new stdClass());
+    test('toArray', function (): void {
+        $viewerRelation = new Userset(direct: new stdClass);
+        $editorRelation = new Userset(direct: new stdClass);
 
         $collection = new TypeDefinitionRelations([
             'viewer' => $viewerRelation,
@@ -92,14 +92,14 @@ describe('TypeDefinitionRelations Collection', function (): void {
         expect($array['editor'])->toBe($editorRelation);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $collection = new TypeDefinitionRelations([
             'viewer' => new Userset(
-                direct: new stdClass(),
+                direct: new stdClass,
             ),
             'editor' => new Userset(
                 union: new Usersets([
-                    new Userset(direct: new stdClass()),
+                    new Userset(direct: new stdClass),
                     new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
                 ]),
             ),
@@ -124,8 +124,8 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
     test('checks if key exists', function (): void {
         $collection = new TypeDefinitionRelations([
-            'viewer' => new Userset(direct: new stdClass()),
-            'editor' => new Userset(direct: new stdClass()),
+            'viewer' => new Userset(direct: new stdClass),
+            'editor' => new Userset(direct: new stdClass),
         ]);
 
         expect(isset($collection['viewer']))->toBeTrue();
@@ -135,9 +135,9 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
     test('returns all keys', function (): void {
         $collection = new TypeDefinitionRelations([
-            'read' => new Userset(direct: new stdClass()),
-            'write' => new Userset(direct: new stdClass()),
-            'delete' => new Userset(direct: new stdClass()),
+            'read' => new Userset(direct: new stdClass),
+            'write' => new Userset(direct: new stdClass),
+            'delete' => new Userset(direct: new stdClass),
         ]);
 
         $keys = array_keys($collection->toArray());
@@ -149,12 +149,12 @@ describe('TypeDefinitionRelations Collection', function (): void {
     test('handles complex relation definitions', function (): void {
         $collection = new TypeDefinitionRelations([
             // Direct assignment
-            'viewer' => new Userset(direct: new stdClass()),
+            'viewer' => new Userset(direct: new stdClass),
 
             // Union of direct and computed
             'editor' => new Userset(
                 union: new Usersets([
-                    new Userset(direct: new stdClass()),
+                    new Userset(direct: new stdClass),
                     new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
                 ]),
             ),
@@ -186,7 +186,7 @@ describe('TypeDefinitionRelations Collection', function (): void {
         expect(isset($collection['commenter']))->toBeTrue();
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = TypeDefinitionRelations::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);

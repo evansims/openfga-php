@@ -10,13 +10,13 @@ use OpenFGA\Schema\SchemaInterface;
 
 describe('Metadata Model', function (): void {
     test('implements MetadataInterface', function (): void {
-        $metadata = new Metadata();
+        $metadata = new Metadata;
 
         expect($metadata)->toBeInstanceOf(MetadataInterface::class);
     });
 
     test('constructs with all null parameters', function (): void {
-        $metadata = new Metadata();
+        $metadata = new Metadata;
 
         expect($metadata->getModule())->toBeNull();
         expect($metadata->getRelations())->toBeNull();
@@ -81,7 +81,7 @@ describe('Metadata Model', function (): void {
     });
 
     test('serializes to JSON with only non-null fields', function (): void {
-        $metadata = new Metadata();
+        $metadata = new Metadata;
         expect($metadata->jsonSerialize())->toBe([]);
 
         $metadata = new Metadata(module: 'auth');

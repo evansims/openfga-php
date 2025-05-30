@@ -114,8 +114,10 @@ class DocumentationGenerator
 
         $namespace = $namespaceMatches[1];
 
-        // Look for either class or interface definition
-        if (preg_match('/(class|interface)\s+(\w+)/', $content, $matches)) {
+        // Look for either class or interface definition at the beginning of a line
+        // This regex ensures we match actual declarations, not text within docblocks
+        // Supports all PHP class modifiers: abstract, final, readonly in any order
+        if (preg_match('/^\s*(?:(?:abstract|final|readonly)\s+)*(class|interface)\s+(\w+)/m', $content, $matches)) {
             $type = $matches[1]; // 'class' or 'interface'
             $name = $matches[2];
             $className = $namespace . '\\' . $name;

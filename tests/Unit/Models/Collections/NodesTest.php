@@ -9,20 +9,20 @@ use OpenFGA\Models\{Computed, Leaf, Node};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Nodes Collection', function (): void {
-    test('implements NodesInterface', function (): void {
-        $collection = new Nodes();
+    test('implements interface', function (): void {
+        $collection = new Nodes;
 
         expect($collection)->toBeInstanceOf(NodesInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
-        $collection = new Nodes();
+    test('creates empty', function (): void {
+        $collection = new Nodes;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of nodes', function (): void {
+    test('creates with array of nodes', function (): void {
         $node1 = new Node(name: 'viewer');
         $node2 = new Node(name: 'editor');
         $node3 = new Node(name: 'owner');
@@ -34,7 +34,7 @@ describe('Nodes Collection', function (): void {
     });
 
     test('adds nodes', function (): void {
-        $collection = new Nodes();
+        $collection = new Nodes;
 
         $node = new Node(
             name: 'viewer',
@@ -70,7 +70,7 @@ describe('Nodes Collection', function (): void {
         expect($names)->toBe(['read', 'write', 'delete']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $node1 = new Node(name: 'user');
         $node2 = new Node(name: 'admin');
 
@@ -83,7 +83,7 @@ describe('Nodes Collection', function (): void {
         expect($array[1])->toBe($node2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $node1 = new Node(name: 'viewer');
         $node2 = new Node(
             name: 'editor',
@@ -104,7 +104,7 @@ describe('Nodes Collection', function (): void {
         ]);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Nodes::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -193,7 +193,7 @@ describe('Nodes Collection', function (): void {
     });
 
     test('handles empty collection edge cases', function (): void {
-        $collection = new Nodes();
+        $collection = new Nodes;
 
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);

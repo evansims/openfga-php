@@ -4,37 +4,31 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models\Collections;
 
-use InvalidArgumentException;
-use OpenFGA\Exceptions\SerializationException;
+use OpenFGA\Exceptions\{ClientException, SerializationException};
+use OpenFGA\Messages;
 use OpenFGA\Models\TupleKey;
 use OpenFGA\Schema\CollectionSchemaInterface;
 use OpenFGA\Tests\Support\Collections\{InvalidIndexedCollection, InvalidTypeIndexedCollection, TestIndexedCollection};
-use OutOfBoundsException;
 use stdClass;
-use TypeError;
 
 describe('IndexedCollection', function (): void {
     test('throws TypeError when $itemType is not defined', function (): void {
-        $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Undefined item type for OpenFGA\Tests\Support\Collections\InvalidIndexedCollection. Define the $itemType property or override the constructor.');
-        new InvalidIndexedCollection();
-    });
+        new InvalidIndexedCollection;
+    })->throws(ClientException::class, trans(Messages::COLLECTION_UNDEFINED_ITEM_TYPE, ['class' => 'OpenFGA\Tests\Support\Collections\InvalidIndexedCollection']));
 
     test('throws TypeError when $itemType does not implement ModelInterface', function (): void {
-        $this->expectException(TypeError::class);
-        $this->expectExceptionMessage('Expected item type to implement OpenFGA\Models\ModelInterface, stdClass given');
-        new InvalidTypeIndexedCollection();
-    });
+        new InvalidTypeIndexedCollection;
+    })->throws(ClientException::class, trans(Messages::COLLECTION_INVALID_ITEM_TYPE_INTERFACE, ['interface' => 'OpenFGA\Models\ModelInterface', 'given' => 'stdClass']));
 
     test('constructs with valid $itemType', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBe(true);
     });
 
     test('every() returns true for empty collection', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
 
         $result = $collection->every(fn () => false);
 
@@ -113,24 +107,20 @@ describe('IndexedCollection', function (): void {
     });
 
     test('key() throws OutOfBoundsException when position is invalid', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
 
-        $this->expectException(OutOfBoundsException::class);
-        $this->expectExceptionMessage('Invalid position');
         $collection->key();
-    });
+    })->throws(ClientException::class, trans(Messages::COLLECTION_INVALID_POSITION));
 
     test('offsetSet() throws InvalidArgumentException with wrong type', function (): void {
-        $collection = new TestIndexedCollection();
-        $wrongType = new stdClass();
+        $collection = new TestIndexedCollection;
+        $wrongType = new stdClass;
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected instance of OpenFGA\Models\TupleKey, stdClass given.');
         $collection->offsetSet(0, $wrongType);
-    });
+    })->throws(ClientException::class, trans(Messages::COLLECTION_INVALID_ITEM_INSTANCE, ['expected' => 'OpenFGA\Models\TupleKey', 'given' => 'stdClass']));
 
     test('offsetSet() with null offset appends item', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
         $tuple = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
 
         $collection->offsetSet(null, $tuple);
@@ -140,7 +130,7 @@ describe('IndexedCollection', function (): void {
     });
 
     test('offsetSet() with specific offset sets item at position', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
         $tuple = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
 
         $collection->offsetSet(5, $tuple);
@@ -169,7 +159,7 @@ describe('IndexedCollection', function (): void {
     });
 
     test('offsetUnset() with non-numeric key does not reorder', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
         $tuple = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
 
         $collection->offsetSet('key', $tuple);
@@ -195,7 +185,7 @@ describe('IndexedCollection', function (): void {
     });
 
     test('reduce() returns initial value for empty collection', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
 
         $result = $collection->reduce('initial', fn (string $acc, TupleKey $tuple) => $acc . $tuple->getUser());
 
@@ -203,7 +193,7 @@ describe('IndexedCollection', function (): void {
     });
 
     test('some() returns false for empty collection', function (): void {
-        $collection = new TestIndexedCollection();
+        $collection = new TestIndexedCollection;
 
         $result = $collection->some(fn () => true);
 
@@ -246,14 +236,12 @@ describe('IndexedCollection', function (): void {
     });
 
     test('schema() throws exception when $itemType is not defined', function (): void {
-        $this->expectException(SerializationException::class);
         InvalidIndexedCollection::schema();
-    });
+    })->throws(SerializationException::class);
 
     test('schema() throws exception when $itemType is invalid', function (): void {
-        $this->expectException(SerializationException::class);
         InvalidTypeIndexedCollection::schema();
-    });
+    })->throws(SerializationException::class);
 
     test('schema() returns valid schema for concrete collection', function (): void {
         $schema = TestIndexedCollection::schema();

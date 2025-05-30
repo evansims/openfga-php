@@ -18,8 +18,8 @@ describe('GetStoreResponse', function (): void {
         $response = new GetStoreResponse(
             'store-id',
             'store-name',
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response)->toBeInstanceOf(GetStoreResponseInterface::class);
     });
@@ -105,47 +105,42 @@ describe('GetStoreResponse', function (): void {
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 401 unauthorized', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 403 forbidden', function (): void {
         $httpResponse = new SimpleResponse(403, json_encode(['code' => 'forbidden', 'message' => 'Access denied']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 404 not found', function (): void {
         $httpResponse = new SimpleResponse(404, json_encode(['code' => 'store_not_found', 'message' => 'Store not found']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('schema returns expected structure', function (): void {
         $schema = GetStoreResponse::schema();
@@ -182,8 +177,8 @@ describe('GetStoreResponse', function (): void {
         $response = new GetStoreResponse(
             'id-123',
             '',
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response->getName())->toBe('');
     });
@@ -193,8 +188,8 @@ describe('GetStoreResponse', function (): void {
         $response = new GetStoreResponse(
             $uuid,
             'UUID Store',
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response->getId())->toBe($uuid);
     });
@@ -221,8 +216,8 @@ describe('GetStoreResponse', function (): void {
         $response = new GetStoreResponse(
             'store-123',
             'Test Store',
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
 
         $store1 = $response->getStore();
@@ -240,8 +235,8 @@ describe('GetStoreResponse', function (): void {
         $response = new GetStoreResponse(
             'store-123',
             $longName,
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
 
         expect($response->getName())->toBe($longName);

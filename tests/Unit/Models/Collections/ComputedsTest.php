@@ -9,20 +9,20 @@ use OpenFGA\Models\Computed;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Computeds Collection', function (): void {
-    test('implements ComputedsInterface', function (): void {
-        $collection = new Computeds();
+    test('implements interface', function (): void {
+        $collection = new Computeds;
 
         expect($collection)->toBeInstanceOf(ComputedsInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
-        $collection = new Computeds();
+    test('creates empty', function (): void {
+        $collection = new Computeds;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of computed objects', function (): void {
+    test('creates with array of computed objects', function (): void {
         $computed1 = new Computed(userset: 'viewer');
         $computed2 = new Computed(userset: 'editor');
         $computed3 = new Computed(userset: 'owner');
@@ -34,7 +34,7 @@ describe('Computeds Collection', function (): void {
     });
 
     test('adds computed objects', function (): void {
-        $collection = new Computeds();
+        $collection = new Computeds;
 
         $computed = new Computed(userset: 'viewer');
         $collection->add($computed);
@@ -66,7 +66,7 @@ describe('Computeds Collection', function (): void {
         expect($usersets)->toBe(['viewer', 'editor', 'owner']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $computed1 = new Computed(userset: 'viewer');
         $computed2 = new Computed(userset: 'editor');
 
@@ -79,7 +79,7 @@ describe('Computeds Collection', function (): void {
         expect($array[1])->toBe($computed2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $computed1 = new Computed(userset: 'viewer');
         $computed2 = new Computed(userset: 'editor');
 
@@ -92,7 +92,7 @@ describe('Computeds Collection', function (): void {
         expect($json[1])->toBe(['userset' => 'editor']);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Computeds::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -173,7 +173,7 @@ describe('Computeds Collection', function (): void {
     });
 
     test('handles empty collection edge cases', function (): void {
-        $collection = new Computeds();
+        $collection = new Computeds;
 
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);

@@ -8,9 +8,17 @@ use OpenFGA\Models\AssertionInterface;
 use Override;
 
 /**
+ * Collection interface for OpenFGA assertion models.
+ *
+ * This interface defines a collection that holds assertion objects used for
+ * testing authorization model correctness. Assertions represent expected
+ * authorization outcomes for specific tuple configurations.
+ *
  * @template T of AssertionInterface
  *
  * @extends IndexedCollectionInterface<T>
+ *
+ * @see https://openfga.dev/docs/modeling/testing OpenFGA Model Testing
  */
 interface AssertionsInterface extends IndexedCollectionInterface
 {

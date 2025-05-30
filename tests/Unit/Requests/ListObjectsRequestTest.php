@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Network\RequestMethod;
@@ -217,21 +217,21 @@ describe('ListObjectsRequest', function (): void {
     });
     test('throws when store ID is empty', function (): void {
         new ListObjectsRequest(store: '', type: 'document', relation: 'viewer', user: 'user:1');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 
     test('throws when type is empty', function (): void {
         new ListObjectsRequest(store: 'test-store', type: '', relation: 'viewer', user: 'user:1');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 
     test('throws when relation is empty', function (): void {
         new ListObjectsRequest(store: 'test-store', type: 'document', relation: '', user: 'user:1');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 
     test('throws when user is empty', function (): void {
         new ListObjectsRequest(store: 'test-store', type: 'document', relation: 'viewer', user: '');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 
     test('throws when model is empty', function (): void {
         new ListObjectsRequest(store: 'test-store', type: 'document', relation: 'viewer', user: 'user:1', model: '');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 });

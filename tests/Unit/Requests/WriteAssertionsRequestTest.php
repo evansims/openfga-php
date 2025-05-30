@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
-use OpenFGA\Models\{Assertion, AssertionTupleKey};
+use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Models\{Assertion, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, TupleKeys};
-use OpenFGA\Models\TupleKey;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{WriteAssertionsRequest, WriteAssertionsRequestInterface};
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
@@ -20,7 +19,7 @@ describe('WriteAssertionsRequest', function (): void {
     });
 
     test('implements WriteAssertionsRequestInterface', function (): void {
-        $assertions = new Assertions();
+        $assertions = new Assertions;
         $request = new WriteAssertionsRequest($assertions, 'store', 'model');
         expect($request)->toBeInstanceOf(WriteAssertionsRequestInterface::class);
     });
@@ -93,7 +92,7 @@ describe('WriteAssertionsRequest', function (): void {
     });
 
     test('handles empty assertions', function (): void {
-        $assertions = new Assertions();
+        $assertions = new Assertions;
 
         $request = new WriteAssertionsRequest(
             assertions: $assertions,
@@ -171,7 +170,7 @@ describe('WriteAssertionsRequest', function (): void {
     });
 
     test('handles UUID format IDs', function (): void {
-        $assertions = new Assertions();
+        $assertions = new Assertions;
         $storeId = '550e8400-e29b-41d4-a716-446655440000';
         $modelId = '660e8400-e29b-41d4-a716-446655440001';
 
@@ -187,26 +186,24 @@ describe('WriteAssertionsRequest', function (): void {
     });
 
     test('throws when store is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new WriteAssertionsRequest(
-            assertions: new Assertions(),
+            assertions: new Assertions,
             store: '',
             model: 'model-id',
         );
-    });
+    })->throws(ClientException::class);
 
     test('throws when model is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new WriteAssertionsRequest(
-            assertions: new Assertions(),
+            assertions: new Assertions,
             store: 'store-id',
             model: '',
         );
-    });
+    })->throws(ClientException::class);
 
     test('preserves assertion order', function (): void {
-        $assertions = new Assertions();
-        for ($i = 1; $i <= 5; ++$i) {
+        $assertions = new Assertions;
+        for ($i = 1; 5 >= $i; ++$i) {
             $assertions->add(new Assertion(
                 tupleKey: new AssertionTupleKey("user:user{$i}", 'viewer', "doc:{$i}"),
                 expectation: 0 === $i % 2,
@@ -231,7 +228,7 @@ describe('WriteAssertionsRequest', function (): void {
         $request->getRequest($this->streamFactory);
 
         expect($capturedBody['assertions'])->toHaveCount(5);
-        for ($i = 0; $i < 5; ++$i) {
+        for ($i = 0; 5 > $i; ++$i) {
             $num = $i + 1;
             expect($capturedBody['assertions'][$i]['tuple_key']['user'])->toBe("user:user{$num}");
             expect($capturedBody['assertions'][$i]['expectation'])->toBe(0 === $num % 2);

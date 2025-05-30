@@ -11,13 +11,13 @@ use stdClass;
 
 describe('User Model', function (): void {
     test('implements UserInterface', function (): void {
-        $user = new User();
+        $user = new User;
 
         expect($user)->toBeInstanceOf(UserInterface::class);
     });
 
     test('constructs with all null parameters', function (): void {
-        $user = new User();
+        $user = new User;
 
         expect($user->getObject())->toBeNull();
         expect($user->getUserset())->toBeNull();
@@ -26,7 +26,7 @@ describe('User Model', function (): void {
     });
 
     test('constructs with object', function (): void {
-        $object = new stdClass();
+        $object = new stdClass;
         $object->id = 'user:anne';
         $user = new User(object: $object);
 
@@ -67,12 +67,12 @@ describe('User Model', function (): void {
     });
 
     test('serializes to JSON with null fields', function (): void {
-        $user = new User();
+        $user = new User;
         expect($user->jsonSerialize())->toBe([]);
     });
 
     test('serializes to JSON with object implementing JsonSerializable', function (): void {
-        $object = new class() implements JsonSerializable {
+        $object = new class implements JsonSerializable {
             public function jsonSerialize(): array
             {
                 return ['id' => 'user:anne'];
@@ -84,7 +84,7 @@ describe('User Model', function (): void {
     });
 
     test('serializes to JSON with object implementing __toString', function (): void {
-        $object = new class() {
+        $object = new class {
             public function __toString(): string
             {
                 return 'user:anne';
@@ -96,7 +96,7 @@ describe('User Model', function (): void {
     });
 
     test('serializes to JSON with plain object', function (): void {
-        $object = new stdClass();
+        $object = new stdClass;
         $object->type = 'user';
         $object->id = 'anne';
 
@@ -186,7 +186,7 @@ describe('User Model', function (): void {
     });
 
     test('only one field should be set at a time', function (): void {
-        $user1 = new User(object: new stdClass());
+        $user1 = new User(object: new stdClass);
         $user2 = new User(userset: new UsersetUser(type: 'group', id: 'admins', relation: 'member'));
         $user3 = new User(wildcard: new TypedWildcard(type: 'user'));
 
@@ -202,10 +202,10 @@ describe('User Model', function (): void {
     });
 
     test('handles object with no serialization methods', function (): void {
-        $object = new class() {
-            private string $secret = 'hidden';
-
+        $object = new class {
             public string $name = 'anne';
+
+            private string $secret = 'hidden';
         };
 
         $user = new User(object: $object);
@@ -216,7 +216,7 @@ describe('User Model', function (): void {
     });
 
     test('getObject returns UserObject when object has type and id properties', function (): void {
-        $object = new class() {
+        $object = new class {
             public string $id = '123';
 
             public string $type = 'user';
@@ -245,7 +245,7 @@ describe('User Model', function (): void {
     });
 
     test('getObject returns string when object has toString method', function (): void {
-        $object = new class() {
+        $object = new class {
             public function __toString(): string
             {
                 return 'user:anne';
@@ -260,7 +260,7 @@ describe('User Model', function (): void {
 
     test('getObject returns null when object cannot be converted', function (): void {
         // Object without type/id, toString, or valid structure
-        $object = new class() {
+        $object = new class {
             public string $name = 'invalid';
 
             public int $value = 42;
@@ -312,7 +312,7 @@ describe('User Model', function (): void {
     });
 
     test('getObject handles object with non-string type or id', function (): void {
-        $object = new class() {
+        $object = new class {
             public string $id = 'test';
 
             public int $type = 123;

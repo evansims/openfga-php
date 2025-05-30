@@ -6,11 +6,12 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\RelationMetadataCollection;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
-
 use Override;
 
 final class Metadata implements MetadataInterface
 {
+    public const string OPENAPI_MODEL = 'Metadata';
+
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
@@ -18,6 +19,22 @@ final class Metadata implements MetadataInterface
         private readonly ?RelationMetadataCollection $relations = null,
         private readonly ?SourceInfoInterface $sourceInfo = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'module', type: 'string', required: false),
+                new SchemaProperty(name: 'relations', type: 'object', className: RelationMetadataCollection::class, required: false),
+                new SchemaProperty(name: 'source_info', type: 'object', className: SourceInfo::class, required: false),
+            ],
+        );
     }
 
     /**
@@ -68,21 +85,5 @@ final class Metadata implements MetadataInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'module', type: 'string', required: false),
-                new SchemaProperty(name: 'relations', type: 'object', className: RelationMetadataCollection::class, required: false),
-                new SchemaProperty(name: 'source_info', type: 'object', className: SourceInfo::class, required: false),
-            ],
-        );
     }
 }

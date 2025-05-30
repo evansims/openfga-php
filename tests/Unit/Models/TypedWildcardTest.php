@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Messages;
 use OpenFGA\Models\{TypedWildcard, TypedWildcardInterface};
 use OpenFGA\Schema\SchemaInterface;
 
@@ -80,10 +81,8 @@ describe('TypedWildcard Model', function (): void {
     });
 
     test('throws exception for empty string type', function (): void {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('TypedWildcard::$type cannot be empty.');
         new TypedWildcard(type: '');
-    });
+    })->throws(ClientException::class, trans(Messages::MODEL_TYPED_WILDCARD_TYPE_EMPTY));
 
     test('trims and lowercases type', function (): void {
         $wildcard = new TypedWildcard(type: '  USER  ');
@@ -131,6 +130,6 @@ describe('TypedWildcard Model', function (): void {
     });
 
     test('has correct OpenAPI type constant', function (): void {
-        expect(TypedWildcard::OPENAPI_TYPE)->toBe('TypedWildcard');
+        expect(TypedWildcard::OPENAPI_MODEL)->toBe('TypedWildcard');
     });
 });

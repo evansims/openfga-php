@@ -23,10 +23,12 @@
 public function getBase(): OpenFGA\Models\NodeInterface
 ```
 
+Get the base node from which the subtract node will be removed. This represents the initial node in the userset tree from which users will be subtracted to compute the final difference result.
 
 
 #### Returns
 [NodeInterface](Models/NodeInterface.md)
+ The base node for the difference operation
 
 ### getSubtract
 
@@ -35,10 +37,12 @@ public function getBase(): OpenFGA\Models\NodeInterface
 public function getSubtract(): OpenFGA\Models\NodeInterface
 ```
 
+Get the node representing users to subtract from the base. This represents the node in the userset tree whose users should be removed from the base node to compute the final difference result.
 
 
 #### Returns
 [NodeInterface](Models/NodeInterface.md)
+ The node to subtract from the base
 
 ### jsonSerialize
 
@@ -57,11 +61,13 @@ array
 *<small>Implements Models\UsersetTreeDifferenceInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\SchemaInterface
+public function schema(): SchemaInterface
 ```
 
+Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
 
 
 #### Returns
-[SchemaInterface](Schema/SchemaInterface.md)
+SchemaInterface
+ The schema definition containing validation rules and property specifications for this model
 

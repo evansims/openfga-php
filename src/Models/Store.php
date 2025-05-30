@@ -12,10 +12,17 @@ use Override;
 
 final class Store implements StoreInterface
 {
-    public const OPENAPI_MODEL = 'Store';
+    public const string OPENAPI_MODEL = 'Store';
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param string             $id        The unique identifier of the store
+     * @param string             $name      The display name of the store
+     * @param DateTimeInterface  $createdAt The timestamp when the store was created
+     * @param DateTimeInterface  $updatedAt The timestamp when the store was last updated
+     * @param ?DateTimeInterface $deletedAt Optional timestamp when the store was deleted
+     */
     public function __construct(
         private readonly string $id,
         private readonly string $name,
@@ -23,6 +30,24 @@ final class Store implements StoreInterface
         private readonly DateTimeInterface $updatedAt,
         private readonly ?DateTimeInterface $deletedAt = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'id', type: 'string', required: true),
+                new SchemaProperty(name: 'name', type: 'string', required: true),
+                new SchemaProperty(name: 'created_at', type: 'string', format: 'datetime', required: true),
+                new SchemaProperty(name: 'updated_at', type: 'string', format: 'datetime', required: true),
+                new SchemaProperty(name: 'deleted_at', type: 'string', format: 'datetime', required: false),
+            ],
+        );
     }
 
     /**
@@ -86,24 +111,12 @@ final class Store implements StoreInterface
     }
 
     /**
-     * @inheritDoc
+     * Converts a DateTimeInterface to a UTC timestamp string in RFC3339 format.
+     *
+     * @param  ?DateTimeInterface $dateTime The datetime to convert, or null
+     * @return string|null        The UTC timestamp string, or null if input is null
      */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'id', type: 'string', required: true),
-                new SchemaProperty(name: 'name', type: 'string', required: true),
-                new SchemaProperty(name: 'created_at', type: 'string', format: 'datetime', required: true),
-                new SchemaProperty(name: 'updated_at', type: 'string', format: 'datetime', required: true),
-                new SchemaProperty(name: 'deleted_at', type: 'string', format: 'datetime', required: false),
-            ],
-        );
-    }
-
-    private static function getUtcTimestamp(?DateTimeInterface $dateTime): ?string
+    private static function getUtcTimestamp(?DateTimeInterface $dateTime): string | null
     {
         if (! $dateTime instanceof DateTimeInterface) {
             return null;

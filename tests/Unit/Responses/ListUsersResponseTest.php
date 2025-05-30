@@ -117,7 +117,7 @@ describe('ListUsersResponse', function (): void {
 
     test('handles large user collections', function (): void {
         $users = [];
-        for ($i = 0; $i < 100; ++$i) {
+        for ($i = 0; 100 > $i; ++$i) {
             $object = (object) ['id' => "user:user{$i}"];
             $users[] = new User(object: $object);
         }
@@ -146,27 +146,24 @@ describe('ListUsersResponse', function (): void {
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ListUsersResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 401 unauthorized', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ListUsersResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ListUsersResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 });

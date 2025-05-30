@@ -1,5 +1,6 @@
 # WriteAssertionsResponse
 
+Response confirming successful writing of test assertions. This response indicates that test assertions have been successfully stored for an authorization model. The assertions can now be used to validate that the model behaves correctly in various authorization scenarios.
 
 ## Namespace
 `OpenFGA\Responses`
@@ -16,17 +17,19 @@
 *<small>Implements Responses\WriteAssertionsResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, Psr\Http\Message\RequestInterface $request, OpenFGA\Schema\SchemaValidator $validator): self
+public function fromResponse(HttpResponseInterface $response, HttpRequestInterface $request, SchemaValidator $validator): static
 ```
 
+Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | Psr\Http\Message\ResponseInterface |  |
-| `$request` | Psr\Http\Message\RequestInterface |  |
-| `$validator` | [SchemaValidator](Schema/SchemaValidator.md) |  |
+| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
+| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
+| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
 
 #### Returns
-self
+static
+ The parsed and validated response instance containing the API response data
 

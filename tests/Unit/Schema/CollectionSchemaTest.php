@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Schema;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Messages;
 use OpenFGA\Schema\CollectionSchema;
 
 describe('CollectionSchema', function (): void {
@@ -23,16 +24,12 @@ describe('CollectionSchema', function (): void {
     });
 
     test('throws exception for invalid class name', function (): void {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Class "NonexistentClass" does not exist or cannot be autoloaded');
         new CollectionSchema('NonexistentClass', 'DateTime');
-    });
+    })->throws(ClientException::class, trans(Messages::SCHEMA_CLASS_NOT_FOUND, ['className' => 'NonexistentClass']));
 
     test('throws exception for invalid item type', function (): void {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Item type "NonexistentType" does not exist or cannot be autoloaded');
         new CollectionSchema('ArrayObject', 'NonexistentType');
-    });
+    })->throws(ClientException::class, trans(Messages::SCHEMA_ITEM_TYPE_NOT_FOUND, ['itemType' => 'NonexistentType']));
 
     test('has default requireItems as false', function (): void {
         $schema = new CollectionSchema('ArrayObject', 'DateTime');

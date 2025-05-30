@@ -1,0 +1,209 @@
+# Relationship Tuples
+
+Relationship tuples are where the rubber meets the road. They're the actual permissions in your system - who can do what to which resource.
+
+A tuple is simply: `(user, relation, object)`
+
+For example: `(user:anne, editor, document:roadmap)` means "Anne can edit the roadmap document."
+
+```php
+<?php
+
+use OpenFGA\Models\{TupleKey, TupleKeys};
+
+// Basic setup - see Getting Started for full client initialization
+$client = new Client(url: 'http://localhost:8080');
+```
+
+## Granting Permissions
+
+Give someone access by writing a tuple:
+
+```php
+// Give Anne editor access to a document
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    writes: new TupleKeys([
+        new TupleKey(
+            user: 'user:anne',
+            relation: 'editor', 
+            object: 'document:roadmap'
+        )
+    ])
+)->unwrap();
+```
+
+## Removing Permissions  
+
+Take away access by deleting a tuple:
+
+```php
+// Remove Anne's editor access
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    deletes: new TupleKeys([
+        new TupleKey(
+            user: 'user:anne',
+            relation: 'editor',
+            object: 'document:roadmap'
+        )
+    ])
+)->unwrap();
+```
+
+## Bulk Operations
+
+Handle multiple permission changes in one transaction:
+
+```php
+// Grant access to multiple users and revoke old permissions
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    writes: new TupleKeys([
+        new TupleKey(user: 'user:bob', relation: 'viewer', object: 'document:roadmap'),
+        new TupleKey(user: 'user:charlie', relation: 'editor', object: 'document:roadmap'),
+        new TupleKey(user: 'team:marketing#member', relation: 'viewer', object: 'folder:campaigns'),
+    ]),
+    deletes: new TupleKeys([
+        new TupleKey(user: 'user:anne', relation: 'owner', object: 'document:old-spec'),
+    ])
+)->unwrap();
+```
+## Reading Existing Permissions
+
+Check what permissions exist by reading tuples:
+
+```php
+// Find all permissions for a specific document
+$response = $client->readTuples(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: new TupleKey(object: 'document:roadmap')
+)->unwrap();
+
+foreach ($response->getTuples() as $tuple) {
+    echo "{$tuple->getUser()} has {$tuple->getRelation()} on {$tuple->getObject()}\n";
+}
+```
+
+```php
+// Find all documents Anne can edit
+$response = $client->readTuples(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: new TupleKey(user: 'user:anne', relation: 'editor')
+)->unwrap();
+
+foreach ($response->getTuples() as $tuple) {
+    echo "Anne can edit: {$tuple->getObject()}\n";
+}
+```
+
+```php
+// Paginate through all tuples
+$continuationToken = null;
+
+do {
+    $response = $client->readTuples(
+        store: $storeId,
+        model: $modelId,
+        pageSize: 100,
+        continuationToken: $continuationToken
+    )->unwrap();
+    
+    foreach ($response->getTuples() as $tuple) {
+        // Process each tuple...
+    }
+    
+    $continuationToken = $response->getContinuationToken();
+} while ($continuationToken !== null);
+```
+
+## Advanced Patterns
+
+### Conditional Tuples
+
+Add conditions to make permissions context-dependent:
+
+```php
+use OpenFGA\Models\{ConditionParameter, ConditionParameters, RelationshipCondition};
+
+// Only allow access during business hours
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    writes: new TupleKeys([
+        new TupleKey(
+            user: 'user:contractor',
+            relation: 'viewer',
+            object: 'document:sensitive',
+            condition: new RelationshipCondition(
+                name: 'business_hours',
+                context: [
+                    'timezone' => 'America/New_York'
+                ]
+            )
+        )
+    ])
+)->unwrap();
+```
+
+### Tracking Changes
+
+Monitor permission changes over time for auditing:
+
+```php
+// Get all permission changes for documents in the last hour
+$startTime = (new DateTimeImmutable())->sub(new DateInterval('PT1H'));
+
+$response = $client->listTupleChanges(
+    store: $storeId,
+    model: $modelId,
+    type: 'document',
+    startTime: $startTime
+)->unwrap();
+
+foreach ($response->getChanges() as $change) {
+    $tuple = $change->getTupleKey();
+    echo "{$change->getOperation()->value}: {$tuple->getUser()} {$tuple->getRelation()} {$tuple->getObject()}\n";
+}
+```
+
+### Working with Groups
+
+Grant permissions to groups instead of individual users:
+
+```php
+// Add user to a group
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    writes: new TupleKeys([
+        new TupleKey(
+            user: 'user:anne',
+            relation: 'member',
+            object: 'team:engineering'
+        )
+    ])
+)->unwrap();
+
+// Grant permission to the entire group
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    writes: new TupleKeys([
+        new TupleKey(
+            user: 'team:engineering#member',
+            relation: 'editor',
+            object: 'document:technical-specs'
+        )
+    ])
+)->unwrap();
+```
+
+Now Anne can edit the technical specs because she's a member of the engineering team.
+
+For checking permissions and querying relationships, see [Queries](Queries.md).

@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{TupleChange, TupleChangeInterface};
-
+use OpenFGA\Models\{ModelInterface, TupleChange, TupleChangeInterface};
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
@@ -16,9 +15,16 @@ use Override;
  */
 final class TupleChanges extends IndexedCollection implements TupleChangesInterface
 {
-    private static ?CollectionSchemaInterface $schema = null;
-
+    /**
+     * @phpstan-var class-string<TupleChangeInterface>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
     protected static string $itemType = TupleChange::class;
+
+    private static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @inheritDoc
@@ -27,8 +33,8 @@ final class TupleChanges extends IndexedCollection implements TupleChangesInterf
     public static function schema(): CollectionSchemaInterface
     {
         return self::$schema ??= new CollectionSchema(
-            className: static::class,
-            itemType: static::$itemType,
+            className: self::class,
+            itemType: /** @var class-string */ self::$itemType,
             requireItems: false,
             wrapperKey: 'changes',
         );

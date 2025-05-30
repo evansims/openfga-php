@@ -1,0 +1,103 @@
+# Codecov configuration for OpenFGA PHP SDK
+# Configured for unit, integration, and contract test coverage
+
+codecov:
+  # Require CI to pass before merging
+  require_ci_to_pass: true
+  max_report_age: "24hrs"
+  disable_default_path_fixes: false
+  strict_yaml_branch: main
+  
+  # Allow coverage to drop by 1% without failing
+  # This provides some flexibility for legitimate changes that might slightly reduce coverage
+  range: "90..100"
+  round: down
+  precision: 2
+  
+  notify:
+    # Reduce noise by only notifying on significant changes
+    require_ci_to_pass: true
+    after_n_builds: 3
+    wait_for_ci: true
+
+# Coverage thresholds and behavior
+coverage:
+  status:
+    project:
+      default:
+        # Overall project coverage target
+        target: 90%
+        threshold: 1%
+        base: auto
+        informational: false
+        only_pulls: false
+        
+    patch:
+      default:
+        # New code should be well tested
+        target: 95%
+        threshold: 5%
+        base: auto
+        informational: false
+        only_pulls: false
+
+  # File-specific coverage rules
+  ignore:
+    # Ignore test files from coverage
+    - "tests/"
+    - "tools/"
+    # Ignore configuration and build files
+    - "*.xml"
+    - "*.yml"
+    - "*.yaml"
+    - "*.json"
+    - "*.md"
+    - "*.sh"
+    # Development and tooling files
+    - "rector.php"
+    - ".php-cs-fixer.dist.php"
+    - "psalm.xml.dist"
+    - "phpstan.neon.dist"
+
+# Configure flags for different test types
+flags:
+  unit:
+    paths:
+      - src/
+    # Unit tests should provide the primary coverage
+    carryforward: false
+    
+  integration:
+    paths:
+      - src/
+    # Integration tests supplement unit test coverage
+    carryforward: true
+    
+  contract:
+    paths:
+      - src/
+    # Contract tests verify API compliance
+    carryforward: true
+
+# Configure coverage reporting
+comment:
+  layout: "reach,diff,flags,tree,footer"
+  behavior: default
+  require_changes: true
+  require_base: false
+  require_head: true
+  branches:
+    - main
+
+# GitHub integration
+github_checks:
+  annotations: true
+  
+# Codecov parsing
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no

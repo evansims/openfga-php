@@ -11,24 +11,24 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
 describe('WriteAssertionsResponse', function (): void {
     beforeEach(function (): void {
-        $this->validator = new SchemaValidator();
+        $this->validator = new SchemaValidator;
         $this->request = test()->createMock(RequestInterface::class);
     });
 
     test('implements WriteAssertionsResponseInterface', function (): void {
-        $response = new WriteAssertionsResponse();
+        $response = new WriteAssertionsResponse;
 
         expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
     });
 
     test('can be instantiated without parameters', function (): void {
-        $response = new WriteAssertionsResponse();
+        $response = new WriteAssertionsResponse;
 
         expect($response)->toBeInstanceOf(WriteAssertionsResponse::class);
     });
 
     test('is a simple response class', function (): void {
-        $response = new WriteAssertionsResponse();
+        $response = new WriteAssertionsResponse;
 
         expect($response)->toBeInstanceOf(WriteAssertionsResponseInterface::class);
     });
@@ -93,9 +93,8 @@ describe('WriteAssertionsResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 403 Forbidden', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -108,9 +107,8 @@ describe('WriteAssertionsResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 404 Not Found', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -123,9 +121,8 @@ describe('WriteAssertionsResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 500 Internal Server Error', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -138,9 +135,8 @@ describe('WriteAssertionsResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 422 Unprocessable Entity', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -153,9 +149,8 @@ describe('WriteAssertionsResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 200 status code as non-success', function (): void {
         // WriteAssertions should return 204, not 200
@@ -169,9 +164,8 @@ describe('WriteAssertionsResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 201 status code as non-success', function (): void {
         // WriteAssertions should return 204, not 201
@@ -185,13 +179,12 @@ describe('WriteAssertionsResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteAssertionsResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('multiple instances are independent', function (): void {
-        $response1 = new WriteAssertionsResponse();
-        $response2 = new WriteAssertionsResponse();
+        $response1 = new WriteAssertionsResponse;
+        $response2 = new WriteAssertionsResponse;
 
         expect($response1)->not->toBe($response2);
         expect($response1)->toBeInstanceOf(WriteAssertionsResponse::class);

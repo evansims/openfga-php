@@ -4,56 +4,55 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use InvalidArgumentException;
+use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\{Assertion, AssertionInterface, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, AssertionsInterface, TupleKeys};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
+use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
+use ReflectionException;
 
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
-
+/**
+ * Response containing test assertions associated with an authorization model.
+ *
+ * This response provides access to test assertions that validate authorization
+ * model behavior. These assertions define expected outcomes for specific
+ * authorization scenarios and help ensure model correctness.
+ *
+ * @see ReadAssertionsResponseInterface For the complete API specification
+ */
 final class ReadAssertionsResponse extends Response implements ReadAssertionsResponseInterface
 {
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param AssertionsInterface<AssertionInterface> $assertions
-     * @param string                                  $model
+     * Create a new read assertions response instance.
+     *
+     * @param ?AssertionsInterface<AssertionInterface> $assertions The collection of assertions from the authorization model, or null if none defined
+     * @param string                                   $model      The authorization model identifier containing these assertions
      */
     public function __construct(
-        private ?AssertionsInterface $assertions,
-        private string $model,
+        private readonly ?AssertionsInterface $assertions,
+        private readonly string $model,
     ) {
     }
 
     /**
      * @inheritDoc
-     */
-    #[Override]
-    public function getAssertions(): ?AssertionsInterface
-    {
-        return $this->assertions;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public function getModel(): string
-    {
-        return $this->model;
-    }
-
-    /**
-     * @inheritDoc
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws NetworkException         If the API returns an error response
+     * @throws ReflectionException      If exception location capture fails
+     * @throws SerializationException   If JSON parsing or schema validation fails
      */
     #[Override]
     public static function fromResponse(
-        ResponseInterface $response,
-        RequestInterface $request,
+        HttpResponseInterface $response,
+        HttpRequestInterface $request,
         SchemaValidator $validator,
     ): ReadAssertionsResponseInterface {
-        // Handle successful responses
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
@@ -68,8 +67,7 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
             return $validator->validateAndTransform($data, self::class);
         }
 
-        // Handle network errors
-        return RequestManager::handleResponseException(
+        RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );
@@ -88,5 +86,23 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
                 new SchemaProperty(name: 'authorization_model_id', type: 'string', required: true, parameterName: 'model'),
             ],
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getAssertions(): ?AssertionsInterface
+    {
+        return $this->assertions;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getModel(): string
+    {
+        return $this->model;
     }
 }

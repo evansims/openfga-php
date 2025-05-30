@@ -12,7 +12,7 @@ use OpenFGA\Schema\SchemaInterface;
 
 describe('ListStoresResponse', function (): void {
     test('implements ListStoresResponseInterface', function (): void {
-        $stores = new Stores();
+        $stores = new Stores;
         $response = new ListStoresResponse($stores);
         expect($response)->toBeInstanceOf(ListStoresResponseInterface::class);
     });
@@ -41,7 +41,7 @@ describe('ListStoresResponse', function (): void {
     });
 
     test('constructs with stores and continuation token', function (): void {
-        $stores = new Stores();
+        $stores = new Stores;
         $continuationToken = 'next-page-token-abc';
 
         $response = new ListStoresResponse($stores, $continuationToken);
@@ -51,7 +51,7 @@ describe('ListStoresResponse', function (): void {
     });
 
     test('handles empty stores collection', function (): void {
-        $stores = new Stores();
+        $stores = new Stores;
         $response = new ListStoresResponse($stores);
 
         expect($response->getStores())->toBe($stores);
@@ -59,9 +59,9 @@ describe('ListStoresResponse', function (): void {
     });
 
     test('handles large stores collection', function (): void {
-        $stores = new Stores();
+        $stores = new Stores;
 
-        for ($i = 1; $i <= 25; ++$i) {
+        for ($i = 1; 25 >= $i; ++$i) {
             $store = new Store(
                 id: "store-{$i}",
                 name: "Store Number {$i}",
@@ -138,7 +138,7 @@ describe('ListStoresResponse', function (): void {
     });
 
     test('handles empty continuation token', function (): void {
-        $stores = new Stores();
+        $stores = new Stores;
         $response = new ListStoresResponse($stores, '');
 
         expect($response->getContinuationToken())->toBe('');

@@ -14,6 +14,27 @@ services:
     networks:
       - openfga-network
 
+  # OpenTelemetry Collector for observability testing
+  otel-collector:
+    container_name: otel-collector-integration-tests
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otel-collector-config.yml"]
+    volumes:
+      - ./tests/Support/otel-collector-config.yml:/etc/otel-collector-config.yml:ro
+    ports:
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver
+      - "8888:8888"   # Prometheus metrics
+      - "8889:8889"   # Prometheus exporter metrics
+    healthcheck:
+      test: ["CMD", "/bin/sh", "-c", "echo > /dev/tcp/localhost/4318"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+    networks:
+      - openfga-network
+
   test:
     container_name: openfga-php-integration-tests
     image: evansims/openfga-php-integration-tests:latest
@@ -27,9 +48,20 @@ services:
       - OPENFGA_API_URL=http://openfga:8080
       - COMPOSER_ALLOW_SUPERUSER=1
       - XDEBUG_MODE=coverage
+      # OpenTelemetry configuration for testing
+      - OTEL_SERVICE_NAME=openfga-php-sdk-test
+      - OTEL_SERVICE_VERSION=test
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4318
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_LOGS_EXPORTER=otlp
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=openfga-php-sdk-test,service.version=test
     working_dir: /app
     depends_on:
       openfga:
+        condition: service_started
+      otel-collector:
         condition: service_started
     networks:
       - openfga-network

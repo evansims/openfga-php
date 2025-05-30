@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Results;
 
 use Exception;
-use LogicException;
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+use OpenFGA\Messages;
 use OpenFGA\Results\{Failure, Success};
 use RuntimeException;
 use Throwable;
@@ -17,13 +17,13 @@ describe('Failure', function (): void {
         $this->networkError = NetworkError::Unexpected->exception();
     });
 
-    test('constructs with error', function (): void {
+    test('constructs', function (): void {
         $failure = new Failure($this->testError);
 
         expect($failure->err())->toBe($this->testError);
     });
 
-    test('constructs with different error types', function (): void {
+    test('accepts different error types', function (): void {
         $clientFailure = new Failure($this->testError);
         $networkFailure = new Failure($this->networkError);
 
@@ -31,38 +31,35 @@ describe('Failure', function (): void {
         expect($networkFailure->err())->toBe($this->networkError);
     });
 
-    test('succeeded returns false', function (): void {
+    test('succeeded', function (): void {
         $failure = new Failure($this->testError);
 
         expect($failure->succeeded())->toBeFalse();
     });
 
-    test('failed returns true', function (): void {
+    test('failed', function (): void {
         $failure = new Failure($this->testError);
 
         expect($failure->failed())->toBeTrue();
     });
 
-    test('err returns the wrapped error', function (): void {
+    test('err', function (): void {
         $failure = new Failure($this->testError);
 
         expect($failure->err())->toBe($this->testError);
     });
 
-    test('val throws LogicException', function (): void {
+    test('val throws ClientException', function (): void {
         $failure = new Failure($this->testError);
 
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Failure has no value');
         $failure->val();
-    });
+    })->throws(ClientException::class, trans(Messages::RESULT_FAILURE_NO_VALUE));
 
     test('unwrap throws error when no callback provided', function (): void {
         $failure = new Failure($this->testError);
 
-        $this->expectException($this->testError::class);
         $failure->unwrap();
-    });
+    })->throws(ClientException::class);
 
     test('unwrap with callback receives error and returns callback result', function (): void {
         $failure = new Failure($this->testError);
@@ -129,12 +126,10 @@ describe('Failure', function (): void {
         $failure = new Failure($this->testError);
         $customException = new RuntimeException('Custom exception from callback');
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Custom exception from callback');
         $failure->unwrap(function () use ($customException): void {
             throw $customException;
         });
-    });
+    })->throws(RuntimeException::class, 'Custom exception from callback');
 
     test('success does not execute callback and returns self', function (): void {
         $failure = new Failure($this->testError);
@@ -330,7 +325,7 @@ describe('Failure', function (): void {
         expect($result)->toBe($failure);
     });
 
-    test('works with standard PHP exceptions', function (): void {
+    test('accepts standard exceptions', function (): void {
         $standardError = new Exception('standard exception');
         $failure = new Failure($standardError);
 
@@ -341,7 +336,7 @@ describe('Failure', function (): void {
         expect($result)->toBe('handled');
     });
 
-    test('works with custom exceptions', function (): void {
+    test('accepts custom exceptions', function (): void {
         $customError = new class('custom message') extends Exception {
             public function getCustomData(): string
             {

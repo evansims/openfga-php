@@ -10,13 +10,13 @@ use OpenFGA\Schema\SchemaInterface;
 
 describe('RelationMetadata Model', function (): void {
     test('implements RelationMetadataInterface', function (): void {
-        $metadata = new RelationMetadata();
+        $metadata = new RelationMetadata;
 
         expect($metadata)->toBeInstanceOf(RelationMetadataInterface::class);
     });
 
     test('constructs with all null parameters', function (): void {
-        $metadata = new RelationMetadata();
+        $metadata = new RelationMetadata;
 
         expect($metadata->getModule())->toBeNull();
         expect($metadata->getDirectlyRelatedUserTypes())->toBeNull();
@@ -70,7 +70,7 @@ describe('RelationMetadata Model', function (): void {
     });
 
     test('serializes to JSON with only non-null fields', function (): void {
-        $metadata = new RelationMetadata();
+        $metadata = new RelationMetadata;
         expect($metadata->jsonSerialize())->toBe([]);
 
         $metadata = new RelationMetadata(module: 'auth');

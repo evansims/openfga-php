@@ -1,15 +1,66 @@
 root = true
 
+# Default settings for all files
 [*]
 charset = utf-8
 end_of_line = lf
 trim_trailing_whitespace = true
 insert_final_newline = true
+indent_style = space
+indent_size = 4
 
+# PHP files
 [*.php]
 indent_style = space
 indent_size = 4
 
-[*.latte]
+# Twig templates
+[*.twig]
 indent_style = space
 indent_size = 4
+
+# JSON files (composer.json, configuration files)
+[*.json]
+indent_style = space
+indent_size = 2
+
+# YAML files (docker-compose, GitHub workflows, codecov)
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# XML files (phpunit.xml, etc.)
+[*.xml]
+indent_style = space
+indent_size = 2
+
+# Markdown documentation
+[*.md]
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = false
+
+# Configuration files
+[*.{ini,neon,dist}]
+indent_style = space
+indent_size = 4
+
+# Shell scripts
+[*.sh]
+indent_style = space
+indent_size = 2
+
+# Dockerfile
+[Dockerfile*]
+indent_style = space
+indent_size = 4
+
+# Specific overrides for certain files
+[{package.json,composer.json}]
+indent_style = space
+indent_size = 2
+
+# GitHub workflow files
+[.github/workflows/*.{yml,yaml}]
+indent_style = space
+indent_size = 2

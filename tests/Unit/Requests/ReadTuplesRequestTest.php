@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Messages;
 use OpenFGA\Models\{ConditionInterface, TupleKey};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Network\RequestMethod;
@@ -124,37 +125,35 @@ describe('ReadTuplesRequest', function (): void {
         expect($capturedBody['continuation_token'])->toBe('token-xyz');
     });
 
-    test('throws exception for invalid pageSize', function (): void {
+    test('throws exception for invalid pageSize zero', function (): void {
         $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$pageSize must be a positive integer.');
         new ReadTuplesRequest(
             store: 'store',
             tupleKey: $tupleKey,
             pageSize: 0,
         );
+    })->throws(ClientException::class, trans(Messages::REQUEST_PAGE_SIZE_INVALID, ['className' => 'ReadTuplesRequest']));
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$pageSize must be a positive integer.');
+    test('throws exception for invalid pageSize negative', function (): void {
+        $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
+
         new ReadTuplesRequest(
             store: 'store',
             tupleKey: $tupleKey,
             pageSize: -10,
         );
-    });
+    })->throws(ClientException::class, trans(Messages::REQUEST_PAGE_SIZE_INVALID, ['className' => 'ReadTuplesRequest']));
 
     test('throws exception for empty continuationToken', function (): void {
         $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
 
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('$continuationToken cannot be an empty string.');
         new ReadTuplesRequest(
             store: 'store',
             tupleKey: $tupleKey,
             continuationToken: '',
         );
-    });
+    })->throws(ClientException::class, trans(Messages::REQUEST_CONTINUATION_TOKEN_EMPTY));
 
     test('handles tuple key with condition', function (): void {
         $condition = $this->createMock(ConditionInterface::class);
@@ -214,7 +213,6 @@ describe('ReadTuplesRequest', function (): void {
     });
 
     test('throws when store is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ReadTuplesRequest(store: '', tupleKey: new TupleKey('user:test', 'reader', 'doc:1'));
-    });
+    })->throws(ClientException::class);
 });

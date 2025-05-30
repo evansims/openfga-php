@@ -8,9 +8,18 @@ use OpenFGA\Models\TypeDefinitionInterface;
 use Override;
 
 /**
+ * Collection interface for OpenFGA type definition objects.
+ *
+ * This interface defines a collection that holds type definition objects
+ * which specify the object types, their relations, and metadata within an
+ * authorization model. Type definitions form the core schema that defines
+ * how different object types relate to each other in the system.
+ *
  * @template T of TypeDefinitionInterface
  *
  * @extends IndexedCollectionInterface<T>
+ *
+ * @see https://openfga.dev/docs/modeling/getting-started OpenFGA Authorization Models
  */
 interface TypeDefinitionsInterface extends IndexedCollectionInterface
 {

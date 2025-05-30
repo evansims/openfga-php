@@ -15,12 +15,12 @@ use Psr\Http\Message\RequestInterface;
 
 describe('GetAuthorizationModelResponse', function (): void {
     test('implements GetAuthorizationModelResponseInterface', function (): void {
-        $response = new GetAuthorizationModelResponse();
+        $response = new GetAuthorizationModelResponse;
         expect($response)->toBeInstanceOf(GetAuthorizationModelResponseInterface::class);
     });
 
     test('constructs with null model', function (): void {
-        $response = new GetAuthorizationModelResponse();
+        $response = new GetAuthorizationModelResponse;
         expect($response->getModel())->toBeNull();
     });
 
@@ -71,27 +71,24 @@ describe('GetAuthorizationModelResponse', function (): void {
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 404 not found', function (): void {
         $httpResponse = new SimpleResponse(404, json_encode(['code' => 'authorization_model_not_found', 'message' => 'Authorization model not found']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         GetAuthorizationModelResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 });

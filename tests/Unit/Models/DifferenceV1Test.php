@@ -11,15 +11,15 @@ use stdClass;
 
 describe('DifferenceV1 Model', function (): void {
     test('implements DifferenceV1Interface', function (): void {
-        $base = new Userset(direct: new stdClass());
-        $subtract = new Userset(direct: new stdClass());
+        $base = new Userset(direct: new stdClass);
+        $subtract = new Userset(direct: new stdClass);
         $difference = new DifferenceV1(base: $base, subtract: $subtract);
 
         expect($difference)->toBeInstanceOf(DifferenceV1Interface::class);
     });
 
     test('constructs with base and subtract usersets', function (): void {
-        $base = new Userset(direct: new stdClass());
+        $base = new Userset(direct: new stdClass);
         $subtract = new Userset(
             computedUserset: new ObjectRelation(relation: 'blocked'),
         );
@@ -31,7 +31,7 @@ describe('DifferenceV1 Model', function (): void {
     });
 
     test('serializes to JSON', function (): void {
-        $base = new Userset(direct: new stdClass());
+        $base = new Userset(direct: new stdClass);
         $subtract = new Userset(
             computedUserset: new ObjectRelation(relation: 'blocked'),
         );
@@ -118,7 +118,7 @@ describe('DifferenceV1 Model', function (): void {
 
     test('handles typical authorization patterns', function (): void {
         // Pattern 1: All users except blocked ones
-        $allUsers = new Userset(direct: new stdClass());
+        $allUsers = new Userset(direct: new stdClass);
         $blockedUsers = new Userset(
             computedUserset: new ObjectRelation(relation: 'blocked'),
         );

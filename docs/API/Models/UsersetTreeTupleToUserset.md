@@ -20,13 +20,15 @@
 
 
 ```php
-public function getComputed(): OpenFGA\Models\Collections\ComputedsInterface
+public function getComputed(): array<int, ComputedInterface>
 ```
 
+Get the array of computed usersets for the tuple-to-userset operation. This returns a collection of computed userset references that define how to resolve the users from the tuple-to-userset mapping in the tree expansion.
 
 
 #### Returns
-[ComputedsInterface](Models/Collections/ComputedsInterface.md)
+array&lt;int, [ComputedInterface](Models/ComputedInterface.md)&gt;
+ Array of computed userset references
 
 ### getTupleset
 
@@ -35,10 +37,12 @@ public function getComputed(): OpenFGA\Models\Collections\ComputedsInterface
 public function getTupleset(): string
 ```
 
+Get the tupleset string identifying which tuples to use for computation. This string identifies the specific tupleset that should be used to resolve users through the tuple-to-userset operation during tree expansion.
 
 
 #### Returns
 string
+ The tupleset identifier string
 
 ### jsonSerialize
 
@@ -57,11 +61,13 @@ array
 *<small>Implements Models\UsersetTreeTupleToUsersetInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\SchemaInterface
+public function schema(): SchemaInterface
 ```
 
+Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
 
 
 #### Returns
-[SchemaInterface](Schema/SchemaInterface.md)
+SchemaInterface
+ The schema definition containing validation rules and property specifications for this model
 

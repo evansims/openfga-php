@@ -20,8 +20,8 @@ describe('CreateStoreResponse', function (): void {
         $response = new CreateStoreResponse(
             'store-id',
             'store-name',
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response)->toBeInstanceOf(CreateStoreResponseInterface::class);
     });
@@ -46,65 +46,58 @@ describe('CreateStoreResponse', function (): void {
     test('fromResponse handles error responses with non-201 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 401 unauthorized', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Invalid credentials']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 403 forbidden', function (): void {
         $httpResponse = new SimpleResponse(403, json_encode(['code' => 'forbidden', 'message' => 'Access denied']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 409 conflict', function (): void {
         $httpResponse = new SimpleResponse(409, json_encode(['code' => 'store_already_exists', 'message' => 'Store already exists']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 422 unprocessable entity', function (): void {
         $httpResponse = new SimpleResponse(422, json_encode(['code' => 'validation_error', 'message' => 'Invalid store name']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Server error']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 200 status (wrong status code)', function (): void {
         $httpResponse = new SimpleResponse(200, json_encode(['id' => 'store-123', 'name' => 'Test Store']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         CreateStoreResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('schema returns expected structure', function (): void {
         $schema = CreateStoreResponse::schema();
@@ -136,8 +129,8 @@ describe('CreateStoreResponse', function (): void {
         $response = new CreateStoreResponse(
             'id-123',
             '',
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response->getName())->toBe('');
     });
@@ -147,8 +140,8 @@ describe('CreateStoreResponse', function (): void {
         $response = new CreateStoreResponse(
             $uuid,
             'UUID Store',
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response->getId())->toBe($uuid);
     });
@@ -173,8 +166,8 @@ describe('CreateStoreResponse', function (): void {
         $response = new CreateStoreResponse(
             'store-123',
             $specialName,
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response->getName())->toBe($specialName);
     });
@@ -184,8 +177,8 @@ describe('CreateStoreResponse', function (): void {
         $response = new CreateStoreResponse(
             'store-123',
             $longName,
-            new DateTimeImmutable(),
-            new DateTimeImmutable(),
+            new DateTimeImmutable,
+            new DateTimeImmutable,
         );
         expect($response->getName())->toBe($longName);
         expect(strlen($response->getName()))->toBe(1600);

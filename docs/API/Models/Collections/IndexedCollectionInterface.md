@@ -1,6 +1,6 @@
 # IndexedCollectionInterface
 
-Represents a collection that is indexed by an integer, like a JSON array.
+Represents a type-safe collection indexed by integers, similar to a JSON array. This interface provides a type-safe, feature-rich collection implementation for OpenFGA model objects that maintains array-like semantics while offering additional functionality for filtering, transformation, and validation. IndexedCollections are used throughout the OpenFGA SDK to manage: - Lists of relationship tuples - Collections of type definitions in authorization models - Arrays of conditions and parameters - Sets of user objects and userset operations - Sequences of authorization model versions The collection provides both familiar array-style access (through ArrayAccess) and enhanced functional programming methods (filter, map, reduce) that make working with authorization data more expressive and safer. All items in the collection are validated to ensure they implement the expected ModelInterface. Collections support both mutable operations (like `add()` and `clear()`) for incremental building and immutable operations (like `withItems()` and `filter()`) for functional programming patterns, providing flexibility while maintaining data integrity in authorization contexts where consistency is critical.
 
 ## Namespace
 `OpenFGA\Models\Collections`
@@ -22,11 +22,12 @@ Represents a collection that is indexed by an integer, like a JSON array.
 public function add(T $item): static
 ```
 
+Add an item to the end of the collection. This method appends a new model object to the collection, automatically assigning it the next available integer index. The item is validated to ensure it matches the expected type for this collection, maintaining type safety throughout the authorization data processing pipeline. This operation modifies the current collection instance directly, making it suitable for building collections incrementally. For immutable operations, use the `withItems()` method instead, which creates new collection instances without modifying the original.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$item` | T |  |
+| `$item` | T | The OpenFGA model object to add to the collection |
 
 #### Returns
 static
@@ -38,6 +39,7 @@ static
 public function clear(): void
 ```
 
+Remove all items from the collection. This method empties the collection, resetting it to its initial state with no items and a count of zero.
 
 
 #### Returns
@@ -47,13 +49,13 @@ void
 
 
 ```php
-public function count(): int
+public function count(): int<0, max>
 ```
 
 
 
 #### Returns
-int
+int&lt;0, max&gt;
 
 ### current
 
@@ -74,7 +76,7 @@ T
 public function every(callable $callback): bool
 ```
 
-Checks if all items match the callback.
+Check if all items in the collection match the given condition. This method tests whether all items in the collection satisfy the provided callback function. Returns true if all items pass the test, false if any item fails.
 
 #### Parameters
 | Name | Type | Description |
@@ -83,6 +85,7 @@ Checks if all items match the callback.
 
 #### Returns
 bool
+ True if all items match the condition, false otherwise
 
 ### filter
 
@@ -91,7 +94,7 @@ bool
 public function filter(callable $callback): static<T>
 ```
 
-Filters the collection using a callback.
+Create a new collection containing only items that match the condition. This method creates a new collection containing only the items from the current collection that satisfy the provided callback function.
 
 #### Parameters
 | Name | Type | Description |
@@ -100,15 +103,16 @@ Filters the collection using a callback.
 
 #### Returns
 static&lt;T&gt;
+ A new collection containing only the matching items
 
 ### first
 
 
 ```php
-public function first(?callable $callback = NULL): null|T
+public function first(?callable $callback = NULL): T|null
 ```
 
-Returns the first item that matches the callback.
+Get the first item in the collection, optionally matching a condition. When called without a callback, returns the first item in the collection. When called with a callback, returns the first item that satisfies the condition.
 
 #### Parameters
 | Name | Type | Description |
@@ -116,23 +120,26 @@ Returns the first item that matches the callback.
 | `$callback` | ?callable |  |
 
 #### Returns
-null | T
+T | null
+ The first matching item, or null if none found
 
 ### get
 
 
 ```php
-public function get(int $offset): null|T
+public function get(int $offset): T|null
 ```
 
+Get an item by its position in the collection. This method retrieves the item at the specified index position. Returns null if the index is out of bounds.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | int |  |
+| `$offset` | int | The index position of the item to retrieve |
 
 #### Returns
-null | T
+T | null
+ The item at the specified position, or null if not found
 
 ### isEmpty
 
@@ -141,10 +148,12 @@ null | T
 public function isEmpty(): bool
 ```
 
+Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
 
 
 #### Returns
 bool
+ True if the collection is empty, false otherwise
 
 ### jsonSerialize
 
@@ -202,7 +211,7 @@ bool
 
 
 ```php
-public function offsetGet(mixed $offset): null|T
+public function offsetGet(mixed $offset): T|null
 ```
 
 
@@ -212,20 +221,20 @@ public function offsetGet(mixed $offset): null|T
 | `$offset` | mixed |  |
 
 #### Returns
-null | T
+T | null
 
 ### offsetSet
 
 
 ```php
-public function offsetSet(null|int|string $offset, T $value): void
+public function offsetSet(int|string|null $offset, T $value): void
 ```
 
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | null | int | string |  |
+| `$offset` | int | string | null |  |
 | `$value` | T |  |
 
 #### Returns
@@ -254,16 +263,17 @@ void
 public function reduce(U $initial, callable $callback): U
 ```
 
-Reduces the collection to a single value.
+Reduce the collection to a single value using a callback function. This method iteratively applies a callback function to accumulate the collection items into a single value, starting with an initial value.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | U |  |
+| `$initial` | U | The initial value to start the reduction |
 | `$callback` | callable |  |
 
 #### Returns
 U
+ The final accumulated value
 
 ### rewind
 
@@ -284,7 +294,7 @@ void
 public function some(callable $callback): bool
 ```
 
-Checks if any item matches the callback.
+Check if at least one item in the collection matches the given condition. This method tests whether at least one item in the collection satisfies the provided callback function. Returns true if any item passes the test, false if all items fail.
 
 #### Parameters
 | Name | Type | Description |
@@ -293,6 +303,7 @@ Checks if any item matches the callback.
 
 #### Returns
 bool
+ True if any item matches the condition, false otherwise
 
 ### toArray
 
@@ -301,10 +312,12 @@ bool
 public function toArray(): array<int|string, T>
 ```
 
+Convert the collection to a standard PHP array. This method creates a native PHP array containing all items in the collection, preserving their order and indexes.
 
 
 #### Returns
 array&lt;int | string, T&gt;
+ A standard PHP array containing all collection items
 
 ### valid
 
@@ -325,6 +338,7 @@ bool
 public function withItems(mixed $items): static<T>
 ```
 
+Create a new collection with the specified items. This method creates a fresh collection instance containing only the provided items, leaving the original collection unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -333,4 +347,5 @@ public function withItems(mixed $items): static<T>
 
 #### Returns
 static&lt;T&gt;
+ A new collection instance containing the specified items
 

@@ -1,0 +1,122 @@
+# OpenFGA PHP SDK - English Translation Messages
+# These messages correspond to the Messages enum cases
+
+client:
+  no_last_request_found: 'No last request found'
+
+dsl:
+  parse_failed: 'Failed to parse DSL input'
+  unrecognized_term: 'Unrecognized DSL term: %term%'
+  input_empty: 'Input string cannot be empty'
+  pattern_empty: 'Pattern cannot be empty'
+  unbalanced_parentheses_closing: 'Unbalanced parentheses: too many closing parentheses at position %position%'
+  unbalanced_parentheses_opening: 'Unbalanced parentheses: %count% unclosed opening %parentheses%'
+  invalid_computed_userset: 'Invalid computed userset'
+
+auth:
+  invalid_response_format: 'Invalid response format'
+  missing_required_fields: 'Missing required fields in response'
+  access_token_must_be_string: 'access_token must be a string'
+  expires_in_must_be_integer: 'expires_in must be an integer'
+  user_message:
+    token_expired: 'Your session has expired. Please sign in again.'
+    token_invalid: 'Invalid authentication credentials provided.'
+  jwt:
+    invalid_format: 'Invalid JWT token format'
+    invalid_header: 'Invalid JWT header'
+    invalid_payload: 'Invalid JWT payload'
+    missing_required_claims: 'Missing required JWT claims'
+    token_expired: 'JWT token has expired'
+    token_not_yet_valid: 'JWT token is not yet valid'
+    invalid_audience: 'JWT token audience does not match expected audience'
+    invalid_issuer: 'JWT token issuer does not match expected issuer'
+
+network:
+  error: 'Network error: %message%'
+  unexpected_status: 'API responded with an unexpected status code: %status_code%'
+
+result:
+  success_no_error: 'Success has no error'
+  failure_no_value: 'Failure has no value'
+
+request:
+  store_id_empty: 'Store ID cannot be empty'
+  model_id_empty: 'Authorization Model ID cannot be empty'
+  store_name_empty: 'Store name cannot be empty'
+  continuation_token_empty: 'Continuation token cannot be empty'
+  page_size_invalid: 'Invalid pageSize provided to %className%'
+  object_type_empty: 'Object type cannot be empty'
+  relation_empty: 'Relation cannot be empty'
+  user_empty: 'User cannot be empty'
+  object_empty: 'Object cannot be empty'
+  type_empty: 'Type cannot be empty'
+
+validation:
+  batch_check_empty: 'Batch check request cannot be empty'
+  invalid_correlation_id: 'Correlation ID "%correlationId%" is invalid. Must match pattern: %pattern%'
+
+model:
+  invalid_tuple_key: 'Invalid tuple_key provided to Assertion::fromArray'
+  typed_wildcard_type_empty: 'TypedWildcard::$type cannot be empty.'
+  source_info_file_empty: 'SourceInfo::$file cannot be empty.'
+  leaf_missing_content: 'Leaf must contain at least one of users, computed or tupleToUserset'
+
+collection:
+  undefined_item_type: 'Undefined item type for %class%. Define the $itemType property or override the constructor.'
+  invalid_item_type_interface: 'Expected item type to implement %interface%, %given% given'
+  invalid_item_instance: 'Expected instance of %expected%, %given% given'
+  invalid_value_type: 'Expected instance of %expected%, %given% given.'
+  key_must_be_string: 'Key must be a string.'
+  invalid_position: 'Invalid position'
+  invalid_key_type: 'Invalid key type; expected string, %given% given.'
+
+consistency:
+  higher_consistency:
+    description: 'Prioritizes data consistency over query performance, ensuring the most up-to-date results'
+  minimize_latency:
+    description: 'Prioritizes query performance over data consistency, potentially using slightly stale data'
+  unspecified:
+    description: 'Uses the default consistency level determined by the OpenFGA server configuration'
+
+schema:
+  class_not_found: 'Class "%className%" does not exist or cannot be autoloaded'
+  item_type_not_found: 'Item type "%itemType%" does not exist or cannot be autoloaded'
+
+exception:
+  client:
+    authentication: 'Authentication error occurred'
+    configuration: 'Configuration error detected'
+    network: 'Network communication error'
+    serialization: 'Data serialization error'
+    validation: 'Request validation failed'
+  auth:
+    token_expired: 'Authentication token has expired'
+    token_invalid: 'Authentication token is invalid'
+  config:
+    http_client_missing: 'HTTP client is not configured'
+    http_request_factory_missing: 'HTTP request factory is not configured'
+    http_response_factory_missing: 'HTTP response factory is not configured'
+    http_stream_factory_missing: 'HTTP stream factory is not configured'
+  network:
+    conflict: 'Conflict (409): The request conflicts with the current state'
+    forbidden: 'Forbidden (403): Access denied to the requested resource'
+    invalid: 'Bad Request (400): The request is invalid'
+    request: 'Request failed: Unable to complete the HTTP request'
+    server: 'Internal Server Error (500): The server encountered an error'
+    timeout: 'Unprocessable Entity (422): The request could not be processed'
+    unauthenticated: 'Unauthorized (401): Authentication required'
+    undefined_endpoint: 'Not Found (404): The requested endpoint does not exist'
+    unexpected: 'Unexpected response from the server'
+  serialization:
+    could_not_add_items_to_collection: 'Could not add items to collection %className%'
+    empty_collection: 'Collection cannot be empty'
+    invalid_item_type: 'Invalid item type for %property% in %className%: expected %expected%, got %actual_type%'
+    missing_required_constructor_parameter: 'Missing required constructor parameter "%paramName%" for class %className%'
+    response: 'Failed to serialize/deserialize response data'
+    undefined_item_type: 'Item type is not defined for %className%'
+
+tuple_operation:
+  write:
+    description: 'Adds a new relationship tuple, granting permissions or establishing relationships'
+  delete:
+    description: 'Removes an existing relationship tuple, revoking permissions or removing relationships'

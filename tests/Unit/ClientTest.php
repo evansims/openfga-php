@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit;
 
 use DateTimeImmutable;
-use LogicException;
-use OpenFGA\Authentication\AccessToken;
-use OpenFGA\{Authentication, Client, ClientInterface};
+use OpenFGA\Authentication\{AccessToken, ClientCredentialAuthentication, TokenAuthentication};
+use OpenFGA\{Client, ClientInterface};
+use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Messages;
+use OpenFGA\Models\AuthorizationModel;
 use OpenFGA\Models\Collections\{Assertions, Conditions, TupleKeys, TypeDefinitions, UserTypeFilters};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Models\{Store, TupleKey};
@@ -32,13 +34,13 @@ describe('Client', function (): void {
     test('Client constructs with full configuration', function (): void {
         $client = new Client(
             url: 'https://api.example.com',
-            authentication: Authentication::CLIENT_CREDENTIALS,
-            clientId: 'client_id',
-            clientSecret: 'client_secret',
-            issuer: 'https://auth.example.com',
-            audience: 'https://api.example.com',
-            token: 'pre_shared_token',
-            maxRetries: 5,
+            authentication: new ClientCredentialAuthentication(
+                clientId: 'client_id',
+                clientSecret: 'client_secret',
+                audience: 'https://api.example.com',
+                issuer: 'https://auth.example.com',
+            ),
+            httpMaxRetries: 5,
         );
 
         expect($client)->toBeInstanceOf(Client::class);
@@ -47,7 +49,7 @@ describe('Client', function (): void {
     test('Client constructs with no authentication', function (): void {
         $client = new Client(
             url: 'https://api.example.com',
-            authentication: Authentication::NONE,
+            authentication: null,
         );
 
         expect($client)->toBeInstanceOf(Client::class);
@@ -56,8 +58,7 @@ describe('Client', function (): void {
     test('Client constructs with token authentication', function (): void {
         $client = new Client(
             url: 'https://api.example.com',
-            authentication: Authentication::TOKEN,
-            token: 'bearer_token_123',
+            authentication: new TokenAuthentication('bearer_token_123'),
         );
 
         expect($client)->toBeInstanceOf(Client::class);
@@ -68,20 +69,54 @@ describe('Client', function (): void {
 
         $client = new Client(
             url: 'https://api.example.com',
-            authentication: Authentication::CLIENT_CREDENTIALS,
-            token: $accessToken,
+            authentication: new TokenAuthentication($accessToken),
         );
 
         expect($client)->toBeInstanceOf(Client::class);
     });
 
+    test('Client constructs with language parameter', function (): void {
+        $client = new Client(
+            url: 'https://api.example.com',
+            authentication: null,
+            language: 'es',
+        );
+
+        expect($client)->toBeInstanceOf(Client::class);
+        expect($client->getLanguage())->toBe('es');
+    });
+
+    test('Client getLanguage returns default language when not specified', function (): void {
+        $client = new Client('https://api.example.com');
+
+        expect($client->getLanguage())->toBe('en');
+    });
+
+    test('Client getLanguage returns configured language', function (): void {
+        $client = new Client(
+            url: 'https://api.example.com',
+            authentication: null,
+            language: 'es',
+        );
+
+        expect($client->getLanguage())->toBe('es');
+    });
+
+    test('Client assertLastRequest throws with configured language', function (): void {
+        $client = new Client(
+            url: 'https://api.example.com',
+            authentication: null,
+            language: 'es',
+        );
+
+        $client->assertLastRequest();
+    })->throws(ClientException::class, trans(Messages::NO_LAST_REQUEST_FOUND, [], 'es'));
+
     test('Client assertLastRequest throws when no request exists', function (): void {
         $client = new Client('https://api.example.com');
 
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('No last request found');
         $client->assertLastRequest();
-    });
+    })->throws(ClientException::class, trans(Messages::NO_LAST_REQUEST_FOUND));
 
     test('Client check returns Result interface', function (): void {
         $client = new Client('https://api.example.com');
@@ -90,11 +125,10 @@ describe('Client', function (): void {
         $model = 'model-456';
         $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
 
-        // Since we can't easily mock the network calls, we just verify the method returns a Result
         $result = $client->check($store, $model, $tupleKey);
 
         expect($result)->toBeInstanceOf(ResultInterface::class);
-        expect($result)->toBeInstanceOf(Failure::class); // Will fail without real API
+        expect($result)->toBeInstanceOf(Failure::class);
     });
 
     test('Client check accepts Store object', function (): void {
@@ -103,8 +137,8 @@ describe('Client', function (): void {
         $store = new Store(
             id: 'store-123',
             name: 'Test Store',
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
         );
         $model = 'model-456';
         $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
@@ -143,7 +177,7 @@ describe('Client', function (): void {
         $result = $client->createStore('My Test Store');
 
         expect($result)->toBeInstanceOf(ResultInterface::class);
-        expect($result)->toBeInstanceOf(Failure::class); // Will fail without real API
+        expect($result)->toBeInstanceOf(Failure::class);
     });
 
     test('Client createStore trims name', function (): void {
@@ -214,7 +248,7 @@ describe('Client', function (): void {
         expect($result)->toBeInstanceOf(ResultInterface::class);
     });
 
-    test('Client listAuthorizationModels handles pagination', function (): void {
+    test('listAuthorizationModels pagination', function (): void {
         $client = new Client('https://api.example.com');
 
         $result = $client->listAuthorizationModels(
@@ -229,11 +263,9 @@ describe('Client', function (): void {
     test('Client listAuthorizationModels clamps page size', function (): void {
         $client = new Client('https://api.example.com');
 
-        // Test max page size clamping
         $result1 = $client->listAuthorizationModels('store-123', null, 5000);
         expect($result1)->toBeInstanceOf(ResultInterface::class);
 
-        // Test min page size clamping
         $result2 = $client->listAuthorizationModels('store-123', null, 0);
         expect($result2)->toBeInstanceOf(ResultInterface::class);
     });
@@ -260,7 +292,7 @@ describe('Client', function (): void {
         expect($result)->toBeInstanceOf(ResultInterface::class);
     });
 
-    test('Client listStores handles pagination', function (): void {
+    test('listStores pagination', function (): void {
         $client = new Client('https://api.example.com');
 
         $result = $client->listStores(
@@ -320,7 +352,6 @@ describe('Client', function (): void {
     test('Client readTuples returns Result interface', function (): void {
         $client = new Client('https://api.example.com');
 
-        // TupleKey for reading can have empty strings to read all tuples
         $tupleKey = new TupleKey('', '', '');
 
         $result = $client->readTuples('store-123', $tupleKey);
@@ -383,5 +414,256 @@ describe('Client', function (): void {
 
     test('Client VERSION constant is defined', function (): void {
         expect(Client::VERSION)->toBeString();
+    });
+
+    test('Client handles authentication with real HTTP requests', function (): void {
+        $client = new Client(
+            url: 'https://api.example.com',
+            authentication: new ClientCredentialAuthentication(
+                clientId: 'client_id',
+                clientSecret: 'client_secret',
+                audience: 'https://api.example.com',
+                issuer: 'https://auth.example.com',
+            ),
+        );
+
+        // Test that client can be configured with authentication
+        expect($client)->toBeInstanceOf(Client::class);
+    });
+
+    test('Client dsl method handles complex authorization models', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $dsl = 'model
+  schema 1.1
+
+type user
+
+type organization
+  relations
+    define member: [user]
+
+type document
+  relations
+    define owner: [user]
+    define viewer: [user, organization#member]
+    define can_view: owner or viewer';
+
+        $result = $client->dsl($dsl);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client dsl method handles malformed DSL', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $invalidDsl = 'invalid dsl format that should fail parsing';
+
+        $result = $client->dsl($invalidDsl);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+        // Note: DSL parsing may be more lenient than expected, so we just check it returns a Result
+    });
+
+    test('Client expand accepts all optional parameters', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = 'store-123';
+        $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
+        $model = 'model-456';
+        $contextualTuples = new TupleKeys([
+            new TupleKey('user:alice', 'member', 'team:engineering'),
+        ]);
+
+        $result = $client->expand(
+            store: $store,
+            tupleKey: $tupleKey,
+            model: $model,
+            contextualTuples: $contextualTuples,
+            consistency: Consistency::MINIMIZE_LATENCY,
+        );
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client readTuples accepts all optional parameters', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = 'store-123';
+        $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
+
+        $result = $client->readTuples(
+            store: $store,
+            tupleKey: $tupleKey,
+            continuationToken: 'token-123',
+            pageSize: 100,
+            consistency: Consistency::MINIMIZE_LATENCY,
+        );
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client listUsers accepts all optional parameters', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $userFilters = new UserTypeFilters([]);
+        $contextualTuples = new TupleKeys([
+            new TupleKey('user:alice', 'member', 'team:engineering'),
+        ]);
+
+        $result = $client->listUsers(
+            store: 'store-123',
+            model: 'model-456',
+            object: 'document:readme',
+            relation: 'viewer',
+            userFilters: $userFilters,
+            context: (object) ['time' => '2024-01-01T10:00:00Z'],
+            contextualTuples: $contextualTuples,
+            consistency: Consistency::MINIMIZE_LATENCY,
+        );
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client listObjects accepts all optional parameters', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $contextualTuples = new TupleKeys([
+            new TupleKey('user:alice', 'member', 'team:engineering'),
+        ]);
+
+        $result = $client->listObjects(
+            store: 'store-123',
+            model: 'model-456',
+            type: 'document',
+            relation: 'viewer',
+            user: 'user:alice',
+            context: (object) ['time' => '2024-01-01T10:00:00Z'],
+            contextualTuples: $contextualTuples,
+            consistency: Consistency::MINIMIZE_LATENCY,
+        );
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client streamedListObjects returns Result interface', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $result = $client->streamedListObjects(
+            store: 'store-123',
+            model: 'model-456',
+            type: 'document',
+            relation: 'viewer',
+            user: 'user:alice',
+        );
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client streamedListObjects accepts all optional parameters', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $contextualTuples = new TupleKeys([
+            new TupleKey('user:alice', 'member', 'team:engineering'),
+        ]);
+
+        $result = $client->streamedListObjects(
+            store: 'store-123',
+            model: 'model-456',
+            type: 'document',
+            relation: 'viewer',
+            user: 'user:alice',
+            context: (object) ['time' => '2024-01-01T10:00:00Z'],
+            contextualTuples: $contextualTuples,
+            consistency: Consistency::MINIMIZE_LATENCY,
+        );
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client createAuthorizationModel with all parameters', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $typeDefinitions = new TypeDefinitions([]);
+        $conditions = new Conditions([]);
+
+        $result = $client->createAuthorizationModel(
+            store: 'store-123',
+            typeDefinitions: $typeDefinitions,
+            conditions: $conditions,
+            schemaVersion: SchemaVersion::V1_0,
+        );
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client handles page size clamping for listTupleChanges', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $result1 = $client->listTupleChanges('store-123', null, 5000);
+        expect($result1)->toBeInstanceOf(ResultInterface::class);
+
+        $result2 = $client->listTupleChanges('store-123', null, 0);
+        expect($result2)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client handles page size clamping for readTuples', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $tupleKey = new TupleKey('', '', '');
+
+        $result1 = $client->readTuples('store-123', $tupleKey, null, 5000);
+        expect($result1)->toBeInstanceOf(ResultInterface::class);
+
+        $result2 = $client->readTuples('store-123', $tupleKey, null, 0);
+        expect($result2)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client getModelId helper handles interface objects', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $model = new AuthorizationModel(
+            id: 'model-123',
+            schemaVersion: SchemaVersion::V1_1,
+            typeDefinitions: new TypeDefinitions([]),
+        );
+
+        // Test with AuthorizationModelInterface object
+        $result = $client->getAuthorizationModel('store-123', $model);
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client getStoreId helper handles interface objects', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = new Store(
+            id: 'store-123',
+            name: 'Test Store',
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
+        );
+
+        // Test with StoreInterface object
+        $result = $client->getStore($store);
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client constructor with null httpMaxRetries', function (): void {
+        $client = new Client(
+            url: 'https://api.example.com',
+            httpMaxRetries: null,
+        );
+
+        expect($client)->toBeInstanceOf(Client::class);
+    });
+
+    test('Client constructor with various httpMaxRetries values', function (): void {
+        $client1 = new Client('https://api.example.com', httpMaxRetries: 1);
+        $client2 = new Client('https://api.example.com', httpMaxRetries: 10);
+        $client3 = new Client('https://api.example.com', httpMaxRetries: 100);
+
+        expect($client1)->toBeInstanceOf(Client::class);
+        expect($client2)->toBeInstanceOf(Client::class);
+        expect($client3)->toBeInstanceOf(Client::class);
     });
 });

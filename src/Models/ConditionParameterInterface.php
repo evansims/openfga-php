@@ -11,10 +11,25 @@ use Override;
 interface ConditionParameterInterface extends ModelInterface
 {
     /**
-     * @return ConditionParametersInterface<ConditionParameterInterface>
+     * Get the generic type parameters for complex types like maps and lists.
+     *
+     * This provides the nested type information for complex parameter types.
+     * For example, a map parameter would have generic types defining the
+     * key and value types, while a list parameter would define the element type.
+     *
+     * @return ?ConditionParametersInterface<ConditionParameterInterface> The generic type parameters, or null for simple types
      */
     public function getGenericTypes(): ?ConditionParametersInterface;
 
+    /**
+     * Get the primary type name of the parameter.
+     *
+     * This returns the fundamental type of the condition parameter,
+     * such as string, int, bool, list, map, etc. This type information
+     * is used during condition evaluation to ensure type safety.
+     *
+     * @return TypeName The type name enum value for this parameter
+     */
     public function getTypeName(): TypeName;
 
     /**

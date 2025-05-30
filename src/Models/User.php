@@ -6,7 +6,6 @@ namespace OpenFGA\Models;
 
 use JsonSerializable;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
-
 use Override;
 
 use function is_array;
@@ -15,14 +14,39 @@ use function is_string;
 
 final class User implements UserInterface
 {
+    public const string OPENAPI_MODEL = 'User';
+
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param mixed                       $object     The user object (string, UserObjectInterface, or other types)
+     * @param UsersetUserInterface|null   $userset    Optional userset user specification
+     * @param TypedWildcardInterface|null $wildcard   Optional wildcard type specification
+     * @param DifferenceV1Interface|null  $difference Optional difference operation
+     */
     public function __construct(
         private readonly mixed $object = null,
         private readonly ?UsersetUserInterface $userset = null,
         private readonly ?TypedWildcardInterface $wildcard = null,
         private readonly ?DifferenceV1Interface $difference = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'object', type: 'object', required: false),
+                new SchemaProperty(name: 'userset', type: 'object', className: UsersetUser::class, required: false),
+                new SchemaProperty(name: 'wildcard', type: 'object', className: TypedWildcard::class, required: false),
+                new SchemaProperty(name: 'difference', type: 'object', className: DifferenceV1::class, required: false),
+            ],
+        );
     }
 
     /**
@@ -46,7 +70,10 @@ final class User implements UserInterface
 
         // Handle plain object with type and id properties
         if (is_object($this->object) && property_exists($this->object, 'type') && property_exists($this->object, 'id')) {
+            /** @var mixed $type */
             $type = $this->object->type;
+
+            /** @var mixed $id */
             $id = $this->object->id;
             if (is_string($type) && is_string($id)) {
                 return new UserObject(
@@ -58,7 +85,10 @@ final class User implements UserInterface
 
         // Handle array with type and id properties (from JSON decode)
         if (is_array($this->object) && isset($this->object['type'], $this->object['id'])) {
+            /** @var mixed $type */
             $type = $this->object['type'];
+
+            /** @var mixed $id */
             $id = $this->object['id'];
             if (is_string($type) && is_string($id)) {
                 return new UserObject(
@@ -102,6 +132,8 @@ final class User implements UserInterface
 
     /**
      * @inheritDoc
+     *
+     * @return array<string, mixed>
      */
     #[Override]
     public function jsonSerialize(): array
@@ -115,22 +147,13 @@ final class User implements UserInterface
     }
 
     /**
-     * @inheritDoc
+     * Serializes the object property for JSON representation.
+     *
+     * Handles various object types including JsonSerializable objects,
+     * objects with __toString methods, and plain objects.
+     *
+     * @return mixed The serialized object representation
      */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'object', type: 'object', required: false),
-                new SchemaProperty(name: 'userset', type: 'object', className: UsersetUser::class, required: false),
-                new SchemaProperty(name: 'wildcard', type: 'object', className: TypedWildcard::class, required: false),
-                new SchemaProperty(name: 'difference', type: 'object', className: DifferenceV1::class, required: false),
-            ],
-        );
-    }
-
     private function serializeObject(): mixed
     {
         if (null === $this->object) {

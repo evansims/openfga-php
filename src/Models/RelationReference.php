@@ -5,21 +5,43 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
-
 use Override;
 
 final class RelationReference implements RelationReferenceInterface
 {
-    public const OPENAPI_MODEL = 'RelationReference';
+    public const string OPENAPI_MODEL = 'RelationReference';
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param string      $type      The type name for the relation reference
+     * @param string|null $relation  Optional relation name
+     * @param object|null $wildcard  Optional wildcard object
+     * @param string|null $condition Optional condition name
+     */
     public function __construct(
         private readonly string $type,
         private readonly ?string $relation = null,
         private readonly ?object $wildcard = null,
         private readonly ?string $condition = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type', type: 'string', required: true),
+                new SchemaProperty(name: 'relation', type: 'string', required: false),
+                new SchemaProperty(name: 'wildcard', type: 'object', required: false),
+                new SchemaProperty(name: 'condition', type: 'string', required: false),
+            ],
+        );
     }
 
     /**
@@ -79,22 +101,5 @@ final class RelationReference implements RelationReferenceInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'type', type: 'string', required: true),
-                new SchemaProperty(name: 'relation', type: 'string', required: false),
-                new SchemaProperty(name: 'wildcard', type: 'object', required: false),
-                new SchemaProperty(name: 'condition', type: 'string', required: false),
-            ],
-        );
     }
 }

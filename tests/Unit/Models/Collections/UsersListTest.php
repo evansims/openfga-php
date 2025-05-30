@@ -9,20 +9,20 @@ use OpenFGA\Models\UsersListUser;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('UsersList Collection', function (): void {
-    test('implements UsersListInterface', function (): void {
+    test('implements interface', function (): void {
         $collection = new UsersList([]);
 
         expect($collection)->toBeInstanceOf(UsersListInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
+    test('creates empty', function (): void {
         $collection = new UsersList([]);
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of users', function (): void {
+    test('creates with array of users', function (): void {
         $user1 = new UsersListUser(user: 'user:alice');
         $user2 = new UsersListUser(user: 'user:bob');
         $user3 = new UsersListUser(user: 'group:engineering#member');
@@ -79,7 +79,7 @@ describe('UsersList Collection', function (): void {
         expect($userIds)->toBe(['user:alice', 'user:bob', 'user:charlie']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $user1 = new UsersListUser(user: 'user:alice');
         $user2 = new UsersListUser(user: 'user:bob');
 
@@ -92,7 +92,7 @@ describe('UsersList Collection', function (): void {
         expect($array[1])->toBe($user2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $collection = new UsersList([
             new UsersListUser(user: 'user:alice'),
             new UsersListUser(user: 'user:bob'),
@@ -115,17 +115,16 @@ describe('UsersList Collection', function (): void {
 
     test('handles different user identifier formats', function (): void {
         $collection = new UsersList([
-            new UsersListUser(user: 'user:alice'),                    // Direct user
-            new UsersListUser(user: 'user:*'),                        // Wildcard user
-            new UsersListUser(user: 'group:engineering#member'),      // Group member
-            new UsersListUser(user: 'team:platform#owner'),           // Team owner
-            new UsersListUser(user: 'service:api-server'),            // Service account
-            new UsersListUser(user: 'organization:acme#admin'),       // Organization admin
+            new UsersListUser(user: 'user:alice'),
+            new UsersListUser(user: 'user:*'),
+            new UsersListUser(user: 'group:engineering#member'),
+            new UsersListUser(user: 'team:platform#owner'),
+            new UsersListUser(user: 'service:api-server'),
+            new UsersListUser(user: 'organization:acme#admin'),
         ]);
 
         expect($collection->count())->toBe(6);
 
-        // Extract user types
         $types = [];
         foreach ($collection as $user) {
             $identifier = $user->getUser();
@@ -145,7 +144,6 @@ describe('UsersList Collection', function (): void {
             new UsersListUser(user: 'user:charlie'),
         ]);
 
-        // Filter only direct users (user:*)
         $directUsers = [];
         foreach ($collection as $user) {
             if (str_starts_with($user->getUser(), 'user:')) {
@@ -164,7 +162,6 @@ describe('UsersList Collection', function (): void {
             new UsersListUser(user: 'user:bob'),
         ]);
 
-        // Count wildcard entries
         $wildcardCount = 0;
         foreach ($collection as $user) {
             if (str_contains($user->getUser(), '*')) {
@@ -181,7 +178,7 @@ describe('UsersList Collection', function (): void {
         expect((string) $user)->toBe('user:alice');
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = UsersList::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -205,38 +202,27 @@ describe('UsersList Collection', function (): void {
         expect($collection->toArray())->toBe([]);
         expect($collection->jsonSerialize())->toBe([]);
 
-        // Test iteration on empty collection
         $count = 0;
         foreach ($collection as $_) {
             ++$count;
         }
         expect($count)->toBe(0);
 
-        // Test get on empty collection
         expect($collection->get(0))->toBeNull();
     });
 
     test('represents access control scenarios', function (): void {
-        // Simulate a typical access control list for a document
         $collection = new UsersList([
-            // Direct user access
             new UsersListUser(user: 'user:alice'),
             new UsersListUser(user: 'user:bob'),
-
-            // Group-based access
             new UsersListUser(user: 'group:engineering#member'),
             new UsersListUser(user: 'group:product#member'),
-
-            // Wildcard access (public)
             new UsersListUser(user: 'user:*'),
-
-            // Service account access
             new UsersListUser(user: 'service:backup-agent'),
         ]);
 
         expect($collection->count())->toBe(6);
 
-        // Check if public access is granted
         $hasPublicAccess = false;
         foreach ($collection as $user) {
             if ('user:*' === $user->getUser()) {

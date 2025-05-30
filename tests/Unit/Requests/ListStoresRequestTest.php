@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\ListStoresRequest;
 use Psr\Http\Message\StreamFactoryInterface;
 
 describe('ListStoresRequest', function (): void {
     test('can be instantiated without parameters', function (): void {
-        $request = new ListStoresRequest();
+        $request = new ListStoresRequest;
 
         expect($request)->toBeInstanceOf(ListStoresRequest::class);
         expect($request->getContinuationToken())->toBeNull();
@@ -31,7 +31,7 @@ describe('ListStoresRequest', function (): void {
     test('generates correct request context without pagination', function (): void {
         $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
-        $request = new ListStoresRequest();
+        $request = new ListStoresRequest;
         $context = $request->getRequest($streamFactory);
 
         expect($context->getMethod())->toBe(RequestMethod::GET);
@@ -98,5 +98,5 @@ describe('ListStoresRequest', function (): void {
 
     test('throws when continuation token is empty', function (): void {
         new ListStoresRequest(continuationToken: '');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 });

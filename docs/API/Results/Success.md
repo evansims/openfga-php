@@ -1,11 +1,13 @@
 # Success
 
+Concrete implementation of a successful result containing a value. This class represents the successful outcome of an operation, storing the resulting value and providing type-safe access through the Result pattern&#039;s fluent interface.
 
 ## Namespace
 `OpenFGA\Results`
 
 ## Implements
 * [ResultInterface](Results/ResultInterface.md)
+* [SuccessInterface](Results/SuccessInterface.md)
 
 
 
@@ -17,11 +19,12 @@
 public function err(): never
 ```
 
-Return the unwrapped error of a `Failure`.
+Retrieves the error from a failed result. This method should only be called on Failure results. Use failed() to check the result type before calling this method to avoid exceptions.
 
 
 #### Returns
 never
+ The error that caused the failure
 
 ### failed
 
@@ -30,11 +33,12 @@ never
 public function failed(): bool
 ```
 
-Return `true` if this is a `Failure`.
+Determines if this result represents a failure.
 
 
 #### Returns
 bool
+ True if this is a Failure result, false if it&#039;s a Success
 
 ### failure
 
@@ -43,7 +47,7 @@ bool
 public function failure(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
-Execute on `Failure` and continue the chain.
+Executes a callback when the result is a failure and continues the chain. The callback receives the error as its parameter and is only executed for Failure results. This method always returns the original result unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -52,6 +56,7 @@ Execute on `Failure` and continue the chain.
 
 #### Returns
 [ResultInterface](Results/ResultInterface.md)
+ The original result for method chaining
 
 ### recover
 
@@ -60,7 +65,7 @@ Execute on `Failure` and continue the chain.
 public function recover(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
-Execute on `Failure`, mutate the result, and continue the chain.
+Recovers from a failure by transforming it into a success or different failure. The callback is only executed for Failure results and can return either a new Result or a plain value (which becomes a Success). Success results pass through unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -69,6 +74,7 @@ Execute on `Failure`, mutate the result, and continue the chain.
 
 #### Returns
 [ResultInterface](Results/ResultInterface.md)
+ The recovered result or original success
 
 ### rethrow
 
@@ -77,7 +83,7 @@ Execute on `Failure`, mutate the result, and continue the chain.
 public function rethrow(?Throwable $throwable = NULL): OpenFGA\Results\ResultInterface
 ```
 
-Throw the error of a `Failure`, or continue the chain.
+Throws the contained error or continues the chain. For Failure results, this throws either the provided throwable or the contained error. For Success results, this method has no effect and returns the result unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -86,6 +92,7 @@ Throw the error of a `Failure`, or continue the chain.
 
 #### Returns
 [ResultInterface](Results/ResultInterface.md)
+ The original result for method chaining
 
 ### succeeded
 
@@ -94,11 +101,12 @@ Throw the error of a `Failure`, or continue the chain.
 public function succeeded(): bool
 ```
 
-Return `true` if this is a `Success`.
+Determines if this result represents a success.
 
 
 #### Returns
 bool
+ True if this is a Success result, false if it&#039;s a Failure
 
 ### success
 
@@ -107,7 +115,7 @@ bool
 public function success(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
-Execute on `Success` and continue the chain.
+Executes a callback when the result is a success and continues the chain. The callback receives the success value as its parameter and is only executed for Success results. This method always returns the original result unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -116,15 +124,16 @@ Execute on `Success` and continue the chain.
 
 #### Returns
 [ResultInterface](Results/ResultInterface.md)
+ The original result for method chaining
 
 ### then
 
 
 ```php
-public function then(callable $fn): OpenFGA\Results\ResultInterface
+public function then(callable $fn): ResultInterface<U, F>
 ```
 
-Execute on `Success`, mutate the result, and continue the chain.
+Transforms a successful result using a callback and continues the chain. The callback is only executed for Success results and can return either a new Result or a plain value (which becomes a Success). Failure results pass through unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -132,7 +141,8 @@ Execute on `Success`, mutate the result, and continue the chain.
 | `fn` | ?callable |  |
 
 #### Returns
-[ResultInterface](Results/ResultInterface.md)
+[ResultInterface](Results/ResultInterface.md)&lt;U, F&gt;
+ The transformed result or original failure
 
 ### unwrap
 
@@ -141,7 +151,7 @@ Execute on `Success`, mutate the result, and continue the chain.
 public function unwrap(?callable $fn = NULL): mixed
 ```
 
-Return the unwrapped value of a `Success`, or throws the error of a `Failure`. When a callable is provided, it is called with the value of the `Success` or `Failure`, and its return value is returned.
+Extracts the value from the result or applies a transformation. Without a callback, this returns the success value or throws the failure error. With a callback, the function is called with either the success value or failure error, and its return value is returned instead of throwing.
 
 #### Parameters
 | Name | Type | Description |
@@ -150,6 +160,7 @@ Return the unwrapped value of a `Success`, or throws the error of a `Failure`. W
 
 #### Returns
 mixed
+ The success value, callback result, or throws the error
 
 ### val
 
@@ -158,9 +169,10 @@ mixed
 public function val(): T
 ```
 
-Return the unwrapped value of a `Success`.
+Retrieves the value from a successful result. This method should only be called on Success results. Use succeeded() to check the result type before calling this method to avoid exceptions.
 
 
 #### Returns
 T
+ The successful value
 

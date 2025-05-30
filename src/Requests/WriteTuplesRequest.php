@@ -4,20 +4,41 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use const JSON_THROW_ON_ERROR;
+
 use InvalidArgumentException;
+use JsonException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
-final class WriteTuplesRequest implements WriteTuplesRequestInterface
+/**
+ * Request for writing and deleting relationship tuples in OpenFGA.
+ *
+ * This request enables batch creation and deletion of relationship tuples,
+ * allowing you to efficiently manage user-object relationships in a single
+ * atomic operation. All changes are applied transactionally.
+ *
+ * @see WriteTuplesRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Tuples/Write Tuple write API endpoint
+ */
+final readonly class WriteTuplesRequest implements WriteTuplesRequestInterface
 {
     /**
-     * @param string                                     $store
-     * @param string                                     $model
-     * @param null|TupleKeysInterface<TupleKeyInterface> $writes
-     * @param null|TupleKeysInterface<TupleKeyInterface> $deletes
+     * @param string                                     $store   The store ID
+     * @param string                                     $model   Authorization model ID
+     * @param TupleKeysInterface<TupleKeyInterface>|null $writes  Tuples to write (optional)
+     * @param TupleKeysInterface<TupleKeyInterface>|null $deletes Tuples to delete (optional)
+     *
+     * @throws ClientThrowable          If the store ID or model ID is empty
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     public function __construct(
         private string $store,
@@ -26,10 +47,10 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
         private ?TupleKeysInterface $deletes = null,
     ) {
         if ('' === $this->store) {
-            throw new InvalidArgumentException('Store ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
         if ('' === $this->model) {
-            throw new InvalidArgumentException('Authorization model ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
         }
     }
 
@@ -53,6 +74,8 @@ final class WriteTuplesRequest implements WriteTuplesRequestInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws JsonException
      */
     #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

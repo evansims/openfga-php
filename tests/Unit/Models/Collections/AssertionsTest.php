@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models\Collections;
 
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\{Assertion, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, AssertionsInterface, TupleKeys};
 use OpenFGA\Schema\CollectionSchemaInterface;
 use stdClass;
-use TypeError;
 
 describe('Assertions Collection', function (): void {
-    test('implements AssertionsInterface', function (): void {
-        $collection = new Assertions();
+    test('implements interface', function (): void {
+        $collection = new Assertions;
 
         expect($collection)->toBeInstanceOf(AssertionsInterface::class);
     });
 
-    test('constructs empty collection', function (): void {
-        $collection = new Assertions();
+    test('creates empty', function (): void {
+        $collection = new Assertions;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBe(true);
         expect($collection->toArray())->toBe([]);
     });
 
-    test('constructs with single Assertion', function (): void {
+    test('creates with single Assertion', function (): void {
         $tupleKey = new AssertionTupleKey(
             user: 'user:anne',
             relation: 'viewer',
@@ -40,7 +40,7 @@ describe('Assertions Collection', function (): void {
         // Collection method removed - not available
     });
 
-    test('constructs with multiple Assertions', function (): void {
+    test('creates with multiple Assertions', function (): void {
         $assertion1 = new Assertion(
             tupleKey: new AssertionTupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1'),
             expectation: true,
@@ -60,7 +60,7 @@ describe('Assertions Collection', function (): void {
         expect($collection->toArray())->toBe([$assertion1, $assertion2, $assertion3]);
     });
 
-    test('constructs with array of Assertions', function (): void {
+    test('creates with array of Assertions', function (): void {
         $assertions = [
             new Assertion(
                 tupleKey: new AssertionTupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1'),
@@ -79,7 +79,7 @@ describe('Assertions Collection', function (): void {
     });
 
     test('adds Assertion to collection', function (): void {
-        $collection = new Assertions();
+        $collection = new Assertions;
         $assertion = new Assertion(
             tupleKey: new AssertionTupleKey(user: 'user:anne', relation: 'viewer', object: 'document:roadmap'),
             expectation: true,
@@ -191,7 +191,7 @@ describe('Assertions Collection', function (): void {
         expect($iterated)->toBe($assertions);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $assertion1 = new Assertion(
             tupleKey: new AssertionTupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1'),
             expectation: true,
@@ -229,16 +229,15 @@ describe('Assertions Collection', function (): void {
     });
 
     test('throws TypeError when adding wrong type', function (): void {
-        $collection = new Assertions();
-        $wrongType = new stdClass();
+        $collection = new Assertions;
+        $wrongType = new stdClass;
 
-        $this->expectException(TypeError::class);
         $collection->add($wrongType);
-    });
+    })->throws(ClientException::class);
 
     test('maintains insertion order', function (): void {
         $assertions = [];
-        for ($i = 0; $i < 5; ++$i) {
+        for ($i = 0; 5 > $i; ++$i) {
             $assertions[] = new Assertion(
                 tupleKey: new AssertionTupleKey(
                     user: "user:user{$i}",
@@ -286,7 +285,7 @@ describe('Assertions Collection', function (): void {
         expect($retrieved->getContext())->toBe($context);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Assertions::schema();
 
         expect($schema)->toBeInstanceOf(CollectionSchemaInterface::class);

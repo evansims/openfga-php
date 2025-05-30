@@ -138,7 +138,7 @@ final class SimpleStream implements StreamInterface
             default => throw new InvalidArgumentException('Invalid whence'),
         };
 
-        if ($newPosition < 0) {
+        if (0 > $newPosition) {
             throw new RuntimeException('Unable to seek to negative position');
         }
 

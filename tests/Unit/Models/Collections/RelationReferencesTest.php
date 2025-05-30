@@ -9,20 +9,20 @@ use OpenFGA\Models\{RelationReference, TypedWildcard};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('RelationReferences Collection', function (): void {
-    test('implements RelationReferencesInterface', function (): void {
+    test('implements interface', function (): void {
         $collection = new RelationReferences([]);
 
         expect($collection)->toBeInstanceOf(RelationReferencesInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
+    test('creates empty', function (): void {
         $collection = new RelationReferences([]);
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of relation references', function (): void {
+    test('creates with array of relation references', function (): void {
         $ref1 = new RelationReference(
             type: 'document',
             relation: 'viewer',
@@ -92,7 +92,7 @@ describe('RelationReferences Collection', function (): void {
         expect($types)->toBe(['document', 'folder', 'organization']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $ref1 = new RelationReference(type: 'document', relation: 'viewer');
         $ref2 = new RelationReference(type: 'folder', relation: 'editor');
 
@@ -105,7 +105,7 @@ describe('RelationReferences Collection', function (): void {
         expect($array[1])->toBe($ref2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $collection = new RelationReferences([
             new RelationReference(type: 'user'),
             new RelationReference(type: 'group', relation: 'member'),
@@ -182,7 +182,7 @@ describe('RelationReferences Collection', function (): void {
         expect($retrieved->getCondition())->toBe('inTenant');
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = RelationReferences::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);

@@ -5,24 +5,23 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{Usersets, UsersetsInterface};
-
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 use stdClass;
 
 final class Userset implements UsersetInterface
 {
-    public const OPENAPI_TYPE = 'Userset';
+    public const string OPENAPI_MODEL = 'Userset';
 
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param null|object                              $direct
-     * @param null|ObjectRelationInterface             $computedUserset
-     * @param null|TupleToUsersetV1Interface           $tupleToUserset
-     * @param null|UsersetsInterface<UsersetInterface> $union
-     * @param null|UsersetsInterface<UsersetInterface> $intersection
-     * @param null|DifferenceV1Interface               $difference
+     * @param object|null                              $direct
+     * @param ObjectRelationInterface|null             $computedUserset
+     * @param TupleToUsersetV1Interface|null           $tupleToUserset
+     * @param UsersetsInterface<UsersetInterface>|null $union
+     * @param UsersetsInterface<UsersetInterface>|null $intersection
+     * @param DifferenceV1Interface|null               $difference
      */
     public function __construct(
         private readonly ?object $direct = null,
@@ -32,6 +31,25 @@ final class Userset implements UsersetInterface
         private readonly ?UsersetsInterface $intersection = null,
         private readonly ?DifferenceV1Interface $difference = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'this', type: 'object', required: false, parameterName: 'direct'),
+                new SchemaProperty(name: 'computedUserset', type: 'object', className: ObjectRelation::class, required: false),
+                new SchemaProperty(name: 'tupleToUserset', type: 'object', className: TupleToUsersetV1::class, required: false),
+                new SchemaProperty(name: 'union', type: 'object', className: Usersets::class, required: false),
+                new SchemaProperty(name: 'intersection', type: 'object', className: Usersets::class, required: false),
+                new SchemaProperty(name: 'difference', type: 'object', className: DifferenceV1::class, required: false),
+            ],
+        );
     }
 
     /**
@@ -98,7 +116,7 @@ final class Userset implements UsersetInterface
 
         if (null !== $this->direct) {
             // 'this' should be an empty object in JSON
-            $data['this'] = new stdClass();
+            $data['this'] = new stdClass;
         }
 
         if ($this->computedUserset instanceof ObjectRelationInterface) {
@@ -122,24 +140,5 @@ final class Userset implements UsersetInterface
         }
 
         return $data;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'this', type: 'object', required: false, parameterName: 'direct'),
-                new SchemaProperty(name: 'computedUserset', type: 'object', className: ObjectRelation::class, required: false),
-                new SchemaProperty(name: 'tupleToUserset', type: 'object', className: TupleToUsersetV1::class, required: false),
-                new SchemaProperty(name: 'union', type: 'object', className: Usersets::class, required: false),
-                new SchemaProperty(name: 'intersection', type: 'object', className: Usersets::class, required: false),
-                new SchemaProperty(name: 'difference', type: 'object', className: DifferenceV1::class, required: false),
-            ],
-        );
     }
 }

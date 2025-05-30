@@ -17,7 +17,7 @@ use function strlen;
 
 describe('ListAuthorizationModelsResponse', function (): void {
     test('implements ListAuthorizationModelsResponseInterface', function (): void {
-        $models = new AuthorizationModels();
+        $models = new AuthorizationModels;
         $response = new ListAuthorizationModelsResponse($models);
         expect($response)->toBeInstanceOf(ListAuthorizationModelsResponseInterface::class);
     });
@@ -49,7 +49,7 @@ describe('ListAuthorizationModelsResponse', function (): void {
     });
 
     test('constructs with models and continuation token', function (): void {
-        $models = new AuthorizationModels();
+        $models = new AuthorizationModels;
         $continuationToken = 'next-page-token-xyz';
 
         $response = new ListAuthorizationModelsResponse($models, $continuationToken);
@@ -59,7 +59,7 @@ describe('ListAuthorizationModelsResponse', function (): void {
     });
 
     test('handles empty models collection', function (): void {
-        $models = new AuthorizationModels();
+        $models = new AuthorizationModels;
         $response = new ListAuthorizationModelsResponse($models);
 
         expect($response->getModels())->toBe($models);
@@ -67,9 +67,9 @@ describe('ListAuthorizationModelsResponse', function (): void {
     });
 
     test('handles large models collection', function (): void {
-        $models = new AuthorizationModels();
+        $models = new AuthorizationModels;
 
-        for ($i = 1; $i <= 10; ++$i) {
+        for ($i = 1; 10 >= $i; ++$i) {
             $typeDefinitions = new TypeDefinitions(
                 new TypeDefinition('user'),
                 new TypeDefinition("resource{$i}"),
@@ -118,14 +118,14 @@ describe('ListAuthorizationModelsResponse', function (): void {
     });
 
     test('handles empty continuation token', function (): void {
-        $models = new AuthorizationModels();
+        $models = new AuthorizationModels;
         $response = new ListAuthorizationModelsResponse($models, '');
 
         expect($response->getContinuationToken())->toBe('');
     });
 
     test('handles long continuation token', function (): void {
-        $models = new AuthorizationModels();
+        $models = new AuthorizationModels;
         $longToken = str_repeat('a', 1000);
 
         $response = new ListAuthorizationModelsResponse($models, $longToken);
@@ -137,27 +137,24 @@ describe('ListAuthorizationModelsResponse', function (): void {
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ListAuthorizationModelsResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 401 unauthorized error', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ListAuthorizationModelsResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ListAuthorizationModelsResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 });

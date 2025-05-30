@@ -11,6 +11,7 @@ RUN set -eux; \
     git \
     unzip \
     curl \
+    wget \
     # Required libraries
     libpng \
     libjpeg-turbo \
@@ -89,4 +90,4 @@ COPY . .
 
 RUN composer dump-autoload --optimize
 
-CMD ["composer", "pest:integration:run"]
+CMD ["composer", "test:integration:run"]

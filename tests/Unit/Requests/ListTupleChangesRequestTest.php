@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Requests;
 
 use DateTimeImmutable;
 use DateTimeZone;
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{ListTupleChangesRequest, ListTupleChangesRequestInterface};
 use Psr\Http\Message\StreamFactoryInterface;
@@ -134,12 +134,10 @@ describe('ListTupleChangesRequest', function (): void {
     });
 
     test('throws when store is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ListTupleChangesRequest(store: '');
-    });
+    })->throws(ClientException::class);
 
     test('throws when continuation token is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ListTupleChangesRequest(store: 'test-store', continuationToken: '');
-    });
+    })->throws(ClientException::class);
 });

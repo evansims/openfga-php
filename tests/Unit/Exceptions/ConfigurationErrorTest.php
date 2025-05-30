@@ -13,8 +13,8 @@ describe('ConfigurationError', function (): void {
      * @param ConfigurationError $configurationErrorCase
      */
     test('ConfigurationError enum exception() factory creates ConfigurationException with all parameters', function (ConfigurationError $configurationErrorCase): void {
-        $mockRequest = new Request();
-        $mockResponse = new Response();
+        $mockRequest = new Request;
+        $mockResponse = new Response;
         $context = ['detail' => 'some additional detail', 'code' => 123];
         $previousThrowable = new RuntimeException('Previous error');
 
@@ -48,8 +48,8 @@ describe('ConfigurationError', function (): void {
      * @param ConfigurationError $configurationErrorCase
      */
     test('ConfigurationError enum exception() factory handles edge case with empty context array', function (ConfigurationError $configurationErrorCase): void {
-        $mockRequest = new Request();
-        $mockResponse = new Response();
+        $mockRequest = new Request;
+        $mockResponse = new Response;
         $emptyContext = [];
 
         $exception = $configurationErrorCase->exception($mockRequest, $mockResponse, $emptyContext);
@@ -91,7 +91,7 @@ describe('ConfigurationError', function (): void {
      * @param ConfigurationError $configurationErrorCase
      */
     test('ConfigurationError enum exception() factory handles edge case with only request parameter', function (ConfigurationError $configurationErrorCase): void {
-        $mockRequest = new Request();
+        $mockRequest = new Request;
 
         $exception = $configurationErrorCase->exception($mockRequest);
 
@@ -108,7 +108,7 @@ describe('ConfigurationError', function (): void {
      * @param ConfigurationError $configurationErrorCase
      */
     test('ConfigurationError enum exception() factory handles edge case with only response parameter', function (ConfigurationError $configurationErrorCase): void {
-        $mockResponse = new Response();
+        $mockResponse = new Response;
 
         $exception = $configurationErrorCase->exception(null, $mockResponse);
 
@@ -120,4 +120,34 @@ describe('ConfigurationError', function (): void {
             ->and($exception->context())->toBe([])
             ->and($exception->getPrevious())->toBeNull();
     })->with(ConfigurationError::cases());
+
+    describe('getRequiredPsrInterface()', function (): void {
+        test('HttpClientMissing returns correct PSR interface', function (): void {
+            expect(ConfigurationError::HttpClientMissing->getRequiredPsrInterface())
+                ->toBe('Psr\\Http\\Client\\ClientInterface');
+        });
+
+        test('HttpRequestFactoryMissing returns correct PSR interface', function (): void {
+            expect(ConfigurationError::HttpRequestFactoryMissing->getRequiredPsrInterface())
+                ->toBe('Psr\\Http\\Message\\RequestFactoryInterface');
+        });
+
+        test('HttpResponseFactoryMissing returns correct PSR interface', function (): void {
+            expect(ConfigurationError::HttpResponseFactoryMissing->getRequiredPsrInterface())
+                ->toBe('Psr\\Http\\Message\\ResponseFactoryInterface');
+        });
+
+        test('HttpStreamFactoryMissing returns correct PSR interface', function (): void {
+            expect(ConfigurationError::HttpStreamFactoryMissing->getRequiredPsrInterface())
+                ->toBe('Psr\\Http\\Message\\StreamFactoryInterface');
+        });
+    });
+
+    describe('isHttpComponentMissing()', function (): void {
+        test('all configuration errors are HTTP component related', function (): void {
+            foreach (ConfigurationError::cases() as $error) {
+                expect($error->isHttpComponentMissing())->toBeTrue();
+            }
+        });
+    });
 });

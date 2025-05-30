@@ -1,5 +1,6 @@
 # GetAuthorizationModelResponseInterface
 
+Interface for authorization model retrieval response objects. This interface defines the contract for responses returned when retrieving authorization models from OpenFGA. An authorization model defines the relationship types, object types, and permission logic that govern how authorization decisions are made within a store. Authorization models are versioned, allowing you to evolve your permission structure over time while maintaining consistency for existing authorization checks.
 
 ## Namespace
 `OpenFGA\Responses`
@@ -14,11 +15,13 @@
 
 
 ```php
-public function getModel(): ?OpenFGA\Models\AuthorizationModelInterface
+public function getModel(): AuthorizationModelInterface|null
 ```
 
+Get the retrieved authorization model. Returns the complete authorization model including its type definitions, schema version, and any conditions. The model defines the relationship types and permission logic that govern authorization decisions within the store.
 
 
 #### Returns
-?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+AuthorizationModelInterface | null
+ The authorization model, or null if not found
 

@@ -4,17 +4,36 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use const JSON_THROW_ON_ERROR;
+
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
 use function is_array;
 
-final class CheckRequest implements CheckRequestInterface
+/**
+ * Request for performing authorization checks in OpenFGA.
+ *
+ * This request determines whether a user has a specific relationship with an object
+ * based on the configured authorization model and relationship tuples. It's the core
+ * operation for making authorization decisions in your application.
+ *
+ * The check operation supports contextual tuples, custom contexts, and tracing to
+ * provide comprehensive authorization decisions with detailed debugging information.
+ *
+ * @see CheckRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Queries/Check Authorization check API endpoint
+ */
+final readonly class CheckRequest implements CheckRequestInterface
 {
     /**
      * @param string                                 $store
@@ -24,6 +43,10 @@ final class CheckRequest implements CheckRequestInterface
      * @param ?object                                $context
      * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
      * @param ?Consistency                           $consistency
+     *
+     * @throws ClientThrowable          If the store ID or model ID is empty
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     public function __construct(
         private string $store,
@@ -35,11 +58,11 @@ final class CheckRequest implements CheckRequestInterface
         private ?Consistency $consistency = null,
     ) {
         if ('' === $this->store) {
-            throw new InvalidArgumentException('Store ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
 
         if ('' === $this->model) {
-            throw new InvalidArgumentException('Authorization Model ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
         }
     }
 

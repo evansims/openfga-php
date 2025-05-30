@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
-
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 final class Condition implements ConditionInterface
 {
-    public const OPENAPI_MODEL = 'Condition';
+    public const string OPENAPI_MODEL = 'Condition';
 
     private static ?SchemaInterface $schema = null;
 
     /**
      * @param string                                                         $name       A unique name for the condition.
      * @param string                                                         $expression A Google CEL expression, expressed as a string.
-     * @param null|ConditionParametersInterface<ConditionParameterInterface> $parameters A collection of parameter names to the parameter's defined type reference.
-     * @param null|ConditionMetadataInterface                                $metadata   The collection of metadata that should be associated with the condition.
+     * @param ConditionParametersInterface<ConditionParameterInterface>|null $parameters A collection of parameter names to the parameter's defined type reference.
+     * @param ConditionMetadataInterface|null                                $metadata   The collection of metadata that should be associated with the condition.
      */
     public function __construct(
         private readonly string $name,
@@ -27,6 +26,23 @@ final class Condition implements ConditionInterface
         private readonly ?ConditionParametersInterface $parameters = null,
         private readonly ?ConditionMetadataInterface $metadata = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'name', type: 'string', required: true),
+                new SchemaProperty(name: 'expression', type: 'string', required: true),
+                new SchemaProperty(name: 'parameters', type: 'object', className: ConditionParameters::class, required: false),
+                new SchemaProperty(name: 'metadata', type: 'object', className: ConditionMetadata::class, required: false),
+            ],
+        );
     }
 
     /**
@@ -67,6 +83,8 @@ final class Condition implements ConditionInterface
 
     /**
      * @inheritDoc
+     *
+     * @return array<string, mixed>
      */
     #[Override]
     public function jsonSerialize(): array
@@ -77,22 +95,5 @@ final class Condition implements ConditionInterface
             'parameters' => $this->parameters?->jsonSerialize(),
             'metadata' => $this->metadata?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'name', type: 'string', required: true),
-                new SchemaProperty(name: 'expression', type: 'string', required: true),
-                new SchemaProperty(name: 'parameters', type: 'object', className: ConditionParameters::class, required: false),
-                new SchemaProperty(name: 'metadata', type: 'object', className: ConditionMetadata::class, required: false),
-            ],
-        );
     }
 }

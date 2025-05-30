@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Network;
 
 use Exception;
-use Mockery;
 use OpenFGA\Client;
 use OpenFGA\Exceptions\{NetworkException};
 use OpenFGA\Network\{RequestContext, RequestManager, RequestMethod};
 use OpenFGA\Requests\RequestInterface as ClientRequestInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface, ResponseFactoryInterface, ResponseInterface, StreamFactoryInterface, StreamInterface};
+use Psr\Http\Message\UriInterface;
 
 describe('RequestManager', function (): void {
     test('constructs with required parameters', function (): void {
@@ -24,10 +25,10 @@ describe('RequestManager', function (): void {
     });
 
     test('constructs with all parameters', function (): void {
-        $httpClient = Mockery::mock(ClientInterface::class);
-        $responseFactory = Mockery::mock(ResponseFactoryInterface::class);
-        $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-        $requestFactory = Mockery::mock(RequestFactoryInterface::class);
+        $httpClient = test()->createMock(ClientInterface::class);
+        $responseFactory = test()->createMock(ResponseFactoryInterface::class);
+        $streamFactory = test()->createMock(StreamFactoryInterface::class);
+        $requestFactory = test()->createMock(RequestFactoryInterface::class);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -43,7 +44,7 @@ describe('RequestManager', function (): void {
     });
 
     test('getHttpClient returns provided client', function (): void {
-        $httpClient = Mockery::mock(ClientInterface::class);
+        $httpClient = test()->createMock(ClientInterface::class);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -55,7 +56,7 @@ describe('RequestManager', function (): void {
     });
 
     test('getHttpRequestFactory returns provided factory', function (): void {
-        $requestFactory = Mockery::mock(RequestFactoryInterface::class);
+        $requestFactory = test()->createMock(RequestFactoryInterface::class);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -67,7 +68,7 @@ describe('RequestManager', function (): void {
     });
 
     test('getHttpResponseFactory returns provided factory', function (): void {
-        $responseFactory = Mockery::mock(ResponseFactoryInterface::class);
+        $responseFactory = test()->createMock(ResponseFactoryInterface::class);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -79,7 +80,7 @@ describe('RequestManager', function (): void {
     });
 
     test('getHttpStreamFactory returns provided factory', function (): void {
-        $streamFactory = Mockery::mock(StreamFactoryInterface::class);
+        $streamFactory = test()->createMock(StreamFactoryInterface::class);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -91,10 +92,10 @@ describe('RequestManager', function (): void {
     });
 
     test('request creates PSR-7 request with authorization header', function (): void {
-        $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-        $requestFactory = Mockery::mock(RequestFactoryInterface::class);
-        $psrRequest = Mockery::mock(RequestInterface::class);
-        $stream = Mockery::mock(StreamInterface::class);
+        $streamFactory = test()->createMock(StreamFactoryInterface::class);
+        $requestFactory = test()->createMock(RequestFactoryInterface::class);
+        $psrRequest = test()->createMock(RequestInterface::class);
+        $stream = test()->createMock(StreamInterface::class);
 
         $requestContext = new RequestContext(
             method: RequestMethod::POST,
@@ -104,27 +105,37 @@ describe('RequestManager', function (): void {
             useApiUrl: true,
         );
 
-        $clientRequest = Mockery::mock(ClientRequestInterface::class);
-        $clientRequest->shouldReceive('getRequest')
+        $clientRequest = test()->createMock(ClientRequestInterface::class);
+        $clientRequest->expects(test()->once())
+            ->method('getRequest')
             ->with($streamFactory)
-            ->andReturn($requestContext);
+            ->willReturn($requestContext);
 
-        $requestFactory->shouldReceive('createRequest')
+        $requestFactory->expects(test()->once())
+            ->method('createRequest')
             ->with('POST', 'https://api.example.com/stores')
-            ->andReturn($psrRequest);
+            ->willReturn($psrRequest);
 
-        $psrRequest->shouldReceive('withHeader')
-            ->with('Content-Type', 'application/json')
-            ->andReturn($psrRequest);
-        $psrRequest->shouldReceive('withHeader')
-            ->with('User-Agent', 'openfga-sdk php/' . Client::VERSION)
-            ->andReturn($psrRequest);
-        $psrRequest->shouldReceive('withHeader')
-            ->with('Authorization', 'Bearer token123')
-            ->andReturn($psrRequest);
-        $psrRequest->shouldReceive('withBody')
+        $psrRequest->expects(test()->exactly(3))
+            ->method('withHeader')
+            ->willReturnCallback(function (string $name, string $value) use ($psrRequest): MockObject {
+                // Verify expected headers
+                expect($name)->toBeIn(['Content-Type', 'User-Agent', 'Authorization']);
+                if ('Content-Type' === $name) {
+                    expect($value)->toBe('application/json');
+                } elseif ('User-Agent' === $name) {
+                    expect($value)->toBe('openfga-sdk php/' . Client::VERSION);
+                } elseif ('Authorization' === $name) {
+                    expect($value)->toBe('Bearer token123');
+                }
+
+                return $psrRequest;
+            });
+
+        $psrRequest->expects(test()->once())
+            ->method('withBody')
             ->with($stream)
-            ->andReturn($psrRequest);
+            ->willReturn($psrRequest);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -140,10 +151,10 @@ describe('RequestManager', function (): void {
     });
 
     test('request handles non-API URLs', function (): void {
-        $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-        $requestFactory = Mockery::mock(RequestFactoryInterface::class);
-        $psrRequest = Mockery::mock(RequestInterface::class);
-        $stream = Mockery::mock(StreamInterface::class);
+        $streamFactory = test()->createMock(StreamFactoryInterface::class);
+        $requestFactory = test()->createMock(RequestFactoryInterface::class);
+        $psrRequest = test()->createMock(RequestInterface::class);
+        $stream = test()->createMock(StreamInterface::class);
 
         $requestContext = new RequestContext(
             method: RequestMethod::GET,
@@ -153,24 +164,25 @@ describe('RequestManager', function (): void {
             useApiUrl: false,
         );
 
-        $clientRequest = Mockery::mock(ClientRequestInterface::class);
-        $clientRequest->shouldReceive('getRequest')
+        $clientRequest = test()->createMock(ClientRequestInterface::class);
+        $clientRequest->expects(test()->once())
+            ->method('getRequest')
             ->with($streamFactory)
-            ->andReturn($requestContext);
+            ->willReturn($requestContext);
 
-        $requestFactory->shouldReceive('createRequest')
+        $requestFactory->expects(test()->once())
+            ->method('createRequest')
             ->with('GET', 'https://other.example.com/resource')
-            ->andReturn($psrRequest);
+            ->willReturn($psrRequest);
 
-        $psrRequest->shouldReceive('withHeader')
-            ->with('User-Agent', 'openfga-sdk php/' . Client::VERSION)
-            ->andReturn($psrRequest);
-        $psrRequest->shouldReceive('withHeader')
-            ->with('Content-Type', 'application/json')
-            ->andReturn($psrRequest);
-        $psrRequest->shouldReceive('withBody')
+        $psrRequest->expects(test()->exactly(2))
+            ->method('withHeader')
+            ->willReturn($psrRequest);
+
+        $psrRequest->expects(test()->once())
+            ->method('withBody')
             ->with($stream)
-            ->andReturn($psrRequest);
+            ->willReturn($psrRequest);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -185,13 +197,22 @@ describe('RequestManager', function (): void {
     });
 
     test('send executes request and returns response', function (): void {
-        $httpClient = Mockery::mock(ClientInterface::class);
-        $psrRequest = Mockery::mock(RequestInterface::class);
-        $psrResponse = Mockery::mock(ResponseInterface::class);
+        $httpClient = test()->createMock(ClientInterface::class);
+        $psrRequest = test()->createMock(RequestInterface::class);
+        $psrResponse = test()->createMock(ResponseInterface::class);
+        $uri = test()->createMock(UriInterface::class);
 
-        $httpClient->shouldReceive('sendRequest')
+        // Mock successful response (status 200)
+        $psrResponse->method('getStatusCode')->willReturn(200);
+
+        // Mock URI for circuit breaker tracking
+        $uri->method('__toString')->willReturn('https://api.example.com/test');
+        $psrRequest->method('getUri')->willReturn($uri);
+
+        $httpClient->expects(test()->once())
+            ->method('sendRequest')
             ->with($psrRequest)
-            ->andReturn($psrResponse);
+            ->willReturn($psrResponse);
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -205,49 +226,54 @@ describe('RequestManager', function (): void {
     });
 
     test('handleResponseException throws appropriate errors', function (): void {
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
+        $response = test()->createMock(ResponseInterface::class);
+        $body = test()->createMock(StreamInterface::class);
 
-        // Test 400 error
-        $response = Mockery::mock(ResponseInterface::class);
-        $response->shouldReceive('getStatusCode')->andReturn(400);
-        $response->shouldReceive('getBody->getContents')->andReturn('{"error": "Invalid request"}');
+        $response->method('getStatusCode')->willReturn(400);
+        $response->method('getBody')->willReturn($body);
+        $body->method('getContents')->willReturn('{"error": "Invalid request"}');
 
-        $this->expectException(NetworkException::class);
         RequestManager::handleResponseException($response, $request);
-    });
+    })->throws(NetworkException::class);
 
     test('handleResponseException throws error for 401', function (): void {
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
+        $response = test()->createMock(ResponseInterface::class);
+        $body = test()->createMock(StreamInterface::class);
 
-        // Test 401 error
-        $response = Mockery::mock(ResponseInterface::class);
-        $response->shouldReceive('getStatusCode')->andReturn(401);
-        $response->shouldReceive('getBody->getContents')->andReturn('');
+        $response->method('getStatusCode')->willReturn(401);
+        $response->method('getBody')->willReturn($body);
+        $body->method('getContents')->willReturn('');
 
-        $this->expectException(NetworkException::class);
         RequestManager::handleResponseException($response, $request);
-    });
+    })->throws(NetworkException::class);
 
     test('handleResponseException throws error for unknown status', function (): void {
-        $request = Mockery::mock(RequestInterface::class);
+        $request = test()->createMock(RequestInterface::class);
+        $response = test()->createMock(ResponseInterface::class);
+        $body = test()->createMock(StreamInterface::class);
 
-        // Test unknown status code
-        $response = Mockery::mock(ResponseInterface::class);
-        $response->shouldReceive('getStatusCode')->andReturn(418);
-        $response->shouldReceive('getBody->getContents')->andReturn('');
+        $response->method('getStatusCode')->willReturn(418);
+        $response->method('getBody')->willReturn($body);
+        $body->method('getContents')->willReturn('');
 
-        $this->expectException(NetworkException::class);
         RequestManager::handleResponseException($response, $request);
-    });
+    })->throws(NetworkException::class);
 
     test('send throws exception on network failure', function (): void {
-        $httpClient = Mockery::mock(ClientInterface::class);
-        $psrRequest = Mockery::mock(RequestInterface::class);
+        $httpClient = test()->createMock(ClientInterface::class);
+        $psrRequest = test()->createMock(RequestInterface::class);
+        $uri = test()->createMock(UriInterface::class);
 
-        $httpClient->shouldReceive('sendRequest')
+        // Mock URI for circuit breaker tracking
+        $uri->method('__toString')->willReturn('https://api.example.com/test');
+        $psrRequest->method('getUri')->willReturn($uri);
+
+        $httpClient->expects(test()->once())
+            ->method('sendRequest')
             ->with($psrRequest)
-            ->once()
-            ->andThrow(new Exception('Network error'));
+            ->willThrowException(new Exception('Network error'));
 
         $manager = new RequestManager(
             url: 'https://api.example.com',
@@ -255,10 +281,8 @@ describe('RequestManager', function (): void {
             httpClient: $httpClient,
         );
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('Network error');
         $manager->send($psrRequest);
-    });
+    })->throws(Exception::class, 'Network error');
 
     test('RequestMethod enum has correct values', function (): void {
         expect(RequestMethod::DELETE->value)->toBe('DELETE');
@@ -268,10 +292,10 @@ describe('RequestManager', function (): void {
     });
 
     test('handles URL with trailing slash', function (): void {
-        $streamFactory = Mockery::mock(StreamFactoryInterface::class);
-        $requestFactory = Mockery::mock(RequestFactoryInterface::class);
-        $psrRequest = Mockery::mock(RequestInterface::class);
-        $stream = Mockery::mock(StreamInterface::class);
+        $streamFactory = test()->createMock(StreamFactoryInterface::class);
+        $requestFactory = test()->createMock(RequestFactoryInterface::class);
+        $psrRequest = test()->createMock(RequestInterface::class);
+        $stream = test()->createMock(StreamInterface::class);
 
         $requestContext = new RequestContext(
             method: RequestMethod::GET,
@@ -281,19 +305,19 @@ describe('RequestManager', function (): void {
             useApiUrl: true,
         );
 
-        $clientRequest = Mockery::mock(ClientRequestInterface::class);
-        $clientRequest->shouldReceive('getRequest')
+        $clientRequest = test()->createMock(ClientRequestInterface::class);
+        $clientRequest->expects(test()->once())
+            ->method('getRequest')
             ->with($streamFactory)
-            ->andReturn($requestContext);
+            ->willReturn($requestContext);
 
-        $requestFactory->shouldReceive('createRequest')
+        $requestFactory->expects(test()->once())
+            ->method('createRequest')
             ->with('GET', 'https://api.example.com//stores')
-            ->andReturn($psrRequest);
+            ->willReturn($psrRequest);
 
-        $psrRequest->shouldReceive('withHeader')
-            ->andReturn($psrRequest);
-        $psrRequest->shouldReceive('withBody')
-            ->andReturn($psrRequest);
+        $psrRequest->method('withHeader')->willReturn($psrRequest);
+        $psrRequest->method('withBody')->willReturn($psrRequest);
 
         $manager = new RequestManager(
             url: 'https://api.example.com/',

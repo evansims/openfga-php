@@ -9,7 +9,7 @@ use Override;
 
 final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterface
 {
-    public const OPENAPI_MODEL = 'UsersetTree.TupleToUserset';
+    public const string OPENAPI_MODEL = 'UsersetTree.TupleToUserset';
 
     private static ?SchemaInterface $schema = null;
 
@@ -21,6 +21,21 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
         private readonly string $tupleset,
         private readonly array $computed,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'tupleset', type: 'string', required: true),
+                new SchemaProperty(name: 'computed', type: 'array', required: true, items: ['type' => 'object', 'className' => Computed::class]),
+            ],
+        );
     }
 
     /**
@@ -51,22 +66,14 @@ final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterf
     {
         return [
             'tupleset' => $this->tupleset,
-            'computed' => array_map(static fn (ComputedInterface $c): array => $c->jsonSerialize(), $this->computed),
+            'computed' => array_map(/**
+             * @return string[]
+             *
+             * @psalm-return array{userset: string}
+             */
+                static fn (ComputedInterface $c): array => $c->jsonSerialize(),
+                $this->computed,
+            ),
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'tupleset', type: 'string', required: true),
-                new SchemaProperty(name: 'computed', type: 'array', required: true, items: ['type' => 'object', 'className' => Computed::class]),
-            ],
-        );
     }
 }

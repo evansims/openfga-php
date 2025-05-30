@@ -4,40 +4,50 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use InvalidArgumentException;
+use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
+use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
+use ReflectionException;
 
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
-
+/**
+ * Response containing a list of objects that a user has a specific relationship with.
+ *
+ * This response provides an array of object identifiers that the specified user
+ * has the given relationship with. Use this to discover what resources a user
+ * can access in your authorization system.
+ *
+ * @see ListObjectsResponseInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Queries/ListObjects
+ */
 final class ListObjectsResponse extends Response implements ListObjectsResponseInterface
 {
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param array<int, string> $objects
+     * Create a new list objects response instance.
+     *
+     * @param array<int, string> $objects The array of object identifiers returned by the list operation
      */
     public function __construct(
-        private array $objects,
+        private readonly array $objects,
     ) {
     }
 
     /**
      * @inheritDoc
-     */
-    #[Override]
-    public function getObjects(): array
-    {
-        return $this->objects;
-    }
-
-    /**
-     * @inheritDoc
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws NetworkException         If the API returns an error response
+     * @throws ReflectionException      If exception location capture fails
+     * @throws SerializationException   If JSON parsing or schema validation fails
      */
     #[Override]
     public static function fromResponse(
-        ResponseInterface $response,
-        RequestInterface $request,
+        HttpResponseInterface $response,
+        HttpRequestInterface $request,
         SchemaValidator $validator,
     ): ListObjectsResponseInterface {
         // Handle successful responses
@@ -50,7 +60,7 @@ final class ListObjectsResponse extends Response implements ListObjectsResponseI
         }
 
         // Handle network errors
-        return RequestManager::handleResponseException(
+        RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );
@@ -68,5 +78,14 @@ final class ListObjectsResponse extends Response implements ListObjectsResponseI
                 new SchemaProperty(name: 'objects', type: 'array', items: ['type' => 'string'], required: true),
             ],
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getObjects(): array
+    {
+        return $this->objects;
     }
 }

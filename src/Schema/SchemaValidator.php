@@ -8,12 +8,14 @@ use ArrayAccess;
 use BackedEnum;
 use DateTimeImmutable;
 use Exception;
-use OpenFGA\Exceptions\{SerializationError, SerializationException};
+use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientThrowable, SerializationError};
+use OpenFGA\Models\Collections\KeyedCollection;
+use OpenFGA\Models\UsersListUser;
+use Override;
 use ReflectionClass;
-
 use ReflectionException;
 use ReflectionNamedType;
-
 use ReflectionParameter;
 
 use function array_key_exists;
@@ -24,12 +26,24 @@ use function is_array;
 use function is_bool;
 use function is_float;
 use function is_int;
+use function is_numeric;
 use function is_object;
 use function is_scalar;
 use function is_string;
+use function method_exists;
 use function sprintf;
 
-final class SchemaValidator
+/**
+ * Validates and transforms data according to registered JSON schemas.
+ *
+ * This validator ensures that API response data conforms to expected schemas
+ * and transforms raw arrays into strongly-typed model objects. It handles
+ * nested objects, collections, and complex validation rules while providing
+ * detailed error reporting for schema violations.
+ *
+ * @see SchemaValidatorInterface For the complete API specification
+ */
+final class SchemaValidator implements SchemaValidatorInterface
 {
     /**
      * @var array<string, SchemaInterface>
@@ -37,20 +51,18 @@ final class SchemaValidator
     private array $schemas = [];
 
     /**
-     * Get all registered schemas.
-     *
-     * @return array<string, SchemaInterface>
+     * @inheritDoc
      */
+    #[Override]
     public function getSchemas(): array
     {
         return $this->schemas;
     }
 
     /**
-     * Register a schema.
-     *
-     * @param SchemaInterface $schema
+     * @inheritDoc
      */
+    #[Override]
     public function registerSchema(SchemaInterface $schema): self
     {
         $this->schemas[$schema->getClassName()] = $schema;
@@ -59,15 +71,12 @@ final class SchemaValidator
     }
 
     /**
-     * @template T of object
+     * @inheritDoc
      *
-     * @param mixed           $data
-     * @param class-string<T> $className
-     *
-     * @throws SerializationException If validation fails, missing required constructor parameter, or could not add items to collection
-     *
-     * @return T
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
+    #[Override]
     public function validateAndTransform(mixed $data, string $className): object
     {
         if (! is_array($data)) {
@@ -91,15 +100,16 @@ final class SchemaValidator
             }
 
             // Only convert to list for IndexedCollections, preserve keys for KeyedCollections
-            if (! array_is_list($data) && ! is_subclass_of($className, \OpenFGA\Models\Collections\KeyedCollection::class)) {
+            if (! array_is_list($data) && ! is_subclass_of($className, KeyedCollection::class)) {
                 $data = array_values($data);
             }
 
-            /** @var T */
             return $this->validateAndTransformCollection($data, $schema, $className);
         }
 
         $errors = [];
+
+        /** @var array<string, mixed> $transformedData */
         $transformedData = [];
 
         // Validate against schema
@@ -128,7 +138,9 @@ final class SchemaValidator
 
                 /** @var mixed $default */
                 $default = $schemaProperty->default;
-                $transformedData[$name] = $default;
+
+                // Explicitly assign mixed default value to transformedData array
+                $this->assignMixed($transformedData, $name, $default);
 
                 continue;
             }
@@ -155,7 +167,7 @@ final class SchemaValidator
                 $transformedData[$name] = $this->validateAndTransform($value, $propClassName);
             } elseif ('object' === $type && null === $propClassName) {
                 // Plain object without specific class - accept as-is
-                $transformedData[$name] = $value;
+                $this->assignMixed($transformedData, $name, $value);
             } elseif ('array' === $type && null !== $items) {
                 $itemType = $items['type'] ?? null;
                 $itemClassName = $items['className'] ?? null;
@@ -164,18 +176,23 @@ final class SchemaValidator
                     throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $type]);
                 }
 
+                /** @var array<int, mixed> $transformedArray */
                 $transformedArray = [];
 
                 /** @var array<int, mixed> $value */
+                /** @var mixed $item */
                 foreach ($value as $item) {
                     if ('object' === $itemType && null !== $itemClassName) {
                         $transformedItem = $this->validateAndTransform($item, $itemClassName);
                         $transformedArray[] = $transformedItem;
                     } else {
-                        if (! $this->validateType($item, $itemType)) {
-                            throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $itemType]);
+                        $validationItemType = $itemType ?? 'mixed';
+                        if (! $this->validateType($item, $validationItemType, null, null)) {
+                            throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $validationItemType]);
                         }
-                        $transformedArray[] = $item;
+
+                        // Add validated item to array - type already validated above
+                        $this->appendMixed($transformedArray, $item);
                     }
                 }
 
@@ -184,8 +201,8 @@ final class SchemaValidator
                     $transformedData[$name] = $transformedArray;
                 }
             } else {
-                // Ensure the type is one of the expected values
-                $validTypes = ['string', 'integer', 'number', 'boolean', 'array', 'object', 'null'];
+                // Ensure the type is one of the expected scalar values (object and array handled above)
+                $validTypes = ['string', 'integer', 'number', 'boolean', 'null'];
                 if (! in_array($type, $validTypes, true)) {
                     $type = 'string'; // Default to string for unknown types
                 }
@@ -203,9 +220,37 @@ final class SchemaValidator
     }
 
     /**
+     * Safely append a mixed value to an array to satisfy Psalm.
+     *
+     * @param array<mixed> $array The target array
+     * @param mixed        $value The value to append
+     *
+     * @psalm-suppress MixedAssignment
+     */
+    private function appendMixed(array &$array, mixed $value): void
+    {
+        $array[] = $value;
+    }
+
+    /**
+     * Safely assign a mixed value to an array to satisfy Psalm.
+     *
+     * @param array<string, mixed> $array The target array
+     * @param string               $key   The array key
+     * @param mixed                $value The value to assign
+     *
+     * @psalm-suppress MixedAssignment
+     */
+    private function assignMixed(array &$array, string $key, mixed $value): void
+    {
+        $array[$key] = $value;
+    }
+
+    /**
      * Convert camelCase to snake_case.
      *
-     * @param string $input
+     * @param  string $input The camelCase string to convert
+     * @return string The converted snake_case string
      */
     private function camelToSnakeCase(string $input): string
     {
@@ -219,12 +264,15 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param class-string<T>          $className
-     * @param array<int|string, mixed> $items
+     * @param class-string<T>          $className The fully qualified class name of the collection to create
+     * @param array<int|string, mixed> $items     The items to populate the collection with
      *
-     * @throws ReflectionException
+     * @throws ClientThrowable          If the collection cannot be populated with items
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     * @throws ReflectionException      If the class cannot be reflected or instantiated
      *
-     * @return T
+     * @return T The created and populated collection instance
      */
     private function createCollectionInstance(string $className, array $items)
     {
@@ -232,7 +280,11 @@ final class SchemaValidator
         $constructor = $reflection->getConstructor();
 
         if (null !== $constructor && 1 === $constructor->getNumberOfParameters()) {
-            $param = $constructor->getParameters()[0];
+            $parameters = $constructor->getParameters();
+            if (! isset($parameters[0])) {
+                throw SerializationError::InvalidItemType->exception(context: ['className' => $className, 'message' => 'Constructor parameter not found']);
+            }
+            $param = $parameters[0];
             $paramType = $param->getType();
 
             if ($paramType instanceof ReflectionNamedType && 'array' === $paramType->getName()) {
@@ -245,6 +297,8 @@ final class SchemaValidator
         if ($instance instanceof ArrayAccess) {
             /** @var ArrayAccess<int|string, mixed>&T $arrayInstance */
             $arrayInstance = $instance;
+
+            /** @var mixed $item */
             foreach ($items as $key => $item) {
                 $arrayInstance->offsetSet($key, $item);
             }
@@ -253,6 +307,7 @@ final class SchemaValidator
             $params = $addMethod->getParameters();
             $paramCount = count($params);
 
+            /** @var mixed $item */
             foreach ($items as $key => $item) {
                 if (2 === $paramCount) {
                     // If add() accepts two parameters, pass both key and item
@@ -274,13 +329,15 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param array<string, mixed> $data
-     * @param class-string<T>      $className
+     * @param array<string, mixed> $data      The validated data to use for object creation
+     * @param class-string<T>      $className The fully qualified class name to instantiate
      *
-     * @throws SerializationException
-     * @throws ReflectionException
+     * @throws ClientThrowable          If object creation fails or required constructor parameters are missing
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     * @throws ReflectionException      If the class cannot be reflected or instantiated
      *
-     * @return T
+     * @return T The created and initialized object instance
      */
     private function createInstance(string $className, array $data): object
     {
@@ -298,6 +355,7 @@ final class SchemaValidator
 
         // If there's a constructor, try to use it with named parameters
         if (null !== $constructor) {
+            /** @var array<string, mixed> $params */
             $params = [];
 
             // Get schema if available to check for parameter mappings
@@ -320,13 +378,29 @@ final class SchemaValidator
 
                 if (null !== $mappedFieldName && array_key_exists($mappedFieldName, $data)) {
                     // Use the mapped field name
-                    $params[$paramName] = $this->transformParameterValue($data[$mappedFieldName], $parameter);
+                    /** @var mixed $transformedValue */
+                    $transformedValue = $this->transformParameterValue($data[$mappedFieldName], $parameter);
+
+                    // Assign transformed parameter value to constructor params
+                    $this->assignMixed($params, $paramName, $transformedValue);
                 } elseif (array_key_exists($paramName, $data)) {
-                    $params[$paramName] = $this->transformParameterValue($data[$paramName], $parameter);
+                    /** @var mixed $transformedValue */
+                    $transformedValue = $this->transformParameterValue($data[$paramName], $parameter);
+
+                    // Assign transformed parameter value to constructor params
+                    $this->assignMixed($params, $paramName, $transformedValue);
                 } elseif (array_key_exists($snakeCaseName, $data)) {
-                    $params[$paramName] = $this->transformParameterValue($data[$snakeCaseName], $parameter);
+                    /** @var mixed $transformedValue */
+                    $transformedValue = $this->transformParameterValue($data[$snakeCaseName], $parameter);
+
+                    // Assign transformed parameter value to constructor params
+                    $this->assignMixed($params, $paramName, $transformedValue);
                 } elseif ($parameter->isDefaultValueAvailable()) {
-                    $params[$paramName] = $parameter->getDefaultValue();
+                    /** @var mixed $defaultValue */
+                    $defaultValue = $parameter->getDefaultValue();
+
+                    // Assign default parameter value to constructor params
+                    $this->assignMixed($params, $paramName, $defaultValue);
                 } else {
                     throw SerializationError::MissingRequiredConstructorParameter->exception(context: ['className' => $className, 'paramName' => $paramName]);
                 }
@@ -339,6 +413,7 @@ final class SchemaValidator
         }
 
         // Set public properties (skip readonly properties)
+        /** @var mixed $value */
         foreach ($data as $name => $value) {
             if ($reflection->hasProperty($name)) {
                 $schemaProperty = $reflection->getProperty($name);
@@ -355,8 +430,9 @@ final class SchemaValidator
     /**
      * Transform a parameter value to match the expected type.
      *
-     * @param mixed               $value
-     * @param ReflectionParameter $parameter
+     * @param  mixed               $value     The raw value to transform
+     * @param  ReflectionParameter $parameter The constructor parameter reflection for type information
+     * @return mixed               The transformed value matching the expected parameter type
      */
     private function transformParameterValue(mixed $value, ReflectionParameter $parameter): mixed
     {
@@ -383,91 +459,73 @@ final class SchemaValidator
     }
 
     /**
+     * Transform string values with format handling.
+     *
+     * @param  mixed                         $value  The value to transform
+     * @param  string|null                   $format Optional format specification
+     * @return DateTimeImmutable|string|null The transformed string or date value
+     */
+    private function transformStringValue(mixed $value, ?string $format): null | DateTimeImmutable | string
+    {
+        if ('date' === $format) {
+            if ($value instanceof DateTimeImmutable) {
+                return $value;
+            }
+            if (is_string($value)) {
+                $date = DateTimeImmutable::createFromFormat('Y-m-d', $value);
+                if (false !== $date) {
+                    return $date;
+                }
+            }
+
+            return null;
+        }
+
+        if ('datetime' === $format) {
+            if ($value instanceof DateTimeImmutable) {
+                return $value;
+            }
+
+            if (is_string($value)) {
+                try {
+                    return new DateTimeImmutable($value);
+                } catch (Exception) {
+                }
+            }
+
+            return null;
+        }
+
+        if (is_string($value)) {
+            return $value;
+        }
+        if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
+            return (string) $value;
+        }
+
+        return '';
+    }
+
+    /**
      * Transform a value to the correct type.
      *
-     * @param mixed                                                         $value
-     * @param 'array'|'boolean'|'integer'|'null'|'number'|'object'|'string' $type
-     * @param ?string                                                       $format
-     *
-     * @return null|array<mixed>|bool|float|int|object|string
+     * @param  mixed                                          $value  The raw value to transform
+     * @param  string                                         $type   The target type to transform to
+     * @param  string|null                                    $format Optional format constraint for string types (e.g., 'date', 'datetime')
+     * @return array<mixed>|bool|float|int|object|string|null The transformed value in the correct type
      */
     private function transformValue(mixed $value, string $type, ?string $format = null): mixed
     {
-        switch ($type) {
-            case 'integer':
-                if (is_int($value)) {
-                    return $value;
-                }
-                if (is_numeric($value)) {
-                    return (int) $value;
-                }
-
-                return 0;
-
-            case 'number':
-                return is_float($value) ? $value : (is_int($value) ? (float) $value : (float) 0);
-
-            case 'boolean':
-                return is_bool($value) ? $value : (bool) $value;
-
-            case 'array':
-                return is_array($value) ? $value : [];
-
-            case 'object':
-                return is_object($value) ? $value : (object) (is_array($value) ? $value : []);
-
-            case 'null':
-                return null;
-
-            case 'string':
-                if ('date' === $format) {
-                    if ($value instanceof DateTimeImmutable) {
-                        return $value;
-                    }
-                    if (is_string($value)) {
-                        $date = DateTimeImmutable::createFromFormat('Y-m-d', $value);
-                        if (false !== $date) {
-                            return $date;
-                        }
-                    }
-
-                    return null;
-                }
-
-                if ('datetime' === $format) {
-                    if ($value instanceof DateTimeImmutable) {
-                        return $value;
-                    }
-
-                    if (is_string($value)) {
-                        try {
-                            return new DateTimeImmutable($value);
-                        } catch (Exception) {
-                        }
-                    }
-
-                    return null;
-                }
-
-                if (is_string($value)) {
-                    return $value;
-                }
-                if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
-                    return (string) $value;
-                }
-
-                return '';
-
-            default:
-                if (is_string($value)) {
-                    return $value;
-                }
-                if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
-                    return (string) $value;
-                }
-
-                return '';
-        }
+        return match ($type) {
+            'integer' => is_int($value) ? $value : (is_numeric($value) ? (int) $value : 0),
+            'number' => is_float($value) ? $value : (is_int($value) ? (float) $value : (float) 0),
+            'boolean' => is_bool($value) ? $value : (bool) $value,
+            'array' => is_array($value) ? $value : [],
+            'object' => is_object($value) ? $value : (object) (is_array($value) ? $value : []),
+            'null' => null,
+            'string' => $this->transformStringValue($value, $format),
+            default => $this->transformStringValue($value, $format),
+        };
     }
 
     /**
@@ -475,16 +533,19 @@ final class SchemaValidator
      *
      * @template T of object
      *
-     * @param array<int|string, mixed>  $data      Array of items
-     * @param CollectionSchemaInterface $schema    Collection schema
-     * @param class-string<T>           $className
+     * @param array<int|string, mixed>  $data      Array of items to validate and transform
+     * @param CollectionSchemaInterface $schema    The collection schema defining validation rules
+     * @param class-string<T>           $className The fully qualified class name of the collection to create
      *
-     * @throws SerializationException If validation fails
+     * @throws ClientThrowable          If validation fails or collection cannot be created
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      *
-     * @return T
+     * @return T The validated and populated collection instance
      */
     private function validateAndTransformCollection(array $data, CollectionSchemaInterface $schema, string $className): object
     {
+        /** @var array<mixed> $transformedItems */
         $transformedItems = [];
         $itemType = $schema->getItemType();
 
@@ -496,9 +557,11 @@ final class SchemaValidator
         }
 
         // Validate each item in the array
+        /** @var array<mixed> $data */
+        /** @var mixed $item */
         foreach ($data as $key => $item) {
             // Special handling for UsersListUser - API returns strings directly
-            if (\OpenFGA\Models\UsersListUser::class === $itemType && is_string($item)) {
+            if (UsersListUser::class === $itemType && is_string($item)) {
                 $transformedItems[$key] = $this->validateAndTransform(['user' => $item], $itemType);
             } else {
                 $transformedItems[$key] = $this->validateAndTransform($item, $itemType);
@@ -511,10 +574,11 @@ final class SchemaValidator
     /**
      * Validate a value against a type.
      *
-     * @param mixed              $value
-     * @param string             $type
-     * @param null|string        $format
-     * @param null|array<string> $enum
+     * @param  mixed              $value  The value to validate
+     * @param  string             $type   The expected type (string, integer, boolean, etc.)
+     * @param  string|null        $format Optional format constraint for string types
+     * @param  array<string>|null $enum   Optional array of allowed values for enumeration validation
+     * @return bool               True if the value matches the expected type and constraints, false otherwise
      */
     private function validateType(mixed $value, string $type, ?string $format = null, ?array $enum = null): bool
     {

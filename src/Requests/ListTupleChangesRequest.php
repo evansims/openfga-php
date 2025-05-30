@@ -8,12 +8,40 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError};
+use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Messages;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
-final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
+/**
+ * Request for listing changes to relationship tuples over time.
+ *
+ * This request retrieves a chronological list of tuple modifications (creates, updates, deletes)
+ * within a store. It's essential for auditing, change tracking, and building event-driven
+ * authorization systems that react to permission changes.
+ *
+ * @see ListTupleChangesRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Tuples/ListTupleChanges List tuple changes API endpoint
+ */
+final readonly class ListTupleChangesRequest implements ListTupleChangesRequestInterface
 {
+    /**
+     * Create a new tuple changes listing request.
+     *
+     * @param string                 $store             The ID of the store to list tuple changes from
+     * @param string|null            $continuationToken Token for pagination to get the next page of results
+     * @param int|null               $pageSize          Maximum number of changes to return per page
+     * @param string|null            $type              Object type to filter changes by
+     * @param DateTimeImmutable|null $startTime         Earliest time to include changes from
+     *
+     * @throws ClientThrowable          If the store ID is empty or the continuation token is empty (but not null)
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     */
     public function __construct(
         private string $store,
         private ?string $continuationToken = null,
@@ -22,11 +50,11 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
         private ?DateTimeImmutable $startTime = null,
     ) {
         if ('' === $this->store) {
-            throw new InvalidArgumentException('Store ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
 
         if (null !== $this->continuationToken && '' === $this->continuationToken) {
-            throw new InvalidArgumentException('Continuation token cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_CONTINUATION_TOKEN_EMPTY)]);
         }
     }
 
@@ -96,7 +124,7 @@ final class ListTupleChangesRequest implements ListTupleChangesRequestInterface
         return $this->type;
     }
 
-    private static function getUtcTimestamp(?DateTimeInterface $dateTime): ?string
+    private static function getUtcTimestamp(?DateTimeInterface $dateTime): string | null
     {
         if (! $dateTime instanceof DateTimeInterface) {
             return null;

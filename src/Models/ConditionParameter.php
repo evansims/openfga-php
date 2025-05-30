@@ -11,7 +11,7 @@ use Override;
 
 final class ConditionParameter implements ConditionParameterInterface
 {
-    public const OPENAPI_MODEL = 'ConditionParamTypeRef';
+    public const string OPENAPI_MODEL = 'ConditionParamTypeRef';
 
     private static ?SchemaInterface $schema = null;
 
@@ -23,6 +23,21 @@ final class ConditionParameter implements ConditionParameterInterface
         private readonly TypeName $typeName,
         private readonly ?ConditionParametersInterface $genericTypes = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type_name', type: 'object', className: TypeName::class, required: true),
+                new SchemaProperty(name: 'generic_types', type: 'object', className: ConditionParameters::class, required: false),
+            ],
+        );
     }
 
     /**
@@ -53,20 +68,5 @@ final class ConditionParameter implements ConditionParameterInterface
             'type_name' => $this->typeName->value,
             'generic_types' => $this->genericTypes?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'type_name', type: 'object', className: TypeName::class, required: true),
-                new SchemaProperty(name: 'generic_types', type: 'object', className: ConditionParameters::class, required: false),
-            ],
-        );
     }
 }

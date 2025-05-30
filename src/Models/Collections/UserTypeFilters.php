@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{UserTypeFilter, UserTypeFilterInterface};
+use OpenFGA\Models\{ModelInterface, UserTypeFilter, UserTypeFilterInterface};
 
 /**
  * @extends IndexedCollection<UserTypeFilterInterface>
@@ -13,5 +13,12 @@ use OpenFGA\Models\{UserTypeFilter, UserTypeFilterInterface};
  */
 final class UserTypeFilters extends IndexedCollection implements UserTypeFiltersInterface
 {
+    /**
+     * @phpstan-var class-string<UserTypeFilterInterface>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
     protected static string $itemType = UserTypeFilter::class;
 }

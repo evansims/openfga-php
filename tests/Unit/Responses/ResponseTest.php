@@ -90,30 +90,26 @@ describe('Response', function (): void {
     test('parseResponse handles empty string response', function (): void {
         $this->stream->method('__toString')->willReturn('');
 
-        $this->expectException(SerializationException::class);
         ResponseTest::parseResponsePublic($this->response, $this->request);
-    });
+    })->throws(SerializationException::class);
 
     test('parseResponse handles invalid JSON', function (): void {
         $this->stream->method('__toString')->willReturn('{"invalid": json}');
 
-        $this->expectException(SerializationException::class);
         ResponseTest::parseResponsePublic($this->response, $this->request);
-    });
+    })->throws(SerializationException::class);
 
     test('parseResponse handles malformed JSON', function (): void {
         $this->stream->method('__toString')->willReturn('{"unclosed": "object"');
 
-        $this->expectException(SerializationException::class);
         ResponseTest::parseResponsePublic($this->response, $this->request);
-    });
+    })->throws(SerializationException::class);
 
     test('parseResponse handles JSON with trailing comma', function (): void {
         $this->stream->method('__toString')->willReturn('{"key": "value",}');
 
-        $this->expectException(SerializationException::class);
         ResponseTest::parseResponsePublic($this->response, $this->request);
-    });
+    })->throws(SerializationException::class);
 
     test('parseResponse handles non-array JSON types', function (): void {
         // JSON string
@@ -157,7 +153,7 @@ describe('Response', function (): void {
 
     test('parseResponse handles large JSON response', function (): void {
         $largeData = [];
-        for ($i = 0; $i < 1000; ++$i) {
+        for ($i = 0; 1000 > $i; ++$i) {
             $largeData["item_{$i}"] = [
                 'id' => $i,
                 'name' => "Item {$i}",

@@ -9,13 +9,13 @@ use OpenFGA\Schema\SchemaInterface;
 
 describe('ObjectRelation Model', function (): void {
     test('implements ObjectRelationInterface', function (): void {
-        $objectRelation = new ObjectRelation();
+        $objectRelation = new ObjectRelation;
 
         expect($objectRelation)->toBeInstanceOf(ObjectRelationInterface::class);
     });
 
     test('constructs with null parameters', function (): void {
-        $objectRelation = new ObjectRelation();
+        $objectRelation = new ObjectRelation;
 
         expect($objectRelation->getObject())->toBeNull();
         expect($objectRelation->getRelation())->toBeNull();
@@ -83,7 +83,7 @@ describe('ObjectRelation Model', function (): void {
     });
 
     test('serializes to JSON with only non-null fields', function (): void {
-        $objectRelation = new ObjectRelation();
+        $objectRelation = new ObjectRelation;
         expect($objectRelation->jsonSerialize())->toBe([]);
 
         $objectRelation = new ObjectRelation(object: 'document:1');

@@ -12,21 +12,21 @@ use OpenFGA\Models\{TupleChange, TupleKey};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('TupleChanges Collection', function (): void {
-    test('implements TupleChangesInterface', function (): void {
-        $collection = new TupleChanges();
+    test('implements interface', function (): void {
+        $collection = new TupleChanges;
 
         expect($collection)->toBeInstanceOf(TupleChangesInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
-        $collection = new TupleChanges();
+    test('creates empty', function (): void {
+        $collection = new TupleChanges;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of tuple changes', function (): void {
-        $now = new DateTimeImmutable();
+    test('creates with array of tuple changes', function (): void {
+        $now = new DateTimeImmutable;
 
         $change1 = new TupleChange(
             tupleKey: new TupleKey(
@@ -55,7 +55,7 @@ describe('TupleChanges Collection', function (): void {
     });
 
     test('adds tuple changes', function (): void {
-        $collection = new TupleChanges();
+        $collection = new TupleChanges;
 
         $change = new TupleChange(
             tupleKey: new TupleKey(
@@ -64,7 +64,7 @@ describe('TupleChanges Collection', function (): void {
                 object: 'folder:shared',
             ),
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $collection->add($change);
@@ -81,7 +81,7 @@ describe('TupleChanges Collection', function (): void {
                 object: 'group:engineering',
             ),
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $collection = new TupleChanges([$change]);
@@ -91,7 +91,7 @@ describe('TupleChanges Collection', function (): void {
     });
 
     test('iterates over tuple changes', function (): void {
-        $now = new DateTimeImmutable();
+        $now = new DateTimeImmutable;
 
         $change1 = new TupleChange(
             tupleKey: new TupleKey(user: 'user:1', relation: 'read', object: 'doc:1'),
@@ -119,8 +119,8 @@ describe('TupleChanges Collection', function (): void {
         expect($operations)->toBe(['TUPLE_OPERATION_WRITE', 'TUPLE_OPERATION_DELETE', 'TUPLE_OPERATION_WRITE']);
     });
 
-    test('converts to array', function (): void {
-        $now = new DateTimeImmutable();
+    test('toArray', function (): void {
+        $now = new DateTimeImmutable;
 
         $change1 = new TupleChange(
             tupleKey: new TupleKey(user: 'user:a', relation: 'viewer', object: 'file:a'),
@@ -142,7 +142,7 @@ describe('TupleChanges Collection', function (): void {
         expect($array[1])->toBe($change2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $timestamp = new DateTimeImmutable('2024-01-15 10:00:00');
 
         $change = new TupleChange(
@@ -171,7 +171,7 @@ describe('TupleChanges Collection', function (): void {
         ]);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = TupleChanges::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -189,7 +189,7 @@ describe('TupleChanges Collection', function (): void {
     });
 
     test('filters changes by operation', function (): void {
-        $now = new DateTimeImmutable();
+        $now = new DateTimeImmutable;
 
         $collection = new TupleChanges([
             new TupleChange(
@@ -265,7 +265,7 @@ describe('TupleChanges Collection', function (): void {
     });
 
     test('groups changes by object', function (): void {
-        $now = new DateTimeImmutable();
+        $now = new DateTimeImmutable;
 
         $collection = new TupleChanges([
             new TupleChange(
@@ -347,7 +347,7 @@ describe('TupleChanges Collection', function (): void {
     });
 
     test('handles empty collection edge cases', function (): void {
-        $collection = new TupleChanges();
+        $collection = new TupleChanges;
 
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);

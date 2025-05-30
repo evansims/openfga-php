@@ -11,24 +11,24 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
 describe('DeleteStoreResponse', function (): void {
     beforeEach(function (): void {
-        $this->validator = new SchemaValidator();
+        $this->validator = new SchemaValidator;
         $this->request = test()->createMock(RequestInterface::class);
     });
 
     test('implements DeleteStoreResponseInterface', function (): void {
-        $response = new DeleteStoreResponse();
+        $response = new DeleteStoreResponse;
 
         expect($response)->toBeInstanceOf(DeleteStoreResponseInterface::class);
     });
 
     test('can be instantiated without parameters', function (): void {
-        $response = new DeleteStoreResponse();
+        $response = new DeleteStoreResponse;
 
         expect($response)->toBeInstanceOf(DeleteStoreResponse::class);
     });
 
     test('is a simple response class', function (): void {
-        $response = new DeleteStoreResponse();
+        $response = new DeleteStoreResponse;
 
         // DeleteStoreResponse is a simple response with no data
         // It represents a successful delete operation (204 No Content)
@@ -95,9 +95,8 @@ describe('DeleteStoreResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 403 Forbidden', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -110,9 +109,8 @@ describe('DeleteStoreResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 404 Not Found', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -125,9 +123,8 @@ describe('DeleteStoreResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 500 Internal Server Error', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -140,9 +137,8 @@ describe('DeleteStoreResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 422 Unprocessable Entity', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -155,9 +151,8 @@ describe('DeleteStoreResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 200 status code as non-success', function (): void {
         // DeleteStore should return 204, not 200
@@ -171,9 +166,8 @@ describe('DeleteStoreResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 409 Conflict', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -186,13 +180,12 @@ describe('DeleteStoreResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         DeleteStoreResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('multiple instances are independent', function (): void {
-        $response1 = new DeleteStoreResponse();
-        $response2 = new DeleteStoreResponse();
+        $response1 = new DeleteStoreResponse;
+        $response2 = new DeleteStoreResponse;
 
         expect($response1)->not->toBe($response2);
         expect($response1)->toBeInstanceOf(DeleteStoreResponse::class);

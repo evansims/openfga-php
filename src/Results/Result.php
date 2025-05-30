@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace OpenFGA\Results;
 
 use Override;
-use Throwable;
 
 /**
- * @template T
- * @template E of Throwable
+ * Abstract base class providing shared functionality for Result implementations.
  *
- * @implements ResultInterface<T, E>
+ * This class implements common methods that are shared between Success and Failure
+ * results, reducing code duplication while maintaining the Result pattern's
+ * type safety and fluent interface.
  */
 abstract class Result implements ResultInterface
 {
@@ -23,7 +23,6 @@ abstract class Result implements ResultInterface
     {
         if ($this->failed()) {
             if (null !== $fn) {
-                /** @var E $error */
                 $error = $this->err();
 
                 return $fn($error);
@@ -33,7 +32,7 @@ abstract class Result implements ResultInterface
         }
 
         if (null !== $fn) {
-            /** @var T $value */
+            /** @var mixed $value */
             $value = $this->val();
 
             return $fn($value);

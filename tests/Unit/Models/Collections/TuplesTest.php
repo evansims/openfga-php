@@ -10,27 +10,27 @@ use OpenFGA\Models\{Condition, Tuple, TupleKey};
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Tuples Collection', function (): void {
-    test('implements TuplesInterface', function (): void {
-        $collection = new Tuples();
+    test('implements interface', function (): void {
+        $collection = new Tuples;
 
         expect($collection)->toBeInstanceOf(TuplesInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
-        $collection = new Tuples();
+    test('creates empty', function (): void {
+        $collection = new Tuples;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of tuples', function (): void {
+    test('creates with array of tuples', function (): void {
         $tuple1 = new Tuple(
             key: new TupleKey(
                 user: 'user:alice',
                 relation: 'viewer',
                 object: 'document:budget',
             ),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $tuple2 = new Tuple(
@@ -39,7 +39,7 @@ describe('Tuples Collection', function (): void {
                 relation: 'editor',
                 object: 'document:report',
             ),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $tuple3 = new Tuple(
@@ -48,7 +48,7 @@ describe('Tuples Collection', function (): void {
                 relation: 'owner',
                 object: 'folder:shared',
             ),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $collection = new Tuples([$tuple1, $tuple2, $tuple3]);
@@ -58,7 +58,7 @@ describe('Tuples Collection', function (): void {
     });
 
     test('adds tuples', function (): void {
-        $collection = new Tuples();
+        $collection = new Tuples;
 
         $tuple = new Tuple(
             key: new TupleKey(
@@ -66,7 +66,7 @@ describe('Tuples Collection', function (): void {
                 relation: 'admin',
                 object: 'system:main',
             ),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $collection->add($tuple);
@@ -82,7 +82,7 @@ describe('Tuples Collection', function (): void {
                 relation: 'member',
                 object: 'group:admins',
             ),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $collection = new Tuples([$tuple]);
@@ -94,15 +94,15 @@ describe('Tuples Collection', function (): void {
     test('iterates over tuples', function (): void {
         $tuple1 = new Tuple(
             key: new TupleKey(user: 'user:1', relation: 'read', object: 'doc:1'),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
         $tuple2 = new Tuple(
             key: new TupleKey(user: 'user:2', relation: 'write', object: 'doc:2'),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
         $tuple3 = new Tuple(
             key: new TupleKey(user: 'user:3', relation: 'delete', object: 'doc:3'),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $collection = new Tuples([$tuple1, $tuple2, $tuple3]);
@@ -115,14 +115,14 @@ describe('Tuples Collection', function (): void {
         expect($relations)->toBe(['read', 'write', 'delete']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $tuple1 = new Tuple(
             key: new TupleKey(user: 'user:a', relation: 'viewer', object: 'file:a'),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
         $tuple2 = new Tuple(
             key: new TupleKey(user: 'user:b', relation: 'editor', object: 'file:b'),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $collection = new Tuples([$tuple1, $tuple2]);
@@ -134,7 +134,7 @@ describe('Tuples Collection', function (): void {
         expect($array[1])->toBe($tuple2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $timestamp = new DateTimeImmutable('2024-01-15 10:00:00');
 
         $tuple1 = new Tuple(
@@ -143,7 +143,7 @@ describe('Tuples Collection', function (): void {
                 relation: 'viewer',
                 object: 'document:report',
             ),
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         $tuple2 = new Tuple(
@@ -178,7 +178,7 @@ describe('Tuples Collection', function (): void {
         expect($json[1]['key']['condition']['name'])->toBe('in_business_hours');
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Tuples::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -196,11 +196,11 @@ describe('Tuples Collection', function (): void {
 
     test('filters tuples by user', function (): void {
         $collection = new Tuples([
-            new Tuple(key: new TupleKey(user: 'user:alice', relation: 'viewer', object: 'doc:1'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:bob', relation: 'editor', object: 'doc:2'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:alice', relation: 'owner', object: 'doc:3'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'group:eng#member', relation: 'viewer', object: 'doc:4'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:alice', relation: 'viewer', object: 'doc:5'), timestamp: new DateTimeImmutable()),
+            new Tuple(key: new TupleKey(user: 'user:alice', relation: 'viewer', object: 'doc:1'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:bob', relation: 'editor', object: 'doc:2'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:alice', relation: 'owner', object: 'doc:3'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'group:eng#member', relation: 'viewer', object: 'doc:4'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:alice', relation: 'viewer', object: 'doc:5'), timestamp: new DateTimeImmutable),
         ]);
 
         // Filter tuples for user:alice
@@ -216,11 +216,11 @@ describe('Tuples Collection', function (): void {
 
     test('groups tuples by relation', function (): void {
         $collection = new Tuples([
-            new Tuple(key: new TupleKey(user: 'user:1', relation: 'viewer', object: 'doc:1'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:2', relation: 'editor', object: 'doc:2'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:3', relation: 'viewer', object: 'doc:3'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:4', relation: 'owner', object: 'doc:4'), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:5', relation: 'viewer', object: 'doc:5'), timestamp: new DateTimeImmutable()),
+            new Tuple(key: new TupleKey(user: 'user:1', relation: 'viewer', object: 'doc:1'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:2', relation: 'editor', object: 'doc:2'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:3', relation: 'viewer', object: 'doc:3'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:4', relation: 'owner', object: 'doc:4'), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:5', relation: 'viewer', object: 'doc:5'), timestamp: new DateTimeImmutable),
         ]);
 
         // Group by relation
@@ -248,7 +248,7 @@ describe('Tuples Collection', function (): void {
                     object: 'doc:sensitive',
                     condition: new Condition(name: 'in_business_hours', expression: 'request.time >= "09:00" && request.time <= "17:00"'),
                 ),
-                timestamp: new DateTimeImmutable(),
+                timestamp: new DateTimeImmutable,
             ),
             new Tuple(
                 key: new TupleKey(
@@ -256,7 +256,7 @@ describe('Tuples Collection', function (): void {
                     relation: 'editor',
                     object: 'doc:public',
                 ),
-                timestamp: new DateTimeImmutable(),
+                timestamp: new DateTimeImmutable,
             ),
             new Tuple(
                 key: new TupleKey(
@@ -265,7 +265,7 @@ describe('Tuples Collection', function (): void {
                     object: 'doc:restricted',
                     condition: new Condition(name: 'is_verified', expression: 'user.verified == true'),
                 ),
-                timestamp: new DateTimeImmutable(),
+                timestamp: new DateTimeImmutable,
             ),
         ]);
 
@@ -297,14 +297,14 @@ describe('Tuples Collection', function (): void {
 
         $collection = new Tuples([
             // Direct user permissions
-            new Tuple(key: new TupleKey(user: 'user:ceo', relation: 'owner', object: $docId), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:cfo', relation: 'editor', object: $docId), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:analyst1', relation: 'viewer', object: $docId), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'user:analyst2', relation: 'viewer', object: $docId), timestamp: new DateTimeImmutable()),
+            new Tuple(key: new TupleKey(user: 'user:ceo', relation: 'owner', object: $docId), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:cfo', relation: 'editor', object: $docId), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:analyst1', relation: 'viewer', object: $docId), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'user:analyst2', relation: 'viewer', object: $docId), timestamp: new DateTimeImmutable),
 
             // Group-based permissions
-            new Tuple(key: new TupleKey(user: 'group:finance#member', relation: 'viewer', object: $docId), timestamp: new DateTimeImmutable()),
-            new Tuple(key: new TupleKey(user: 'group:executives#member', relation: 'editor', object: $docId), timestamp: new DateTimeImmutable()),
+            new Tuple(key: new TupleKey(user: 'group:finance#member', relation: 'viewer', object: $docId), timestamp: new DateTimeImmutable),
+            new Tuple(key: new TupleKey(user: 'group:executives#member', relation: 'editor', object: $docId), timestamp: new DateTimeImmutable),
 
             // Conditional permission
             new Tuple(key: new TupleKey(
@@ -312,7 +312,7 @@ describe('Tuples Collection', function (): void {
                 relation: 'viewer',
                 object: $docId,
                 condition: new Condition(name: 'during_contract_period', expression: 'request.time >= contract.start && request.time <= contract.end'),
-            ), timestamp: new DateTimeImmutable()),
+            ), timestamp: new DateTimeImmutable),
         ]);
 
         expect($collection->count())->toBe(7);
@@ -332,7 +332,7 @@ describe('Tuples Collection', function (): void {
     });
 
     test('handles empty collection edge cases', function (): void {
-        $collection = new Tuples();
+        $collection = new Tuples;
 
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);

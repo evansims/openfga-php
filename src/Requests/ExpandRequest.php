@@ -4,24 +4,46 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use const JSON_THROW_ON_ERROR;
+
 use InvalidArgumentException;
+use JsonException;
+use OpenFGA\Exceptions\{ClientError};
+use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Messages;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
 use function is_array;
 
-final class ExpandRequest implements ExpandRequestInterface
+/**
+ * Request for expanding a relationship to show all users who have that relationship.
+ *
+ * This request returns the complete set of users and usersets that have the specified
+ * relationship with an object. It's useful for debugging authorization models, auditing
+ * permissions, and understanding the complete authorization tree.
+ *
+ * @see ExpandRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Queries/Expand Expand API endpoint
+ */
+final readonly class ExpandRequest implements ExpandRequestInterface
 {
     /**
-     * @param string                                 $store
-     * @param TupleKeyInterface                      $tupleKey
-     * @param ?string                                $model
-     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
-     * @param ?Consistency                           $consistency
+     * @param string                                 $store            The store ID
+     * @param TupleKeyInterface                      $tupleKey         The tuple key to expand
+     * @param ?string                                $model            Authorization model ID (optional)
+     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples Contextual tuples (optional)
+     * @param ?Consistency                           $consistency      Consistency requirement (optional)
+     *
+     * @throws ClientThrowable          If the store ID is empty or model ID is empty (when provided)
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     public function __construct(
         private string $store,
@@ -31,7 +53,7 @@ final class ExpandRequest implements ExpandRequestInterface
         private ?Consistency $consistency = null,
     ) {
         if ('' === $this->store) {
-            throw new InvalidArgumentException('Store ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
     }
 
@@ -64,6 +86,8 @@ final class ExpandRequest implements ExpandRequestInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws JsonException
      */
     #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

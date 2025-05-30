@@ -9,16 +9,30 @@ use Override;
 
 final class NodeUnion implements NodeUnionInterface
 {
-    public const OPENAPI_TYPE = 'NodeUnion';
+    public const string OPENAPI_MODEL = 'NodeUnion';
 
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param array<int, NodeInterface> $nodes
+     * @param array<int, NodeInterface> $nodes Array of node interfaces for the union
      */
     public function __construct(
         private readonly array $nodes,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'nodes', type: 'array', required: true, items: ['type' => 'object', 'className' => Node::class]),
+            ],
+        );
     }
 
     /**
@@ -39,21 +53,10 @@ final class NodeUnion implements NodeUnionInterface
     public function jsonSerialize(): array
     {
         return [
-            'nodes' => array_map(static fn (NodeInterface $node): array => $node->jsonSerialize(), $this->nodes),
+            'nodes' => array_map(
+                static fn (NodeInterface $node): array => $node->jsonSerialize(),
+                $this->nodes,
+            ),
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'nodes', type: 'array', required: true, items: ['type' => 'object', 'className' => Node::class]),
-            ],
-        );
     }
 }

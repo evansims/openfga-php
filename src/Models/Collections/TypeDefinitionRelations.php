@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{Userset, UsersetInterface};
-
+use OpenFGA\Models\{ModelInterface, Userset, UsersetInterface};
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
@@ -16,9 +15,16 @@ use Override;
  */
 final class TypeDefinitionRelations extends KeyedCollection implements TypeDefinitionRelationsInterface
 {
-    private static ?CollectionSchemaInterface $schema = null;
-
+    /**
+     * @phpstan-var class-string<UsersetInterface>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
     protected static string $itemType = Userset::class;
+
+    private static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @inheritDoc
@@ -27,8 +33,8 @@ final class TypeDefinitionRelations extends KeyedCollection implements TypeDefin
     public static function schema(): CollectionSchemaInterface
     {
         return self::$schema ??= new CollectionSchema(
-            className: static::class,
-            itemType: static::$itemType,
+            className: self::class,
+            itemType: /** @var class-string */ self::$itemType,
             requireItems: false,
             wrapperKey: 'relations',
         );

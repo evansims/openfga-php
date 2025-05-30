@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Messages;
 use OpenFGA\Models\{SourceInfo, SourceInfoInterface};
 use OpenFGA\Schema\SchemaInterface;
 
@@ -22,10 +23,8 @@ describe('SourceInfo Model', function (): void {
     });
 
     test('throws exception for empty file string', function (): void {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('SourceInfo::$file cannot be empty.');
         new SourceInfo(file: '');
-    });
+    })->throws(ClientException::class, trans(Messages::MODEL_SOURCE_INFO_FILE_EMPTY));
 
     test('handles various file paths', function (): void {
         $filePaths = [

@@ -13,15 +13,45 @@ use Override;
 
 final class TupleChange implements TupleChangeInterface
 {
-    public const OPENAPI_TYPE = 'TupleChange';
+    public const string OPENAPI_MODEL = 'TupleChange';
 
     private static ?SchemaInterface $schema = null;
 
     public function __construct(
-        private TupleKeyInterface $tupleKey,
+        private readonly TupleKeyInterface $tupleKey,
         private readonly TupleOperation $operation,
-        private DateTimeImmutable $timestamp,
+        private readonly DateTimeImmutable $timestamp,
     ) {
+    }
+
+    /**
+     * Create TupleChange from array data.
+     *
+     * @param array{tuple_key: TupleKeyInterface, operation: string, timestamp: DateTimeImmutable} $data
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            tupleKey: $data['tuple_key'],
+            operation: TupleOperation::from($data['operation']),
+            timestamp: $data['timestamp'],
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'tuple_key', type: 'object', className: TupleKey::class, required: true),
+                new SchemaProperty(name: 'operation', type: 'string', required: true),
+                new SchemaProperty(name: 'timestamp', type: 'string', format: 'datetime', required: true),
+            ],
+        );
     }
 
     /**
@@ -65,35 +95,11 @@ final class TupleChange implements TupleChangeInterface
     }
 
     /**
-     * Create TupleChange from array data.
+     * Converts a DateTimeInterface to a UTC timestamp string in RFC3339 format.
      *
-     * @param array{tuple_key: TupleKeyInterface, operation: string, timestamp: DateTimeImmutable} $data
+     * @param  DateTimeInterface $dateTime The datetime to convert
+     * @return string            The UTC timestamp string in RFC3339 format
      */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            tupleKey: $data['tuple_key'],
-            operation: TupleOperation::from($data['operation']),
-            timestamp: $data['timestamp'],
-        );
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'tuple_key', type: 'object', className: TupleKey::class, required: true),
-                new SchemaProperty(name: 'operation', type: 'string', required: true),
-                new SchemaProperty(name: 'timestamp', type: 'string', format: 'datetime', required: true),
-            ],
-        );
-    }
-
     private static function getUtcTimestamp(DateTimeInterface $dateTime): string
     {
         return ($dateTime instanceof DateTimeImmutable ? $dateTime : DateTimeImmutable::createFromInterface($dateTime))

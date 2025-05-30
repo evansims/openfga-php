@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models\Collections;
 
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{ConditionParameters, TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey};
 use OpenFGA\Models\Enums\TypeName;
 use stdClass;
-use TypeError;
 
 describe('TupleKeys Collection', function (): void {
-    test('implements TupleKeysInterface', function (): void {
-        $collection = new TupleKeys();
+    test('implements interface', function (): void {
+        $collection = new TupleKeys;
 
         expect($collection)->toBeInstanceOf(TupleKeysInterface::class);
     });
 
-    test('constructs empty collection', function (): void {
-        $collection = new TupleKeys();
+    test('creates empty', function (): void {
+        $collection = new TupleKeys;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBe(true);
         expect($collection->toArray())->toBe([]);
     });
 
-    test('constructs with single TupleKey', function (): void {
+    test('creates with single TupleKey', function (): void {
         $tupleKey = new TupleKey(
             user: 'user:anne',
             relation: 'viewer',
@@ -39,7 +39,7 @@ describe('TupleKeys Collection', function (): void {
         // Collection method removed - not available
     });
 
-    test('constructs with multiple TupleKeys', function (): void {
+    test('creates with multiple TupleKeys', function (): void {
         $tupleKey1 = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:roadmap');
         $tupleKey2 = new TupleKey(user: 'user:bob', relation: 'editor', object: 'document:roadmap');
         $tupleKey3 = new TupleKey(user: 'user:charlie', relation: 'owner', object: 'document:roadmap');
@@ -50,7 +50,7 @@ describe('TupleKeys Collection', function (): void {
         expect($collection->toArray())->toBe([$tupleKey1, $tupleKey2, $tupleKey3]);
     });
 
-    test('constructs with array of TupleKeys', function (): void {
+    test('creates with array of TupleKeys', function (): void {
         $tupleKeys = [
             new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1'),
             new TupleKey(user: 'user:bob', relation: 'editor', object: 'document:2'),
@@ -63,7 +63,7 @@ describe('TupleKeys Collection', function (): void {
     });
 
     test('adds TupleKey to collection', function (): void {
-        $collection = new TupleKeys();
+        $collection = new TupleKeys;
         $tupleKey = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:roadmap');
 
         $result = $collection->add($tupleKey);
@@ -77,7 +77,7 @@ describe('TupleKeys Collection', function (): void {
         $tupleKey1 = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
         $tupleKey2 = new TupleKey(user: 'user:bob', relation: 'editor', object: 'document:2');
 
-        $collection = (new TupleKeys())
+        $collection = (new TupleKeys)
             ->add($tupleKey1)
             ->add($tupleKey2);
 
@@ -149,14 +149,14 @@ describe('TupleKeys Collection', function (): void {
     });
 
     test('returns null for first and last on empty collection', function (): void {
-        $collection = new TupleKeys();
+        $collection = new TupleKeys;
 
         // First and last methods not available - verify empty collection behavior
         expect($collection->get(0))->toBeNull();
         expect($collection->count())->toBe(0);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $tupleKey1 = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
         $tupleKey2 = new TupleKey(user: 'user:bob', relation: 'editor', object: 'document:2');
 
@@ -173,7 +173,7 @@ describe('TupleKeys Collection', function (): void {
     });
 
     test('serializes empty collection to empty array', function (): void {
-        $collection = new TupleKeys();
+        $collection = new TupleKeys;
 
         expect($collection->jsonSerialize())->toBe(['tuple_keys' => []]);
     });
@@ -200,13 +200,12 @@ describe('TupleKeys Collection', function (): void {
         expect($collection->get(0)->getCondition())->toBe($condition);
     });
 
-    test('throws TypeError when adding wrong type', function (): void {
-        $collection = new TupleKeys();
-        $wrongType = new stdClass();
+    test('throws on invalid type', function (): void {
+        $collection = new TupleKeys;
+        $wrongType = new stdClass;
 
-        $this->expectException(TypeError::class);
         $collection->add($wrongType);
-    });
+    })->throws(ClientException::class);
 
     test('mixed TupleKey formats in same collection', function (): void {
         $tupleKeys = [
@@ -223,7 +222,7 @@ describe('TupleKeys Collection', function (): void {
 
     test('maintains insertion order', function (): void {
         $tupleKeys = [];
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; 10 > $i; ++$i) {
             $tupleKeys[] = new TupleKey(
                 user: "user:user{$i}",
                 relation: 'viewer',

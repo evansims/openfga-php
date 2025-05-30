@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{UsersListUser, UsersListUserInterface};
+use OpenFGA\Models\{ModelInterface, UsersListUser, UsersListUserInterface};
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
@@ -15,9 +15,16 @@ use Override;
  */
 final class UsersList extends IndexedCollection implements UsersListInterface
 {
-    private static ?CollectionSchemaInterface $schema = null;
-
+    /**
+     * @phpstan-var class-string<UsersListUserInterface>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
     protected static string $itemType = UsersListUser::class;
+
+    private static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @inheritDoc
@@ -26,8 +33,8 @@ final class UsersList extends IndexedCollection implements UsersListInterface
     public static function schema(): CollectionSchemaInterface
     {
         return self::$schema ??= new CollectionSchema(
-            className: static::class,
-            itemType: static::$itemType,
+            className: self::class,
+            itemType: /** @var class-string */ self::$itemType,
             requireItems: false,
             wrapperKey: 'users',
         );

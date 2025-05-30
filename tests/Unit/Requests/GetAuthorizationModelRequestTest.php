@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\GetAuthorizationModelRequest;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -56,9 +56,9 @@ describe('GetAuthorizationModelRequest', function (): void {
 
     test('throws when store ID is empty', function (): void {
         new GetAuthorizationModelRequest(store: '', model: 'model-123');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 
     test('throws when model ID is empty', function (): void {
         new GetAuthorizationModelRequest(store: 'store-123', model: '');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 });

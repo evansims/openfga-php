@@ -27,7 +27,7 @@ describe('NodeUnion Model', function (): void {
     });
 
     test('constructs with single node', function (): void {
-        $leaf = new Leaf(users: new UsersList());
+        $leaf = new Leaf(users: new UsersList);
         $node = new Node(name: 'document:1#viewer', leaf: $leaf);
         $nodes = [$node];
 
@@ -39,9 +39,9 @@ describe('NodeUnion Model', function (): void {
     });
 
     test('constructs with multiple nodes', function (): void {
-        $node1 = new Node(name: 'document:1#viewer', leaf: new Leaf(users: new UsersList()));
-        $node2 = new Node(name: 'document:2#editor', leaf: new Leaf(users: new UsersList()));
-        $node3 = new Node(name: 'document:3#owner', leaf: new Leaf(users: new UsersList()));
+        $node1 = new Node(name: 'document:1#viewer', leaf: new Leaf(users: new UsersList));
+        $node2 = new Node(name: 'document:2#editor', leaf: new Leaf(users: new UsersList));
+        $node3 = new Node(name: 'document:3#owner', leaf: new Leaf(users: new UsersList));
         $nodes = [$node1, $node2, $node3];
 
         $nodeUnion = new NodeUnion(nodes: $nodes);
@@ -52,8 +52,8 @@ describe('NodeUnion Model', function (): void {
     });
 
     test('serializes to JSON', function (): void {
-        $node1 = new Node(name: 'document:1#viewer', leaf: new Leaf(users: new UsersList()));
-        $node2 = new Node(name: 'document:2#editor', leaf: new Leaf(users: new UsersList()));
+        $node1 = new Node(name: 'document:1#viewer', leaf: new Leaf(users: new UsersList));
+        $node2 = new Node(name: 'document:2#editor', leaf: new Leaf(users: new UsersList));
         $nodes = [$node1, $node2];
 
         $nodeUnion = new NodeUnion(nodes: $nodes);
@@ -99,13 +99,13 @@ describe('NodeUnion Model', function (): void {
     });
 
     test('has correct OpenAPI type constant', function (): void {
-        expect(NodeUnion::OPENAPI_TYPE)->toBe('NodeUnion');
+        expect(NodeUnion::OPENAPI_MODEL)->toBe('NodeUnion');
     });
 
     test('handles complex node structures', function (): void {
         // Create nested node structure with union
-        $leaf1 = new Leaf(users: new UsersList());
-        $leaf2 = new Leaf(users: new UsersList());
+        $leaf1 = new Leaf(users: new UsersList);
+        $leaf2 = new Leaf(users: new UsersList);
 
         $childNode1 = new Node(name: 'group:admins#member', leaf: $leaf1);
         $childNode2 = new Node(name: 'group:editors#member', leaf: $leaf2);
@@ -133,7 +133,7 @@ describe('NodeUnion Model', function (): void {
         expect($retrievedNodes)->toBe($originalNodes);
 
         // Since arrays are passed by value, modifying the original doesn't affect the union
-        $newNode = new Node(name: 'test:node', leaf: new Leaf(users: new UsersList()));
+        $newNode = new Node(name: 'test:node', leaf: new Leaf(users: new UsersList));
         $originalNodes[] = $newNode;
 
         // The union still has the original empty array

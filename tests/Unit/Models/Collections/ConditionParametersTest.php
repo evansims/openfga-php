@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models\Collections;
 
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
 use OpenFGA\Models\{ConditionParameter};
 use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\CollectionSchemaInterface;
 use stdClass;
-use TypeError;
 
 use function count;
 
 describe('ConditionParameters Collection', function (): void {
-    test('implements ConditionParametersInterface', function (): void {
+    test('implements interface', function (): void {
         $collection = new ConditionParameters([]);
 
         expect($collection)->toBeInstanceOf(ConditionParametersInterface::class);
     });
 
-    test('creates empty collection', function (): void {
+    test('creates empty', function (): void {
         $collection = new ConditionParameters([]);
 
         expect($collection->count())->toBe(0);
@@ -28,7 +28,7 @@ describe('ConditionParameters Collection', function (): void {
         expect($collection->toArray())->toBe([]);
     });
 
-    test('creates collection with single parameter', function (): void {
+    test('creates with single parameter', function (): void {
         $param = new ConditionParameter(typeName: TypeName::STRING);
         $collection = new ConditionParameters([$param]);
 
@@ -37,7 +37,7 @@ describe('ConditionParameters Collection', function (): void {
         expect($collection->get(0))->toBe($param);
     });
 
-    test('creates collection with multiple parameters', function (): void {
+    test('creates with multiple parameters', function (): void {
         $param1 = new ConditionParameter(typeName: TypeName::STRING);
         $param2 = new ConditionParameter(typeName: TypeName::INT);
         $param3 = new ConditionParameter(typeName: TypeName::BOOL);
@@ -98,7 +98,7 @@ describe('ConditionParameters Collection', function (): void {
         expect($collection[999])->toBeNull();
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $param1 = new ConditionParameter(typeName: TypeName::STRING);
         $param2 = new ConditionParameter(typeName: TypeName::INT);
         $collection = new ConditionParameters([$param1, $param2]);
@@ -133,7 +133,7 @@ describe('ConditionParameters Collection', function (): void {
         expect($collection->get(0)->getGenericTypes())->toBe($innerCollection);
     });
 
-    test('returns collection schema', function (): void {
+    test('schema', function (): void {
         $schema = ConditionParameters::schema();
 
         expect($schema)->toBeInstanceOf(CollectionSchemaInterface::class);
@@ -162,7 +162,7 @@ describe('ConditionParameters Collection', function (): void {
         }
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $param1 = new ConditionParameter(typeName: TypeName::STRING);
         $param2 = new ConditionParameter(typeName: TypeName::INT);
         $collection = new ConditionParameters([$param1, $param2]);
@@ -174,11 +174,11 @@ describe('ConditionParameters Collection', function (): void {
         expect($array)->toHaveCount(2);
     });
 
-    test('throws exception for invalid item type', function (): void {
-        $this->expectException(TypeError::class);
+    test('throws on invalid type', function (): void {
         $collection = new ConditionParameters([]);
-        $collection->add(new stdClass());
-    });
+
+        $collection->add(new stdClass);
+    })->throws(ClientException::class);
 
     test('uses first() method', function (): void {
         $param1 = new ConditionParameter(typeName: TypeName::STRING);

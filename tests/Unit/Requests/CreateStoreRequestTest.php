@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Messages;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\CreateStoreRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
@@ -56,5 +57,5 @@ describe('CreateStoreRequest', function (): void {
 
     test('throws when store name is empty', function (): void {
         new CreateStoreRequest(name: '');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class, trans(Messages::REQUEST_STORE_NAME_EMPTY));
 });

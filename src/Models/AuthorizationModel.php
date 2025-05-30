@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Language\DslTransformer;
+use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\Collections\{Conditions, ConditionsInterface, TypeDefinitions, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Transformer;
 use Override;
+use ReflectionException;
 
 final class AuthorizationModel implements AuthorizationModelInterface
 {
-    public const OPENAPI_MODEL = 'AuthorizationModel';
+    public const string OPENAPI_MODEL = 'AuthorizationModel';
 
     private static ?SchemaInterface $schema = null;
 
@@ -20,7 +23,7 @@ final class AuthorizationModel implements AuthorizationModelInterface
      * @param string                                            $id              Authorization model ID.
      * @param SchemaVersion                                     $schemaVersion   Schema version of the authorization model.
      * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions Type definitions for the authorization model.
-     * @param null|ConditionsInterface<ConditionInterface>      $conditions      Conditions for the authorization model.
+     * @param ConditionsInterface<ConditionInterface>|null      $conditions      Conditions for the authorization model.
      */
     public function __construct(
         private readonly string $id,
@@ -34,9 +37,30 @@ final class AuthorizationModel implements AuthorizationModelInterface
      * @inheritDoc
      */
     #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'id', type: 'string', required: true),
+                new SchemaProperty(name: 'schema_version', type: 'string', required: true),
+                new SchemaProperty(name: 'type_definitions', type: 'object', className: TypeDefinitions::class, required: true),
+                new SchemaProperty(name: 'conditions', type: 'object', className: Conditions::class, required: false),
+            ],
+        );
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @throws ClientThrowable          If the authorization model cannot be converted to DSL format
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     */
+    #[Override]
     public function dsl(): string
     {
-        return DslTransformer::toDsl($this);
+        return Transformer::toDsl($this);
     }
 
     /**
@@ -81,28 +105,12 @@ final class AuthorizationModel implements AuthorizationModelInterface
     #[Override]
     public function jsonSerialize(): array
     {
+        /** @var array{conditions?: array<int, array{expression: string, metadata?: array<string, mixed>, name: string, parameters?: array<string, mixed>}>, id: string, schema_version: string, type_definitions: array<int, array{metadata?: array<string, mixed>, relations?: array<string, mixed>, type: string}>} */
         return array_filter([
             'id' => $this->id,
             'schema_version' => $this->schemaVersion->value,
             'type_definitions' => $this->typeDefinitions->jsonSerialize(),
             'conditions' => $this->conditions?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'id', type: 'string', required: true),
-                new SchemaProperty(name: 'schema_version', type: 'string', required: true),
-                new SchemaProperty(name: 'type_definitions', type: 'object', className: TypeDefinitions::class, required: true),
-                new SchemaProperty(name: 'conditions', type: 'object', className: Conditions::class, required: false),
-            ],
-        );
     }
 }

@@ -1,0 +1,90 @@
+name: Quality: Documentation
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - docs/**
+      - src/**/*.php
+      - README.md
+      - CHANGELOG.md
+      - CONTRIBUTING.md
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - docs/**
+      - src/**/*.php
+      - README.md
+      - CHANGELOG.md
+      - CONTRIBUTING.md
+
+jobs:
+  documentation-quality:
+    runs-on: ubuntu-latest
+    name: Coverage and Style
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@cf4cade2721270509d5b1c766ab3549210a39a2a # 2.33.0
+        with:
+          php-version: "8.3"
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-dev
+
+      - name: Install Vale
+        run: |
+          wget -O vale.tar.gz https://github.com/errata-ai/vale/releases/latest/download/vale_Linux_64-bit.tar.gz
+          tar -xzf vale.tar.gz
+          sudo mv vale /usr/local/bin/
+
+      - name: Documentation Coverage Check
+        run: composer docs:coverage --min-coverage=85
+
+      - name: Documentation Style Check
+        run: composer docs:lint
+
+      - name: Link Validation
+        run: composer docs:links --external
+
+      - name: Generate Documentation Metrics
+        run: composer docs:metrics --format=json --output=docs-metrics.json
+
+      - name: Upload Documentation Metrics
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: documentation-metrics
+          path: docs-metrics.json
+
+      - name: Comment PR with Documentation Quality
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            const fs = require('fs');
+            const metrics = JSON.parse(fs.readFileSync('docs-metrics.json', 'utf8'));
+            
+            const comment = `## 📊 Documentation Quality Report
+            
+            **Overall Score: ${metrics.overall_score.toFixed(1)}%**
+            
+            | Metric | Score | Status |
+            |--------|-------|--------|
+            | Coverage | ${metrics.coverage.overall.toFixed(1)}% | ${metrics.coverage.overall >= 85 ? '✅' : '❌'} |
+            | Style | ${metrics.style.compliance_score.toFixed(1)}% | ${metrics.style.compliance_score >= 85 ? '✅' : '❌'} |
+            | Links | ${metrics.links.health_score.toFixed(1)}% | ${metrics.links.health_score >= 95 ? '✅' : '❌'} |
+            | Freshness | ${metrics.freshness.freshness_score.toFixed(1)}% | ${metrics.freshness.freshness_score >= 80 ? '✅' : '❌'} |
+            
+            ${metrics.overall_score >= 85 ? '🎉 Documentation quality is excellent!' : '⚠️ Documentation quality needs improvement.'}
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });

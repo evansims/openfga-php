@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace OpenFGA\Results;
 
-use LogicException;
+use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
+use OpenFGA\Translation\Translator;
 use Override;
+use ReflectionException;
 use Throwable;
 
 /**
- * @template T
+ * Concrete implementation of a successful result containing a value.
  *
- * @extends Result<T, never>
- *
- * @implements ResultInterface<T, never>
+ * This class represents the successful outcome of an operation, storing the
+ * resulting value and providing type-safe access through the Result pattern's
+ * fluent interface.
  */
-final class Success extends Result implements ResultInterface
+final class Success extends Result implements SuccessInterface
 {
     /**
-     * @param T $value
+     * Creates a new successful result containing the provided value.
+     *
+     * @param mixed $value The successful value to store in this result
      */
     public function __construct(private readonly mixed $value)
     {
@@ -26,11 +32,15 @@ final class Success extends Result implements ResultInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          Always throws since successes have no error
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function err(): never
     {
-        throw new LogicException('Success has no error');
+        throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::RESULT_SUCCESS_NO_ERROR)]);
     }
 
     /**
@@ -53,9 +63,6 @@ final class Success extends Result implements ResultInterface
 
     /**
      * @inheritDoc
-     *
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress InvalidReturnType
      */
     #[Override]
     public function recover(callable $fn): ResultInterface
@@ -94,19 +101,24 @@ final class Success extends Result implements ResultInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws Throwable Any exception thrown by the transformation callback
      */
     #[Override]
     public function then(callable $fn): ResultInterface
     {
+        /** @var mixed $result */
         $result = $fn($this->val());
 
-        return $result instanceof ResultInterface ? $result : new self($result);
+        if ($result instanceof ResultInterface) {
+            return $result;
+        }
+
+        return new self($result);
     }
 
     /**
      * @inheritDoc
-     *
-     * @return T
      */
     #[Override]
     public function val(): mixed

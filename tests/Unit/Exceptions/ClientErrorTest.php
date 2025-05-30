@@ -13,8 +13,8 @@ describe('ClientError', function (): void {
      * @param ClientError $clientErrorCase
      */
     test('ClientError enum exception() factory creates ClientException with all parameters', function (ClientError $clientErrorCase): void {
-        $mockRequest = new Request();
-        $mockResponse = new Response();
+        $mockRequest = new Request;
+        $mockResponse = new Response;
         $context = ['detail' => 'some additional detail', 'code' => 123];
         $previousThrowable = new RuntimeException('Previous error');
 

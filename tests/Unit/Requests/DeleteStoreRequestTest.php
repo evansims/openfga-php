@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\DeleteStoreRequest;
 use Psr\Http\Message\StreamFactoryInterface;
@@ -43,5 +43,5 @@ describe('DeleteStoreRequest', function (): void {
 
     test('throws when store ID is empty', function (): void {
         new DeleteStoreRequest(store: '');
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 });

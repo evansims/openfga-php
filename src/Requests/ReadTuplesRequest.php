@@ -4,15 +4,46 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use const JSON_THROW_ON_ERROR;
+
 use InvalidArgumentException;
+use JsonException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
-final class ReadTuplesRequest implements ReadTuplesRequestInterface
+/**
+ * Request for reading relationship tuples that match specified criteria.
+ *
+ * This request retrieves tuples from a store based on filtering criteria,
+ * with support for pagination and consistency levels. It's essential for
+ * querying existing relationships, debugging authorization data, and building
+ * administrative interfaces.
+ *
+ * @see ReadTuplesRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Tuples/ReadTuples Read tuples API endpoint
+ */
+final readonly class ReadTuplesRequest implements ReadTuplesRequestInterface
 {
+    /**
+     * Create a new tuples reading request.
+     *
+     * @param string            $store             The ID of the store containing the tuples
+     * @param TupleKeyInterface $tupleKey          The tuple key filter for reading specific tuples
+     * @param string|null       $continuationToken Token for pagination to get the next page of results
+     * @param int|null          $pageSize          Maximum number of tuples to return per page
+     * @param Consistency|null  $consistency       The read consistency level for the operation
+     *
+     * @throws ClientThrowable          If the store ID is empty, page size is invalid, or continuation token is empty (but not null)
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     */
     public function __construct(
         private string $store,
         private TupleKeyInterface $tupleKey,
@@ -21,15 +52,15 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
         private ?Consistency $consistency = null,
     ) {
         if ('' === $this->store) {
-            throw new InvalidArgumentException('Store ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
 
-        if (null !== $pageSize && $pageSize <= 0) {
-            throw new InvalidArgumentException('$pageSize must be a positive integer.');
+        if (null !== $pageSize && 0 >= $pageSize) {
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_PAGE_SIZE_INVALID, ['className' => 'ReadTuplesRequest'])]);
         }
 
         if (null !== $continuationToken && '' === $continuationToken) {
-            throw new InvalidArgumentException('$continuationToken cannot be an empty string.');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_CONTINUATION_TOKEN_EMPTY)]);
         }
     }
 
@@ -62,6 +93,8 @@ final class ReadTuplesRequest implements ReadTuplesRequestInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws JsonException If the request body cannot be serialized to JSON
      */
     #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

@@ -131,6 +131,9 @@ use Rector\Php80\Rector\Identical\{StrEndsWithRector,
 use Rector\Php80\Rector\NotIdentical\StrContainsRector;
 use Rector\Php80\Rector\Switch_\ChangeSwitchToMatchRector;
 use Rector\Php80\Rector\Ternary\GetDebugTypeRector;
+use Rector\Php81\Rector\Array_\FirstClassCallableRector;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
+use Rector\Php82\Rector\Class_\ReadOnlyClassRector;
 use Rector\Php83\Rector\ClassMethod\AddOverrideAttributeToOverriddenMethodsRector;
 use Rector\Privatization\Rector\ClassMethod\PrivatizeFinalClassMethodRector;
 use Rector\Privatization\Rector\Property\{PrivatizeFinalClassPropertyRector};
@@ -162,11 +165,28 @@ return RectorConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
         __DIR__ . '/tests',
+        __DIR__ . '/examples',
     ])
     ->withConfiguredRule(AddOverrideAttributeToOverriddenMethodsRector::class, [
         'allow_override_empty_method' => false,
     ])
+    ->withSkip([
+        // Skip StaticClosureRector for PEST test files as PEST doesn't support static test closures
+        StaticClosureRector::class => [
+            __DIR__ . '/tests/Unit',
+            __DIR__ . '/tests/Integration',
+            __DIR__ . '/tests/Contract',
+        ],
+    ])
     ->withRules([
+        // PHP 8.1+ Features
+        FirstClassCallableRector::class,
+        ReadOnlyPropertyRector::class,
+
+        // PHP 8.2+ Features
+        ReadOnlyClassRector::class,
+
+        // Existing rules
         AbsolutizeRequireAndIncludePathRector::class,
         AddArrowFunctionReturnTypeRector::class,
         AddMethodCallBasedStrictParamTypeRector::class,

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{TupleKeys, UserTypeFilters};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\{TupleKey, UserTypeFilter};
@@ -20,7 +20,7 @@ describe('ListUsersRequest', function (): void {
     });
 
     test('implements ListUsersRequestInterface', function (): void {
-        $userFilters = new UserTypeFilters();
+        $userFilters = new UserTypeFilters;
         $request = new ListUsersRequest('store', 'model', 'object', 'relation', $userFilters);
         expect($request)->toBeInstanceOf(ListUsersRequestInterface::class);
     });
@@ -170,7 +170,7 @@ describe('ListUsersRequest', function (): void {
     });
 
     test('handles empty user filters', function (): void {
-        $userFilters = new UserTypeFilters();
+        $userFilters = new UserTypeFilters;
 
         $request = new ListUsersRequest(
             store: 'store',
@@ -235,18 +235,18 @@ describe('ListUsersRequest', function (): void {
     });
 
     test('throws when store is empty', function (): void {
-        new ListUsersRequest(store: '', model: 'model', object: 'object', relation: 'relation', userFilters: new UserTypeFilters());
-    })->throws(InvalidArgumentException::class);
+        new ListUsersRequest(store: '', model: 'model', object: 'object', relation: 'relation', userFilters: new UserTypeFilters);
+    })->throws(ClientException::class);
 
     test('throws when model is empty', function (): void {
-        new ListUsersRequest(store: 'store', model: '', object: 'object', relation: 'relation', userFilters: new UserTypeFilters());
-    })->throws(InvalidArgumentException::class);
+        new ListUsersRequest(store: 'store', model: '', object: 'object', relation: 'relation', userFilters: new UserTypeFilters);
+    })->throws(ClientException::class);
 
     test('throws when object is empty', function (): void {
-        new ListUsersRequest(store: 'store', model: 'model', object: '', relation: 'relation', userFilters: new UserTypeFilters());
-    })->throws(InvalidArgumentException::class);
+        new ListUsersRequest(store: 'store', model: 'model', object: '', relation: 'relation', userFilters: new UserTypeFilters);
+    })->throws(ClientException::class);
 
     test('throws when relation is empty', function (): void {
-        new ListUsersRequest(store: 'store', model: 'model', object: 'object', relation: '', userFilters: new UserTypeFilters());
-    })->throws(InvalidArgumentException::class);
+        new ListUsersRequest(store: 'store', model: 'model', object: 'object', relation: '', userFilters: new UserTypeFilters);
+    })->throws(ClientException::class);
 });

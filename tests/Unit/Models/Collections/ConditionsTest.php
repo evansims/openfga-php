@@ -5,33 +5,32 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models\Collections;
 
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, ConditionsInterface};
-use OpenFGA\Models\{Condition, ConditionMetadata, SourceInfo};
-use OpenFGA\Models\{ConditionParameter};
+use OpenFGA\Models\{Condition, ConditionMetadata, ConditionParameter, SourceInfo};
 use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Conditions Collection', function (): void {
-    test('implements ConditionsInterface', function (): void {
-        $collection = new Conditions();
+    test('implements interface', function (): void {
+        $collection = new Conditions;
 
         expect($collection)->toBeInstanceOf(ConditionsInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
-        $collection = new Conditions();
+    test('creates empty', function (): void {
+        $collection = new Conditions;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of conditions', function (): void {
+    test('creates with array of conditions', function (): void {
         $condition1 = new Condition(
             name: 'condition1',
             expression: 'user.id == params.allowed_user',
             parameters: new ConditionParameters([
                 new ConditionParameter(
                     typeName: TypeName::STRING,
-                    genericTypes: new ConditionParameters(),
+                    genericTypes: new ConditionParameters,
                 ),
             ]),
         );
@@ -51,7 +50,7 @@ describe('Conditions Collection', function (): void {
     });
 
     test('adds conditions', function (): void {
-        $collection = new Conditions();
+        $collection = new Conditions;
 
         $condition = new Condition(
             name: 'is_owner',
@@ -97,7 +96,7 @@ describe('Conditions Collection', function (): void {
         expect($names)->toBe(['cond1', 'cond2', 'cond3']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $condition1 = new Condition(name: 'cond1', expression: 'expr1');
         $condition2 = new Condition(name: 'cond2', expression: 'expr2');
 
@@ -111,7 +110,7 @@ describe('Conditions Collection', function (): void {
         expect($array[1])->toBe($condition2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $condition = new Condition(
             name: 'ip_check',
             expression: 'user.ip_address in params.allowed_ips',
@@ -134,7 +133,7 @@ describe('Conditions Collection', function (): void {
         expect($json[0]['name'])->toBe('ip_check');
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Conditions::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -254,7 +253,7 @@ describe('Conditions Collection', function (): void {
     });
 
     test('handles empty collection edge cases', function (): void {
-        $collection = new Conditions();
+        $collection = new Conditions;
 
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);

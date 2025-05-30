@@ -4,46 +4,54 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\Collections\{Users, UsersInterface};
-use OpenFGA\Models\Collections\Usersets;
+use InvalidArgumentException;
+use OpenFGA\Exceptions\{NetworkException, SerializationException};
+use OpenFGA\Models\Collections\{Users, UsersInterface, Usersets};
 use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, TypedWildcard, User, UserInterface, UserObject, Userset, UsersetUser};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
+use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
+use ReflectionException;
 
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
-
+/**
+ * Response containing a list of users that have a specific relationship with an object.
+ *
+ * This response provides a collection of users (including user objects, usersets,
+ * and typed wildcards) that have the specified relationship with the target object.
+ * Use this to discover who has access to resources in your authorization system.
+ *
+ * @see ListUsersResponseInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Queries/ListUsers
+ */
 final class ListUsersResponse extends Response implements ListUsersResponseInterface
 {
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param UsersInterface<UserInterface> $users
+     * Create a new list users response instance.
+     *
+     * @param UsersInterface<UserInterface> $users The collection of users that have the specified relationship with the object
      */
     public function __construct(
-        private UsersInterface $users,
+        private readonly UsersInterface $users,
     ) {
     }
 
     /**
      * @inheritDoc
-     */
-    #[Override]
-    public function getUsers(): UsersInterface
-    {
-        return $this->users;
-    }
-
-    /**
-     * @inheritDoc
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws NetworkException         If the API returns an error response
+     * @throws ReflectionException      If exception location capture fails
+     * @throws SerializationException   If JSON parsing or schema validation fails
      */
     #[Override]
     public static function fromResponse(
-        ResponseInterface $response,
-        RequestInterface $request,
+        HttpResponseInterface $response,
+        HttpRequestInterface $request,
         SchemaValidator $validator,
     ): ListUsersResponseInterface {
-        // Handle successful responses
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
@@ -62,8 +70,7 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
             return $validator->validateAndTransform($data, self::class);
         }
 
-        // Handle network errors
-        return RequestManager::handleResponseException(
+        RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );
@@ -81,5 +88,14 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
                 new SchemaProperty(name: 'users', type: 'object', className: Users::class, required: true),
             ],
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getUsers(): UsersInterface
+    {
+        return $this->users;
     }
 }

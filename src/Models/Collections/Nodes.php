@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{Node, NodeInterface};
-
+use OpenFGA\Models\{ModelInterface, Node, NodeInterface};
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
@@ -16,9 +15,16 @@ use Override;
  */
 final class Nodes extends IndexedCollection implements NodesInterface
 {
-    private static ?CollectionSchemaInterface $schema = null;
-
+    /**
+     * @phpstan-var class-string<NodeInterface>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
     protected static string $itemType = Node::class;
+
+    private static ?CollectionSchemaInterface $schema = null;
 
     /**
      * @inheritDoc
@@ -27,8 +33,8 @@ final class Nodes extends IndexedCollection implements NodesInterface
     public static function schema(): CollectionSchemaInterface
     {
         return self::$schema ??= new CollectionSchema(
-            className: static::class,
-            itemType: static::$itemType,
+            className: self::class,
+            itemType: /** @var class-string */ self::$itemType,
             requireItems: false,
             wrapperKey: 'nodes',
         );

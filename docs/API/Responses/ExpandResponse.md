@@ -1,5 +1,6 @@
 # ExpandResponse
 
+Response containing the expanded userset tree for a relationship query. This response provides a hierarchical tree structure showing how a relationship is computed, including all the users, usersets, and computed relationships that contribute to the final authorization decision.
 
 ## Namespace
 `OpenFGA\Responses`
@@ -16,19 +17,21 @@
 *<small>Implements Responses\ExpandResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, Psr\Http\Message\RequestInterface $request, OpenFGA\Schema\SchemaValidator $validator): self
+public function fromResponse(HttpResponseInterface $response, HttpRequestInterface $request, SchemaValidator $validator): static
 ```
 
+Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | Psr\Http\Message\ResponseInterface |  |
-| `$request` | Psr\Http\Message\RequestInterface |  |
-| `$validator` | [SchemaValidator](Schema/SchemaValidator.md) |  |
+| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
+| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
+| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
 
 #### Returns
-self
+static
+ The parsed and validated response instance containing the API response data
 
 ### getTree
 
@@ -37,21 +40,25 @@ self
 public function getTree(): ?OpenFGA\Models\UsersetTreeInterface
 ```
 
+Get the expansion tree for the queried relationship. Returns a hierarchical tree structure that represents all users and usersets that have the specified relationship with the target object. The tree shows both direct relationships and computed relationships through other relations.
 
 
 #### Returns
 ?[UsersetTreeInterface](Models/UsersetTreeInterface.md)
+ The relationship expansion tree, or null if no relationships found
 
 ### schema
 
 *<small>Implements Responses\ExpandResponseInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\SchemaInterface
+public function schema(): SchemaInterface
 ```
 
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for relationship expansion response data, ensuring consistent parsing and validation of API responses.
 
 
 #### Returns
-[SchemaInterface](Schema/SchemaInterface.md)
+SchemaInterface
+ The schema definition for response validation
 

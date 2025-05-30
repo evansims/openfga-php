@@ -6,8 +6,22 @@ parameters:
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
 
-    ignoreErrors:
-        - identifier: property.onlyWritten
+    # Enhanced strict analysis
+    checkMissingCallableSignature: true
+    checkUninitializedProperties: true
+    polluteScopeWithLoopInitialAssignments: false
+    polluteScopeWithAlwaysIterableForeach: false
+
+    # Modern PHP best practices
+    checkExplicitMixedMissingReturn: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    checkTooWideReturnTypesInProtectedAndPublicMethods: true
+
+    # Readonly properties support (PHP 8.1+)
+    checkDynamicProperties: true
+
+    ignoreErrors: []
 
     paths:
         - src

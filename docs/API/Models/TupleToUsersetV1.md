@@ -12,7 +12,7 @@
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_TYPE` | `&#039;v1.TupleToUserset&#039;` |  |
+| `OPENAPI_MODEL` | `&#039;v1.TupleToUserset&#039;` |  |
 
 
 ## Methods
@@ -23,10 +23,12 @@
 public function getComputedUserset(): OpenFGA\Models\ObjectRelationInterface
 ```
 
+Get the userset that will be computed based on the tupleset. This represents the object-relation pair that defines which userset should be computed for each tuple found in the tupleset. The computed userset determines the final set of users resulting from the tuple-to-userset operation.
 
 
 #### Returns
 [ObjectRelationInterface](Models/ObjectRelationInterface.md)
+ The object-relation pair defining the computed userset
 
 ### getTupleset
 
@@ -35,10 +37,12 @@ public function getComputedUserset(): OpenFGA\Models\ObjectRelationInterface
 public function getTupleset(): OpenFGA\Models\ObjectRelationInterface
 ```
 
+Get the tupleset (object-relation pair) that defines which tuples to use for computation. This represents the object-relation pair that identifies which tuples should be examined to compute the final userset. For each matching tuple, the computed userset will be evaluated to determine the resulting users.
 
 
 #### Returns
 [ObjectRelationInterface](Models/ObjectRelationInterface.md)
+ The object-relation pair defining the tupleset
 
 ### jsonSerialize
 
@@ -57,11 +61,13 @@ array
 *<small>Implements Models\TupleToUsersetV1Interface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\SchemaInterface
+public function schema(): SchemaInterface
 ```
 
+Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
 
 
 #### Returns
-[SchemaInterface](Schema/SchemaInterface.md)
+SchemaInterface
+ The schema definition containing validation rules and property specifications for this model
 

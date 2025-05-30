@@ -1,185 +1,182 @@
-# Validating Your Model with Assertions
+# Testing Your Authorization Model
 
-In OpenFGA, **Assertions** are essentially **tests for your authorization model**. They allow you to define expected outcomes for specific access scenarios, ensuring your model behaves exactly as you intend. Think of them as a safety net that helps you build and maintain a robust authorization system with confidence.
+Think of assertions as unit tests for your permission system. They let you define what should and shouldn't be allowed, then verify your authorization model works correctly before deploying it to production.
 
-## Why are Assertions Important?
+## What are assertions?
 
-Investing a little time in writing assertions can save you a lot of headaches down the line. Here's why they are crucial:
-
-- **Validation:** Assertions confirm that your authorization model correctly grants or denies access for critical user scenarios. For example, you can assert that an "admin" _should_ be able to delete a "document," while a "viewer" _should not_.
-- **Prevent Regressions:** When you modify your authorization model (e.g., add new types, change relations), assertions act as automated tests. If a change inadvertently breaks an existing rule, your assertions will help you catch this before it impacts users.
-- **Live Documentation:** Assertions serve as clear, testable documentation of your model's intended behavior. Anyone can look at the assertions to understand the expected access control outcomes for key relationships.
-- **Increased Confidence:** Knowing that your model is backed by a suite of assertions gives you greater confidence in your authorization logic, especially as your application and its permission rules grow in complexity.
-
-Assertions are stored _per authorization model_. Each assertion defines an expected outcome for a specific relationship check:
-
-- `user:anne` **should have** `viewer` access to `document:roadmap`.
-- `user:anne` **should NOT have** `editor` access to `document:roadmap`.
-
-## Prerequisites
-
-These examples assume:
-
-1. You have initialized the SDK client as `$client`.
-2. Refer to [Getting Started](GettingStarted.md), [Managing Stores](Stores.md), and [Understanding Authorization Models](AuthorizationModels.md) for these initial setup steps.
-
-For robust error handling beyond the `unwrap()` helper shown in these examples, please see our guide on [Results and Error Handling](Results.md).
+Assertions are test cases that specify expected outcomes for permission checks. Each assertion says "user X should (or shouldn't) have permission Y on resource Z" and verifies this against your authorization model.
 
 ```php
-<?php
-// Common setup for examples:
-require_once __DIR__ . '/vendor/autoload.php'; // If running examples standalone
-
 use OpenFGA\Client;
 use OpenFGA\Models\{TupleKey, Assertion};
 use OpenFGA\Collections\Assertions;
 
-// Response interfaces for type hinting (optional but good practice)
-use OpenFGA\Responses\{ReadAssertionsResponseInterface, WriteAssertionsResponseInterface};
-
-use function OpenFGA\Results\unwrap;
-
-// Assuming $client is initialized as shown in GettingStarted.md
-// $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
-?>
+$client = new Client(url: $_ENV['FGA_API_URL']);
 ```
 
-## Structure of an Assertion
+## Writing your first test
 
-An assertion in OpenFGA, represented by the `OpenFGA\Models\Assertion` object in the PHP SDK, consists of two main parts:
-
-1. **`tuple_key`** (`OpenFGA\Models\TupleKey`): This specifies the relationship being tested. It includes:
-
-   - `user` (string): The user or userset (e.g., `user:anne`, `group:auditors#member`).
-   - `relation` (string): The relation or permission (e.g., `viewer`, `can_edit`).
-   - `object` (string): The resource (e.g., `document:financial_report`).
-
-2. **`expectation`** (boolean): This defines the expected outcome of a `check()` for the given `tuple_key`.
-   - `true`: You expect the relationship to exist (access should be granted).
-   - `false`: You expect the relationship _not_ to exist (access should be denied).
-
-## Writing Assertions (`Client::writeAssertions()`)
-
-You write assertions for a specific authorization model. The `writeAssertions()` method allows you to define a set of assertions for the model ID currently configured on the client (or one passed directly).
-
-**Important Behavior:** Calling `writeAssertions()` **overwrites all existing assertions** for the specified `authorization_model_id`. You are essentially providing the complete set of assertions for that model each time.
-
-**Parameters:**
-
-- `assertions` (required `OpenFGA\Collections\Assertions`): A collection of `Assertion` objects.
-- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
-- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
+Let's say you're building a document management system. You want to test that owners can edit documents but viewers cannot:
 
 ```php
-<?php
-// Example: Writing Assertions for the current model ($client->getModel())
-
-// Assertion 1: User 'anne' SHOULD BE a 'viewer' of 'document:roadmap'
-$assertionAnneCanViewRoadmap = new Assertion(
+// Test: Document owners can edit
+$ownerCanEdit = new Assertion(
     tupleKey: new TupleKey(
-        user: 'user:anne',
-        relation: 'viewer',
-        object: 'document:roadmap'
-    ),
-    expectation: true // true = access expected
-);
-
-// Assertion 2: User 'bob' SHOULD NOT BE an 'editor' of 'document:roadmap'
-$assertionBobCannotEditRoadmap = new Assertion(
-    tupleKey: new TupleKey(
-        user: 'user:bob',
-        relation: 'editor',
-        object: 'document:roadmap'
-    ),
-    expectation: false // false = access NOT expected
-);
-
-// Assertion 3: Any 'user' SHOULD BE a 'viewer' of 'document:public_guide'
-$assertionAnyoneCanViewPublicGuide = new Assertion(
-    tupleKey: new TupleKey(
-        user: 'user:*', // Using a wildcard
-        relation: 'viewer',
-        object: 'document:public_guide'
+        user: 'user:alice',
+        relation: 'can_edit',
+        object: 'document:quarterly-report'
     ),
     expectation: true
 );
 
-$assertionsToWrite = new Assertions([
-    $assertionAnneCanViewRoadmap,
-    $assertionBobCannotEditRoadmap,
-    $assertionAnyoneCanViewPublicGuide,
-]);
+// Test: Viewers cannot edit
+$viewerCannotEdit = new Assertion(
+    tupleKey: new TupleKey(
+        user: 'user:bob',
+        relation: 'can_edit', 
+        object: 'document:quarterly-report'
+    ),
+    expectation: false
+);
 
-try {
-    // We rely on the model ID set via $client->setModel() for this call.
-    // If not set on the client, you MUST pass it as a parameter:
-    // $client->writeAssertions(store: $storeId, model: $modelId, assertions: $assertionsToWrite);
+$tests = new Assertions([$ownerCanEdit, $viewerCannotEdit]);
 
-    unwrap($client->writeAssertions(store: $storeId, model: $modelId, assertions: $assertionsToWrite));
-
-    echo "Assertions written successfully for model ID: " . $client->getModel() . "\n";
-    echo "Remember: This overwrites any previous assertions for this model.\n";
-
-} catch (Throwable $e) {
-    echo "Error writing assertions: " . $e->getMessage() . "\n";
-    // This could be due to an invalid model ID or issues with the OpenFGA server.
-}
-?>
+$client->writeAssertions(
+    store: $storeId,
+    model: $modelId,
+    assertions: $tests
+)->unwrap();
 ```
 
-## Reading Assertions (`Client::readAssertions()`)
+## Testing permission inheritance
 
-You can retrieve all assertions associated with a specific authorization model. This is useful for reviewing existing tests or for custom validation logic.
-
-**Parameters:**
-
-- `store` (required `OpenFGA\Models\StoreId`): The store ID to use for this specific call.
-- `model` (required `OpenFGA\Models\AuthorizationModelId`): The authorization model ID to use for this specific call.
+Complex authorization models often have inherited permissions. Test these relationships to ensure they work as expected:
 
 ```php
-<?php
-// Example: Reading Assertions for the current model ($client->getModel())
-
-try {
-    // We rely on the model ID set via $client->setModel() for this call.
-    // If not set on the client, you MUST pass it as a parameter:
-    // $client->readAssertions(store: $storeId, model: 'your_specific_model_id');
-
-    /** @var ReadAssertionsResponseInterface $response */
-    $response = unwrap($client->readAssertions(store: $storeId, model: $modelId));
-
-    $retrievedAssertions = $response->getAssertions();
-
-    echo "Assertions for model ID '" . $client->getModel() . "':\n";
-    if (empty($retrievedAssertions)) {
-        echo "No assertions found for this model.\n";
-    } else {
-        foreach ($retrievedAssertions as $assertion) {
-            $tupleKey = $assertion->getTupleKey();
-            $expected = $assertion->getExpectation() ? 'SHOULD HAVE' : 'SHOULD NOT HAVE';
-            echo "- User '{$tupleKey->getUser()}' {$expected} '{$tupleKey->getRelation()}' access to '{$tupleKey->getObject()}'.\n";
-        }
-    }
-} catch (Throwable $e) {
-    echo "Error reading assertions: " . $e->getMessage() . "\n";
-}
-?>
+// In a team workspace, team members inherit folder permissions
+$teamFolderAccess = [
+    // Direct team member access
+    new Assertion(
+        tupleKey: new TupleKey('user:sarah', 'can_read', 'folder:team-docs'),
+        expectation: true
+    ),
+    
+    // Inherited document access through folder membership
+    new Assertion(
+        tupleKey: new TupleKey('user:sarah', 'can_read', 'document:team-meeting-notes'),
+        expectation: true
+    ),
+    
+    // Non-team members should be denied
+    new Assertion(
+        tupleKey: new TupleKey('user:outsider', 'can_read', 'folder:team-docs'),
+        expectation: false
+    ),
+];
 ```
 
-## How Assertions Are Used
+## Testing edge cases
 
-While the SDK provides methods to write and read assertions, their primary execution happens on the **OpenFGA server**:
+Test boundary conditions and special cases in your permission model:
 
-- **Model Validation:** When you create or update an authorization model that has assertions defined, the OpenFGA server can automatically run these assertions. If any assertion fails (e.g., the model grants access when the assertion expects it to be denied), the model creation/update operation may fail or return warnings, depending on the server configuration.
-- **OpenFGA Playground:** The OpenFGA Playground (a UI tool for developing and testing models) heavily utilizes assertions. You can write your model, add tuples, and define assertions directly in the Playground, and it will immediately show you if your assertions pass or fail against the current model and data. This provides a very tight feedback loop during development.
-- **Custom Testing:** You can use the `readAssertions()` method to fetch assertions and then, in your own testing framework, programmatically create the necessary [Relationship Tuples](RelationshipTuples.md) and perform [Queries](Queries.md) (like `check()`) to verify if the outcomes match the `expectation` in each assertion.
+```php
+$edgeCases = [
+    // Public documents should be readable by anyone
+    new Assertion(
+        tupleKey: new TupleKey('user:*', 'can_read', 'document:company-handbook'),
+        expectation: true
+    ),
+    
+    // Deleted users should lose all access
+    new Assertion(
+        tupleKey: new TupleKey('user:former-employee', 'can_read', 'document:confidential'),
+        expectation: false
+    ),
+    
+    // Admin override permissions
+    new Assertion(
+        tupleKey: new TupleKey('user:admin', 'can_delete', 'document:any-document'),
+        expectation: true
+    ),
+    
+    // Cross-organization access should be blocked
+    new Assertion(
+        tupleKey: new TupleKey('user:competitor', 'can_read', 'document:internal-strategy'),
+        expectation: false
+    ),
+];
+```
 
-The SDK itself doesn't have a single "run assertions" command that triggers server-side validation of all assertions for a model after they are written. The validation is more of an implicit behavior of the server during model changes or an explicit feature of tools like the Playground.
+## Managing test data
 
-## Next Steps
+Organize your assertions logically and keep them maintainable:
 
-Effectively using assertions is a key part of maintaining a healthy authorization system.
+```php
+class DocumentPermissionTests
+{
+    public static function getBasicPermissions(): array
+    {
+        return [
+            // Owner permissions
+            new Assertion(new TupleKey('user:owner', 'can_read', 'document:doc1'), true),
+            new Assertion(new TupleKey('user:owner', 'can_edit', 'document:doc1'), true),
+            new Assertion(new TupleKey('user:owner', 'can_delete', 'document:doc1'), true),
+            
+            // Editor permissions  
+            new Assertion(new TupleKey('user:editor', 'can_read', 'document:doc1'), true),
+            new Assertion(new TupleKey('user:editor', 'can_edit', 'document:doc1'), true),
+            new Assertion(new TupleKey('user:editor', 'can_delete', 'document:doc1'), false),
+            
+            // Viewer permissions
+            new Assertion(new TupleKey('user:viewer', 'can_read', 'document:doc1'), true),
+            new Assertion(new TupleKey('user:viewer', 'can_edit', 'document:doc1'), false),
+            new Assertion(new TupleKey('user:viewer', 'can_delete', 'document:doc1'), false),
+        ];
+    }
+    
+    public static function getInheritanceTests(): array
+    {
+        return [
+            // Team lead inherits team permissions
+            new Assertion(new TupleKey('user:team-lead', 'can_manage', 'team:engineering'), true),
+            new Assertion(new TupleKey('user:team-lead', 'can_read', 'document:team-roadmap'), true),
+        ];
+    }
+}
 
-- If your assertions reveal unexpected behavior, it's time to revisit your **[Authorization Model](AuthorizationModels.md)** or the test **[Relationship Tuples](RelationshipTuples.md)** you're using.
-- For more complex permission checks beyond simple assertions, explore advanced **[Query Techniques](Queries.md)**.
-- Regularly review and update your assertions as your application's authorization requirements evolve.
+// Write different test suites
+$client->writeAssertions(
+    store: $storeId,
+    model: $modelId,
+    assertions: new Assertions([
+        ...DocumentPermissionTests::getBasicPermissions(),
+        ...DocumentPermissionTests::getInheritanceTests(),
+    ])
+)->unwrap();
+```
+
+## Best practices
+
+**Start with critical paths**: Test the most important permission checks first - admin access, user data privacy, billing permissions.
+
+**Test both positive and negative cases**: Don't just test what should work, test what should be blocked.
+
+**Use realistic data**: Test with actual user IDs, resource names, and permission types from your application.
+
+**Update tests when models change**: Assertions should evolve with your authorization model. Treat them like any other test suite.
+
+**Validate before deployment**: Run assertions in your CI/CD pipeline to catch permission regressions before they reach production.
+
+```php
+// Reading existing assertions for review
+$response = $client->readAssertions(store: $storeId, model: $modelId)->unwrap();
+
+foreach ($response->getAssertions() as $assertion) {
+    $key = $assertion->getTupleKey();
+    $expected = $assertion->getExpectation() ? 'CAN' : 'CANNOT';
+    
+    echo "{$key->getUser()} {$expected} {$key->getRelation()} {$key->getObject()}\n";
+}
+```
+
+Remember: assertions replace all existing tests for a model when you call `writeAssertions()`. Always include your complete test suite in each call.

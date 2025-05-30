@@ -1,0 +1,122 @@
+# OpenFGA PHP SDK - Spanish Translation Messages
+# Mensajes de traducción en español para OpenFGA PHP SDK
+
+client:
+  no_last_request_found: 'No se encontró la última solicitud'
+
+dsl:
+  parse_failed: 'No se pudo analizar la entrada DSL'
+  unrecognized_term: 'Término DSL no reconocido: %term%'
+  input_empty: 'La cadena de entrada no puede estar vacía'
+  pattern_empty: 'El patrón no puede estar vacío'
+  unbalanced_parentheses_closing: 'Paréntesis desequilibrados: demasiados paréntesis de cierre en la posición %position%'
+  unbalanced_parentheses_opening: 'Paréntesis desequilibrados: %count% %parentheses% de apertura sin cerrar'
+  invalid_computed_userset: 'Conjunto de usuarios calculado inválido'
+
+auth:
+  invalid_response_format: 'Formato de respuesta inválido'
+  missing_required_fields: 'Faltan campos requeridos en la respuesta'
+  access_token_must_be_string: 'access_token debe ser una cadena'
+  expires_in_must_be_integer: 'expires_in debe ser un entero'
+  user_message:
+    token_expired: 'Su sesión ha expirado. Por favor, inicie sesión nuevamente.'
+    token_invalid: 'Credenciales de autenticación inválidas proporcionadas.'
+  jwt:
+    invalid_format: 'Formato de token JWT inválido'
+    invalid_header: 'Encabezado JWT inválido'
+    invalid_payload: 'Carga útil JWT inválida'
+    missing_required_claims: 'Faltan claims requeridos en el JWT'
+    token_expired: 'El token JWT ha expirado'
+    token_not_yet_valid: 'El token JWT aún no es válido'
+    invalid_audience: 'La audiencia del token JWT no coincide con la audiencia esperada'
+    invalid_issuer: 'El emisor del token JWT no coincide con el emisor esperado'
+
+network:
+  error: 'Error de red: %message%'
+  unexpected_status: 'La API respondió con un código de estado inesperado: %status_code%'
+
+result:
+  success_no_error: 'El resultado exitoso no tiene error'
+  failure_no_value: 'El resultado fallido no tiene valor'
+
+request:
+  store_id_empty: 'El ID del almacén no puede estar vacío'
+  model_id_empty: 'El ID del modelo de autorización no puede estar vacío'
+  store_name_empty: 'El nombre del almacén no puede estar vacío'
+  continuation_token_empty: 'El token de continuación no puede estar vacío'
+  page_size_invalid: 'pageSize inválido proporcionado a %className%'
+  object_type_empty: 'El tipo de objeto no puede estar vacío'
+  relation_empty: 'La relación no puede estar vacía'
+  user_empty: 'El usuario no puede estar vacío'
+  object_empty: 'El objeto no puede estar vacío'
+  type_empty: 'El tipo no puede estar vacío'
+
+validation:
+  batch_check_empty: 'La solicitud de verificación por lotes no puede estar vacía'
+  invalid_correlation_id: 'ID de correlación "%correlationId%" es inválido. Debe coincidir con el patrón: %pattern%'
+
+model:
+  invalid_tuple_key: 'tuple_key inválido proporcionado a Assertion::fromArray'
+  typed_wildcard_type_empty: 'TypedWildcard::$type no puede estar vacío.'
+  source_info_file_empty: 'SourceInfo::$file no puede estar vacío.'
+  leaf_missing_content: 'Leaf debe contener al menos uno de: users, computed o tupleToUserset'
+
+collection:
+  undefined_item_type: 'Tipo de elemento indefinido para %class%. Define la propiedad $itemType o sobrescribe el constructor.'
+  invalid_item_type_interface: 'Se esperaba que el tipo de elemento implemente %interface%, se proporcionó %given%'
+  invalid_item_instance: 'Se esperaba una instancia de %expected%, se proporcionó %given%'
+  invalid_value_type: 'Se esperaba una instancia de %expected%, se proporcionó %given%.'
+  key_must_be_string: 'La clave debe ser una cadena.'
+  invalid_position: 'Posición inválida'
+  invalid_key_type: 'Tipo de clave inválido; se esperaba cadena, se proporcionó %given%.'
+
+consistency:
+  higher_consistency:
+    description: 'Prioriza la consistencia de datos sobre el rendimiento de consultas, asegurando los resultados más actualizados'
+  minimize_latency:
+    description: 'Prioriza el rendimiento de consultas sobre la consistencia de datos, potencialmente usando datos ligeramente obsoletos'
+  unspecified:
+    description: 'Usa el nivel de consistencia predeterminado determinado por la configuración del servidor OpenFGA'
+
+schema:
+  class_not_found: 'La clase "%className%" no existe o no se puede cargar automáticamente'
+  item_type_not_found: 'El tipo de elemento "%itemType%" no existe o no se puede cargar automáticamente'
+
+exception:
+  client:
+    authentication: 'Error de autenticación'
+    configuration: 'Error de configuración detectado'
+    network: 'Error de comunicación de red'
+    serialization: 'Error de serialización de datos'
+    validation: 'La validación de la solicitud falló'
+  auth:
+    token_expired: 'El token de autenticación ha expirado'
+    token_invalid: 'El token de autenticación es inválido'
+  config:
+    http_client_missing: 'El cliente HTTP no está configurado'
+    http_request_factory_missing: 'La fábrica de solicitudes HTTP no está configurada'
+    http_response_factory_missing: 'La fábrica de respuestas HTTP no está configurada'
+    http_stream_factory_missing: 'La fábrica de streams HTTP no está configurada'
+  network:
+    conflict: 'Conflicto (409): La solicitud entra en conflicto con el estado actual'
+    forbidden: 'Prohibido (403): Acceso denegado al recurso solicitado'
+    invalid: 'Solicitud incorrecta (400): La solicitud no es válida'
+    request: 'Solicitud fallida: No se pudo completar la solicitud HTTP'
+    server: 'Error interno del servidor (500): El servidor encontró un error'
+    timeout: 'Entidad no procesable (422): No se pudo procesar la solicitud'
+    unauthenticated: 'No autorizado (401): Se requiere autenticación'
+    undefined_endpoint: 'No encontrado (404): El endpoint solicitado no existe'
+    unexpected: 'Respuesta inesperada del servidor'
+  serialization:
+    could_not_add_items_to_collection: 'No se pudieron agregar elementos a la colección %className%'
+    empty_collection: 'La colección no puede estar vacía'
+    invalid_item_type: 'Tipo de elemento inválido para %property% en %className%: se esperaba %expected%, se obtuvo %actual_type%'
+    missing_required_constructor_parameter: 'Falta el parámetro requerido del constructor "%paramName%" para la clase %className%'
+    response: 'No se pudieron serializar/deserializar los datos de respuesta'
+    undefined_item_type: 'El tipo de elemento no está definido para %className%'
+
+tuple_operation:
+  write:
+    description: 'Agrega una nueva tupla de relación, otorgando permisos o estableciendo relaciones'
+  delete:
+    description: 'Elimina una tupla de relación existente, revocando permisos o eliminando relaciones'

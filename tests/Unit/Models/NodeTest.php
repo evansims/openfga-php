@@ -52,7 +52,6 @@ describe('Node Model', function (): void {
     });
 
     test('constructs with name and union', function (): void {
-        // Union is a single node, not a collection
         $unionNode = new Node(name: 'owner_or_editor');
 
         $node = new Node(name: 'viewer', union: $unionNode);
@@ -65,7 +64,6 @@ describe('Node Model', function (): void {
     });
 
     test('constructs with name and intersection', function (): void {
-        // Intersection is a single node, not a collection
         $intersectionNode = new Node(name: 'member_and_verified');
 
         $node = new Node(name: 'verified_member', intersection: $intersectionNode);
@@ -78,11 +76,9 @@ describe('Node Model', function (): void {
     });
 
     test('serializes to JSON with only non-null fields', function (): void {
-        // Node with only name
         $node = new Node(name: 'viewer');
         expect($node->jsonSerialize())->toBe(['name' => 'viewer']);
 
-        // Node with leaf
         $leaf = new Leaf(
             computed: new Computed(userset: 'owner'),
         );
@@ -94,7 +90,6 @@ describe('Node Model', function (): void {
             ],
         ]);
 
-        // Node with union
         $unionNode = new Node(name: 'owner_or_editor');
         $node = new Node(name: 'viewer', union: $unionNode);
 
@@ -121,32 +116,27 @@ describe('Node Model', function (): void {
         $schema = Node::schema();
         $properties = $schema->getProperties();
 
-        // Name property
         $nameProp = $properties['name'];
         expect($nameProp->name)->toBe('name');
         expect($nameProp->type)->toBe('string');
         expect($nameProp->required)->toBe(true);
 
-        // Leaf property
         $leafProp = $properties['leaf'];
         expect($leafProp->name)->toBe('leaf');
         expect($leafProp->type)->toBe('object');
         expect($leafProp->required)->toBe(false);
 
-        // Difference property
         $differenceProp = $properties['difference'];
         expect($differenceProp->name)->toBe('difference');
         expect($differenceProp->type)->toBe('object');
         expect($differenceProp->required)->toBe(false);
 
-        // Union property
         $unionProp = $properties['union'];
         expect($unionProp->name)->toBe('union');
         expect($unionProp->type)->toBe('object');
         expect($unionProp->required)->toBe(false);
         expect($unionProp->className)->toBe(NodeUnion::class);
 
-        // Intersection property
         $intersectionProp = $properties['intersection'];
         expect($intersectionProp->name)->toBe('intersection');
         expect($intersectionProp->type)->toBe('object');
@@ -162,7 +152,6 @@ describe('Node Model', function (): void {
     });
 
     test('handles typical authorization patterns', function (): void {
-        // Pattern 1: Simple leaf node
         $simpleNode = new Node(
             name: 'owner',
             leaf: new Leaf(
@@ -177,7 +166,6 @@ describe('Node Model', function (): void {
             ],
         ]);
 
-        // Pattern 2: Union of permissions (viewer has union of owner_or_editor)
         $unionNode = new Node(
             name: 'owner_or_editor',
             leaf: new Leaf(computed: new Computed(userset: 'owner')),
@@ -197,7 +185,6 @@ describe('Node Model', function (): void {
             ],
         ]);
 
-        // Pattern 3: Difference (all users except blocked)
         $allUsersNode = new Node(
             name: 'all_users',
             leaf: new Leaf(computed: new Computed(userset: 'user:*')),
@@ -219,21 +206,18 @@ describe('Node Model', function (): void {
     });
 
     test('handles nested node structures', function (): void {
-        // Create a complex nested structure
         $ownerLeaf = new Leaf(computed: new Computed(userset: 'owner'));
         $ownerNode = new Node(name: 'owner', leaf: $ownerLeaf);
 
         $editorLeaf = new Leaf(computed: new Computed(userset: 'editor'));
         $editorNode = new Node(name: 'editor', leaf: $editorLeaf);
 
-        // Create an intersection node that combines owner and editor
         $editorWithIntersection = new Node(
             name: 'editor_node',
             leaf: $editorLeaf,
             intersection: $ownerNode,
         );
 
-        // Create the main viewer node with a union
         $viewerNode = new Node(
             name: 'viewer',
             union: $editorWithIntersection,

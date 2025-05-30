@@ -6,6 +6,15 @@ namespace OpenFGA\Schema;
 
 use Override;
 
+/**
+ * JSON schema definition for validating and transforming data structures.
+ *
+ * This schema defines validation rules and transformation logic for converting
+ * raw API response data into strongly-typed model objects. It specifies property
+ * types, validation constraints, and mapping rules for accurate data processing.
+ *
+ * @see SchemaInterface For the complete API specification
+ */
 final class Schema implements SchemaInterface
 {
     /**
@@ -14,8 +23,10 @@ final class Schema implements SchemaInterface
     private array $properties = [];
 
     /**
-     * @param array<SchemaProperty> $properties
-     * @param string                $className
+     * Create a new schema definition for a specific class.
+     *
+     * @param string                $className  The fully qualified class name this schema defines
+     * @param array<SchemaProperty> $properties Array of schema properties to include in this schema
      */
     public function __construct(
         public readonly string $className,

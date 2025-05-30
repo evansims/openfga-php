@@ -15,13 +15,15 @@
 
 
 ```php
-public function getRoot(): OpenFGA\Models\NodeInterface
+public function getRoot(): NodeInterface
 ```
 
+Get the root node of the userset tree structure. This returns the top-level node that represents the entry point for userset expansion. The tree structure allows for complex authorization logic including unions, intersections, and difference operations.
 
 
 #### Returns
 [NodeInterface](Models/NodeInterface.md)
+ The root node of the userset tree
 
 ### jsonSerialize
 

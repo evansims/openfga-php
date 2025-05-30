@@ -10,22 +10,22 @@ use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 use stdClass;
 
 describe('Usersets Collection', function (): void {
-    test('implements UsersetsInterface', function (): void {
+    test('implements interface', function (): void {
         $collection = new Usersets([]);
 
         expect($collection)->toBeInstanceOf(UsersetsInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
+    test('creates empty', function (): void {
         $collection = new Usersets([]);
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of usersets', function (): void {
+    test('creates with array of usersets', function (): void {
         $collection = new Usersets([
-            new Userset(direct: new stdClass()),
+            new Userset(direct: new stdClass),
             new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
             new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
         ]);
@@ -37,7 +37,7 @@ describe('Usersets Collection', function (): void {
     test('adds usersets', function (): void {
         $collection = new Usersets([]);
 
-        $userset = new Userset(direct: new stdClass());
+        $userset = new Userset(direct: new stdClass);
 
         $collection->add($userset);
 
@@ -46,7 +46,7 @@ describe('Usersets Collection', function (): void {
     });
 
     test('gets usersets by index', function (): void {
-        $userset1 = new Userset(direct: new stdClass());
+        $userset1 = new Userset(direct: new stdClass);
         $userset2 = new Userset(computedUserset: new ObjectRelation(relation: 'owner'));
 
         $collection = new Usersets([
@@ -60,7 +60,7 @@ describe('Usersets Collection', function (): void {
     });
 
     test('checks if userset exists by index', function (): void {
-        $userset = new Userset(direct: new stdClass());
+        $userset = new Userset(direct: new stdClass);
 
         $collection = new Usersets([
             $userset,
@@ -72,7 +72,7 @@ describe('Usersets Collection', function (): void {
 
     test('iterates over usersets', function (): void {
         $collection = new Usersets([
-            new Userset(direct: new stdClass()),
+            new Userset(direct: new stdClass),
             new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
             new Userset(computedUserset: new ObjectRelation(relation: 'editor')),
         ]);
@@ -86,8 +86,8 @@ describe('Usersets Collection', function (): void {
         expect($keys)->toBe([0, 1, 2]);
     });
 
-    test('converts to array', function (): void {
-        $userset1 = new Userset(direct: new stdClass());
+    test('toArray', function (): void {
+        $userset1 = new Userset(direct: new stdClass);
         $userset2 = new Userset(computedUserset: new ObjectRelation(relation: 'viewer'));
 
         $collection = new Usersets([
@@ -103,9 +103,9 @@ describe('Usersets Collection', function (): void {
         expect($array[1])->toBe($userset2);
     });
 
-    test('serializes to JSON with child array', function (): void {
+    test('jsonSerialize', function (): void {
         $collection = new Usersets([
-            new Userset(direct: new stdClass()),
+            new Userset(direct: new stdClass),
             new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
             new Userset(
                 difference: new DifferenceV1(
@@ -139,7 +139,7 @@ describe('Usersets Collection', function (): void {
     test('handles different userset types', function (): void {
         $collection = new Usersets([
             // Direct assignment
-            new Userset(direct: new stdClass()),
+            new Userset(direct: new stdClass),
 
             // Computed userset
             new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
@@ -147,7 +147,7 @@ describe('Usersets Collection', function (): void {
             // Union of usersets
             new Userset(
                 union: new Usersets([
-                    new Userset(direct: new stdClass()),
+                    new Userset(direct: new stdClass),
                     new Userset(computedUserset: new ObjectRelation(relation: 'viewer')),
                 ]),
             ),
@@ -188,7 +188,7 @@ describe('Usersets Collection', function (): void {
         expect($collection->get(5))->toBeInstanceOf(Userset::class);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Usersets::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);

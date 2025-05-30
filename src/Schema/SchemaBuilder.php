@@ -4,7 +4,18 @@ declare(strict_types=1);
 
 namespace OpenFGA\Schema;
 
-final class SchemaBuilder
+use Override;
+
+/**
+ * Fluent builder for creating JSON schemas for data validation and transformation.
+ *
+ * This builder provides a fluent API for defining validation schemas for model classes,
+ * supporting various data types, formats, and validation constraints. It's used internally
+ * by the SDK to validate API responses and ensure data integrity.
+ *
+ * @see SchemaBuilderInterface For the complete API specification
+ */
+final class SchemaBuilder implements SchemaBuilderInterface
 {
     /**
      * @var array<SchemaProperty>
@@ -12,7 +23,9 @@ final class SchemaBuilder
     private array $properties = [];
 
     /**
-     * @param class-string $className
+     * Create a new schema builder for the specified class.
+     *
+     * @param class-string $className The fully qualified class name to build a schema for
      */
     public function __construct(
         private readonly string $className,
@@ -20,13 +33,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add an array property.
-     *
-     * @param array{type: string, className?: class-string} $items
-     * @param string                                        $name
-     * @param bool                                          $required
-     * @param mixed                                         $default
+     * @inheritDoc
      */
+    #[Override]
     public function array(string $name, array $items, bool $required = false, mixed $default = null): self
     {
         $this->properties[] = new SchemaProperty(
@@ -41,12 +50,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add a boolean property.
-     *
-     * @param string     $name
-     * @param bool       $required
-     * @param null|mixed $default
+     * @inheritDoc
      */
+    #[Override]
     public function boolean(string $name, bool $required = false, mixed $default = null): self
     {
         $this->properties[] = new SchemaProperty(
@@ -60,12 +66,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add a date property.
-     *
-     * @param string     $name
-     * @param bool       $required
-     * @param null|mixed $default
+     * @inheritDoc
      */
+    #[Override]
     public function date(string $name, bool $required = false, mixed $default = null): self
     {
         $this->properties[] = new SchemaProperty(
@@ -80,12 +83,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add a datetime property.
-     *
-     * @param string     $name
-     * @param bool       $required
-     * @param null|mixed $default
+     * @inheritDoc
      */
+    #[Override]
     public function datetime(string $name, bool $required = false, mixed $default = null): self
     {
         $this->properties[] = new SchemaProperty(
@@ -100,12 +100,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add an integer property.
-     *
-     * @param string     $name
-     * @param bool       $required
-     * @param null|mixed $default
+     * @inheritDoc
      */
+    #[Override]
     public function integer(string $name, bool $required = false, mixed $default = null): self
     {
         $this->properties[] = new SchemaProperty(
@@ -119,12 +116,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add a number (float) property.
-     *
-     * @param string     $name
-     * @param bool       $required
-     * @param null|mixed $default
+     * @inheritDoc
      */
+    #[Override]
     public function number(string $name, bool $required = false, mixed $default = null): self
     {
         $this->properties[] = new SchemaProperty(
@@ -138,12 +132,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add an object property.
-     *
-     * @param class-string $className
-     * @param string       $name
-     * @param bool         $required
+     * @inheritDoc
      */
+    #[Override]
     public function object(string $name, string $className, bool $required = false): self
     {
         $this->properties[] = new SchemaProperty(
@@ -157,8 +148,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Build and register the schema.
+     * @inheritDoc
      */
+    #[Override]
     public function register(): Schema
     {
         $schema = new Schema($this->className, $this->properties);
@@ -168,14 +160,9 @@ final class SchemaBuilder
     }
 
     /**
-     * Add a string property.
-     *
-     * @param string             $name
-     * @param bool               $required
-     * @param null|string        $format
-     * @param null|array<string> $enum
-     * @param mixed              $default
+     * @inheritDoc
      */
+    #[Override]
     public function string(string $name, bool $required = false, ?string $format = null, ?array $enum = null, mixed $default = null): self
     {
         $this->properties[] = new SchemaProperty(

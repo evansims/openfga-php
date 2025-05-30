@@ -16,7 +16,7 @@ use Psr\Http\Message\RequestInterface;
 
 describe('ReadTuplesResponse', function (): void {
     test('implements ReadTuplesResponseInterface', function (): void {
-        $tuples = new Tuples();
+        $tuples = new Tuples;
         $response = new ReadTuplesResponse($tuples);
         expect($response)->toBeInstanceOf(ReadTuplesResponseInterface::class);
     });
@@ -41,7 +41,7 @@ describe('ReadTuplesResponse', function (): void {
     });
 
     test('constructs with tuples and continuation token', function (): void {
-        $tuples = new Tuples();
+        $tuples = new Tuples;
         $continuationToken = 'next-page-token-def';
 
         $response = new ReadTuplesResponse($tuples, $continuationToken);
@@ -51,7 +51,7 @@ describe('ReadTuplesResponse', function (): void {
     });
 
     test('handles empty tuples collection', function (): void {
-        $tuples = new Tuples();
+        $tuples = new Tuples;
         $response = new ReadTuplesResponse($tuples);
 
         expect($response->getTuples())->toBe($tuples);
@@ -59,9 +59,9 @@ describe('ReadTuplesResponse', function (): void {
     });
 
     test('handles large tuples collection', function (): void {
-        $tuples = new Tuples();
+        $tuples = new Tuples;
 
-        for ($i = 1; $i <= 50; ++$i) {
+        for ($i = 1; 50 >= $i; ++$i) {
             $tuple = new Tuple(
                 key: new TupleKey("user:user{$i}", 'viewer', "document:doc{$i}.pdf"),
                 timestamp: new DateTimeImmutable("2024-01-01 10:{$i}:00"),
@@ -77,7 +77,7 @@ describe('ReadTuplesResponse', function (): void {
     });
 
     test('handles tuples with conditions', function (): void {
-        $condition = mock(ConditionInterface::class);
+        $condition = test()->createMock(ConditionInterface::class);
 
         $tupleKey = new TupleKey(
             user: 'user:charlie',
@@ -132,7 +132,7 @@ describe('ReadTuplesResponse', function (): void {
     });
 
     test('handles empty continuation token', function (): void {
-        $tuples = new Tuples();
+        $tuples = new Tuples;
         $response = new ReadTuplesResponse($tuples, '');
 
         expect($response->getContinuationToken())->toBe('');
@@ -166,27 +166,24 @@ describe('ReadTuplesResponse', function (): void {
     test('fromResponse handles error responses with non-200 status', function (): void {
         $httpResponse = new SimpleResponse(400, json_encode(['code' => 'invalid_request', 'message' => 'Bad request']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ReadTuplesResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 401 unauthorized error', function (): void {
         $httpResponse = new SimpleResponse(401, json_encode(['code' => 'unauthenticated', 'message' => 'Unauthorized']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ReadTuplesResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 
     test('fromResponse handles 500 internal server error', function (): void {
         $httpResponse = new SimpleResponse(500, json_encode(['code' => 'internal_error', 'message' => 'Internal server error']));
         $request = test()->createMock(RequestInterface::class);
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
-        $this->expectException(NetworkException::class);
         ReadTuplesResponse::fromResponse($httpResponse, $request, $validator);
-    });
+    })->throws(NetworkException::class);
 });

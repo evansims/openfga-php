@@ -5,20 +5,28 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{UsersList, UsersListInterface};
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Translation\Translator;
 use Override;
+use ReflectionException;
 
 final class Leaf implements LeafInterface
 {
-    public const OPENAPI_MODEL = 'Leaf';
+    public const string OPENAPI_MODEL = 'Leaf';
 
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param null|UsersListInterface<UsersListUserInterface> $users
-     * @param null|ComputedInterface                          $computed
-     * @param null|UsersetTreeTupleToUsersetInterface         $tupleToUserset
+     * @param UsersListInterface<UsersListUserInterface>|null $users
+     * @param ComputedInterface|null                          $computed
+     * @param UsersetTreeTupleToUsersetInterface|null         $tupleToUserset
+     *
+     * @throws ClientThrowable          If none of the leaf content parameters are provided
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     public function __construct(
         private readonly ?UsersListInterface $users = null,
@@ -26,8 +34,24 @@ final class Leaf implements LeafInterface
         private readonly ?UsersetTreeTupleToUsersetInterface $tupleToUserset = null,
     ) {
         if (! $users instanceof UsersListInterface && ! $computed instanceof ComputedInterface && ! $tupleToUserset instanceof UsersetTreeTupleToUsersetInterface) {
-            throw new InvalidArgumentException('Leaf must contain at least one of users, computed or tupleToUserset');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::MODEL_LEAF_MISSING_CONTENT)]);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'users', type: 'object', className: UsersList::class, required: false),
+                new SchemaProperty(name: 'computed', type: 'object', className: Computed::class, required: false),
+                new SchemaProperty(name: 'tupleToUserset', type: 'object', className: UsersetTreeTupleToUserset::class, required: false),
+            ],
+        );
     }
 
     /**
@@ -68,21 +92,5 @@ final class Leaf implements LeafInterface
             'computed' => $this->computed?->jsonSerialize(),
             'tupleToUserset' => $this->tupleToUserset?->jsonSerialize(),
         ], static fn ($value): bool => null !== $value);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'users', type: 'object', className: UsersList::class, required: false),
-                new SchemaProperty(name: 'computed', type: 'object', className: Computed::class, required: false),
-                new SchemaProperty(name: 'tupleToUserset', type: 'object', className: UsersetTreeTupleToUserset::class, required: false),
-            ],
-        );
     }
 }

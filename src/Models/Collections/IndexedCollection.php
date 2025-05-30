@@ -4,28 +4,53 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
+use Generator;
 use InvalidArgumentException;
-use OpenFGA\Exceptions\SerializationError;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable, SerializationError};
+use OpenFGA\Messages;
 use OpenFGA\Models\ModelInterface;
 use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
-use OutOfBoundsException;
+use OpenFGA\Translation\Translator;
 use Override;
-
-use TypeError;
+use ReflectionClass;
+use ReflectionException;
 
 use function count;
 use function is_a;
 use function is_int;
 use function is_iterable;
-use function sprintf;
+use function is_string;
 
 /**
+ * Base implementation for integer-indexed collections in the OpenFGA SDK.
+ *
+ * This abstract class provides a foundation for collections that are indexed
+ * by integers, similar to JSON arrays. It includes validation, iteration,
+ * and manipulation methods while ensuring type safety for contained items.
+ *
+ * Collections extending this class can hold any type of model that implements
+ * ModelInterface, with runtime type checking to ensure data integrity.
+ *
  * @template T of ModelInterface
  *
  * @implements IndexedCollectionInterface<T>
  */
 abstract class IndexedCollection implements IndexedCollectionInterface
 {
+    /**
+     * @phpstan-var class-string<T>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
+    protected static string $itemType;
+
+    /**
+     * @var array<class-string, CollectionSchemaInterface>
+     */
+    private static array $cachedSchemas = [];
+
     /**
      * @var array<int|string, T>
      */
@@ -34,28 +59,26 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     private int $position = 0;
 
     /**
-     * @var array<class-string, CollectionSchemaInterface>
-     */
-    private static array $cachedSchemas = [];
-
-    /**
-     * @phpstan-var class-string<ModelInterface>
-     *
-     * @var class-string<ModelInterface>
-     */
-    protected static string $itemType;
-
-    /**
      * @param iterable<T>|T ...$items
+     *
+     * @throws ClientThrowable          When validation fails
+     * @throws InvalidArgumentException If parameters are invalid or message translation fails
+     * @throws ReflectionException      If exception location capture fails
      */
     final public function __construct(...$items)
     {
-        if (! isset(static::$itemType)) {
-            throw new TypeError(sprintf('Undefined item type for %s. Define the $itemType property or override the constructor.', static::class));
+        $reflection = new ReflectionClass(static::class);
+        if (! $reflection->hasProperty('itemType')) {
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_UNDEFINED_ITEM_TYPE, ['class' => static::class])]);
+        }
+
+        $property = $reflection->getProperty('itemType');
+        if (! $property->isInitialized()) {
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_UNDEFINED_ITEM_TYPE, ['class' => static::class])]);
         }
 
         if (! is_a(static::$itemType, ModelInterface::class, true)) {
-            throw new TypeError(sprintf('Expected item type to implement %s, %s given', ModelInterface::class, static::$itemType));
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_INVALID_ITEM_TYPE_INTERFACE, ['interface' => ModelInterface::class, 'given' => static::$itemType])]);
         }
 
         foreach ($this->normalizeItems($items) as $item) {
@@ -65,12 +88,57 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          If item type is not defined or invalid
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     */
+    #[Override]
+    public static function schema(): CollectionSchemaInterface
+    {
+        if (isset(self::$cachedSchemas[static::class])) {
+            return self::$cachedSchemas[static::class];
+        }
+
+        $reflection = new ReflectionClass(static::class);
+        if (! $reflection->hasProperty('itemType')) {
+            throw SerializationError::UndefinedItemType->exception();
+        }
+
+        $property = $reflection->getProperty('itemType');
+        if (! $property->isInitialized()) {
+            throw SerializationError::UndefinedItemType->exception();
+        }
+
+        if (! is_a(static::$itemType, ModelInterface::class, true)) {
+            throw SerializationError::InvalidItemType->exception();
+        }
+
+        $itemTypeString = static::$itemType;
+
+        $schema = new CollectionSchema(
+            className: static::class,
+            itemType: $itemTypeString,
+            requireItems: false,
+        );
+
+        self::$cachedSchemas[static::class] = $schema;
+
+        return $schema;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @throws ClientThrowable          If the item is not an instance of the expected type
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function add($item): static
     {
         if (! $item instanceof static::$itemType) {
-            throw new TypeError(sprintf('Expected instance of %s, %s given', static::$itemType, $item::class));
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_INVALID_ITEM_INSTANCE, ['expected' => static::$itemType, 'given' => $item::class])]);
         }
 
         $this->models[] = $item;
@@ -101,6 +169,10 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          If the current position key is not an integer
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function current(): ModelInterface
@@ -127,12 +199,18 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          If the filtered items fail validation during construction
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     *
+     * @psalm-suppress UnsafeGenericInstantiation
      */
     #[Override]
     public function filter(callable $callback): static
     {
         /** @var static<T> $new */
-        $new = new static();
+        $new = new static;
 
         foreach ($this->models as $model) {
             if ($callback($model)) {
@@ -194,6 +272,10 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          If the current position key is not an integer
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function key(): int
@@ -201,7 +283,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         $key = array_keys($this->models)[$this->position] ?? null;
 
         if (! is_int($key)) {
-            throw new OutOfBoundsException('Invalid position');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_INVALID_POSITION)]);
         }
 
         return $key;
@@ -222,6 +304,10 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     #[Override]
     public function offsetExists(mixed $offset): bool
     {
+        if (! is_int($offset) && ! is_string($offset)) {
+            return false;
+        }
+
         return isset($this->models[$offset]);
     }
 
@@ -231,17 +317,25 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     #[Override]
     public function offsetGet(mixed $offset): ?ModelInterface
     {
+        if (! is_int($offset) && ! is_string($offset)) {
+            return null;
+        }
+
         return $this->models[$offset] ?? null;
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          If the value is not an instance of the expected type
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function offsetSet(mixed $offset, mixed $value): void
     {
         if (! $value instanceof static::$itemType) {
-            throw new InvalidArgumentException(sprintf('Expected instance of %s, %s given.', static::$itemType, get_debug_type($value)));
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_INVALID_VALUE_TYPE, ['expected' => static::$itemType, 'given' => get_debug_type($value)])]);
         }
 
         if (null === $offset) {
@@ -257,7 +351,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     #[Override]
     public function offsetUnset(mixed $offset): void
     {
-        if (isset($this->models[$offset])) {
+        if ((is_int($offset) || is_string($offset)) && isset($this->models[$offset])) {
             $isNumeric = is_int($offset);
             unset($this->models[$offset]);
             if ($isNumeric) {
@@ -327,45 +421,18 @@ abstract class IndexedCollection implements IndexedCollectionInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          If any items fail validation during addition
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function withItems(...$items): static
     {
-        /** @var static<T> $new */
-        /** @psalm-suppress UnnecessaryVarAnnotation */
         $new = clone $this;
         $new->addItems(...$items);
 
         return $new;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): CollectionSchemaInterface
-    {
-        if (isset(self::$cachedSchemas[static::class])) {
-            return self::$cachedSchemas[static::class];
-        }
-
-        if (! isset(static::$itemType)) {
-            throw SerializationError::UndefinedItemType->exception();
-        }
-
-        if (! is_a(static::$itemType, ModelInterface::class, true)) {
-            throw SerializationError::InvalidItemType->exception();
-        }
-
-        $schema = new CollectionSchema(
-            className: static::class,
-            itemType: static::$itemType,
-            requireItems: false,
-        );
-
-        self::$cachedSchemas[static::class] = $schema;
-
-        return $schema;
     }
 
     /**
@@ -381,14 +448,14 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     /**
      * @param array<int|string, iterable<T>|T> $items
      *
-     * @return iterable<T>
+     * @psalm-return Generator<int, T, mixed, void>
      */
-    protected function normalizeItems(array $items): iterable
+    protected function normalizeItems(array $items): Generator
     {
         foreach ($items as $item) {
             if (is_iterable($item)) {
+                /** @var iterable<T> $item */
                 foreach ($item as $i) {
-                    /** @var T $i */
                     yield $i;
                 }
             } else {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\TupleKeys;
 use OpenFGA\Models\{ConditionInterface, TupleKey};
 use OpenFGA\Network\RequestMethod;
@@ -226,8 +226,8 @@ describe('WriteTuplesRequest', function (): void {
     });
 
     test('handles empty TupleKeys collections', function (): void {
-        $writes = new TupleKeys();
-        $deletes = new TupleKeys();
+        $writes = new TupleKeys;
+        $deletes = new TupleKeys;
 
         $request = new WriteTuplesRequest(
             store: 'store',
@@ -308,12 +308,12 @@ describe('WriteTuplesRequest', function (): void {
             store: '',
             model: 'model-id',
         );
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 
     test('throws when model is empty', function (): void {
         new WriteTuplesRequest(
             store: 'store-id',
             model: '',
         );
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 });

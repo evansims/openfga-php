@@ -5,30 +5,63 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Translation\Translator;
 use Override;
+use ReflectionException;
 
 final class TypedWildcard implements TypedWildcardInterface
 {
-    public const OPENAPI_TYPE = 'TypedWildcard';
+    public const string OPENAPI_MODEL = 'TypedWildcard';
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param string $type The type name for the wildcard (will be normalized to lowercase)
+     *
+     * @throws ClientThrowable          If the type is empty after normalization
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     */
     public function __construct(
         private string $type,
     ) {
         $type = strtolower(trim($type));
 
         if ('' === $type) {
-            throw new InvalidArgumentException('TypedWildcard::$type cannot be empty.');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::MODEL_TYPED_WILDCARD_TYPE_EMPTY)]);
         }
 
         $this->type = $type;
     }
 
+    /**
+     * Get the string representation of this typed wildcard.
+     *
+     * Returns the type name that this wildcard represents, which is used
+     * in string contexts and for display purposes.
+     *
+     * @return string The type name for this wildcard
+     */
     public function __toString(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'type', type: 'string', required: true),
+            ],
+        );
     }
 
     /**
@@ -49,19 +82,5 @@ final class TypedWildcard implements TypedWildcardInterface
         return [
             'type' => $this->type,
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'type', type: 'string', required: true),
-            ],
-        );
     }
 }

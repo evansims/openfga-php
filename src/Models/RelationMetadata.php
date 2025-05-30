@@ -5,26 +5,41 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface};
-
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 final class RelationMetadata implements RelationMetadataInterface
 {
-    public const OPENAPI_MODEL = 'RelationMetadata';
+    public const string OPENAPI_MODEL = 'RelationMetadata';
 
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param null|string                                                  $module
-     * @param null|RelationReferencesInterface<RelationReferenceInterface> $directlyRelatedUserTypes
-     * @param null|SourceInfoInterface                                     $sourceInfo
+     * @param string|null                                                  $module
+     * @param RelationReferencesInterface<RelationReferenceInterface>|null $directlyRelatedUserTypes
+     * @param SourceInfoInterface|null                                     $sourceInfo
      */
     public function __construct(
         private readonly ?string $module = null,
         private readonly ?RelationReferencesInterface $directlyRelatedUserTypes = null,
         private readonly ?SourceInfoInterface $sourceInfo = null,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'module', type: 'string', required: false),
+                new SchemaProperty(name: 'directly_related_user_types', type: 'object', className: RelationReferences::class, required: false),
+                new SchemaProperty(name: 'source_info', type: 'object', className: SourceInfo::class, required: false),
+            ],
+        );
     }
 
     /**
@@ -75,21 +90,5 @@ final class RelationMetadata implements RelationMetadataInterface
         }
 
         return $result;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'module', type: 'string', required: false),
-                new SchemaProperty(name: 'directly_related_user_types', type: 'object', className: RelationReferences::class, required: false),
-                new SchemaProperty(name: 'source_info', type: 'object', className: SourceInfo::class, required: false),
-            ],
-        );
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Results;
 
-use LogicException;
-use OpenFGA\Exceptions\{ClientError, NetworkError};
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError};
+use OpenFGA\Messages;
 use OpenFGA\Results\{Failure, Success};
 use RuntimeException;
 
@@ -20,13 +20,13 @@ describe('Success', function (): void {
         $this->testError = ClientError::Validation->exception();
     });
 
-    test('constructs with value', function (): void {
+    test('constructs', function (): void {
         $success = new Success($this->testValue);
 
         expect($success->val())->toBe($this->testValue);
     });
 
-    test('constructs with different value types', function (): void {
+    test('accepts different types', function (): void {
         $stringSuccess = new Success($this->testValue);
         $numberSuccess = new Success($this->testNumber);
         $arraySuccess = new Success($this->testArray);
@@ -38,39 +38,37 @@ describe('Success', function (): void {
         expect($objectSuccess->val())->toBe($this->testObject);
     });
 
-    test('succeeded returns true', function (): void {
+    test('succeeded', function (): void {
         $success = new Success($this->testValue);
 
         expect($success->succeeded())->toBeTrue();
     });
 
-    test('failed returns false', function (): void {
+    test('failed', function (): void {
         $success = new Success($this->testValue);
 
         expect($success->failed())->toBeFalse();
     });
 
-    test('val returns the wrapped value', function (): void {
+    test('val', function (): void {
         $success = new Success($this->testValue);
 
         expect($success->val())->toBe($this->testValue);
     });
 
-    test('err throws LogicException', function (): void {
+    test('err throws ClientException', function (): void {
         $success = new Success($this->testValue);
 
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Success has no error');
         $success->err();
-    });
+    })->throws(ClientException::class, trans(Messages::RESULT_SUCCESS_NO_ERROR));
 
-    test('unwrap returns value when no callback provided', function (): void {
+    test('unwrap without callback', function (): void {
         $success = new Success($this->testValue);
 
         expect($success->unwrap())->toBe($this->testValue);
     });
 
-    test('unwrap with callback transforms the value', function (): void {
+    test('unwrap with callback', function (): void {
         $success = new Success($this->testValue);
 
         $result = $success->unwrap(function ($value) {
@@ -119,12 +117,10 @@ describe('Success', function (): void {
     test('unwrap callback can throw exception', function (): void {
         $success = new Success($this->testValue);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Transform failed');
         $success->unwrap(function ($value): void {
             throw new RuntimeException('Transform failed');
         });
-    });
+    })->throws(RuntimeException::class, 'Transform failed');
 
     test('success executes callback and returns self', function (): void {
         $success = new Success($this->testValue);
@@ -264,7 +260,7 @@ describe('Success', function (): void {
         expect($result)->toBe($success);
     });
 
-    test('works with null values', function (): void {
+    test('accepts null', function (): void {
         $success = new Success(null);
 
         expect($success->val())->toBeNull();
@@ -276,7 +272,7 @@ describe('Success', function (): void {
         expect($result)->toBe('default');
     });
 
-    test('works with falsy values', function (): void {
+    test('accepts falsy values', function (): void {
         $falsyValues = [false, 0, ''];
 
         foreach ($falsyValues as $value) {

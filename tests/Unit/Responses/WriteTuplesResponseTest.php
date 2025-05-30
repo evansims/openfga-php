@@ -11,24 +11,24 @@ use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
 describe('WriteTuplesResponse', function (): void {
     beforeEach(function (): void {
-        $this->validator = new SchemaValidator();
+        $this->validator = new SchemaValidator;
         $this->request = test()->createMock(RequestInterface::class);
     });
 
     test('implements WriteTuplesResponseInterface', function (): void {
-        $response = new WriteTuplesResponse();
+        $response = new WriteTuplesResponse;
 
         expect($response)->toBeInstanceOf(WriteTuplesResponseInterface::class);
     });
 
     test('can be instantiated without parameters', function (): void {
-        $response = new WriteTuplesResponse();
+        $response = new WriteTuplesResponse;
 
         expect($response)->toBeInstanceOf(WriteTuplesResponse::class);
     });
 
     test('is a simple response class', function (): void {
-        $response = new WriteTuplesResponse();
+        $response = new WriteTuplesResponse;
 
         // WriteTuplesResponse is a simple response with no data
         // It represents a successful write operation (200 OK)
@@ -95,9 +95,8 @@ describe('WriteTuplesResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 403 Forbidden', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -110,9 +109,8 @@ describe('WriteTuplesResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 404 Not Found', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -125,9 +123,8 @@ describe('WriteTuplesResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 500 Internal Server Error', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -140,9 +137,8 @@ describe('WriteTuplesResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 422 Unprocessable Entity', function (): void {
         $stream = test()->createMock(StreamInterface::class);
@@ -155,9 +151,8 @@ describe('WriteTuplesResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('fromResponse handles 204 status code as success', function (): void {
         // WriteTuples can also return 204 No Content
@@ -189,13 +184,12 @@ describe('WriteTuplesResponse', function (): void {
         $httpResponse->method('getBody')
             ->willReturn($stream);
 
-        $this->expectException(Exception::class);
         WriteTuplesResponse::fromResponse($httpResponse, $this->request, $this->validator);
-    });
+    })->throws(Exception::class);
 
     test('multiple instances are independent', function (): void {
-        $response1 = new WriteTuplesResponse();
-        $response2 = new WriteTuplesResponse();
+        $response1 = new WriteTuplesResponse;
+        $response2 = new WriteTuplesResponse;
 
         expect($response1)->not->toBe($response2);
         expect($response1)->toBeInstanceOf(WriteTuplesResponse::class);

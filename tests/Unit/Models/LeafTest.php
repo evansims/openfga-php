@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\UsersList;
 use OpenFGA\Models\{Computed, Leaf, LeafInterface, UsersListUser, UsersetTreeTupleToUserset};
 use OpenFGA\Schema\SchemaInterface;
@@ -20,9 +20,8 @@ describe('Leaf Model', function (): void {
     });
 
     test('requires at least one parameter', function (): void {
-        $this->expectException(InvalidArgumentException::class);
-        new Leaf();
-    });
+        new Leaf;
+    })->throws(ClientException::class);
 
     test('constructs with users', function (): void {
         $users = new UsersList([

@@ -16,7 +16,7 @@ describe('TupleChange Model', function (): void {
         $tupleChange = new TupleChange(
             tupleKey: $tupleKey,
             operation: TupleOperation::TUPLE_OPERATION_WRITE,
-            timestamp: new DateTimeImmutable(),
+            timestamp: new DateTimeImmutable,
         );
 
         expect($tupleChange)->toBeInstanceOf(TupleChangeInterface::class);
@@ -40,7 +40,7 @@ describe('TupleChange Model', function (): void {
 
     test('handles all tuple operations', function (): void {
         $tupleKey = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
-        $timestamp = new DateTimeImmutable();
+        $timestamp = new DateTimeImmutable;
 
         $operations = [
             TupleOperation::TUPLE_OPERATION_WRITE,
@@ -151,7 +151,7 @@ describe('TupleChange Model', function (): void {
             object: 'document:1',
             condition: $condition,
         );
-        $timestamp = new DateTimeImmutable();
+        $timestamp = new DateTimeImmutable;
 
         $tupleChange = new TupleChange(
             tupleKey: $tupleKey,
@@ -195,7 +195,7 @@ describe('TupleChange Model', function (): void {
     test('maintains immutability', function (): void {
         $tupleKey = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
         $operation = TupleOperation::TUPLE_OPERATION_WRITE;
-        $timestamp = new DateTimeImmutable();
+        $timestamp = new DateTimeImmutable;
 
         $tupleChange = new TupleChange(
             tupleKey: $tupleKey,
@@ -272,7 +272,7 @@ describe('TupleChange Model', function (): void {
 
     test('fromArray throws error on invalid operation', function (): void {
         $tupleKey = new TupleKey(user: 'user:anne', relation: 'viewer', object: 'document:1');
-        $timestamp = new DateTimeImmutable();
+        $timestamp = new DateTimeImmutable;
 
         $data = [
             'tuple_key' => $tupleKey,
@@ -280,10 +280,10 @@ describe('TupleChange Model', function (): void {
             'timestamp' => $timestamp,
         ];
 
-        expect(fn () => TupleChange::fromArray($data))->toThrow(ValueError::class);
-    });
+        TupleChange::fromArray($data);
+    })->throws(ValueError::class);
 
     test('has correct OpenAPI type constant', function (): void {
-        expect(TupleChange::OPENAPI_TYPE)->toBe('TupleChange');
+        expect(TupleChange::OPENAPI_MODEL)->toBe('TupleChange');
     });
 });

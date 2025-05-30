@@ -18,7 +18,7 @@ describe('Tuple Model', function (): void {
             relation: 'viewer',
             object: 'document:roadmap',
         );
-        $timestamp = new DateTimeImmutable();
+        $timestamp = new DateTimeImmutable;
 
         $tuple = new Tuple(key: $key, timestamp: $timestamp);
 
@@ -163,7 +163,7 @@ describe('Tuple Model', function (): void {
                 ]),
             ),
         );
-        $timestamp = new DateTimeImmutable();
+        $timestamp = new DateTimeImmutable;
 
         $tuple = new Tuple(key: $key, timestamp: $timestamp);
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Results;
 
-use OpenFGA\Exceptions\ClientError;
+use OpenFGA\Exceptions\{ClientError, ClientException};
 use OpenFGA\Results\{Failure, Result, ResultInterface, Success};
 
 describe('Result', function (): void {
@@ -27,9 +27,8 @@ describe('Result', function (): void {
         $error = ClientError::Validation->exception();
         $failure = new Failure($error);
 
-        $this->expectException($error::class);
         $failure->unwrap();
-    });
+    })->throws(ClientException::class);
 
     test('unwrap returns callback result for Failure', function (): void {
         $error = ClientError::Validation->exception();

@@ -4,21 +4,27 @@ declare(strict_types=1);
 
 namespace OpenFGA\Results;
 
-use LogicException;
+use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
+use OpenFGA\Translation\Translator;
 use Override;
+use ReflectionException;
 use Throwable;
 
 /**
- * @template E of Throwable
+ * Concrete implementation of a failed result containing an error.
  *
- * @extends Result<never, E>
- *
- * @implements ResultInterface<never, E>
+ * This class represents the failed outcome of an operation, storing the
+ * error that caused the failure and providing safe access through the
+ * Result pattern's fluent interface.
  */
-final class Failure extends Result implements ResultInterface
+final class Failure extends Result implements FailureInterface
 {
     /**
-     * @param E $error
+     * Creates a new failed result containing the provided error.
+     *
+     * @param Throwable $error The error that caused the failure
      */
     public function __construct(private readonly Throwable $error)
     {
@@ -26,8 +32,6 @@ final class Failure extends Result implements ResultInterface
 
     /**
      * @inheritDoc
-     *
-     * @return E
      */
     #[Override]
     public function err(): Throwable
@@ -57,13 +61,20 @@ final class Failure extends Result implements ResultInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws Throwable Any exception thrown by the recovery callback
      */
     #[Override]
     public function recover(callable $fn): ResultInterface
     {
+        /** @var mixed $result */
         $result = $fn($this->err());
 
-        return $result instanceof ResultInterface ? $result : new Success($result);
+        if ($result instanceof ResultInterface) {
+            return $result;
+        }
+
+        return new Success($result);
     }
 
     /**
@@ -95,9 +106,6 @@ final class Failure extends Result implements ResultInterface
 
     /**
      * @inheritDoc
-     *
-     * @psalm-suppress InvalidReturnStatement
-     * @psalm-suppress InvalidReturnType
      */
     #[Override]
     public function then(callable $fn): ResultInterface
@@ -107,10 +115,14 @@ final class Failure extends Result implements ResultInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          Always throws since failures have no value
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function val(): never
     {
-        throw new LogicException('Failure has no value');
+        throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::RESULT_FAILURE_NO_VALUE)]);
     }
 }

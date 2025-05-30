@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{RelationReference, RelationReferenceInterface};
+use OpenFGA\Models\{ModelInterface, RelationReference, RelationReferenceInterface};
 
 /**
  * @extends IndexedCollection<RelationReferenceInterface>
@@ -13,5 +13,12 @@ use OpenFGA\Models\{RelationReference, RelationReferenceInterface};
  */
 final class RelationReferences extends IndexedCollection implements RelationReferencesInterface
 {
+    /**
+     * @phpstan-var class-string<RelationReferenceInterface>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
     protected static string $itemType = RelationReference::class;
 }

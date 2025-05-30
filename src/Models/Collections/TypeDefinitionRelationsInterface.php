@@ -17,14 +17,7 @@ interface TypeDefinitionRelationsInterface extends KeyedCollectionInterface
     /**
      * Serialize the collection to an array.
      *
-     * @return array<string, array{
-     *     computedUserset?: array{object?: string, relation?: string},
-     *     tupleToUserset?: array{tupleset: array{object?: string, relation?: string}, computedUserset: array{object?: string, relation?: string}},
-     *     union?: array<mixed>,
-     *     intersection?: array<mixed>,
-     *     difference?: array{base: array<mixed>, subtract: array<mixed>},
-     *     this?: object,
-     * }>
+     * @return array<string, mixed>
      */
     #[Override]
     public function jsonSerialize(): array;

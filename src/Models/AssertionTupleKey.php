@@ -5,20 +5,40 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
-
 use Override;
 
 final class AssertionTupleKey implements AssertionTupleKeyInterface
 {
-    public const OPENAPI_MODEL = 'AssertionTupleKey';
+    public const string OPENAPI_MODEL = 'AssertionTupleKey';
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param string $user     The user identifier for the assertion tuple key
+     * @param string $relation The relation name for the assertion tuple key
+     * @param string $object   The object identifier for the assertion tuple key
+     */
     public function __construct(
         private readonly string $user,
         private readonly string $relation,
         private readonly string $object,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'user', type: 'string', required: true),
+                new SchemaProperty(name: 'relation', type: 'string', required: true),
+                new SchemaProperty(name: 'object', type: 'string', required: true),
+            ],
+        );
     }
 
     /**
@@ -59,21 +79,5 @@ final class AssertionTupleKey implements AssertionTupleKeyInterface
             'relation' => $this->relation,
             'object' => $this->object,
         ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'user', type: 'string', required: true),
-                new SchemaProperty(name: 'relation', type: 'string', required: true),
-                new SchemaProperty(name: 'object', type: 'string', required: true),
-            ],
-        );
     }
 }

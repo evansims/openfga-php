@@ -16,8 +16,8 @@ describe('Store Model', function (): void {
         $store = new Store(
             id: 'store-123',
             name: 'Test Store',
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
         );
 
         expect($store)->toBeInstanceOf(StoreInterface::class);
@@ -138,8 +138,8 @@ describe('Store Model', function (): void {
         $store = new Store(
             id: 'store-123',
             name: '',
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
         );
 
         expect($store->getName())->toBe('');
@@ -151,8 +151,8 @@ describe('Store Model', function (): void {
         $store = new Store(
             id: $uuid,
             name: 'Test Store',
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
         );
 
         expect($store->getId())->toBe($uuid);
@@ -205,8 +205,8 @@ describe('Store Model', function (): void {
         $store = new Store(
             id: 'store-123',
             name: '  Test Store with Spaces  ',
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
         );
 
         expect($store->getName())->toBe('  Test Store with Spaces  ');
@@ -216,8 +216,8 @@ describe('Store Model', function (): void {
         $store = new Store(
             id: 'store-123',
             name: 'Test Store™ - Production (2023)',
-            createdAt: new DateTimeImmutable(),
-            updatedAt: new DateTimeImmutable(),
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
         );
 
         expect($store->getName())->toBe('Test Store™ - Production (2023)');

@@ -8,8 +8,24 @@ use Override;
 
 interface DifferenceV1Interface extends ModelInterface
 {
+    /**
+     * Get the base userset from which users will be subtracted.
+     *
+     * This represents the initial set of users or relationships from which
+     * the subtract userset will be removed to compute the final difference.
+     *
+     * @return UsersetInterface The base userset for the difference operation
+     */
     public function getBase(): UsersetInterface;
 
+    /**
+     * Get the userset of users to subtract from the base userset.
+     *
+     * This represents the set of users or relationships that should be removed
+     * from the base userset to compute the final result of the difference operation.
+     *
+     * @return UsersetInterface The userset to subtract from the base
+     */
     public function getSubtract(): UsersetInterface;
 
     /**

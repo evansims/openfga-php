@@ -8,10 +8,19 @@ use Override;
 
 interface UsersetTreeInterface extends ModelInterface
 {
+    /**
+     * Get the root node of the userset tree structure.
+     *
+     * This returns the top-level node that represents the entry point for
+     * userset expansion. The tree structure allows for complex authorization
+     * logic including unions, intersections, and difference operations.
+     *
+     * @return NodeInterface The root node of the userset tree
+     */
     public function getRoot(): NodeInterface;
 
     /**
-     * @return array{root: array{name: string, leaf?: array{users?: array<int, string>, computed?: array{userset: string}, tupleToUserset?: mixed}, difference?: mixed, intersection?: mixed, union?: mixed}}
+     * @return array<string, mixed>
      */
     #[Override]
     public function jsonSerialize(): array;

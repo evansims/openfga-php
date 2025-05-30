@@ -1,0 +1,41 @@
+# NodeUnionInterface
+
+Represents a union operation between multiple nodes in a userset tree. A node union combines multiple authorization nodes where users from any of the constituent nodes are included in the result set. This implements the logical OR operation in authorization evaluation.
+
+## Namespace
+`OpenFGA\Models`
+
+## Implements
+* [ModelInterface](Models/ModelInterface.md)
+* JsonSerializable
+
+
+
+## Methods
+### getNodes
+
+
+```php
+public function getNodes(): array<int, NodeInterface>
+```
+
+Get the collection of nodes that participate in this union. Returns all the nodes that are combined in this union operation. The union result includes users from any of these nodes.
+
+
+#### Returns
+array&lt;int, [NodeInterface](Models/NodeInterface.md)&gt;
+ The array of nodes in the union
+
+### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+Serialize the node union to its JSON representation.
+
+
+#### Returns
+array
+

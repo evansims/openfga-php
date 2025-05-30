@@ -4,19 +4,29 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\{Userset, UsersetInterface};
-
+use OpenFGA\Models\{ModelInterface, Userset, UsersetInterface};
 use Override;
 
 /**
  * @extends IndexedCollection<UsersetInterface>
+ *
+ * @implements UsersetUnionInterface<UsersetInterface>
  */
-final class UsersetUnion extends IndexedCollection
+final class UsersetUnion extends IndexedCollection implements UsersetUnionInterface
 {
+    /**
+     * @phpstan-var class-string<UsersetInterface>
+     *
+     * @psalm-var class-string<ModelInterface>
+     *
+     * @var class-string<ModelInterface>
+     */
     protected static string $itemType = Userset::class;
 
     /**
-     * @inheritDoc
+     * @return array{
+     *     child: array<int|string, mixed>
+     * }
      */
     #[Override]
     public function jsonSerialize(): array

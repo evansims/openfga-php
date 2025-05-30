@@ -8,9 +8,18 @@ use OpenFGA\Models\StoreInterface;
 use Override;
 
 /**
+ * Collection interface for OpenFGA store objects.
+ *
+ * This interface defines a collection that holds store objects representing
+ * individual OpenFGA authorization stores. Each store is an isolated
+ * authorization domain with its own models, tuples, and configuration,
+ * providing multi-tenancy within the OpenFGA system.
+ *
  * @template T of StoreInterface
  *
  * @extends IndexedCollectionInterface<T>
+ *
+ * @see https://openfga.dev/docs/concepts#stores OpenFGA Stores
  */
 interface StoresInterface extends IndexedCollectionInterface
 {

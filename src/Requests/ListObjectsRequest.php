@@ -4,27 +4,48 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use const JSON_THROW_ON_ERROR;
+
 use InvalidArgumentException;
+use JsonException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Messages;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
 use function is_array;
 
-final class ListObjectsRequest implements ListObjectsRequestInterface
+/**
+ * Request for listing objects that a user has a specific relationship with.
+ *
+ * This request finds all objects of a given type where the specified user has
+ * the requested relationship. It's useful for building resource lists, dashboards,
+ * or any interface that shows what a user can access.
+ *
+ * @see ListObjectsRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Queries/ListObjects List objects API endpoint
+ */
+final readonly class ListObjectsRequest implements ListObjectsRequestInterface
 {
     /**
-     * @param string                                 $store
-     * @param string                                 $type
-     * @param string                                 $relation
-     * @param string                                 $user
-     * @param ?string                                $model
-     * @param ?object                                $context
-     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
-     * @param ?Consistency                           $consistency
+     * @param string                                 $store            The store ID
+     * @param string                                 $type             The object type
+     * @param string                                 $relation         The relation
+     * @param string                                 $user             The user
+     * @param ?string                                $model            Authorization model ID (optional)
+     * @param ?object                                $context          Context object (optional)
+     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples Contextual tuples (optional)
+     * @param ?Consistency                           $consistency      Consistency requirement (optional)
+     *
+     * @throws ClientThrowable          If the store ID, type, relation, user, or model ID (when provided) is empty
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     public function __construct(
         private string $store,
@@ -37,20 +58,20 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
         private ?Consistency $consistency = null,
     ) {
         if ('' === $this->store) {
-            throw new InvalidArgumentException('Store ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
         if ('' === $this->type) {
-            throw new InvalidArgumentException('Type cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_TYPE_EMPTY)]);
         }
         if ('' === $this->relation) {
-            throw new InvalidArgumentException('Relation cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_RELATION_EMPTY)]);
         }
         if ('' === $this->user) {
-            throw new InvalidArgumentException('User cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_USER_EMPTY)]);
         }
 
         if (null !== $this->model && '' === $this->model) {
-            throw new InvalidArgumentException('Authorization Model ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
         }
     }
 
@@ -101,6 +122,8 @@ final class ListObjectsRequest implements ListObjectsRequestInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws JsonException
      */
     #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

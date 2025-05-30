@@ -4,31 +4,30 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models\Collections;
 
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface};
-use OpenFGA\Models\{ObjectRelation, Userset};
-use OpenFGA\Models\{TypeDefinition};
+use OpenFGA\Models\{ObjectRelation, TypeDefinition, Userset};
 use OpenFGA\Schema\CollectionSchemaInterface;
 use stdClass;
-use TypeError;
 
 use function count;
 
 describe('TypeDefinitions Collection', function (): void {
-    test('implements TypeDefinitionsInterface', function (): void {
-        $collection = new TypeDefinitions();
+    test('implements interface', function (): void {
+        $collection = new TypeDefinitions;
 
         expect($collection)->toBeInstanceOf(TypeDefinitionsInterface::class);
     });
 
-    test('creates empty collection', function (): void {
-        $collection = new TypeDefinitions();
+    test('creates empty', function (): void {
+        $collection = new TypeDefinitions;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBe(true);
         expect($collection->toArray())->toBe([]);
     });
 
-    test('creates collection with single type definition', function (): void {
+    test('creates with single type definition', function (): void {
         $typeDefinition = new TypeDefinition(type: 'user');
         $collection = new TypeDefinitions([$typeDefinition]);
 
@@ -37,7 +36,7 @@ describe('TypeDefinitions Collection', function (): void {
         expect($collection->get(0))->toBe($typeDefinition);
     });
 
-    test('creates collection with multiple type definitions', function (): void {
+    test('creates with multiple type definitions', function (): void {
         $userType = new TypeDefinition(type: 'user');
         $documentType = new TypeDefinition(type: 'document');
         $folderType = new TypeDefinition(type: 'folder');
@@ -51,7 +50,7 @@ describe('TypeDefinitions Collection', function (): void {
     });
 
     test('adds type definitions to collection', function (): void {
-        $collection = new TypeDefinitions();
+        $collection = new TypeDefinitions;
 
         $userType = new TypeDefinition(type: 'user');
         $collection->add($userType);
@@ -98,7 +97,7 @@ describe('TypeDefinitions Collection', function (): void {
         expect($collection[999])->toBeNull();
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $userType = new TypeDefinition(type: 'user');
         $documentType = new TypeDefinition(
             type: 'document',
@@ -120,7 +119,7 @@ describe('TypeDefinitions Collection', function (): void {
     });
 
     test('serializes empty collection to empty array', function (): void {
-        $collection = new TypeDefinitions();
+        $collection = new TypeDefinitions;
 
         expect($collection->jsonSerialize())->toBe([]);
     });
@@ -144,7 +143,7 @@ describe('TypeDefinitions Collection', function (): void {
         expect($collection->get(0)->getRelations())->toBe($relations);
     });
 
-    test('returns collection schema', function (): void {
+    test('schema', function (): void {
         $schema = TypeDefinitions::schema();
 
         expect($schema)->toBeInstanceOf(CollectionSchemaInterface::class);
@@ -167,7 +166,7 @@ describe('TypeDefinitions Collection', function (): void {
         }
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $userType = new TypeDefinition(type: 'user');
         $documentType = new TypeDefinition(type: 'document');
         $collection = new TypeDefinitions([$userType, $documentType]);
@@ -179,11 +178,11 @@ describe('TypeDefinitions Collection', function (): void {
         expect($array)->toHaveCount(2);
     });
 
-    test('throws exception for invalid item type', function (): void {
-        $this->expectException(TypeError::class);
+    test('throws on invalid type', function (): void {
         $collection = new TypeDefinitions([]);
-        $collection->add(new stdClass());
-    });
+
+        $collection->add(new stdClass);
+    })->throws(ClientException::class);
 
     test('uses first() method', function (): void {
         $userType = new TypeDefinition(type: 'user');
@@ -196,7 +195,7 @@ describe('TypeDefinitions Collection', function (): void {
     });
 
     test('first() returns null on empty collection', function (): void {
-        $collection = new TypeDefinitions();
+        $collection = new TypeDefinitions;
 
         expect($collection->first())->toBeNull();
     });
@@ -208,7 +207,7 @@ describe('TypeDefinitions Collection', function (): void {
         // Group type with member relation
         $groupRelations = new TypeDefinitionRelations([]);
         $memberRelation = new Userset(
-            direct: new stdClass(),
+            direct: new stdClass,
         );
         $groupRelations->add('member', $memberRelation);
         $groupType = new TypeDefinition(type: 'group', relations: $groupRelations);

@@ -23,10 +23,12 @@
 public function getDirectlyRelatedUserTypes(): ?OpenFGA\Models\Collections\RelationReferencesInterface
 ```
 
+Get the user types that can be directly related through this relation. This defines which types of users can have this relation to objects, providing type safety and helping with authorization model validation. For example, a &quot;member&quot; relation might allow &quot;user&quot; and &quot;group&quot; types.
 
 
 #### Returns
 ?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
+ The directly related user types, or null if not specified
 
 ### getModule
 
@@ -35,10 +37,12 @@ public function getDirectlyRelatedUserTypes(): ?OpenFGA\Models\Collections\Relat
 public function getModule(): ?string
 ```
 
+Get the optional module name for organization. This provides organizational information about which module or namespace contains the relation definition, helping with model organization and debugging.
 
 
 #### Returns
 ?string
+ The module name, or null if not specified
 
 ### getSourceInfo
 
@@ -47,10 +51,12 @@ public function getModule(): ?string
 public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
 ```
 
+Get optional source file information for debugging and tooling. This provides information about the source file where the relation was originally defined, which is useful for development tools, debugging, and error reporting.
 
 
 #### Returns
 ?[SourceInfoInterface](Models/SourceInfoInterface.md)
+ The source file information, or null if not available
 
 ### jsonSerialize
 
@@ -69,11 +75,13 @@ array
 *<small>Implements Models\RelationMetadataInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\SchemaInterface
+public function schema(): SchemaInterface
 ```
 
+Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
 
 
 #### Returns
-[SchemaInterface](Schema/SchemaInterface.md)
+SchemaInterface
+ The schema definition containing validation rules and property specifications for this model
 

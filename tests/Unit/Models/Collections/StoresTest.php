@@ -11,21 +11,21 @@ use OpenFGA\Models\Store;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Stores Collection', function (): void {
-    test('implements StoresInterface', function (): void {
-        $collection = new Stores();
+    test('implements interface', function (): void {
+        $collection = new Stores;
 
         expect($collection)->toBeInstanceOf(StoresInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
-        $collection = new Stores();
+    test('creates empty', function (): void {
+        $collection = new Stores;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of stores', function (): void {
-        $now = new DateTimeImmutable();
+    test('creates with array of stores', function (): void {
+        $now = new DateTimeImmutable;
 
         $store1 = new Store(
             id: 'store-1',
@@ -55,8 +55,8 @@ describe('Stores Collection', function (): void {
     });
 
     test('adds stores', function (): void {
-        $collection = new Stores();
-        $now = new DateTimeImmutable();
+        $collection = new Stores;
+        $now = new DateTimeImmutable;
 
         $store = new Store(
             id: 'store-123',
@@ -72,7 +72,7 @@ describe('Stores Collection', function (): void {
     });
 
     test('checks if store exists', function (): void {
-        $now = new DateTimeImmutable();
+        $now = new DateTimeImmutable;
         $store = new Store(
             id: 'store-456',
             name: 'Another Store',
@@ -86,7 +86,7 @@ describe('Stores Collection', function (): void {
     });
 
     test('iterates over stores', function (): void {
-        $now = new DateTimeImmutable();
+        $now = new DateTimeImmutable;
         $store1 = new Store(
             id: 'store-1',
             name: 'Store One',
@@ -119,8 +119,8 @@ describe('Stores Collection', function (): void {
         expect($names)->toBe(['Store One', 'Store Two', 'Store Three']);
     });
 
-    test('converts to array', function (): void {
-        $now = new DateTimeImmutable();
+    test('toArray', function (): void {
+        $now = new DateTimeImmutable;
         $store1 = new Store(
             id: 'store-a',
             name: 'Store A',
@@ -143,7 +143,7 @@ describe('Stores Collection', function (): void {
         expect($array[1])->toBe($store2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $createdAt = new DateTimeImmutable('2024-01-15 10:00:00');
         $updatedAt = new DateTimeImmutable('2024-01-16 15:30:00');
 
@@ -181,7 +181,7 @@ describe('Stores Collection', function (): void {
         ]);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Stores::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -279,7 +279,7 @@ describe('Stores Collection', function (): void {
     });
 
     test('handles different store naming patterns', function (): void {
-        $now = new DateTimeImmutable();
+        $now = new DateTimeImmutable;
         $collection = new Stores([
             new Store(id: '01HXF7M9KT', name: 'Production Environment', createdAt: $now, updatedAt: $now),
             new Store(id: '01HXF7M9KU', name: 'Staging Environment', createdAt: $now, updatedAt: $now),
@@ -338,7 +338,7 @@ describe('Stores Collection', function (): void {
     });
 
     test('handles empty collection edge cases', function (): void {
-        $collection = new Stores();
+        $collection = new Stores;
 
         expect($collection->isEmpty())->toBeTrue();
         expect($collection->toArray())->toBe([]);

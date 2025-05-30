@@ -1,5 +1,6 @@
 # CreateAuthorizationModelResponse
 
+Response confirming successful creation of a new authorization model. This response provides the unique identifier of the newly created authorization model, which can be used for subsequent operations like checks, expansions, and model management activities.
 
 ## Namespace
 `OpenFGA\Responses`
@@ -16,19 +17,21 @@
 *<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, Psr\Http\Message\RequestInterface $request, OpenFGA\Schema\SchemaValidator $validator): self
+public function fromResponse(HttpResponseInterface $response, HttpRequestInterface $request, SchemaValidator $validator): static
 ```
 
+Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | Psr\Http\Message\ResponseInterface |  |
-| `$request` | Psr\Http\Message\RequestInterface |  |
-| `$validator` | [SchemaValidator](Schema/SchemaValidator.md) |  |
+| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
+| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
+| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
 
 #### Returns
-self
+static
+ The parsed and validated response instance containing the API response data
 
 ### getModel
 
@@ -37,21 +40,25 @@ self
 public function getModel(): string
 ```
 
+Get the unique identifier of the created authorization model. Returns the system-generated unique identifier for the newly created authorization model. This ID is used in subsequent API operations to reference this specific model version for authorization checks and other operations.
 
 
 #### Returns
 string
+ The unique authorization model identifier
 
 ### schema
 
 *<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\SchemaInterface
+public function schema(): SchemaInterface
 ```
 
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for authorization model creation response data, ensuring consistent parsing and validation of API responses.
 
 
 #### Returns
-[SchemaInterface](Schema/SchemaInterface.md)
+SchemaInterface
+ The schema definition for response validation
 

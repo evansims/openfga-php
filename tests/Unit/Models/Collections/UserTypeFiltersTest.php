@@ -9,20 +9,20 @@ use OpenFGA\Models\UserTypeFilter;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('UserTypeFilters Collection', function (): void {
-    test('implements UserTypeFiltersInterface', function (): void {
+    test('implements interface', function (): void {
         $collection = new UserTypeFilters([]);
 
         expect($collection)->toBeInstanceOf(UserTypeFiltersInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
+    test('creates empty', function (): void {
         $collection = new UserTypeFilters([]);
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of user type filters', function (): void {
+    test('creates with array of user type filters', function (): void {
         $filter1 = new UserTypeFilter(
             type: 'user',
         );
@@ -91,7 +91,7 @@ describe('UserTypeFilters Collection', function (): void {
         expect($types)->toBe(['user', 'group', 'team']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $filter1 = new UserTypeFilter(type: 'user');
         $filter2 = new UserTypeFilter(type: 'group', relation: 'member');
 
@@ -104,7 +104,7 @@ describe('UserTypeFilters Collection', function (): void {
         expect($array[1])->toBe($filter2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $collection = new UserTypeFilters([
             new UserTypeFilter(type: 'user'),
             new UserTypeFilter(type: 'group', relation: 'member'),
@@ -174,7 +174,7 @@ describe('UserTypeFilters Collection', function (): void {
         expect($withoutRelation)->toBe(2);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = UserTypeFilters::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);

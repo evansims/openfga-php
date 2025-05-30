@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\RequestMethod;
@@ -193,5 +193,5 @@ describe('CreateAuthorizationModelRequest', function (): void {
 
     test('throws when store ID is empty', function (): void {
         new CreateAuthorizationModelRequest(store: '', typeDefinitions: $this->createMock(TypeDefinitionsInterface::class));
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 });

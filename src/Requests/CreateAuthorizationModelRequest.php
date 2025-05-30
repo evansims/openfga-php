@@ -4,21 +4,43 @@ declare(strict_types=1);
 
 namespace OpenFGA\Requests;
 
+use const JSON_THROW_ON_ERROR;
+
 use InvalidArgumentException;
+use JsonException;
+use OpenFGA\Exceptions\{ClientError};
+use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\{ConditionInterface, TypeDefinitionInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
-final class CreateAuthorizationModelRequest implements CreateAuthorizationModelRequestInterface
+/**
+ * Request for creating a new authorization model in OpenFGA.
+ *
+ * Authorization models define the permission structure for your application,
+ * including object types, relationships, and how permissions are computed.
+ * Models are immutable once created and identified by a unique ID.
+ *
+ * @see CreateAuthorizationModelRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Authorization%20Models/WriteAuthorizationModel Authorization model creation API endpoint
+ */
+final readonly class CreateAuthorizationModelRequest implements CreateAuthorizationModelRequestInterface
 {
     /**
-     * @param string                                            $store
-     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions
-     * @param SchemaVersion                                     $schemaVersion
-     * @param ?ConditionsInterface<ConditionInterface>          $conditions
+     * @param string                                            $store           The store ID
+     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions Type definitions
+     * @param SchemaVersion                                     $schemaVersion   Schema version
+     * @param ?ConditionsInterface<ConditionInterface>          $conditions      Conditions (optional)
+     *
+     * @throws ClientThrowable          If the store ID is empty
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     public function __construct(
         private string $store,
@@ -27,7 +49,7 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
         private ?ConditionsInterface $conditions = null,
     ) {
         if ('' === $this->store) {
-            throw new InvalidArgumentException('Store ID cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
     }
 
@@ -42,14 +64,17 @@ final class CreateAuthorizationModelRequest implements CreateAuthorizationModelR
 
     /**
      * @inheritDoc
+     *
+     * @throws JsonException
      */
     #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
         $conditions = null;
+        $conditionsCollection = $this->getConditions();
 
-        if ($this->getConditions() instanceof ConditionsInterface && $this->getConditions()->count() > 0) {
-            $conditions = $this->getConditions()->jsonSerialize();
+        if ($conditionsCollection instanceof ConditionsInterface && 0 < $conditionsCollection->count()) {
+            $conditions = $conditionsCollection->jsonSerialize();
         }
 
         $body = array_filter([

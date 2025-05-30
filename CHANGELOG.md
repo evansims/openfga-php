@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.2.0] - 2025-06-02
+
+### Added
+
+- New endpoints for `StreamedListObjects` and `BatchCheck`
+
+- Automatic retry of failed network requests
+
+  - Uses exponential backoff with jitter
+  - Configurable with the `httpMaxRetries` Client constructor parameter
+    - Defaults to 3 retries, max 15
+    - Set to 0 to disable retries
+
+- Observability support introduced
+
+  - OpenTelemetry metrics, tracing and logging support
+  - Configurable with the `telemetry` Client constructor parameter
+  - See [examples/observability/example.php](examples/observability/example.php) for example usage.
+
+- Added i18n support for exception messages
+
+  - Configurable with the `language` Client constructor parameter
+  - Defaults to `en` (English)
+
+### Changed
+
+- Simplified helper function imports
+
+  ```php
+  use function OpenFGA\{allowed, dsl, model, store, tuple, write, ...};
+  ```
+
+- Updated exception message handling to use a central location for all messages
+
 ## [1.1.0] - 2025-05-30
 
 ### Added

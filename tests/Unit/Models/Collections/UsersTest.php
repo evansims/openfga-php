@@ -10,21 +10,21 @@ use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 use stdClass;
 
 describe('Users Collection', function (): void {
-    test('implements UsersInterface', function (): void {
+    test('implements interface', function (): void {
         $collection = new Users([]);
 
         expect($collection)->toBeInstanceOf(UsersInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
+    test('creates empty', function (): void {
         $collection = new Users([]);
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of users', function (): void {
-        $user1 = new User(object: new stdClass());
+    test('creates with array of users', function (): void {
+        $user1 = new User(object: new stdClass);
         $user2 = new User(wildcard: new TypedWildcard(type: 'user'));
         $user3 = new User(userset: new UsersetUser(
             type: 'group',
@@ -41,7 +41,7 @@ describe('Users Collection', function (): void {
     test('adds users', function (): void {
         $collection = new Users([]);
 
-        $user = new User(object: new stdClass());
+        $user = new User(object: new stdClass);
 
         $collection->add($user);
 
@@ -50,7 +50,7 @@ describe('Users Collection', function (): void {
     });
 
     test('gets users by index', function (): void {
-        $user1 = new User(object: new stdClass());
+        $user1 = new User(object: new stdClass);
         $user2 = new User(wildcard: new TypedWildcard(type: 'user'));
 
         $collection = new Users([$user1, $user2]);
@@ -61,7 +61,7 @@ describe('Users Collection', function (): void {
     });
 
     test('checks if user exists', function (): void {
-        $user = new User(object: new stdClass());
+        $user = new User(object: new stdClass);
 
         $collection = new Users([$user]);
 
@@ -70,7 +70,7 @@ describe('Users Collection', function (): void {
     });
 
     test('iterates over users', function (): void {
-        $user1 = new User(object: new stdClass());
+        $user1 = new User(object: new stdClass);
         $user2 = new User(wildcard: new TypedWildcard(type: 'user'));
         $user3 = new User(userset: new UsersetUser(
             type: 'team',
@@ -89,8 +89,8 @@ describe('Users Collection', function (): void {
         expect($count)->toBe(3);
     });
 
-    test('converts to array', function (): void {
-        $user1 = new User(object: new stdClass());
+    test('toArray', function (): void {
+        $user1 = new User(object: new stdClass);
         $user2 = new User(wildcard: new TypedWildcard(type: 'group'));
 
         $collection = new Users([$user1, $user2]);
@@ -102,9 +102,9 @@ describe('Users Collection', function (): void {
         expect($array[1])->toBe($user2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $collection = new Users([
-            new User(object: new stdClass()),
+            new User(object: new stdClass),
             new User(wildcard: new TypedWildcard(type: 'user')),
             new User(userset: new UsersetUser(
                 type: 'group',
@@ -179,7 +179,7 @@ describe('Users Collection', function (): void {
         expect($usersetCount)->toBe(2);
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = Users::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);

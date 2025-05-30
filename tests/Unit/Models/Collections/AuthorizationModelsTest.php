@@ -10,20 +10,20 @@ use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
 
 describe('AuthorizationModels Collection', function (): void {
-    test('implements AuthorizationModelsInterface', function (): void {
-        $collection = new AuthorizationModels();
+    test('implements interface', function (): void {
+        $collection = new AuthorizationModels;
 
         expect($collection)->toBeInstanceOf(AuthorizationModelsInterface::class);
     });
 
-    test('constructs with empty array', function (): void {
-        $collection = new AuthorizationModels();
+    test('creates empty', function (): void {
+        $collection = new AuthorizationModels;
 
         expect($collection->count())->toBe(0);
         expect($collection->isEmpty())->toBeTrue();
     });
 
-    test('constructs with array of authorization models', function (): void {
+    test('creates with array of authorization models', function (): void {
         $model1 = new AuthorizationModel(
             id: 'model-1',
             schemaVersion: SchemaVersion::V1_1,
@@ -48,7 +48,7 @@ describe('AuthorizationModels Collection', function (): void {
     });
 
     test('adds authorization models', function (): void {
-        $collection = new AuthorizationModels();
+        $collection = new AuthorizationModels;
 
         $model = new AuthorizationModel(
             id: 'model-1',
@@ -106,7 +106,7 @@ describe('AuthorizationModels Collection', function (): void {
         expect($ids)->toBe(['model-1', 'model-2']);
     });
 
-    test('converts to array', function (): void {
+    test('toArray', function (): void {
         $model1 = new AuthorizationModel(
             id: 'model-1',
             schemaVersion: SchemaVersion::V1_1,
@@ -132,7 +132,7 @@ describe('AuthorizationModels Collection', function (): void {
         expect($array[1])->toBe($model2);
     });
 
-    test('serializes to JSON', function (): void {
+    test('jsonSerialize', function (): void {
         $model = new AuthorizationModel(
             id: 'model-1',
             schemaVersion: SchemaVersion::V1_1,
@@ -150,7 +150,7 @@ describe('AuthorizationModels Collection', function (): void {
         expect($json[0]['id'])->toBe('model-1');
     });
 
-    test('returns schema instance', function (): void {
+    test('schema', function (): void {
         $schema = AuthorizationModels::schema();
 
         expect($schema)->toBeInstanceOf(SchemaInterface::class);
@@ -217,7 +217,7 @@ describe('AuthorizationModels Collection', function (): void {
         // Create a series of models representing version history
         $models = [];
 
-        for ($i = 1; $i <= 5; ++$i) {
+        for ($i = 1; 5 >= $i; ++$i) {
             $models[] = new AuthorizationModel(
                 id: "01HXF7M9KTEQR{$i}NBPW96PDTV",
                 schemaVersion: SchemaVersion::V1_1,

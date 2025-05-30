@@ -37,7 +37,7 @@ describe('RelationReference Model', function (): void {
     });
 
     test('constructs with type and wildcard', function (): void {
-        $wildcard = new stdClass();
+        $wildcard = new stdClass;
         $relationReference = new RelationReference(
             type: 'user',
             wildcard: $wildcard,
@@ -62,7 +62,7 @@ describe('RelationReference Model', function (): void {
     });
 
     test('constructs with all parameters', function (): void {
-        $wildcard = new stdClass();
+        $wildcard = new stdClass;
         $relationReference = new RelationReference(
             type: 'group',
             relation: 'member',
@@ -110,7 +110,7 @@ describe('RelationReference Model', function (): void {
     });
 
     test('serializes to JSON with wildcard', function (): void {
-        $wildcard = new stdClass();
+        $wildcard = new stdClass;
         $relationReference = new RelationReference(
             type: 'user',
             wildcard: $wildcard,
@@ -123,7 +123,7 @@ describe('RelationReference Model', function (): void {
     });
 
     test('serializes to JSON with all fields', function (): void {
-        $wildcard = new stdClass();
+        $wildcard = new stdClass;
         $relationReference = new RelationReference(
             type: 'group',
             relation: 'member',

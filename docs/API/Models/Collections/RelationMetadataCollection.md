@@ -1,16 +1,18 @@
 # RelationMetadataCollection
 
+Collection implementation for OpenFGA relation metadata objects. This class provides a concrete implementation for managing keyed collections of relation metadata objects. Relation metadata provides additional context about relations defined in authorization model type definitions, including module information and source file details. The collection uses relation names as keys, enabling efficient retrieval of metadata for specific relations within a type definition.
 
 ## Namespace
 `OpenFGA\Models\Collections`
 
 ## Implements
-* ArrayAccess
-* Countable
-* Iterator
-* JsonSerializable
-* Traversable
 * [KeyedCollectionInterface](Models/Collections/KeyedCollectionInterface.md)
+* Traversable
+* JsonSerializable
+* Iterator
+* Countable
+* ArrayAccess
+* [RelationMetadataCollectionInterface](Models/Collections/RelationMetadataCollectionInterface.md)
 
 
 
@@ -22,11 +24,12 @@
 public function add(string $key, OpenFGA\Models\ModelInterface $item): static
 ```
 
+Add an item to the collection with the specified key. This method associates an item with a string key, allowing for named access to collection elements similar to an associative array.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string |  |
+| `$key` | string | The string key to associate with the item |
 | `key` | string |  |
 
 #### Returns
@@ -36,13 +39,13 @@ static
 
 
 ```php
-public function count(): int
+public function count(): int<0, max>
 ```
 
 
 
 #### Returns
-int
+int&lt;0, max&gt;
 
 ### current
 
@@ -63,6 +66,7 @@ public function current(): OpenFGA\Models\ModelInterface
 public function get(string $key)
 ```
 
+Get an item by its string key. This method retrieves the item associated with the specified key. Returns null if no item is found with the given key.
 
 #### Parameters
 | Name | Type | Description |
@@ -77,7 +81,7 @@ public function get(string $key)
 public function has(string $key): bool
 ```
 
-Check if a key exists in the collection.
+Check if a key exists in the collection. This method determines whether the collection contains an item associated with the specified key.
 
 #### Parameters
 | Name | Type | Description |
@@ -86,6 +90,7 @@ Check if a key exists in the collection.
 
 #### Returns
 bool
+ True if the key exists, false otherwise
 
 ### isEmpty
 
@@ -94,10 +99,12 @@ bool
 public function isEmpty(): bool
 ```
 
+Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
 
 
 #### Returns
 bool
+ True if the collection is empty, false otherwise
 
 ### jsonSerialize
 
@@ -155,15 +162,18 @@ bool
 
 
 ```php
-public function offsetGet(mixed $offset)
+public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 ```
 
+Get an item by its offset key.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
 | `value` | mixed |  |
 
+#### Returns
+?[ModelInterface](Models/ModelInterface.md)
 
 ### offsetSet
 
@@ -215,13 +225,15 @@ void
 *<small>Implements Models\Collections\KeyedCollectionInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\CollectionSchemaInterface
+public function schema(): CollectionSchemaInterface
 ```
 
+Get the schema definition for this collection type. Returns the schema that defines the structure and validation rules for this collection, including the expected item type and constraints.
 
 
 #### Returns
-[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
+CollectionSchemaInterface
+ The collection schema
 
 ### toArray
 
@@ -230,10 +242,12 @@ public function schema(): OpenFGA\Schema\CollectionSchemaInterface
 public function toArray(): array
 ```
 
+Convert the collection to a standard PHP associative array. This method creates a native PHP associative array containing all items in the collection, preserving their string keys and values.
 
 
 #### Returns
 array
+ An associative array containing all collection items
 
 ### valid
 

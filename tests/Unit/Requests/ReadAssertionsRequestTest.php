@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Network\RequestMethod;
 use OpenFGA\Requests\{ReadAssertionsRequest, ReadAssertionsRequestInterface};
 use Psr\Http\Message\StreamFactoryInterface;
@@ -82,12 +82,10 @@ describe('ReadAssertionsRequest', function (): void {
     });
 
     test('throws when store is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ReadAssertionsRequest(store: '', model: 'model');
-    });
+    })->throws(ClientException::class);
 
     test('throws when model is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new ReadAssertionsRequest(store: 'store', model: '');
-    });
+    })->throws(ClientException::class);
 });

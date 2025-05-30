@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\{TupleKey, TupleKeyInterface};
@@ -180,11 +180,11 @@ describe('ExpandRequest', function (): void {
 
     test('throws when store ID is empty', function (): void {
         new ExpandRequest(store: '', tupleKey: test()->createMock(TupleKeyInterface::class));
-    })->throws(InvalidArgumentException::class);
+    })->throws(ClientException::class);
 
     test('omits empty contextual tuples from request body', function (): void {
         $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
-        $emptyTuples = new TupleKeys();
+        $emptyTuples = new TupleKeys;
 
         $stream = test()->createMock(StreamInterface::class);
         $streamFactory = test()->createMock(StreamFactoryInterface::class);

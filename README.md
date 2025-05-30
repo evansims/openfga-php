@@ -9,99 +9,67 @@
 <p align="center">
   <a href="https://codecov.io/gh/evansims/openfga-php" target="_blank"><img src="https://codecov.io/gh/evansims/openfga-php/graph/badge.svg" alt="codecov" /></a>
   <a href="https://shepherd.dev/github/evansims/openfga-php" target="_blank"><img src="https://shepherd.dev/github/evansims/openfga-php/coverage.svg" alt="Psalm Type Coverage" /></a>
+  <a href="https://www.bestpractices.dev/projects/10666"><img src="https://www.bestpractices.dev/projects/10666/badge"></a>
 </p>
 
 <p align="center">
-  A PHP SDK for <a href="https://openfga.dev/">OpenFGA</a> and <a href="https://auth0.com/fine-grained-authorization">Auth0 FGA</a>.<br />
-  Read the <a href="/docs/README.md">documentation</a> to get started.
+  Stop writing authorization logic. Start asking questions.<br />
+  <a href="/docs/README.md">Read the documentation</a> to get started.
 </p>
 
 <br />
 
-## Introduction
+## Why OpenFGA?
 
-[OpenFGA](https://openfga.dev/) is a relationship-based access control (ReBAC) system that makes authorization simple and scalable. This SDK makes integrating OpenFGA into your PHP application straightforward.
+Every app needs permissions. Most developers end up with authorization logic scattered across controllers, middleware, and business logic. Changes break things. New features require touching dozens of files.
 
-- Configure the SDK ↘
+**[OpenFGA](https://openfga.dev/) solves this.** Define your authorization rules once, query them anywhere. This SDK provides a modern PHP interface to [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https://auth0.com/fga).
 
-  ```php
-  use OpenFGA\Client;
+## Quick start
 
-  $client = new Client(
-    url: 'http://localhost:8080'
-  );
-  ```
+```bash
+composer require evansims/openfga-php
+```
 
-- Create [a store](docs/Stores.md) ↘
+```php
+use OpenFGA\Client;
+use function OpenFGA\{allowed, tuple};
 
-  ```php
-  use function OpenFGA\Models\store;
+$client = new Client(url: 'http://localhost:8080');
 
-  $store = store(
+// Instead of scattered if statements in your controllers:
+if ($user->isAdmin() || $user->owns($document) || $user->team->canEdit($document)) {
+    // ...
+}
+
+// Ask OpenFGA:
+$canEdit = allowed(
     client: $client,
-    name: 'my-php-store',
-  );
-  ```
+    store: 'my-store',
+    model: 'my-model',
+    tuple: tuple('user:alice', 'editor', 'document:readme')
+);
 
-- Create [an authorization model](docs/AuthorizationModels.md) ↘
+// Zero business logic coupling. Pure authorization.
+```
 
-  ```php
-  use function OpenFGA\Models\{dsl, model};
+## Highlights
 
-  $dsl = dsl(<<<'DSL'
-    model
-    schema 1.1
+- **Zero business logic coupling** — Authorization stays separate from your domain code
+- **Scalable architecture** — Battle-tested relationship-based access control patterns inspired by Google Zanzibar
+- **Type-safe by design** — Complete type hints, strict typing, and full IDE support
+- **Human-readable DSL** — Define authorization models with intuitive syntax
+- **Production ready** — OpenTelemetry observability, retry logic, and circuit breakers included
+- **Developer experience first** — Stewarded by 30+ years of PHP expertise with intuitive APIs and comprehensive documentation
 
-    type user
+## Learn more
 
-    type document
-      relations
-        define viewer: [user]
-        define editor: [user] and viewer
-  DSL);
+Ready to build bulletproof authorization? See [the documentation](docs/README.md) for:
 
-  $model = model(
-    client: $client,
-    store: $store,
-    typeDefinitions: $dsl->getTypeDefinitions(),
-  );
-  ```
-
-- Create [a relationship tuple](docs/Tuples.md) ↘
-
-  ```php
-  use function OpenFGA\Models\tuple;
-  use function OpenFGA\Requests\write;
-
-  $tuple = tuple('user:anne', 'viewer', 'document:roadmap');
-
-  // "Anne has viewer access to roadmap"
-  write(
-    client: $client,
-    store: $store,
-    model: $model,
-    tuples: $tuple,
-  );
-  ```
-
-- [Query](docs/Queries.md) for a relationship ↘
-
-  ```php
-  use function OpenFGA\Models\tuple;
-  use function OpenFGA\Requests\allowed;
-
-  $tuple = tuple('user:anne', 'viewer', 'document:roadmap');
-
-  // "Can Anne view the roadmap?"
-  allowed(
-    client: $client,
-    store: $store,
-    model: $model,
-    tuples: $tuple,
-  );
-  ```
-
-See [the documentation](docs/README.md) for more help on getting started.
+- **[Getting started](docs/Introduction.md)** — Build your first authorization system in 10 minutes
+- **[Authorization models](docs/Models.md)** — Define permission rules with intuitive DSL
+- **[Queries](docs/Queries.md)** — Check permissions and list accessible resources
+- **[Authentication](docs/Authentication.md)** — Secure your production setup
 
 ## Installation
 
@@ -109,7 +77,7 @@ See [the documentation](docs/README.md) for more help on getting started.
 composer require evansims/openfga-php
 ```
 
-See [the documentation](docs/README.md) for more information.
+See [the documentation](docs/README.md) for configuration and setup.
 
 ## Contributing
 

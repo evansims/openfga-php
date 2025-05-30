@@ -12,14 +12,33 @@ use Override;
 
 final class Tuple implements TupleInterface
 {
-    public const OPENAPI_MODEL = 'Tuple';
+    public const string OPENAPI_MODEL = 'Tuple';
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * @param TupleKeyInterface $key       The tuple key containing user, relation, and object
+     * @param DateTimeImmutable $timestamp The timestamp when the tuple was created
+     */
     public function __construct(
         private readonly TupleKeyInterface $key,
         private readonly DateTimeImmutable $timestamp,
     ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): SchemaInterface
+    {
+        return self::$schema ??= new Schema(
+            className: self::class,
+            properties: [
+                new SchemaProperty(name: 'key', type: 'object', className: TupleKey::class, required: true),
+                new SchemaProperty(name: 'timestamp', type: 'string', format: 'datetime', required: true),
+            ],
+        );
     }
 
     /**
@@ -53,20 +72,11 @@ final class Tuple implements TupleInterface
     }
 
     /**
-     * @inheritDoc
+     * Converts a DateTimeInterface to a UTC timestamp string in RFC3339 format.
+     *
+     * @param  DateTimeInterface $dateTime The datetime to convert
+     * @return string            The UTC timestamp string
      */
-    #[Override]
-    public static function schema(): SchemaInterface
-    {
-        return self::$schema ??= new Schema(
-            className: self::class,
-            properties: [
-                new SchemaProperty(name: 'key', type: 'object', className: TupleKey::class, required: true),
-                new SchemaProperty(name: 'timestamp', type: 'string', format: 'datetime', required: true),
-            ],
-        );
-    }
-
     private static function getUtcTimestamp(DateTimeInterface $dateTime): string
     {
         return ($dateTime instanceof DateTimeImmutable ? $dateTime : DateTimeImmutable::createFromInterface($dateTime))

@@ -4,56 +4,57 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
+use InvalidArgumentException;
+use JsonException;
+use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
 use OpenFGA\Models\{TupleChange, TupleChangeInterface, TupleKey};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
+use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
+use ReflectionException;
 
-use Psr\Http\Message\{RequestInterface, ResponseInterface};
-
+/**
+ * Response containing a paginated list of tuple changes from the store.
+ *
+ * This response provides a collection of tuple changes (additions, deletions) along
+ * with pagination information for retrieving additional pages of results. Use this
+ * to track the history of relationship changes in your authorization store.
+ *
+ * @see ListTupleChangesResponseInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Relationship%20Tuples/ReadChanges
+ */
 final class ListTupleChangesResponse extends Response implements ListTupleChangesResponseInterface
 {
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param TupleChangesInterface<TupleChangeInterface> $changes
-     * @param ?string                                     $continuationToken
+     * Create a new list tuple changes response instance.
+     *
+     * @param TupleChangesInterface<TupleChangeInterface> $changes           The collection of tuple changes for the current page
+     * @param ?string                                     $continuationToken Pagination token for fetching additional results, or null if no more pages exist
      */
     public function __construct(
-        private TupleChangesInterface $changes,
-        private ?string $continuationToken,
+        private readonly TupleChangesInterface $changes,
+        private readonly ?string $continuationToken,
     ) {
     }
 
     /**
      * @inheritDoc
-     */
-    #[Override]
-    public function getChanges(): TupleChangesInterface
-    {
-        return $this->changes;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public function getContinuationToken(): ?string
-    {
-        return $this->continuationToken;
-    }
-
-    /**
-     * @inheritDoc
+     *
+     * @throws ClientThrowable          If the response format is invalid or status code indicates an error
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws JsonException            If the response body is not valid JSON
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public static function fromResponse(
-        ResponseInterface $response,
-        RequestInterface $request,
+        HttpResponseInterface $response,
+        HttpRequestInterface $request,
         SchemaValidator $validator,
     ): ListTupleChangesResponseInterface {
-        // Handle successful responses
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
 
@@ -65,8 +66,7 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
             return $validator->validateAndTransform($data, self::class);
         }
 
-        // Handle network errors
-        return RequestManager::handleResponseException(
+        RequestManager::handleResponseException(
             response: $response,
             request: $request,
         );
@@ -85,5 +85,23 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
                 new SchemaProperty(name: 'continuation_token', type: 'string', required: false),
             ],
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getChanges(): TupleChangesInterface
+    {
+        return $this->changes;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getContinuationToken(): ?string
+    {
+        return $this->continuationToken;
     }
 }

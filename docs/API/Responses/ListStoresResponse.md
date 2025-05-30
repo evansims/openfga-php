@@ -1,5 +1,6 @@
 # ListStoresResponse
 
+Response containing a paginated list of available stores. This response provides access to stores that the authenticated user or application can access, with pagination support for handling large numbers of stores. Each store includes its ID, name, and creation metadata.
 
 ## Namespace
 `OpenFGA\Responses`
@@ -16,19 +17,21 @@
 *<small>Implements Responses\ListStoresResponseInterface</small>*  
 
 ```php
-public function fromResponse(Psr\Http\Message\ResponseInterface $response, Psr\Http\Message\RequestInterface $request, OpenFGA\Schema\SchemaValidator $validator): self
+public function fromResponse(HttpResponseInterface $response, HttpRequestInterface $request, SchemaValidator $validator): static
 ```
 
+Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | Psr\Http\Message\ResponseInterface |  |
-| `$request` | Psr\Http\Message\RequestInterface |  |
-| `$validator` | [SchemaValidator](Schema/SchemaValidator.md) |  |
+| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
+| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
+| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
 
 #### Returns
-self
+static
+ The parsed and validated response instance containing the API response data
 
 ### getContinuationToken
 
@@ -37,10 +40,12 @@ self
 public function getContinuationToken(): ?string
 ```
 
+Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of stores exceeds the page size limit. If null, there are no more results to fetch.
 
 
 #### Returns
 ?string
+ The continuation token for fetching more results, or null if no more pages exist
 
 ### getStores
 
@@ -49,21 +54,25 @@ public function getContinuationToken(): ?string
 public function getStores(): OpenFGA\Models\Collections\StoresInterface
 ```
 
+Get the collection of stores. Returns a type-safe collection containing the store objects from the current page of results. Each store includes its metadata such as ID, name, and timestamps.
 
 
 #### Returns
 [StoresInterface](Models/Collections/StoresInterface.md)
+ The collection of stores
 
 ### schema
 
 *<small>Implements Responses\ListStoresResponseInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\SchemaInterface
+public function schema(): SchemaInterface
 ```
 
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for store listing response data, ensuring consistent parsing and validation of API responses.
 
 
 #### Returns
-[SchemaInterface](Schema/SchemaInterface.md)
+SchemaInterface
+ The schema definition for response validation
 

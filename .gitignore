@@ -1,11 +1,82 @@
+# Operating System Files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Environment and Configuration
 .env
-.openapi
+.env.*
+!.env.example
+!.env.dist
+.envrc
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.cache/
+
+# PHP Dependencies and Package Management
+/vendor/
+composer.local.json
+composer.phar
+.composer/
+
+# PHP Development Tools and Caches
 .php_cs.cache
 .php-cs-fixer.cache
+.php-cs-fixer.dist.cache
 .phpunit.result.cache
-composer.local.json
-coverage
-junit.xml
-vendor
-/wiki-repo
+.phpstan.cache
+.psalm.cache
+.rector.cache
+
+# Build Artifacts and Reports
+/coverage/
+/codecov.json
+/junit.xml
+/.phpunit.cache/
+/build/
+/dist/
+
+# Logs and Temporary Files
+*.log
+*.tmp
+*.temp
+*.pid
+*.lock
+/tmp/
+
+# Project-Specific
+/.openapi/
+/wiki-repo/
+/tools/docs/vendor/
+/tools/vendor/
+
+# Node.js (if using for documentation/tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Documentation Build
+/docs/build/
+/.docusaurus/
+
+# Testing
+/phpunit.xml
+/.phpunit.result.cache
+
+# Security
+*.pem
+*.key
+*.crt

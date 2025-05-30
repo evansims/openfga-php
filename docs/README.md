@@ -1,79 +1,120 @@
----
-title: OpenFGA PHP SDK
-description: Official PHP SDK for OpenFGA - Fine-grained authorization made simple
----
-
 # OpenFGA PHP SDK
 
-The OpenFGA PHP SDK provides a convenient way to interact with [OpenFGA](https://openfga.dev), a high-performance and flexible authorization/permission engine built on Google Zanzibar.
+Modern fine-grained authorization for PHP applications. Build permission systems that scale from simple role checks to complex multi-tenant authorization patterns.
 
-The project is available on GitHub at [evansims/openfga-php](https://github.com/evansims/openfga-php).
+## What is this?
 
-## Quick Start
+OpenFGA lets you answer questions like "Can Alice edit this document?" or "Which projects can Bob view?" without scattering permission logic throughout your codebase. Define your authorization rules once, then query them anywhere.
 
-Get up and running with fine-grained authorization in your PHP application:
+This SDK provides a modern PHP interface to [OpenFGA](https://openfga.dev) - Google's Zanzibar-inspired authorization engine that powers services like YouTube, Google Drive, and GitHub.
 
-- 📚 **[Getting Started Guide](GettingStarted.md)** - Installation, setup, and your first authorization check
-- 🔐 **[Authentication](Authentication.md)** - Configure API credentials and access tokens
-- 🏪 **[Stores](Stores.md)** - Create and manage authorization stores
-- 📝 **[Authorization Models](AuthorizationModels.md)** - Define your permission rules
-- 🔍 **[Queries](Queries.md)** - Check permissions and expand relationships
-- 📊 **[Relationship Tuples](RelationshipTuples.md)** - Manage user-resource relationships
-- 🎯 **[Results](Results.md)** - Handle success and failure responses
-
-## API Reference
-
-Comprehensive documentation for all SDK classes and methods:
-
-- **[Client](API/Client.md)** - Main SDK client interface
-- **[Models](API/Models/)** - Data structures and domain objects
-- **[Requests](API/Requests/)** - API request builders
-- **[Responses](API/Responses/)** - API response objects
-- **[Exceptions](API/Exceptions/)** - Error handling and exception types
-
-## Features
-
-- ✅ **PHP 8.3+** - Modern PHP with strict typing
-- ✅ **Result Pattern** - Elegant error handling without exceptions
-- ✅ **PSR Compliant** - Works with any PSR-7/17/18 HTTP implementation
-- ✅ **Type Safe** - Full type hints and IDE support
-- ✅ **DSL Support** - Human-readable authorization model syntax
-- ✅ **Comprehensive** - Complete OpenFGA API coverage
-
-## Installation
+## Quick start
 
 ```bash
 composer require evansims/openfga-php
 ```
 
-## Quick Example
-
 ```php
-use OpenFGA\SDK\Client;
-use OpenFGA\SDK\ClientConfiguration;
+use OpenFGA\Client;
+use function OpenFGA\Models\tuple;
 
-// Configure the client
-$config = new ClientConfiguration([
-    'apiUrl' => 'https://api.fga.example',
-    'storeId' => 'your-store-id',
-    'authorizationModelId' => 'your-model-id'
-]);
+$client = new Client(url: 'https://api.fga.example');
 
-$client = new Client($config);
+// Check permissions
+$canEdit = $client->check(
+    store: 'store_123',
+    model: 'model_456', 
+    tupleKey: tuple(
+        user: 'user:alice',
+        relation: 'editor', 
+        object: 'document:readme'
+    )
+)->unwrap()->getIsAllowed();
 
-// Check if a user can read a document
-$result = $client->check([
-    'user' => 'user:alice',
-    'relation' => 'reader',
-    'object' => 'document:readme'
-]);
-
-$result->success(fn($response) => $response->getAllowed())
-       ->failure(fn($error) => throw $error)
-       ->unwrap(); // true or false
+// Find accessible resources
+$documents = $client->listObjects(
+    store: 'store_123',
+    model: 'model_456',
+    user: 'user:alice',
+    relation: 'viewer',
+    type: 'document'
+)->unwrap()->getObjects();
 ```
 
-## Need Help?
+## Why choose this SDK?
 
-- 📖 **[OpenFGA Documentation](https://openfga.dev/docs)** - Learn authorization concepts
-- 🐛 **[Report Issues](https://github.com/evansims/openfga-php/issues)** - Found a bug or need a feature?
+**Type-safe by design.** Every method has complete type hints. Your IDE knows exactly what you're working with.
+
+**Error handling that makes sense.** No more try-catch blocks everywhere. The Result pattern lets you handle success and failure elegantly.
+
+**Modern PHP patterns.** Built for PHP 8.3+ with property promotion, named arguments, and strict typing throughout.
+
+**Production ready.** Comprehensive OpenTelemetry support, retry logic, circuit breakers, and graceful error handling.
+
+## Core concepts
+
+### Getting started → Introduction
+
+New to OpenFGA? Start here to understand the basics and get your first authorization check working.
+
+**[Getting Started Guide →](Introduction.md)**
+
+### Core concepts → Authorization models
+
+Learn how to define your permission rules using OpenFGA's intuitive DSL.
+
+**[Authorization Models →](Models.md)**
+
+### Core concepts → Relationship tuples
+
+Understand how to grant and revoke specific permissions between users and resources.
+
+**[Relationship Tuples →](Tuples.md)**
+
+### Querying → Permission checks
+
+Master the four types of queries: check permissions, list objects, find users, and expand relationships.
+
+**[Queries →](Queries.md)**
+
+## Configuration
+
+### Authentication → API credentials
+
+Set up authentication for production environments and managed services.
+
+**[Authentication →](Authentication.md)**
+
+### Configuration → Stores
+
+Manage authorization stores for multi-tenant applications and environment separation.
+
+**[Stores →](Stores.md)**
+
+### Configuration → Error handling
+
+Build robust applications with proper error handling and the Result pattern.
+
+**[Results →](Results.md)**
+
+### Observability → OpenTelemetry
+
+Add comprehensive tracing and metrics to monitor your authorization system.
+
+**[Observability →](Observability.md)**
+
+## Key features
+
+**Modern PHP 8.3+** — Property promotion, named arguments, and strict typing
+**Result pattern** — Elegant error handling without exceptions  
+**PSR compliant** — Works with any PSR-7/17/18 HTTP implementation
+**Type safe** — Complete type hints and IDE support
+**DSL support** — Human-readable authorization model syntax
+**Observability** — Built-in OpenTelemetry tracing and metrics
+**Production ready** — Retry logic, circuit breakers, and graceful degradation
+
+## Need help?
+
+**[OpenFGA Documentation](https://openfga.dev/docs)** — Learn authorization concepts and patterns
+**[Report Issues](https://github.com/evansims/openfga-php/issues)** — Found a bug or need a feature?
+**[API Reference](API/)** — Complete method documentation and examples

@@ -1,5 +1,6 @@
 # TupleKeys
 
+Collection implementation for OpenFGA tuple key objects. This class provides a concrete implementation for managing collections of tuple key objects that define relationships between users, objects, and relations in the OpenFGA authorization system. Tuple keys are the essential components used to express authorization relationships and permissions. This collection is commonly used in write operations to specify which relationships should be created or deleted in the authorization store.
 
 ## Namespace
 `OpenFGA\Models\Collections`
@@ -23,6 +24,7 @@
 public function add(mixed $item): static
 ```
 
+Add an item to the end of the collection. This method appends a new model object to the collection, automatically assigning it the next available integer index. The item is validated to ensure it matches the expected type for this collection, maintaining type safety throughout the authorization data processing pipeline. This operation modifies the current collection instance directly, making it suitable for building collections incrementally. For immutable operations, use the `withItems()` method instead, which creates new collection instances without modifying the original.
 
 #### Parameters
 | Name | Type | Description |
@@ -39,6 +41,7 @@ static
 public function clear(): void
 ```
 
+Remove all items from the collection. This method empties the collection, resetting it to its initial state with no items and a count of zero.
 
 
 #### Returns
@@ -48,13 +51,13 @@ void
 
 
 ```php
-public function count(): int
+public function count(): int<0, max>
 ```
 
 
 
 #### Returns
-int
+int&lt;0, max&gt;
 
 ### current
 
@@ -75,7 +78,7 @@ public function current(): OpenFGA\Models\ModelInterface
 public function every(callable $callback): bool
 ```
 
-Checks if all items match the callback.
+Check if all items in the collection match the given condition. This method tests whether all items in the collection satisfy the provided callback function. Returns true if all items pass the test, false if any item fails.
 
 #### Parameters
 | Name | Type | Description |
@@ -84,6 +87,7 @@ Checks if all items match the callback.
 
 #### Returns
 bool
+ True if all items match the condition, false otherwise
 
 ### filter
 
@@ -92,7 +96,7 @@ bool
 public function filter(callable $callback): static
 ```
 
-Filters the collection using a callback.
+Create a new collection containing only items that match the condition. This method creates a new collection containing only the items from the current collection that satisfy the provided callback function.
 
 #### Parameters
 | Name | Type | Description |
@@ -101,6 +105,7 @@ Filters the collection using a callback.
 
 #### Returns
 static
+ A new collection containing only the matching items
 
 ### first
 
@@ -109,7 +114,7 @@ static
 public function first(?callable $callback = NULL)
 ```
 
-Returns the first item that matches the callback.
+Get the first item in the collection, optionally matching a condition. When called without a callback, returns the first item in the collection. When called with a callback, returns the first item that satisfies the condition.
 
 #### Parameters
 | Name | Type | Description |
@@ -124,6 +129,7 @@ Returns the first item that matches the callback.
 public function get(int $offset)
 ```
 
+Get an item by its position in the collection. This method retrieves the item at the specified index position. Returns null if the index is out of bounds.
 
 #### Parameters
 | Name | Type | Description |
@@ -138,10 +144,12 @@ public function get(int $offset)
 public function isEmpty(): bool
 ```
 
+Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
 
 
 #### Returns
 bool
+ True if the collection is empty, false otherwise
 
 ### jsonSerialize
 
@@ -251,16 +259,17 @@ void
 public function reduce(mixed $initial, callable $callback): mixed
 ```
 
-Reduces the collection to a single value.
+Reduce the collection to a single value using a callback function. This method iteratively applies a callback function to accumulate the collection items into a single value, starting with an initial value.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | mixed |  |
+| `$initial` | mixed | The initial value to start the reduction |
 | `callback` | callable |  |
 
 #### Returns
 mixed
+ The final accumulated value
 
 ### rewind
 
@@ -279,13 +288,15 @@ void
 *<small>Implements Models\Collections\IndexedCollectionInterface</small>*  
 
 ```php
-public function schema(): OpenFGA\Schema\CollectionSchemaInterface
+public function schema(): CollectionSchemaInterface
 ```
 
+Get the schema definition for this collection type. Returns the schema that defines the structure, validation rules, and serialization behavior for this collection type. The schema specifies the expected item type, validation constraints, and transformation rules that ensure all items in the collection conform to OpenFGA data requirements. Collection schemas enable: - Type validation for all added items - Consistent serialization across different contexts - API compatibility verification - Runtime type checking and error reporting The schema system ensures that authorization data maintains integrity throughout processing, preventing type mismatches that could lead to authorization failures or security vulnerabilities.
 
 
 #### Returns
-[CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
+CollectionSchemaInterface
+ The schema definition containing validation rules and type constraints for this collection
 
 ### some
 
@@ -294,7 +305,7 @@ public function schema(): OpenFGA\Schema\CollectionSchemaInterface
 public function some(callable $callback): bool
 ```
 
-Checks if any item matches the callback.
+Check if at least one item in the collection matches the given condition. This method tests whether at least one item in the collection satisfies the provided callback function. Returns true if any item passes the test, false if all items fail.
 
 #### Parameters
 | Name | Type | Description |
@@ -303,6 +314,7 @@ Checks if any item matches the callback.
 
 #### Returns
 bool
+ True if any item matches the condition, false otherwise
 
 ### toArray
 
@@ -311,10 +323,12 @@ bool
 public function toArray(): array
 ```
 
+Convert the collection to a standard PHP array. This method creates a native PHP array containing all items in the collection, preserving their order and indexes.
 
 
 #### Returns
 array
+ A standard PHP array containing all collection items
 
 ### valid
 
@@ -335,6 +349,7 @@ bool
 public function withItems(mixed $items): static
 ```
 
+Create a new collection with the specified items. This method creates a fresh collection instance containing only the provided items, leaving the original collection unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -343,4 +358,5 @@ public function withItems(mixed $items): static
 
 #### Returns
 static
+ A new collection instance containing the specified items
 

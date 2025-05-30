@@ -2,35 +2,41 @@
 
 declare(strict_types=1);
 
+namespace OpenFGA\Tests\Integration;
+
+use Buzz\Client\FileGetContents;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
+use OpenFGA\Models\Collections\UserTypeFilters;
 use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Models\UserTypeFilter;
 
-use function OpenFGA\Models\{tuple, tuples};
+use function is_string;
+use function OpenFGA\{tuple, tuples};
 
-beforeEach(function (): void {
-    $this->responseFactory = new Nyholm\Psr7\Factory\Psr17Factory();
-    $this->httpClient = new Buzz\Client\FileGetContents($this->responseFactory);
-    $this->httpRequestFactory = $this->responseFactory;
-    $this->httpStreamFactory = $this->responseFactory;
-    $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+describe('Contextual Tuples', function (): void {
+    beforeEach(function (): void {
+        $this->responseFactory = new Psr17Factory;
+        $this->httpClient = new FileGetContents($this->responseFactory);
+        $this->httpRequestFactory = $this->responseFactory;
+        $this->httpStreamFactory = $this->responseFactory;
+        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
 
-    $this->client = new Client(
-        url: $this->url,
-        httpClient: $this->httpClient,
-        httpResponseFactory: $this->responseFactory,
-        httpStreamFactory: $this->httpStreamFactory,
-        httpRequestFactory: $this->httpRequestFactory,
-    );
+        $this->client = new Client(
+            url: $this->url,
+            httpClient: $this->httpClient,
+            httpResponseFactory: $this->responseFactory,
+            httpStreamFactory: $this->httpStreamFactory,
+            httpRequestFactory: $this->httpRequestFactory,
+        );
 
-    // Create a test store and authorization model
-    $name = 'contextual-test-' . bin2hex(random_bytes(5));
-    $this->store = $this->client->createStore(name: $name)
-        ->rethrow()
-        ->unwrap();
-    $this->storeId = $this->store->getId();
+        $name = 'contextual-test-' . bin2hex(random_bytes(5));
+        $this->store = $this->client->createStore(name: $name)
+            ->rethrow()
+            ->unwrap();
+        $this->storeId = $this->store->getId();
 
-    // Create authorization model without conditions (DSL doesn't support them yet)
-    $dsl = '
+        $dsl = '
         model
           schema 1.1
 
@@ -50,218 +56,194 @@ beforeEach(function (): void {
             define restricted_viewer: [user]
     ';
 
-    $model = $this->client->dsl($dsl)->rethrow()->unwrap();
+        $model = $this->client->dsl($dsl)->rethrow()->unwrap();
 
-    $createModelResponse = $this->client->createAuthorizationModel(
-        store: $this->storeId,
-        typeDefinitions: $model->getTypeDefinitions(),
-    )->rethrow()->unwrap();
+        $createModelResponse = $this->client->createAuthorizationModel(
+            store: $this->storeId,
+            typeDefinitions: $model->getTypeDefinitions(),
+        )->rethrow()->unwrap();
 
-    $this->modelId = $createModelResponse->getModel();
+        $this->modelId = $createModelResponse->getModel();
 
-    // Set up base tuples
-    $baseTuples = tuples(
-        // Organization structure
-        tuple('user:alice', 'member', 'organization:acme'),
-        tuple('user:bob', 'member', 'organization:acme'),
+        $baseTuples = tuples(
+            tuple('user:alice', 'member', 'organization:acme'),
+            tuple('user:bob', 'member', 'organization:acme'),
+            tuple('user:alice', 'owner', 'document:strategy'),
+            tuple('organization:acme#member', 'viewer', 'document:public-doc'),
+            tuple('user:charlie', 'admin', 'organization:acme'),
+            tuple('user:dave', 'can_share', 'document:premium-content'),
+            tuple('user:eve', 'restricted_viewer', 'document:confidential'),
+        );
 
-        // Document ownership
-        tuple('user:alice', 'owner', 'document:strategy'),
-        tuple('organization:acme#member', 'viewer', 'document:public-doc'),
+        $this->client->writeTuples(
+            store: $this->storeId,
+            model: $this->modelId,
+            writes: $baseTuples,
+        )->rethrow()->unwrap();
+    });
 
-        // Conditional relations
-        tuple('user:charlie', 'admin', 'organization:acme'),
-        tuple('user:dave', 'can_share', 'document:premium-content'),
-        tuple('user:eve', 'restricted_viewer', 'document:confidential'),
-    );
+    afterEach(function (): void {
+        if (isset($this->storeId)) {
+            $this->client->deleteStore(store: $this->storeId);
+        }
+    });
 
-    $this->client->writeTuples(
-        store: $this->storeId,
-        model: $this->modelId,
-        writes: $baseTuples,
-    )->rethrow()->unwrap();
-});
+    test('check with contextual tuples', function (): void {
+        $checkWithoutContext = $this->client->check(
+            store: $this->storeId,
+            model: $this->modelId,
+            tupleKey: tuple('user:frank', 'viewer', 'document:public-doc'),
+        )->rethrow()->unwrap();
 
-afterEach(function (): void {
-    // Clean up test store
-    if (isset($this->storeId)) {
-        $this->client->deleteStore(store: $this->storeId);
-    }
-});
+        expect($checkWithoutContext->getAllowed())->toBeFalse();
 
-test('check with contextual tuples', function (): void {
-    // Check without contextual tuples - Frank should NOT have access
-    $checkWithoutContext = $this->client->check(
-        store: $this->storeId,
-        model: $this->modelId,
-        tupleKey: tuple('user:frank', 'viewer', 'document:public-doc'),
-    )->rethrow()->unwrap();
+        $contextualTuples = tuples(
+            tuple('user:frank', 'member', 'organization:acme'),
+        );
 
-    expect($checkWithoutContext->getAllowed())->toBeFalse();
+        $checkWithContext = $this->client->check(
+            store: $this->storeId,
+            model: $this->modelId,
+            tupleKey: tuple('user:frank', 'viewer', 'document:public-doc'),
+            contextualTuples: $contextualTuples,
+        )->rethrow()->unwrap();
 
-    // Check with contextual tuples - Frank should have access through org membership
-    $contextualTuples = tuples(
-        tuple('user:frank', 'member', 'organization:acme'),
-    );
+        expect($checkWithContext->getAllowed())->toBeTrue();
+    });
 
-    $checkWithContext = $this->client->check(
-        store: $this->storeId,
-        model: $this->modelId,
-        tupleKey: tuple('user:frank', 'viewer', 'document:public-doc'),
-        contextualTuples: $contextualTuples,
-    )->rethrow()->unwrap();
+    test('list objects with contextual tuples', function (): void {
+        $withoutContext = $this->client->listObjects(
+            store: $this->storeId,
+            model: $this->modelId,
+            type: 'document',
+            relation: 'viewer',
+            user: 'user:frank',
+        )->rethrow()->unwrap();
 
-    expect($checkWithContext->getAllowed())->toBeTrue();
-});
+        expect($withoutContext->getObjects())->toHaveCount(0);
 
-test('list objects with contextual tuples', function (): void {
-    // List objects Frank can view without context
-    $withoutContext = $this->client->listObjects(
-        store: $this->storeId,
-        model: $this->modelId,
-        type: 'document',
-        relation: 'viewer',
-        user: 'user:frank',
-    )->rethrow()->unwrap();
+        $contextualTuples = tuples(
+            tuple('user:frank', 'member', 'organization:acme'),
+        );
 
-    expect($withoutContext->getObjects())->toHaveCount(0);
+        $withContext = $this->client->listObjects(
+            store: $this->storeId,
+            model: $this->modelId,
+            type: 'document',
+            relation: 'viewer',
+            user: 'user:frank',
+            contextualTuples: $contextualTuples,
+        )->rethrow()->unwrap();
 
-    // List objects Frank can view with contextual org membership
-    $contextualTuples = tuples(
-        tuple('user:frank', 'member', 'organization:acme'),
-    );
+        expect($withContext->getObjects())->toContain('document:public-doc');
+    });
 
-    $withContext = $this->client->listObjects(
-        store: $this->storeId,
-        model: $this->modelId,
-        type: 'document',
-        relation: 'viewer',
-        user: 'user:frank',
-        contextualTuples: $contextualTuples,
-    )->rethrow()->unwrap();
+    test('list users with contextual tuples', function (): void {
+        $userFilter = new UserTypeFilter(type: 'user');
+        $userFilters = new UserTypeFilters;
+        $userFilters->add($userFilter);
 
-    expect($withContext->getObjects())->toContain('document:public-doc');
-});
+        $withoutContextResult = $this->client->listUsers(
+            store: $this->storeId,
+            model: $this->modelId,
+            object: 'document:public-doc',
+            relation: 'viewer',
+            userFilters: $userFilters,
+        );
 
-test('list users with contextual tuples', function (): void {
-    // Create user filters
-    $userFilter = new OpenFGA\Models\UserTypeFilter(type: 'user');
-    $userFilters = new OpenFGA\Models\Collections\UserTypeFilters();
-    $userFilters->add($userFilter);
+        $withoutContext = $withoutContextResult->rethrow()->unwrap();
 
-    // List users who can view public-doc without extra context
-    $withoutContextResult = $this->client->listUsers(
-        store: $this->storeId,
-        model: $this->modelId,
-        object: 'document:public-doc',
-        relation: 'viewer',
-        userFilters: $userFilters,
-    );
+        $baseUsers = [];
+        foreach ($withoutContext->getUsers() as $user) {
+            $object = $user->getObject();
+            $baseUsers[] = is_string($object) ? $object : (string) $object;
+        }
 
-    $withoutContext = $withoutContextResult->rethrow()->unwrap();
+        expect($baseUsers)->toContain('user:alice');
+        expect($baseUsers)->toContain('user:bob');
+        expect($baseUsers)->not->toContain('user:frank');
 
-    $baseUsers = [];
-    foreach ($withoutContext->getUsers() as $user) {
-        $object = $user->getObject();
-        $baseUsers[] = \is_string($object) ? $object : (string) $object;
-    }
+        $contextualTuples = tuples(
+            tuple('user:frank', 'member', 'organization:acme'),
+        );
 
-    // Should include Alice and Bob (org members)
-    expect($baseUsers)->toContain('user:alice');
-    expect($baseUsers)->toContain('user:bob');
-    expect($baseUsers)->not->toContain('user:frank');
+        $withContext = $this->client->listUsers(
+            store: $this->storeId,
+            model: $this->modelId,
+            object: 'document:public-doc',
+            relation: 'viewer',
+            userFilters: $userFilters,
+            contextualTuples: $contextualTuples,
+        )->rethrow()->unwrap();
 
-    // List users with Frank as contextual member
-    $contextualTuples = tuples(
-        tuple('user:frank', 'member', 'organization:acme'),
-    );
+        $contextUsers = [];
+        foreach ($withContext->getUsers() as $user) {
+            $object = $user->getObject();
+            $contextUsers[] = is_string($object) ? $object : (string) $object;
+        }
 
-    $withContext = $this->client->listUsers(
-        store: $this->storeId,
-        model: $this->modelId,
-        object: 'document:public-doc',
-        relation: 'viewer',
-        userFilters: $userFilters,
-        contextualTuples: $contextualTuples,
-    )->rethrow()->unwrap();
+        expect($contextUsers)->toContain('user:frank');
+    });
 
-    $contextUsers = [];
-    foreach ($withContext->getUsers() as $user) {
-        $object = $user->getObject();
-        $contextUsers[] = \is_string($object) ? $object : (string) $object;
-    }
+    test('expand with contextual tuples', function (): void {
+        $expandResponse = $this->client->expand(
+            store: $this->storeId,
+            model: $this->modelId,
+            tupleKey: tuple('', 'viewer', 'document:public-doc'),
+        )->rethrow()->unwrap();
 
-    // Should now include Frank
-    expect($contextUsers)->toContain('user:frank');
-});
+        $tree = $expandResponse->getTree();
+        expect($tree)->not()->toBeNull();
+    });
 
-test('expand with contextual tuples', function (): void {
-    // Expand viewer relationship on public-doc
-    $expandResponse = $this->client->expand(
-        store: $this->storeId,
-        model: $this->modelId,
-        tupleKey: tuple('', 'viewer', 'document:public-doc'),
-    )->rethrow()->unwrap();
+    test('multiple contextual tuples', function (): void {
+        $contextualTuples = tuples(
+            tuple('user:grace', 'member', 'organization:acme'),
+            tuple('user:grace', 'owner', 'document:temp-doc'),
+        );
 
-    $tree = $expandResponse->getTree();
-    expect($tree)->not()->toBeNull();
+        $checkView = $this->client->check(
+            store: $this->storeId,
+            model: $this->modelId,
+            tupleKey: tuple('user:grace', 'viewer', 'document:public-doc'),
+            contextualTuples: $contextualTuples,
+        )->rethrow()->unwrap();
 
-    // TODO: Add more specific assertions about the expansion tree
-    // once we understand the tree structure better
-});
+        expect($checkView->getAllowed())->toBeTrue();
 
-test('multiple contextual tuples', function (): void {
-    // Grace needs multiple contextual relationships
-    $contextualTuples = tuples(
-        tuple('user:grace', 'member', 'organization:acme'),
-        tuple('user:grace', 'owner', 'document:temp-doc'),
-    );
+        $checkEdit = $this->client->check(
+            store: $this->storeId,
+            model: $this->modelId,
+            tupleKey: tuple('user:grace', 'editor', 'document:temp-doc'),
+            contextualTuples: $contextualTuples,
+        )->rethrow()->unwrap();
 
-    // Check if Grace can view through contextual membership
-    $checkView = $this->client->check(
-        store: $this->storeId,
-        model: $this->modelId,
-        tupleKey: tuple('user:grace', 'viewer', 'document:public-doc'),
-        contextualTuples: $contextualTuples,
-    )->rethrow()->unwrap();
+        expect($checkEdit->getAllowed())->toBeTrue();
+    });
 
-    expect($checkView->getAllowed())->toBeTrue();
+    test('consistency modes with contextual data', function (): void {
+        $contextualTuples = tuples(
+            tuple('user:henry', 'member', 'organization:acme'),
+        );
 
-    // Check if Grace can edit her contextual owned doc
-    $checkEdit = $this->client->check(
-        store: $this->storeId,
-        model: $this->modelId,
-        tupleKey: tuple('user:grace', 'editor', 'document:temp-doc'),
-        contextualTuples: $contextualTuples,
-    )->rethrow()->unwrap();
+        $checkMinLatency = $this->client->check(
+            store: $this->storeId,
+            model: $this->modelId,
+            tupleKey: tuple('user:henry', 'viewer', 'document:public-doc'),
+            contextualTuples: $contextualTuples,
+            consistency: Consistency::MINIMIZE_LATENCY,
+        )->rethrow()->unwrap();
 
-    expect($checkEdit->getAllowed())->toBeTrue();
-});
+        expect($checkMinLatency->getAllowed())->toBeTrue();
 
-test('consistency modes with contextual data', function (): void {
-    $contextualTuples = tuples(
-        tuple('user:henry', 'member', 'organization:acme'),
-    );
+        $checkHighConsistency = $this->client->check(
+            store: $this->storeId,
+            model: $this->modelId,
+            tupleKey: tuple('user:henry', 'viewer', 'document:public-doc'),
+            contextualTuples: $contextualTuples,
+            consistency: Consistency::HIGHER_CONSISTENCY,
+        )->rethrow()->unwrap();
 
-    // Test with minimize latency
-    $checkMinLatency = $this->client->check(
-        store: $this->storeId,
-        model: $this->modelId,
-        tupleKey: tuple('user:henry', 'viewer', 'document:public-doc'),
-        contextualTuples: $contextualTuples,
-        consistency: Consistency::MINIMIZE_LATENCY,
-    )->rethrow()->unwrap();
-
-    expect($checkMinLatency->getAllowed())->toBeTrue();
-
-    // Test with higher consistency
-    $checkHighConsistency = $this->client->check(
-        store: $this->storeId,
-        model: $this->modelId,
-        tupleKey: tuple('user:henry', 'viewer', 'document:public-doc'),
-        contextualTuples: $contextualTuples,
-        consistency: Consistency::HIGHER_CONSISTENCY,
-    )->rethrow()->unwrap();
-
-    expect($checkHighConsistency->getAllowed())->toBeTrue();
+        expect($checkHighConsistency->getAllowed())->toBeTrue();
+    });
 });

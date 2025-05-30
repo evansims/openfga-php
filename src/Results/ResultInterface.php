@@ -4,95 +4,170 @@ declare(strict_types=1);
 
 namespace OpenFGA\Results;
 
-use LogicException;
+use OpenFGA\Exceptions\ClientThrowable;
 use Throwable;
 
 /**
- * @template T
- * @template E of Throwable
+ * Represents the result of an operation that can either succeed or fail.
+ *
+ * The Result pattern provides a safe and composable way to handle operations that
+ * might fail without using exceptions for control flow. Results can be chained
+ * together using fluent methods, making error handling explicit and predictable.
+ *
+ * ## Working with Result Types
+ *
+ * Each Result contains either a success value (specific response interface) or a failure
+ * error (Throwable). The specific types are documented in each method's @return annotation.
+ *
+ * ## Common Usage Patterns
+ *
+ * ### Simple Value Extraction
+ * ```php
+ * $result = $client->check($store, $model, $tupleKey);
+ * if ($result->succeeded()) {
+ *     $response = $result->val(); // Returns CheckResponseInterface
+ *     $allowed = $response->getAllowed();
+ * }
+ * ```
+ *
+ * ### Fluent Error Handling
+ * ```php
+ * $allowed = $client->check($store, $model, $tupleKey)
+ *     ->success(fn($response) => logger()->info('Check succeeded'))
+ *     ->failure(fn($error) => logger()->error('Check failed: ' . $error->getMessage()))
+ *     ->then(fn($response) => $response->getAllowed())
+ *     ->recover(fn($error) => false) // Default to not allowed on error
+ *     ->unwrap();
+ * ```
+ *
+ * ### Safe Unwrapping with Default Values
+ * ```php
+ * $store = $client->getStore($storeId)
+ *     ->unwrap(fn($result) => $result instanceof StoreInterface ? $result : null);
+ * ```
+ *
+ * ### Transforming Results
+ * ```php
+ * $storeNames = $client->listStores()
+ *     ->then(fn($response) => array_map(
+ *         fn($store) => $store->getName(),
+ *         $response->getStores()->toArray()
+ *     ))
+ *     ->unwrap();
+ * ```
  */
 interface ResultInterface
 {
     /**
-     * Return the unwrapped error of a `Failure`.
+     * Retrieves the error from a failed result.
      *
-     * @throws LogicException if called on Success
+     * This method should only be called on Failure results. Use failed() to check
+     * the result type before calling this method to avoid exceptions.
+     *
+     * @throws ClientThrowable When called on a Success result
+     *
+     * @return Throwable The error that caused the failure
      */
     public function err(): Throwable;
 
     /**
-     * Return `true` if this is a `Failure`.
+     * Determines if this result represents a failure.
+     *
+     * @return bool True if this is a Failure result, false if it's a Success
      */
     public function failed(): bool;
 
     /**
-     * Execute on `Failure` and continue the chain.
+     * Executes a callback when the result is a failure and continues the chain.
      *
-     * @param callable(E): void $fn
+     * The callback receives the error as its parameter and is only executed for
+     * Failure results. This method always returns the original result unchanged.
      *
-     * @return ResultInterface<T, E>
+     * @param  callable(Throwable): void $fn Callback to execute with the error on failure
+     * @return ResultInterface           The original result for method chaining
      */
     public function failure(callable $fn): self;
 
     /**
-     * Execute on `Failure`, mutate the result, and continue the chain.
+     * Recovers from a failure by transforming it into a success or different failure.
      *
-     * @template U
-     * @template F of Throwable
+     * The callback is only executed for Failure results and can return either a new
+     * Result or a plain value (which becomes a Success). Success results pass through unchanged.
      *
-     * @param callable(Throwable): (ResultInterface<U, F>|U) $fn
-     *
-     * @return ResultInterface<U, F>
+     * @param  callable(Throwable): (mixed|ResultInterface) $fn Recovery function that transforms the error
+     * @return ResultInterface                              The recovered result or original success
      */
     public function recover(callable $fn): self;
 
     /**
-     * Throw the error of a `Failure`, or continue the chain.
+     * Throws the contained error or continues the chain.
      *
-     * @param ?Throwable $throwable
+     * For Failure results, this throws either the provided throwable or the contained error.
+     * For Success results, this method has no effect and returns the result unchanged.
      *
-     * @return ResultInterface<T, E>
+     * @param Throwable|null $throwable Optional throwable to throw instead of the contained error
+     *
+     * @throws Throwable The contained error or provided throwable for Failure results
+     *
+     * @return ResultInterface The original result for method chaining
      */
     public function rethrow(?Throwable $throwable = null): self;
 
     /**
-     * Return `true` if this is a `Success`.
+     * Determines if this result represents a success.
+     *
+     * @return bool True if this is a Success result, false if it's a Failure
      */
     public function succeeded(): bool;
 
     /**
-     * Execute on `Success` and continue the chain.
+     * Executes a callback when the result is a success and continues the chain.
      *
-     * @param callable(T): void $fn
+     * The callback receives the success value (specific response interface) as its parameter
+     * and is only executed for Success results. This method always returns the original result unchanged.
      *
-     * @return ResultInterface<T, E>
+     * @param  callable(mixed): void $fn Callback to execute with the response interface on success
+     * @return ResultInterface       The original result for method chaining
      */
     public function success(callable $fn): self;
 
     /**
-     * Execute on `Success`, mutate the result, and continue the chain.
+     * Transforms a successful result using a callback and continues the chain.
      *
-     * @template U
-     * @template F of Throwable
+     * The callback is only executed for Success results and receives the specific response
+     * interface as its parameter. It can return either a new Result or a plain value
+     * (which becomes a Success). Failure results pass through unchanged.
      *
-     * @param callable(T): (ResultInterface<U, F>|U) $fn
-     *
-     * @return ResultInterface<U, F>
+     * @param  callable(mixed): (mixed|ResultInterface) $fn Transformation function for the response interface
+     * @return ResultInterface                          The transformed result or original failure
      */
     public function then(callable $fn): self;
 
     /**
-     * Return the unwrapped value of a `Success`, or throws the error of a `Failure`.
-     * When a callable is provided, it is called with the value of the `Success` or `Failure`, and its return value is returned.
+     * Extracts the value from the result or applies a transformation.
      *
-     * @param null|callable(E|T): mixed $fn
+     * Without a callback, this returns the success value (specific response interface) or throws the failure error.
+     * With a callback, the function is called with either the response interface or failure error,
+     * and its return value is returned instead of throwing.
+     *
+     * @param callable(mixed|Throwable): mixed|null $fn Optional transformation function for the result
+     *
+     * @throws Throwable When called on a Failure result without a callback
+     *
+     * @return mixed The response interface, callback result, or throws the error
      */
     public function unwrap(?callable $fn = null): mixed;
 
     /**
-     * Return the unwrapped value of a `Success`.
+     * Retrieves the value from a successful result.
      *
-     * @throws LogicException if called on Failure
+     * This method should only be called on Success results. Use succeeded() to check
+     * the result type before calling this method to avoid exceptions. Returns the
+     * specific response interface documented in the calling method's @return annotation.
+     *
+     * @throws ClientThrowable When called on a Failure result
+     *
+     * @return mixed The response interface (e.g., CheckResponseInterface, StoreInterface)
      */
     public function val(): mixed;
 }

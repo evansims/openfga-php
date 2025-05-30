@@ -13,8 +13,8 @@ describe('AuthenticationError', function (): void {
      * @param AuthenticationError $authenticationErrorCase
      */
     test('AuthenticationError enum exception() factory creates AuthenticationException with all parameters', function (AuthenticationError $authenticationErrorCase): void {
-        $mockRequest = new Request();
-        $mockResponse = new Response();
+        $mockRequest = new Request;
+        $mockResponse = new Response;
         $context = ['detail' => 'some additional detail', 'code' => 123];
         $previousThrowable = new RuntimeException('Previous error');
 

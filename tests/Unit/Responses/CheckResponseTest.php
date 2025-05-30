@@ -22,7 +22,7 @@ describe('CheckResponse', function (): void {
     });
 
     test('can be instantiated with null values', function (): void {
-        $response = new CheckResponse();
+        $response = new CheckResponse;
 
         expect($response)->toBeInstanceOf(CheckResponse::class);
         expect($response->getAllowed())->toBeNull();
@@ -79,7 +79,7 @@ describe('CheckResponse', function (): void {
         $request = test()->createMock(RequestInterface::class);
 
         // Use a real SchemaValidator instance
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
         $response = CheckResponse::fromResponse($httpResponse, $request, $validator);
 
@@ -101,7 +101,7 @@ describe('CheckResponse', function (): void {
 
         $request = test()->createMock(RequestInterface::class);
 
-        $validator = new SchemaValidator();
+        $validator = new SchemaValidator;
 
         CheckResponse::fromResponse($httpResponse, $request, $validator);
     })->throws(Exception::class);

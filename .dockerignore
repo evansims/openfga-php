@@ -1,3 +1,84 @@
+# Git and version control
+.git/
+.gitignore
+.gitattributes
+
+# Dependencies (installed in container)
 vendor/
 composer.lock
-composer.dev.json
+composer.local.json
+node_modules/
+
+# Development and build artifacts
+coverage/
+build/
+dist/
+junit.xml
+codecov.json
+
+# Cache files
+.php_cs.cache
+.php-cs-fixer.cache
+.phpunit.result.cache
+.phpstan.cache
+.psalm.cache
+.rector.cache
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Environment files
+.env
+.env.*
+!.env.example
+!.env.dist
+
+# Documentation and wiki
+docs/
+wiki-repo/
+README.md
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+
+# Development tools and configuration
+.claude/
+.github/
+.openapi/
+tools/
+styles/
+grumphp.yml
+rector.php
+phpstan.neon.dist
+psalm.xml.dist
+phpunit.xml.dist
+.vale.ini
+.tool-versions
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+tmp/
+
+# Docker files (don't need to copy themselves)
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Examples (usually not needed in production)
+examples/

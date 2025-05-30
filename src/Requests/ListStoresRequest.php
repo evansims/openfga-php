@@ -5,18 +5,43 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError};
+use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Messages;
 use OpenFGA\Network\{RequestContext, RequestMethod};
+use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Message\StreamFactoryInterface;
+use ReflectionException;
 
-final class ListStoresRequest implements ListStoresRequestInterface
+/**
+ * Request for listing all available stores with pagination support.
+ *
+ * This request retrieves a paginated list of stores accessible to the
+ * authenticated user or application. It's useful for store selection
+ * interfaces, administrative dashboards, and multi-tenant applications.
+ *
+ * @see ListStoresRequestInterface For the complete API specification
+ * @see https://openfga.dev/docs/api#/Stores/ListStores List stores API endpoint
+ */
+final readonly class ListStoresRequest implements ListStoresRequestInterface
 {
+    /**
+     * Create a new stores listing request.
+     *
+     * @param string|null $continuationToken Token for pagination to get the next page of results
+     * @param int|null    $pageSize          Maximum number of stores to return per page
+     *
+     * @throws ClientThrowable          If the continuation token is empty (but not null)
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
+     */
     public function __construct(
         private ?string $continuationToken = null,
         private ?int $pageSize = null,
     ) {
         if (null !== $this->continuationToken && '' === $this->continuationToken) {
-            throw new InvalidArgumentException('Continuation token cannot be empty');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_CONTINUATION_TOKEN_EMPTY)]);
         }
     }
 

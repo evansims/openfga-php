@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Requests;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\TupleKeys;
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\TupleKey;
@@ -227,18 +227,16 @@ describe('CheckRequest', function (): void {
     });
 
     test('throws when store ID is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new CheckRequest(store: '', model: 'test-model', tupleKey: new TupleKey('user:test', 'viewer', 'doc:1'));
-    });
+    })->throws(ClientException::class);
 
     test('throws when model ID is empty', function (): void {
-        $this->expectException(InvalidArgumentException::class);
         new CheckRequest(store: 'test-store', model: '', tupleKey: new TupleKey('user:test', 'viewer', 'doc:1'));
-    });
+    })->throws(ClientException::class);
 
     test('omits empty contextual tuples from request body', function (): void {
         $tupleKey = new TupleKey('user:test', 'viewer', 'doc:1');
-        $emptyTuples = new TupleKeys(); // Empty collection
+        $emptyTuples = new TupleKeys; // Empty collection
 
         $request = new CheckRequest(
             store: 'test-store',

@@ -8,6 +8,12 @@ use OpenFGA\Models\UserInterface;
 use Override;
 
 /**
+ * Represents a collection of users in authorization contexts.
+ *
+ * This collection manages users who have been granted access through various
+ * authorization mechanisms. Users can be individual identities, usersets,
+ * or wildcard patterns depending on the authorization model configuration.
+ *
  * @template T of UserInterface
  *
  * @extends IndexedCollectionInterface<T>

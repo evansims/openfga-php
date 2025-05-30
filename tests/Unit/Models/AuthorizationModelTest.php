@@ -10,7 +10,7 @@ use OpenFGA\Models\Enums\{SchemaVersion, TypeName};
 use OpenFGA\Schema\SchemaInterface;
 
 describe('AuthorizationModel Model', function (): void {
-    test('implements AuthorizationModelInterface', function (): void {
+    test('implements interface', function (): void {
         $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
@@ -22,7 +22,7 @@ describe('AuthorizationModel Model', function (): void {
         expect($model)->toBeInstanceOf(AuthorizationModelInterface::class);
     });
 
-    test('constructs with required parameters only', function (): void {
+    test('constructs with required parameters', function (): void {
         $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
@@ -68,7 +68,7 @@ describe('AuthorizationModel Model', function (): void {
             relations: $documentRelations,
         );
 
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions;
         $typeDefinitions->add($userType);
         $typeDefinitions->add($documentType);
 
@@ -83,7 +83,7 @@ describe('AuthorizationModel Model', function (): void {
         expect($model->getTypeDefinitions()->get(1))->toBe($documentType);
     });
 
-    test('serializes to JSON without conditions', function (): void {
+    test('serializes without conditions', function (): void {
         $typeDefinitions = new TypeDefinitions([]);
 
         $model = new AuthorizationModel(
@@ -102,7 +102,7 @@ describe('AuthorizationModel Model', function (): void {
         expect($json)->not->toHaveKey('conditions');
     });
 
-    test('serializes to JSON with conditions', function (): void {
+    test('serializes with conditions', function (): void {
         $typeDefinitions = new TypeDefinitions([]);
 
         $conditionParam = new ConditionParameter(typeName: TypeName::STRING);
@@ -220,7 +220,7 @@ describe('AuthorizationModel Model', function (): void {
             typeDefinitions: $typeDefinitions,
         );
 
-        // The dsl() method calls DslTransformer::toDsl($this)
+        // The dsl() method calls Transformer::toDsl($this)
         // We're just testing that it returns a string and doesn't throw
         $dsl = $model->dsl();
 
@@ -232,7 +232,7 @@ describe('AuthorizationModel Model', function (): void {
         $documentType = new TypeDefinition(type: 'document', relations: new TypeDefinitionRelations([]));
         $folderType = new TypeDefinition(type: 'folder', relations: new TypeDefinitionRelations([]));
 
-        $typeDefinitions = new TypeDefinitions();
+        $typeDefinitions = new TypeDefinitions;
         $typeDefinitions->add($userType);
         $typeDefinitions->add($documentType);
         $typeDefinitions->add($folderType);

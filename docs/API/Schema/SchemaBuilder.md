@@ -1,9 +1,12 @@
 # SchemaBuilder
 
+Fluent builder for creating JSON schemas for data validation and transformation. This builder provides a fluent API for defining validation schemas for model classes, supporting various data types, formats, and validation constraints. It&#039;s used internally by the SDK to validate API responses and ensure data integrity.
 
 ## Namespace
 `OpenFGA\Schema`
 
+## Implements
+* [SchemaBuilderInterface](Schema/SchemaBuilderInterface.md)
 
 
 
@@ -15,113 +18,119 @@
 public function array(string $name, array $items, bool $required = false, mixed $default = NULL): self
 ```
 
-Add an array property.
+Add an array property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
+| `$name` | string | The property name |
 | `$items` | array |  |
-| `$required` | bool |  |
-| `$default` | mixed |  |
+| `$required` | bool | Whether the property is required |
+| `default` | mixed |  |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
 ### boolean
 
 
 ```php
-public function boolean(string $name, bool $required = false, null|mixed $default = NULL): self
+public function boolean(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
-Add a boolean property.
+Add a boolean property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
-| `$required` | bool |  |
-| `$default` | null | mixed |  |
+| `$name` | string | The property name |
+| `$required` | bool | Whether the property is required |
+| `default` | mixed |  |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
 ### date
 
 
 ```php
-public function date(string $name, bool $required = false, null|mixed $default = NULL): self
+public function date(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
-Add a date property.
+Add a date property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
-| `$required` | bool |  |
-| `$default` | null | mixed |  |
+| `$name` | string | The property name |
+| `$required` | bool | Whether the property is required |
+| `default` | mixed |  |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
 ### datetime
 
 
 ```php
-public function datetime(string $name, bool $required = false, null|mixed $default = NULL): self
+public function datetime(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
-Add a datetime property.
+Add a datetime property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
-| `$required` | bool |  |
-| `$default` | null | mixed |  |
+| `$name` | string | The property name |
+| `$required` | bool | Whether the property is required |
+| `default` | mixed |  |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
 ### integer
 
 
 ```php
-public function integer(string $name, bool $required = false, null|mixed $default = NULL): self
+public function integer(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
-Add an integer property.
+Add an integer property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
-| `$required` | bool |  |
-| `$default` | null | mixed |  |
+| `$name` | string | The property name |
+| `$required` | bool | Whether the property is required |
+| `default` | mixed |  |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
 ### number
 
 
 ```php
-public function number(string $name, bool $required = false, null|mixed $default = NULL): self
+public function number(string $name, bool $required = false, mixed $default = NULL): self
 ```
 
-Add a number (float) property.
+Add a number (float) property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
-| `$required` | bool |  |
-| `$default` | null | mixed |  |
+| `$name` | string | The property name |
+| `$required` | bool | Whether the property is required |
+| `required` | bool |  |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
 ### object
 
@@ -130,17 +139,18 @@ self
 public function object(string $name, string $className, bool $required = false): self
 ```
 
-Add an object property.
+Add an object property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
+| `$name` | string | The property name |
 | `$className` | string |  |
-| `$required` | bool |  |
+| `default` | mixed |  |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
 ### register
 
@@ -149,30 +159,32 @@ self
 public function register(): OpenFGA\Schema\Schema
 ```
 
-Build and register the schema.
+Build and register the schema. Creates a Schema instance with all defined properties and registers it in the SchemaRegistry for use in validation.
 
 
 #### Returns
 [Schema](Schema/Schema.md)
+ The built and registered schema
 
 ### string
 
 
 ```php
-public function string(string $name, bool $required = false, null|string $format = NULL, null|array<string> $enum = NULL, mixed $default = NULL): self
+public function string(string $name, bool $required = false, ?string $format = NULL, ?array $enum = NULL, mixed $default = NULL): self
 ```
 
-Add a string property.
+Add a string property to the schema.
 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string |  |
-| `$required` | bool |  |
-| `$format` | null | string |  |
-| `$enum` | null | array&lt;string&gt; |  |
-| `$default` | mixed |  |
+| `$name` | string | The property name |
+| `$required` | bool | Whether the property is required |
+| `$format` | ?string | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
+| `$enum` | ?array | Array of allowed string values |
+| `$default` | mixed | Default value for optional properties |
 
 #### Returns
 self
+ Returns the builder instance for method chaining
 
