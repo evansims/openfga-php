@@ -6,6 +6,17 @@ namespace OpenFGA\Models;
 
 use Override;
 
+/**
+ * Represents a user in a list context for authorization operations.
+ *
+ * UsersListUser provides a simple wrapper around user identifiers, ensuring
+ * they conform to the expected format and can be properly serialized for
+ * API operations. This is commonly used in list operations where user
+ * identifiers need to be processed in bulk.
+ *
+ * Use this interface when working with lists of users in authorization
+ * contexts, such as batch operations or user enumeration.
+ */
 interface UsersListUserInterface extends ModelInterface
 {
     /**
@@ -30,6 +41,14 @@ interface UsersListUserInterface extends ModelInterface
      */
     public function getUser(): string;
 
+    /**
+     * Serialize the user to its JSON representation.
+     *
+     * Returns the user identifier as a string for API serialization.
+     * This differs from most models which serialize to arrays.
+     *
+     * @return string The user identifier string
+     */
     #[Override]
     public function jsonSerialize(): string;
 }

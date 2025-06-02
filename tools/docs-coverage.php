@@ -242,7 +242,10 @@ final class DocumentationCoverageAnalyzer
             $this->stats['total_parameters']++;
             
             $paramName = $parameter->getName();
-            $hasParamDoc = preg_match('/@param\s+[^\s]+\s+\$' . preg_quote($paramName, '/') . '/', $methodDoc);
+            // Check for regular parameter documentation or variadic parameter documentation
+            $regularParamPattern = '/@param\s+[^\s]+(?:\s+[^\s]+)*\s+\$' . preg_quote($paramName, '/') . '(?:\s|$)/';
+            $variadicParamPattern = '/@param\s+[^\s]+(?:\s+[^\s]+)*\s+\.\.\.\$' . preg_quote($paramName, '/') . '(?:\s|$)/';
+            $hasParamDoc = preg_match($regularParamPattern, $methodDoc) || preg_match($variadicParamPattern, $methodDoc);
             
             if ($hasParamDoc || $hasInheritDoc) {
                 $this->stats['documented_parameters']++;
@@ -260,13 +263,20 @@ final class DocumentationCoverageAnalyzer
             $returnType = $method->getReturnType();
             $needsReturnDoc = true;
             
-            // Don't require @return documentation for void methods (Rector/PHP-CS-Fixer remove these)
+            // Don't require @return documentation for:
+            // 1. void methods (Rector/PHP-CS-Fixer remove these)
+            // 2. Methods with explicit return type that matches the class (like static factory methods)
             if ($returnType !== null) {
                 $returnTypeName = $returnType instanceof \ReflectionNamedType 
                     ? $returnType->getName() 
                     : (string) $returnType;
                     
                 if ($returnTypeName === 'void') {
+                    $needsReturnDoc = false;
+                }
+                
+                // For static factory methods that return 'self', the return type is clear from signature
+                if ($returnTypeName === 'self' && $method->isStatic()) {
                     $needsReturnDoc = false;
                 }
             }
@@ -282,12 +292,28 @@ final class DocumentationCoverageAnalyzer
         }
 
         // Check for @throws documentation if method can throw exceptions
-        if (preg_match('/throw\s+new/', file_get_contents($method->getFileName() ?: ''))) {
-            $hasThrowsDoc = preg_match('/@throws\s+/', $methodDoc);
+        // Only check files that exist and contain the method body
+        $sourceFile = $method->getFileName();
+        if ($sourceFile && file_exists($sourceFile)) {
+            $methodSource = file_get_contents($sourceFile);
+            $methodStartLine = $method->getStartLine();
+            $methodEndLine = $method->getEndLine();
             
-            if (!$hasThrowsDoc && !$hasInheritDoc) {
-                $this->stats['missing_throws']++;
-                $this->issues[] = "Missing @throws documentation for $className::{$method->getName()}() in $filePath";
+            // Extract just the method body for more accurate detection
+            if ($methodStartLine && $methodEndLine) {
+                $lines = file($sourceFile);
+                $methodLines = array_slice($lines, $methodStartLine - 1, $methodEndLine - $methodStartLine + 1);
+                $methodBody = implode('', $methodLines);
+                
+                // Look for explicit throws in the method body (not just comments or docblocks)
+                if (preg_match('/throw\s+new\s+/', $methodBody)) {
+                    $hasThrowsDoc = preg_match('/@throws\s+/', $methodDoc);
+                    
+                    if (!$hasThrowsDoc && !$hasInheritDoc) {
+                        $this->stats['missing_throws']++;
+                        $this->issues[] = "Missing @throws documentation for $className::{$method->getName()}() in $filePath";
+                    }
+                }
             }
         }
     }

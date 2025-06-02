@@ -6,6 +6,17 @@ namespace OpenFGA\Models;
 
 use Override;
 
+/**
+ * Defines metadata information for conditions in OpenFGA authorization models.
+ *
+ * ConditionMetadata provides organizational and debugging information about
+ * conditions, including the module where they're defined and source file
+ * information. This helps with model analysis, debugging, and development
+ * tooling when working with complex authorization conditions.
+ *
+ * Use this interface when building tools that need to inspect or manipulate
+ * condition metadata in authorization models.
+ */
 interface ConditionMetadataInterface extends ModelInterface
 {
     /**
