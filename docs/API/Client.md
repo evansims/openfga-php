@@ -77,7 +77,7 @@ if ($result->success()) {
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to check against |
 | `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The authorization model to use |
-| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+| `$checks` | [BatchCheckItemsInterface](Models/Collections/BatchCheckItemsInterface.md) | The batch check items |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -142,7 +142,7 @@ $result = $client->check(
 | `$trace` | bool &#124; null | Whether to include a trace in the response |
 | `$context` | object &#124; null | Additional context for the check |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `schemaVersion` | OpenFGA\Models\Enums\SchemaVersion |  |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -172,7 +172,7 @@ Expands a relationship tuple to show all users that have the relationship.
 | `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | The tuple to expand |
 | `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; null &#124; string &#124; null | The authorization model to use |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `model` | OpenFGA\Models\AuthorizationModelInterface|string |  |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -230,7 +230,7 @@ if ($result->success()) {
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to create the model in |
 | `$typeDefinitions` | [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md) | The type definitions for the model |
 | `$conditions` | [ConditionsInterface](Models/Collections/ConditionsInterface.md) &#124; null | The conditions for the model |
-| `name` | string |  |
+| `$schemaVersion` | [SchemaVersion](Models/Enums/SchemaVersion.md) | The schema version to use (default: 1.1) |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -250,7 +250,7 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `store` | OpenFGA\Models\StoreInterface|string |  |
+| `$name` | string | The name for the new store |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -272,7 +272,7 @@ Deletes a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `dsl` | string |  |
+| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to delete |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -296,7 +296,7 @@ Retrieves assertions for an authorization model.
 | Name | Type | Description |
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store containing the model |
-| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The model to get assertions for |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -326,7 +326,7 @@ Reads relationship tuples from a store with optional filtering and pagination.
 | `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | Filter tuples by this key (return all if null) |
 | `$continuationToken` | string &#124; null | Token for pagination |
 | `$pageSize` | int &#124; null | Maximum number of tuples to return |
-| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -352,7 +352,7 @@ Creates or updates assertions for an authorization model.
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store containing the model |
 | `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The model to update assertions for |
-| `deletes` | ?OpenFGA\Models\Collections\TupleKeysInterface |  |
+| `$assertions` | [AssertionsInterface](Models/Collections/AssertionsInterface.md) | The assertions to upsert |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -445,7 +445,7 @@ Retrieves an authorization model by ID.
 | Name | Type | Description |
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store containing the model |
-| `store` | OpenFGA\Models\StoreInterface|string |  |
+| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The model to retrieve |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -513,7 +513,7 @@ Retrieves store details by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `pageSize` | ?int |  |
+| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to retrieve |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -539,7 +539,7 @@ Lists authorization models in a store with pagination.
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to list models from |
 | `$continuationToken` | string &#124; null | Token for pagination |
-| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+| `$pageSize` | int &#124; null | Maximum number of models to return |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -613,7 +613,7 @@ $result = $client->listObjects(
 | `$user` | string | The user to check relationships for |
 | `$context` | object &#124; null | Additional context for evaluation |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `pageSize` | ?int |  |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -637,7 +637,7 @@ Lists all stores with pagination.
 | Name | Type | Description |
 |------|------|-------------|
 | `$continuationToken` | string &#124; null | Token for pagination |
-| `startTime` | ?DateTimeImmutable |  |
+| `$pageSize` | int &#124; null | Maximum number of stores to return |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -667,7 +667,7 @@ Lists changes to relationship tuples in a store.
 | `$continuationToken` | string &#124; null | Token for pagination |
 | `$pageSize` | int &#124; null | Maximum number of changes to return |
 | `$type` | string &#124; null | Filter changes by type |
-| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+| `$startTime` | DateTimeImmutable &#124; null | Only include changes at or after this time (inclusive) |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -744,7 +744,7 @@ $result = $client->listUsers(
 | `$userFilters` | [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md) | Filters for user types to include |
 | `$context` | object &#124; null | Additional context for evaluation |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `model` | OpenFGA\Models\AuthorizationModelInterface|string |  |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -780,7 +780,7 @@ Streams objects that a user has a specific relationship with. Returns all object
 | `$user` | string | The user to check relationships for |
 | `$context` | object &#124; null | Additional context for evaluation |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `assertions` | OpenFGA\Models\Collections\AssertionsInterface |  |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -863,7 +863,7 @@ if ($result->success()) {
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+| `$dsl` | string | The DSL string to parse |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)

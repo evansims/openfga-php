@@ -34,7 +34,7 @@ Get the current failure count for an endpoint. Returns the number of consecutive
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `endpoint` | string |  |
+| `$endpoint` | string | The endpoint URL or identifier to check |
 
 #### Returns
 int
@@ -55,7 +55,7 @@ Check if the circuit is currently open for an endpoint. Returns true if the circ
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `endpoint` | string |  |
+| `$endpoint` | string | The endpoint URL or identifier to check |
 
 #### Returns
 bool
@@ -76,7 +76,7 @@ Record a failure for the specified endpoint. Increments the failure count for th
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `endpoint` | string |  |
+| `$endpoint` | string | The endpoint URL or identifier that failed |
 
 #### Returns
 void
@@ -95,7 +95,7 @@ Record a successful request for the specified endpoint. Resets the failure state
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `endpoint` | string |  |
+| `$endpoint` | string | The endpoint URL or identifier that succeeded |
 
 #### Returns
 void

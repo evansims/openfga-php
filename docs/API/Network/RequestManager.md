@@ -121,7 +121,7 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `request` | Psr\Http\Message\RequestInterface |  |
+| `$request` | [RequestInterface](Requests/RequestInterface.md) | The high-level OpenFGA API request to convert |
 
 #### Returns
 Psr\Http\Message\RequestInterface

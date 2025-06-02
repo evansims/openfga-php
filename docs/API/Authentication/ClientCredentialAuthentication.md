@@ -34,7 +34,7 @@ Get an authentication request context if this strategy requires token acquisitio
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `response` | Psr\Http\Message\ResponseInterface |  |
+| `$streamFactory` | StreamFactoryInterface | Factory for creating request body streams |
 
 #### Returns
 [RequestContext](Network/RequestContext.md) &#124; null

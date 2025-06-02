@@ -66,7 +66,7 @@ Executes a callback when the result is a failure and continues the chain. The ca
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `fn` | callable |  |
+| `$fn` | callable |  |
 
 #### Returns
 [ResultInterface](ResultInterface.md)
@@ -86,7 +86,7 @@ Recovers from a failure by transforming it into a success or different failure. 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `throwable` | ?Throwable |  |
+| `$fn` | callable |  |
 
 #### Returns
 [ResultInterface](ResultInterface.md)
@@ -106,7 +106,7 @@ Throws the contained error or continues the chain. For Failure results, this thr
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `fn` | callable |  |
+| `$throwable` | Throwable &#124; null | Optional throwable to throw instead of the contained error |
 
 #### Returns
 [ResultInterface](ResultInterface.md)
@@ -142,7 +142,7 @@ Executes a callback when the result is a success and continues the chain. The ca
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `fn` | callable |  |
+| `$fn` | callable |  |
 
 #### Returns
 [ResultInterface](ResultInterface.md)
@@ -162,7 +162,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `fn` | ?callable |  |
+| `$fn` | callable |  |
 
 #### Returns
 [ResultInterface](ResultInterface.md)

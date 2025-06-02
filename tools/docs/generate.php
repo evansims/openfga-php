@@ -312,6 +312,7 @@ class DocumentationGenerator
                         }
                     }
                 }
+                unset($param); // Destroy the reference to avoid issues
 
                 // Use interface return description if class method doesn't have one
                 if (empty($methodData['return']['description']) && !empty($interfaceMethod['return']['description'])) {
@@ -695,10 +696,6 @@ class DocumentationGenerator
         // Handle fully qualified class names
         if (str_starts_with($type, 'OpenFGA\\')) {
             $isInternalClass = array_key_exists($type, $this->classMap);
-            if (!$isInternalClass && str_contains($type, 'Consistency')) {
-                echo "[DEBUG] Enum linking issue: type='$type', found_in_classmap=" . ($isInternalClass ? 'yes' : 'no') . "\n";
-                echo "[DEBUG] Available in classMap: " . implode(', ', array_keys(array_filter($this->classMap, fn($k) => str_contains($k, 'Consistency'), ARRAY_FILTER_USE_KEY))) . "\n";
-            }
             $relativePath = str_replace('OpenFGA\\', '', $type);
             $relativePath = str_replace('\\', '/', $relativePath);
             $displayName = substr($type, strrpos($type, '\\') + 1);

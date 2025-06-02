@@ -41,7 +41,7 @@ Get an item by its string key. This method retrieves the item associated with th
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `key` | string |  |
+| `$key` | string | The key of the item to retrieve |
 
 
 #### offsetGet
@@ -58,7 +58,7 @@ Get an item by its offset key.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `value` | mixed |  |
+| `$offset` | mixed |  |
 
 #### Returns
 [ModelInterface](../Models/ModelInterface.md) &#124; null
@@ -96,7 +96,7 @@ Check if a key exists in the collection. This method determines whether the coll
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | mixed |  |
+| `$key` | string | The key to check for existence |
 
 #### Returns
 bool
@@ -132,7 +132,7 @@ Check if an offset exists in the collection. This method determines whether the 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | mixed |  |
+| `$offset` | mixed | The key to check for existence |
 
 #### Returns
 bool
@@ -152,7 +152,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 | Name | Type | Description |
 |------|------|-------------|
 | `$offset` | mixed |  |
-| `offset` | mixed |  |
+| `$value` | mixed |  |
 
 #### Returns
 void
@@ -191,7 +191,7 @@ Add an item to the collection with the specified key. This method associates an 
 | Name | Type | Description |
 |------|------|-------------|
 | `$key` | string | The string key to associate with the item |
-| `key` | string |  |
+| `$item` | [ModelInterface](../Models/ModelInterface.md) | The item to add to the collection |
 
 #### Returns
 static

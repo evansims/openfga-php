@@ -59,7 +59,7 @@ Add an array property to the schema.
 | `$name` | string | The property name |
 | `$items` | array |  |
 | `$required` | bool | Whether the property is required |
-| `default` | mixed |  |
+| `$default` | mixed | Default value for optional properties |
 
 #### Returns
 self
@@ -81,7 +81,7 @@ Add a boolean property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `default` | mixed |  |
+| `$default` | mixed | Default value for optional properties |
 
 #### Returns
 self
@@ -103,7 +103,7 @@ Add a date property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `default` | mixed |  |
+| `$default` | mixed | Default value for optional properties |
 
 #### Returns
 self
@@ -125,7 +125,7 @@ Add a datetime property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `default` | mixed |  |
+| `$default` | mixed | Default value for optional properties |
 
 #### Returns
 self
@@ -147,7 +147,7 @@ Add an integer property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `default` | mixed |  |
+| `$default` | mixed | Default value for optional properties |
 
 #### Returns
 self
@@ -169,7 +169,7 @@ Add a number (float) property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `required` | bool |  |
+| `$default` | mixed | Default value for optional properties |
 
 #### Returns
 self
@@ -191,7 +191,7 @@ Add an object property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$className` | string | The class name for the object property |
-| `default` | mixed |  |
+| `$required` | bool | Whether the property is required |
 
 #### Returns
 self

@@ -39,7 +39,7 @@ Get an item by its position in the collection. This method retrieves the item at
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | mixed |  |
+| `$offset` | int | The index position of the item to retrieve |
 
 
 #### offsetGet
@@ -55,7 +55,7 @@ public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `value` | mixed |  |
+| `$offset` | mixed |  |
 
 #### Returns
 [ModelInterface](../Models/ModelInterface.md) &#124; null
@@ -109,7 +109,7 @@ Check if an offset exists in the collection. This method determines whether the 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | mixed |  |
+| `$offset` | mixed | The offset to check for existence |
 
 #### Returns
 bool
@@ -129,7 +129,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 | Name | Type | Description |
 |------|------|-------------|
 | `$offset` | mixed |  |
-| `offset` | mixed |  |
+| `$value` | mixed |  |
 
 #### Returns
 void
@@ -147,7 +147,7 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | callable |  |
+| `$offset` | mixed |  |
 
 #### Returns
 void
@@ -167,7 +167,7 @@ Add an item to the end of the collection. This method appends a new model object
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | callable |  |
+| `$item` | mixed | The OpenFGA model object to add to the collection |
 
 #### Returns
 static
@@ -229,7 +229,7 @@ Check if all items in the collection match the given condition. This method test
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | callable |  |
+| `$callback` | callable |  |
 
 #### Returns
 bool
@@ -249,7 +249,7 @@ Create a new collection containing only items that match the condition. This met
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `callback` | ?callable |  |
+| `$callback` | callable |  |
 
 #### Returns
 static
@@ -269,7 +269,7 @@ Get the first item in the collection, optionally matching a condition. When call
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `offset` | int |  |
+| `$callback` | callable &#124; null |  |
 
 
 #### jsonSerialize
@@ -332,7 +332,7 @@ Reduce the collection to a single value using a callback function. This method i
 | Name | Type | Description |
 |------|------|-------------|
 | `$initial` | mixed | The initial value to start the reduction |
-| `callback` | callable |  |
+| `$callback` | callable |  |
 
 #### Returns
 mixed
@@ -367,7 +367,7 @@ Check if at least one item in the collection matches the given condition. This m
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `items` |  |  |
+| `$callback` | callable |  |
 
 #### Returns
 bool

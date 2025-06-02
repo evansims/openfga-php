@@ -37,7 +37,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 |------|------|-------------|
 | `$span` | mixed | The span identifier returned by startHttpRequest() |
 | `$response` | Psr\Http\Message\ResponseInterface &#124; null | The HTTP response received, if any |
-| `attributes` | array |  |
+| `$exception` | Throwable &#124; null | Optional exception that occurred during the request |
 
 #### Returns
 void
@@ -64,7 +64,7 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 | `$span` | mixed | The span identifier returned by startOperation() |
 | `$success` | bool | Whether the operation completed successfully |
 | `$exception` | Throwable &#124; null | Optional exception that occurred during the operation |
-| `attributes` | array |  |
+| `$attributes` | array |  |
 
 #### Returns
 void
@@ -91,7 +91,7 @@ Record authentication events. Records metrics and traces related to authenticati
 | `$event` | string | The authentication event type (&#039;token_request&#039;, &#039;token_refresh&#039;, &#039;auth_failure&#039;) |
 | `$success` | bool | Whether the authentication event was successful |
 | `$duration` | float | The duration of the authentication operation in seconds |
-| `failureRate` | float |  |
+| `$attributes` | array |  |
 
 #### Returns
 void
@@ -118,7 +118,7 @@ Record circuit breaker state changes. Records metrics about circuit breaker stat
 | `$endpoint` | string | The API endpoint this circuit breaker protects |
 | `$state` | string | The new circuit breaker state (&#039;open&#039;, &#039;closed&#039;, &#039;half_open&#039;) |
 | `$failures` | int | The current failure count |
-| `attributes` | array |  |
+| `$failureRate` | float | The current failure rate (0.0 to 1.0) |
 
 #### Returns
 void
@@ -147,7 +147,7 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 | `$duration` | float | The operation duration in seconds |
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store being operated on |
 | `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; null &#124; string &#124; null | The authorization model used |
-| `exception` | ?Throwable |  |
+| `$attributes` | array |  |
 
 #### Returns
 void
@@ -176,7 +176,7 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 | `$attempt` | int | The current attempt number (1-based) |
 | `$delayMs` | int | The delay before this attempt in milliseconds |
 | `$outcome` | string | The outcome of this attempt (&#039;success&#039;, &#039;failure&#039;, &#039;retry&#039;) |
-| `request` | Psr\Http\Message\RequestInterface |  |
+| `$exception` | Throwable &#124; null | Optional exception from this attempt |
 
 #### Returns
 void
@@ -195,7 +195,7 @@ Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP req
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `attributes` | array |  |
+| `$request` | Psr\Http\Message\RequestInterface | The HTTP request being sent |
 
 #### Returns
 object

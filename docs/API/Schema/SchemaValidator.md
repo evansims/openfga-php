@@ -73,7 +73,7 @@ Register a schema for validation use. Adds a schema to the validator&#039;s regi
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `className` | string |  |
+| `$schema` | [SchemaInterface](SchemaInterface.md) | The schema definition to register |
 
 #### Returns
 self
