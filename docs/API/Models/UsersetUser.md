@@ -17,9 +17,9 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 * [UsersetUserInterface](Models/UsersetUserInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'UsersetUser'` |  |
+| Name            | Value           | Description |
+| --------------- | --------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersetUser'` |             |
 
 ## Methods
 

@@ -18,9 +18,9 @@ Represents a relationship tuple key defining a connection between user, relation
 * [TupleKeys](Models/Collections/TupleKeys.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'TupleKey'` |  |
+| Name            | Value        | Description |
+| --------------- | ------------ | ----------- |
+| `OPENAPI_MODEL` | `'TupleKey'` |             |
 
 ## Methods
 

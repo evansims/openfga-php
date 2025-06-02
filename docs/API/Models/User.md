@@ -17,9 +17,9 @@ Represents a user or user specification in authorization contexts. A User can re
 * [UserInterface](Models/UserInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'User'` |  |
+| Name            | Value    | Description |
+| --------------- | -------- | ----------- |
+| `OPENAPI_MODEL` | `'User'` |             |
 
 ## Methods
 

@@ -18,9 +18,9 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 * [TypedWildcardInterface](Models/TypedWildcardInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'TypedWildcard'` |  |
+| Name            | Value             | Description |
+| --------------- | ----------------- | ----------- |
+| `OPENAPI_MODEL` | `'TypedWildcard'` |             |
 
 ## Methods
 

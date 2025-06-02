@@ -27,8 +27,8 @@ Get an authentication request context if this strategy requires token acquisitio
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L86)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name             | Type                     | Description                               |
+| ---------------- | ------------------------ | ----------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | Factory for creating request body streams |
 
 #### Returns
@@ -81,8 +81,8 @@ Handle the authentication response and update the stored token. Processes the OA
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L174)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type                                                  | Description                                       |
+| ----------- | ----------------------------------------------------- | ------------------------------------------------- |
 | `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The authentication response from the OAuth server |
 
 #### Returns

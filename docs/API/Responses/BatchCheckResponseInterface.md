@@ -40,8 +40,8 @@ Get the result for a specific correlation ID. Returns the check result for the g
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponseInterface.php#L40)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name             | Type     | Description                   |
+| ---------------- | -------- | ----------------------------- |
 | `$correlationId` | `string` | The correlation ID to look up |
 
 #### Returns

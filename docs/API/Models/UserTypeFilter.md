@@ -17,9 +17,9 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 * [UserTypeFilterInterface](Models/UserTypeFilterInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'UserTypeFilter'` |  |
+| Name            | Value              | Description |
+| --------------- | ------------------ | ----------- |
+| `OPENAPI_MODEL` | `'UserTypeFilter'` |             |
 
 ## Methods
 

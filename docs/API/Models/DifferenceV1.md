@@ -17,9 +17,9 @@ Represents a set difference operation between two usersets. In authorization mod
 * [DifferenceV1Interface](Models/DifferenceV1Interface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'v1.Difference'` |  |
+| Name            | Value             | Description |
+| --------------- | ----------------- | ----------- |
+| `OPENAPI_MODEL` | `'v1.Difference'` |             |
 
 ## Methods
 

@@ -17,9 +17,9 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 * [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'AssertionTupleKey'` |  |
+| Name            | Value                 | Description |
+| --------------- | --------------------- | ----------- |
+| `OPENAPI_MODEL` | `'AssertionTupleKey'` |             |
 
 ## Methods
 

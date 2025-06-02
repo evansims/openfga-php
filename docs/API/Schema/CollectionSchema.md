@@ -66,8 +66,8 @@ Get a specific property definition by name. This method retrieves the schema def
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/CollectionSchema.php#L84)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name    | Type     | Description                          |
+| ------- | -------- | ------------------------------------ |
 | `$name` | `string` | The name of the property to retrieve |
 
 #### Returns

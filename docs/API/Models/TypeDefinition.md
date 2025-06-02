@@ -18,9 +18,9 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 * [TypeDefinitions](Models/Collections/TypeDefinitions.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'TypeDefinition'` |  |
+| Name            | Value              | Description |
+| --------------- | ------------------ | ----------- |
+| `OPENAPI_MODEL` | `'TypeDefinition'` |             |
 
 ## Methods
 

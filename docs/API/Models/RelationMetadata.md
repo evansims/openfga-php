@@ -17,9 +17,9 @@ Contains metadata information about a relation in your authorization model. Rela
 * [RelationMetadataInterface](Models/RelationMetadataInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'RelationMetadata'` |  |
+| Name            | Value                | Description |
+| --------------- | -------------------- | ----------- |
+| `OPENAPI_MODEL` | `'RelationMetadata'` |             |
 
 ## Methods
 

@@ -25,11 +25,11 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L41)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$span` | `mixed` | The span identifier returned by startHttpRequest() |
-| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The HTTP response received, if any |
-| `$exception` | `Throwable` &#124; `null` | Optional exception that occurred during the request |
+| Name         | Type                                                                | Description                                         |
+| ------------ | ------------------------------------------------------------------- | --------------------------------------------------- |
+| `$span`      | `mixed`                                                             | The span identifier returned by startHttpRequest()  |
+| `$response`  | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The HTTP response received, if any                  |
+| `$exception` | `Throwable` &#124; `null`                                           | Optional exception that occurred during the request |
 
 #### Returns
 `void`
@@ -49,12 +49,12 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L59)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$span` | `mixed` | The span identifier returned by startOperation() |
-| `$success` | `bool` | Whether the operation completed successfully |
-| `$exception` | `Throwable` &#124; `null` | Optional exception that occurred during the operation |
-| `$attributes` | `array&lt;`string`, `mixed`&gt;` |  |
+| Name          | Type                             | Description                                           |
+| ------------- | -------------------------------- | ----------------------------------------------------- |
+| `$span`       | `mixed`                          | The span identifier returned by startOperation()      |
+| `$success`    | `bool`                           | Whether the operation completed successfully          |
+| `$exception`  | `Throwable` &#124; `null`        | Optional exception that occurred during the operation |
+| `$attributes` | `array&lt;`string`, `mixed`&gt;` |                                                       |
 
 #### Returns
 `void`
@@ -74,12 +74,12 @@ Record authentication events. Records metrics and traces related to authenticati
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L78)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$event` | `string` | The authentication event type (&#039;token_request&#039;, &#039;token_refresh&#039;, &#039;auth_failure&#039;) |
-| `$success` | `bool` | Whether the authentication event was successful |
-| `$duration` | `float` | The duration of the authentication operation in seconds |
-| `$attributes` | `array&lt;`string`, `mixed`&gt;` |  |
+| Name          | Type                             | Description                                                                                                    |
+| ------------- | -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `$event`      | `string`                         | The authentication event type (&#039;token_request&#039;, &#039;token_refresh&#039;, &#039;auth_failure&#039;) |
+| `$success`    | `bool`                           | Whether the authentication event was successful                                                                |
+| `$duration`   | `float`                          | The duration of the authentication operation in seconds                                                        |
+| `$attributes` | `array&lt;`string`, `mixed`&gt;` |                                                                                                                |
 
 #### Returns
 `void`
@@ -99,12 +99,12 @@ Record circuit breaker state changes. Records metrics about circuit breaker stat
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L97)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$endpoint` | `string` | The API endpoint this circuit breaker protects |
-| `$state` | `string` | The new circuit breaker state (&#039;open&#039;, &#039;closed&#039;, &#039;half_open&#039;) |
-| `$failures` | `int` | The current failure count |
-| `$failureRate` | `float` | The current failure rate (0.0 to 1.0) |
+| Name           | Type     | Description                                                                                 |
+| -------------- | -------- | ------------------------------------------------------------------------------------------- |
+| `$endpoint`    | `string` | The API endpoint this circuit breaker protects                                              |
+| `$state`       | `string` | The new circuit breaker state (&#039;open&#039;, &#039;closed&#039;, &#039;half_open&#039;) |
+| `$failures`    | `int`    | The current failure count                                                                   |
+| `$failureRate` | `float`  | The current failure rate (0.0 to 1.0)                                                       |
 
 #### Returns
 `void`
@@ -125,13 +125,13 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L117)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$operation` | `string` | The OpenFGA operation name |
-| `$duration` | `float` | The operation duration in seconds |
-| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store being operated on |
-| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null` | The authorization model used |
-| `$attributes` | `array&lt;`string`, `mixed`&gt;` |  |
+| Name          | Type                                                                                                 | Description                       |
+| ------------- | ---------------------------------------------------------------------------------------------------- | --------------------------------- |
+| `$operation`  | `string`                                                                                             | The OpenFGA operation name        |
+| `$duration`   | `float`                                                                                              | The operation duration in seconds |
+| `$store`      | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                         | The store being operated on       |
+| `$model`      | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null` | The authorization model used      |
+| `$attributes` | `array&lt;`string`, `mixed`&gt;`                                                                     |                                   |
 
 #### Returns
 `void`
@@ -152,13 +152,13 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L138)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$endpoint` | `string` | The API endpoint being retried |
-| `$attempt` | `int` | The current attempt number (1-based) |
-| `$delayMs` | `int` | The delay before this attempt in milliseconds |
-| `$outcome` | `string` | The outcome of this attempt (&#039;success&#039;, &#039;failure&#039;, &#039;retry&#039;) |
-| `$exception` | `Throwable` &#124; `null` | Optional exception from this attempt |
+| Name         | Type                      | Description                                                                               |
+| ------------ | ------------------------- | ----------------------------------------------------------------------------------------- |
+| `$endpoint`  | `string`                  | The API endpoint being retried                                                            |
+| `$attempt`   | `int`                     | The current attempt number (1-based)                                                      |
+| `$delayMs`   | `int`                     | The delay before this attempt in milliseconds                                             |
+| `$outcome`   | `string`                  | The outcome of this attempt (&#039;success&#039;, &#039;failure&#039;, &#039;retry&#039;) |
+| `$exception` | `Throwable` &#124; `null` | Optional exception from this attempt                                                      |
 
 #### Returns
 `void`
@@ -173,8 +173,8 @@ Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP req
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L156)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name       | Type                                               | Description                 |
+| ---------- | -------------------------------------------------- | --------------------------- |
 | `$request` | [`RequestInterface`](Requests/RequestInterface.md) | The HTTP request being sent |
 
 #### Returns
@@ -195,12 +195,12 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L171)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$operation` | `string` | The OpenFGA operation name (e.g., &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
-| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store being operated on |
-| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null` | The authorization model being used |
-| `$attributes` | `array&lt;`string`, `mixed`&gt;` |  |
+| Name          | Type                                                                                                 | Description                                                                                        |
+| ------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `$operation`  | `string`                                                                                             | The OpenFGA operation name (e.g., &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
+| `$store`      | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                         | The store being operated on                                                                        |
+| `$model`      | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null` | The authorization model being used                                                                 |
+| `$attributes` | `array&lt;`string`, `mixed`&gt;`                                                                     |                                                                                                    |
 
 #### Returns
 `mixed` — A span identifier or context that can be passed to endOperation()

@@ -1319,6 +1319,9 @@ class DocumentationGenerator
         // Apply additional cleanup patterns
         $content = $this->applyMarkdownCleanupPatterns($content);
         
+        // Format tables for better readability
+        $content = $this->formatTables($content);
+        
         return $content;
     }
 
@@ -1358,6 +1361,166 @@ class DocumentationGenerator
         $content = preg_replace('/\n{3,}(#### \w+)/', "\n\n$1", $content);
         
         return $content;
+    }
+
+    /**
+     * Format markdown tables for better readability by aligning columns.
+     *
+     * This method finds markdown tables and properly aligns all columns by:
+     * - Calculating the maximum width for each column
+     * - Padding all cells to match the maximum width
+     * - Ensuring proper spacing and alignment
+     *
+     * @param string $content Markdown content with tables
+     * @return string Content with properly formatted tables
+     */
+    private function formatTables(string $content): string
+    {
+        // Pattern to match markdown tables (header + separator + data rows)
+        $tablePattern = '/(?:^|\n)((?:\|[^\n]*\|\n)+)/m';
+        
+        return preg_replace_callback($tablePattern, function($matches) {
+            $tableContent = trim($matches[1]);
+            $lines = explode("\n", $tableContent);
+            
+            if (count($lines) < 2) {
+                return $matches[0]; // Not a valid table
+            }
+            
+            // Parse all rows
+            $rows = [];
+            $separatorIndex = -1;
+            
+            foreach ($lines as $index => $line) {
+                $line = trim($line);
+                if (empty($line)) continue;
+                
+                // Check if this is a separator row (contains only |, -, :, and spaces)
+                if (preg_match('/^\|[\s\-:|]+\|$/', $line)) {
+                    $separatorIndex = count($rows);
+                    $rows[] = $this->parseSeparatorRow($line);
+                } else {
+                    $rows[] = $this->parseTableRow($line);
+                }
+            }
+            
+            if ($separatorIndex === -1 || count($rows) < 2) {
+                return $matches[0]; // Not a valid table structure
+            }
+            
+            // Ensure all rows have the same number of columns
+            $maxColumns = max(array_map('count', $rows));
+            foreach ($rows as &$row) {
+                while (count($row) < $maxColumns) {
+                    $row[] = '';
+                }
+            }
+            unset($row);
+            
+            // Calculate maximum width for each column based on actual display width
+            $columnWidths = [];
+            foreach ($rows as $rowIndex => $row) {
+                // Skip separator row for width calculation
+                if ($rowIndex === $separatorIndex) {
+                    continue;
+                }
+                
+                foreach ($row as $colIndex => $cell) {
+                    // Use raw cell content length for column width calculation
+                    // This preserves backticks and other markdown formatting in the width
+                    $cellWidth = mb_strlen($cell);
+                    $columnWidths[$colIndex] = max($columnWidths[$colIndex] ?? 0, $cellWidth);
+                }
+            }
+            
+            // Ensure minimum column widths
+            foreach ($columnWidths as $colIndex => $width) {
+                $columnWidths[$colIndex] = max($width, 3); // Minimum 3 characters per column
+            }
+            
+            // Format the table
+            $formattedRows = [];
+            foreach ($rows as $rowIndex => $row) {
+                if ($rowIndex === $separatorIndex) {
+                    // Format separator row
+                    $formattedCells = [];
+                    foreach ($columnWidths as $colIndex => $width) {
+                        $formattedCells[] = str_repeat('-', $width);
+                    }
+                    $formattedRows[] = '| ' . implode(' | ', $formattedCells) . ' |';
+                } else {
+                    // Format data row
+                    $formattedCells = [];
+                    foreach ($columnWidths as $colIndex => $width) {
+                        $cellContent = $row[$colIndex] ?? '';
+                        $actualWidth = mb_strlen($cellContent);
+                        $padding = $width - $actualWidth;
+                        $formattedCells[] = $cellContent . str_repeat(' ', max(0, $padding));
+                    }
+                    $formattedRows[] = '| ' . implode(' | ', $formattedCells) . ' |';
+                }
+            }
+            
+            return "\n" . implode("\n", $formattedRows) . "\n";
+        }, $content);
+    }
+    
+    /**
+     * Parse a table row into individual cells.
+     *
+     * @param string $line Table row line
+     * @return array Array of cell contents
+     */
+    private function parseTableRow(string $line): array
+    {
+        // Remove leading/trailing |
+        $line = trim($line, '| ');
+        
+        // Split by | and trim each cell
+        $cells = array_map('trim', explode('|', $line));
+        
+        return $cells;
+    }
+    
+    /**
+     * Parse a separator row into individual cells.
+     *
+     * @param string $line Separator row line
+     * @return array Array of separator contents
+     */
+    private function parseSeparatorRow(string $line): array
+    {
+        // Remove leading/trailing |
+        $line = trim($line, '| ');
+        
+        // Split by | and trim each cell
+        $cells = array_map('trim', explode('|', $line));
+        
+        // Convert separator cells to simple dashes for processing
+        return array_map(fn($cell) => str_repeat('-', max(3, strlen($cell))), $cells);
+    }
+    
+    /**
+     * Strip markdown formatting to calculate actual display width.
+     *
+     * @param string $text Text with markdown formatting
+     * @return string Text without markdown formatting
+     */
+    private function stripMarkdownFormatting(string $text): string
+    {
+        // Remove markdown links [text](url)
+        $text = preg_replace('/\[([^\]]*)\]\([^)]*\)/', '$1', $text);
+        
+        // Remove backticks
+        $text = str_replace('`', '', $text);
+        
+        // Remove bold/italic markers
+        $text = preg_replace('/[*_]{1,2}([^*_]*)[*_]{1,2}/', '$1', $text);
+        
+        // Decode HTML entities for length calculation
+        $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        
+        return $text;
     }
 
     public static function deleteDir(string $dir): void

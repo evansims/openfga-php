@@ -48,9 +48,9 @@ Executes a callback when the result is a failure and continues the chain. The ca
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L89)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
@@ -65,9 +65,9 @@ Recovers from a failure by transforming it into a success or different failure. 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L100)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 [`ResultInterface`](ResultInterface.md) — The recovered result or original success
@@ -82,8 +82,8 @@ Throws the contained error or continues the chain. For Failure results, this thr
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L114)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name         | Type                      | Description                                                |
+| ------------ | ------------------------- | ---------------------------------------------------------- |
 | `$throwable` | `Throwable` &#124; `null` | Optional throwable to throw instead of the contained error |
 
 #### Returns
@@ -111,9 +111,9 @@ Executes a callback when the result is a success and continues the chain. The ca
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L132)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
@@ -128,9 +128,9 @@ Transforms a successful result using a callback and continues the chain. The cal
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L144)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 [`ResultInterface`](ResultInterface.md) — The transformed result or original failure
@@ -145,9 +145,9 @@ Extracts the value from the result or applies a transformation. Without a callba
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L159)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$fn` | `callable` &#124; `null` |  |
+| Name  | Type                     | Description |
+| ----- | ------------------------ | ----------- |
+| `$fn` | `callable` &#124; `null` |             |
 
 #### Returns
 `mixed` — The response interface, callback result, or throws the error

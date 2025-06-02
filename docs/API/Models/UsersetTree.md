@@ -17,9 +17,9 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 * [UsersetTreeInterface](Models/UsersetTreeInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'UsersetTree'` |  |
+| Name            | Value           | Description |
+| --------------- | --------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersetTree'` |             |
 
 ## Methods
 

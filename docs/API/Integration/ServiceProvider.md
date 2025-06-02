@@ -21,8 +21,8 @@ Register OpenFGA services with the dependency injection container. This method r
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Integration/ServiceProvider.php#L45)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name         | Type     | Description                        |
+| ------------ | -------- | ---------------------------------- |
 | `$container` | `object` | The dependency injection container |
 
 #### Returns

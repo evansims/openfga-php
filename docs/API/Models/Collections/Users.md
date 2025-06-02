@@ -32,8 +32,8 @@ Get an item by its position in the collection. This method retrieves the item at
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L247)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name      | Type  | Description                                |
+| --------- | ----- | ------------------------------------------ |
 | `$offset` | `int` | The index position of the item to retrieve |
 
 #### offsetGet
@@ -45,9 +45,9 @@ public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L318)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 [`ModelInterface`](../Models/ModelInterface.md) &#124; `null`
@@ -90,8 +90,8 @@ Check if an offset exists in the collection. This method determines whether the 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L305)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name      | Type    | Description                       |
+| --------- | ------- | --------------------------------- |
 | `$offset` | `mixed` | The offset to check for existence |
 
 #### Returns
@@ -105,10 +105,10 @@ public function offsetSet(mixed $offset, mixed $value): void
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L335)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | `mixed` |  |
-| `$value` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
+| `$value`  | `mixed` |             |
 
 #### Returns
 `void`
@@ -121,9 +121,9 @@ public function offsetUnset(mixed $offset): void
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L352)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 `void`
@@ -139,8 +139,8 @@ Add an item to the end of the collection. This method appends a new model object
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L138)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name    | Type  | Description                                       |
+| ------- | ----- | ------------------------------------------------- |
 | `$item` | mixed | The OpenFGA model object to add to the collection |
 
 #### Returns
@@ -188,9 +188,9 @@ Check if all items in the collection match the given condition. This method test
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L189)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$callback` | `callable` |  |
+| Name        | Type       | Description |
+| ----------- | ---------- | ----------- |
+| `$callback` | `callable` |             |
 
 #### Returns
 `bool` — True if all items match the condition, false otherwise
@@ -205,9 +205,9 @@ Create a new collection containing only items that match the condition. This met
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L210)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$callback` | `callable` |  |
+| Name        | Type       | Description |
+| ----------- | ---------- | ----------- |
+| `$callback` | `callable` |             |
 
 #### Returns
 `static` — A new collection containing only the matching items
@@ -222,9 +222,9 @@ Get the first item in the collection, optionally matching a condition. When call
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L228)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$callback` | `callable` &#124; `null` |  |
+| Name        | Type                     | Description |
+| ----------- | ------------------------ | ----------- |
+| `$callback` | `callable` &#124; `null` |             |
 
 #### jsonSerialize
 
@@ -271,10 +271,10 @@ Reduce the collection to a single value using a callback function. This method i
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L368)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$initial` | `mixed` | The initial value to start the reduction |
-| `$callback` | `callable` |  |
+| Name        | Type       | Description                              |
+| ----------- | ---------- | ---------------------------------------- |
+| `$initial`  | `mixed`    | The initial value to start the reduction |
+| `$callback` | `callable` |                                          |
 
 #### Returns
 `mixed` — The final accumulated value
@@ -301,9 +301,9 @@ Check if at least one item in the collection matches the given condition. This m
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L391)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$callback` | `callable` |  |
+| Name        | Type       | Description |
+| ----------- | ---------- | ----------- |
+| `$callback` | `callable` |             |
 
 #### Returns
 `bool` — True if any item matches the condition, false otherwise
@@ -342,9 +342,9 @@ Create a new collection with the specified items. This method creates a fresh co
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollection.php#L430)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$items` | mixed |  |
+| Name     | Type  | Description |
+| -------- | ----- | ----------- |
+| `$items` | mixed |             |
 
 #### Returns
 `static` — A new collection instance containing the specified items

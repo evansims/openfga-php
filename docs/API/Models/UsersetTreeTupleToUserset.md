@@ -17,9 +17,9 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 * [UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'UsersetTree.TupleToUserset'` |  |
+| Name            | Value                          | Description |
+| --------------- | ------------------------------ | ----------- |
+| `OPENAPI_MODEL` | `'UsersetTree.TupleToUserset'` |             |
 
 ## Methods
 

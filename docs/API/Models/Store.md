@@ -18,9 +18,9 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 * [Stores](Models/Collections/Stores.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'Store'` |  |
+| Name            | Value     | Description |
+| --------------- | --------- | ----------- |
+| `OPENAPI_MODEL` | `'Store'` |             |
 
 ## Methods
 

@@ -18,9 +18,9 @@ Represents a change to a relationship tuple in your authorization store. When yo
 * [TupleChanges](Models/Collections/TupleChanges.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'TupleChange'` |  |
+| Name            | Value           | Description |
+| --------------- | --------------- | ----------- |
+| `OPENAPI_MODEL` | `'TupleChange'` |             |
 
 ## Methods
 

@@ -18,9 +18,9 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 * [Tuples](Models/Collections/Tuples.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'Tuple'` |  |
+| Name            | Value     | Description |
+| --------------- | --------- | ----------- |
+| `OPENAPI_MODEL` | `'Tuple'` |             |
 
 ## Methods
 

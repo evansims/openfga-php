@@ -17,9 +17,9 @@ Represents a tuple-to-userset relationship that derives permissions from related
 * [TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'v1.TupleToUserset'` |  |
+| Name            | Value                 | Description |
+| --------------- | --------------------- | ----------- |
+| `OPENAPI_MODEL` | `'v1.TupleToUserset'` |             |
 
 ## Methods
 

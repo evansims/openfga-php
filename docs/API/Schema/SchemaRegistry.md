@@ -30,8 +30,8 @@ Create a new schema builder for the specified class.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistryInterface.php#L29)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name         | Type     | Description                    |
+| ------------ | -------- | ------------------------------ |
 | `$className` | `string` | The fully qualified class name |
 
 #### Returns
@@ -50,8 +50,8 @@ Retrieve a registered schema by class name.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistryInterface.php#L37)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name         | Type     | Description                    |
+| ------------ | -------- | ------------------------------ |
 | `$className` | `string` | The fully qualified class name |
 
 #### Returns
@@ -70,8 +70,8 @@ Register a schema in the registry.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistryInterface.php#L44)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name      | Type                  | Description                     |
+| --------- | --------------------- | ------------------------------- |
 | `$schema` | [`Schema`](Schema.md) | The schema instance to register |
 
 #### Returns

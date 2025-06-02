@@ -28,11 +28,11 @@ Execute an HTTP request with automatic retry logic. Performs the HTTP request wi
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RetryHandlerInterface.php#L55)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$requestExecutor` | `callable` |  |
-| `$request` | [`RequestInterface`](Requests/RequestInterface.md) | The original HTTP request for context |
-| `$endpoint` | `string` | The endpoint URL for circuit breaker tracking |
+| Name               | Type                                               | Description                                   |
+| ------------------ | -------------------------------------------------- | --------------------------------------------- |
+| `$requestExecutor` | `callable`                                         |                                               |
+| `$request`         | [`RequestInterface`](Requests/RequestInterface.md) | The original HTTP request for context         |
+| `$endpoint`        | `string`                                           | The endpoint URL for circuit breaker tracking |
 
 #### Returns
 [`ResponseInterface`](Responses/ResponseInterface.md) — The successful HTTP response

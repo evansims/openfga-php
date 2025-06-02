@@ -35,8 +35,8 @@ Get an item by its string key. This method retrieves the item associated with th
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L177)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name   | Type     | Description                     |
+| ------ | -------- | ------------------------------- |
 | `$key` | `string` | The key of the item to retrieve |
 
 #### offsetGet
@@ -50,9 +50,9 @@ Get an item by its offset key.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L267)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 [`ModelInterface`](../Models/ModelInterface.md) &#124; `null`
@@ -83,8 +83,8 @@ Check if a key exists in the collection. This method determines whether the coll
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L186)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name   | Type     | Description                    |
+| ------ | -------- | ------------------------------ |
 | `$key` | `string` | The key to check for existence |
 
 #### Returns
@@ -112,8 +112,8 @@ Check if an offset exists in the collection. This method determines whether the 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L254)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name      | Type    | Description                    |
+| --------- | ------- | ------------------------------ |
 | `$offset` | `mixed` | The key to check for existence |
 
 #### Returns
@@ -127,10 +127,10 @@ public function offsetSet(mixed $offset, mixed $value): void
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L284)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | `mixed` |  |
-| `$value` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
+| `$value`  | `mixed` |             |
 
 #### Returns
 `void`
@@ -143,9 +143,9 @@ public function offsetUnset(mixed $offset): void
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L301)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 `void`
@@ -161,10 +161,10 @@ Add an item to the collection with the specified key. This method associates an 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L135)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$key` | `string` | The string key to associate with the item |
-| `$item` | [`ModelInterface`](../Models/ModelInterface.md) | The item to add to the collection |
+| Name    | Type                                            | Description                               |
+| ------- | ----------------------------------------------- | ----------------------------------------- |
+| `$key`  | `string`                                        | The string key to associate with the item |
+| `$item` | [`ModelInterface`](../Models/ModelInterface.md) | The item to add to the collection         |
 
 #### Returns
 `static`

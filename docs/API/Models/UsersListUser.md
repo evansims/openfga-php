@@ -18,9 +18,9 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 * [UsersListUserInterface](Models/UsersListUserInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'UsersListUser'` |  |
+| Name            | Value             | Description |
+| --------------- | ----------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersListUser'` |             |
 
 ## Methods
 

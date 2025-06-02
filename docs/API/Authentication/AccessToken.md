@@ -85,11 +85,11 @@ Create an access token instance from an OAuth server response. This factory meth
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessTokenInterface.php#L68)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The HTTP response from the OAuth token endpoint |
-| `$expectedIssuer` | `string` &#124; `null` | Optional expected issuer for JWT validation |
-| `$expectedAudience` | `string` &#124; `null` | Optional expected audience for JWT validation |
+| Name                | Type                                                  | Description                                     |
+| ------------------- | ----------------------------------------------------- | ----------------------------------------------- |
+| `$response`         | [`ResponseInterface`](Responses/ResponseInterface.md) | The HTTP response from the OAuth token endpoint |
+| `$expectedIssuer`   | `string` &#124; `null`                                | Optional expected issuer for JWT validation     |
+| `$expectedAudience` | `string` &#124; `null`                                | Optional expected audience for JWT validation   |
 
 #### Returns
 `self` — A new access token instance created from the response data

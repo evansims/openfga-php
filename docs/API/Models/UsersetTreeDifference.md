@@ -17,9 +17,9 @@ Represents a difference operation node in authorization evaluation trees. Userse
 * [UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'UsersetTree.Difference'` |  |
+| Name            | Value                      | Description |
+| --------------- | -------------------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersetTree.Difference'` |             |
 
 ## Methods
 

@@ -25,8 +25,8 @@ Get the current failure count for an endpoint. Returns the number of consecutive
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/CircuitBreakerInterface.php#L34)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type     | Description                             |
+| ----------- | -------- | --------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns
@@ -43,8 +43,8 @@ Check if the circuit is currently open for an endpoint. Returns true if the circ
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/CircuitBreakerInterface.php#L45)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type     | Description                             |
+| ----------- | -------- | --------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns
@@ -61,8 +61,8 @@ Record a failure for the specified endpoint. Increments the failure count for th
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/CircuitBreakerInterface.php#L56)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type     | Description                                |
+| ----------- | -------- | ------------------------------------------ |
 | `$endpoint` | `string` | The endpoint URL or identifier that failed |
 
 #### Returns
@@ -78,8 +78,8 @@ Record a successful request for the specified endpoint. Resets the failure state
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/CircuitBreakerInterface.php#L67)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type     | Description                                   |
+| ----------- | -------- | --------------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier that succeeded |
 
 #### Returns
@@ -95,8 +95,8 @@ Check if the circuit breaker should allow a request to the specified endpoint. E
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/CircuitBreakerInterface.php#L79)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type     | Description                             |
+| ----------- | -------- | --------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns

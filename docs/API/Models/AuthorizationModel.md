@@ -18,9 +18,9 @@ Defines the authorization rules and relationships for your application. An Autho
 * [AuthorizationModels](Models/Collections/AuthorizationModels.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'AuthorizationModel'` |  |
+| Name            | Value                  | Description |
+| --------------- | ---------------------- | ----------- |
+| `OPENAPI_MODEL` | `'AuthorizationModel'` |             |
 
 ## Methods
 

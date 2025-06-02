@@ -22,8 +22,8 @@ Get an authentication request context if this strategy requires token acquisitio
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AuthenticationInterface.php#L31)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name             | Type                     | Description                               |
+| ---------------- | ------------------------ | ----------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | Factory for creating request body streams |
 
 #### Returns
@@ -52,8 +52,8 @@ Handle the authentication response and update internal state. This method is cal
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AuthenticationInterface.php#L56)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name        | Type                                                  | Description                 |
+| ----------- | ----------------------------------------------------- | --------------------------- |
 | `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The authentication response |
 
 #### Returns

@@ -18,9 +18,9 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 * [Nodes](Models/Collections/Nodes.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'Node'` |  |
+| Name            | Value    | Description |
+| --------------- | -------- | ----------- |
+| `OPENAPI_MODEL` | `'Node'` |             |
 
 ## Methods
 

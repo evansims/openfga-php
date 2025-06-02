@@ -17,9 +17,9 @@ Represents a reference to a specific relation on an object. In authorization mod
 * [ObjectRelationInterface](Models/ObjectRelationInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'ObjectRelation'` |  |
+| Name            | Value              | Description |
+| --------------- | ------------------ | ----------- |
+| `OPENAPI_MODEL` | `'ObjectRelation'` |             |
 
 ## Methods
 

@@ -28,10 +28,10 @@ Validate data against a registered schema and transform it into the target class
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidator.php#L80)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$data` | `mixed` | The raw data to validate (typically an array from JSON) |
-| `$className` | `string` | The fully qualified class name to validate against |
+| Name         | Type     | Description                                             |
+| ------------ | -------- | ------------------------------------------------------- |
+| `$data`      | `mixed`  | The raw data to validate (typically an array from JSON) |
+| `$className` | `string` | The fully qualified class name to validate against      |
 
 #### Returns
 `object` — The validated and transformed object instance
@@ -60,8 +60,8 @@ Register a schema for validation use. Adds a schema to the validator&#039;s regi
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidator.php#L66)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name      | Type                                    | Description                       |
+| --------- | --------------------------------------- | --------------------------------- |
 | `$schema` | [`SchemaInterface`](SchemaInterface.md) | The schema definition to register |
 
 #### Returns

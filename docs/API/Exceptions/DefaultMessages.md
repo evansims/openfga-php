@@ -29,8 +29,8 @@ Get the default message key for an authentication error. Maps authentication-rel
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L40)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name     | Type                                            | Description                                          |
+| -------- | ----------------------------------------------- | ---------------------------------------------------- |
 | `$error` | [`AuthenticationError`](AuthenticationError.md) | The specific authentication error type that occurred |
 
 #### Returns
@@ -48,8 +48,8 @@ Get the default message key for a general client error. Maps high-level client e
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L52)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name     | Type                            | Description                                  |
+| -------- | ------------------------------- | -------------------------------------------- |
 | `$error` | [`ClientError`](ClientError.md) | The specific client error type that occurred |
 
 #### Returns
@@ -67,8 +67,8 @@ Get the default message key for a configuration error. Maps configuration-relate
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L64)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name     | Type                                          | Description                                         |
+| -------- | --------------------------------------------- | --------------------------------------------------- |
 | `$error` | [`ConfigurationError`](ConfigurationError.md) | The specific configuration error type that occurred |
 
 #### Returns
@@ -88,8 +88,8 @@ Get the default message key for any supported error type. Generic method that ac
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L77)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name     | Type                                                                                                                                                                                                                                      | Description                          |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
 | `$error` | [`AuthenticationError`](AuthenticationError.md) &#124; [`ClientError`](ClientError.md) &#124; [`ConfigurationError`](ConfigurationError.md) &#124; [`NetworkError`](NetworkError.md) &#124; [`SerializationError`](SerializationError.md) | The error enum of any supported type |
 
 #### Returns
@@ -107,8 +107,8 @@ Get the default message key for a network error. Maps network and HTTP-related e
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L90)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name     | Type                              | Description                                   |
+| -------- | --------------------------------- | --------------------------------------------- |
 | `$error` | [`NetworkError`](NetworkError.md) | The specific network error type that occurred |
 
 #### Returns
@@ -126,8 +126,8 @@ Get the default message key for a serialization error. Maps data serialization a
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L103)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name     | Type                                          | Description                                         |
+| -------- | --------------------------------------------- | --------------------------------------------------- |
 | `$error` | [`SerializationError`](SerializationError.md) | The specific serialization error type that occurred |
 
 #### Returns

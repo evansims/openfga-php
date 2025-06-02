@@ -17,9 +17,9 @@ Represents a leaf node in authorization evaluation trees containing specific use
 * [LeafInterface](Models/LeafInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'Leaf'` |  |
+| Name            | Value    | Description |
+| --------------- | -------- | ----------- |
+| `OPENAPI_MODEL` | `'Leaf'` |             |
 
 ## Methods
 

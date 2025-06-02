@@ -18,9 +18,9 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 * [ConditionParameters](Models/Collections/ConditionParameters.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'ConditionParamTypeRef'` |  |
+| Name            | Value                     | Description |
+| --------------- | ------------------------- | ----------- |
+| `OPENAPI_MODEL` | `'ConditionParamTypeRef'` |             |
 
 ## Methods
 

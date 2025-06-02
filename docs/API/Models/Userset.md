@@ -17,9 +17,9 @@ Represents a userset specification for computing groups of users. A Userset defi
 * [UsersetInterface](Models/UsersetInterface.md) (interface)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'Userset'` |  |
+| Name            | Value       | Description |
+| --------------- | ----------- | ----------- |
+| `OPENAPI_MODEL` | `'Userset'` |             |
 
 ## Methods
 

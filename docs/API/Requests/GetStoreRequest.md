@@ -29,8 +29,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/GetStoreRequest.php#L50)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

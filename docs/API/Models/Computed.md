@@ -18,9 +18,9 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 * [Computeds](Models/Collections/Computeds.md) (collection)
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `OPENAPI_MODEL` | `'Computed'` |  |
+| Name            | Value        | Description |
+| --------------- | ------------ | ----------- |
+| `OPENAPI_MODEL` | `'Computed'` |             |
 
 ## Methods
 

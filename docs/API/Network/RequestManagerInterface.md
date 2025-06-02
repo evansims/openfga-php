@@ -74,8 +74,8 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php#L169)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name       | Type                                               | Description                                   |
+| ---------- | -------------------------------------------------- | --------------------------------------------- |
 | `$request` | [`RequestInterface`](Requests/RequestInterface.md) | The high-level OpenFGA API request to convert |
 
 #### Returns
@@ -91,8 +91,8 @@ Send an HTTP request and return the response. Executes the provided PSR-7 HTTP r
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php#L192)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
+| Name       | Type                   | Description                       |
+| ---------- | ---------------------- | --------------------------------- |
 | `$request` | `HttpRequestInterface` | The PSR-7 HTTP request to execute |
 
 #### Returns

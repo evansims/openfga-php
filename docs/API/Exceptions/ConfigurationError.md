@@ -13,20 +13,20 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 * `BackedEnum`
 
 ## Constants
-| Name | Value | Description |
-|------|-------|-------------|
-| `HttpClientMissing` | `\OpenFGA\Exceptions\ConfigurationError::HttpClientMissing` |  |
-| `HttpRequestFactoryMissing` | `\OpenFGA\Exceptions\ConfigurationError::HttpRequestFactoryMissing` |  |
-| `HttpResponseFactoryMissing` | `\OpenFGA\Exceptions\ConfigurationError::HttpResponseFactoryMissing` |  |
-| `HttpStreamFactoryMissing` | `\OpenFGA\Exceptions\ConfigurationError::HttpStreamFactoryMissing` |  |
+| Name                         | Value                                                                | Description |
+| ---------------------------- | -------------------------------------------------------------------- | ----------- |
+| `HttpClientMissing`          | `\OpenFGA\Exceptions\ConfigurationError::HttpClientMissing`          |             |
+| `HttpRequestFactoryMissing`  | `\OpenFGA\Exceptions\ConfigurationError::HttpRequestFactoryMissing`  |             |
+| `HttpResponseFactoryMissing` | `\OpenFGA\Exceptions\ConfigurationError::HttpResponseFactoryMissing` |             |
+| `HttpStreamFactoryMissing`   | `\OpenFGA\Exceptions\ConfigurationError::HttpStreamFactoryMissing`   |             |
 
 ## Cases
-| Name | Value | Description |
-|------|-------|-------------|
-| `HttpClientMissing` | `http_client_missing` |  |
-| `HttpRequestFactoryMissing` | `http_request_factory_missing` |  |
-| `HttpResponseFactoryMissing` | `http_response_factory_missing` |  |
-| `HttpStreamFactoryMissing` | `http_stream_factory_missing` |  |
+| Name                         | Value                           | Description |
+| ---------------------------- | ------------------------------- | ----------- |
+| `HttpClientMissing`          | `http_client_missing`           |             |
+| `HttpRequestFactoryMissing`  | `http_request_factory_missing`  |             |
+| `HttpResponseFactoryMissing` | `http_response_factory_missing` |             |
+| `HttpStreamFactoryMissing`   | `http_stream_factory_missing`   |             |
 
 ## Methods
 
@@ -73,12 +73,12 @@ Create a new ConfigurationException for this error type. Factory method that cre
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L62)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request being processed when configuration error occurred, if applicable |
-| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response received, if applicable |
-| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
-| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
+| Name        | Type                                                                | Description                                                                             |
+| ----------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `$request`  | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null`    | The PSR-7 HTTP request being processed when configuration error occurred, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response received, if applicable                                         |
+| `$context`  | `array&lt;`string`, `mixed`&gt;`                                    |                                                                                         |
+| `$prev`     | `Throwable` &#124; `null`                                           | The previous throwable used for exception chaining, if any                              |
 
 #### Returns
 [`ConfigurationException`](ConfigurationException.md) — The newly created ConfigurationException instance with comprehensive error context

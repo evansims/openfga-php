@@ -35,11 +35,11 @@ Create a response instance from an HTTP response. This method transforms a raw H
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php#L44)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
-| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
-| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
+| Name         | Type                    | Description                                               |
+| ------------ | ----------------------- | --------------------------------------------------------- |
+| `$response`  | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API                |
+| `$request`   | `HttpRequestInterface`  | The original HTTP request that generated this response    |
+| `$validator` | `SchemaValidator`       | Schema validator for parsing and validating response data |
 
 #### Returns
 `static` — The parsed and validated response instance containing the API response data

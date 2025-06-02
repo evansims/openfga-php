@@ -48,11 +48,11 @@ Create a streaming response from an HTTP response. Processes the streaming HTTP 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponseInterface.php#L42)
 
 #### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$response` | `HttpResponseInterface` | The HTTP response from the API |
-| `$request` | `HttpRequestInterface` | The original HTTP request |
-| `$validator` | `SchemaValidator` | Schema validator for response validation |
+| Name         | Type                    | Description                              |
+| ------------ | ----------------------- | ---------------------------------------- |
+| `$response`  | `HttpResponseInterface` | The HTTP response from the API           |
+| `$request`   | `HttpRequestInterface`  | The original HTTP request                |
+| `$validator` | `SchemaValidator`       | Schema validator for response validation |
 
 #### Returns
 `Generator`&lt;`int`, [`StreamedListObjectsResponseInterface`](StreamedListObjectsResponseInterface.md)&gt; — Generator yielding response objects
