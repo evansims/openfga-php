@@ -31,30 +31,32 @@ Performs multiple authorization checks in a single batch request. This method al
 **Batch checking multiple permissions efficiently:**
 ```php
 $checks = new BatchCheckItems([
-new BatchCheckItem(
-tupleKey: new TupleKey(&#039;user:anne&#039;, &#039;viewer&#039;, &#039;document:budget&#039;),
-correlationId: &#039;check-anne-viewer&#039;
-),
-new BatchCheckItem(
-tupleKey: new TupleKey(&#039;user:bob&#039;, &#039;editor&#039;, &#039;document:budget&#039;),
-correlationId: &#039;check-bob-editor&#039;
-),
-new BatchCheckItem(
-tupleKey: new TupleKey(&#039;user:charlie&#039;, &#039;owner&#039;, &#039;document:roadmap&#039;),
-correlationId: &#039;check-charlie-owner&#039;
-),
+    new BatchCheckItem(
+        tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
+        correlationId: 'check-anne-viewer'
+    ),
+    new BatchCheckItem(
+        tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
+        correlationId: 'check-bob-editor'
+    ),
+    new BatchCheckItem(
+        tupleKey: new TupleKey('user:charlie', 'owner', 'document:roadmap'),
+        correlationId: 'check-charlie-owner'
+    ),
 ]);
-$result = $client-&gt;batchCheck(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-checks: $checks
+
+$result = $client->batchCheck(
+    store: 'store-id',
+    model: 'model-id',
+    checks: $checks
 );
-if ($result-&gt;success()) {
-$responses = $result-&gt;value()-&gt;getResults();
-foreach ($responses as $response) {
-echo $response-&gt;getCorrelationId() . &#039;: &#039; .
-($response-&gt;getAllowed() ? &#039;ALLOWED&#039; : &#039;DENIED&#039;) . &quot;\n&quot;;
-}
+
+if ($result->success()) {
+    $responses = $result->value()->getResults();
+    foreach ($responses as $response) {
+        echo $response->getCorrelationId() . ': ' .
+             ($response->getAllowed() ? 'ALLOWED' : 'DENIED') . "\n";
+    }
 }
 ```
 
@@ -83,29 +85,31 @@ Checks if a user has a specific relationship with an object. Performs an authori
 
 **Basic permission check:**
 ```php
-$result = $client-&gt;check(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-tupleKey: new TupleKey(&#039;user:anne&#039;, &#039;reader&#039;, &#039;document:budget&#039;)
+$result = $client->check(
+    store: 'store-id',
+    model: 'model-id',
+    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget')
 );
-if ($result-&gt;success()) {
-$allowed = $result-&gt;value()-&gt;getAllowed();
-if ($allowed) {
-User has permission
-}
+
+if ($result->success()) {
+    $allowed = $result->value()->getAllowed();
+    if ($allowed) {
+        // User has permission
+    }
 }
 ```
 
 **Check with contextual tuples:**
 ```php
 $contextualTuples = new TupleKeys([
-new TupleKey(&#039;user:anne&#039;, &#039;member&#039;, &#039;team:finance&#039;)
+    new TupleKey('user:anne', 'member', 'team:finance')
 ]);
-$result = $client-&gt;check(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-tupleKey: new TupleKey(&#039;user:anne&#039;, &#039;reader&#039;, &#039;document:budget&#039;),
-contextualTuples: $contextualTuples
+
+$result = $client->check(
+    store: 'store-id',
+    model: 'model-id',
+    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget'),
+    contextualTuples: $contextualTuples
 );
 ```
 
@@ -163,25 +167,29 @@ Creates a new authorization model with the given type definitions and conditions
 
 **Creating a document authorization model with DSL (recommended):**
 ```php
-Using DSL is usually easier than manually building type definitions
-$dsl = &#039;
-model
-schema 1.1
-type user
-type document
-relations
-define owner: [user]
-define editor: [user] or owner
-define viewer: [user] or editor
-&#039;;
-$authModel = $client-&gt;dsl($dsl)-&gt;unwrap();
-$result = $client-&gt;createAuthorizationModel(
-store: &#039;store-id&#039;,
-typeDefinitions: $authModel-&gt;getTypeDefinitions()
+// Using DSL is usually easier than manually building type definitions
+$dsl = '
+    model
+      schema 1.1
+
+    type user
+
+    type document
+      relations
+        define owner: [user]
+        define editor: [user] or owner
+        define viewer: [user] or editor
+';
+
+$authModel = $client->dsl($dsl)->unwrap();
+$result = $client->createAuthorizationModel(
+    store: 'store-id',
+    typeDefinitions: $authModel->getTypeDefinitions()
 );
-if ($result-&gt;success()) {
-$modelId = $result-&gt;value()-&gt;getAuthorizationModelId();
-echo &quot;Created model: {$modelId}&quot;;
+
+if ($result->success()) {
+    $modelId = $result->value()->getAuthorizationModelId();
+    echo "Created model: {$modelId}";
 }
 ```
 
@@ -248,7 +256,7 @@ public function readAssertions(StoreInterface|string $store, AuthorizationModelI
 
 Retrieves assertions for an authorization model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L514)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L512)
 
 #### Parameters
 | Name | Type | Description |
@@ -269,7 +277,7 @@ public function readTuples(StoreInterface|string $store, TupleKeyInterface $tupl
 
 Reads relationship tuples from a store with optional filtering and pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L532)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L530)
 
 #### Parameters
 | Name | Type | Description |
@@ -293,7 +301,7 @@ public function writeAssertions(StoreInterface|string $store, AuthorizationModel
 
 Creates or updates assertions for an authorization model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L576)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L574)
 
 #### Parameters
 | Name | Type | Description |
@@ -318,39 +326,44 @@ Writes or deletes relationship tuples in a store.
 
 **Writing and deleting relationship tuples:**
 ```php
-Create relationships
+// Create relationships
 $writes = new TupleKeys([
-new TupleKey(&#039;user:anne&#039;, &#039;owner&#039;, &#039;document:budget&#039;),
-new TupleKey(&#039;user:bob&#039;, &#039;viewer&#039;, &#039;document:budget&#039;),
-new TupleKey(&#039;user:charlie&#039;, &#039;editor&#039;, &#039;document:roadmap&#039;),
+    new TupleKey('user:anne', 'owner', 'document:budget'),
+    new TupleKey('user:bob', 'viewer', 'document:budget'),
+    new TupleKey('user:charlie', 'editor', 'document:roadmap'),
 ]);
-$result = $client-&gt;writeTuples(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-writes: $writes
+
+$result = $client->writeTuples(
+    store: 'store-id',
+    model: 'model-id',
+    writes: $writes
 );
-if ($result-&gt;success()) {
-echo &quot;Successfully wrote &quot; . count($writes) . &quot; relationships&quot;;
+
+if ($result->success()) {
+    echo "Successfully wrote " . count($writes) . " relationships";
 }
 ```
 
 **Updating permissions by adding and removing tuples:**
 ```php
 $writes = new TupleKeys([
-new TupleKey(&#039;user:anne&#039;, &#039;editor&#039;, &#039;document:budget&#039;), // Promote anne to editor
+    new TupleKey('user:anne', 'editor', 'document:budget'), // Promote anne to editor
 ]);
+
 $deletes = new TupleKeys([
-new TupleKey(&#039;user:bob&#039;, &#039;viewer&#039;, &#039;document:budget&#039;), // Remove bob&#039;s access
+    new TupleKey('user:bob', 'viewer', 'document:budget'), // Remove bob's access
 ]);
-$client-&gt;writeTuples(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-writes: $writes,
-deletes: $deletes
+
+$client->writeTuples(
+    store: 'store-id',
+    model: 'model-id',
+    writes: $writes,
+    deletes: $deletes
 );
+/
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L625)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L622)
 
 #### Parameters
 | Name | Type | Description |
@@ -470,39 +483,42 @@ Lists objects that have a specific relationship with a user.
 
 **List all documents a user can view:**
 ```php
-$result = $client-&gt;listObjects(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-type: &#039;document&#039;,
-relation: &#039;viewer&#039;,
-user: &#039;user:anne&#039;
+$result = $client->listObjects(
+    store: 'store-id',
+    model: 'model-id',
+    type: 'document',
+    relation: 'viewer',
+    user: 'user:anne'
 );
-if ($result-&gt;success()) {
-$objects = $result-&gt;value()-&gt;getObjects();
-echo &quot;Anne can view &quot; . count($objects) . &quot; documents:\n&quot;;
-foreach ($objects as $object) {
-echo &quot;- {$object}\n&quot;;
-}
+
+if ($result->success()) {
+    $objects = $result->value()->getObjects();
+    echo "Anne can view " . count($objects) . " documents:\n";
+    foreach ($objects as $object) {
+        echo "- {$object}\n";
+    }
 }
 ```
 
 **List objects with contextual evaluation:**
 ```php
-Check what documents anne can edit, considering her team membership
+// Check what documents anne can edit, considering her team membership
 $contextualTuples = new TupleKeys([
-new TupleKey(&#039;user:anne&#039;, &#039;member&#039;, &#039;team:engineering&#039;)
+    new TupleKey('user:anne', 'member', 'team:engineering')
 ]);
-$result = $client-&gt;listObjects(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-type: &#039;document&#039;,
-relation: &#039;editor&#039;,
-user: &#039;user:anne&#039;,
-contextualTuples: $contextualTuples
+
+$result = $client->listObjects(
+    store: 'store-id',
+    model: 'model-id',
+    type: 'document',
+    relation: 'editor',
+    user: 'user:anne',
+    contextualTuples: $contextualTuples
 );
+/
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L401)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L400)
 
 #### Parameters
 | Name | Type | Description |
@@ -529,7 +545,7 @@ public function listStores(string|null $continuationToken = NULL, ?int $pageSize
 
 Lists all stores with pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L422)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L421)
 
 #### Parameters
 | Name | Type | Description |
@@ -550,7 +566,7 @@ public function listTupleChanges(StoreInterface|string $store, string|null $cont
 
 Lists changes to relationship tuples in a store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L440)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L439)
 
 #### Parameters
 | Name | Type | Description |
@@ -578,40 +594,44 @@ Lists users that have a specific relationship with an object.
 **List all users who can view a document:**
 ```php
 $userFilters = new UserTypeFilters([
-new UserTypeFilter(&#039;user&#039;) // Only include direct users, not groups
+    new UserTypeFilter('user') // Only include direct users, not groups
 ]);
-$result = $client-&gt;listUsers(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-object: &#039;document:budget&#039;,
-relation: &#039;viewer&#039;,
-userFilters: $userFilters
+
+$result = $client->listUsers(
+    store: 'store-id',
+    model: 'model-id',
+    object: 'document:budget',
+    relation: 'viewer',
+    userFilters: $userFilters
 );
-if ($result-&gt;success()) {
-$users = $result-&gt;value()-&gt;getUsers();
-echo &quot;Users who can view the budget document:\n&quot;;
-foreach ($users as $user) {
-echo &quot;- {$user}\n&quot;;
-}
+
+if ($result->success()) {
+    $users = $result->value()->getUsers();
+    echo "Users who can view the budget document:\n";
+    foreach ($users as $user) {
+        echo "- {$user}\n";
+    }
 }
 ```
 
 **Find both users and groups with access:**
 ```php
 $userFilters = new UserTypeFilters([
-new UserTypeFilter(&#039;user&#039;),
-new UserTypeFilter(&#039;group&#039;)
+    new UserTypeFilter('user'),
+    new UserTypeFilter('group')
 ]);
-$result = $client-&gt;listUsers(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-object: &#039;document:sensitive&#039;,
-relation: &#039;editor&#039;,
-userFilters: $userFilters
+
+$result = $client->listUsers(
+    store: 'store-id',
+    model: 'model-id',
+    object: 'document:sensitive',
+    relation: 'editor',
+    userFilters: $userFilters
 );
+/
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L496)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L494)
 
 #### Parameters
 | Name | Type | Description |
@@ -638,7 +658,7 @@ public function streamedListObjects(StoreInterface|string $store, AuthorizationM
 
 Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L557)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L555)
 
 #### Parameters
 | Name | Type | Description |
@@ -669,15 +689,18 @@ Retrieves the last HTTP request made by the client.
 
 **Accessing the last request for debugging:**
 ```php
-$result = $client-&gt;check(
-store: &#039;store-id&#039;,
-model: &#039;model-id&#039;,
-tupleKey: new TupleKey(&#039;user:anne&#039;, &#039;viewer&#039;, &#039;document:budget&#039;)
+$result = $client->check(
+    store: 'store-id',
+    model: 'model-id',
+    tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget')
 );
-$lastRequest = $client-&gt;assertLastRequest();
-echo &quot;Method: &quot; . $lastRequest-&gt;getMethod();
-echo &quot;URL: &quot; . $lastRequest-&gt;getUri();
-echo &quot;Headers: &quot; . json_encode($lastRequest-&gt;getHeaders());
+
+$lastRequest = $client->assertLastRequest();
+
+echo "Method: " . $lastRequest->getMethod();
+echo "URL: " . $lastRequest->getUri();
+echo "Headers: " . json_encode($lastRequest->getHeaders());
+/
 ```
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L55)
@@ -700,23 +723,28 @@ Parses a DSL string and returns an AuthorizationModel. The Domain Specific Langu
 
 **Parse a complete authorization model from DSL:**
 ```php
-$dsl = &#039;
-model
-schema 1.1
-type user
-type organization
-relations
-define member: [user]
-type document
-relations
-define owner: [user]
-define editor: [user, organization#member] or owner
-define viewer: [user, organization#member] or editor
-&#039;;
-$result = $client-&gt;dsl($dsl);
-if ($result-&gt;success()) {
-$authModel = $result-&gt;value();
-echo &quot;Parsed model with &quot; . count($authModel-&gt;getTypeDefinitions()) . &quot; types&quot;;
+$dsl = '
+    model
+      schema 1.1
+
+    type user
+
+    type organization
+      relations
+        define member: [user]
+
+    type document
+      relations
+        define owner: [user]
+        define editor: [user, organization#member] or owner
+        define viewer: [user, organization#member] or editor
+';
+
+$result = $client->dsl($dsl);
+
+if ($result->success()) {
+    $authModel = $result->value();
+    echo "Parsed model with " . count($authModel->getTypeDefinitions()) . " types";
 }
 ```
 

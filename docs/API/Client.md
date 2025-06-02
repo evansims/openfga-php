@@ -33,6 +33,39 @@ public function batchCheck(OpenFGA\Models\StoreInterface|string $store, OpenFGA\
 
 Performs multiple authorization checks in a single batch request. This method allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information for each check.
 
+
+**Batch checking multiple permissions efficiently:**
+```php
+$checks = new BatchCheckItems([
+    new BatchCheckItem(
+        tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
+        correlationId: 'check-anne-viewer'
+    ),
+    new BatchCheckItem(
+        tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
+        correlationId: 'check-bob-editor'
+    ),
+    new BatchCheckItem(
+        tupleKey: new TupleKey('user:charlie', 'owner', 'document:roadmap'),
+        correlationId: 'check-charlie-owner'
+    ),
+]);
+
+$result = $client->batchCheck(
+    store: 'store-id',
+    model: 'model-id',
+    checks: $checks
+);
+
+if ($result->success()) {
+    $responses = $result->value()->getResults();
+    foreach ($responses as $response) {
+        echo $response->getCorrelationId() . ': ' .
+             ($response->getAllowed() ? 'ALLOWED' : 'DENIED') . "\n";
+    }
+}
+```
+
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L132)
 
 #### Parameters
@@ -54,6 +87,37 @@ public function check(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Model
 ```
 
 Checks if a user has a specific relationship with an object. Performs an authorization check to determine if a user has a particular relationship with an object based on the configured authorization model. This is the core operation for making authorization decisions in OpenFGA.
+
+
+**Basic permission check:**
+```php
+$result = $client->check(
+    store: 'store-id',
+    model: 'model-id',
+    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget')
+);
+
+if ($result->success()) {
+    $allowed = $result->value()->getAllowed();
+    if ($allowed) {
+        // User has permission
+    }
+}
+```
+
+**Check with contextual tuples:**
+```php
+$contextualTuples = new TupleKeys([
+    new TupleKey('user:anne', 'member', 'team:finance')
+]);
+
+$result = $client->check(
+    store: 'store-id',
+    model: 'model-id',
+    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget'),
+    contextualTuples: $contextualTuples
+);
+```
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L163)
 
@@ -105,6 +169,35 @@ public function createAuthorizationModel(OpenFGA\Models\StoreInterface|string $s
 ```
 
 Creates a new authorization model with the given type definitions and conditions. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
+
+
+**Creating a document authorization model with DSL (recommended):**
+```php
+// Using DSL is usually easier than manually building type definitions
+$dsl = '
+    model
+      schema 1.1
+
+    type user
+
+    type document
+      relations
+        define owner: [user]
+        define editor: [user] or owner
+        define viewer: [user] or editor
+';
+
+$authModel = $client->dsl($dsl)->unwrap();
+$result = $client->createAuthorizationModel(
+    store: 'store-id',
+    typeDefinitions: $authModel->getTypeDefinitions()
+);
+
+if ($result->success()) {
+    $modelId = $result->value()->getAuthorizationModelId();
+    echo "Created model: {$modelId}";
+}
+```
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L202)
 
@@ -235,6 +328,46 @@ public function writeTuples(OpenFGA\Models\StoreInterface|string $store, OpenFGA
 ```
 
 Writes or deletes relationship tuples in a store.
+
+
+**Writing and deleting relationship tuples:**
+```php
+// Create relationships
+$writes = new TupleKeys([
+    new TupleKey('user:anne', 'owner', 'document:budget'),
+    new TupleKey('user:bob', 'viewer', 'document:budget'),
+    new TupleKey('user:charlie', 'editor', 'document:roadmap'),
+]);
+
+$result = $client->writeTuples(
+    store: 'store-id',
+    model: 'model-id',
+    writes: $writes
+);
+
+if ($result->success()) {
+    echo "Successfully wrote " . count($writes) . " relationships";
+}
+```
+
+**Updating permissions by adding and removing tuples:**
+```php
+$writes = new TupleKeys([
+    new TupleKey('user:anne', 'editor', 'document:budget'), // Promote anne to editor
+]);
+
+$deletes = new TupleKeys([
+    new TupleKey('user:bob', 'viewer', 'document:budget'), // Remove bob's access
+]);
+
+$client->writeTuples(
+    store: 'store-id',
+    model: 'model-id',
+    writes: $writes,
+    deletes: $deletes
+);
+/
+```
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L695)
 
@@ -369,6 +502,44 @@ public function listObjects(OpenFGA\Models\StoreInterface|string $store, OpenFGA
 
 Lists objects that have a specific relationship with a user.
 
+
+**List all documents a user can view:**
+```php
+$result = $client->listObjects(
+    store: 'store-id',
+    model: 'model-id',
+    type: 'document',
+    relation: 'viewer',
+    user: 'user:anne'
+);
+
+if ($result->success()) {
+    $objects = $result->value()->getObjects();
+    echo "Anne can view " . count($objects) . " documents:\n";
+    foreach ($objects as $object) {
+        echo "- {$object}\n";
+    }
+}
+```
+
+**List objects with contextual evaluation:**
+```php
+// Check what documents anne can edit, considering her team membership
+$contextualTuples = new TupleKeys([
+    new TupleKey('user:anne', 'member', 'team:engineering')
+]);
+
+$result = $client->listObjects(
+    store: 'store-id',
+    model: 'model-id',
+    type: 'document',
+    relation: 'editor',
+    user: 'user:anne',
+    contextualTuples: $contextualTuples
+);
+/
+```
+
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L447)
 
 #### Parameters
@@ -441,6 +612,47 @@ public function listUsers(OpenFGA\Models\StoreInterface|string $store, OpenFGA\M
 
 Lists users that have a specific relationship with an object.
 
+
+**List all users who can view a document:**
+```php
+$userFilters = new UserTypeFilters([
+    new UserTypeFilter('user') // Only include direct users, not groups
+]);
+
+$result = $client->listUsers(
+    store: 'store-id',
+    model: 'model-id',
+    object: 'document:budget',
+    relation: 'viewer',
+    userFilters: $userFilters
+);
+
+if ($result->success()) {
+    $users = $result->value()->getUsers();
+    echo "Users who can view the budget document:\n";
+    foreach ($users as $user) {
+        echo "- {$user}\n";
+    }
+}
+```
+
+**Find both users and groups with access:**
+```php
+$userFilters = new UserTypeFilters([
+    new UserTypeFilter('user'),
+    new UserTypeFilter('group')
+]);
+
+$result = $client->listUsers(
+    store: 'store-id',
+    model: 'model-id',
+    object: 'document:sensitive',
+    relation: 'editor',
+    userFilters: $userFilters
+);
+/
+```
+
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L541)
 
 #### Parameters
@@ -496,6 +708,23 @@ public function assertLastRequest(): Psr\Http\Message\RequestInterface
 
 Retrieves the last HTTP request made by the client.
 
+
+**Accessing the last request for debugging:**
+```php
+$result = $client->check(
+    store: 'store-id',
+    model: 'model-id',
+    tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget')
+);
+
+$lastRequest = $client->assertLastRequest();
+
+echo "Method: " . $lastRequest->getMethod();
+echo "URL: " . $lastRequest->getUri();
+echo "Headers: " . json_encode($lastRequest->getHeaders());
+/
+```
+
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L117)
 
 
@@ -512,6 +741,34 @@ public function dsl(string $dsl): OpenFGA\Results\FailureInterface|OpenFGA\Resul
 ```
 
 Parses a DSL string and returns an AuthorizationModel. The Domain Specific Language (DSL) provides a human-readable way to define authorization models using intuitive syntax for relationships and permissions. This method converts DSL text into a structured authorization model object.
+
+
+**Parse a complete authorization model from DSL:**
+```php
+$dsl = '
+    model
+      schema 1.1
+
+    type user
+
+    type organization
+      relations
+        define member: [user]
+
+    type document
+      relations
+        define owner: [user]
+        define editor: [user, organization#member] or owner
+        define viewer: [user, organization#member] or editor
+';
+
+$result = $client->dsl($dsl);
+
+if ($result->success()) {
+    $authModel = $result->value();
+    echo "Parsed model with " . count($authModel->getTypeDefinitions()) . " types";
+}
+```
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L276)
 

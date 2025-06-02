@@ -295,6 +295,11 @@ class DocumentationGenerator
                     $methodData['return']['description'] = $interfaceMethod['return']['description'];
                 }
 
+                // Inherit examples from interface if class method doesn't have any
+                if (empty($methodData['examples']) && !empty($interfaceMethod['examples'])) {
+                    $methodData['examples'] = $interfaceMethod['examples'];
+                }
+
                 // Mark as from interface for rendering
                 $methodData['fromInterface'] = $interfaceMethod['fromInterface'];
 
@@ -1011,9 +1016,11 @@ class DocumentationGenerator
                         $currentExample = null;
                     }
                 } else {
-                    // Add line to current example
-                    if ($currentExample !== null && !empty($trimmedLine)) {
-                        $currentExample['code'][] = $trimmedLine;
+                    // Add line to current example, preserving original indentation from docblock
+                    if ($currentExample !== null) {
+                        // Remove only the comment prefix (* and whitespace), preserve code indentation
+                        $codeLine = preg_replace('/^\s*\*\s?/', '', $line);
+                        $currentExample['code'][] = $codeLine;
                     }
                 }
             }
@@ -1026,7 +1033,37 @@ class DocumentationGenerator
         
         // Clean up examples
         foreach ($examples as &$example) {
-            $example['code'] = implode("\n", $example['code']);
+            // Join lines and clean up formatting
+            $codeLines = $example['code'];
+            
+            // Remove empty lines at start and end
+            while (!empty($codeLines) && trim($codeLines[0]) === '') {
+                array_shift($codeLines);
+            }
+            while (!empty($codeLines) && trim(end($codeLines)) === '') {
+                array_pop($codeLines);
+            }
+            
+            // Find minimum indentation (excluding empty lines)
+            $minIndent = PHP_INT_MAX;
+            foreach ($codeLines as $line) {
+                if (trim($line) !== '') {
+                    $indent = strlen($line) - strlen(ltrim($line));
+                    $minIndent = min($minIndent, $indent);
+                }
+            }
+            
+            // Remove common indentation and normalize
+            if ($minIndent > 0 && $minIndent !== PHP_INT_MAX) {
+                $codeLines = array_map(function($line) use ($minIndent) {
+                    if (trim($line) === '') {
+                        return '';
+                    }
+                    return substr($line, $minIndent);
+                }, $codeLines);
+            }
+            
+            $example['code'] = implode("\n", $codeLines);
         }
         
         return $examples;

@@ -77,7 +77,7 @@
 {% for example in method.examples %}
 **{{ example.title }}:**
 ```php
-{{ example.code }}
+{{ example.code|raw }}
 ```
 
 {% endfor %}
