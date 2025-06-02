@@ -5,6 +5,9 @@ Represents source file information for OpenFGA model elements. Source informatio
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfoInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getFile(): string
 
 Get the source file path where the model element was defined. This provides debugging and tooling information about the original source file location for the model element. This is particularly useful for development tools, error reporting, and tracing model definitions back to their source.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfoInterface.php#L39)
+
 
 #### Returns
 string
@@ -33,6 +38,8 @@ string
 public function jsonSerialize(): array
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfoInterface.php#L45)
 
 
 #### Returns

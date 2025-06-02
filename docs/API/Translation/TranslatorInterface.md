@@ -5,6 +5,9 @@ Translation service interface for OpenFGA SDK messages. This interface defines t
 ## Namespace
 `OpenFGA\Translation`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php)
+
 
 
 

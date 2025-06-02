@@ -4,6 +4,9 @@
 ## Namespace
 `OpenFGA\Models\Collections`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/ConditionParametersInterface.php)
+
 ## Implements
 * [IndexedCollectionInterface](IndexedCollectionInterface.md)
 * Traversable
@@ -24,6 +27,8 @@ public function add(T $item): static
 
 Add an item to the end of the collection. This method appends a new model object to the collection, automatically assigning it the next available integer index. The item is validated to ensure it matches the expected type for this collection, maintaining type safety throughout the authorization data processing pipeline. This operation modifies the current collection instance directly, making it suitable for building collections incrementally. For immutable operations, use the `withItems()` method instead, which creates new collection instances without modifying the original.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L95)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -41,6 +46,8 @@ public function clear(): void
 
 Remove all items from the collection. This method empties the collection, resetting it to its initial state with no items and a count of zero.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L103)
+
 
 #### Returns
 void
@@ -52,6 +59,8 @@ void
 public function count(): int<0, max>
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L109)
 
 
 #### Returns
@@ -65,6 +74,8 @@ public function current(): T
 ```
 
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L116)
+
 
 #### Returns
 T
@@ -77,6 +88,8 @@ public function every(callable $callback): bool
 ```
 
 Check if all items in the collection match the given condition. This method tests whether all items in the collection satisfy the provided callback function. Returns true if all items pass the test, false if any item fails.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L128)
 
 #### Parameters
 | Name | Type | Description |
@@ -96,6 +109,8 @@ public function filter(callable $callback): static
 
 Create a new collection containing only items that match the condition. This method creates a new collection containing only the items from the current collection that satisfy the provided callback function.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L139)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -113,6 +128,8 @@ public function first(?callable $callback = NULL): T|null
 ```
 
 Get the first item in the collection, optionally matching a condition. When called without a callback, returns the first item in the collection. When called with a callback, returns the first item that satisfies the condition.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L150)
 
 #### Parameters
 | Name | Type | Description |
@@ -132,6 +149,8 @@ public function get(int $offset): T|null
 
 Get an item by its position in the collection. This method retrieves the item at the specified index position. Returns null if the index is out of bounds.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L161)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -150,6 +169,8 @@ public function isEmpty(): bool
 
 Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L171)
+
 
 #### Returns
 bool
@@ -163,6 +184,8 @@ public function jsonSerialize(): array
 ```
 
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/ConditionParametersInterface.php#L21)
+
 
 #### Returns
 array
@@ -175,6 +198,8 @@ public function key(): int
 ```
 
 Get the current iterator key. This method returns the current position in the collection iteration, which is always an integer for indexed collections.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L188)
 
 
 #### Returns
@@ -190,6 +215,8 @@ public function next(): void
 
 Move the iterator to the next position. This method advances the internal iterator pointer to the next item in the collection sequence.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L197)
+
 
 #### Returns
 void
@@ -202,6 +229,8 @@ public function offsetExists(mixed $offset): bool
 ```
 
 Check if an offset exists in the collection. This method determines whether the collection contains an item at the specified offset position.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L209)
 
 #### Parameters
 | Name | Type | Description |
@@ -220,6 +249,8 @@ public function offsetGet(mixed $offset): T|null
 ```
 
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L217)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -235,6 +266,8 @@ T&#124;null
 public function offsetSet(int|string|null $offset, T $value): void
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L226)
 
 #### Parameters
 | Name | Type | Description |
@@ -253,6 +286,8 @@ public function offsetUnset(mixed $offset): void
 ```
 
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L232)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -269,6 +304,8 @@ public function reduce(U $initial, callable $callback): U
 ```
 
 Reduce the collection to a single value using a callback function. This method iteratively applies a callback function to accumulate the collection items into a single value, starting with an initial value.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L246)
 
 #### Parameters
 | Name | Type | Description |
@@ -289,6 +326,8 @@ public function rewind(): void
 
 Reset the iterator to the beginning of the collection. This method moves the internal iterator pointer back to the first item in the collection.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L255)
+
 
 #### Returns
 void
@@ -301,6 +340,8 @@ public function some(callable $callback): bool
 ```
 
 Check if at least one item in the collection matches the given condition. This method tests whether at least one item in the collection satisfies the provided callback function. Returns true if any item passes the test, false if all items fail.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L267)
 
 #### Parameters
 | Name | Type | Description |
@@ -320,6 +361,8 @@ public function toArray(): array<int|string, T>
 
 Convert the collection to a standard PHP array. This method creates a native PHP array containing all items in the collection, preserving their order and indexes.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L277)
+
 
 #### Returns
 array&lt;int&#124;string, T&gt;
@@ -334,6 +377,8 @@ public function valid(): bool
 
 Check if the current iterator position is valid. This method determines whether the current iterator position points to a valid item in the collection.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L288)
+
 
 #### Returns
 bool
@@ -347,6 +392,8 @@ public function withItems(mixed $items): static
 ```
 
 Create a new collection with the specified items. This method creates a fresh collection instance containing only the provided items, leaving the original collection unchanged.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L302)
 
 #### Parameters
 | Name | Type | Description |

@@ -5,6 +5,9 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getOperation(): TupleOperation
 
 Get the type of operation performed on the tuple. Operations indicate whether the tuple was written (created) or deleted from the authorization store. This information is crucial for understanding the nature of the change.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L39)
+
 
 #### Returns
 TupleOperation
@@ -34,6 +39,8 @@ public function getTimestamp(): DateTimeImmutable
 ```
 
 Get the timestamp when this tuple change occurred. Timestamps help track the chronological order of changes and provide audit trail capabilities. They are essential for understanding the sequence of relationship modifications.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L50)
 
 
 #### Returns
@@ -49,6 +56,8 @@ public function getTupleKey(): TupleKeyInterface
 
 Get the tuple key that was affected by this change. The tuple key identifies which specific relationship was created or deleted, containing the user, relation, object, and optional condition information.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L61)
+
 
 #### Returns
 TupleKeyInterface
@@ -61,6 +70,8 @@ TupleKeyInterface
 public function jsonSerialize(): array<string, mixed>
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L67)
 
 
 #### Returns

@@ -5,6 +5,9 @@ Represents a collection that is indexed by a string, like a JSON object.
 ## Namespace
 `OpenFGA\Models\Collections`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php)
+
 ## Implements
 * ArrayAccess
 * Countable
@@ -24,6 +27,8 @@ public function add(string $key, T $item): static
 
 Add an item to the collection with the specified key. This method associates an item with a string key, allowing for named access to collection elements similar to an associative array.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L52)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -41,6 +46,8 @@ public function count(): int<0, max>
 ```
 
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L58)
+
 
 #### Returns
 int&lt;0, max&gt;
@@ -52,6 +59,8 @@ int&lt;0, max&gt;
 public function current(): T
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L67)
 
 
 #### Returns
@@ -65,6 +74,8 @@ public function get(string $key): T|null
 ```
 
 Get an item by its string key. This method retrieves the item associated with the specified key. Returns null if no item is found with the given key.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L78)
 
 #### Parameters
 | Name | Type | Description |
@@ -84,6 +95,8 @@ public function has(string $key): bool
 
 Check if a key exists in the collection. This method determines whether the collection contains an item associated with the specified key.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L89)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -102,6 +115,8 @@ public function isEmpty(): bool
 
 Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L99)
+
 
 #### Returns
 bool
@@ -115,6 +130,8 @@ public function jsonSerialize(): array<string, mixed>
 ```
 
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L105)
+
 
 #### Returns
 array&lt;string, mixed&gt;
@@ -127,6 +144,8 @@ public function key(): string
 ```
 
 Get the current iterator key. This method returns the current string key in the collection iteration. For keyed collections, this is always a string identifier.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L118)
 
 
 #### Returns
@@ -142,6 +161,8 @@ public function next(): void
 
 Move the iterator to the next position. This method advances the internal iterator pointer to the next key-value pair in the collection.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L127)
+
 
 #### Returns
 void
@@ -154,6 +175,8 @@ public function offsetExists(mixed $offset): bool
 ```
 
 Check if an offset exists in the collection. This method determines whether the collection contains an item with the specified key.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L139)
 
 #### Parameters
 | Name | Type | Description |
@@ -173,6 +196,8 @@ public function offsetGet(mixed $offset): T|null
 
 Get an item by its offset key.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L149)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -188,6 +213,8 @@ T&#124;null
 public function offsetSet(string|null $offset, T $value): void
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L158)
 
 #### Parameters
 | Name | Type | Description |
@@ -206,6 +233,8 @@ public function offsetUnset(mixed $offset): void
 ```
 
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L164)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -223,6 +252,8 @@ public function rewind(): void
 
 Reset the iterator to the beginning of the collection. This method moves the internal iterator pointer back to the first key-value pair in the collection.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L173)
+
 
 #### Returns
 void
@@ -235,6 +266,8 @@ public function toArray(): array<string, T>
 ```
 
 Convert the collection to a standard PHP associative array. This method creates a native PHP associative array containing all items in the collection, preserving their string keys and values.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L183)
 
 
 #### Returns
@@ -249,6 +282,8 @@ public function valid(): bool
 ```
 
 Check if the current iterator position is valid. This method determines whether the current iterator position points to a valid key-value pair in the collection.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L194)
 
 
 #### Returns

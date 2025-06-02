@@ -5,6 +5,9 @@ Request for performing multiple authorization checks in a single batch. This req
 ## Namespace
 `OpenFGA\Requests`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/BatchCheckRequestInterface.php)
+
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
@@ -20,6 +23,8 @@ public function getChecks(): BatchCheckItemsInterface
 
 Get the collection of checks to perform in this batch. Each item contains a tuple key to check and a correlation ID to map the result back to this specific check.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/BatchCheckRequestInterface.php#L33)
+
 
 #### Returns
 BatchCheckItemsInterface
@@ -33,6 +38,8 @@ public function getRequest(StreamFactoryInterface $streamFactory): RequestContex
 ```
 
 Build a request context for HTTP execution. Transforms the request object into a standardized HTTP request context that can be executed by the OpenFGA HTTP client. This method handles all aspects of request preparation including parameter serialization, URL construction, header configuration, and body stream creation. The method validates that all required parameters are present and properly formatted, serializes complex objects to JSON, constructs the appropriate API endpoint URL, and creates the necessary HTTP message body streams.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/RequestInterface.php#L57)
 
 #### Parameters
 | Name | Type | Description |

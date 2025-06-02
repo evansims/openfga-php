@@ -5,6 +5,9 @@ Contains metadata information about type definitions in your authorization model
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php)
+
 ## Implements
 * [MetadataInterface](MetadataInterface.md)
 * JsonSerializable
@@ -26,6 +29,8 @@ public function getModule(): ?string
 
 Get the module name for this metadata. Modules provide a way to organize and namespace authorization model components, similar to packages in programming languages. This helps with model organization and prevents naming conflicts in large authorization systems.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L62)
+
 
 #### Returns
 ?string
@@ -39,6 +44,8 @@ public function getRelations(): ?OpenFGA\Models\Collections\RelationMetadataColl
 ```
 
 Get the collection of relation metadata. Relation metadata provides additional configuration and context for specific relations within a type definition. This can include documentation, constraints, or other relation-specific settings that enhance the authorization model.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L71)
 
 
 #### Returns
@@ -54,6 +61,8 @@ public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
 
 Get the source code information for this metadata. Source information provides debugging and development context by tracking where authorization model elements were defined. This is particularly useful for development tools and error reporting.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L80)
+
 
 #### Returns
 ?OpenFGA\Models\SourceInfoInterface
@@ -66,6 +75,8 @@ Get the source code information for this metadata. Source information provides d
 public function jsonSerialize(): array
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L89)
 
 
 #### Returns
@@ -80,6 +91,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
 
 #### Returns

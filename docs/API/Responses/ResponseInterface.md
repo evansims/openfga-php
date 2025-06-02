@@ -5,6 +5,9 @@ Base interface for all OpenFGA API response objects. This interface establishes 
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php)
+
 
 
 

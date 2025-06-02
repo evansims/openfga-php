@@ -5,6 +5,9 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 ## Namespace
 `OpenFGA\Requests`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php)
+
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
@@ -20,6 +23,8 @@ public function getDeletes(): TupleKeysInterface<TupleKeyInterface>|null
 
 Get the relationship tuples to delete from the store. Returns a collection of relationship tuples that should be removed from the authorization store. Each tuple represents a permission or relationship that will be revoked. The deletion is atomic with any write operations specified in the same request.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L43)
+
 
 #### Returns
 TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
@@ -34,6 +39,8 @@ public function getModel(): string
 
 Get the authorization model ID to use for tuple validation. Specifies which version of the authorization model should be used to validate the relationship tuples being written or deleted. This ensures that all tuples conform to the expected schema and relationship types defined in the model.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L55)
+
 
 #### Returns
 string
@@ -47,6 +54,8 @@ public function getRequest(StreamFactoryInterface $streamFactory): RequestContex
 ```
 
 Build a request context for HTTP execution. Transforms the request object into a standardized HTTP request context that can be executed by the OpenFGA HTTP client. This method handles all aspects of request preparation including parameter serialization, URL construction, header configuration, and body stream creation. The method validates that all required parameters are present and properly formatted, serializes complex objects to JSON, constructs the appropriate API endpoint URL, and creates the necessary HTTP message body streams.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/RequestInterface.php#L57)
 
 #### Parameters
 | Name | Type | Description |
@@ -66,6 +75,8 @@ public function getStore(): string
 
 Get the store ID where tuples will be written. Identifies the OpenFGA store that contains the authorization data to be modified. All write and delete operations will be performed within the context of this specific store.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L66)
+
 
 #### Returns
 string
@@ -79,6 +90,8 @@ public function getWrites(): TupleKeysInterface<TupleKeyInterface>|null
 ```
 
 Get the relationship tuples to write to the store. Returns a collection of relationship tuples that should be added to the authorization store. Each tuple represents a new permission or relationship that will be granted. The write operation is atomic with any delete operations specified in the same request.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L78)
 
 
 #### Returns

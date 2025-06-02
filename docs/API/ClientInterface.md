@@ -5,6 +5,9 @@ OpenFGA Client Interface for relationship-based access control operations. This 
 ## Namespace
 `OpenFGA`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php)
+
 
 
 
@@ -17,6 +20,8 @@ public function assertLastRequest(): HttpRequestInterface
 ```
 
 Retrieves the last HTTP request made by the client.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L42)
 
 
 #### Returns
@@ -31,6 +36,8 @@ public function batchCheck(StoreInterface|string $store, AuthorizationModelInter
 ```
 
 Performs multiple authorization checks in a single batch request. This method allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information for each check.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L66)
 
 #### Parameters
 | Name | Type | Description |
@@ -51,6 +58,8 @@ public function check(StoreInterface|string $store, AuthorizationModelInterface|
 ```
 
 Checks if a user has a specific relationship with an object. Performs an authorization check to determine if a user has a particular relationship with an object based on the configured authorization model. This is the core operation for making authorization decisions in OpenFGA.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L90)
 
 #### Parameters
 | Name | Type | Description |
@@ -76,6 +85,8 @@ public function createAuthorizationModel(StoreInterface|string $store, TypeDefin
 
 Creates a new authorization model with the given type definitions and conditions. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L116)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -97,6 +108,8 @@ public function createStore(string $name): FailureInterface|SuccessInterface
 
 Creates a new store with the given name. Stores provide data isolation for different applications or environments. Each store maintains its own authorization models, relationship tuples, and provides complete separation from other stores.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L135)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -114,6 +127,8 @@ public function deleteStore(StoreInterface|string $store): FailureInterface|Succ
 ```
 
 Deletes a store.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L145)
 
 #### Parameters
 | Name | Type | Description |
@@ -133,6 +148,8 @@ public function dsl(string $dsl): FailureInterface|SuccessInterface
 
 Parses a DSL string and returns an AuthorizationModel. The Domain Specific Language (DSL) provides a human-readable way to define authorization models using intuitive syntax for relationships and permissions. This method converts DSL text into a structured authorization model object.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L164)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -150,6 +167,8 @@ public function expand(StoreInterface|string $store, TupleKeyInterface $tupleKey
 ```
 
 Expands a relationship tuple to show all users that have the relationship.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L176)
 
 #### Parameters
 | Name | Type | Description |
@@ -173,6 +192,8 @@ public function getAuthorizationModel(StoreInterface|string $store, Authorizatio
 
 Retrieves an authorization model by ID.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L191)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -192,6 +213,8 @@ public function getLastRequest(): ?Psr\Http\Message\RequestInterface
 
 Retrieves the last HTTP request made by the client.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L201)
+
 
 #### Returns
 ?Psr\Http\Message\RequestInterface
@@ -205,6 +228,8 @@ public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
 
 Retrieves the last HTTP response received by the client.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L208)
+
 
 #### Returns
 ?Psr\Http\Message\ResponseInterface
@@ -217,6 +242,8 @@ public function getStore(StoreInterface|string $store): FailureInterface|Success
 ```
 
 Retrieves store details by ID.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L216)
 
 #### Parameters
 | Name | Type | Description |
@@ -235,6 +262,8 @@ public function listAuthorizationModels(StoreInterface|string $store, string|nul
 ```
 
 Lists authorization models in a store with pagination.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L231)
 
 #### Parameters
 | Name | Type | Description |
@@ -255,6 +284,8 @@ public function listObjects(StoreInterface|string $store, AuthorizationModelInte
 ```
 
 Lists objects that have a specific relationship with a user.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L250)
 
 #### Parameters
 | Name | Type | Description |
@@ -281,6 +312,8 @@ public function listStores(string|null $continuationToken = NULL, ?int $pageSize
 
 Lists all stores with pagination.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L271)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -299,6 +332,8 @@ public function listTupleChanges(StoreInterface|string $store, string|null $cont
 ```
 
 Lists changes to relationship tuples in a store.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L289)
 
 #### Parameters
 | Name | Type | Description |
@@ -321,6 +356,8 @@ public function listUsers(StoreInterface|string $store, AuthorizationModelInterf
 ```
 
 Lists users that have a specific relationship with an object.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L310)
 
 #### Parameters
 | Name | Type | Description |
@@ -347,6 +384,8 @@ public function readAssertions(StoreInterface|string $store, AuthorizationModelI
 
 Retrieves assertions for an authorization model.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L328)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -365,6 +404,8 @@ public function readTuples(StoreInterface|string $store, TupleKeyInterface $tupl
 ```
 
 Reads relationship tuples from a store with optional filtering and pagination.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L346)
 
 #### Parameters
 | Name | Type | Description |
@@ -387,6 +428,8 @@ public function streamedListObjects(StoreInterface|string $store, AuthorizationM
 ```
 
 Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L371)
 
 #### Parameters
 | Name | Type | Description |
@@ -413,6 +456,8 @@ public function writeAssertions(StoreInterface|string $store, AuthorizationModel
 
 Creates or updates assertions for an authorization model.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L390)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -432,6 +477,8 @@ public function writeTuples(StoreInterface|string $store, AuthorizationModelInte
 ```
 
 Writes or deletes relationship tuples in a store.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L405)
 
 #### Parameters
 | Name | Type | Description |

@@ -5,6 +5,9 @@ Interface for tuple changes listing response objects. This interface defines the
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php)
+
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
@@ -20,6 +23,8 @@ public function getChanges(): TupleChangesInterface<TupleChangeInterface>
 
 Get the collection of tuple changes. Returns a type-safe collection containing the tuple change objects from the current page of results. Each change represents a modification (insert or delete) to the relationship data, including timestamps and operation details.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L46)
+
 
 #### Returns
 TupleChangesInterface&lt;TupleChangeInterface&gt;
@@ -33,6 +38,8 @@ public function getContinuationToken(): string|null
 ```
 
 Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of tuple changes exceeds the page size limit. If null, there are no more results to fetch.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L57)
 
 
 #### Returns

@@ -5,6 +5,9 @@ Response containing a list of users that have a specific relationship with an ob
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponse.php)
+
 ## Implements
 * [ListUsersResponseInterface](ListUsersResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
@@ -21,6 +24,8 @@ public function fromResponse(HttpResponseInterface $response, HttpRequestInterfa
 ```
 
 Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php#L44)
 
 #### Parameters
 | Name | Type | Description |
@@ -42,6 +47,8 @@ public function getUsers(): OpenFGA\Models\Collections\UsersInterface
 
 Get the collection of users with the specified relationship. Returns a type-safe collection containing the user objects that have the queried relationship with the specified object. Each user represents an entity that has been granted the specified permission or relationship.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponse.php#L97)
+
 
 #### Returns
 OpenFGA\Models\Collections\UsersInterface
@@ -56,6 +63,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this response. Returns the schema that defines the structure and validation rules for user listing response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponseInterface.php#L36)
 
 
 #### Returns

@@ -5,6 +5,9 @@ Response containing the result of an authorization check. This response indicate
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php)
+
 ## Implements
 * [CheckResponseInterface](CheckResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
@@ -21,6 +24,8 @@ public function fromResponse(HttpResponseInterface $response, HttpRequestInterfa
 ```
 
 Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php#L44)
 
 #### Parameters
 | Name | Type | Description |
@@ -42,6 +47,8 @@ public function getAllowed(): ?bool
 
 Get whether the permission check was allowed. This is the primary result of the permission check operation, indicating whether the specified user has the requested permission on the given object according to the authorization model and current relationship data.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L88)
+
 
 #### Returns
 ?bool
@@ -55,6 +62,8 @@ public function getResolution(): ?string
 ```
 
 Get the resolution details for the permission decision. This provides additional information about how the permission decision was reached, which can be useful for understanding complex authorization logic or debugging permission issues.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L97)
 
 
 #### Returns
@@ -70,6 +79,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this response. This method returns the schema that defines the structure and validation rules for check response data, ensuring consistent parsing and validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponseInterface.php#L32)
 
 
 #### Returns

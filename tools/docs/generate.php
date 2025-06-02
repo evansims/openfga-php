@@ -203,6 +203,7 @@ class DocumentationGenerator
             'namespace' => $reflection->getNamespaceName(),
             'isInterface' => $isInterface,
             'classDescription' => $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
+            'sourceFile' => $this->getSourceFileLink($file),
             'interfaces' => array_map(function($interface) use ($reflection, $currentFilePath) {
                 return $this->convertToMarkdownLink($interface->getName(), $reflection->getNamespaceName(), $currentFilePath);
             }, $reflection->getInterfaces()),
@@ -244,6 +245,7 @@ class DocumentationGenerator
                 'name' => $method->getName(),
                 'signature' => $this->getMethodSignature($method),
                 'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
+                'sourceLink' => $this->getMethodSourceLink($method),
                 'parameters' => [],
                 'return' => [
                     'type' => $this->getReturnType($method, $reflection->getNamespaceName(), true, $currentFilePath),
@@ -370,6 +372,7 @@ class DocumentationGenerator
                         'name' => $methodName,
                         'signature' => $this->getMethodSignature($method),
                         'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
+                        'sourceLink' => $this->getMethodSourceLink($method),
                         'parameters' => [],
                         'return' => [
                             'type' => $this->getReturnType($method, $interface->getNamespaceName(), true, $currentFilePath),
@@ -841,6 +844,70 @@ class DocumentationGenerator
     {
         // Replace characters that can break markdown table formatting
         return str_replace(['<', '>', '|'], ['&lt;', '&gt;', '&#124;'], $type);
+    }
+
+    /**
+     * Generate a GitHub source link for a file
+     */
+    private function getSourceFileLink(string $filePath): string
+    {
+        // Convert absolute path to relative path from project root
+        $relativePath = $this->getRelativePathFromProjectRoot($filePath);
+        return "https://github.com/evansims/openfga-php/blob/main/{$relativePath}";
+    }
+
+    /**
+     * Generate a GitHub source link for a method with line number
+     */
+    private function getMethodSourceLink(ReflectionMethod $method): string
+    {
+        $filePath = $method->getFileName();
+        if (!$filePath) {
+            return '';
+        }
+
+        $relativePath = $this->getRelativePathFromProjectRoot($filePath);
+        $lineNumber = $method->getStartLine();
+        
+        return "https://github.com/evansims/openfga-php/blob/main/{$relativePath}#L{$lineNumber}";
+    }
+
+    /**
+     * Convert absolute file path to relative path from project root
+     */
+    private function getRelativePathFromProjectRoot(string $filePath): string
+    {
+        // Find the project root by looking for composer.json
+        $projectRoot = $this->findProjectRoot($filePath);
+        
+        if ($projectRoot) {
+            return str_replace($projectRoot . '/', '', $filePath);
+        }
+        
+        // Fallback: assume src directory structure
+        if (str_contains($filePath, '/src/')) {
+            $parts = explode('/src/', $filePath);
+            return 'src/' . end($parts);
+        }
+        
+        return basename($filePath);
+    }
+
+    /**
+     * Find the project root directory by looking for composer.json
+     */
+    private function findProjectRoot(string $startPath): ?string
+    {
+        $currentPath = is_file($startPath) ? dirname($startPath) : $startPath;
+        
+        while ($currentPath !== '/' && $currentPath !== '') {
+            if (file_exists($currentPath . '/composer.json')) {
+                return $currentPath;
+            }
+            $currentPath = dirname($currentPath);
+        }
+        
+        return null;
     }
 
     public static function deleteDir(string $dir): void

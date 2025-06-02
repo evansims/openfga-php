@@ -5,6 +5,9 @@ Response confirming successful writing of relationship tuples. This response is 
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/WriteTuplesResponse.php)
+
 ## Implements
 * [WriteTuplesResponseInterface](WriteTuplesResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
@@ -21,6 +24,8 @@ public function fromResponse(HttpResponseInterface $response, HttpRequestInterfa
 ```
 
 Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php#L44)
 
 #### Parameters
 | Name | Type | Description |

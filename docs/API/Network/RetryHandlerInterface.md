@@ -5,6 +5,9 @@ Retry handler interface for advanced HTTP request retry strategies. This interfa
 ## Namespace
 `OpenFGA\Network`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RetryHandlerInterface.php)
+
 
 
 
@@ -17,6 +20,8 @@ public function executeWithRetry(callable $requestExecutor, RequestInterface $re
 ```
 
 Execute an HTTP request with automatic retry logic. Performs the HTTP request with intelligent retry behavior based on error type, server headers, and circuit breaker state. The method tracks attempt counts, calculates appropriate delays, and respects server-provided timing information. The implementation should: - Check circuit breaker state before attempting requests - Apply exponential backoff with jitter to prevent thundering herd - Respect server-provided timing headers (Retry-After, X-Rate-Limit-Reset) - Handle different error types with appropriate retry strategies - Consider request method idempotency for retry decisions - Track failures and successes with the circuit breaker
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RetryHandlerInterface.php#L55)
 
 #### Parameters
 | Name | Type | Description |

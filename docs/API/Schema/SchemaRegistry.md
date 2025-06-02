@@ -5,6 +5,9 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 ## Namespace
 `OpenFGA\Schema`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistry.php)
+
 ## Implements
 * [SchemaRegistryInterface](SchemaRegistryInterface.md)
 
@@ -20,6 +23,8 @@ public function create(string $className): SchemaBuilder
 ```
 
 Create a new schema builder for the specified class.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistryInterface.php#L29)
 
 #### Parameters
 | Name | Type | Description |
@@ -40,6 +45,8 @@ public function get(string $className): ?OpenFGA\Schema\Schema
 
 Retrieve a registered schema by class name.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistryInterface.php#L37)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -57,6 +64,8 @@ public function register(Schema $schema): void
 ```
 
 Register a schema in the registry.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistryInterface.php#L44)
 
 #### Parameters
 | Name | Type | Description |

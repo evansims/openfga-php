@@ -5,6 +5,9 @@ Represents a successful result containing a value. Success results indicate that
 ## Namespace
 `OpenFGA\Results`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Results/SuccessInterface.php)
+
 ## Implements
 * [ResultInterface](ResultInterface.md)
 
@@ -20,6 +23,8 @@ public function err(): Throwable
 
 Retrieves the error from a failed result. This method should only be called on Failure results. Use failed() to check the result type before calling this method to avoid exceptions.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L71)
+
 
 #### Returns
 Throwable
@@ -34,6 +39,8 @@ public function failed(): bool
 
 Determines if this result represents a failure.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L78)
+
 
 #### Returns
 bool
@@ -47,6 +54,8 @@ public function failure(callable $fn): ResultInterface
 ```
 
 Executes a callback when the result is a failure and continues the chain. The callback receives the error as its parameter and is only executed for Failure results. This method always returns the original result unchanged.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L89)
 
 #### Parameters
 | Name | Type | Description |
@@ -66,6 +75,8 @@ public function recover(callable $fn): ResultInterface
 
 Recovers from a failure by transforming it into a success or different failure. The callback is only executed for Failure results and can return either a new Result or a plain value (which becomes a Success). Success results pass through unchanged.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L100)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -83,6 +94,8 @@ public function rethrow(Throwable|null $throwable = NULL): ResultInterface
 ```
 
 Throws the contained error or continues the chain. For Failure results, this throws either the provided throwable or the contained error. For Success results, this method has no effect and returns the result unchanged.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L114)
 
 #### Parameters
 | Name | Type | Description |
@@ -102,6 +115,8 @@ public function succeeded(): bool
 
 Determines if this result represents a success.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L121)
+
 
 #### Returns
 bool
@@ -115,6 +130,8 @@ public function success(callable $fn): ResultInterface
 ```
 
 Executes a callback when the result is a success and continues the chain. The callback receives the success value (specific response interface) as its parameter and is only executed for Success results. This method always returns the original result unchanged.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L132)
 
 #### Parameters
 | Name | Type | Description |
@@ -134,6 +151,8 @@ public function then(callable $fn): ResultInterface
 
 Transforms a successful result using a callback and continues the chain. The callback is only executed for Success results and receives the specific response interface as its parameter. It can return either a new Result or a plain value (which becomes a Success). Failure results pass through unchanged.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L144)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -152,6 +171,8 @@ public function unwrap(?callable $fn = NULL): mixed
 
 Extracts the value from the result or applies a transformation. Without a callback, this returns the success value (specific response interface) or throws the failure error. With a callback, the function is called with either the response interface or failure error, and its return value is returned instead of throwing.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L159)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -169,6 +190,8 @@ public function val(): mixed
 ```
 
 Retrieves the value from a successful result. This method should only be called on Success results. Use succeeded() to check the result type before calling this method to avoid exceptions. Returns the specific response interface documented in the calling method&#039;s @return annotation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L172)
 
 
 #### Returns

@@ -5,6 +5,9 @@ Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexi
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UserInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getDifference(): DifferenceV1Interface|null
 
 Get the difference operation for this user. Difference operations enable sophisticated access control by subtracting one set of users from another, creating complex user definitions that include some users while explicitly excluding others. For example, &quot;all editors except contractors&quot; or &quot;all organization members except suspended users&quot;. This pattern is particularly useful for: - Implementing exception-based access policies - Temporary access restrictions without modifying base permissions - Complex organizational hierarchies with exclusion rules - Compliance scenarios requiring explicit user exclusions When a difference operation is present, the authorization system evaluates both the base user set and the excluded user set, granting access only to users who match the base set but not the exclusion set.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserInterface.php#L62)
+
 
 #### Returns
 DifferenceV1Interface&#124;null
@@ -34,6 +39,8 @@ public function getObject(): string|UserObjectInterface|null
 ```
 
 Get the user object representation. User objects represent direct, concrete user identifiers within the authorization system. These can be structured objects with explicit type and ID properties, or simple string identifiers following the &quot;type:id&quot; convention for backward compatibility and convenience. Examples of user object representations: - Structured: UserObject with type=&quot;user&quot; and id=&quot;alice&quot; - String format: &quot;user:alice&quot;, &quot;service:backup-agent&quot;, &quot;bot:notification-service&quot; Direct user objects are the most straightforward way to assign permissions to specific, known entities in your system. They provide clear, unambiguous identification and are efficient for authorization queries.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserInterface.php#L82)
 
 
 #### Returns
@@ -49,6 +56,8 @@ public function getUserset(): UsersetUserInterface|null
 
 Get the userset reference for this user. Usersets define dynamic user groups through relationships to other objects, enabling permissions that automatically adapt as relationships change in your system. A userset specifies users indirectly by describing a relationship pattern, such as &quot;all editors of document:readme&quot; or &quot;all members of group:engineering&quot;. Usersets are powerful because they: - Automatically include/exclude users as relationships change - Reduce the need for explicit permission management - Enable permission inheritance and delegation patterns - Support complex organizational structures and role hierarchies When authorization checks encounter usersets, OpenFGA recursively evaluates the referenced relationships to determine the actual set of users that have access through this indirect relationship.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserInterface.php#L104)
+
 
 #### Returns
 UsersetUserInterface&#124;null
@@ -63,6 +72,8 @@ public function getWildcard(): TypedWildcardInterface|null
 
 Get the wildcard definition for this user. Wildcards represent all users of a specific type, enabling broad, type-based permissions without enumerating individual users. This pattern is particularly useful for organization-wide permissions, public access scenarios, or when you want to grant access to all users matching certain criteria. Common wildcard use cases: - &quot;All employees can access the company directory&quot; - &quot;All authenticated users can read public documents&quot; - &quot;All service accounts can write to audit logs&quot; - &quot;All users in the organization can view the org chart&quot; Wildcards are efficient for authorization because they don&#039;t require maintaining explicit relationships for every user, while still providing type-safe access control based on user categorization.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserInterface.php#L126)
+
 
 #### Returns
 TypedWildcardInterface&#124;null
@@ -76,6 +87,8 @@ public function jsonSerialize(): array<string, mixed>
 ```
 
 Serialize the user for JSON encoding. This method prepares the user data for API communication with the OpenFGA service, converting the user representation into the format expected by the OpenFGA API. The serialization handles all user types (direct objects, usersets, wildcards, and difference operations) and ensures the resulting structure matches the OpenFGA API specification. Only the appropriate user type fields are included in the output: - Direct users include object field with type:id or structured object - Usersets include userset field with type, id, and relation - Wildcards include wildcard field with type specification - Difference operations include difference field with base and subtract sets
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserInterface.php#L146)
 
 
 #### Returns

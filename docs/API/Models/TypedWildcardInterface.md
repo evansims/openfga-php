@@ -5,6 +5,9 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcardInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * Stringable
@@ -22,6 +25,8 @@ public function getType(): string
 
 Get the object type that this wildcard represents. This returns the type name for which the wildcard grants access to all users of that type. For example, &quot;user&quot; would represent all users, &quot;group&quot; would represent all groups, etc.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcardInterface.php#L41)
+
 
 #### Returns
 string
@@ -34,6 +39,8 @@ string
 public function jsonSerialize(): array
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcardInterface.php#L47)
 
 
 #### Returns

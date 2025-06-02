@@ -5,6 +5,9 @@ Represents a user in a list context for authorization operations. UsersListUser 
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUserInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * Stringable
@@ -22,6 +25,8 @@ public function getUser(): string
 
 Get the user identifier string. This returns the user identifier in the format expected by OpenFGA, typically &quot;type:id&quot; where type describes the kind of user and id is the unique identifier for that user.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUserInterface.php#L42)
+
 
 #### Returns
 string
@@ -35,6 +40,8 @@ public function jsonSerialize(): string
 ```
 
 Serialize the user to its JSON representation. Returns the user identifier as a string for API serialization. This differs from most models which serialize to arrays.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUserInterface.php#L53)
 
 
 #### Returns

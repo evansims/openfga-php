@@ -6,6 +6,11 @@
 ## Namespace
 `{{ namespace }}`
 
+{% if sourceFile is defined and sourceFile is not empty %}
+## Source
+[View source code]({{ sourceFile }})
+{% endif %}
+
 {% if interfaces is not empty %}
 ## Implements
 {% for interface in interfaces %}
@@ -44,6 +49,10 @@
 ```
 
 {% if method.description %}{{ method.description }}
+{% endif %}
+
+{% if method.sourceLink is defined and method.sourceLink is not empty %}
+[View source]({{ method.sourceLink }})
 {% endif %}
 
 {% if method.parameters is not empty %}

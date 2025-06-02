@@ -5,6 +5,9 @@ Defines a difference operation between two usersets in authorization models. Dif
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1Interface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getBase(): UsersetInterface
 
 Get the base userset from which users will be subtracted. This represents the initial set of users or relationships from which the subtract userset will be removed to compute the final difference.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1Interface.php#L31)
+
 
 #### Returns
 UsersetInterface
@@ -35,6 +40,8 @@ public function getSubtract(): UsersetInterface
 
 Get the userset of users to subtract from the base userset. This represents the set of users or relationships that should be removed from the base userset to compute the final result of the difference operation.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1Interface.php#L41)
+
 
 #### Returns
 UsersetInterface
@@ -47,6 +54,8 @@ UsersetInterface
 public function jsonSerialize(): array
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1Interface.php#L61)
 
 
 #### Returns

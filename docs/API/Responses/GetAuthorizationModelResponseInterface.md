@@ -5,6 +5,9 @@ Interface for authorization model retrieval response objects. This interface def
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponseInterface.php)
+
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
@@ -19,6 +22,8 @@ public function getModel(): AuthorizationModelInterface|null
 ```
 
 Get the retrieved authorization model. Returns the complete authorization model including its type definitions, schema version, and any conditions. The model defines the relationship types and permission logic that govern authorization decisions within the store.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponseInterface.php#L44)
 
 
 #### Returns

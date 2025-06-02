@@ -5,6 +5,9 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php)
+
 ## Implements
 * [AssertionInterface](AssertionInterface.md)
 * JsonSerializable
@@ -26,6 +29,8 @@ public function getContext(): ?array
 
 Get the context data for evaluating ABAC conditions. Context provides additional information that can be used when evaluating attribute-based access control (ABAC) conditions. This might include user attributes, resource properties, or environmental factors like time of day.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L174)
+
 
 #### Returns
 ?array
@@ -39,6 +44,8 @@ public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInte
 
 Get the contextual tuples for this assertion. Contextual tuples provide additional relationship data that should be considered when evaluating the assertion. These are temporary relationships that exist only for the duration of the authorization check, useful for testing &quot;what-if&quot; scenarios.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L183)
+
 
 #### Returns
 ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -51,6 +58,8 @@ public function getExpectation(): bool
 ```
 
 Get the expected result for this assertion. The expectation defines whether the authorization check should return true (access granted) or false (access denied). This is what the assertion will be tested against.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L192)
 
 
 #### Returns
@@ -66,6 +75,8 @@ public function getTupleKey(): OpenFGA\Models\AssertionTupleKeyInterface
 
 Get the tuple key that defines what to test. The tuple key specifies the exact authorization question to ask: &quot;Does user X have relation Y on object Z?&quot; This is the core of what the assertion is testing.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L201)
+
 
 #### Returns
 OpenFGA\Models\AssertionTupleKeyInterface
@@ -78,6 +89,8 @@ OpenFGA\Models\AssertionTupleKeyInterface
 public function jsonSerialize(): array
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L210)
 
 
 #### Returns
@@ -92,6 +105,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
 
 #### Returns

@@ -5,6 +5,9 @@ Interface for assertions writing response objects. This interface defines the co
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/WriteAssertionsResponseInterface.php)
+
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 

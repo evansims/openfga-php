@@ -5,6 +5,9 @@ Interface for tuple writing response objects. This interface defines the contrac
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/WriteTuplesResponseInterface.php)
+
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 

@@ -5,6 +5,9 @@ Interface for mapping exception error enums to their default message keys. Provi
 ## Namespace
 `OpenFGA\Exceptions`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php)
+
 
 
 

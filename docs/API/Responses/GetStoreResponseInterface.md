@@ -5,6 +5,9 @@ Interface for store retrieval response objects. This interface defines the contr
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php)
+
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
@@ -20,6 +23,8 @@ public function getCreatedAt(): DateTimeImmutable
 
 Get the timestamp when the store was created. Returns the exact moment when the store was successfully created in the OpenFGA system. This timestamp is immutable and set by the server upon store creation.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L44)
+
 
 #### Returns
 DateTimeImmutable
@@ -33,6 +38,8 @@ public function getDeletedAt(): DateTimeImmutable|null
 ```
 
 Get the timestamp when the store was deleted, if applicable. Returns the deletion timestamp for soft-deleted stores, or null if the store is active. This is used for stores that have been marked for deletion but may still be accessible for a grace period.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L55)
 
 
 #### Returns
@@ -48,6 +55,8 @@ public function getId(): string
 
 Get the unique identifier of the store. Returns the system-generated unique identifier for the store. This ID is used in all API operations to reference this specific store.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L65)
+
 
 #### Returns
 string
@@ -61,6 +70,8 @@ public function getName(): string
 ```
 
 Get the human-readable name of the store. Returns the descriptive name that was assigned to the store during creation or last update. This name is used for identification and administrative purposes.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L75)
 
 
 #### Returns
@@ -76,6 +87,8 @@ public function getStore(): StoreInterface
 
 Get the complete store object. Returns the full store object containing all store metadata and configuration. This provides access to the complete store data structure including any additional properties beyond the individual accessor methods.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L86)
+
 
 #### Returns
 StoreInterface
@@ -89,6 +102,8 @@ public function getUpdatedAt(): DateTimeImmutable
 ```
 
 Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata or configuration. This is updated whenever store properties are changed.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L96)
 
 
 #### Returns

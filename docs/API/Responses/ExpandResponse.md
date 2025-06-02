@@ -5,6 +5,9 @@ Response containing the expanded userset tree for a relationship query. This res
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ExpandResponse.php)
+
 ## Implements
 * [ExpandResponseInterface](ExpandResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
@@ -21,6 +24,8 @@ public function fromResponse(HttpResponseInterface $response, HttpRequestInterfa
 ```
 
 Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php#L44)
 
 #### Parameters
 | Name | Type | Description |
@@ -42,6 +47,8 @@ public function getTree(): ?OpenFGA\Models\UsersetTreeInterface
 
 Get the expansion tree for the queried relationship. Returns a hierarchical tree structure that represents all users and usersets that have the specified relationship with the target object. The tree shows both direct relationships and computed relationships through other relations.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ExpandResponse.php#L107)
+
 
 #### Returns
 ?OpenFGA\Models\UsersetTreeInterface
@@ -56,6 +63,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this response. Returns the schema that defines the structure and validation rules for relationship expansion response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ExpandResponseInterface.php#L34)
 
 
 #### Returns

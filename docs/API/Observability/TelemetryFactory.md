@@ -5,6 +5,9 @@ Factory for creating telemetry providers with OpenTelemetry integration. This fa
 ## Namespace
 `OpenFGA\Observability`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryFactory.php)
+
 
 
 

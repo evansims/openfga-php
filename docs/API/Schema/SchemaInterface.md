@@ -5,6 +5,9 @@ Base interface for schema definitions in the OpenFGA system. This interface defi
 ## Namespace
 `OpenFGA\Schema`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaInterface.php)
+
 
 
 
@@ -17,6 +20,8 @@ public function getClassName(): string
 ```
 
 Get the fully qualified class name this schema defines. This method returns the class name that this schema describes, which is used during validation and object instantiation to ensure the correct model class is created.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaInterface.php#L38)
 
 
 #### Returns
@@ -32,6 +37,8 @@ public function getProperties(): array<string, SchemaProperty>
 
 Get all properties defined in this schema. This method returns a comprehensive collection of all properties that make up this schema, including their validation rules, types, and default values. Each property defines how a specific field should be validated and processed.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaInterface.php#L49)
+
 
 #### Returns
 array&lt;string, SchemaProperty&gt;
@@ -45,6 +52,8 @@ public function getProperty(string $name): SchemaProperty|null
 ```
 
 Get a specific property definition by name. This method retrieves the schema definition for a particular property, allowing you to access its validation rules, type information, and other metadata for individual fields.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaInterface.php#L60)
 
 #### Parameters
 | Name | Type | Description |

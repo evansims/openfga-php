@@ -5,6 +5,9 @@ Maps exception error enums to their default message keys. This class provides th
 ## Namespace
 `OpenFGA\Exceptions`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessages.php)
+
 ## Implements
 * [DefaultMessagesInterface](DefaultMessagesInterface.md)
 
@@ -20,6 +23,8 @@ public function forAuthenticationError(AuthenticationError $error): Messages
 ```
 
 Get the default message key for an authentication error. Maps authentication-related error types (such as expired tokens or invalid credentials) to their corresponding message keys. These messages typically guide users on how to resolve authentication issues with the OpenFGA service.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L40)
 
 #### Parameters
 | Name | Type | Description |
@@ -40,6 +45,8 @@ public function forClientError(ClientError $error): Messages
 
 Get the default message key for a general client error. Maps high-level client error categories to their corresponding message keys. These are broad error classifications that encompass various types of SDK usage and operational failures.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L52)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -58,6 +65,8 @@ public function forConfigurationError(ConfigurationError $error): Messages
 ```
 
 Get the default message key for a configuration error. Maps configuration-related error types (such as missing PSR components or invalid setup) to their corresponding message keys. These messages typically provide guidance on proper SDK configuration and setup.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L64)
 
 #### Parameters
 | Name | Type | Description |
@@ -78,6 +87,8 @@ public function forError(AuthenticationError|ClientError|ConfigurationError|Netw
 
 Get the default message key for any supported error type. Generic method that accepts any error enum type and routes it to the appropriate specific method. This provides a unified interface for error message lookup when the specific error type is not known at compile time.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L77)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -97,6 +108,8 @@ public function forNetworkError(NetworkError $error): Messages
 
 Get the default message key for a network error. Maps network and HTTP-related error types (such as timeouts, HTTP status codes, or connectivity issues) to their corresponding message keys. These messages often include information about retry strategies and network troubleshooting.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L90)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -115,6 +128,8 @@ public function forSerializationError(SerializationError $error): Messages
 ```
 
 Get the default message key for a serialization error. Maps data serialization and validation error types (such as JSON parsing failures or schema validation errors) to their corresponding message keys. These messages typically provide details about data format issues and validation failures.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/DefaultMessagesInterface.php#L103)
 
 #### Parameters
 | Name | Type | Description |

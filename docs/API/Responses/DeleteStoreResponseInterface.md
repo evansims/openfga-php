@@ -5,6 +5,9 @@ Interface for store deletion response objects. This interface defines the contra
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/DeleteStoreResponseInterface.php)
+
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 

@@ -5,6 +5,9 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * Stringable
@@ -22,6 +25,8 @@ public function getId(): string
 
 Get the unique identifier of the user object. The ID is unique within the context of the object type and represents the specific instance of the typed object.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php#L36)
+
 
 #### Returns
 string
@@ -36,6 +41,8 @@ public function getType(): string
 
 Get the type of the user object. The type defines the category or class of the object (e.g., &#039;user&#039;, &#039;group&#039;, &#039;organization&#039;) and must be defined in the authorization model.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php#L46)
+
 
 #### Returns
 string
@@ -49,6 +56,8 @@ public function jsonSerialize(): array
 ```
 
 Serialize the user object to its JSON representation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php#L54)
 
 
 #### Returns

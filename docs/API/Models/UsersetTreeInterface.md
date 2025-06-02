@@ -5,6 +5,9 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getRoot(): NodeInterface
 
 Get the root node of the userset tree structure. This returns the top-level node that represents the entry point for userset expansion. The tree structure allows for complex authorization logic including unions, intersections, and difference operations.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeInterface.php#L33)
+
 
 #### Returns
 NodeInterface
@@ -33,6 +38,8 @@ NodeInterface
 public function jsonSerialize(): array<string, mixed>
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeInterface.php#L39)
 
 
 #### Returns

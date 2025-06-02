@@ -5,6 +5,9 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getExpression(): string
 
 Get the condition expression. This returns the logical expression that defines when this condition evaluates to true. The expression can reference parameters and context data to enable dynamic authorization decisions based on runtime information.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L55)
+
 
 #### Returns
 string
@@ -34,6 +39,8 @@ public function getMetadata(): ConditionMetadataInterface|null
 ```
 
 Get metadata about the condition definition. This provides additional information about where the condition was defined and how it should be processed, which is useful for tooling and debugging.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L65)
 
 
 #### Returns
@@ -49,6 +56,8 @@ public function getName(): string
 
 Get the name of the condition. This is a unique identifier for the condition within the authorization model, allowing it to be referenced from type definitions and other parts of the model.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L75)
+
 
 #### Returns
 string
@@ -63,6 +72,8 @@ public function getParameters(): ConditionParametersInterface<ConditionParameter
 
 Get the parameters available to the condition expression. These parameters define the typed inputs that can be used within the condition expression, enabling dynamic evaluation based on contextual data provided during authorization checks.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L86)
+
 
 #### Returns
 ConditionParametersInterface&lt;ConditionParameterInterface&gt;&#124;null
@@ -76,6 +87,8 @@ public function jsonSerialize(): array<string, mixed>
 ```
 
 Serialize the condition for JSON encoding. This method prepares the condition data for API requests or storage, ensuring all components are properly formatted according to the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L97)
 
 
 #### Returns

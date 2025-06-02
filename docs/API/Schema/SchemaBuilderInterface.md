@@ -5,6 +5,9 @@ Interface for building schema definitions using the builder pattern. This interf
 ## Namespace
 `OpenFGA\Schema`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php)
+
 
 
 
@@ -17,6 +20,8 @@ public function array(string $name, array $items, bool $required = false, mixed 
 ```
 
 Add an array property to the schema.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L46)
 
 #### Parameters
 | Name | Type | Description |
@@ -39,6 +44,8 @@ public function boolean(string $name, bool $required = false, mixed|null $defaul
 
 Add a boolean property to the schema.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L56)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -58,6 +65,8 @@ public function date(string $name, bool $required = false, mixed|null $default =
 ```
 
 Add a date property to the schema.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L66)
 
 #### Parameters
 | Name | Type | Description |
@@ -79,6 +88,8 @@ public function datetime(string $name, bool $required = false, mixed|null $defau
 
 Add a datetime property to the schema.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L76)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -98,6 +109,8 @@ public function integer(string $name, bool $required = false, mixed|null $defaul
 ```
 
 Add an integer property to the schema.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L86)
 
 #### Parameters
 | Name | Type | Description |
@@ -119,6 +132,8 @@ public function number(string $name, bool $required = false, mixed|null $default
 
 Add a number (float) property to the schema.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L96)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -138,6 +153,8 @@ public function object(string $name, string $className, bool $required = false):
 ```
 
 Add an object property to the schema.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L106)
 
 #### Parameters
 | Name | Type | Description |
@@ -159,6 +176,8 @@ public function register(): Schema
 
 Build and register the schema. Creates a Schema instance with all defined properties and registers it in the SchemaRegistry for use in validation.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L116)
+
 
 #### Returns
 Schema
@@ -172,6 +191,8 @@ public function string(string $name, bool $required = false, string|null $format
 ```
 
 Add a string property to the schema.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilderInterface.php#L128)
 
 #### Parameters
 | Name | Type | Description |

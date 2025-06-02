@@ -5,6 +5,9 @@ Interface for OpenTelemetry integration in the OpenFGA SDK. This interface provi
 ## Namespace
 `OpenFGA\Observability`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php)
+
 
 
 
@@ -17,6 +20,8 @@ public function endHttpRequest(mixed $span, ResponseInterface|null $response = N
 ```
 
 End tracing for an HTTP request. Completes the HTTP request span, recording the response status and any errors that occurred. The span should include standard HTTP response attributes such as status code and response size.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L41)
 
 #### Parameters
 | Name | Type | Description |
@@ -36,6 +41,8 @@ public function endOperation(mixed $span, bool $success, Throwable|null $excepti
 ```
 
 End tracing for an OpenFGA API operation. Completes the trace span started with startOperation(), recording the operation outcome and any relevant metrics. If an exception occurred during the operation, it should be recorded in the span.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L59)
 
 #### Parameters
 | Name | Type | Description |
@@ -57,6 +64,8 @@ public function recordAuthenticationEvent(string $event, bool $success, float $d
 
 Record authentication events. Records metrics and traces related to authentication flows, including token acquisition, refresh operations, and authentication failures. This helps monitor authentication performance and troubleshoot auth issues.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L78)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -77,6 +86,8 @@ public function recordCircuitBreakerState(string $endpoint, string $state, int $
 
 Record circuit breaker state changes. Records metrics about circuit breaker state transitions and failure rates. This helps monitor the health of individual API endpoints and the SDK&#039;s resilience mechanisms.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L97)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -96,6 +107,8 @@ public function recordOperationMetrics(string $operation, float $duration, Store
 ```
 
 Record performance metrics for OpenFGA operations. Records timing and throughput metrics for OpenFGA API operations, allowing monitoring of operation latency and identifying performance bottlenecks or degradations.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L117)
 
 #### Parameters
 | Name | Type | Description |
@@ -118,6 +131,8 @@ public function recordRetryAttempt(string $endpoint, int $attempt, int $delayMs,
 
 Record retry attempt metrics. Records metrics about retry attempts, including the retry count, delay, and eventual outcome. This helps track the reliability and performance of API requests under various network conditions.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L138)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -139,6 +154,8 @@ public function startHttpRequest(RequestInterface $request): mixed
 
 Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP request to the OpenFGA API. The span should follow OpenTelemetry semantic conventions for HTTP client operations, including standard HTTP attributes.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L156)
+
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
@@ -156,6 +173,8 @@ public function startOperation(string $operation, StoreInterface|string $store, 
 ```
 
 Start tracing an OpenFGA API operation. Creates a new trace span for a high-level OpenFGA operation such as check, expand, or write operations. The span should include relevant attributes such as store ID, authorization model ID, and operation-specific metadata.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L171)
 
 #### Parameters
 | Name | Type | Description |

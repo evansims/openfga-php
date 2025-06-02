@@ -5,6 +5,9 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getCondition(): ConditionInterface|null
 
 Get the condition that constrains this relationship. Conditions enable dynamic authorization by allowing relationships to be conditional based on runtime context, such as time of day, resource attributes, or other factors. When a condition is present, the relationship is only valid when the condition evaluates to true.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L52)
+
 
 #### Returns
 ConditionInterface&#124;null
@@ -34,6 +39,8 @@ public function getObject(): string|null
 ```
 
 Get the object in this relationship tuple. The object represents the resource or entity that the permission or relationship applies to. For example, in &quot;user:alice can view document:readme&quot;, the object would be &quot;document:readme&quot;. Objects are typically formatted as &quot;type:id&quot; where type describes the kind of resource.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L63)
 
 
 #### Returns
@@ -49,6 +56,8 @@ public function getRelation(): string|null
 
 Get the relation that defines the type of relationship. The relation describes what kind of permission or relationship exists between the user and object. For example, common relations include &quot;owner&quot;, &quot;viewer&quot;, &quot;editor&quot;, &quot;can_read&quot;, &quot;can_write&quot;. Relations are defined in your authorization model and determine what actions are permitted.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L74)
+
 
 #### Returns
 string&#124;null
@@ -63,6 +72,8 @@ public function getUser(): string|null
 
 Get the user (subject) in this relationship tuple. The user represents the entity that has the relationship to the object. This can be an individual user, a group, a role, or any other subject defined in your authorization model. For example, in &quot;user:alice can view document:readme&quot;, the user would be &quot;user:alice&quot;.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L85)
+
 
 #### Returns
 string&#124;null
@@ -76,6 +87,8 @@ public function jsonSerialize(): array<string, mixed>
 ```
 
 Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L97)
 
 
 #### Returns

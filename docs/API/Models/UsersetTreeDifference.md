@@ -5,6 +5,9 @@ Represents a difference operation node in authorization evaluation trees. Userse
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifference.php)
+
 ## Implements
 * [UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md)
 * JsonSerializable
@@ -26,6 +29,8 @@ public function getBase(): OpenFGA\Models\NodeInterface
 
 Get the base node from which the subtract node will be removed. This represents the initial node in the userset tree from which users will be subtracted to compute the final difference result.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifference.php#L56)
+
 
 #### Returns
 OpenFGA\Models\NodeInterface
@@ -40,6 +45,8 @@ public function getSubtract(): OpenFGA\Models\NodeInterface
 
 Get the node representing users to subtract from the base. This represents the node in the userset tree whose users should be removed from the base node to compute the final difference result.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifference.php#L65)
+
 
 #### Returns
 OpenFGA\Models\NodeInterface
@@ -52,6 +59,8 @@ OpenFGA\Models\NodeInterface
 public function jsonSerialize(): array
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifference.php#L74)
 
 
 #### Returns
@@ -66,6 +75,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
 
 #### Returns

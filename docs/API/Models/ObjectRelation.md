@@ -5,6 +5,9 @@ Represents a reference to a specific relation on an object. In authorization mod
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php)
+
 ## Implements
 * [ObjectRelationInterface](ObjectRelationInterface.md)
 * JsonSerializable
@@ -26,6 +29,8 @@ public function getObject(): ?string
 
 Get the object identifier in an object-relation pair. The object represents the resource or entity being referenced, typically formatted as &quot;type:id&quot; where type describes the kind of resource.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L56)
+
 
 #### Returns
 ?string
@@ -39,6 +44,8 @@ public function getRelation(): ?string
 
 Get the relation name that defines the type of relationship to the object. The relation describes what kind of permission or relationship exists. Common examples include &quot;owner&quot;, &quot;viewer&quot;, &quot;editor&quot;, &quot;member&quot;.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L65)
+
 
 #### Returns
 ?string
@@ -50,6 +57,8 @@ Get the relation name that defines the type of relationship to the object. The r
 public function jsonSerialize(): array
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L74)
 
 
 #### Returns
@@ -64,6 +73,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this model. This method returns the schema that defines the structure, validation rules, and serialization behavior for this model class. The schema is used for data validation, transformation, and ensuring consistency across API operations with the OpenFGA service. Each model&#039;s schema defines: - Required and optional properties - Data types and format constraints - Nested object relationships - Validation rules and business logic constraints The schema system enables the SDK to automatically validate incoming data, transform between different representations, and ensure compliance with the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
 
 #### Returns

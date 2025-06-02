@@ -5,6 +5,9 @@ Interface for schema validation and object transformation in the OpenFGA system.
 ## Namespace
 `OpenFGA\Schema`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidatorInterface.php)
+
 
 
 
@@ -17,6 +20,8 @@ public function getSchemas(): array<string, SchemaInterface>
 ```
 
 Get all currently registered schemas. Returns a comprehensive map of all schemas that have been registered with this validator, keyed by their associated class names. This is useful for debugging, introspection, and understanding which schemas are available for validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidatorInterface.php#L39)
 
 
 #### Returns
@@ -31,6 +36,8 @@ public function registerSchema(SchemaInterface $schema): self
 ```
 
 Register a schema for validation use. Adds a schema to the validator&#039;s registry, making it available for use in validation and transformation operations. Schemas must be registered before they can be used to validate data for their associated class.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidatorInterface.php#L51)
 
 #### Parameters
 | Name | Type | Description |
@@ -49,6 +56,8 @@ public function validateAndTransform(mixed $data, string $className): T
 ```
 
 Validate data against a registered schema and transform it into the target class instance. This method performs comprehensive validation of the provided data against the schema for the specified class name. If validation succeeds, it creates and returns a fully initialized instance of the target class with all data properly transformed and typed. The validation process includes: - Required field validation - Type checking and conversion - Format validation (dates, enums, etc.) - Nested object validation - Collection validation for arrays - Constructor parameter mapping - Default value application
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidatorInterface.php#L78)
 
 #### Parameters
 | Name | Type | Description |

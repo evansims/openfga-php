@@ -5,6 +5,9 @@ Represents a filter for limiting users by their relationships to specific object
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getRelation(): ?string
 
 Get the optional relation filter for limiting user types. When specified, this filter limits the results to users that have the specified relation to objects of the target type. This allows for more specific filtering beyond just the object type.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php#L39)
+
 
 #### Returns
 ?string
@@ -34,6 +39,8 @@ public function getType(): string
 
 Get the object type to filter by. This specifies the type of objects that users should be related to when filtering results. Only users connected to objects of this type will be included in the filtered results.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php#L50)
+
 
 #### Returns
 string
@@ -46,6 +53,8 @@ string
 public function jsonSerialize(): array<'relation'|'type', string>
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php#L56)
 
 
 #### Returns

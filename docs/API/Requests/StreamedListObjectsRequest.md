@@ -5,6 +5,9 @@ Request for streaming objects that a user has a specific relationship with. This
 ## Namespace
 `OpenFGA\Requests`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php)
+
 ## Implements
 * [StreamedListObjectsRequestInterface](StreamedListObjectsRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
@@ -21,6 +24,8 @@ public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
 
 Get the consistency requirement for this request.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L84)
+
 
 #### Returns
 ?OpenFGA\Models\Enums\Consistency
@@ -34,6 +39,8 @@ public function getContext(): ?object
 ```
 
 Get the context object for this request.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L93)
 
 
 #### Returns
@@ -49,6 +56,8 @@ public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInte
 
 Get the contextual tuples for this request.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L102)
+
 
 #### Returns
 ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -62,6 +71,8 @@ public function getModel(): ?string
 ```
 
 Get the authorization model ID for this request.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L111)
 
 
 #### Returns
@@ -77,6 +88,8 @@ public function getRelation(): string
 
 Get the relation name for this request.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L120)
+
 
 #### Returns
 string
@@ -90,6 +103,8 @@ public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactor
 ```
 
 Build a request context for HTTP execution. Transforms the request object into a standardized HTTP request context that can be executed by the OpenFGA HTTP client. This method handles all aspects of request preparation including parameter serialization, URL construction, header configuration, and body stream creation. The method validates that all required parameters are present and properly formatted, serializes complex objects to JSON, constructs the appropriate API endpoint URL, and creates the necessary HTTP message body streams.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L131)
 
 #### Parameters
 | Name | Type | Description |
@@ -109,6 +124,8 @@ public function getStore(): string
 
 Get the store ID for this request.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L158)
+
 
 #### Returns
 string
@@ -123,6 +140,8 @@ public function getType(): string
 
 Get the object type for this request.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L167)
+
 
 #### Returns
 string
@@ -136,6 +155,8 @@ public function getUser(): string
 ```
 
 Get the user identifier for this request.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L176)
 
 
 #### Returns

@@ -5,6 +5,9 @@ Response containing the results of a batch authorization check. This response co
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php)
+
 ## Implements
 * [BatchCheckResponseInterface](BatchCheckResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
@@ -21,6 +24,8 @@ public function fromResponse(HttpResponseInterface $response, HttpRequestInterfa
 ```
 
 Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php#L44)
 
 #### Parameters
 | Name | Type | Description |
@@ -42,6 +47,8 @@ public function getResult(): array
 
 Get the results map from correlation IDs to check results. Each key in the map is a correlation ID from the original request, and each value is the result of that specific check.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php#L101)
+
 
 #### Returns
 array
@@ -55,6 +62,8 @@ public function getResultForCorrelationId(string $correlationId): ?OpenFGA\Model
 ```
 
 Get the result for a specific correlation ID. Returns the check result for the given correlation ID, or null if no result exists for that ID.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php#L110)
 
 #### Parameters
 | Name | Type | Description |

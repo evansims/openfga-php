@@ -5,6 +5,9 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 ## Namespace
 `OpenFGA\Models`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php)
+
 ## Implements
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
@@ -21,6 +24,8 @@ public function getMetadata(): MetadataInterface|null
 
 Get the metadata associated with this type definition. Metadata provides additional context, documentation, and configuration information for the type definition. This can include source file information, module details, and other development-time context.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L39)
+
 
 #### Returns
 MetadataInterface&#124;null
@@ -35,6 +40,8 @@ public function getRelations(): TypeDefinitionRelationsInterface<UsersetInterfac
 
 Get the collection of relations defined for this type. Relations define the authorized relationships that can exist between objects of this type and other entities in the system.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L49)
+
 
 #### Returns
 TypeDefinitionRelationsInterface&lt;UsersetInterface&gt;&#124;null
@@ -48,6 +55,8 @@ public function getType(): string
 
 Get the name of this type. The type name uniquely identifies this type definition within the authorization model. Common examples include &quot;user&quot;, &quot;document&quot;, &quot;folder&quot;, &quot;organization&quot;, etc.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L60)
+
 
 #### Returns
 string
@@ -60,6 +69,8 @@ string
 public function jsonSerialize(): array<string, mixed>
 ```
 
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L66)
 
 
 #### Returns

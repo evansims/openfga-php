@@ -5,6 +5,9 @@ Response containing test assertions associated with an authorization model. This
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponse.php)
+
 ## Implements
 * [ReadAssertionsResponseInterface](ReadAssertionsResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
@@ -21,6 +24,8 @@ public function fromResponse(HttpResponseInterface $response, HttpRequestInterfa
 ```
 
 Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php#L44)
 
 #### Parameters
 | Name | Type | Description |
@@ -42,6 +47,8 @@ public function getAssertions(): ?OpenFGA\Models\Collections\AssertionsInterface
 
 Get the collection of assertions from the authorization model. Returns a type-safe collection containing the assertion objects associated with the authorization model. Each assertion defines a test case with expected permission check results for validating model behavior.
 
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponse.php#L95)
+
 
 #### Returns
 ?OpenFGA\Models\Collections\AssertionsInterface
@@ -55,6 +62,8 @@ public function getModel(): string
 ```
 
 Get the authorization model identifier for these assertions. Returns the unique identifier of the authorization model that contains these assertions. This ties the assertions to a specific model version for validation and testing purposes.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponse.php#L104)
 
 
 #### Returns
@@ -70,6 +79,8 @@ public function schema(): SchemaInterface
 ```
 
 Get the schema definition for this response. Returns the schema that defines the structure and validation rules for assertions reading response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponseInterface.php#L35)
 
 
 #### Returns

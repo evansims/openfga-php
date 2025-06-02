@@ -5,6 +5,9 @@ Interface for authorization model creation response objects. This interface defi
 ## Namespace
 `OpenFGA\Responses`
 
+## Source
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponseInterface.php)
+
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
@@ -19,6 +22,8 @@ public function getModel(): string
 ```
 
 Get the unique identifier of the created authorization model. Returns the system-generated unique identifier for the newly created authorization model. This ID is used in subsequent API operations to reference this specific model version for authorization checks and other operations.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponseInterface.php#L43)
 
 
 #### Returns
