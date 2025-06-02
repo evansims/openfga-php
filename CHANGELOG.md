@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Enhanced API documentation generator with translation tables for Messages class
+- Added OPENAPI_MODEL constants to BatchCheckItem and BatchCheckSingleResult classes
+
+### Fixed
+
+- Fixed constant value formatting in API documentation (removed unnecessary quotes)
+
 ## [1.2.0] - 2025-06-02
 
 ### Added

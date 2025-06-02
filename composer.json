@@ -159,6 +159,7 @@
     "lint:psalm": "@php vendor/bin/psalm",
     "lint:rector": "@php vendor/bin/rector process src --dry-run",
     "lint:rector:fix": "@php vendor/bin/rector process src",
+    "release": "@php tools/release.php",
     "security:workflows": "@php tools/workflow-security-audit.php",
     "security:workflows:fix": "@php tools/workflow-security-audit.php --fix",
     "test": [

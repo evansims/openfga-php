@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+### Release Process
+
+- `composer release` - Perform a release; pass the intended version as the first argument, such as "composer release 1.2.0"
+
 ### Testing
 
 - `composer test` - Run all our tests (unit, integration, contract)
