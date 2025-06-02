@@ -13,9 +13,7 @@ Represents a reference to a specific relation on an object. In authorization mod
 ## Implements
 
 * [`ObjectRelationInterface`](ObjectRelationInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a reference to a specific relation on an object. In authorization mod
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'ObjectRelation'` |  |
+| Name            | Value              | Description |
+| --------------- | ------------------ | ----------- |
+| `OPENAPI_MODEL` | `'ObjectRelation'` |             |
 
 ## Methods
 

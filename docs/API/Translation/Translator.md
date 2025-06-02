@@ -56,13 +56,10 @@ Check if a translation exists for the given message. Determines whether a specif
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$message` | [`Messages`](Messages.md) | The message enum case to check |
-
-| `$locale` | `string` &#124; `null` | Locale to check (defaults to configured locale) |
+| Name       | Type                      | Description                                     |
+| ---------- | ------------------------- | ----------------------------------------------- |
+| `$message` | [`Messages`](Messages.md) | The message enum case to check                  |
+| `$locale`  | `string` &#124; `null`    | Locale to check (defaults to configured locale) |
 
 #### Returns
 
@@ -100,10 +97,8 @@ Set the default locale for translations. Configures the default locale that is u
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name      | Type     | Description                                                                   |
+| --------- | -------- | ----------------------------------------------------------------------------- |
 | `$locale` | `string` | The locale code (for example, &#039;en&#039;, &#039;es&#039;, &#039;fr&#039;) |
 
 #### Returns
@@ -132,17 +127,12 @@ Add a translation resource to the translator. Registers a translation file with 
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$format` | `string` | The file format (for example, &#039;yaml&#039;, &#039;json&#039;, &#039;php&#039;) |
-
-| `$resource` | `string` | The path to the translation file |
-
-| `$locale` | `string` | The locale code (for example, &#039;en&#039;, &#039;es&#039;, &#039;fr&#039;) |
-
-| `$domain` | `string` | The translation domain (defaults to &#039;messages&#039;) |
+| Name        | Type     | Description                                                                        |
+| ----------- | -------- | ---------------------------------------------------------------------------------- |
+| `$format`   | `string` | The file format (for example, &#039;yaml&#039;, &#039;json&#039;, &#039;php&#039;) |
+| `$resource` | `string` | The path to the translation file                                                   |
+| `$locale`   | `string` | The locale code (for example, &#039;en&#039;, &#039;es&#039;, &#039;fr&#039;)      |
+| `$domain`   | `string` | The translation domain (defaults to &#039;messages&#039;)                          |
 
 #### Returns
 
@@ -163,15 +153,11 @@ Translate a message using a Messages enum case. Performs type-safe message trans
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$message` | [`Messages`](Messages.md) | The message enum case to translate |
-
-| `$parameters` | `array&lt;`string`, `mixed`&gt;` |  |
-
-| `$locale` | `string` &#124; `null` | Locale to use (defaults to configured locale) |
+| Name          | Type                             | Description                                   |
+| ------------- | -------------------------------- | --------------------------------------------- |
+| `$message`    | [`Messages`](Messages.md)        | The message enum case to translate            |
+| `$parameters` | `array&lt;`string`, `mixed`&gt;` |                                               |
+| `$locale`     | `string` &#124; `null`           | Locale to use (defaults to configured locale) |
 
 #### Returns
 
@@ -192,15 +178,11 @@ Translate a message using a translation key string. Provides direct translation 
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$key` | `string` | The translation key to look up |
-
-| `$parameters` | `array&lt;`string`, `mixed`&gt;` |  |
-
-| `$locale` | `string` &#124; `null` | Locale to use (defaults to configured locale) |
+| Name          | Type                             | Description                                   |
+| ------------- | -------------------------------- | --------------------------------------------- |
+| `$key`        | `string`                         | The translation key to look up                |
+| `$parameters` | `array&lt;`string`, `mixed`&gt;` |                                               |
+| `$locale`     | `string` &#124; `null`           | Locale to use (defaults to configured locale) |
 
 #### Returns
 

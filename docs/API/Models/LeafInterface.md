@@ -13,7 +13,6 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

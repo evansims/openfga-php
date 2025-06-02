@@ -33,10 +33,8 @@ Get an authentication request context if this strategy requires token acquisitio
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                               |
+| ---------------- | ------------------------ | ----------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | Factory for creating request body streams |
 
 #### Returns
@@ -103,10 +101,8 @@ Handle the authentication response and update the stored token. Processes the OA
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type                                                  | Description                                       |
+| ----------- | ----------------------------------------------------- | ------------------------------------------------- |
 | `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The authentication response from the OAuth server |
 
 #### Returns

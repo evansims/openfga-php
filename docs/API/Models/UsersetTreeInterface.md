@@ -13,7 +13,6 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

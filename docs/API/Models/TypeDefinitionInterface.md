@@ -13,7 +13,6 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

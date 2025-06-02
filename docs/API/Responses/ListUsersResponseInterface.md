@@ -17,7 +17,6 @@ Interface for user listing response objects. This interface defines the contract
 ## Related Classes
 
 * [ListUsersResponse](Responses/ListUsersResponse.md) (implementation)
-
 * [ListUsersRequestInterface](Requests/ListUsersRequestInterface.md) (request)
 
 ## Methods

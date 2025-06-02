@@ -13,9 +13,7 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 ## Implements
 
 * [`AssertionInterface`](AssertionInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'Assertion'` |  |
+| Name            | Value         | Description |
+| --------------- | ------------- | ----------- |
+| `OPENAPI_MODEL` | `'Assertion'` |             |
 
 ## Methods
 

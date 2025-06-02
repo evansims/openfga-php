@@ -13,44 +13,29 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 ## Implements
 
 * `UnitEnum`
-
 * `BackedEnum`
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `CouldNotAddItemsToCollection` | `\OpenFGA\Exceptions\SerializationError::CouldNotAddItemsToCollection` |  |
-
-| `EmptyCollection` | `\OpenFGA\Exceptions\SerializationError::EmptyCollection` |  |
-
-| `InvalidItemType` | `\OpenFGA\Exceptions\SerializationError::InvalidItemType` |  |
-
-| `MissingRequiredConstructorParameter` | `\OpenFGA\Exceptions\SerializationError::MissingRequiredConstructorParameter` |  |
-
-| `Response` | `\OpenFGA\Exceptions\SerializationError::Response` |  |
-
-| `UndefinedItemType` | `\OpenFGA\Exceptions\SerializationError::UndefinedItemType` |  |
+| Name                                  | Value                                                                         | Description |
+| ------------------------------------- | ----------------------------------------------------------------------------- | ----------- |
+| `CouldNotAddItemsToCollection`        | `\OpenFGA\Exceptions\SerializationError::CouldNotAddItemsToCollection`        |             |
+| `EmptyCollection`                     | `\OpenFGA\Exceptions\SerializationError::EmptyCollection`                     |             |
+| `InvalidItemType`                     | `\OpenFGA\Exceptions\SerializationError::InvalidItemType`                     |             |
+| `MissingRequiredConstructorParameter` | `\OpenFGA\Exceptions\SerializationError::MissingRequiredConstructorParameter` |             |
+| `Response`                            | `\OpenFGA\Exceptions\SerializationError::Response`                            |             |
+| `UndefinedItemType`                   | `\OpenFGA\Exceptions\SerializationError::UndefinedItemType`                   |             |
 
 ## Cases
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `CouldNotAddItemsToCollection` | `could_not_add_items_to_collection` |  |
-
-| `EmptyCollection` | `empty_collection` |  |
-
-| `InvalidItemType` | `invalid_item_type` |  |
-
-| `MissingRequiredConstructorParameter` | `missing_required_constructor_parameter` |  |
-
-| `Response` | `response` |  |
-
-| `UndefinedItemType` | `undefined_item_type` |  |
+| Name                                  | Value                                    | Description |
+| ------------------------------------- | ---------------------------------------- | ----------- |
+| `CouldNotAddItemsToCollection`        | `could_not_add_items_to_collection`      |             |
+| `EmptyCollection`                     | `empty_collection`                       |             |
+| `InvalidItemType`                     | `invalid_item_type`                      |             |
+| `MissingRequiredConstructorParameter` | `missing_required_constructor_parameter` |             |
+| `Response`                            | `response`                               |             |
+| `UndefinedItemType`                   | `undefined_item_type`                    |             |
 
 ## Methods
 
@@ -106,17 +91,12 @@ Create a new SerializationException for this error type. Factory method that cre
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request being processed when serialization failed, if applicable |
-
-| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response containing invalid data, if applicable |
-
-| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
-
-| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
+| Name        | Type                                                                | Description                                                                     |
+| ----------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `$request`  | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null`    | The PSR-7 HTTP request being processed when serialization failed, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response containing invalid data, if applicable                  |
+| `$context`  | `array&lt;`string`, `mixed`&gt;`                                    |                                                                                 |
+| `$prev`     | `Throwable` &#124; `null`                                           | The previous throwable used for exception chaining, if any                      |
 
 #### Returns
 

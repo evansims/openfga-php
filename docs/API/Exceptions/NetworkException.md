@@ -13,9 +13,7 @@ Network-related exception for the OpenFGA SDK. Thrown when network or HTTP commu
 ## Implements
 
 * `Stringable`
-
 * `Throwable`
-
 * [`ClientThrowable`](ClientThrowable.md)
 
 ## Methods

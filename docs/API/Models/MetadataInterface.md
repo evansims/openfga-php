@@ -13,7 +13,6 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

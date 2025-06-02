@@ -13,7 +13,6 @@ Defines a difference operation node in authorization evaluation trees. UsersetTr
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

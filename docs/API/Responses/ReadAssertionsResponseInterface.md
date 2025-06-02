@@ -17,7 +17,6 @@ Interface for assertions reading response objects. This interface defines the co
 ## Related Classes
 
 * [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (implementation)
-
 * [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (request)
 
 ## Methods

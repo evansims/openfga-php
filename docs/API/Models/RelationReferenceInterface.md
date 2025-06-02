@@ -13,7 +13,6 @@ Defines the contract for relation references with optional conditions. A relatio
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

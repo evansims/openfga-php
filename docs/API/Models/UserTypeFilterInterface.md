@@ -13,7 +13,6 @@ Represents a filter for limiting users by their relationships to specific object
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

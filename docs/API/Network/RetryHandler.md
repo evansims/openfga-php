@@ -37,15 +37,11 @@ Execute an HTTP request with automatic retry logic. Performs the HTTP request wi
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$requestExecutor` | `callable` |  |
-
-| `$request` | `Psr\Http\Message\RequestInterface` | The original HTTP request for context |
-
-| `$endpoint` | `string` | The endpoint URL for circuit breaker tracking |
+| Name               | Type                                | Description                                   |
+| ------------------ | ----------------------------------- | --------------------------------------------- |
+| `$requestExecutor` | `callable`                          |                                               |
+| `$request`         | `Psr\Http\Message\RequestInterface` | The original HTTP request for context         |
+| `$endpoint`        | `string`                            | The endpoint URL for circuit breaker tracking |
 
 #### Returns
 

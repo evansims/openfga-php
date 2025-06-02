@@ -13,7 +13,6 @@ Represents an OpenFGA store that contains authorization models and relationship 
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

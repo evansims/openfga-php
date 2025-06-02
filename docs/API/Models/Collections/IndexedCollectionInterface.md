@@ -13,13 +13,9 @@ Represents a type-safe collection indexed by integers, similar to a JSON array. 
 ## Implements
 
 * `ArrayAccess`
-
 * `Countable`
-
 * `Iterator`
-
 * `JsonSerializable`
-
 * `Traversable`
 
 ## Related Classes
@@ -43,10 +39,8 @@ Get an item by its position in the collection. This method retrieves the item at
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name      | Type  | Description                                |
+| --------- | ----- | ------------------------------------------ |
 | `$offset` | `int` | The index position of the item to retrieve |
 
 #### Returns
@@ -64,11 +58,9 @@ public function offsetGet(mixed $offset): T|null
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 
@@ -104,10 +96,8 @@ Check if an offset exists in the collection. This method determines whether the 
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name      | Type    | Description                       |
+| --------- | ------- | --------------------------------- |
 | `$offset` | `mixed` | The offset to check for existence |
 
 #### Returns
@@ -125,13 +115,10 @@ public function offsetSet(int|string|null $offset, T $value): void
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$offset` | `int` &#124; `string` &#124; `null` |  |
-
-| `$value` | `T` |  |
+| Name      | Type                                | Description |
+| --------- | ----------------------------------- | ----------- |
+| `$offset` | `int` &#124; `string` &#124; `null` |             |
+| `$value`  | `T`                                 |             |
 
 #### Returns
 
@@ -148,11 +135,9 @@ public function offsetUnset(mixed $offset): void
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 
@@ -173,11 +158,9 @@ Add an item to the end of the collection. This method appends a new model object
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$item` | `T` | The OpenFGA model object to add to the collection |
+| Name    | Type | Description                                       |
+| ------- | ---- | ------------------------------------------------- |
+| `$item` | `T`  | The OpenFGA model object to add to the collection |
 
 #### Returns
 
@@ -237,11 +220,9 @@ Check if all items in the collection match the given condition. This method test
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$callback` | `callable` |  |
+| Name        | Type       | Description |
+| ----------- | ---------- | ----------- |
+| `$callback` | `callable` |             |
 
 #### Returns
 
@@ -260,11 +241,9 @@ Create a new collection containing only items that match the condition. This met
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$callback` | `callable` |  |
+| Name        | Type       | Description |
+| ----------- | ---------- | ----------- |
+| `$callback` | `callable` |             |
 
 #### Returns
 
@@ -283,11 +262,9 @@ Get the first item in the collection, optionally matching a condition. When call
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$callback` | `callable` &#124; `null` |  |
+| Name        | Type                     | Description |
+| ----------- | ------------------------ | ----------- |
+| `$callback` | `callable` &#124; `null` |             |
 
 #### Returns
 
@@ -349,13 +326,10 @@ Reduce the collection to a single value using a callback function. This method i
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$initial` | `U` | The initial value to start the reduction |
-
-| `$callback` | `callable` |  |
+| Name        | Type       | Description                              |
+| ----------- | ---------- | ---------------------------------------- |
+| `$initial`  | `U`        | The initial value to start the reduction |
+| `$callback` | `callable` |                                          |
 
 #### Returns
 
@@ -389,11 +363,9 @@ Check if at least one item in the collection matches the given condition. This m
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$callback` | `callable` |  |
+| Name        | Type       | Description |
+| ----------- | ---------- | ----------- |
+| `$callback` | `callable` |             |
 
 #### Returns
 
@@ -442,11 +414,9 @@ Create a new collection with the specified items. This method creates a fresh co
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$items` | mixed |  |
+| Name     | Type  | Description |
+| -------- | ----- | ----------- |
+| `$items` | mixed |             |
 
 #### Returns
 

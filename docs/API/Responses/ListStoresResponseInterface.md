@@ -17,7 +17,6 @@ Interface for stores listing response objects. This interface defines the contra
 ## Related Classes
 
 * [ListStoresResponse](Responses/ListStoresResponse.md) (implementation)
-
 * [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (request)
 
 ## Methods

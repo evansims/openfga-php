@@ -13,13 +13,11 @@ Request for streaming objects that a user has a specific relationship with. This
 ## Implements
 
 * [`StreamedListObjectsRequestInterface`](StreamedListObjectsRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [StreamedListObjectsResponse](Responses/StreamedListObjectsResponse.md) (response)
-
 * [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md) (interface)
 
 ## Methods
@@ -112,10 +110,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

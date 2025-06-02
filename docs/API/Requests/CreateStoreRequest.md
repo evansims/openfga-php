@@ -13,13 +13,11 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 ## Implements
 
 * [`CreateStoreRequestInterface`](CreateStoreRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [CreateStoreResponse](Responses/CreateStoreResponse.md) (response)
-
 * [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (interface)
 
 ## Methods
@@ -52,10 +50,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

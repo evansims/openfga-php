@@ -13,9 +13,7 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `Stringable`
-
 * `JsonSerializable`
 
 ## Related Classes

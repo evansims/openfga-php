@@ -13,7 +13,6 @@ Represents an object-relation pair in OpenFGA authorization models. Object-relat
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

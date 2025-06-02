@@ -13,13 +13,11 @@ Request for creating a new authorization model in OpenFGA. Authorization models 
 ## Implements
 
 * [`CreateAuthorizationModelRequestInterface`](CreateAuthorizationModelRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (response)
-
 * [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md) (interface)
 
 ## Methods
@@ -52,10 +50,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

@@ -13,7 +13,6 @@ Base interface for all OpenFGA SDK exceptions. Extends the standard PHP Throwabl
 ## Implements
 
 * `Throwable`
-
 * `Stringable`
 
 ## Methods

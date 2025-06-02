@@ -13,7 +13,6 @@ Represents an assertion used to test authorization model correctness. Assertions
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

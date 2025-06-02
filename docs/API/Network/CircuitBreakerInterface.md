@@ -31,10 +31,8 @@ Get the current failure count for an endpoint. Returns the number of consecutive
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type     | Description                             |
+| ----------- | -------- | --------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns
@@ -56,10 +54,8 @@ Check if the circuit is currently open for an endpoint. Returns true if the circ
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type     | Description                             |
+| ----------- | -------- | --------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns
@@ -81,10 +77,8 @@ Record a failure for the specified endpoint. Increments the failure count for th
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type     | Description                                |
+| ----------- | -------- | ------------------------------------------ |
 | `$endpoint` | `string` | The endpoint URL or identifier that failed |
 
 #### Returns
@@ -104,10 +98,8 @@ Record a successful request for the specified endpoint. Resets the failure state
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type     | Description                                   |
+| ----------- | -------- | --------------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier that succeeded |
 
 #### Returns
@@ -127,10 +119,8 @@ Check if the circuit breaker should allow a request to the specified endpoint. E
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type     | Description                             |
+| ----------- | -------- | --------------------------------------- |
 | `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns

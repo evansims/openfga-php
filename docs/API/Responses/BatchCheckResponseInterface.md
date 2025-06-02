@@ -17,7 +17,6 @@ Response containing the results of a batch authorization check. This response co
 ## Related Classes
 
 * [BatchCheckResponse](Responses/BatchCheckResponse.md) (implementation)
-
 * [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (request)
 
 ## Methods
@@ -50,10 +49,8 @@ Get the result for a specific correlation ID. Returns the check result for the g
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type     | Description                   |
+| ---------------- | -------- | ----------------------------- |
 | `$correlationId` | `string` | The correlation ID to look up |
 
 #### Returns

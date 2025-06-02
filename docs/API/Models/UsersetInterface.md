@@ -13,7 +13,6 @@ Defines the contract for userset specifications in authorization models. A users
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

@@ -13,24 +13,19 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 ## Implements
 
 * [`TypeDefinitionInterface`](TypeDefinitionInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [TypeDefinitionInterface](Models/TypeDefinitionInterface.md) (interface)
-
 * [TypeDefinitions](Models/Collections/TypeDefinitions.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'TypeDefinition'` |  |
+| Name            | Value              | Description |
+| --------------- | ------------------ | ----------- |
+| `OPENAPI_MODEL` | `'TypeDefinition'` |             |
 
 ## Methods
 

@@ -13,9 +13,7 @@ Represents a user in a list context for authorization operations. UsersListUser 
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `Stringable`
-
 * `JsonSerializable`
 
 ## Related Classes

@@ -13,9 +13,7 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 ## Implements
 
 * [`UsersetUserInterface`](UsersetUserInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'UsersetUser'` |  |
+| Name            | Value           | Description |
+| --------------- | --------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersetUser'` |             |
 
 ## Methods
 

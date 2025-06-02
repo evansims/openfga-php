@@ -11,15 +11,10 @@
 ## Implements
 
 * [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
-
 * `Traversable`
-
 * `JsonSerializable`
-
 * `Iterator`
-
 * `Countable`
-
 * `ArrayAccess`
 
 ## Related Classes
@@ -43,10 +38,8 @@ Get an item by its string key. This method retrieves the item associated with th
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name   | Type     | Description                     |
+| ------ | -------- | ------------------------------- |
 | `$key` | `string` | The key of the item to retrieve |
 
 #### Returns
@@ -66,11 +59,9 @@ Get an item by its offset key.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 
@@ -91,10 +82,8 @@ Check if a key exists in the collection. This method determines whether the coll
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name   | Type     | Description                    |
+| ------ | -------- | ------------------------------ |
 | `$key` | `string` | The key to check for existence |
 
 #### Returns
@@ -129,10 +118,8 @@ Check if an offset exists in the collection. This method determines whether the 
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name      | Type    | Description                    |
+| --------- | ------- | ------------------------------ |
 | `$offset` | `mixed` | The key to check for existence |
 
 #### Returns
@@ -150,13 +137,10 @@ public function offsetSet(string|null $offset, T $value): void
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$offset` | `string` &#124; `null` |  |
-
-| `$value` | `T` |  |
+| Name      | Type                   | Description |
+| --------- | ---------------------- | ----------- |
+| `$offset` | `string` &#124; `null` |             |
+| `$value`  | `T`                    |             |
 
 #### Returns
 
@@ -173,11 +157,9 @@ public function offsetUnset(mixed $offset): void
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$offset` | `mixed` |  |
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
 
 #### Returns
 
@@ -198,13 +180,10 @@ Add an item to the collection with the specified key. This method associates an 
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$key` | `string` | The string key to associate with the item |
-
-| `$item` | `T` | The item to add to the collection |
+| Name    | Type     | Description                               |
+| ------- | -------- | ----------------------------------------- |
+| `$key`  | `string` | The string key to associate with the item |
+| `$item` | `T`      | The item to add to the collection         |
 
 #### Returns
 

@@ -17,5 +17,4 @@ Interface for store deletion response objects. This interface defines the contra
 ## Related Classes
 
 * [DeleteStoreResponse](Responses/DeleteStoreResponse.md) (implementation)
-
 * [DeleteStoreRequestInterface](Requests/DeleteStoreRequestInterface.md) (request)

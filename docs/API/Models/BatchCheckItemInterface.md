@@ -13,7 +13,6 @@ Represents a single item in a batch check request. Each batch check item contain
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

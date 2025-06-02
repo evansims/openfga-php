@@ -17,7 +17,6 @@ Interface for store retrieval response objects. This interface defines the contr
 ## Related Classes
 
 * [GetStoreResponse](Responses/GetStoreResponse.md) (implementation)
-
 * [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (request)
 
 ## Methods

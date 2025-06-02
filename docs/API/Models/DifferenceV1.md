@@ -13,9 +13,7 @@ Represents a set difference operation between two usersets. In authorization mod
 ## Implements
 
 * [`DifferenceV1Interface`](DifferenceV1Interface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a set difference operation between two usersets. In authorization mod
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'v1.Difference'` |  |
+| Name            | Value             | Description |
+| --------------- | ----------------- | ----------- |
+| `OPENAPI_MODEL` | `'v1.Difference'` |             |
 
 ## Methods
 

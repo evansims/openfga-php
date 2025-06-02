@@ -13,7 +13,6 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

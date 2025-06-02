@@ -13,13 +13,11 @@ Request for reading relationship tuples that match specified criteria. This requ
 ## Implements
 
 * [`ReadTuplesRequestInterface`](ReadTuplesRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (response)
-
 * [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md) (interface)
 
 ## Methods
@@ -82,10 +80,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

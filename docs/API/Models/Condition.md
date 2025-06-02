@@ -13,24 +13,19 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 ## Implements
 
 * [`ConditionInterface`](ConditionInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [ConditionInterface](Models/ConditionInterface.md) (interface)
-
 * [Conditions](Models/Collections/Conditions.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'Condition'` |  |
+| Name            | Value         | Description |
+| --------------- | ------------- | ----------- |
+| `OPENAPI_MODEL` | `'Condition'` |             |
 
 ## Methods
 

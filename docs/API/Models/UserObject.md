@@ -13,11 +13,8 @@ Represents a specific user object with type and identifier. A UserObject provide
 ## Implements
 
 * [`UserObjectInterface`](UserObjectInterface.md)
-
 * `Stringable`
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -26,11 +23,9 @@ Represents a specific user object with type and identifier. A UserObject provide
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'UserObject'` |  |
+| Name            | Value          | Description |
+| --------------- | -------------- | ----------- |
+| `OPENAPI_MODEL` | `'UserObject'` |             |
 
 ## Methods
 

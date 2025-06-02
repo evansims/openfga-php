@@ -17,7 +17,6 @@ Response containing streaming objects that a user has a specific relationship wi
 ## Related Classes
 
 * [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (interface)
-
 * [StreamedListObjectsRequest](Requests/StreamedListObjectsRequest.md) (request)
 
 ## Methods
@@ -60,15 +59,11 @@ Create a streaming response from an HTTP response. Processes the streaming HTTP 
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$response` | `HttpResponseInterface` | The HTTP response from the API |
-
-| `$request` | `HttpRequestInterface` | The original HTTP request |
-
-| `$validator` | `SchemaValidator` | Schema validator for response validation |
+| Name         | Type                    | Description                              |
+| ------------ | ----------------------- | ---------------------------------------- |
+| `$response`  | `HttpResponseInterface` | The HTTP response from the API           |
+| `$request`   | `HttpRequestInterface`  | The original HTTP request                |
+| `$validator` | `SchemaValidator`       | Schema validator for response validation |
 
 #### Returns
 

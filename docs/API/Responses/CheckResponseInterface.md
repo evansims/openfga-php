@@ -17,7 +17,6 @@ Interface for permission check response objects. This interface defines the cont
 ## Related Classes
 
 * [CheckResponse](Responses/CheckResponse.md) (implementation)
-
 * [CheckRequestInterface](Requests/CheckRequestInterface.md) (request)
 
 ## Methods

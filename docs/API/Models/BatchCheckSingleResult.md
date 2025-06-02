@@ -13,9 +13,7 @@ Represents the result of a single check within a batch check response. Each resu
 ## Implements
 
 * [`BatchCheckSingleResultInterface`](BatchCheckSingleResultInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes

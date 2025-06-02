@@ -13,15 +13,12 @@ Represents a single item in a batch check request. Each batch check item contain
 ## Implements
 
 * [`BatchCheckItemInterface`](BatchCheckItemInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
-
 * [BatchCheckItems](Models/Collections/BatchCheckItems.md) (collection)
 
 ## Methods

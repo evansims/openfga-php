@@ -13,7 +13,6 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

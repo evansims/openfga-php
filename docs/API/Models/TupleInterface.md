@@ -13,7 +13,6 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

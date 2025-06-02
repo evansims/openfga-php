@@ -13,24 +13,19 @@ Represents a relationship tuple key defining a connection between user, relation
 ## Implements
 
 * [`TupleKeyInterface`](TupleKeyInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [TupleKeyInterface](Models/TupleKeyInterface.md) (interface)
-
 * [TupleKeys](Models/Collections/TupleKeys.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'TupleKey'` |  |
+| Name            | Value        | Description |
+| --------------- | ------------ | ----------- |
+| `OPENAPI_MODEL` | `'TupleKey'` |             |
 
 ## Methods
 

@@ -13,13 +13,11 @@ Request for listing users who have a specific relationship with an object. This 
 ## Implements
 
 * [`ListUsersRequestInterface`](ListUsersRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [ListUsersResponse](Responses/ListUsersResponse.md) (response)
-
 * [ListUsersRequestInterface](Requests/ListUsersRequestInterface.md) (interface)
 
 ## Methods
@@ -127,10 +125,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

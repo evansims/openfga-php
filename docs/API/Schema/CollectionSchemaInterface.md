@@ -17,7 +17,6 @@ Interface for collection schema definitions in the OpenFGA system. This interfac
 ## Related Classes
 
 * [SchemaInterface](Schema/SchemaInterface.md) (item)
-
 * [CollectionSchema](Schema/CollectionSchema.md) (implementation)
 
 ## Methods
@@ -82,10 +81,8 @@ Get a specific property definition by name. This method retrieves the schema def
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name    | Type     | Description                          |
+| ------- | -------- | ------------------------------------ |
 | `$name` | `string` | The name of the property to retrieve |
 
 #### Returns

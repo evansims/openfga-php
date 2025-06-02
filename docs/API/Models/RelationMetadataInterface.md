@@ -13,7 +13,6 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

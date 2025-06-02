@@ -17,7 +17,6 @@ Interface for relationship expansion response objects. This interface defines th
 ## Related Classes
 
 * [ExpandResponse](Responses/ExpandResponse.md) (implementation)
-
 * [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (request)
 
 ## Methods

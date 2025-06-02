@@ -13,7 +13,6 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

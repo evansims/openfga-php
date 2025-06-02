@@ -13,13 +13,11 @@ Request for reading test assertions associated with an authorization model. This
 ## Implements
 
 * [`ReadAssertionsRequestInterface`](ReadAssertionsRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (response)
-
 * [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (interface)
 
 ## Methods
@@ -52,10 +50,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

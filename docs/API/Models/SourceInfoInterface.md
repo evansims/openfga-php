@@ -13,7 +13,6 @@ Represents source file information for OpenFGA model elements. Source informatio
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

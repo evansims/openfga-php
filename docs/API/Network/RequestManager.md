@@ -99,13 +99,10 @@ Handle error responses by throwing appropriate exceptions. Analyzes HTTP error r
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type                                                  | Description                                                    |
+| ----------- | ----------------------------------------------------- | -------------------------------------------------------------- |
 | `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The HTTP error response to analyze and convert to an exception |
-
-| `$request` | `HttpRequestInterface` &#124; `null` | Optional request context for enhanced error reporting |
+| `$request`  | `HttpRequestInterface` &#124; `null`                  | Optional request context for enhanced error reporting          |
 
 #### Returns
 
@@ -124,10 +121,8 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name       | Type                                               | Description                                   |
+| ---------- | -------------------------------------------------- | --------------------------------------------- |
 | `$request` | [`RequestInterface`](Requests/RequestInterface.md) | The high-level OpenFGA API request to convert |
 
 #### Returns
@@ -147,10 +142,8 @@ Send an HTTP request and return the response. Executes the provided PSR-7 HTTP r
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name       | Type                                | Description                       |
+| ---------- | ----------------------------------- | --------------------------------- |
 | `$request` | `Psr\Http\Message\RequestInterface` | The PSR-7 HTTP request to execute |
 
 #### Returns

@@ -13,7 +13,6 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

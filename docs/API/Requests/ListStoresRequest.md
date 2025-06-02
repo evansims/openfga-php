@@ -13,13 +13,11 @@ Request for listing all available stores with pagination support. This request r
 ## Implements
 
 * [`ListStoresRequestInterface`](ListStoresRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [ListStoresResponse](Responses/ListStoresResponse.md) (response)
-
 * [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (interface)
 
 ## Methods
@@ -67,10 +65,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

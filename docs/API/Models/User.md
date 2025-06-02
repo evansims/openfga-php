@@ -13,9 +13,7 @@ Represents a user or user specification in authorization contexts. A User can re
 ## Implements
 
 * [`UserInterface`](UserInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a user or user specification in authorization contexts. A User can re
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'User'` |  |
+| Name            | Value    | Description |
+| --------------- | -------- | ----------- |
+| `OPENAPI_MODEL` | `'User'` |             |
 
 ## Methods
 

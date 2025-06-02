@@ -13,7 +13,6 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

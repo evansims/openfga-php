@@ -17,7 +17,6 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 ## Related Classes
 
 * [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (response)
-
 * [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (implementation)
 
 ## Methods
@@ -80,10 +79,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

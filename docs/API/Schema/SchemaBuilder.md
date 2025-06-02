@@ -57,17 +57,12 @@ Add an array property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
-| `$items` | `array` |  |
-
-| `$required` | `bool` | Whether the property is required |
-
-| `$default` | `mixed` | Default value for optional properties |
+| Name        | Type     | Description                           |
+| ----------- | -------- | ------------------------------------- |
+| `$name`     | `string` | The property name                     |
+| `$items`    | `array`  |                                       |
+| `$required` | `bool`   | Whether the property is required      |
+| `$default`  | `mixed`  | Default value for optional properties |
 
 #### Returns
 
@@ -86,15 +81,11 @@ Add a boolean property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
-| `$required` | `bool` | Whether the property is required |
-
-| `$default` | `mixed` | Default value for optional properties |
+| Name        | Type     | Description                           |
+| ----------- | -------- | ------------------------------------- |
+| `$name`     | `string` | The property name                     |
+| `$required` | `bool`   | Whether the property is required      |
+| `$default`  | `mixed`  | Default value for optional properties |
 
 #### Returns
 
@@ -113,15 +104,11 @@ Add a date property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
-| `$required` | `bool` | Whether the property is required |
-
-| `$default` | `mixed` | Default value for optional properties |
+| Name        | Type     | Description                           |
+| ----------- | -------- | ------------------------------------- |
+| `$name`     | `string` | The property name                     |
+| `$required` | `bool`   | Whether the property is required      |
+| `$default`  | `mixed`  | Default value for optional properties |
 
 #### Returns
 
@@ -140,15 +127,11 @@ Add a datetime property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
-| `$required` | `bool` | Whether the property is required |
-
-| `$default` | `mixed` | Default value for optional properties |
+| Name        | Type     | Description                           |
+| ----------- | -------- | ------------------------------------- |
+| `$name`     | `string` | The property name                     |
+| `$required` | `bool`   | Whether the property is required      |
+| `$default`  | `mixed`  | Default value for optional properties |
 
 #### Returns
 
@@ -167,15 +150,11 @@ Add an integer property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
-| `$required` | `bool` | Whether the property is required |
-
-| `$default` | `mixed` | Default value for optional properties |
+| Name        | Type     | Description                           |
+| ----------- | -------- | ------------------------------------- |
+| `$name`     | `string` | The property name                     |
+| `$required` | `bool`   | Whether the property is required      |
+| `$default`  | `mixed`  | Default value for optional properties |
 
 #### Returns
 
@@ -194,15 +173,11 @@ Add a number (float) property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
-| `$required` | `bool` | Whether the property is required |
-
-| `$default` | `mixed` | Default value for optional properties |
+| Name        | Type     | Description                           |
+| ----------- | -------- | ------------------------------------- |
+| `$name`     | `string` | The property name                     |
+| `$required` | `bool`   | Whether the property is required      |
+| `$default`  | `mixed`  | Default value for optional properties |
 
 #### Returns
 
@@ -221,15 +196,11 @@ Add an object property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
+| Name         | Type     | Description                            |
+| ------------ | -------- | -------------------------------------- |
+| `$name`      | `string` | The property name                      |
 | `$className` | `string` | The class name for the object property |
-
-| `$required` | `bool` | Whether the property is required |
+| `$required`  | `bool`   | Whether the property is required       |
 
 #### Returns
 
@@ -254,19 +225,13 @@ Add a string property to the schema.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$name` | `string` | The property name |
-
-| `$required` | `bool` | Whether the property is required |
-
-| `$format` | `string` &#124; `null` | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
-
-| `$enum` | `array` &#124; `null` | Array of allowed string values |
-
-| `$default` | `mixed` | Default value for optional properties |
+| Name        | Type                   | Description                                                             |
+| ----------- | ---------------------- | ----------------------------------------------------------------------- |
+| `$name`     | `string`               | The property name                                                       |
+| `$required` | `bool`                 | Whether the property is required                                        |
+| `$format`   | `string` &#124; `null` | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
+| `$enum`     | `array` &#124; `null`  | Array of allowed string values                                          |
+| `$default`  | `mixed`                | Default value for optional properties                                   |
 
 #### Returns
 

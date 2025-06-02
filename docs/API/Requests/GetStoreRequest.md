@@ -13,13 +13,11 @@ Request for retrieving store information by its ID. This request fetches the det
 ## Implements
 
 * [`GetStoreRequestInterface`](GetStoreRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [GetStoreResponse](Responses/GetStoreResponse.md) (response)
-
 * [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (interface)
 
 ## Methods
@@ -37,10 +35,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

@@ -13,9 +13,7 @@ Authentication-related exception for the OpenFGA SDK. Thrown when authentication
 ## Implements
 
 * `Stringable`
-
 * `Throwable`
-
 * [`ClientThrowable`](ClientThrowable.md)
 
 ## Methods

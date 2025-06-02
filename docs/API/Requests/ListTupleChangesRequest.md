@@ -13,13 +13,11 @@ Request for listing changes to relationship tuples over time. This request retri
 ## Implements
 
 * [`ListTupleChangesRequestInterface`](ListTupleChangesRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (response)
-
 * [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (interface)
 
 ## Methods
@@ -67,10 +65,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

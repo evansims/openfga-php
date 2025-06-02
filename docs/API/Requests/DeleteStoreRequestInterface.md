@@ -17,7 +17,6 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 ## Related Classes
 
 * [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (response)
-
 * [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (implementation)
 
 ## Methods
@@ -35,10 +34,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

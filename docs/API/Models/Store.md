@@ -13,24 +13,19 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 ## Implements
 
 * [`StoreInterface`](StoreInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [StoreInterface](Models/StoreInterface.md) (interface)
-
 * [Stores](Models/Collections/Stores.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'Store'` |  |
+| Name            | Value     | Description |
+| --------------- | --------- | ----------- |
+| `OPENAPI_MODEL` | `'Store'` |             |
 
 ## Methods
 

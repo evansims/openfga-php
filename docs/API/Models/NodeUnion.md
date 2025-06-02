@@ -13,9 +13,7 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 ## Implements
 
 * [`NodeUnionInterface`](NodeUnionInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'NodeUnion'` |  |
+| Name            | Value         | Description |
+| --------------- | ------------- | ----------- |
+| `OPENAPI_MODEL` | `'NodeUnion'` |             |
 
 ## Methods
 

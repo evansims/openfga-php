@@ -13,28 +13,21 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 ## Implements
 
 * `UnitEnum`
-
 * `BackedEnum`
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
+| Name           | Value                                                   | Description                                                                                                                                                                     |
+| -------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `TokenExpired` | `\OpenFGA\Exceptions\AuthenticationError::TokenExpired` | Access token has expired and needs to be refreshed. Occurs when an access token&#039;s expiration time has passed, requiring a new token to be obtained through the OAuth flow. |
-
-| `TokenInvalid` | `\OpenFGA\Exceptions\AuthenticationError::TokenInvalid` | Access token is invalid or malformed. Occurs when the provided token is not recognized by the authorization server or has an invalid format. |
+| `TokenInvalid` | `\OpenFGA\Exceptions\AuthenticationError::TokenInvalid` | Access token is invalid or malformed. Occurs when the provided token is not recognized by the authorization server or has an invalid format.                                    |
 
 ## Cases
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
+| Name           | Value           | Description                                                                                                                                                                     |
+| -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `TokenExpired` | `token_expired` | Access token has expired and needs to be refreshed. Occurs when an access token&#039;s expiration time has passed, requiring a new token to be obtained through the OAuth flow. |
-
-| `TokenInvalid` | `token_invalid` | Access token is invalid or malformed. Occurs when the provided token is not recognized by the authorization server or has an invalid format. |
+| `TokenInvalid` | `token_invalid` | Access token is invalid or malformed. Occurs when the provided token is not recognized by the authorization server or has an invalid format.                                    |
 
 ## Methods
 
@@ -53,10 +46,8 @@ Get a user-friendly error message for this authentication error. Provides approp
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name      | Type                   | Description                                      |
+| --------- | ---------------------- | ------------------------------------------------ |
 | `$locale` | `string` &#124; `null` | Optional locale override for message translation |
 
 #### Returns
@@ -100,17 +91,12 @@ Create a new AuthenticationException for this error type. Factory method that cr
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request that triggered the authentication failure, if applicable |
-
-| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response containing authentication error details, if applicable |
-
-| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
-
-| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
+| Name        | Type                                                                | Description                                                                     |
+| ----------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `$request`  | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null`    | The PSR-7 HTTP request that triggered the authentication failure, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response containing authentication error details, if applicable  |
+| `$context`  | `array&lt;`string`, `mixed`&gt;`                                    |                                                                                 |
+| `$prev`     | `Throwable` &#124; `null`                                           | The previous throwable used for exception chaining, if any                      |
 
 #### Returns
 

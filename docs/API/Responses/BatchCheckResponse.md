@@ -13,13 +13,11 @@ Response containing the results of a batch authorization check. This response co
 ## Implements
 
 * [`BatchCheckResponseInterface`](BatchCheckResponseInterface.md)
-
 * [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
 * [BatchCheckResponseInterface](Responses/BatchCheckResponseInterface.md) (interface)
-
 * [BatchCheckRequest](Requests/BatchCheckRequest.md) (request)
 
 ## Methods
@@ -54,10 +52,8 @@ Get the result for a specific correlation ID. Returns the check result for the g
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type     | Description                   |
+| ---------------- | -------- | ----------------------------- |
 | `$correlationId` | `string` | The correlation ID to look up |
 
 #### Returns
@@ -85,15 +81,11 @@ Create a response instance from an HTTP response. This method transforms a raw H
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
-
-| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
-
-| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
+| Name         | Type                    | Description                                               |
+| ------------ | ----------------------- | --------------------------------------------------------- |
+| `$response`  | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API                |
+| `$request`   | `HttpRequestInterface`  | The original HTTP request that generated this response    |
+| `$validator` | `SchemaValidator`       | Schema validator for parsing and validating response data |
 
 #### Returns
 

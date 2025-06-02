@@ -17,7 +17,6 @@ Interface for listing users who have a specific relation to an object. This inte
 ## Related Classes
 
 * [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md) (response)
-
 * [ListUsersRequest](Requests/ListUsersRequest.md) (implementation)
 
 ## Methods
@@ -125,10 +124,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

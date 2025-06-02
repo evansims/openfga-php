@@ -17,7 +17,6 @@ Interface for authorization model retrieval response objects. This interface def
 ## Related Classes
 
 * [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (implementation)
-
 * [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md) (request)
 
 ## Methods

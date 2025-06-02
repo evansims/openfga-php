@@ -17,7 +17,6 @@ Interface for authorization model creation response objects. This interface defi
 ## Related Classes
 
 * [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (implementation)
-
 * [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md) (request)
 
 ## Methods

@@ -13,11 +13,8 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 ## Implements
 
 * [`UsersListUserInterface`](UsersListUserInterface.md)
-
 * `Stringable`
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -26,11 +23,9 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'UsersListUser'` |  |
+| Name            | Value             | Description |
+| --------------- | ----------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersListUser'` |             |
 
 ## Methods
 

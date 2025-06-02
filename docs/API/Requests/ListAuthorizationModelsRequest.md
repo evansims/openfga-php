@@ -13,13 +13,11 @@ Request for listing all authorization models in a store. This request retrieves 
 ## Implements
 
 * [`ListAuthorizationModelsRequestInterface`](ListAuthorizationModelsRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [ListAuthorizationModelsResponse](Responses/ListAuthorizationModelsResponse.md) (response)
-
 * [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md) (interface)
 
 ## Methods
@@ -67,10 +65,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

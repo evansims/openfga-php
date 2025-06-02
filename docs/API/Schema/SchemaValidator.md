@@ -35,13 +35,10 @@ Validate data against a registered schema and transform it into the target class
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$data` | `mixed` | The raw data to validate (typically an array from JSON) |
-
-| `$className` | `string` | The fully qualified class name to validate against |
+| Name         | Type     | Description                                             |
+| ------------ | -------- | ------------------------------------------------------- |
+| `$data`      | `mixed`  | The raw data to validate (typically an array from JSON) |
+| `$className` | `string` | The fully qualified class name to validate against      |
 
 #### Returns
 
@@ -79,10 +76,8 @@ Register a schema for validation use. Adds a schema to the validator&#039;s regi
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name      | Type                                    | Description                       |
+| --------- | --------------------------------------- | --------------------------------- |
 | `$schema` | [`SchemaInterface`](SchemaInterface.md) | The schema definition to register |
 
 #### Returns

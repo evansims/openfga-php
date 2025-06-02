@@ -13,7 +13,6 @@ Defines a difference operation between two usersets in authorization models. Dif
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

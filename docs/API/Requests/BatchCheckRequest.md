@@ -13,13 +13,11 @@ Request for performing multiple authorization checks in a single batch. This req
 ## Implements
 
 * [`BatchCheckRequestInterface`](BatchCheckRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [BatchCheckResponse](Responses/BatchCheckResponse.md) (response)
-
 * [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (interface)
 
 ## Methods
@@ -56,10 +54,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

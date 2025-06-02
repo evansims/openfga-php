@@ -13,27 +13,20 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 ## Implements
 
 * `UnitEnum`
-
 * `BackedEnum`
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `V1_0` | `\OpenFGA\Models\Enums\SchemaVersion::V1_0` | Schema version 1.0 - Legacy authorization model format. This foundational schema version provides core relationship modeling capabilities including basic type definitions, relations, and usersets. While still supported for backward compatibility with existing deployments, this version has limitations compared to newer schema versions. Features available in v1.0: - Basic type definitions and relations - Simple userset operations (direct, union, intersection) - Fundamental relationship modeling Consider upgrading to v1.1 for access to advanced features like conditions and enhanced relationship modeling capabilities. |
-
+| Name   | Value                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------ | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `V1_0` | `\OpenFGA\Models\Enums\SchemaVersion::V1_0` | Schema version 1.0 - Legacy authorization model format. This foundational schema version provides core relationship modeling capabilities including basic type definitions, relations, and usersets. While still supported for backward compatibility with existing deployments, this version has limitations compared to newer schema versions. Features available in v1.0: - Basic type definitions and relations - Simple userset operations (direct, union, intersection) - Fundamental relationship modeling Consider upgrading to v1.1 for access to advanced features like conditions and enhanced relationship modeling capabilities.                                                                                                                                                                                                |
 | `V1_1` | `\OpenFGA\Models\Enums\SchemaVersion::V1_1` | Schema version 1.1 - Current standard authorization model format. This is the recommended schema version for new OpenFGA deployments, providing comprehensive authorization modeling capabilities including advanced features that enable sophisticated access control patterns. This version represents the current state of the art in OpenFGA authorization modeling. Enhanced features in v1.1: - Conditional relationships with runtime parameter evaluation - Advanced type definition metadata and configuration - Improved userset operations and relationship inheritance - Enhanced debugging and introspection capabilities - Full compatibility with all current OpenFGA service features Use this version for new projects and when migrating from v1.0 to access the latest OpenFGA capabilities and performance improvements. |
 
 ## Cases
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `V1_0` | `1.0` | Schema version 1.0 - Legacy authorization model format. This foundational schema version provides core relationship modeling capabilities including basic type definitions, relations, and usersets. While still supported for backward compatibility with existing deployments, this version has limitations compared to newer schema versions. Features available in v1.0: - Basic type definitions and relations - Simple userset operations (direct, union, intersection) - Fundamental relationship modeling Consider upgrading to v1.1 for access to advanced features like conditions and enhanced relationship modeling capabilities. |
-
+| Name   | Value | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `V1_0` | `1.0` | Schema version 1.0 - Legacy authorization model format. This foundational schema version provides core relationship modeling capabilities including basic type definitions, relations, and usersets. While still supported for backward compatibility with existing deployments, this version has limitations compared to newer schema versions. Features available in v1.0: - Basic type definitions and relations - Simple userset operations (direct, union, intersection) - Fundamental relationship modeling Consider upgrading to v1.1 for access to advanced features like conditions and enhanced relationship modeling capabilities.                                                                                                                                                                                                |
 | `V1_1` | `1.1` | Schema version 1.1 - Current standard authorization model format. This is the recommended schema version for new OpenFGA deployments, providing comprehensive authorization modeling capabilities including advanced features that enable sophisticated access control patterns. This version represents the current state of the art in OpenFGA authorization modeling. Enhanced features in v1.1: - Conditional relationships with runtime parameter evaluation - Advanced type definition metadata and configuration - Improved userset operations and relationship inheritance - Enhanced debugging and introspection capabilities - Full compatibility with all current OpenFGA service features Use this version for new projects and when migrating from v1.0 to access the latest OpenFGA capabilities and performance improvements. |
 
 ## Methods
@@ -102,10 +95,8 @@ Compare this schema version with another version. Returns negative, zero, or pos
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name     | Type                                | Description                    |
+| -------- | ----------------------------------- | ------------------------------ |
 | `$other` | [`SchemaVersion`](SchemaVersion.md) | The version to compare against |
 
 #### Returns

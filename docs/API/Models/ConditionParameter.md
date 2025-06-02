@@ -13,24 +13,19 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 ## Implements
 
 * [`ConditionParameterInterface`](ConditionParameterInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [ConditionParameterInterface](Models/ConditionParameterInterface.md) (interface)
-
 * [ConditionParameters](Models/Collections/ConditionParameters.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'ConditionParamTypeRef'` |  |
+| Name            | Value                     | Description |
+| --------------- | ------------------------- | ----------- |
+| `OPENAPI_MODEL` | `'ConditionParamTypeRef'` |             |
 
 ## Methods
 

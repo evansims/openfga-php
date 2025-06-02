@@ -13,7 +13,6 @@ Represents a node in a userset tree structure. Nodes are fundamental building bl
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

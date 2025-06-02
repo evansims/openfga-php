@@ -13,13 +13,11 @@ Response containing a paginated list of tuple changes from the store. This respo
 ## Implements
 
 * [`ListTupleChangesResponseInterface`](ListTupleChangesResponseInterface.md)
-
 * [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
 * [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (interface)
-
 * [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (request)
 
 ## Methods
@@ -96,15 +94,11 @@ Create a response instance from an HTTP response. This method transforms a raw H
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
-
-| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
-
-| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
+| Name         | Type                    | Description                                               |
+| ------------ | ----------------------- | --------------------------------------------------------- |
+| `$response`  | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API                |
+| `$request`   | `HttpRequestInterface`  | The original HTTP request that generated this response    |
+| `$validator` | `SchemaValidator`       | Schema validator for parsing and validating response data |
 
 #### Returns
 

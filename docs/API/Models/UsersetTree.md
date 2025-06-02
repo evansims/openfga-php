@@ -13,9 +13,7 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 ## Implements
 
 * [`UsersetTreeInterface`](UsersetTreeInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'UsersetTree'` |  |
+| Name            | Value           | Description |
+| --------------- | --------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersetTree'` |             |
 
 ## Methods
 

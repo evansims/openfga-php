@@ -13,13 +13,11 @@ Schema definition specifically for validating and transforming collection data s
 ## Implements
 
 * [`CollectionSchemaInterface`](CollectionSchemaInterface.md)
-
 * [`SchemaInterface`](SchemaInterface.md)
 
 ## Related Classes
 
 * [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md) (interface)
-
 * [Schema](Schema/Schema.md) (item)
 
 ## Methods
@@ -84,10 +82,8 @@ Get a specific property definition by name. This method retrieves the schema def
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name    | Type     | Description                          |
+| ------- | -------- | ------------------------------------ |
 | `$name` | `string` | The name of the property to retrieve |
 
 #### Returns

@@ -17,7 +17,6 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 ## Related Classes
 
 * [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md) (response)
-
 * [WriteTuplesRequest](Requests/WriteTuplesRequest.md) (implementation)
 
 ## Methods
@@ -84,10 +83,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

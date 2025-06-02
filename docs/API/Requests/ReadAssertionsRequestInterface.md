@@ -17,7 +17,6 @@ Interface for reading test assertions from an authorization model. This interfac
 ## Related Classes
 
 * [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (response)
-
 * [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (implementation)
 
 ## Methods
@@ -50,10 +49,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

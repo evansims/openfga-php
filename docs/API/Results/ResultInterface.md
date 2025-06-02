@@ -59,11 +59,9 @@ Executes a callback when the result is a failure and continues the chain. The ca
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 
@@ -82,11 +80,9 @@ Recovers from a failure by transforming it into a success or different failure. 
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 
@@ -105,10 +101,8 @@ Throws the contained error or continues the chain. For Failure results, this thr
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name         | Type                      | Description                                                |
+| ------------ | ------------------------- | ---------------------------------------------------------- |
 | `$throwable` | `Throwable` &#124; `null` | Optional throwable to throw instead of the contained error |
 
 #### Returns
@@ -143,11 +137,9 @@ Executes a callback when the result is a success and continues the chain. The ca
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 
@@ -166,11 +158,9 @@ Transforms a successful result using a callback and continues the chain. The cal
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$fn` | `callable` |  |
+| Name  | Type       | Description |
+| ----- | ---------- | ----------- |
+| `$fn` | `callable` |             |
 
 #### Returns
 
@@ -189,11 +179,9 @@ Extracts the value from the result or applies a transformation. Without a callba
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$fn` | `callable` &#124; `null` |  |
+| Name  | Type                     | Description |
+| ----- | ------------------------ | ----------- |
+| `$fn` | `callable` &#124; `null` |             |
 
 #### Returns
 

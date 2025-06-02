@@ -13,24 +13,19 @@ Represents a change to a relationship tuple in your authorization store. When yo
 ## Implements
 
 * [`TupleChangeInterface`](TupleChangeInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [TupleChangeInterface](Models/TupleChangeInterface.md) (interface)
-
 * [TupleChanges](Models/Collections/TupleChanges.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'TupleChange'` |  |
+| Name            | Value           | Description |
+| --------------- | --------------- | ----------- |
+| `OPENAPI_MODEL` | `'TupleChange'` |             |
 
 ## Methods
 

@@ -13,9 +13,7 @@ Represents a difference operation node in authorization evaluation trees. Userse
 ## Implements
 
 * [`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a difference operation node in authorization evaluation trees. Userse
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'UsersetTree.Difference'` |  |
+| Name            | Value                      | Description |
+| --------------- | -------------------------- | ----------- |
+| `OPENAPI_MODEL` | `'UsersetTree.Difference'` |             |
 
 ## Methods
 

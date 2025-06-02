@@ -1347,23 +1347,17 @@ class DocumentationGenerator
         $content = preg_replace('/(?<!\n\n)\n(```)/', "\n\n$1", $content);
         $content = preg_replace('/(```[^\n]*(?:\n(?!```)[^\n]*)*\n```)\n(?!\n)/', "$1\n\n", $content);
         
-        // Ensure proper spacing around tables
-        $content = preg_replace('/(?<!\n\n)\n(\|[^\n]*\|)/', "\n\n$1", $content);
-        $content = preg_replace('/(\|[^\n]*\|(?:\n\|[^\n]*\|)*)\n(?!\n)(?!\|)/', "$1\n\n", $content);
-        
-        // Ensure proper spacing around lists
-        $content = preg_replace('/(?<!\n\n)\n([\*\-\+]\s)/', "\n\n$1", $content);
+        // Remove blank lines that are just whitespace
+        $content = preg_replace('/\n[ \t]+\n/', "\n\n", $content);
         
         // Fix spacing issues with consecutive headers (h2 followed by h3, h4, etc.)
         $content = preg_replace('/(#{2}\s[^\n]+)\n\n\n(#{3,6}\s)/', "$1\n\n$2", $content);
-        
-        // Remove blank lines that are just whitespace
-        $content = preg_replace('/\n[ \t]+\n/', "\n\n", $content);
         
         // Specific cleanup for method sections - ensure consistent spacing
         $content = preg_replace('/(\n#{4}\s[^\n]+)\n\n\n(```php)/', "$1\n\n$2", $content);
         
         // Final pass: ensure we never have more than one blank line anywhere
+        // BUT preserve table structure by NOT adding blank lines between table rows
         $content = preg_replace('/\n{3,}/', "\n\n", $content);
         
         return $content;

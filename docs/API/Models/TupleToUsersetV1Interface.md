@@ -13,7 +13,6 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

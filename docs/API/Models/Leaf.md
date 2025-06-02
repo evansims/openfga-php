@@ -13,9 +13,7 @@ Represents a leaf node in authorization evaluation trees containing specific use
 ## Implements
 
 * [`LeafInterface`](LeafInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a leaf node in authorization evaluation trees containing specific use
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'Leaf'` |  |
+| Name            | Value    | Description |
+| --------------- | -------- | ----------- |
+| `OPENAPI_MODEL` | `'Leaf'` |             |
 
 ## Methods
 

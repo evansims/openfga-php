@@ -13,13 +13,11 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
 ## Implements
 
 * [`WriteTuplesRequestInterface`](WriteTuplesRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [WriteTuplesResponse](Responses/WriteTuplesResponse.md) (response)
-
 * [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md) (interface)
 
 ## Methods
@@ -86,10 +84,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

@@ -13,13 +13,11 @@ Request for writing test assertions to validate authorization model behavior. Th
 ## Implements
 
 * [`WriteAssertionsRequestInterface`](WriteAssertionsRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (response)
-
 * [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (interface)
 
 ## Methods
@@ -67,10 +65,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

@@ -13,13 +13,11 @@ Request for expanding a relationship to show all users who have that relationshi
 ## Implements
 
 * [`ExpandRequestInterface`](ExpandRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [ExpandResponse](Responses/ExpandResponse.md) (response)
-
 * [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (interface)
 
 ## Methods
@@ -82,10 +80,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

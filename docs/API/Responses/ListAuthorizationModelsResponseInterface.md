@@ -17,7 +17,6 @@ Interface for authorization models listing response objects. This interface defi
 ## Related Classes
 
 * [ListAuthorizationModelsResponse](Responses/ListAuthorizationModelsResponse.md) (implementation)
-
 * [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md) (request)
 
 ## Methods

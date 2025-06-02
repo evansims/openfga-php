@@ -17,7 +17,6 @@ Interface for listing historical changes to relationship tuples. This interface 
 ## Related Classes
 
 * [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (response)
-
 * [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (implementation)
 
 ## Methods
@@ -65,10 +64,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

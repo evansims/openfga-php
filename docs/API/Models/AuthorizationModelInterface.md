@@ -13,7 +13,6 @@ Represents an OpenFGA authorization model that defines permission structures. Au
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

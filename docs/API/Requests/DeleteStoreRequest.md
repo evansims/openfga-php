@@ -13,13 +13,11 @@ Request for permanently deleting a store and all its data. This request removes 
 ## Implements
 
 * [`DeleteStoreRequestInterface`](DeleteStoreRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [DeleteStoreResponse](Responses/DeleteStoreResponse.md) (response)
-
 * [DeleteStoreRequestInterface](Requests/DeleteStoreRequestInterface.md) (interface)
 
 ## Methods
@@ -37,10 +35,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

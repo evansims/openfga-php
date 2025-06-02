@@ -13,24 +13,19 @@ Represents a reference to a specific relation with optional conditions. A Relati
 ## Implements
 
 * [`RelationReferenceInterface`](RelationReferenceInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [RelationReferenceInterface](Models/RelationReferenceInterface.md) (interface)
-
 * [RelationReferences](Models/Collections/RelationReferences.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'RelationReference'` |  |
+| Name            | Value                 | Description |
+| --------------- | --------------------- | ----------- |
+| `OPENAPI_MODEL` | `'RelationReference'` |             |
 
 ## Methods
 

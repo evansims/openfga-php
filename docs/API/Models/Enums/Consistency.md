@@ -13,32 +13,23 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 ## Implements
 
 * `UnitEnum`
-
 * `BackedEnum`
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
+| Name                 | Value                                                   | Description                                                                                                                                                                                                                                     |
+| -------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `HIGHER_CONSISTENCY` | `\OpenFGA\Models\Enums\Consistency::HIGHER_CONSISTENCY` | Prioritize data consistency over query performance. This option ensures that authorization checks are performed against the most up-to-date data, potentially at the cost of increased latency. Use when accuracy is more important than speed. |
-
-| `MINIMIZE_LATENCY` | `\OpenFGA\Models\Enums\Consistency::MINIMIZE_LATENCY` | Prioritize query performance over data consistency. This option allows for faster authorization checks by potentially using slightly stale data. Use when speed is more important than having the absolute latest data. |
-
-| `UNSPECIFIED` | `\OpenFGA\Models\Enums\Consistency::UNSPECIFIED` | Use the default consistency level determined by the OpenFGA server. This option delegates the consistency decision to the server&#039;s configuration, which may change based on deployment settings. |
+| `MINIMIZE_LATENCY`   | `\OpenFGA\Models\Enums\Consistency::MINIMIZE_LATENCY`   | Prioritize query performance over data consistency. This option allows for faster authorization checks by potentially using slightly stale data. Use when speed is more important than having the absolute latest data.                         |
+| `UNSPECIFIED`        | `\OpenFGA\Models\Enums\Consistency::UNSPECIFIED`        | Use the default consistency level determined by the OpenFGA server. This option delegates the consistency decision to the server&#039;s configuration, which may change based on deployment settings.                                           |
 
 ## Cases
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
+| Name                 | Value                | Description                                                                                                                                                                                                                                     |
+| -------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `HIGHER_CONSISTENCY` | `HIGHER_CONSISTENCY` | Prioritize data consistency over query performance. This option ensures that authorization checks are performed against the most up-to-date data, potentially at the cost of increased latency. Use when accuracy is more important than speed. |
-
-| `MINIMIZE_LATENCY` | `MINIMIZE_LATENCY` | Prioritize query performance over data consistency. This option allows for faster authorization checks by potentially using slightly stale data. Use when speed is more important than having the absolute latest data. |
-
-| `UNSPECIFIED` | `UNSPECIFIED` | Use the default consistency level determined by the OpenFGA server. This option delegates the consistency decision to the server&#039;s configuration, which may change based on deployment settings. |
+| `MINIMIZE_LATENCY`   | `MINIMIZE_LATENCY`   | Prioritize query performance over data consistency. This option allows for faster authorization checks by potentially using slightly stale data. Use when speed is more important than having the absolute latest data.                         |
+| `UNSPECIFIED`        | `UNSPECIFIED`        | Use the default consistency level determined by the OpenFGA server. This option delegates the consistency decision to the server&#039;s configuration, which may change based on deployment settings.                                           |
 
 ## Methods
 

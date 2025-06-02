@@ -13,9 +13,7 @@ Contains metadata information about a relation in your authorization model. Rela
 ## Implements
 
 * [`RelationMetadataInterface`](RelationMetadataInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Contains metadata information about a relation in your authorization model. Rela
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'RelationMetadata'` |  |
+| Name            | Value                | Description |
+| --------------- | -------------------- | ----------- |
+| `OPENAPI_MODEL` | `'RelationMetadata'` |             |
 
 ## Methods
 

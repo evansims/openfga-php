@@ -37,10 +37,8 @@ Create a new schema builder for the specified class.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name         | Type     | Description                    |
+| ------------ | -------- | ------------------------------ |
 | `$className` | `string` | The fully qualified class name |
 
 #### Returns
@@ -64,10 +62,8 @@ Retrieve a registered schema by class name.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name         | Type     | Description                    |
+| ------------ | -------- | ------------------------------ |
 | `$className` | `string` | The fully qualified class name |
 
 #### Returns
@@ -91,10 +87,8 @@ Register a schema in the registry.
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name      | Type                  | Description                     |
+| --------- | --------------------- | ------------------------------- |
 | `$schema` | [`Schema`](Schema.md) | The schema instance to register |
 
 #### Returns

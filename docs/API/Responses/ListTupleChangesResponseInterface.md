@@ -17,7 +17,6 @@ Interface for tuple changes listing response objects. This interface defines the
 ## Related Classes
 
 * [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (implementation)
-
 * [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (request)
 
 ## Methods

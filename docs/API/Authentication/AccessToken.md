@@ -13,7 +13,6 @@ Immutable access token implementation for OpenFGA API authentication. This class
 ## Implements
 
 * [`AccessTokenInterface`](AccessTokenInterface.md)
-
 * `Stringable`
 
 ## Related Classes
@@ -107,15 +106,11 @@ Create an access token instance from an OAuth server response. This factory meth
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The HTTP response from the OAuth token endpoint |
-
-| `$expectedIssuer` | `string` &#124; `null` | Optional expected issuer for JWT validation |
-
-| `$expectedAudience` | `string` &#124; `null` | Optional expected audience for JWT validation |
+| Name                | Type                                                  | Description                                     |
+| ------------------- | ----------------------------------------------------- | ----------------------------------------------- |
+| `$response`         | [`ResponseInterface`](Responses/ResponseInterface.md) | The HTTP response from the OAuth token endpoint |
+| `$expectedIssuer`   | `string` &#124; `null`                                | Optional expected issuer for JWT validation     |
+| `$expectedAudience` | `string` &#124; `null`                                | Optional expected audience for JWT validation   |
 
 #### Returns
 

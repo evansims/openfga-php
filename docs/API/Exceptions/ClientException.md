@@ -13,9 +13,7 @@ General client exception for the OpenFGA SDK. Thrown for high-level client error
 ## Implements
 
 * `Stringable`
-
 * `Throwable`
-
 * [`ClientThrowable`](ClientThrowable.md)
 
 ## Methods

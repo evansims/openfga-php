@@ -13,9 +13,7 @@ Contains metadata information about type definitions in your authorization model
 ## Implements
 
 * [`MetadataInterface`](MetadataInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Contains metadata information about type definitions in your authorization model
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'Metadata'` |  |
+| Name            | Value        | Description |
+| --------------- | ------------ | ----------- |
+| `OPENAPI_MODEL` | `'Metadata'` |             |
 
 ## Methods
 

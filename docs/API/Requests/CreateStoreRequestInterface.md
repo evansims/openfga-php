@@ -17,7 +17,6 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 ## Related Classes
 
 * [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (response)
-
 * [CreateStoreRequest](Requests/CreateStoreRequest.md) (implementation)
 
 ## Methods
@@ -50,10 +49,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

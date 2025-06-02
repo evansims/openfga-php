@@ -13,13 +13,11 @@ Request for retrieving a specific authorization model by its ID. This request fe
 ## Implements
 
 * [`GetAuthorizationModelRequestInterface`](GetAuthorizationModelRequestInterface.md)
-
 * [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
 * [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (response)
-
 * [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md) (interface)
 
 ## Methods
@@ -52,10 +50,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

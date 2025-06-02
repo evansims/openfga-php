@@ -13,7 +13,6 @@ Defines the contract for userset user specifications. A userset user represents 
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

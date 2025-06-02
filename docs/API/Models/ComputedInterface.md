@@ -13,7 +13,6 @@ Represents a computed userset in OpenFGA authorization models. Computed usersets
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

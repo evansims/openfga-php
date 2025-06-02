@@ -13,7 +13,6 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

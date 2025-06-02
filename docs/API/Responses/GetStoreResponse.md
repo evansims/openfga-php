@@ -13,13 +13,11 @@ Response containing detailed information about a specific store. This response p
 ## Implements
 
 * [`GetStoreResponseInterface`](GetStoreResponseInterface.md)
-
 * [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
 * [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md) (interface)
-
 * [GetStoreRequest](Requests/GetStoreRequest.md) (request)
 
 ## Methods
@@ -158,15 +156,11 @@ Create a response instance from an HTTP response. This method transforms a raw H
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
-
-| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
-
-| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
+| Name         | Type                    | Description                                               |
+| ------------ | ----------------------- | --------------------------------------------------------- |
+| `$response`  | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API                |
+| `$request`   | `HttpRequestInterface`  | The original HTTP request that generated this response    |
+| `$validator` | `SchemaValidator`       | Schema validator for parsing and validating response data |
 
 #### Returns
 

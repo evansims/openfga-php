@@ -17,7 +17,6 @@ Interface for authorization check request specifications. This interface defines
 ## Related Classes
 
 * [CheckResponseInterface](Responses/CheckResponseInterface.md) (response)
-
 * [CheckRequest](Requests/CheckRequest.md) (implementation)
 
 ## Methods
@@ -95,10 +94,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

@@ -13,9 +13,7 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 ## Implements
 
 * [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'AssertionTupleKey'` |  |
+| Name            | Value                 | Description |
+| --------------- | --------------------- | ----------- |
+| `OPENAPI_MODEL` | `'AssertionTupleKey'` |             |
 
 ## Methods
 

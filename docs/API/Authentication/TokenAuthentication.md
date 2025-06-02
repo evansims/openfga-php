@@ -33,10 +33,8 @@ Get an authentication request context if this strategy requires token acquisitio
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                               |
+| ---------------- | ------------------------ | ----------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | Factory for creating request body streams |
 
 #### Returns
@@ -88,10 +86,8 @@ Handle the authentication response and update internal state. This method is cal
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name        | Type                                 | Description                 |
+| ----------- | ------------------------------------ | --------------------------- |
 | `$response` | `Psr\Http\Message\ResponseInterface` | The authentication response |
 
 #### Returns

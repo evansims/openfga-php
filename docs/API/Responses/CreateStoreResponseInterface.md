@@ -17,7 +17,6 @@ Interface for store creation response objects. This interface defines the contra
 ## Related Classes
 
 * [CreateStoreResponse](Responses/CreateStoreResponse.md) (implementation)
-
 * [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (request)
 
 ## Methods

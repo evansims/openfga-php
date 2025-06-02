@@ -13,9 +13,7 @@ Represents a userset specification for computing groups of users. A Userset defi
 ## Implements
 
 * [`UsersetInterface`](UsersetInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a userset specification for computing groups of users. A Userset defi
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'Userset'` |  |
+| Name            | Value       | Description |
+| --------------- | ----------- | ----------- |
+| `OPENAPI_MODEL` | `'Userset'` |             |
 
 ## Methods
 

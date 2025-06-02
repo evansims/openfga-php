@@ -13,9 +13,7 @@ Serialization-related exception for the OpenFGA SDK. Thrown when data serializat
 ## Implements
 
 * `Stringable`
-
 * `Throwable`
-
 * [`ClientThrowable`](ClientThrowable.md)
 
 ## Methods

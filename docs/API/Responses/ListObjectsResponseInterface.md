@@ -17,7 +17,6 @@ Interface for object listing response objects. This interface defines the contra
 ## Related Classes
 
 * [ListObjectsResponse](Responses/ListObjectsResponse.md) (implementation)
-
 * [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md) (request)
 
 ## Methods

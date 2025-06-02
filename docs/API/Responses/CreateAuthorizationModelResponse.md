@@ -13,13 +13,11 @@ Response confirming successful creation of a new authorization model. This respo
 ## Implements
 
 * [`CreateAuthorizationModelResponseInterface`](CreateAuthorizationModelResponseInterface.md)
-
 * [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
 * [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (interface)
-
 * [CreateAuthorizationModelRequest](Requests/CreateAuthorizationModelRequest.md) (request)
 
 ## Methods
@@ -81,15 +79,11 @@ Create a response instance from an HTTP response. This method transforms a raw H
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
-| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
-
-| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
-
-| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
+| Name         | Type                    | Description                                               |
+| ------------ | ----------------------- | --------------------------------------------------------- |
+| `$response`  | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API                |
+| `$request`   | `HttpRequestInterface`  | The original HTTP request that generated this response    |
+| `$validator` | `SchemaValidator`       | Schema validator for parsing and validating response data |
 
 #### Returns
 

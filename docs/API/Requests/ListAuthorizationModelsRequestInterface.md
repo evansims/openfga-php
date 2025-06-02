@@ -17,7 +17,6 @@ Interface for listing authorization models in a store. This interface defines th
 ## Related Classes
 
 * [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (response)
-
 * [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (implementation)
 
 ## Methods
@@ -65,10 +64,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

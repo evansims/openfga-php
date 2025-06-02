@@ -17,7 +17,6 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 ## Related Classes
 
 * [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (response)
-
 * [ListStoresRequest](Requests/ListStoresRequest.md) (implementation)
 
 ## Methods
@@ -65,10 +64,8 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 #### Parameters
 
-| Name | Type | Description |
-
-|------|------|-------------|
-
+| Name             | Type                     | Description                                                                 |
+| ---------------- | ------------------------ | --------------------------------------------------------------------------- |
 | `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns

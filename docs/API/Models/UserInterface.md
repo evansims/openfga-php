@@ -13,7 +13,6 @@ Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexi
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

@@ -13,7 +13,6 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

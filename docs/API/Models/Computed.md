@@ -13,24 +13,19 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 ## Implements
 
 * [`ComputedInterface`](ComputedInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [ComputedInterface](Models/ComputedInterface.md) (interface)
-
 * [Computeds](Models/Collections/Computeds.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'Computed'` |  |
+| Name            | Value        | Description |
+| --------------- | ------------ | ----------- |
+| `OPENAPI_MODEL` | `'Computed'` |             |
 
 ## Methods
 

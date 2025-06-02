@@ -13,24 +13,19 @@ Defines the authorization rules and relationships for your application. An Autho
 ## Implements
 
 * [`AuthorizationModelInterface`](AuthorizationModelInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
 * [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) (interface)
-
 * [AuthorizationModels](Models/Collections/AuthorizationModels.md) (collection)
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'AuthorizationModel'` |  |
+| Name            | Value                  | Description |
+| --------------- | ---------------------- | ----------- |
+| `OPENAPI_MODEL` | `'AuthorizationModel'` |             |
 
 ## Methods
 

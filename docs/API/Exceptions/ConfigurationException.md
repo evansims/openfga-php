@@ -13,9 +13,7 @@ Configuration-related exception for the OpenFGA SDK. Thrown when configuration e
 ## Implements
 
 * `Stringable`
-
 * `Throwable`
-
 * [`ClientThrowable`](ClientThrowable.md)
 
 ## Methods

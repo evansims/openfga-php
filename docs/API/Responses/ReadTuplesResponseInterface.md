@@ -17,7 +17,6 @@ Interface for tuple reading response objects. This interface defines the contrac
 ## Related Classes
 
 * [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (implementation)
-
 * [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md) (request)
 
 ## Methods

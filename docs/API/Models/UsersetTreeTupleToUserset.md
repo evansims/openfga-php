@@ -13,9 +13,7 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 ## Implements
 
 * [`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'UsersetTree.TupleToUserset'` |  |
+| Name            | Value                          | Description |
+| --------------- | ------------------------------ | ----------- |
+| `OPENAPI_MODEL` | `'UsersetTree.TupleToUserset'` |             |
 
 ## Methods
 

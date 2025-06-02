@@ -13,5 +13,4 @@ Base interface for all OpenFGA API response objects. This interface establishes 
 ## Related Classes
 
 * [Response](Responses/Response.md) (implementation)
-
 * [RequestInterface](Requests/RequestInterface.md) (request)

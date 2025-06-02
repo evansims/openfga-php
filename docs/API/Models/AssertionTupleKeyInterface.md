@@ -13,7 +13,6 @@ Defines the contract for assertion tuple keys used in authorization model testin
 ## Implements
 
 * [`ModelInterface`](ModelInterface.md)
-
 * `JsonSerializable`
 
 ## Related Classes

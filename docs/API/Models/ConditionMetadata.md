@@ -13,9 +13,7 @@ Contains metadata information about conditions in your authorization model. Cond
 ## Implements
 
 * [`ConditionMetadataInterface`](ConditionMetadataInterface.md)
-
 * `JsonSerializable`
-
 * [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
@@ -24,11 +22,9 @@ Contains metadata information about conditions in your authorization model. Cond
 
 ## Constants
 
-| Name | Value | Description |
-
-|------|-------|-------------|
-
-| `OPENAPI_MODEL` | `'ConditionMetadata'` |  |
+| Name            | Value                 | Description |
+| --------------- | --------------------- | ----------- |
+| `OPENAPI_MODEL` | `'ConditionMetadata'` |             |
 
 ## Methods
 
