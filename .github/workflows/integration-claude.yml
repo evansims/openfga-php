@@ -1,4 +1,4 @@
-name: Integration: Claude
+name: "Integration: Claude"
 
 on:
   issue_comment:
@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   claude:
-    name: AI Assistant
+    name: "AI Assistant"
     if: |
       (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude')) ||
       (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude')) ||

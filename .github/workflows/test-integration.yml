@@ -1,4 +1,4 @@
-name: Test: Integration
+name: "Test: Integration"
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   integration:
-    name: OpenFGA Server
+    name: "OpenFGA Server"
     runs-on: ubuntu-latest
 
     steps:

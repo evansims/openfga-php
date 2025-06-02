@@ -1,4 +1,4 @@
-name: Security: Code Analysis
+name: "Security: Code Analysis"
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   psalm-security:
-    name: Psalm Scanner
+    name: "Psalm Scanner"
     runs-on: ubuntu-latest
 
     permissions:
@@ -40,7 +40,7 @@ jobs:
           category: psalm-security
 
   php-security-checker:
-    name: Symfony Checker
+    name: "Symfony Checker"
     runs-on: ubuntu-latest
     steps:
       - name: Harden the runner (Audit all outbound calls)

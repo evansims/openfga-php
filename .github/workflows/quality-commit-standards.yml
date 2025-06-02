@@ -1,4 +1,4 @@
-name: Quality: Commit Standards
+name: "Quality: Commit Standards"
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   check-commit-message:
-    name: Conventional Commits
+    name: "Conventional Commits"
     runs-on: ubuntu-latest
     steps:
       - name: Harden the runner (Audit all outbound calls)

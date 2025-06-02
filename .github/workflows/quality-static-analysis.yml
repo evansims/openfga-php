@@ -1,4 +1,4 @@
-name: Quality: Static Analysis
+name: "Quality: Static Analysis"
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   phpstan:
-    name: PHPStan Level 9
+    name: "PHPStan"
     runs-on: ubuntu-latest
     steps:
       - name: Harden the runner (Audit all outbound calls)
@@ -37,7 +37,7 @@ jobs:
         run: vendor/bin/phpstan analyse --no-progress
 
   psalm:
-    name: Psalm Level 5
+    name: "Psalm"
     runs-on: ubuntu-latest
     steps:
       - name: Harden the runner (Audit all outbound calls)

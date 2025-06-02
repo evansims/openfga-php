@@ -1,4 +1,4 @@
-name: Security: Dependencies
+name: "Security: Dependencies"
 
 on:
   push:
@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   audit:
-    name: Vulnerability Scan
+    name: "Vulnerability Scan"
     runs-on: ubuntu-latest
 
     steps:

@@ -1,4 +1,4 @@
-name: Test: Unit
+name: "Test: Unit"
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   tests:
-    name: PHP 8.3 with Coverage
+    name: "PHP 8.3 with Coverage"
     runs-on: ubuntu-latest
 
     steps:

@@ -1,8 +1,8 @@
-name: Quality: Documentation
+name: "Quality: Documentation"
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
       - docs/**
       - src/**/*.php
@@ -10,7 +10,7 @@ on:
       - CHANGELOG.md
       - CONTRIBUTING.md
   pull_request:
-    branches: [ main, develop ]
+    branches: [main, develop]
     paths:
       - docs/**
       - src/**/*.php
@@ -21,7 +21,7 @@ on:
 jobs:
   documentation-quality:
     runs-on: ubuntu-latest
-    name: Coverage and Style
+    name: "Coverage and Style"
 
     steps:
       - name: Checkout code
@@ -67,21 +67,21 @@ jobs:
           script: |
             const fs = require('fs');
             const metrics = JSON.parse(fs.readFileSync('docs-metrics.json', 'utf8'));
-            
+
             const comment = `## 📊 Documentation Quality Report
-            
+
             **Overall Score: ${metrics.overall_score.toFixed(1)}%**
-            
+
             | Metric | Score | Status |
             |--------|-------|--------|
             | Coverage | ${metrics.coverage.overall.toFixed(1)}% | ${metrics.coverage.overall >= 85 ? '✅' : '❌'} |
             | Style | ${metrics.style.compliance_score.toFixed(1)}% | ${metrics.style.compliance_score >= 85 ? '✅' : '❌'} |
             | Links | ${metrics.links.health_score.toFixed(1)}% | ${metrics.links.health_score >= 95 ? '✅' : '❌'} |
             | Freshness | ${metrics.freshness.freshness_score.toFixed(1)}% | ${metrics.freshness.freshness_score >= 80 ? '✅' : '❌'} |
-            
+
             ${metrics.overall_score >= 85 ? '🎉 Documentation quality is excellent!' : '⚠️ Documentation quality needs improvement.'}
             `;
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

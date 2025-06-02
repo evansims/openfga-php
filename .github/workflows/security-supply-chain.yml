@@ -1,4 +1,4 @@
-name: Security: Supply Chain
+name: "Security: Supply Chain"
 on:
   branch_protection_rule:
   schedule:
@@ -10,7 +10,7 @@ permissions: read-all
 
 jobs:
   analysis:
-    name: OSSF Scorecard
+    name: "OSSF Scorecard"
     runs-on: ubuntu-latest
     if: github.event.repository.default_branch == github.ref_name || github.event_name == 'pull_request'
     permissions:

@@ -1,4 +1,4 @@
-name: Test: API Contract
+name: "Test: API Contract"
 
 on:
   push:
@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   contract:
-    name: OpenAPI Specification
+    name: "OpenAPI Specification"
     runs-on: ubuntu-latest
 
     env:

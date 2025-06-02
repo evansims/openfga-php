@@ -1,4 +1,4 @@
-name: Docs: Generate
+name: "Docs: Generate"
 
 on:
   push:
@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   build:
-    name: API Documentation
+    name: "API Documentation"
     runs-on: ubuntu-latest
 
     steps:
@@ -64,7 +64,7 @@ jobs:
           path: "./_site"
 
   deploy:
-    name: GitHub Pages
+    name: "GitHub Pages"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -74,4 +74,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
-

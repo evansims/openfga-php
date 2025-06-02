@@ -1,4 +1,4 @@
-name: Security: Dependency Review
+name: "Security: Dependency Review"
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   dependency-review:
-    name: PR Changes
+    name: "PR Changes"
     runs-on: ubuntu-latest
     steps:
       - name: Harden the runner (Audit all outbound calls)

@@ -1,4 +1,4 @@
-name: Security: SBOM
+name: "Security: SBOM"
 
 on:
   push:
@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   build:
-    name: Generate Report
+    name: "Generate Report"
     runs-on: ubuntu-latest
     permissions:
       contents: write # Needed to upload artifacts to releases
