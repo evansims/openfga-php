@@ -96,6 +96,7 @@ Serialize the node to its JSON representation.
 
 #### Returns
 array
+ The serialized node data
 
 ### schema
 

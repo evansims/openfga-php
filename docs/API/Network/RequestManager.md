@@ -72,7 +72,7 @@ StreamFactoryInterface
 *<small>Implements Network\RequestManagerInterface</small>*  
 
 ```php
-public function handleResponseException(ResponseInterface $response): never
+public function handleResponseException(ResponseInterface $response, HttpRequestInterface|null $request = NULL): never
 ```
 
 Handle error responses by throwing appropriate exceptions. Analyzes HTTP error responses to determine the specific type of error and throws the most appropriate exception with comprehensive context information. This method processes: - HTTP status codes (400, 401, 403, 404, 409, 422, 500, etc.) - Error response bodies containing detailed error information - OpenFGA-specific error codes and messages - Request context for debugging purposes The method provides structured error information that applications can use for error handling, user messaging, and debugging. Different exception types are thrown based on the error category to enable appropriate handling strategies. Common error scenarios include: - 400 Bad Request: Invalid request parameters or malformed data - 401 Unauthorized: Missing or invalid authentication credentials - 403 Forbidden: Valid credentials but insufficient permissions - 404 Not Found: Requested resource (store, model) does not exist - 409 Conflict: Request conflicts with current resource state - 422 Unprocessable Entity: Request timeout or processing limits exceeded - 500 Internal Server Error: Server-side processing failures
@@ -81,6 +81,7 @@ Handle error responses by throwing appropriate exceptions. Analyzes HTTP error r
 | Name | Type | Description |
 |------|------|-------------|
 | `$response` | ResponseInterface | The HTTP error response to analyze and convert to an exception |
+| `$request` | HttpRequestInterface | null | Optional request context for enhanced error reporting |
 
 #### Returns
 never

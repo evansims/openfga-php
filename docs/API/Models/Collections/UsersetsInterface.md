@@ -92,7 +92,7 @@ bool
 
 
 ```php
-public function filter(callable $callback): static<T>
+public function filter(callable $callback): static
 ```
 
 Create a new collection containing only items that match the condition. This method creates a new collection containing only the items from the current collection that satisfy the provided callback function.
@@ -103,7 +103,7 @@ Create a new collection containing only items that match the condition. This met
 | `$callback` | callable |  |
 
 #### Returns
-static&lt;T&gt;
+static
  A new collection containing only the matching items
 
 ### first
@@ -336,7 +336,7 @@ bool
 
 
 ```php
-public function withItems(mixed $items): static<T>
+public function withItems(mixed $items): static
 ```
 
 Create a new collection with the specified items. This method creates a fresh collection instance containing only the provided items, leaving the original collection unchanged.
@@ -347,6 +347,6 @@ Create a new collection with the specified items. This method creates a fresh co
 | `$items` | mixed |  |
 
 #### Returns
-static&lt;T&gt;
+static
  A new collection instance containing the specified items
 

@@ -1,6 +1,6 @@
-# TuplesInterface
+# BatchCheckItemsInterface
 
-Collection interface for OpenFGA tuple objects. This interface defines a collection that holds tuple objects representing relationship facts in the OpenFGA authorization system. Tuples define the actual relationships between users, objects, and relations that are used for authorization decisions. Each tuple contains a key (defining the relationship) and a timestamp (recording when the relationship was established), making them essential for both authorization checks and audit trails.
+Collection of batch check items for batch authorization requests. This collection maintains a list of BatchCheckItem objects, each representing a single authorization check to be performed as part of a batch request.
 
 ## Namespace
 `OpenFGA\Models\Collections`
@@ -160,13 +160,13 @@ bool
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<int|string, mixed>
 ```
 
 
 
 #### Returns
-array
+array&lt;int | string, mixed&gt;
 
 ### key
 

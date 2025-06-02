@@ -44,12 +44,13 @@ DateTimeImmutable
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<string, mixed>
 ```
 
 Serialize the tuple for JSON encoding. This method prepares the tuple data for API communication with the OpenFGA service, converting the tuple key and timestamp into the format expected by the OpenFGA API. The tuple key is serialized to include all relationship components (user, relation, object, and optional condition), while the timestamp is formatted as an RFC3339 string in UTC timezone. The resulting structure matches the OpenFGA API specification for tuple objects, ensuring seamless integration with write operations, read queries, and other tuple-related API endpoints.
 
 
 #### Returns
-array
+array&lt;string, mixed&gt;
+ Tuple data formatted for JSON encoding with API-compatible structure
 

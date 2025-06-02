@@ -1,6 +1,6 @@
 # Translator
 
-Translation service for OpenFGA SDK messages. This implementation provides centralized message translation with support for parameterized messages and multiple locales using the Symfony Translation component. The translator automatically loads English translations and supports dynamic loading of additional locales and translation resources. The service uses a singleton pattern to maintain translation state across the application lifecycle and provides automatic parameter conversion to support Symfony&#039;s parameter placeholder format.
+Translation service for OpenFGA SDK messages. This implementation provides centralized message translation with parameter substitution without external dependencies. It supports multiple locales, domain-based organization, and automatic fallback to default locale when translations are missing. The service uses a singleton pattern to maintain translation state across the application lifecycle and supports parameter substitution using %parameter% placeholder format for compatibility with existing message definitions.
 
 ## Namespace
 `OpenFGA\Translation`

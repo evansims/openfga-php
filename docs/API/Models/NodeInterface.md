@@ -84,12 +84,13 @@ Get the union operation for this node. The union operation represents the combin
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<string, mixed>
 ```
 
 Serialize the node to its JSON representation.
 
 
 #### Returns
-array
+array&lt;string, mixed&gt;
+ The serialized node data
 

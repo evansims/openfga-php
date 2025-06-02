@@ -23,11 +23,31 @@ Retrieves the last HTTP request made by the client.
 HttpRequestInterface
  The last request
 
+### batchCheck
+
+
+```php
+public function batchCheck(StoreInterface|string $store, AuthorizationModelInterface|string $model, BatchCheckItemsInterface $checks): FailureInterface|SuccessInterface
+```
+
+Performs multiple authorization checks in a single batch request. This method allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information for each check.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | StoreInterface | string | The store to check against |
+| `$model` | AuthorizationModelInterface | string | The authorization model to use |
+| `$checks` | BatchCheckItemsInterface | The batch check items |
+
+#### Returns
+FailureInterface | SuccessInterface
+ The batch check results
+
 ### check
 
 
 ```php
-public function check(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeyInterface $tupleKey, bool|null $trace = NULL, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): Failure<Throwable>|Success<CheckResponse>
+public function check(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeyInterface $tupleKey, bool|null $trace = NULL, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
 ```
 
 Checks if a user has a specific relationship with an object. Performs an authorization check to determine if a user has a particular relationship with an object based on the configured authorization model. This is the core operation for making authorization decisions in OpenFGA.
@@ -44,14 +64,14 @@ Checks if a user has a specific relationship with an object. Performs an authori
 | `$consistency` | Consistency | null | Override the default consistency level |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;CheckResponse&gt;
- The result of the check request
+FailureInterface | SuccessInterface
+ Success contains CheckResponseInterface, Failure contains Throwable
 
 ### createAuthorizationModel
 
 
 ```php
-public function createAuthorizationModel(StoreInterface|string $store, TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions, ConditionsInterface<ConditionInterface>|null $conditions = NULL, SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): Failure<Throwable>|Success<CreateAuthorizationModelResponse>
+public function createAuthorizationModel(StoreInterface|string $store, TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions, ConditionsInterface<ConditionInterface>|null $conditions = NULL, SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): FailureInterface|SuccessInterface
 ```
 
 Creates a new authorization model with the given type definitions and conditions. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
@@ -65,14 +85,14 @@ Creates a new authorization model with the given type definitions and conditions
 | `$schemaVersion` | SchemaVersion | The schema version to use (default: 1.1) |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;CreateAuthorizationModelResponse&gt;
- The result of the authorization model creation request
+FailureInterface | SuccessInterface
+ Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### createStore
 
 
 ```php
-public function createStore(string $name): Failure<Throwable>|Success<CreateStoreResponse>
+public function createStore(string $name): FailureInterface|SuccessInterface
 ```
 
 Creates a new store with the given name. Stores provide data isolation for different applications or environments. Each store maintains its own authorization models, relationship tuples, and provides complete separation from other stores.
@@ -83,14 +103,14 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 | `$name` | string | The name for the new store |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;CreateStoreResponse&gt;
- The result of the store creation request
+FailureInterface | SuccessInterface
+ Success contains CreateStoreResponseInterface, Failure contains Throwable
 
 ### deleteStore
 
 
 ```php
-public function deleteStore(StoreInterface|string $store): Failure<Throwable>|Success<DeleteStoreResponse>
+public function deleteStore(StoreInterface|string $store): FailureInterface|SuccessInterface
 ```
 
 Deletes a store.
@@ -101,14 +121,14 @@ Deletes a store.
 | `$store` | StoreInterface | string | The store to delete |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;DeleteStoreResponse&gt;
- The result of the store deletion request
+FailureInterface | SuccessInterface
+ Success contains DeleteStoreResponseInterface, Failure contains Throwable
 
 ### dsl
 
 
 ```php
-public function dsl(string $dsl): Failure<Throwable>|Success<AuthorizationModelInterface>
+public function dsl(string $dsl): FailureInterface|SuccessInterface
 ```
 
 Parses a DSL string and returns an AuthorizationModel. The Domain Specific Language (DSL) provides a human-readable way to define authorization models using intuitive syntax for relationships and permissions. This method converts DSL text into a structured authorization model object.
@@ -119,14 +139,14 @@ Parses a DSL string and returns an AuthorizationModel. The Domain Specific Langu
 | `$dsl` | string | The DSL string to parse |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;AuthorizationModelInterface&gt;
- The result of the DSL transformation request
+FailureInterface | SuccessInterface
+ Success contains AuthorizationModelInterface, Failure contains Throwable
 
 ### expand
 
 
 ```php
-public function expand(StoreInterface|string $store, TupleKeyInterface $tupleKey, AuthorizationModelInterface|string|null $model = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): Failure<Throwable>|Success<ExpandResponse>
+public function expand(StoreInterface|string $store, TupleKeyInterface $tupleKey, AuthorizationModelInterface|string|null $model = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
 ```
 
 Expands a relationship tuple to show all users that have the relationship.
@@ -141,14 +161,14 @@ Expands a relationship tuple to show all users that have the relationship.
 | `$consistency` | Consistency | null | Override the default consistency level |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ExpandResponse&gt;
- The result of the expansion request
+FailureInterface | SuccessInterface
+ Success contains ExpandResponseInterface, Failure contains Throwable
 
 ### getAuthorizationModel
 
 
 ```php
-public function getAuthorizationModel(StoreInterface|string $store, AuthorizationModelInterface|string $model): Failure<Throwable>|Success<GetAuthorizationModelResponse>
+public function getAuthorizationModel(StoreInterface|string $store, AuthorizationModelInterface|string $model): FailureInterface|SuccessInterface
 ```
 
 Retrieves an authorization model by ID.
@@ -160,8 +180,8 @@ Retrieves an authorization model by ID.
 | `$model` | AuthorizationModelInterface | string | The model to retrieve |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;GetAuthorizationModelResponse&gt;
- The result of the authorization model retrieval request
+FailureInterface | SuccessInterface
+ Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### getLastRequest
 
@@ -193,7 +213,7 @@ Retrieves the last HTTP response received by the client.
 
 
 ```php
-public function getStore(StoreInterface|string $store): Failure<Throwable>|Success<GetStoreResponse>
+public function getStore(StoreInterface|string $store): FailureInterface|SuccessInterface
 ```
 
 Retrieves store details by ID.
@@ -204,14 +224,14 @@ Retrieves store details by ID.
 | `$store` | StoreInterface | string | The store to retrieve |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;GetStoreResponse&gt;
- The result of the store retrieval request
+FailureInterface | SuccessInterface
+ Success contains GetStoreResponseInterface, Failure contains Throwable
 
 ### listAuthorizationModels
 
 
 ```php
-public function listAuthorizationModels(StoreInterface|string $store, string|null $continuationToken = NULL, ?int $pageSize = NULL): Failure<Throwable>|Success<ListAuthorizationModelsResponse>
+public function listAuthorizationModels(StoreInterface|string $store, string|null $continuationToken = NULL, ?int $pageSize = NULL): FailureInterface|SuccessInterface
 ```
 
 Lists authorization models in a store with pagination.
@@ -224,14 +244,14 @@ Lists authorization models in a store with pagination.
 | `$pageSize` | ?int |  |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ListAuthorizationModelsResponse&gt;
- The result of the authorization model listing request
+FailureInterface | SuccessInterface
+ Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
 
 ### listObjects
 
 
 ```php
-public function listObjects(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $type, string $relation, string $user, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): Failure<Throwable>|Success<ListObjectsResponse>
+public function listObjects(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $type, string $relation, string $user, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
 ```
 
 Lists objects that have a specific relationship with a user.
@@ -249,14 +269,14 @@ Lists objects that have a specific relationship with a user.
 | `$consistency` | Consistency | null | Override the default consistency level |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ListObjectsResponse&gt;
- The result of the object listing request
+FailureInterface | SuccessInterface
+ Success contains ListObjectsResponseInterface, Failure contains Throwable
 
 ### listStores
 
 
 ```php
-public function listStores(string|null $continuationToken = NULL, ?int $pageSize = NULL): Failure<Throwable>|Success<ListStoresResponse>
+public function listStores(string|null $continuationToken = NULL, ?int $pageSize = NULL): FailureInterface|SuccessInterface
 ```
 
 Lists all stores with pagination.
@@ -268,14 +288,14 @@ Lists all stores with pagination.
 | `$pageSize` | ?int |  |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ListStoresResponse&gt;
- The result of the store listing request
+FailureInterface | SuccessInterface
+ Success contains ListStoresResponseInterface, Failure contains Throwable
 
 ### listTupleChanges
 
 
 ```php
-public function listTupleChanges(StoreInterface|string $store, string|null $continuationToken = NULL, ?int $pageSize = NULL, string|null $type = NULL, DateTimeImmutable|null $startTime = NULL): Failure<Throwable>|Success<ListTupleChangesResponse>
+public function listTupleChanges(StoreInterface|string $store, string|null $continuationToken = NULL, ?int $pageSize = NULL, string|null $type = NULL, DateTimeImmutable|null $startTime = NULL): FailureInterface|SuccessInterface
 ```
 
 Lists changes to relationship tuples in a store.
@@ -290,14 +310,14 @@ Lists changes to relationship tuples in a store.
 | `$startTime` | DateTimeImmutable | null | Only include changes at or after this time (inclusive) |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ListTupleChangesResponse&gt;
- The result of the tuple change listing request
+FailureInterface | SuccessInterface
+ Success contains ListTupleChangesResponseInterface, Failure contains Throwable
 
 ### listUsers
 
 
 ```php
-public function listUsers(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $object, string $relation, UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): Failure<Throwable>|Success<ListUsersResponse>
+public function listUsers(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $object, string $relation, UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
 ```
 
 Lists users that have a specific relationship with an object.
@@ -315,14 +335,14 @@ Lists users that have a specific relationship with an object.
 | `$consistency` | Consistency | null | Override the default consistency level |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ListUsersResponse&gt;
- The result of the user listing request
+FailureInterface | SuccessInterface
+ Success contains ListUsersResponseInterface, Failure contains Throwable
 
 ### readAssertions
 
 
 ```php
-public function readAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model): Failure<Throwable>|Success<ReadAssertionsResponse>
+public function readAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model): FailureInterface|SuccessInterface
 ```
 
 Retrieves assertions for an authorization model.
@@ -334,14 +354,14 @@ Retrieves assertions for an authorization model.
 | `$model` | AuthorizationModelInterface | string | The model to get assertions for |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ReadAssertionsResponse&gt;
- The result of the assertions read request
+FailureInterface | SuccessInterface
+ Success contains ReadAssertionsResponseInterface, Failure contains Throwable
 
 ### readTuples
 
 
 ```php
-public function readTuples(StoreInterface|string $store, TupleKeyInterface $tupleKey, string|null $continuationToken = NULL, ?int $pageSize = NULL, Consistency|null $consistency = NULL): Failure<Throwable>|Success<ReadTuplesResponse>
+public function readTuples(StoreInterface|string $store, TupleKeyInterface $tupleKey, string|null $continuationToken = NULL, ?int $pageSize = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
 ```
 
 Reads relationship tuples from a store with optional filtering and pagination.
@@ -356,14 +376,39 @@ Reads relationship tuples from a store with optional filtering and pagination.
 | `$consistency` | Consistency | null | Override the default consistency level |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;ReadTuplesResponse&gt;
- The result of the tuple read request
+FailureInterface | SuccessInterface
+ Success contains ReadTuplesResponseInterface, Failure contains Throwable
+
+### streamedListObjects
+
+
+```php
+public function streamedListObjects(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $type, string $relation, string $user, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
+```
+
+Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | StoreInterface | string | The store to query |
+| `$model` | AuthorizationModelInterface | string | The authorization model to use |
+| `$type` | string | The object type to find |
+| `$relation` | string | The relationship to check |
+| `$user` | string | The user to check relationships for |
+| `$context` | object | null | Additional context for evaluation |
+| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt; | null | Additional tuples for contextual evaluation |
+| `$consistency` | Consistency | null | Override the default consistency level |
+
+#### Returns
+FailureInterface | SuccessInterface
+ Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
 
 ### writeAssertions
 
 
 ```php
-public function writeAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model, AssertionsInterface<AssertionInterface> $assertions): Failure<Throwable>|Success<WriteAssertionsResponse>
+public function writeAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model, AssertionsInterface<AssertionInterface> $assertions): FailureInterface|SuccessInterface
 ```
 
 Creates or updates assertions for an authorization model.
@@ -376,14 +421,14 @@ Creates or updates assertions for an authorization model.
 | `$assertions` | AssertionsInterface&lt;AssertionInterface&gt; | The assertions to upsert |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;WriteAssertionsResponse&gt;
- The result of the assertion write request
+FailureInterface | SuccessInterface
+ Success contains WriteAssertionsResponseInterface, Failure contains Throwable
 
 ### writeTuples
 
 
 ```php
-public function writeTuples(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeysInterface<TupleKeyInterface>|null $writes = NULL, TupleKeysInterface<TupleKeyInterface>|null $deletes = NULL): Failure<Throwable>|Success<WriteTuplesResponse>
+public function writeTuples(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeysInterface<TupleKeyInterface>|null $writes = NULL, TupleKeysInterface<TupleKeyInterface>|null $deletes = NULL): FailureInterface|SuccessInterface
 ```
 
 Writes or deletes relationship tuples in a store.
@@ -397,6 +442,6 @@ Writes or deletes relationship tuples in a store.
 | `$deletes` | TupleKeysInterface&lt;TupleKeyInterface&gt; | null | Tuples to delete |
 
 #### Returns
-Failure&lt;Throwable&gt; | Success&lt;WriteTuplesResponse&gt;
- The result of the tuple write request
+FailureInterface | SuccessInterface
+ Success contains WriteTuplesResponseInterface, Failure contains Throwable
 

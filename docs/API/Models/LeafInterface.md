@@ -58,11 +58,11 @@ UsersListInterface&lt;[UsersListUserInterface](Models/UsersListUserInterface.md)
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<string, mixed>
 ```
 
 
 
 #### Returns
-array
+array&lt;string, mixed&gt;
 

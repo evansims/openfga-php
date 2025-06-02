@@ -84,6 +84,7 @@ Serialize the tuple key for JSON encoding. This method prepares the tuple key da
 
 #### Returns
 array
+ The serialized tuple key data ready for JSON encoding
 
 ### schema
 

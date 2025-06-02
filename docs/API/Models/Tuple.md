@@ -56,6 +56,7 @@ Serialize the tuple for JSON encoding. This method prepares the tuple data for A
 
 #### Returns
 array
+ Tuple data formatted for JSON encoding with API-compatible structure
 
 ### schema
 

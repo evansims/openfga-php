@@ -72,12 +72,13 @@ string | null
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<string, mixed>
 ```
 
 Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
 
 
 #### Returns
-array
+array&lt;string, mixed&gt;
+ The serialized tuple key data ready for JSON encoding
 

@@ -43,11 +43,11 @@ Get the node representing users to subtract from the base. This represents the n
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<string, mixed>
 ```
 
 
 
 #### Returns
-array
+array&lt;string, mixed&gt;
 

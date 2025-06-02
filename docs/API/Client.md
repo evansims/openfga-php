@@ -11,7 +11,7 @@ OpenFGA Client implementation for relationship-based access control operations. 
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `VERSION` | `&#039;1.0.0&#039;` | The version of the OpenFGA PHP SDK. |
+| `VERSION` | `&#039;1.2.0&#039;` | The version of the OpenFGA PHP SDK. |
 
 
 ## Methods
@@ -28,6 +28,26 @@ Retrieves the last HTTP request made by the client.
 #### Returns
 Psr\Http\Message\RequestInterface
  The last request
+
+### batchCheck
+
+
+```php
+public function batchCheck(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, OpenFGA\Models\Collections\BatchCheckItemsInterface $checks): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+```
+
+Performs multiple authorization checks in a single batch request. This method allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information for each check.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | [StoreInterface](Models/StoreInterface.md) | string | The store to check against |
+| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string | The authorization model to use |
+| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+
+#### Returns
+[FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
+ The batch check results
 
 ### check
 
@@ -51,7 +71,7 @@ Checks if a user has a specific relationship with an object. Performs an authori
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the check request
+ Success contains CheckResponseInterface, Failure contains Throwable
 
 ### createAuthorizationModel
 
@@ -72,7 +92,7 @@ Creates a new authorization model with the given type definitions and conditions
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the authorization model creation request
+ Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### createStore
 
@@ -90,7 +110,7 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the store creation request
+ Success contains CreateStoreResponseInterface, Failure contains Throwable
 
 ### deleteStore
 
@@ -108,7 +128,7 @@ Deletes a store.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the store deletion request
+ Success contains DeleteStoreResponseInterface, Failure contains Throwable
 
 ### dsl
 
@@ -126,7 +146,7 @@ Parses a DSL string and returns an AuthorizationModel. The Domain Specific Langu
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the DSL transformation request
+ Success contains AuthorizationModelInterface, Failure contains Throwable
 
 ### expand
 
@@ -148,7 +168,7 @@ Expands a relationship tuple to show all users that have the relationship.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the expansion request
+ Success contains ExpandResponseInterface, Failure contains Throwable
 
 ### getAuthorizationModel
 
@@ -167,7 +187,7 @@ Retrieves an authorization model by ID.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the authorization model retrieval request
+ Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### getLanguage
 
@@ -225,7 +245,7 @@ Retrieves store details by ID.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the store retrieval request
+ Success contains GetStoreResponseInterface, Failure contains Throwable
 
 ### listAuthorizationModels
 
@@ -245,7 +265,7 @@ Lists authorization models in a store with pagination.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the authorization model listing request
+ Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
 
 ### listObjects
 
@@ -270,7 +290,7 @@ Lists objects that have a specific relationship with a user.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the object listing request
+ Success contains ListObjectsResponseInterface, Failure contains Throwable
 
 ### listStores
 
@@ -289,7 +309,7 @@ Lists all stores with pagination.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the store listing request
+ Success contains ListStoresResponseInterface, Failure contains Throwable
 
 ### listTupleChanges
 
@@ -311,7 +331,7 @@ Lists changes to relationship tuples in a store.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the tuple change listing request
+ Success contains ListTupleChangesResponseInterface, Failure contains Throwable
 
 ### listUsers
 
@@ -336,7 +356,7 @@ Lists users that have a specific relationship with an object.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the user listing request
+ Success contains ListUsersResponseInterface, Failure contains Throwable
 
 ### readAssertions
 
@@ -355,7 +375,7 @@ Retrieves assertions for an authorization model.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the assertions read request
+ Success contains ReadAssertionsResponseInterface, Failure contains Throwable
 
 ### readTuples
 
@@ -373,11 +393,36 @@ Reads relationship tuples from a store with optional filtering and pagination.
 | `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | Filter tuples by this key (return all if null) |
 | `$continuationToken` | ?string | Token for pagination |
 | `$pageSize` | ?int |  |
+| `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
+
+#### Returns
+[FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
+ Success contains ReadTuplesResponseInterface, Failure contains Throwable
+
+### streamedListObjects
+
+
+```php
+public function streamedListObjects(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, string $type, string $relation, string $user, ?object $context = NULL, ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL, ?OpenFGA\Models\Enums\Consistency $consistency = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+```
+
+Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$store` | [StoreInterface](Models/StoreInterface.md) | string | The store to query |
+| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string | The authorization model to use |
+| `$type` | string | The object type to find |
+| `$relation` | string | The relationship to check |
+| `$user` | string | The user to check relationships for |
+| `$context` | ?object | Additional context for evaluation |
+| `$contextualTuples` | ?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) | Additional tuples for contextual evaluation |
 | `assertions` | OpenFGA\Models\Collections\AssertionsInterface |  |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the tuple read request
+ Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
 
 ### writeAssertions
 
@@ -397,7 +442,7 @@ Creates or updates assertions for an authorization model.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the assertion write request
+ Success contains WriteAssertionsResponseInterface, Failure contains Throwable
 
 ### writeTuples
 
@@ -418,5 +463,5 @@ Writes or deletes relationship tuples in a store.
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) | [SuccessInterface](Results/SuccessInterface.md)
- The result of the tuple write request
+ Success contains WriteTuplesResponseInterface, Failure contains Throwable
 

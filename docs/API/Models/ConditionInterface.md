@@ -72,12 +72,13 @@ ConditionParametersInterface&lt;[ConditionParameterInterface](Models/ConditionPa
 
 
 ```php
-public function jsonSerialize(): array
+public function jsonSerialize(): array<string, mixed>
 ```
 
 Serialize the condition for JSON encoding. This method prepares the condition data for API requests or storage, ensuring all components are properly formatted according to the OpenFGA API specification.
 
 
 #### Returns
-array
+array&lt;string, mixed&gt;
+ The serialized condition data
 

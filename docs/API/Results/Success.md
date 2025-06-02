@@ -115,7 +115,7 @@ bool
 public function success(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
-Executes a callback when the result is a success and continues the chain. The callback receives the success value as its parameter and is only executed for Success results. This method always returns the original result unchanged.
+Executes a callback when the result is a success and continues the chain. The callback receives the success value (specific response interface) as its parameter and is only executed for Success results. This method always returns the original result unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -130,10 +130,10 @@ Executes a callback when the result is a success and continues the chain. The ca
 
 
 ```php
-public function then(callable $fn): ResultInterface<U, F>
+public function then(callable $fn): OpenFGA\Results\ResultInterface
 ```
 
-Transforms a successful result using a callback and continues the chain. The callback is only executed for Success results and can return either a new Result or a plain value (which becomes a Success). Failure results pass through unchanged.
+Transforms a successful result using a callback and continues the chain. The callback is only executed for Success results and receives the specific response interface as its parameter. It can return either a new Result or a plain value (which becomes a Success). Failure results pass through unchanged.
 
 #### Parameters
 | Name | Type | Description |
@@ -141,7 +141,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 | `fn` | ?callable |  |
 
 #### Returns
-[ResultInterface](Results/ResultInterface.md)&lt;U, F&gt;
+[ResultInterface](Results/ResultInterface.md)
  The transformed result or original failure
 
 ### unwrap
@@ -151,7 +151,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 public function unwrap(?callable $fn = NULL): mixed
 ```
 
-Extracts the value from the result or applies a transformation. Without a callback, this returns the success value or throws the failure error. With a callback, the function is called with either the success value or failure error, and its return value is returned instead of throwing.
+Extracts the value from the result or applies a transformation. Without a callback, this returns the success value (specific response interface) or throws the failure error. With a callback, the function is called with either the response interface or failure error, and its return value is returned instead of throwing.
 
 #### Parameters
 | Name | Type | Description |
@@ -160,19 +160,19 @@ Extracts the value from the result or applies a transformation. Without a callba
 
 #### Returns
 mixed
- The success value, callback result, or throws the error
+ The response interface, callback result, or throws the error
 
 ### val
 
 
 ```php
-public function val(): T
+public function val(): mixed
 ```
 
-Retrieves the value from a successful result. This method should only be called on Success results. Use succeeded() to check the result type before calling this method to avoid exceptions.
+Retrieves the value from a successful result. This method should only be called on Success results. Use succeeded() to check the result type before calling this method to avoid exceptions. Returns the specific response interface documented in the calling method&#039;s @return annotation.
 
 
 #### Returns
-T
- The successful value
+mixed
+ The response interface (e.g., CheckResponseInterface, StoreInterface)
 

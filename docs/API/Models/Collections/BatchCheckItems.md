@@ -1,6 +1,6 @@
-# TuplesInterface
+# BatchCheckItems
 
-Collection interface for OpenFGA tuple objects. This interface defines a collection that holds tuple objects representing relationship facts in the OpenFGA authorization system. Tuples define the actual relationships between users, objects, and relations that are used for authorization decisions. Each tuple contains a key (defining the relationship) and a timestamp (recording when the relationship was established), making them essential for both authorization checks and audit trails.
+Collection of batch check items for batch authorization requests. This collection maintains a list of BatchCheckItem objects, each representing a single authorization check to be performed as part of a batch request.
 
 ## Namespace
 `OpenFGA\Models\Collections`
@@ -12,6 +12,7 @@ Collection interface for OpenFGA tuple objects. This interface defines a collect
 * Iterator
 * Countable
 * ArrayAccess
+* [BatchCheckItemsInterface](Models/Collections/BatchCheckItemsInterface.md)
 
 
 
@@ -20,7 +21,7 @@ Collection interface for OpenFGA tuple objects. This interface defines a collect
 
 
 ```php
-public function add(T $item): static
+public function add(mixed $item): static
 ```
 
 Add an item to the end of the collection. This method appends a new model object to the collection, automatically assigning it the next available integer index. The item is validated to ensure it matches the expected type for this collection, maintaining type safety throughout the authorization data processing pipeline. This operation modifies the current collection instance directly, making it suitable for building collections incrementally. For immutable operations, use the `withItems()` method instead, which creates new collection instances without modifying the original.
@@ -28,7 +29,7 @@ Add an item to the end of the collection. This method appends a new model object
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$item` | T | The OpenFGA model object to add to the collection |
+| `callback` | callable |  |
 
 #### Returns
 static
@@ -62,13 +63,13 @@ int&lt;0, max&gt;
 
 
 ```php
-public function current(): T
+public function current(): OpenFGA\Models\ModelInterface
 ```
 
 
 
 #### Returns
-T
+[ModelInterface](Models/ModelInterface.md)
 
 ### every
 
@@ -82,7 +83,7 @@ Check if all items in the collection match the given condition. This method test
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | callable |  |
+| `callback` | callable |  |
 
 #### Returns
 bool
@@ -100,7 +101,7 @@ Create a new collection containing only items that match the condition. This met
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | callable |  |
+| `callback` | ?callable |  |
 
 #### Returns
 static
@@ -110,7 +111,7 @@ static
 
 
 ```php
-public function first(?callable $callback = NULL): T|null
+public function first(?callable $callback = NULL)
 ```
 
 Get the first item in the collection, optionally matching a condition. When called without a callback, returns the first item in the collection. When called with a callback, returns the first item that satisfies the condition.
@@ -118,17 +119,14 @@ Get the first item in the collection, optionally matching a condition. When call
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | ?callable |  |
+| `offset` | int |  |
 
-#### Returns
-T | null
- The first matching item, or null if none found
 
 ### get
 
 
 ```php
-public function get(int $offset): T|null
+public function get(int $offset)
 ```
 
 Get an item by its position in the collection. This method retrieves the item at the specified index position. Returns null if the index is out of bounds.
@@ -136,11 +134,8 @@ Get an item by its position in the collection. This method retrieves the item at
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | int | The index position of the item to retrieve |
+| `offset` | mixed |  |
 
-#### Returns
-T | null
- The item at the specified position, or null if not found
 
 ### isEmpty
 
@@ -203,7 +198,7 @@ public function offsetExists(mixed $offset): bool
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
+| `offset` | mixed |  |
 
 #### Returns
 bool
@@ -212,7 +207,23 @@ bool
 
 
 ```php
-public function offsetGet(mixed $offset): T|null
+public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
+```
+
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `value` | mixed |  |
+
+#### Returns
+?[ModelInterface](Models/ModelInterface.md)
+
+### offsetSet
+
+
+```php
+public function offsetSet(mixed $offset, mixed $value): void
 ```
 
 
@@ -220,23 +231,7 @@ public function offsetGet(mixed $offset): T|null
 | Name | Type | Description |
 |------|------|-------------|
 | `$offset` | mixed |  |
-
-#### Returns
-T | null
-
-### offsetSet
-
-
-```php
-public function offsetSet(int|string|null $offset, T $value): void
-```
-
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$offset` | int | string | null |  |
-| `$value` | T |  |
+| `offset` | mixed |  |
 
 #### Returns
 void
@@ -252,7 +247,7 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
+| `callback` | callable |  |
 
 #### Returns
 void
@@ -261,7 +256,7 @@ void
 
 
 ```php
-public function reduce(U $initial, callable $callback): U
+public function reduce(mixed $initial, callable $callback): mixed
 ```
 
 Reduce the collection to a single value using a callback function. This method iteratively applies a callback function to accumulate the collection items into a single value, starting with an initial value.
@@ -269,11 +264,11 @@ Reduce the collection to a single value using a callback function. This method i
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | U | The initial value to start the reduction |
-| `$callback` | callable |  |
+| `$initial` | mixed | The initial value to start the reduction |
+| `callback` | callable |  |
 
 #### Returns
-U
+mixed
  The final accumulated value
 
 ### rewind
@@ -288,6 +283,21 @@ public function rewind(): void
 #### Returns
 void
 
+### schema
+
+*<small>Implements Models\Collections\IndexedCollectionInterface</small>*  
+
+```php
+public function schema(): CollectionSchemaInterface
+```
+
+Get the schema definition for this collection type. Returns the schema that defines the structure, validation rules, and serialization behavior for this collection type. The schema specifies the expected item type, validation constraints, and transformation rules that ensure all items in the collection conform to OpenFGA data requirements. Collection schemas enable: - Type validation for all added items - Consistent serialization across different contexts - API compatibility verification - Runtime type checking and error reporting The schema system ensures that authorization data maintains integrity throughout processing, preventing type mismatches that could lead to authorization failures or security vulnerabilities.
+
+
+#### Returns
+CollectionSchemaInterface
+ The schema definition containing validation rules and type constraints for this collection
+
 ### some
 
 
@@ -300,7 +310,7 @@ Check if at least one item in the collection matches the given condition. This m
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | callable |  |
+| `items` |  |  |
 
 #### Returns
 bool
@@ -310,14 +320,14 @@ bool
 
 
 ```php
-public function toArray(): array<int|string, T>
+public function toArray(): array
 ```
 
 Convert the collection to a standard PHP array. This method creates a native PHP array containing all items in the collection, preserving their order and indexes.
 
 
 #### Returns
-array&lt;int | string, T&gt;
+array
  A standard PHP array containing all collection items
 
 ### valid
