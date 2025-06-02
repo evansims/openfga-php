@@ -3,23 +3,18 @@
 OpenFGA Client implementation for relationship-based access control operations. This client provides a complete implementation of the OpenFGA API, supporting all core operations including store management, authorization model configuration, relationship tuple operations, and authorization checks. The client uses PSR-7/18 HTTP standards and implements the Result pattern for error handling. The client supports multiple authentication methods including OAuth 2.0 Client Credentials flow and pre-shared key authentication, with automatic token management and retry capabilities for reliable operation.
 
 ## Namespace
-
 `OpenFGA`
 
 ## Source
-
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Client.php)
 
 ## Implements
-
-- [`ClientInterface`](ClientInterface.md)
+* [`ClientInterface`](ClientInterface.md)
 
 ## Related Classes
-
-- [ClientInterface](ClientInterface.md) (interface)
+* [ClientInterface](ClientInterface.md) (interface)
 
 ## Constants
-
 | Name      | Value     | Description                         |
 | --------- | --------- | ----------------------------------- |
 | `VERSION` | `'1.2.0'` | The version of the OpenFGA PHP SDK. |
@@ -27,7 +22,6 @@ OpenFGA Client implementation for relationship-based access control operations. 
 ## Methods
 
 ### Authorization
-
 #### batchCheck
 
 ```php
@@ -40,8 +34,8 @@ public function batchCheck(
 
 Performs multiple authorization checks in a single batch request. This method allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information for each check.
 
-**Batch checking multiple permissions efficiently:**
 
+**Batch checking multiple permissions efficiently:**
 ```php
 $checks = new BatchCheckItems([
     new BatchCheckItem(
@@ -76,7 +70,6 @@ if ($result->success()) {
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L132)
 
 #### Parameters
-
 | Name      | Type                                                                                   | Description                    |
 | --------- | -------------------------------------------------------------------------------------- | ------------------------------ |
 | `$store`  | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to check against     |
@@ -84,9 +77,7 @@ if ($result->success()) {
 | `$checks` | [`BatchCheckItemsInterface`](Models/Collections/BatchCheckItemsInterface.md)           | The batch check items          |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — The batch check results
-
 #### check
 
 ```php
@@ -103,8 +94,8 @@ public function check(
 
 Checks if a user has a specific relationship with an object. Performs an authorization check to determine if a user has a particular relationship with an object based on the configured authorization model. This is the core operation for making authorization decisions in OpenFGA.
 
-**Basic permission check:**
 
+**Basic permission check:**
 ```php
 $result = $client->check(
     store: 'store-id',
@@ -121,7 +112,6 @@ if ($result->success()) {
 ```
 
 **Check with contextual tuples:**
-
 ```php
 $contextualTuples = new TupleKeys([
     new TupleKey('user:anne', 'member', 'team:finance')
@@ -138,7 +128,6 @@ $result = $client->check(
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L163)
 
 #### Parameters
-
 | Name                | Type                                                                                   | Description                                 |
 | ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to check against                  |
@@ -150,9 +139,7 @@ $result = $client->check(
 | `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CheckResponseInterface, Failure contains Throwable
-
 #### expand
 
 ```php
@@ -170,7 +157,6 @@ Expands a relationship tuple to show all users that have the relationship.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L313)
 
 #### Parameters
-
 | Name                | Type                                                                                                               | Description                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                       | The store containing the tuple              |
@@ -180,11 +166,8 @@ Expands a relationship tuple to show all users that have the relationship.
 | `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                         | Override the default consistency level      |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ExpandResponseInterface, Failure contains Throwable
-
 ### CRUD Operations
-
 #### createAuthorizationModel
 
 ```php
@@ -198,8 +181,8 @@ public function createAuthorizationModel(
 
 Creates a new authorization model with the given type definitions and conditions. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
 
-**Creating a document authorization model with DSL (recommended):**
 
+**Creating a document authorization model with DSL (recommended):**
 ```php
 // Using DSL is usually easier than manually building type definitions
 $dsl = '
@@ -230,7 +213,6 @@ if ($result->success()) {
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L202)
 
 #### Parameters
-
 | Name               | Type                                                                             | Description                              |
 | ------------------ | -------------------------------------------------------------------------------- | ---------------------------------------- |
 | `$store`           | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                     | The store to create the model in         |
@@ -239,9 +221,7 @@ if ($result->success()) {
 | `$schemaVersion`   | [`SchemaVersion`](Models/Enums/SchemaVersion.md)                                 | The schema version to use (default: 1.1) |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
-
 #### createStore
 
 ```php
@@ -253,15 +233,12 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L230)
 
 #### Parameters
-
 | Name    | Type     | Description                |
 | ------- | -------- | -------------------------- |
 | `$name` | `string` | The name for the new store |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateStoreResponseInterface, Failure contains Throwable
-
 #### deleteStore
 
 ```php
@@ -275,15 +252,12 @@ Deletes a store.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L254)
 
 #### Parameters
-
 | Name     | Type                                                         | Description         |
 | -------- | ------------------------------------------------------------ | ------------------- |
 | `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to delete |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains DeleteStoreResponseInterface, Failure contains Throwable
-
 #### readAssertions
 
 ```php
@@ -298,16 +272,13 @@ Retrieves assertions for an authorization model.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L577)
 
 #### Parameters
-
 | Name     | Type                                                                                   | Description                     |
 | -------- | -------------------------------------------------------------------------------------- | ------------------------------- |
 | `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store containing the model  |
 | `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to get assertions for |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadAssertionsResponseInterface, Failure contains Throwable
-
 #### readTuples
 
 ```php
@@ -325,7 +296,6 @@ Reads relationship tuples from a store with optional filtering and pagination.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L601)
 
 #### Parameters
-
 | Name                 | Type                                                         | Description                                    |
 | -------------------- | ------------------------------------------------------------ | ---------------------------------------------- |
 | `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to read from                         |
@@ -335,9 +305,7 @@ Reads relationship tuples from a store with optional filtering and pagination.
 | `$consistency`       | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`   | Override the default consistency level         |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadTuplesResponseInterface, Failure contains Throwable
-
 #### writeAssertions
 
 ```php
@@ -353,7 +321,6 @@ Creates or updates assertions for an authorization model.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L669)
 
 #### Parameters
-
 | Name          | Type                                                                                   | Description                        |
 | ------------- | -------------------------------------------------------------------------------------- | ---------------------------------- |
 | `$store`      | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store containing the model     |
@@ -361,9 +328,7 @@ Creates or updates assertions for an authorization model.
 | `$assertions` | [`AssertionsInterface`](Models/Collections/AssertionsInterface.md)                     | The assertions to upsert           |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains WriteAssertionsResponseInterface, Failure contains Throwable
-
 #### writeTuples
 
 ```php
@@ -377,8 +342,8 @@ public function writeTuples(
 
 Writes or deletes relationship tuples in a store.
 
-**Writing and deleting relationship tuples:**
 
+**Writing and deleting relationship tuples:**
 ```php
 // Create relationships
 $writes = new TupleKeys([
@@ -399,7 +364,6 @@ if ($result->success()) {
 ```
 
 **Updating permissions by adding and removing tuples:**
-
 ```php
 $writes = new TupleKeys([
     new TupleKey('user:anne', 'editor', 'document:budget'), // Promote anne to editor
@@ -421,7 +385,6 @@ $client->writeTuples(
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L695)
 
 #### Parameters
-
 | Name       | Type                                                                                   | Description                        |
 | ---------- | -------------------------------------------------------------------------------------- | ---------------------------------- |
 | `$store`   | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to modify                |
@@ -430,11 +393,8 @@ $client->writeTuples(
 | `$deletes` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Tuples to delete                   |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains WriteTuplesResponseInterface, Failure contains Throwable
-
 ### List Operations
-
 #### getAuthorizationModel
 
 ```php
@@ -449,16 +409,13 @@ Retrieves an authorization model by ID.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L343)
 
 #### Parameters
-
 | Name     | Type                                                                                   | Description                    |
 | -------- | -------------------------------------------------------------------------------------- | ------------------------------ |
 | `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store containing the model |
 | `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to retrieve          |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
-
 #### getLanguage
 
 ```php
@@ -470,9 +427,7 @@ Get the configured language for i18n translations.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L366)
 
 #### Returns
-
 `string` — The configured language code
-
 #### getLastRequest
 
 ```php
@@ -484,9 +439,7 @@ Retrieves the last HTTP request made by the client.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L375)
 
 #### Returns
-
 `Psr\Http\Message\RequestInterface` &#124; `null`
-
 #### getLastResponse
 
 ```php
@@ -498,9 +451,7 @@ Retrieves the last HTTP response received by the client.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L384)
 
 #### Returns
-
 `Psr\Http\Message\ResponseInterface` &#124; `null`
-
 #### getStore
 
 ```php
@@ -514,15 +465,12 @@ Retrieves store details by ID.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L395)
 
 #### Parameters
-
 | Name     | Type                                                         | Description           |
 | -------- | ------------------------------------------------------------ | --------------------- |
 | `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to retrieve |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetStoreResponseInterface, Failure contains Throwable
-
 #### listAuthorizationModels
 
 ```php
@@ -538,7 +486,6 @@ Lists authorization models in a store with pagination.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L419)
 
 #### Parameters
-
 | Name                 | Type                                                         | Description                        |
 | -------------------- | ------------------------------------------------------------ | ---------------------------------- |
 | `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from      |
@@ -546,9 +493,7 @@ Lists authorization models in a store with pagination.
 | `$pageSize`          | `int` &#124; `null`                                          | Maximum number of models to return |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
-
 #### listObjects
 
 ```php
@@ -566,8 +511,8 @@ public function listObjects(
 
 Lists objects that have a specific relationship with a user.
 
-**List all documents a user can view:**
 
+**List all documents a user can view:**
 ```php
 $result = $client->listObjects(
     store: 'store-id',
@@ -587,7 +532,6 @@ if ($result->success()) {
 ```
 
 **List objects with contextual evaluation:**
-
 ```php
 // Check what documents anne can edit, considering her team membership
 $contextualTuples = new TupleKeys([
@@ -608,7 +552,6 @@ $result = $client->listObjects(
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L447)
 
 #### Parameters
-
 | Name                | Type                                                                                   | Description                                 |
 | ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
@@ -621,9 +564,7 @@ $result = $client->listObjects(
 | `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListObjectsResponseInterface, Failure contains Throwable
-
 #### listStores
 
 ```php
@@ -638,16 +579,13 @@ Lists all stores with pagination.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L483)
 
 #### Parameters
-
 | Name                 | Type                   | Description                        |
 | -------------------- | ---------------------- | ---------------------------------- |
 | `$continuationToken` | `string` &#124; `null` | Token for pagination               |
 | `$pageSize`          | `int` &#124; `null`    | Maximum number of stores to return |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListStoresResponseInterface, Failure contains Throwable
-
 #### listTupleChanges
 
 ```php
@@ -665,7 +603,6 @@ Lists changes to relationship tuples in a store.
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L509)
 
 #### Parameters
-
 | Name                 | Type                                                         | Description                                            |
 | -------------------- | ------------------------------------------------------------ | ------------------------------------------------------ |
 | `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list changes for                          |
@@ -675,9 +612,7 @@ Lists changes to relationship tuples in a store.
 | `$startTime`         | `DateTimeImmutable` &#124; `null`                            | Only include changes at or after this time (inclusive) |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListTupleChangesResponseInterface, Failure contains Throwable
-
 #### listUsers
 
 ```php
@@ -695,8 +630,8 @@ public function listUsers(
 
 Lists users that have a specific relationship with an object.
 
-**List all users who can view a document:**
 
+**List all users who can view a document:**
 ```php
 $userFilters = new UserTypeFilters([
     new UserTypeFilter('user') // Only include direct users, not groups
@@ -720,7 +655,6 @@ if ($result->success()) {
 ```
 
 **Find both users and groups with access:**
-
 ```php
 $userFilters = new UserTypeFilters([
     new UserTypeFilter('user'),
@@ -740,7 +674,6 @@ $result = $client->listUsers(
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L541)
 
 #### Parameters
-
 | Name                | Type                                                                                   | Description                                 |
 | ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
@@ -753,9 +686,7 @@ $result = $client->listUsers(
 | `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListUsersResponseInterface, Failure contains Throwable
-
 #### streamedListObjects
 
 ```php
@@ -776,7 +707,6 @@ Streams objects that a user has a specific relationship with. Returns all object
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L633)
 
 #### Parameters
-
 | Name                | Type                                                                                   | Description                                 |
 | ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
@@ -789,11 +719,8 @@ Streams objects that a user has a specific relationship with. Returns all object
 | `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
-
 ### Utility
-
 #### assertLastRequest
 
 ```php
@@ -802,8 +729,8 @@ public function assertLastRequest(): Psr\Http\Message\RequestInterface
 
 Retrieves the last HTTP request made by the client.
 
-**Accessing the last request for debugging:**
 
+**Accessing the last request for debugging:**
 ```php
 $result = $client->check(
     store: 'store-id',
@@ -822,11 +749,8 @@ echo "Headers: " . json_encode($lastRequest->getHeaders());
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L117)
 
 #### Returns
-
 `Psr\Http\Message\RequestInterface` — The last request
-
 ### Other
-
 #### dsl
 
 ```php
@@ -835,8 +759,8 @@ public function dsl(string $dsl): OpenFGA\Results\FailureInterface|OpenFGA\Resul
 
 Parses a DSL string and returns an AuthorizationModel. The Domain Specific Language (DSL) provides a human-readable way to define authorization models using intuitive syntax for relationships and permissions. This method converts DSL text into a structured authorization model object.
 
-**Parse a complete authorization model from DSL:**
 
+**Parse a complete authorization model from DSL:**
 ```php
 $dsl = '
     model
@@ -866,11 +790,9 @@ if ($result->success()) {
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L276)
 
 #### Parameters
-
 | Name   | Type     | Description             |
 | ------ | -------- | ----------------------- |
 | `$dsl` | `string` | The DSL string to parse |
 
 #### Returns
-
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains AuthorizationModelInterface, Failure contains Throwable
