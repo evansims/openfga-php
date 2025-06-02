@@ -7,6 +7,7 @@ namespace OpenFGA\Tools;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
+use OpenFGA\Translation\YamlParser;
 
 // Load Composer autoloader
 $autoloader = __DIR__ . '/vendor/autoload.php';
@@ -27,11 +28,13 @@ class DocumentationGenerator
     private string $outputDir;
     private Environment $twig;
     private array $classMap = [];
+    private string $projectRoot;
 
     public function __construct(string $srcDir, string $outputDir)
     {
         $this->srcDir = rtrim($srcDir, '/');
         $this->outputDir = rtrim($outputDir, '/');
+        $this->projectRoot = $this->findProjectRootFromSrc($srcDir);
 
         $loader = new FilesystemLoader(__DIR__);
         $this->twig = new Environment($loader);
@@ -188,7 +191,7 @@ class DocumentationGenerator
         echo "Documentation generation complete. Generated $classCount classes, $interfaceCount interfaces, and skipped $skippedCount abstract classes.\n";
     }
 
-    private function generateClassDocumentation(string $className, string $file, bool $isInterface = false, bool $isEnum = false): void
+    protected function generateClassDocumentation(string $className, string $file, bool $isInterface = false, bool $isEnum = false): void
     {
         $reflection = new ReflectionClass($className);
 
@@ -387,6 +390,13 @@ class DocumentationGenerator
         // Add method statistics and related classes
         $classData['methodStats'] = $this->calculateMethodStatistics($classData['methods']);
         $classData['relatedClasses'] = $this->findRelatedClasses($reflection);
+        
+        // Add translation tables for Messages class
+        if ($className === 'OpenFGA\Messages') {
+            $translationData = $this->loadTranslationData();
+            $classData['translations'] = $this->organizeMessageTranslations($translationData);
+            $classData['availableLocales'] = array_keys($translationData);
+        }
 
         // Render and save
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
@@ -1523,6 +1533,119 @@ class DocumentationGenerator
         return $text;
     }
 
+    /**
+     * Find the project root directory from the src directory path.
+     */
+    private function findProjectRootFromSrc(string $srcDir): string
+    {
+        $projectRoot = $this->findProjectRoot($srcDir);
+        return $projectRoot ?? dirname($srcDir);
+    }
+
+    /**
+     * Load translation data for all available locales.
+     * 
+     * @return array<string, array<string, mixed>>
+     */
+    private function loadTranslationData(): array
+    {
+        $translationsDir = $this->projectRoot . '/translations';
+        if (!is_dir($translationsDir)) {
+            return [];
+        }
+
+        $translations = [];
+        $translationFiles = glob($translationsDir . '/messages.*.yaml');
+        
+        if (!$translationFiles) {
+            return [];
+        }
+
+        foreach ($translationFiles as $file) {
+            $filename = basename($file);
+            if (preg_match('/messages\.([a-z]{2})\.yaml$/', $filename, $matches)) {
+                $locale = $matches[1];
+                try {
+                    $translations[$locale] = YamlParser::parseFile($file);
+                } catch (\Exception $e) {
+                    echo "Warning: Could not parse translation file $file: " . $e->getMessage() . "\n";
+                }
+            }
+        }
+
+        return $translations;
+    }
+
+    /**
+     * Extract message keys from the Messages enum and organize them with their translations.
+     * 
+     * @param array<string, array<string, mixed>> $translations
+     * @return array<string, array<string, mixed>>
+     */
+    private function organizeMessageTranslations(array $translations): array
+    {
+        $organized = [];
+        
+        // Get all message keys from the Messages enum
+        $messagesClass = new ReflectionClass('OpenFGA\\Messages');
+        
+        // For PHP 8.1+ enums, use getCases()
+        if (method_exists($messagesClass, 'getCases')) {
+            $cases = $messagesClass->getCases();
+            foreach ($cases as $case) {
+                $messageKey = $case->getValue()->value;
+                $organized[$messageKey] = [];
+                
+                foreach ($translations as $locale => $data) {
+                    $value = $this->getNestedValue($data, $messageKey);
+                    if ($value !== null) {
+                        $organized[$messageKey][$locale] = $value;
+                    }
+                }
+            }
+        } else {
+            // Fallback for older versions - get constants manually
+            $enumConstants = $messagesClass->getConstants();
+            foreach ($enumConstants as $constantName => $constantValue) {
+                if ($constantValue instanceof \OpenFGA\Messages) {
+                    $messageKey = $constantValue->value;
+                    $organized[$messageKey] = [];
+                    
+                    foreach ($translations as $locale => $data) {
+                        $value = $this->getNestedValue($data, $messageKey);
+                        if ($value !== null) {
+                            $organized[$messageKey][$locale] = $value;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return $organized;
+    }
+
+    /**
+     * Get a nested value from an array using dot notation.
+     * 
+     * @param array<string, mixed> $array
+     * @param string $key
+     * @return mixed
+     */
+    private function getNestedValue(array $array, string $key): mixed
+    {
+        $keys = explode('.', $key);
+        $current = $array;
+        
+        foreach ($keys as $keyPart) {
+            if (!is_array($current) || !array_key_exists($keyPart, $current)) {
+                return null;
+            }
+            $current = $current[$keyPart];
+        }
+        
+        return $current;
+    }
+
     public static function deleteDir(string $dir): void
     {
         if (!is_dir($dir)) {
@@ -1543,7 +1666,7 @@ class DocumentationGenerator
 }
 
 if (php_sapi_name() === 'cli' && isset($argv[0]) && realpath($argv[0]) === __FILE__) {
-    $options = getopt('', ['src::', 'out::', 'clean']);
+    $options = getopt('', ['src:', 'out:', 'clean']);
 
     $srcDir = $options['src'] ?? __DIR__ . '/../../src';
     $outputDir = $options['out'] ?? __DIR__ . '/../../docs/API';

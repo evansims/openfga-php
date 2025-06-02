@@ -42,6 +42,24 @@
 {% endfor %}
 {% endif %}
 
+{% if translations is defined and translations is not empty %}
+## Translation Tables
+
+The following tables show all available translations for each message key used throughout the OpenFGA PHP SDK.
+
+{% for messageKey, localeTranslations in translations %}
+{% if localeTranslations is not empty %}
+### `{{ messageKey }}`
+
+| Locale | Translation |
+|--------|-------------|
+{% for locale, translation in localeTranslations %}| `{{ locale }}` | {{ translation }} |
+{% endfor %}
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
 {% if methods is not empty %}
 ## Methods
 
