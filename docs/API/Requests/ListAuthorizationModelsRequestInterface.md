@@ -22,7 +22,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string|null
+string&#124;null
  The continuation token from a previous operation, or null for the first page
 
 ### getPageSize
@@ -36,7 +36,7 @@ Get the maximum number of models to return per page. Specifies the page size for
 
 
 #### Returns
-int|null
+int&#124;null
  The maximum number of models to return per page, or null to use the default page size
 
 ### getRequest

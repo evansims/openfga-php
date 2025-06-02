@@ -72,7 +72,7 @@ Get an item by its string key. This method retrieves the item associated with th
 | `$key` | string | The key of the item to retrieve |
 
 #### Returns
-T|null
+T&#124;null
  The item associated with the key, or null if not found
 
 ### has
@@ -180,7 +180,7 @@ Get an item by its offset key.
 | `$offset` | mixed |  |
 
 #### Returns
-T|null
+T&#124;null
 
 ### offsetSet
 
@@ -193,7 +193,7 @@ public function offsetSet(string|null $offset, T $value): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | string|null |  |
+| `$offset` | string&#124;null |  |
 | `$value` | T |  |
 
 #### Returns

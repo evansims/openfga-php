@@ -120,7 +120,7 @@ Get the specific error category for this exception. Returns the error classifica
 
 
 #### Returns
-OpenFGA\Exceptions\ClientError|OpenFGA\Exceptions\AuthenticationError|OpenFGA\Exceptions\ConfigurationError|OpenFGA\Exceptions\NetworkError|OpenFGA\Exceptions\SerializationError
+OpenFGA\Exceptions\ClientError&#124;OpenFGA\Exceptions\AuthenticationError&#124;OpenFGA\Exceptions\ConfigurationError&#124;OpenFGA\Exceptions\NetworkError&#124;OpenFGA\Exceptions\SerializationError
  The error category enum indicating the type of failure
 
 ### previous

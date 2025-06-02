@@ -26,8 +26,8 @@ Create an access token instance from an OAuth server response. This factory meth
 | Name | Type | Description |
 |------|------|-------------|
 | `$response` | ResponseInterface | The HTTP response from the OAuth token endpoint |
-| `$expectedIssuer` | string|null | Optional expected issuer for JWT validation |
-| `$expectedAudience` | string|null | Optional expected audience for JWT validation |
+| `$expectedIssuer` | string&#124;null | Optional expected issuer for JWT validation |
+| `$expectedAudience` | string&#124;null | Optional expected audience for JWT validation |
 
 #### Returns
 self

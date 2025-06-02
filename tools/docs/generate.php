@@ -839,8 +839,8 @@ class DocumentationGenerator
      */
     private function escapeForTable(string $type): string
     {
-        // Replace angle brackets with HTML entities to prevent markdown interpretation
-        return str_replace(['<', '>'], ['&lt;', '&gt;'], $type);
+        // Replace characters that can break markdown table formatting
+        return str_replace(['<', '>', '|'], ['&lt;', '&gt;', '&#124;'], $type);
     }
 
     public static function deleteDir(string $dir): void

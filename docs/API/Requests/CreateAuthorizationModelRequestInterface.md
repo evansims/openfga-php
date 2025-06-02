@@ -22,7 +22,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 
 #### Returns
-ConditionsInterface&lt;ConditionInterface&gt;|null
+ConditionsInterface&lt;ConditionInterface&gt;&#124;null
  Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
 ### getRequest

@@ -23,7 +23,7 @@ Get the optional condition name that must be satisfied. When specified, this con
 
 
 #### Returns
-string|null
+string&#124;null
  The condition name, or null if no condition is required
 
 ### getRelation
@@ -37,7 +37,7 @@ Get the optional specific relation on the referenced type. When specified, this 
 
 
 #### Returns
-string|null
+string&#124;null
  The relation name, or null to reference the entire type
 
 ### getType
@@ -65,7 +65,7 @@ Get the optional wildcard marker for type-level permissions. When present, this 
 
 
 #### Returns
-object|null
+object&#124;null
  The wildcard marker, or null for instance-specific references
 
 ### jsonSerialize

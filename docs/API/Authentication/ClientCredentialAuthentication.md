@@ -67,7 +67,7 @@ Get the current access token if available. Returns the stored access token, whic
 
 
 #### Returns
-AccessTokenInterface|null
+AccessTokenInterface&#124;null
  The current access token, or null if not authenticated
 
 ### handleAuthenticationResponse

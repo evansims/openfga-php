@@ -22,7 +22,7 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 
 #### Returns
-AssertionsInterface&lt;AssertionInterface&gt;|null
+AssertionsInterface&lt;AssertionInterface&gt;&#124;null
  The collection of assertions, or null if no assertions are defined
 
 ### getModel

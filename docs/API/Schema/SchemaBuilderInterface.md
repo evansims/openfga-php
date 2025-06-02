@@ -44,7 +44,7 @@ Add a boolean property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `$default` | mixed|null | Default value for optional properties |
+| `$default` | mixed&#124;null | Default value for optional properties |
 
 #### Returns
 self
@@ -64,7 +64,7 @@ Add a date property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `$default` | mixed|null | Default value for optional properties |
+| `$default` | mixed&#124;null | Default value for optional properties |
 
 #### Returns
 self
@@ -84,7 +84,7 @@ Add a datetime property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `$default` | mixed|null | Default value for optional properties |
+| `$default` | mixed&#124;null | Default value for optional properties |
 
 #### Returns
 self
@@ -104,7 +104,7 @@ Add an integer property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `$default` | mixed|null | Default value for optional properties |
+| `$default` | mixed&#124;null | Default value for optional properties |
 
 #### Returns
 self
@@ -124,7 +124,7 @@ Add a number (float) property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `$default` | mixed|null | Default value for optional properties |
+| `$default` | mixed&#124;null | Default value for optional properties |
 
 #### Returns
 self
@@ -178,8 +178,8 @@ Add a string property to the schema.
 |------|------|-------------|
 | `$name` | string | The property name |
 | `$required` | bool | Whether the property is required |
-| `$format` | string|null | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
-| `$enum` | array&lt;string&gt;|null | Array of allowed string values |
+| `$format` | string&#124;null | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
+| `$enum` | array&lt;string&gt;&#124;null | Array of allowed string values |
 | `$default` | mixed | Default value for optional properties |
 
 #### Returns

@@ -54,7 +54,7 @@ Get the current authentication token. Returns the token that was provided during
 
 
 #### Returns
-AccessTokenInterface|string
+AccessTokenInterface&#124;string
  The authentication token used by this strategy
 
 ### handleAuthenticationResponse

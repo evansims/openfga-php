@@ -42,7 +42,7 @@ Get the user object representation. User objects represent direct, concrete user
 
 
 #### Returns
-?OpenFGA\Models\UserObjectInterface|string|null
+?OpenFGA\Models\UserObjectInterface&#124;string&#124;null
  The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
 ### getUserset

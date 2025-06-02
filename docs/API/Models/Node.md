@@ -41,7 +41,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 
 #### Returns
-?OpenFGA\Models\NodeInterface|OpenFGA\Models\NodeUnionInterface|null
+?OpenFGA\Models\NodeInterface&#124;OpenFGA\Models\NodeUnionInterface&#124;null
  The intersection node or null if not applicable
 
 ### getLeaf
@@ -82,7 +82,7 @@ Get the union operation for this node. The union operation represents the combin
 
 
 #### Returns
-?OpenFGA\Models\NodeInterface|OpenFGA\Models\NodeUnionInterface|null
+?OpenFGA\Models\NodeInterface&#124;OpenFGA\Models\NodeUnionInterface&#124;null
  The union node or null if not applicable
 
 ### jsonSerialize

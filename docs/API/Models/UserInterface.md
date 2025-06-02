@@ -23,7 +23,7 @@ Get the difference operation for this user. Difference operations enable sophist
 
 
 #### Returns
-DifferenceV1Interface|null
+DifferenceV1Interface&#124;null
  The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 
 ### getObject
@@ -37,7 +37,7 @@ Get the user object representation. User objects represent direct, concrete user
 
 
 #### Returns
-string|UserObjectInterface|null
+string&#124;UserObjectInterface&#124;null
  The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
 ### getUserset
@@ -51,7 +51,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 
 
 #### Returns
-UsersetUserInterface|null
+UsersetUserInterface&#124;null
  The userset definition specifying users through relationships, or null if this is not a userset-based user
 
 ### getWildcard
@@ -65,7 +65,7 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 
 
 #### Returns
-TypedWildcardInterface|null
+TypedWildcardInterface&#124;null
  The wildcard definition specifying the user type, or null if this is not a wildcard user
 
 ### jsonSerialize

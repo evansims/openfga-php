@@ -81,7 +81,7 @@ Handle error responses by throwing appropriate exceptions. Analyzes HTTP error r
 | Name | Type | Description |
 |------|------|-------------|
 | `$response` | ResponseInterface | The HTTP error response to analyze and convert to an exception |
-| `$request` | HttpRequestInterface|null | Optional request context for enhanced error reporting |
+| `$request` | HttpRequestInterface&#124;null | Optional request context for enhanced error reporting |
 
 #### Returns
 never

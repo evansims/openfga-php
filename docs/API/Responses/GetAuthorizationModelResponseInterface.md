@@ -22,6 +22,6 @@ Get the retrieved authorization model. Returns the complete authorization model 
 
 
 #### Returns
-AuthorizationModelInterface|null
+AuthorizationModelInterface&#124;null
  The authorization model, or null if not found
 

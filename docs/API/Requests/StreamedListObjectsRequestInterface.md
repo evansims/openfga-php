@@ -22,7 +22,7 @@ Get the consistency requirement for this request.
 
 
 #### Returns
-Consistency|null
+Consistency&#124;null
  The consistency requirement, or null if not specified
 
 ### getContext
@@ -36,7 +36,7 @@ Get the context object for this request.
 
 
 #### Returns
-object|null
+object&#124;null
  The context object, or null if not specified
 
 ### getContextualTuples
@@ -50,7 +50,7 @@ Get the contextual tuples for this request.
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt;|null
+TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
  The contextual tuples collection, or null if not specified
 
 ### getModel
@@ -64,7 +64,7 @@ Get the authorization model ID for this request.
 
 
 #### Returns
-string|null
+string&#124;null
  The authorization model ID, or null if not specified
 
 ### getRelation

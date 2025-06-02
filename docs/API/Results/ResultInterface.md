@@ -85,7 +85,7 @@ Throws the contained error or continues the chain. For Failure results, this thr
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$throwable` | Throwable|null | Optional throwable to throw instead of the contained error |
+| `$throwable` | Throwable&#124;null | Optional throwable to throw instead of the contained error |
 
 #### Returns
 ResultInterface

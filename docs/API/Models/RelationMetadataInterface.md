@@ -23,7 +23,7 @@ Get the user types that can be directly related through this relation. This defi
 
 
 #### Returns
-RelationReferencesInterface&lt;RelationReferenceInterface&gt;|null
+RelationReferencesInterface&lt;RelationReferenceInterface&gt;&#124;null
  The directly related user types, or null if not specified
 
 ### getModule
@@ -37,7 +37,7 @@ Get the optional module name for organization. This provides organizational info
 
 
 #### Returns
-string|null
+string&#124;null
  The module name, or null if not specified
 
 ### getSourceInfo
@@ -51,7 +51,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 
 #### Returns
-SourceInfoInterface|null
+SourceInfoInterface&#124;null
  The source file information, or null if not available
 
 ### jsonSerialize

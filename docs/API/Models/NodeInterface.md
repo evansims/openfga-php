@@ -36,7 +36,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 
 #### Returns
-NodeUnionInterface|self|null
+NodeUnionInterface&#124;self&#124;null
  The intersection node or null if not applicable
 
 ### getLeaf
@@ -77,7 +77,7 @@ Get the union operation for this node. The union operation represents the combin
 
 
 #### Returns
-NodeUnionInterface|self|null
+NodeUnionInterface&#124;self&#124;null
  The union node or null if not applicable
 
 ### jsonSerialize

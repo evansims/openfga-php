@@ -35,12 +35,12 @@ Performs multiple authorization checks in a single batch request. This method al
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to check against |
-| `$model` | AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | StoreInterface&#124;string | The store to check against |
+| `$model` | AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$checks` | BatchCheckItemsInterface | The batch check items |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  The batch check results
 
 ### check
@@ -55,16 +55,16 @@ Checks if a user has a specific relationship with an object. Performs an authori
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to check against |
-| `$model` | AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | StoreInterface&#124;string | The store to check against |
+| `$model` | AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$tupleKey` | TupleKeyInterface | The relationship to check |
-| `$trace` | bool|null | Whether to include a trace in the response |
-| `$context` | object|null | Additional context for the check |
-| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;|null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency|null | Override the default consistency level |
+| `$trace` | bool&#124;null | Whether to include a trace in the response |
+| `$context` | object&#124;null | Additional context for the check |
+| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null | Additional tuples for contextual evaluation |
+| `$consistency` | Consistency&#124;null | Override the default consistency level |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains CheckResponseInterface, Failure contains Throwable
 
 ### createAuthorizationModel
@@ -79,13 +79,13 @@ Creates a new authorization model with the given type definitions and conditions
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to create the model in |
+| `$store` | StoreInterface&#124;string | The store to create the model in |
 | `$typeDefinitions` | TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt; | The type definitions for the model |
-| `$conditions` | ConditionsInterface&lt;ConditionInterface&gt;|null | The conditions for the model |
+| `$conditions` | ConditionsInterface&lt;ConditionInterface&gt;&#124;null | The conditions for the model |
 | `$schemaVersion` | SchemaVersion | The schema version to use (default: 1.1) |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### createStore
@@ -103,7 +103,7 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 | `$name` | string | The name for the new store |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains CreateStoreResponseInterface, Failure contains Throwable
 
 ### deleteStore
@@ -118,10 +118,10 @@ Deletes a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to delete |
+| `$store` | StoreInterface&#124;string | The store to delete |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains DeleteStoreResponseInterface, Failure contains Throwable
 
 ### dsl
@@ -139,7 +139,7 @@ Parses a DSL string and returns an AuthorizationModel. The Domain Specific Langu
 | `$dsl` | string | The DSL string to parse |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains AuthorizationModelInterface, Failure contains Throwable
 
 ### expand
@@ -154,14 +154,14 @@ Expands a relationship tuple to show all users that have the relationship.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store containing the tuple |
+| `$store` | StoreInterface&#124;string | The store containing the tuple |
 | `$tupleKey` | TupleKeyInterface | The tuple to expand |
-| `$model` | AuthorizationModelInterface|string|null | The authorization model to use |
-| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;|null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency|null | Override the default consistency level |
+| `$model` | AuthorizationModelInterface&#124;string&#124;null | The authorization model to use |
+| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null | Additional tuples for contextual evaluation |
+| `$consistency` | Consistency&#124;null | Override the default consistency level |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ExpandResponseInterface, Failure contains Throwable
 
 ### getAuthorizationModel
@@ -176,11 +176,11 @@ Retrieves an authorization model by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store containing the model |
-| `$model` | AuthorizationModelInterface|string | The model to retrieve |
+| `$store` | StoreInterface&#124;string | The store containing the model |
+| `$model` | AuthorizationModelInterface&#124;string | The model to retrieve |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### getLastRequest
@@ -221,10 +221,10 @@ Retrieves store details by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to retrieve |
+| `$store` | StoreInterface&#124;string | The store to retrieve |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains GetStoreResponseInterface, Failure contains Throwable
 
 ### listAuthorizationModels
@@ -239,12 +239,12 @@ Lists authorization models in a store with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to list models from |
-| `$continuationToken` | string|null | Token for pagination |
+| `$store` | StoreInterface&#124;string | The store to list models from |
+| `$continuationToken` | string&#124;null | Token for pagination |
 | `$pageSize` | ?int |  |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
 
 ### listObjects
@@ -259,17 +259,17 @@ Lists objects that have a specific relationship with a user.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to query |
-| `$model` | AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | StoreInterface&#124;string | The store to query |
+| `$model` | AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$type` | string | The type of objects to list |
 | `$relation` | string | The relationship to check |
 | `$user` | string | The user to check relationships for |
-| `$context` | object|null | Additional context for evaluation |
-| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;|null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency|null | Override the default consistency level |
+| `$context` | object&#124;null | Additional context for evaluation |
+| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null | Additional tuples for contextual evaluation |
+| `$consistency` | Consistency&#124;null | Override the default consistency level |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ListObjectsResponseInterface, Failure contains Throwable
 
 ### listStores
@@ -284,11 +284,11 @@ Lists all stores with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$continuationToken` | string|null | Token for pagination |
+| `$continuationToken` | string&#124;null | Token for pagination |
 | `$pageSize` | ?int |  |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ListStoresResponseInterface, Failure contains Throwable
 
 ### listTupleChanges
@@ -303,14 +303,14 @@ Lists changes to relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to list changes for |
-| `$continuationToken` | string|null | Token for pagination |
+| `$store` | StoreInterface&#124;string | The store to list changes for |
+| `$continuationToken` | string&#124;null | Token for pagination |
 | `$pageSize` | ?int |  |
-| `$type` | string|null | Filter changes by type |
-| `$startTime` | DateTimeImmutable|null | Only include changes at or after this time (inclusive) |
+| `$type` | string&#124;null | Filter changes by type |
+| `$startTime` | DateTimeImmutable&#124;null | Only include changes at or after this time (inclusive) |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ListTupleChangesResponseInterface, Failure contains Throwable
 
 ### listUsers
@@ -325,17 +325,17 @@ Lists users that have a specific relationship with an object.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to query |
-| `$model` | AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | StoreInterface&#124;string | The store to query |
+| `$model` | AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$object` | string | The object to check relationships for |
 | `$relation` | string | The relationship to check |
 | `$userFilters` | UserTypeFiltersInterface&lt;UserTypeFilterInterface&gt; | Filters for user types to include |
-| `$context` | object|null | Additional context for evaluation |
-| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;|null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency|null | Override the default consistency level |
+| `$context` | object&#124;null | Additional context for evaluation |
+| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null | Additional tuples for contextual evaluation |
+| `$consistency` | Consistency&#124;null | Override the default consistency level |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ListUsersResponseInterface, Failure contains Throwable
 
 ### readAssertions
@@ -350,11 +350,11 @@ Retrieves assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store containing the model |
-| `$model` | AuthorizationModelInterface|string | The model to get assertions for |
+| `$store` | StoreInterface&#124;string | The store containing the model |
+| `$model` | AuthorizationModelInterface&#124;string | The model to get assertions for |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ReadAssertionsResponseInterface, Failure contains Throwable
 
 ### readTuples
@@ -369,14 +369,14 @@ Reads relationship tuples from a store with optional filtering and pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to read from |
+| `$store` | StoreInterface&#124;string | The store to read from |
 | `$tupleKey` | TupleKeyInterface | Filter tuples by this key (return all if null) |
-| `$continuationToken` | string|null | Token for pagination |
+| `$continuationToken` | string&#124;null | Token for pagination |
 | `$pageSize` | ?int |  |
-| `$consistency` | Consistency|null | Override the default consistency level |
+| `$consistency` | Consistency&#124;null | Override the default consistency level |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains ReadTuplesResponseInterface, Failure contains Throwable
 
 ### streamedListObjects
@@ -391,17 +391,17 @@ Streams objects that a user has a specific relationship with. Returns all object
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to query |
-| `$model` | AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | StoreInterface&#124;string | The store to query |
+| `$model` | AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$type` | string | The object type to find |
 | `$relation` | string | The relationship to check |
 | `$user` | string | The user to check relationships for |
-| `$context` | object|null | Additional context for evaluation |
-| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;|null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency|null | Override the default consistency level |
+| `$context` | object&#124;null | Additional context for evaluation |
+| `$contextualTuples` | TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null | Additional tuples for contextual evaluation |
+| `$consistency` | Consistency&#124;null | Override the default consistency level |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
 
 ### writeAssertions
@@ -416,12 +416,12 @@ Creates or updates assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store containing the model |
-| `$model` | AuthorizationModelInterface|string | The model to update assertions for |
+| `$store` | StoreInterface&#124;string | The store containing the model |
+| `$model` | AuthorizationModelInterface&#124;string | The model to update assertions for |
 | `$assertions` | AssertionsInterface&lt;AssertionInterface&gt; | The assertions to upsert |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains WriteAssertionsResponseInterface, Failure contains Throwable
 
 ### writeTuples
@@ -436,12 +436,12 @@ Writes or deletes relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | StoreInterface|string | The store to modify |
-| `$model` | AuthorizationModelInterface|string | The authorization model to use |
-| `$writes` | TupleKeysInterface&lt;TupleKeyInterface&gt;|null | Tuples to write (create or update) |
-| `$deletes` | TupleKeysInterface&lt;TupleKeyInterface&gt;|null | Tuples to delete |
+| `$store` | StoreInterface&#124;string | The store to modify |
+| `$model` | AuthorizationModelInterface&#124;string | The authorization model to use |
+| `$writes` | TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null | Tuples to write (create or update) |
+| `$deletes` | TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null | Tuples to delete |
 
 #### Returns
-FailureInterface|SuccessInterface
+FailureInterface&#124;SuccessInterface
  Success contains WriteTuplesResponseInterface, Failure contains Throwable
 

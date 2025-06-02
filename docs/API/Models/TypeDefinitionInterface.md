@@ -23,7 +23,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 
 #### Returns
-MetadataInterface|null
+MetadataInterface&#124;null
  The metadata, or null if not specified
 
 ### getRelations
@@ -37,7 +37,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 
 #### Returns
-TypeDefinitionRelationsInterface&lt;UsersetInterface&gt;|null
+TypeDefinitionRelationsInterface&lt;UsersetInterface&gt;&#124;null
 
 ### getType
 

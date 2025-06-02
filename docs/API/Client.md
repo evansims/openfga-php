@@ -41,12 +41,12 @@ Performs multiple authorization checks in a single batch request. This method al
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to check against |
-| `$model` | OpenFGA\Models\AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to check against |
+| `$model` | OpenFGA\Models\AuthorizationModelInterface&#124;string | The authorization model to use |
 | `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  The batch check results
 
 ### check
@@ -61,8 +61,8 @@ Checks if a user has a specific relationship with an object. Performs an authori
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to check against |
-| `$model` | OpenFGA\Models\AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to check against |
+| `$model` | OpenFGA\Models\AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$tupleKey` | OpenFGA\Models\TupleKeyInterface | The relationship to check |
 | `$trace` | ?bool | Whether to include a trace in the response |
 | `$context` | ?object | Additional context for the check |
@@ -70,7 +70,7 @@ Checks if a user has a specific relationship with an object. Performs an authori
 | `schemaVersion` | OpenFGA\Models\Enums\SchemaVersion |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains CheckResponseInterface, Failure contains Throwable
 
 ### createAuthorizationModel
@@ -85,13 +85,13 @@ Creates a new authorization model with the given type definitions and conditions
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to create the model in |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to create the model in |
 | `$typeDefinitions` | OpenFGA\Models\Collections\TypeDefinitionsInterface | The type definitions for the model |
 | `$conditions` | ?OpenFGA\Models\Collections\ConditionsInterface | The conditions for the model |
 | `name` | string |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### createStore
@@ -109,7 +109,7 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 | `store` | OpenFGA\Models\StoreInterface|string |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains CreateStoreResponseInterface, Failure contains Throwable
 
 ### deleteStore
@@ -127,7 +127,7 @@ Deletes a store.
 | `dsl` | string |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains DeleteStoreResponseInterface, Failure contains Throwable
 
 ### dsl
@@ -145,7 +145,7 @@ Parses a DSL string and returns an AuthorizationModel. The Domain Specific Langu
 | `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains AuthorizationModelInterface, Failure contains Throwable
 
 ### expand
@@ -160,14 +160,14 @@ Expands a relationship tuple to show all users that have the relationship.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store containing the tuple |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store containing the tuple |
 | `$tupleKey` | OpenFGA\Models\TupleKeyInterface | The tuple to expand |
-| `$model` | ?OpenFGA\Models\AuthorizationModelInterface|string|null | The authorization model to use |
+| `$model` | ?OpenFGA\Models\AuthorizationModelInterface&#124;string&#124;null | The authorization model to use |
 | `$contextualTuples` | ?OpenFGA\Models\Collections\TupleKeysInterface | Additional tuples for contextual evaluation |
 | `model` | OpenFGA\Models\AuthorizationModelInterface|string |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ExpandResponseInterface, Failure contains Throwable
 
 ### getAuthorizationModel
@@ -182,11 +182,11 @@ Retrieves an authorization model by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store containing the model |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store containing the model |
 | `store` | OpenFGA\Models\StoreInterface|string |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
 
 ### getLanguage
@@ -244,7 +244,7 @@ Retrieves store details by ID.
 | `pageSize` | ?int |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains GetStoreResponseInterface, Failure contains Throwable
 
 ### listAuthorizationModels
@@ -259,12 +259,12 @@ Lists authorization models in a store with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to list models from |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to list models from |
 | `$continuationToken` | ?string | Token for pagination |
 | `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
 
 ### listObjects
@@ -279,8 +279,8 @@ Lists objects that have a specific relationship with a user.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to query |
-| `$model` | OpenFGA\Models\AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to query |
+| `$model` | OpenFGA\Models\AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$type` | string | The type of objects to list |
 | `$relation` | string | The relationship to check |
 | `$user` | string | The user to check relationships for |
@@ -289,7 +289,7 @@ Lists objects that have a specific relationship with a user.
 | `pageSize` | ?int |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ListObjectsResponseInterface, Failure contains Throwable
 
 ### listStores
@@ -308,7 +308,7 @@ Lists all stores with pagination.
 | `startTime` | ?DateTimeImmutable |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ListStoresResponseInterface, Failure contains Throwable
 
 ### listTupleChanges
@@ -323,14 +323,14 @@ Lists changes to relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to list changes for |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to list changes for |
 | `$continuationToken` | ?string | Token for pagination |
 | `$pageSize` | ?int |  |
 | `$type` | ?string | Filter changes by type |
 | `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ListTupleChangesResponseInterface, Failure contains Throwable
 
 ### listUsers
@@ -345,8 +345,8 @@ Lists users that have a specific relationship with an object.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to query |
-| `$model` | OpenFGA\Models\AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to query |
+| `$model` | OpenFGA\Models\AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$object` | string | The object to check relationships for |
 | `$relation` | string | The relationship to check |
 | `$userFilters` | OpenFGA\Models\Collections\UserTypeFiltersInterface | Filters for user types to include |
@@ -355,7 +355,7 @@ Lists users that have a specific relationship with an object.
 | `model` | OpenFGA\Models\AuthorizationModelInterface|string |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ListUsersResponseInterface, Failure contains Throwable
 
 ### readAssertions
@@ -370,11 +370,11 @@ Retrieves assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store containing the model |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store containing the model |
 | `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ReadAssertionsResponseInterface, Failure contains Throwable
 
 ### readTuples
@@ -389,14 +389,14 @@ Reads relationship tuples from a store with optional filtering and pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to read from |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to read from |
 | `$tupleKey` | OpenFGA\Models\TupleKeyInterface | Filter tuples by this key (return all if null) |
 | `$continuationToken` | ?string | Token for pagination |
 | `$pageSize` | ?int |  |
 | `consistency` | ?OpenFGA\Models\Enums\Consistency |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains ReadTuplesResponseInterface, Failure contains Throwable
 
 ### streamedListObjects
@@ -411,8 +411,8 @@ Streams objects that a user has a specific relationship with. Returns all object
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to query |
-| `$model` | OpenFGA\Models\AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to query |
+| `$model` | OpenFGA\Models\AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$type` | string | The object type to find |
 | `$relation` | string | The relationship to check |
 | `$user` | string | The user to check relationships for |
@@ -421,7 +421,7 @@ Streams objects that a user has a specific relationship with. Returns all object
 | `assertions` | OpenFGA\Models\Collections\AssertionsInterface |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
 
 ### writeAssertions
@@ -436,12 +436,12 @@ Creates or updates assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store containing the model |
-| `$model` | OpenFGA\Models\AuthorizationModelInterface|string | The model to update assertions for |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store containing the model |
+| `$model` | OpenFGA\Models\AuthorizationModelInterface&#124;string | The model to update assertions for |
 | `deletes` | ?OpenFGA\Models\Collections\TupleKeysInterface |  |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains WriteAssertionsResponseInterface, Failure contains Throwable
 
 ### writeTuples
@@ -456,12 +456,12 @@ Writes or deletes relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | OpenFGA\Models\StoreInterface|string | The store to modify |
-| `$model` | OpenFGA\Models\AuthorizationModelInterface|string | The authorization model to use |
+| `$store` | OpenFGA\Models\StoreInterface&#124;string | The store to modify |
+| `$model` | OpenFGA\Models\AuthorizationModelInterface&#124;string | The authorization model to use |
 | `$writes` | ?OpenFGA\Models\Collections\TupleKeysInterface | Tuples to write (create or update) |
 | `$deletes` | ?OpenFGA\Models\Collections\TupleKeysInterface | Tuples to delete |
 
 #### Returns
-OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+OpenFGA\Results\FailureInterface&#124;OpenFGA\Results\SuccessInterface
  Success contains WriteTuplesResponseInterface, Failure contains Throwable
 

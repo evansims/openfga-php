@@ -119,7 +119,7 @@ Get the specific error category for this exception. Returns the error classifica
 
 
 #### Returns
-AuthenticationError|ClientError|ConfigurationError|NetworkError|SerializationError
+AuthenticationError&#124;ClientError&#124;ConfigurationError&#124;NetworkError&#124;SerializationError
  The error category enum indicating the type of failure
 
 ### previous
@@ -133,7 +133,7 @@ Get the previous exception that caused this one. Provides access to the exceptio
 
 
 #### Returns
-Throwable|null
+Throwable&#124;null
  The previous exception in the chain, or null if this is the root exception
 
 ### request
@@ -147,7 +147,7 @@ Get the HTTP request associated with this exception. Returns the PSR-7 HTTP requ
 
 
 #### Returns
-RequestInterface|null
+RequestInterface&#124;null
  The PSR-7 HTTP request that triggered the exception, or null if not applicable
 
 ### response
@@ -161,6 +161,6 @@ Get the HTTP response associated with this exception. Returns the PSR-7 HTTP res
 
 
 #### Returns
-ResponseInterface|null
+ResponseInterface&#124;null
  The PSR-7 HTTP response received from the API, or null if no response was received
 
