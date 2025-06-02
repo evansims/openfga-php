@@ -19,7 +19,7 @@ Represents a leaf node in authorization evaluation trees containing specific use
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Leaf&#039;` |  |
+| `OPENAPI_MODEL` | `'Leaf'` |  |
 
 
 ## Methods

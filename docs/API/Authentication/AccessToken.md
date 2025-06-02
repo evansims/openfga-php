@@ -92,7 +92,11 @@ bool
 *<small>Implements Authentication\AccessTokenInterface</small>*  
 
 ```php
-public function fromResponse(ResponseInterface $response, string|null $expectedIssuer = NULL, string|null $expectedAudience = NULL): self
+public function fromResponse(
+    ResponseInterface $response,
+    string|null $expectedIssuer = NULL,
+    string|null $expectedAudience = NULL,
+): self
 ```
 
 Create an access token instance from an OAuth server response. This factory method parses an HTTP response from an OAuth authorization server and extracts the access token information. The response should contain a JSON payload with the standard OAuth 2.0 token response fields including access_token, expires_in, and optionally scope. If the access token is a JWT and expectedIssuer/expectedAudience are provided, the JWT is validated to ensure the issuer and audience claims match the expected values from the OAuth client configuration.

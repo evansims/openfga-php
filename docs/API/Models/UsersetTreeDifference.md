@@ -19,7 +19,7 @@ Represents a difference operation node in authorization evaluation trees. Userse
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;UsersetTree.Difference&#039;` |  |
+| `OPENAPI_MODEL` | `'UsersetTree.Difference'` |  |
 
 
 ## Methods

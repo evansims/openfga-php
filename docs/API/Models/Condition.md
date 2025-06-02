@@ -20,7 +20,7 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Condition&#039;` |  |
+| `OPENAPI_MODEL` | `'Condition'` |  |
 
 
 ## Methods

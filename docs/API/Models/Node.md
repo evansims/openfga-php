@@ -20,7 +20,7 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Node&#039;` |  |
+| `OPENAPI_MODEL` | `'Node'` |  |
 
 
 ## Methods

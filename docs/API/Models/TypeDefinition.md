@@ -20,7 +20,7 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;TypeDefinition&#039;` |  |
+| `OPENAPI_MODEL` | `'TypeDefinition'` |  |
 
 
 ## Methods

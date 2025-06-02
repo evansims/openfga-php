@@ -19,7 +19,7 @@ Represents a set difference operation between two usersets. In authorization mod
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;v1.Difference&#039;` |  |
+| `OPENAPI_MODEL` | `'v1.Difference'` |  |
 
 
 ## Methods

@@ -87,7 +87,9 @@ Messages
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*  
 
 ```php
-public function forError(AuthenticationError|ClientError|ConfigurationError|NetworkError|SerializationError $error): Messages
+public function forError(
+    AuthenticationError|ClientError|ConfigurationError|NetworkError|SerializationError $error,
+): Messages
 ```
 
 Get the default message key for any supported error type. Generic method that accepts any error enum type and routes it to the appropriate specific method. This provides a unified interface for error message lookup when the specific error type is not known at compile time.

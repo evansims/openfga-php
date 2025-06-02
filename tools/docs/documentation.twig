@@ -30,7 +30,7 @@
 | Name | Value | Description |
 |------|-------|-------------|
 {% for constant in constants %}
-| `{{ constant.name }}` | `{{ constant.value }}` | {{ constant.description }} |
+| `{{ constant.name }}` | `{{ constant.value|raw }}` | {{ constant.description }} |
 {% endfor %}
 {% endif %}
 

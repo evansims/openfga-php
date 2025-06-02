@@ -29,6 +29,27 @@ describe('Documentation Generator', function (): void {
         expect($signature)
             ->toContain("= 'baz'")
             ->and($signature)->toContain('array')
-            ->and($signature)->toContain('0 => 1');
+            ->and($signature)->toContain('[1, 2]');
+    });
+
+    test('method signature prints associative arrays with key => value syntax', function (): void {
+        final class DocumentationGeneratorTestAssoc
+        {
+            public function foo(array $config = ['key' => 'value', 'enabled' => true]): void
+            {
+            }
+        }
+
+        $generator = new DocumentationGenerator(__DIR__, __DIR__);
+        $method = (new ReflectionClass(DocumentationGeneratorTestAssoc::class))->getMethod('foo');
+
+        $signatureMethod = (new ReflectionClass(DocumentationGenerator::class))
+            ->getMethod('getMethodSignature');
+        $signatureMethod->setAccessible(true);
+        $signature = $signatureMethod->invoke($generator, $method);
+
+        expect($signature)
+            ->toContain("'key' => 'value'")
+            ->and($signature)->toContain("'enabled' => true");
     });
 });

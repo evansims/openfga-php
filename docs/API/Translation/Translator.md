@@ -102,7 +102,12 @@ void
 *<small>Implements Translation\TranslatorInterface</small>*  
 
 ```php
-public function addResource(string $format, string $resource, string $locale, string $domain = 'messages'): void
+public function addResource(
+    string $format,
+    string $resource,
+    string $locale,
+    string $domain = 'messages',
+): void
 ```
 
 Add a translation resource to the translator. Registers a translation file with the translator for a specific locale and domain. This allows the translator to load and use translations from various file formats and organize them by locale and domain for better maintainability.

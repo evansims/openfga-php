@@ -19,7 +19,7 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;UsersetTree&#039;` |  |
+| `OPENAPI_MODEL` | `'UsersetTree'` |  |
 
 
 ## Methods

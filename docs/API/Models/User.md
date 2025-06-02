@@ -19,7 +19,7 @@ Represents a user or user specification in authorization contexts. A User can re
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;User&#039;` |  |
+| `OPENAPI_MODEL` | `'User'` |  |
 
 
 ## Methods

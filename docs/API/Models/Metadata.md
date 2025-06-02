@@ -19,7 +19,7 @@ Contains metadata information about type definitions in your authorization model
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Metadata&#039;` |  |
+| `OPENAPI_MODEL` | `'Metadata'` |  |
 
 
 ## Methods

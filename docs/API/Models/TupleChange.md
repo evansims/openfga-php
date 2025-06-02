@@ -20,7 +20,7 @@ Represents a change to a relationship tuple in your authorization store. When yo
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;TupleChange&#039;` |  |
+| `OPENAPI_MODEL` | `'TupleChange'` |  |
 
 
 ## Methods

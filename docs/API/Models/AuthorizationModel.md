@@ -20,7 +20,7 @@ Defines the authorization rules and relationships for your application. An Autho
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;AuthorizationModel&#039;` |  |
+| `OPENAPI_MODEL` | `'AuthorizationModel'` |  |
 
 
 ## Methods

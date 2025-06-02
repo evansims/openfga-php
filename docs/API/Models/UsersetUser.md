@@ -19,7 +19,7 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;UsersetUser&#039;` |  |
+| `OPENAPI_MODEL` | `'UsersetUser'` |  |
 
 
 ## Methods

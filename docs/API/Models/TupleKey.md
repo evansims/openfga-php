@@ -20,7 +20,7 @@ Represents a relationship tuple key defining a connection between user, relation
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;TupleKey&#039;` |  |
+| `OPENAPI_MODEL` | `'TupleKey'` |  |
 
 
 ## Methods

@@ -19,7 +19,7 @@ Represents a reference to a specific relation on an object. In authorization mod
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;ObjectRelation&#039;` |  |
+| `OPENAPI_MODEL` | `'ObjectRelation'` |  |
 
 
 ## Methods

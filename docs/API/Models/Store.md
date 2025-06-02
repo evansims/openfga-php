@@ -20,7 +20,7 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Store&#039;` |  |
+| `OPENAPI_MODEL` | `'Store'` |  |
 
 
 ## Methods

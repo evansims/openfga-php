@@ -19,7 +19,7 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;AssertionTupleKey&#039;` |  |
+| `OPENAPI_MODEL` | `'AssertionTupleKey'` |  |
 
 
 ## Methods

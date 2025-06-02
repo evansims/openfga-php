@@ -19,7 +19,7 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Assertion&#039;` |  |
+| `OPENAPI_MODEL` | `'Assertion'` |  |
 
 
 ## Methods

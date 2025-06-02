@@ -20,7 +20,7 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Computed&#039;` |  |
+| `OPENAPI_MODEL` | `'Computed'` |  |
 
 
 ## Methods

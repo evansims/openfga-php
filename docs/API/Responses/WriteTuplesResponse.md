@@ -26,7 +26,11 @@ Response confirming successful writing of relationship tuples. This response is 
 *<small>Implements Responses\WriteTuplesResponseInterface</small>*  
 
 ```php
-public function fromResponse(HttpResponseInterface $response, HttpRequestInterface $request, SchemaValidator $validator): static
+public function fromResponse(
+    HttpResponseInterface $response,
+    HttpRequestInterface $request,
+    SchemaValidator $validator,
+): static
 ```
 
 Create a response instance from an HTTP response. This method transforms a raw HTTP response from the OpenFGA API into a structured response object, validating and parsing the response data according to the expected schema. It handles both successful responses by parsing and validating the data, and error responses by throwing appropriate exceptions.

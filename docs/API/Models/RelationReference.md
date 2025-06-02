@@ -20,7 +20,7 @@ Represents a reference to a specific relation with optional conditions. A Relati
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;RelationReference&#039;` |  |
+| `OPENAPI_MODEL` | `'RelationReference'` |  |
 
 
 ## Methods

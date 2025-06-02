@@ -504,12 +504,29 @@ class DocumentationGenerator
         $returnType = $this->getReturnType($method, $namespace, false);
         $returnTypeStr = $returnType ? ': ' . $returnType : '';
 
-        return sprintf(
+        // For multi-line formatting, check if the signature would be long
+        $singleLineSignature = sprintf(
             'public function %s(%s)%s',
             $method->getName(),
             implode(', ', $params),
             $returnTypeStr
         );
+        
+        // If signature is longer than 120 characters or has more than 3 parameters, use multi-line format
+        if (strlen($singleLineSignature) > 120 || count($params) > 3) {
+            if (empty($params)) {
+                return sprintf('public function %s()%s', $method->getName(), $returnTypeStr);
+            }
+            
+            return sprintf(
+                "public function %s(\n    %s,\n)%s",
+                $method->getName(),
+                implode(",\n    ", $params),
+                $returnTypeStr
+            );
+        }
+        
+        return $singleLineSignature;
     }
 
     private function getParameterType(ReflectionParameter $param, string $namespace = 'OpenFGA', bool $withLinks = true, string $currentFilePath = ''): string

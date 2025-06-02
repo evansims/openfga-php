@@ -17,7 +17,7 @@ OpenFGA Client implementation for relationship-based access control operations. 
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `VERSION` | `&#039;1.2.0&#039;` | The version of the OpenFGA PHP SDK. |
+| `VERSION` | `'1.2.0'` | The version of the OpenFGA PHP SDK. |
 
 
 ## Methods
@@ -28,7 +28,11 @@ OpenFGA Client implementation for relationship-based access control operations. 
 
 
 ```php
-public function batchCheck(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, OpenFGA\Models\Collections\BatchCheckItemsInterface $checks): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function batchCheck(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    OpenFGA\Models\Collections\BatchCheckItemsInterface $checks,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Performs multiple authorization checks in a single batch request. This method allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information for each check.
@@ -83,7 +87,15 @@ if ($result->success()) {
 
 
 ```php
-public function check(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, OpenFGA\Models\TupleKeyInterface $tupleKey, ?bool $trace = NULL, ?object $context = NULL, ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL, ?OpenFGA\Models\Enums\Consistency $consistency = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function check(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    OpenFGA\Models\TupleKeyInterface $tupleKey,
+    ?bool $trace = NULL,
+    ?object $context = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Checks if a user has a specific relationship with an object. Performs an authorization check to determine if a user has a particular relationship with an object based on the configured authorization model. This is the core operation for making authorization decisions in OpenFGA.
@@ -140,7 +152,13 @@ $result = $client->check(
 
 
 ```php
-public function expand(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\TupleKeyInterface $tupleKey, ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL, ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL, ?OpenFGA\Models\Enums\Consistency $consistency = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function expand(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\TupleKeyInterface $tupleKey,
+    ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Expands a relationship tuple to show all users that have the relationship.
@@ -165,7 +183,12 @@ Expands a relationship tuple to show all users that have the relationship.
 
 
 ```php
-public function createAuthorizationModel(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\Collections\TypeDefinitionsInterface $typeDefinitions, ?OpenFGA\Models\Collections\ConditionsInterface $conditions = NULL, OpenFGA\Models\Enums\SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function createAuthorizationModel(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\Collections\TypeDefinitionsInterface $typeDefinitions,
+    ?OpenFGA\Models\Collections\ConditionsInterface $conditions = NULL,
+    OpenFGA\Models\Enums\SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Creates a new authorization model with the given type definitions and conditions. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
@@ -237,7 +260,9 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 
 
 ```php
-public function deleteStore(OpenFGA\Models\StoreInterface|string $store): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function deleteStore(
+    OpenFGA\Models\StoreInterface|string $store,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Deletes a store.
@@ -257,7 +282,10 @@ Deletes a store.
 
 
 ```php
-public function readAssertions(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function readAssertions(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Retrieves assertions for an authorization model.
@@ -278,7 +306,13 @@ Retrieves assertions for an authorization model.
 
 
 ```php
-public function readTuples(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\TupleKeyInterface $tupleKey, ?string $continuationToken = NULL, ?int $pageSize = NULL, ?OpenFGA\Models\Enums\Consistency $consistency = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function readTuples(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\TupleKeyInterface $tupleKey,
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Reads relationship tuples from a store with optional filtering and pagination.
@@ -302,7 +336,11 @@ Reads relationship tuples from a store with optional filtering and pagination.
 
 
 ```php
-public function writeAssertions(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, OpenFGA\Models\Collections\AssertionsInterface $assertions): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function writeAssertions(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    OpenFGA\Models\Collections\AssertionsInterface $assertions,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Creates or updates assertions for an authorization model.
@@ -324,7 +362,12 @@ Creates or updates assertions for an authorization model.
 
 
 ```php
-public function writeTuples(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, ?OpenFGA\Models\Collections\TupleKeysInterface $writes = NULL, ?OpenFGA\Models\Collections\TupleKeysInterface $deletes = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function writeTuples(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $writes = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $deletes = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Writes or deletes relationship tuples in a store.
@@ -388,7 +431,10 @@ $client->writeTuples(
 
 
 ```php
-public function getAuthorizationModel(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function getAuthorizationModel(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Retrieves an authorization model by ID.
@@ -455,7 +501,9 @@ Retrieves the last HTTP response received by the client.
 
 
 ```php
-public function getStore(OpenFGA\Models\StoreInterface|string $store): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function getStore(
+    OpenFGA\Models\StoreInterface|string $store,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Retrieves store details by ID.
@@ -475,7 +523,11 @@ Retrieves store details by ID.
 
 
 ```php
-public function listAuthorizationModels(OpenFGA\Models\StoreInterface|string $store, ?string $continuationToken = NULL, ?int $pageSize = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function listAuthorizationModels(
+    OpenFGA\Models\StoreInterface|string $store,
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Lists authorization models in a store with pagination.
@@ -497,7 +549,16 @@ Lists authorization models in a store with pagination.
 
 
 ```php
-public function listObjects(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, string $type, string $relation, string $user, ?object $context = NULL, ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL, ?OpenFGA\Models\Enums\Consistency $consistency = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function listObjects(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    string $type,
+    string $relation,
+    string $user,
+    ?object $context = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Lists objects that have a specific relationship with a user.
@@ -562,7 +623,10 @@ $result = $client->listObjects(
 
 
 ```php
-public function listStores(?string $continuationToken = NULL, ?int $pageSize = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function listStores(
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Lists all stores with pagination.
@@ -583,7 +647,13 @@ Lists all stores with pagination.
 
 
 ```php
-public function listTupleChanges(OpenFGA\Models\StoreInterface|string $store, ?string $continuationToken = NULL, ?int $pageSize = NULL, ?string $type = NULL, ?DateTimeImmutable $startTime = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function listTupleChanges(
+    OpenFGA\Models\StoreInterface|string $store,
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
+    ?string $type = NULL,
+    ?DateTimeImmutable $startTime = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Lists changes to relationship tuples in a store.
@@ -607,7 +677,16 @@ Lists changes to relationship tuples in a store.
 
 
 ```php
-public function listUsers(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, string $object, string $relation, OpenFGA\Models\Collections\UserTypeFiltersInterface $userFilters, ?object $context = NULL, ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL, ?OpenFGA\Models\Enums\Consistency $consistency = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function listUsers(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    string $object,
+    string $relation,
+    OpenFGA\Models\Collections\UserTypeFiltersInterface $userFilters,
+    ?object $context = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Lists users that have a specific relationship with an object.
@@ -675,7 +754,16 @@ $result = $client->listUsers(
 
 
 ```php
-public function streamedListObjects(OpenFGA\Models\StoreInterface|string $store, OpenFGA\Models\AuthorizationModelInterface|string $model, string $type, string $relation, string $user, ?object $context = NULL, ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL, ?OpenFGA\Models\Enums\Consistency $consistency = NULL): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function streamedListObjects(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    string $type,
+    string $relation,
+    string $user,
+    ?object $context = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
 
 Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.

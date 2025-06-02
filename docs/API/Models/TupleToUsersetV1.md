@@ -19,7 +19,7 @@ Represents a tuple-to-userset relationship that derives permissions from related
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;v1.TupleToUserset&#039;` |  |
+| `OPENAPI_MODEL` | `'v1.TupleToUserset'` |  |
 
 
 ## Methods

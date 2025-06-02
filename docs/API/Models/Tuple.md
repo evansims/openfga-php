@@ -20,7 +20,7 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Tuple&#039;` |  |
+| `OPENAPI_MODEL` | `'Tuple'` |  |
 
 
 ## Methods

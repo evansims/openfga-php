@@ -19,7 +19,7 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;NodeUnion&#039;` |  |
+| `OPENAPI_MODEL` | `'NodeUnion'` |  |
 
 
 ## Methods

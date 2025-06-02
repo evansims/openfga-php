@@ -43,7 +43,11 @@ string
 *<small>Implements Responses\StreamedListObjectsResponseInterface</small>*  
 
 ```php
-public function fromResponse(HttpResponseInterface $response, HttpRequestInterface $request, SchemaValidator $validator): Generator<int, StreamedListObjectsResponseInterface>
+public function fromResponse(
+    HttpResponseInterface $response,
+    HttpRequestInterface $request,
+    SchemaValidator $validator,
+): Generator<int, StreamedListObjectsResponseInterface>
 ```
 
 Create a streaming response from an HTTP response. Processes the streaming HTTP response and returns a Generator that yields individual object identifiers as they are received from the server.

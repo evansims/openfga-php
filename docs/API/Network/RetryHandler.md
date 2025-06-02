@@ -23,7 +23,11 @@ Advanced retry handler with exponential backoff, jitter, and circuit breaker int
 
 
 ```php
-public function executeWithRetry(callable $requestExecutor, Psr\Http\Message\RequestInterface $request, string $endpoint): Psr\Http\Message\ResponseInterface
+public function executeWithRetry(
+    callable $requestExecutor,
+    Psr\Http\Message\RequestInterface $request,
+    string $endpoint,
+): Psr\Http\Message\ResponseInterface
 ```
 
 Execute an HTTP request with automatic retry logic. Performs the HTTP request with intelligent retry behavior based on error type, server headers, and circuit breaker state. The method tracks attempt counts, calculates appropriate delays, and respects server-provided timing information. The implementation should: - Check circuit breaker state before attempting requests - Apply exponential backoff with jitter to prevent thundering herd - Respect server-provided timing headers (Retry-After, X-Rate-Limit-Reset) - Handle different error types with appropriate retry strategies - Consider request method idempotency for retry decisions - Track failures and successes with the circuit breaker

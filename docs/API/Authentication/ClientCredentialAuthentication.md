@@ -22,7 +22,9 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 
 
 ```php
-public function getAuthenticationRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): ?OpenFGA\Network\RequestContext
+public function getAuthenticationRequest(
+    Psr\Http\Message\StreamFactoryInterface $streamFactory,
+): ?OpenFGA\Network\RequestContext
 ```
 
 Get an authentication request context if this strategy requires token acquisition. Returns a RequestContext for making an authentication request (such as OAuth token request) if the strategy needs to obtain tokens dynamically. Returns null for strategies that don&#039;t require authentication requests (like pre-shared tokens).

@@ -22,7 +22,11 @@ OpenFGA Client Interface for relationship-based access control operations. This 
 
 
 ```php
-public function batchCheck(StoreInterface|string $store, AuthorizationModelInterface|string $model, BatchCheckItemsInterface $checks): FailureInterface|SuccessInterface
+public function batchCheck(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+    BatchCheckItemsInterface $checks,
+): FailureInterface|SuccessInterface
 ```
 
 Performs multiple authorization checks in a single batch request. This method allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information for each check.
@@ -77,7 +81,15 @@ if ($result->success()) {
 
 
 ```php
-public function check(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeyInterface $tupleKey, bool|null $trace = NULL, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
+public function check(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+    TupleKeyInterface $tupleKey,
+    bool|null $trace = NULL,
+    object|null $context = NULL,
+    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    Consistency|null $consistency = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Checks if a user has a specific relationship with an object. Performs an authorization check to determine if a user has a particular relationship with an object based on the configured authorization model. This is the core operation for making authorization decisions in OpenFGA.
@@ -134,7 +146,13 @@ $result = $client->check(
 
 
 ```php
-public function expand(StoreInterface|string $store, TupleKeyInterface $tupleKey, AuthorizationModelInterface|string|null $model = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
+public function expand(
+    StoreInterface|string $store,
+    TupleKeyInterface $tupleKey,
+    AuthorizationModelInterface|string|null $model = NULL,
+    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    Consistency|null $consistency = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Expands a relationship tuple to show all users that have the relationship.
@@ -159,7 +177,12 @@ Expands a relationship tuple to show all users that have the relationship.
 
 
 ```php
-public function createAuthorizationModel(StoreInterface|string $store, TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions, ConditionsInterface<ConditionInterface>|null $conditions = NULL, SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1): FailureInterface|SuccessInterface
+public function createAuthorizationModel(
+    StoreInterface|string $store,
+    TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions,
+    ConditionsInterface<ConditionInterface>|null $conditions = NULL,
+    SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1,
+): FailureInterface|SuccessInterface
 ```
 
 Creates a new authorization model with the given type definitions and conditions. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
@@ -251,7 +274,10 @@ Deletes a store.
 
 
 ```php
-public function readAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model): FailureInterface|SuccessInterface
+public function readAssertions(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+): FailureInterface|SuccessInterface
 ```
 
 Retrieves assertions for an authorization model.
@@ -272,7 +298,13 @@ Retrieves assertions for an authorization model.
 
 
 ```php
-public function readTuples(StoreInterface|string $store, TupleKeyInterface $tupleKey, string|null $continuationToken = NULL, ?int $pageSize = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
+public function readTuples(
+    StoreInterface|string $store,
+    TupleKeyInterface $tupleKey,
+    string|null $continuationToken = NULL,
+    ?int $pageSize = NULL,
+    Consistency|null $consistency = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Reads relationship tuples from a store with optional filtering and pagination.
@@ -296,7 +328,11 @@ Reads relationship tuples from a store with optional filtering and pagination.
 
 
 ```php
-public function writeAssertions(StoreInterface|string $store, AuthorizationModelInterface|string $model, AssertionsInterface<AssertionInterface> $assertions): FailureInterface|SuccessInterface
+public function writeAssertions(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+    AssertionsInterface<AssertionInterface> $assertions,
+): FailureInterface|SuccessInterface
 ```
 
 Creates or updates assertions for an authorization model.
@@ -318,7 +354,12 @@ Creates or updates assertions for an authorization model.
 
 
 ```php
-public function writeTuples(StoreInterface|string $store, AuthorizationModelInterface|string $model, TupleKeysInterface<TupleKeyInterface>|null $writes = NULL, TupleKeysInterface<TupleKeyInterface>|null $deletes = NULL): FailureInterface|SuccessInterface
+public function writeTuples(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+    TupleKeysInterface<TupleKeyInterface>|null $writes = NULL,
+    TupleKeysInterface<TupleKeyInterface>|null $deletes = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Writes or deletes relationship tuples in a store.
@@ -382,7 +423,10 @@ $client->writeTuples(
 
 
 ```php
-public function getAuthorizationModel(StoreInterface|string $store, AuthorizationModelInterface|string $model): FailureInterface|SuccessInterface
+public function getAuthorizationModel(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+): FailureInterface|SuccessInterface
 ```
 
 Retrieves an authorization model by ID.
@@ -453,7 +497,11 @@ Retrieves store details by ID.
 
 
 ```php
-public function listAuthorizationModels(StoreInterface|string $store, string|null $continuationToken = NULL, ?int $pageSize = NULL): FailureInterface|SuccessInterface
+public function listAuthorizationModels(
+    StoreInterface|string $store,
+    string|null $continuationToken = NULL,
+    ?int $pageSize = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Lists authorization models in a store with pagination.
@@ -475,7 +523,16 @@ Lists authorization models in a store with pagination.
 
 
 ```php
-public function listObjects(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $type, string $relation, string $user, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
+public function listObjects(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+    string $type,
+    string $relation,
+    string $user,
+    object|null $context = NULL,
+    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    Consistency|null $consistency = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Lists objects that have a specific relationship with a user.
@@ -540,7 +597,10 @@ $result = $client->listObjects(
 
 
 ```php
-public function listStores(string|null $continuationToken = NULL, ?int $pageSize = NULL): FailureInterface|SuccessInterface
+public function listStores(
+    string|null $continuationToken = NULL,
+    ?int $pageSize = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Lists all stores with pagination.
@@ -561,7 +621,13 @@ Lists all stores with pagination.
 
 
 ```php
-public function listTupleChanges(StoreInterface|string $store, string|null $continuationToken = NULL, ?int $pageSize = NULL, string|null $type = NULL, DateTimeImmutable|null $startTime = NULL): FailureInterface|SuccessInterface
+public function listTupleChanges(
+    StoreInterface|string $store,
+    string|null $continuationToken = NULL,
+    ?int $pageSize = NULL,
+    string|null $type = NULL,
+    DateTimeImmutable|null $startTime = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Lists changes to relationship tuples in a store.
@@ -585,7 +651,16 @@ Lists changes to relationship tuples in a store.
 
 
 ```php
-public function listUsers(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $object, string $relation, UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
+public function listUsers(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+    string $object,
+    string $relation,
+    UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters,
+    object|null $context = NULL,
+    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    Consistency|null $consistency = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Lists users that have a specific relationship with an object.
@@ -653,7 +728,16 @@ $result = $client->listUsers(
 
 
 ```php
-public function streamedListObjects(StoreInterface|string $store, AuthorizationModelInterface|string $model, string $type, string $relation, string $user, object|null $context = NULL, TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL, Consistency|null $consistency = NULL): FailureInterface|SuccessInterface
+public function streamedListObjects(
+    StoreInterface|string $store,
+    AuthorizationModelInterface|string $model,
+    string $type,
+    string $relation,
+    string $user,
+    object|null $context = NULL,
+    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    Consistency|null $consistency = NULL,
+): FailureInterface|SuccessInterface
 ```
 
 Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.

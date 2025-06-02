@@ -19,7 +19,7 @@ Represents source file information for debugging and development tools. SourceIn
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;SourceInfo&#039;` |  |
+| `OPENAPI_MODEL` | `'SourceInfo'` |  |
 
 
 ## Methods

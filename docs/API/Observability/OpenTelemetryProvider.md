@@ -21,7 +21,11 @@ OpenTelemetry implementation for OpenFGA SDK observability. This class provides 
 
 
 ```php
-public function endHttpRequest(mixed $span, ?Psr\Http\Message\ResponseInterface $response = NULL, ?Throwable $exception = NULL): void
+public function endHttpRequest(
+    mixed $span,
+    ?Psr\Http\Message\ResponseInterface $response = NULL,
+    ?Throwable $exception = NULL,
+): void
 ```
 
 End tracing for an HTTP request. Completes the HTTP request span, recording the response status and any errors that occurred. The span should include standard HTTP response attributes such as status code and response size.
@@ -42,7 +46,12 @@ void
 
 
 ```php
-public function endOperation(mixed $span, bool $success, ?Throwable $exception = NULL, array $attributes = []): void
+public function endOperation(
+    mixed $span,
+    bool $success,
+    ?Throwable $exception = NULL,
+    array $attributes = [],
+): void
 ```
 
 End tracing for an OpenFGA API operation. Completes the trace span started with startOperation(), recording the operation outcome and any relevant metrics. If an exception occurred during the operation, it should be recorded in the span.
@@ -64,7 +73,12 @@ void
 
 
 ```php
-public function recordAuthenticationEvent(string $event, bool $success, float $duration, array $attributes = []): void
+public function recordAuthenticationEvent(
+    string $event,
+    bool $success,
+    float $duration,
+    array $attributes = [],
+): void
 ```
 
 Record authentication events. Records metrics and traces related to authentication flows, including token acquisition, refresh operations, and authentication failures. This helps monitor authentication performance and troubleshoot auth issues.
@@ -86,7 +100,12 @@ void
 
 
 ```php
-public function recordCircuitBreakerState(string $endpoint, string $state, int $failures, float $failureRate): void
+public function recordCircuitBreakerState(
+    string $endpoint,
+    string $state,
+    int $failures,
+    float $failureRate,
+): void
 ```
 
 Record circuit breaker state changes. Records metrics about circuit breaker state transitions and failure rates. This helps monitor the health of individual API endpoints and the SDK&#039;s resilience mechanisms.
@@ -108,7 +127,13 @@ void
 
 
 ```php
-public function recordOperationMetrics(string $operation, float $duration, OpenFGA\Models\StoreInterface|string $store, ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL, array $attributes = []): void
+public function recordOperationMetrics(
+    string $operation,
+    float $duration,
+    OpenFGA\Models\StoreInterface|string $store,
+    ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL,
+    array $attributes = [],
+): void
 ```
 
 Record performance metrics for OpenFGA operations. Records timing and throughput metrics for OpenFGA API operations, allowing monitoring of operation latency and identifying performance bottlenecks or degradations.
@@ -131,7 +156,13 @@ void
 
 
 ```php
-public function recordRetryAttempt(string $endpoint, int $attempt, int $delayMs, string $outcome, ?Throwable $exception = NULL): void
+public function recordRetryAttempt(
+    string $endpoint,
+    int $attempt,
+    int $delayMs,
+    string $outcome,
+    ?Throwable $exception = NULL,
+): void
 ```
 
 Record retry attempt metrics. Records metrics about retry attempts, including the retry count, delay, and eventual outcome. This helps track the reliability and performance of API requests under various network conditions.
@@ -174,7 +205,12 @@ object
 
 
 ```php
-public function startOperation(string $operation, OpenFGA\Models\StoreInterface|string $store, ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL, array $attributes = []): object
+public function startOperation(
+    string $operation,
+    OpenFGA\Models\StoreInterface|string $store,
+    ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL,
+    array $attributes = [],
+): object
 ```
 
 Start tracing an OpenFGA API operation. Creates a new trace span for a high-level OpenFGA operation such as check, expand, or write operations. The span should include relevant attributes such as store ID, authorization model ID, and operation-specific metadata.

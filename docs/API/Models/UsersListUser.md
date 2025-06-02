@@ -20,7 +20,7 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;UsersListUser&#039;` |  |
+| `OPENAPI_MODEL` | `'UsersListUser'` |  |
 
 
 ## Methods

@@ -41,7 +41,12 @@ Build and register the schema. Creates a Schema instance with all defined proper
 
 
 ```php
-public function array(string $name, array $items, bool $required = false, mixed $default = NULL): self
+public function array(
+    string $name,
+    array $items,
+    bool $required = false,
+    mixed $default = NULL,
+): self
 ```
 
 Add an array property to the schema.
@@ -196,7 +201,13 @@ self
 
 
 ```php
-public function string(string $name, bool $required = false, ?string $format = NULL, ?array $enum = NULL, mixed $default = NULL): self
+public function string(
+    string $name,
+    bool $required = false,
+    ?string $format = NULL,
+    ?array $enum = NULL,
+    mixed $default = NULL,
+): self
 ```
 
 Add a string property to the schema.

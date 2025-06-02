@@ -19,7 +19,7 @@ Represents a userset specification for computing groups of users. A Userset defi
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;Userset&#039;` |  |
+| `OPENAPI_MODEL` | `'Userset'` |  |
 
 
 ## Methods

@@ -19,7 +19,7 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
-| `OPENAPI_MODEL` | `&#039;UserTypeFilter&#039;` |  |
+| `OPENAPI_MODEL` | `'UserTypeFilter'` |  |
 
 
 ## Methods
