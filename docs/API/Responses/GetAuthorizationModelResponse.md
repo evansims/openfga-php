@@ -35,7 +35,7 @@ Get the retrieved authorization model. Returns the complete authorization model 
 
 
 #### Returns
-?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; null
  The authorization model, or null if not found
 
 ### Model Management

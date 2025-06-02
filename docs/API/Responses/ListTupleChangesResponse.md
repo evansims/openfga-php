@@ -51,7 +51,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-?string
+string &#124; null
  The continuation token for fetching more results, or null if no more pages exist
 
 ### Model Management

@@ -179,7 +179,7 @@ Extracts the value from the result or applies a transformation. Without a callba
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | ?callable |  |
+| `$fn` | callable &#124; null |  |
 
 #### Returns
 mixed

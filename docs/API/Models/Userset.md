@@ -39,7 +39,7 @@ Get the computed userset specification for this userset. A computed userset defi
 
 
 #### Returns
-?[ObjectRelationInterface](ObjectRelationInterface.md)
+[ObjectRelationInterface](ObjectRelationInterface.md) &#124; null
  The computed userset specification, or null if not used
 
 #### getDifference
@@ -55,7 +55,7 @@ Get the difference operation specification for this userset. A difference operat
 
 
 #### Returns
-?[DifferenceV1Interface](DifferenceV1Interface.md)
+[DifferenceV1Interface](DifferenceV1Interface.md) &#124; null
  The difference operation specification, or null if not used
 
 #### getDirect
@@ -71,7 +71,7 @@ Get the direct userset value for this userset. A direct userset represents an im
 
 
 #### Returns
-?object
+object &#124; null
  The direct userset value, or null if not used
 
 #### getIntersection
@@ -87,7 +87,7 @@ Get the intersection operation specification for this userset. An intersection o
 
 
 #### Returns
-?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+[UsersetsInterface](Models/Collections/UsersetsInterface.md) &#124; null
  The collection of usersets to intersect, or null if not used
 
 #### getTupleToUserset
@@ -103,7 +103,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 
 
 #### Returns
-?[TupleToUsersetV1Interface](TupleToUsersetV1Interface.md)
+[TupleToUsersetV1Interface](TupleToUsersetV1Interface.md) &#124; null
  The tuple-to-userset operation specification, or null if not used
 
 #### getUnion
@@ -119,7 +119,7 @@ Get the union operation specification for this userset. A union operation repres
 
 
 #### Returns
-?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+[UsersetsInterface](Models/Collections/UsersetsInterface.md) &#124; null
  The collection of usersets to unite, or null if not used
 
 ### Model Management

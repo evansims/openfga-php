@@ -33,7 +33,7 @@ Get the consistency requirement for this request.
 
 
 #### Returns
-Consistency &#124; null
+[Consistency](Models/Enums/Consistency.md) &#124; null
  The consistency requirement, or null if not specified
 
 #### getContext

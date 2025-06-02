@@ -39,7 +39,7 @@ Get the user types that can be directly related through this relation. This defi
 
 
 #### Returns
-?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
+[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md) &#124; null
  The directly related user types, or null if not specified
 
 #### getModule
@@ -55,7 +55,7 @@ Get the optional module name for organization. This provides organizational info
 
 
 #### Returns
-?string
+string &#124; null
  The module name, or null if not specified
 
 #### getSourceInfo
@@ -71,7 +71,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 
 #### Returns
-?[SourceInfoInterface](SourceInfoInterface.md)
+[SourceInfoInterface](SourceInfoInterface.md) &#124; null
  The source file information, or null if not available
 
 ### Model Management

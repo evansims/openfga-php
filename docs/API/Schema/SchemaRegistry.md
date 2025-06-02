@@ -60,7 +60,7 @@ Retrieve a registered schema by class name.
 | `$className` | string | The fully qualified class name |
 
 #### Returns
-?[Schema](Schema.md)
+[Schema](Schema.md) &#124; null
 
 ### Utility
 #### register

@@ -114,11 +114,11 @@ class DocumentationGenerator
 
         $namespace = $namespaceMatches[1];
 
-        // Look for either class or interface definition at the beginning of a line
+        // Look for class, interface, or enum definition at the beginning of a line
         // This regex ensures we match actual declarations, not text within docblocks
         // Supports all PHP class modifiers: abstract, final, readonly in any order
-        if (preg_match('/^\s*(?:(?:abstract|final|readonly)\s+)*(class|interface)\s+(\w+)/m', $content, $matches)) {
-            $type = $matches[1]; // 'class' or 'interface'
+        if (preg_match('/^\s*(?:(?:abstract|final|readonly)\s+)*(class|interface|enum)\s+(\w+)/m', $content, $matches)) {
+            $type = $matches[1]; // 'class', 'interface', or 'enum'
             $name = $matches[2];
             $className = $namespace . '\\' . $name;
             echo "[DEBUG] Found $type: $className in $file\n";
@@ -126,7 +126,7 @@ class DocumentationGenerator
             return $className;
         }
 
-        echo "[DEBUG] No class or interface found in file: $file\n";
+        echo "[DEBUG] No class, interface, or enum found in file: $file\n";
         $cache[$file] = null;
         return null;
     }
@@ -158,9 +158,10 @@ class DocumentationGenerator
             try {
                 $reflection = new ReflectionClass($className);
                 $isInterface = $reflection->isInterface();
+                $isEnum = $reflection->isEnum();
 
-                // Skip abstract classes that are not interfaces
-                if ($reflection->isAbstract() && !$isInterface) {
+                // Skip abstract classes that are not interfaces or enums
+                if ($reflection->isAbstract() && !$isInterface && !$isEnum) {
                     $skippedCount++;
                     continue;
                 }
@@ -169,12 +170,15 @@ class DocumentationGenerator
                     $interfaceCount++;
                     $processedInterfaces++;
                     echo "Generating interface: $className ($processedInterfaces/$totalInterfaces)\n";
+                } elseif ($isEnum) {
+                    $classCount++;
+                    echo "Generating enum: $className\n";
                 } else {
                     $classCount++;
                     echo "Generating class: $className\n";
                 }
 
-                $this->generateClassDocumentation($className, $file, $isInterface);
+                $this->generateClassDocumentation($className, $file, $isInterface, $isEnum);
 
             } catch (\Exception $e) {
                 echo "Error processing $className: " . $e->getMessage() . "\n";
@@ -184,12 +188,12 @@ class DocumentationGenerator
         echo "Documentation generation complete. Generated $classCount classes, $interfaceCount interfaces, and skipped $skippedCount abstract classes.\n";
     }
 
-    private function generateClassDocumentation(string $className, string $file, bool $isInterface = false): void
+    private function generateClassDocumentation(string $className, string $file, bool $isInterface = false, bool $isEnum = false): void
     {
         $reflection = new ReflectionClass($className);
 
-        // Skip abstract classes (but not interfaces)
-        if ($reflection->isAbstract() && !$isInterface) {
+        // Skip abstract classes (but not interfaces or enums)
+        if ($reflection->isAbstract() && !$isInterface && !$isEnum) {
             return;
         }
 
@@ -202,6 +206,7 @@ class DocumentationGenerator
             'className' => $reflection->getShortName(),
             'namespace' => $reflection->getNamespaceName(),
             'isInterface' => $isInterface,
+            'isEnum' => $isEnum,
             'classDescription' => $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
             'sourceFile' => $this->getSourceFileLink($file),
             'interfaces' => array_map(function($interface) use ($reflection, $currentFilePath) {
@@ -209,6 +214,7 @@ class DocumentationGenerator
             }, $reflection->getInterfaces()),
             'methods' => [],
             'constants' => [],
+            'cases' => [],
         ];
 
         // Process Constants if it's not an interface
@@ -225,13 +231,30 @@ class DocumentationGenerator
             }
         }
 
-        // Get interface methods documentation if this is a class (not an interface)
+        // Process Enum Cases if it's an enum
+        if ($isEnum) {
+            $reflectionEnum = new \ReflectionEnum($className);
+            $isBacked = $reflectionEnum->isBacked();
+            foreach ($reflectionEnum->getCases() as $case) {
+                $value = null;
+                if ($isBacked && $case instanceof \ReflectionEnumBackedCase) {
+                    $value = $case->getBackingValue();
+                }
+                $classData['cases'][] = [
+                    'name' => $case->getName(),
+                    'value' => $value,
+                    'description' => $this->extractDescriptionFromDocComment($case->getDocComment() ?: ''),
+                ];
+            }
+        }
+
+        // Get interface methods documentation if this is a class (not an interface or enum)
         $interfaceMethods = [];
-        if (!$isInterface) {
+        if (!$isInterface && !$isEnum) {
             $interfaceMethods = $this->getInterfaceMethodsDocumentation($reflection, $currentFilePath);
         }
 
-        // Process methods
+        // Process methods (skip for enums unless they have custom methods)
         foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             if ($method->isDestructor() || $method->isStatic()) { // Allow constructors
                 continue;
@@ -659,7 +682,8 @@ class DocumentationGenerator
         if (in_array($lowerType, array_map('strtolower', $builtInTypes), true)) {
             $result = $type . $genericSuffix;
             if ($isArray) $result .= '[]';
-            return ($isNullable ? '?' : '') . $result;
+            if ($isNullable) $result .= ' | null';
+            return $result;
         }
 
         // Check if it's a class in our SDK
@@ -671,6 +695,10 @@ class DocumentationGenerator
         // Handle fully qualified class names
         if (str_starts_with($type, 'OpenFGA\\')) {
             $isInternalClass = array_key_exists($type, $this->classMap);
+            if (!$isInternalClass && str_contains($type, 'Consistency')) {
+                echo "[DEBUG] Enum linking issue: type='$type', found_in_classmap=" . ($isInternalClass ? 'yes' : 'no') . "\n";
+                echo "[DEBUG] Available in classMap: " . implode(', ', array_keys(array_filter($this->classMap, fn($k) => str_contains($k, 'Consistency'), ARRAY_FILTER_USE_KEY))) . "\n";
+            }
             $relativePath = str_replace('OpenFGA\\', '', $type);
             $relativePath = str_replace('\\', '/', $relativePath);
             $displayName = substr($type, strrpos($type, '\\') + 1);
@@ -748,7 +776,8 @@ class DocumentationGenerator
         // Add back generic suffix, array brackets, and nullable
         $result .= $genericSuffix;
         if ($isArray) $result .= '[]';
-        return ($isNullable ? '?' : '') . $result;
+        if ($isNullable) $result .= ' | null';
+        return $result;
     }
 
     private function extractDescriptionFromDocComment(string $docComment): string

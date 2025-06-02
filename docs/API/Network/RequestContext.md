@@ -33,7 +33,7 @@ Get the request body stream. Returns the PSR-7 stream containing the request bod
 
 
 #### Returns
-?Psr\Http\Message\StreamInterface
+Psr\Http\Message\StreamInterface &#124; null
  The request body stream containing JSON data, or null for operations without body content
 
 #### getHeaders
@@ -65,7 +65,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 
 #### Returns
-RequestMethod
+[RequestMethod](RequestMethod.md)
  The HTTP method enum value indicating the request type
 
 #### getUrl

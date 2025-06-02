@@ -40,7 +40,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 
 #### Returns
-?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+[ConditionsInterface](Models/Collections/ConditionsInterface.md) &#124; null
  The collection of reusable conditions defined in this model, or null if no conditions are defined
 
 #### getId
@@ -72,7 +72,7 @@ Get the schema version of this authorization model. The schema version indicates
 
 
 #### Returns
-SchemaVersion
+[SchemaVersion](Models/Enums/SchemaVersion.md)
  The schema version enumeration indicating the model format specification
 
 #### getTypeDefinitions

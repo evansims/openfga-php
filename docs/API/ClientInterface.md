@@ -136,7 +136,7 @@ $result = $client->check(
 | `$trace` | bool &#124; null | Whether to include a trace in the response |
 | `$context` | object &#124; null | Additional context for the check |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency &#124; null | Override the default consistency level |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -166,7 +166,7 @@ Expands a relationship tuple to show all users that have the relationship.
 | `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | The tuple to expand |
 | `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string &#124; null | The authorization model to use |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency &#124; null | Override the default consistency level |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -224,7 +224,7 @@ if ($result->success()) {
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to create the model in |
 | `$typeDefinitions` | [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)&lt;[TypeDefinitionInterface](Models/TypeDefinitionInterface.md)&gt; | The type definitions for the model |
 | `$conditions` | [ConditionsInterface](Models/Collections/ConditionsInterface.md)&lt;[ConditionInterface](Models/ConditionInterface.md)&gt; &#124; null | The conditions for the model |
-| `$schemaVersion` | SchemaVersion | The schema version to use (default: 1.1) |
+| `$schemaVersion` | [SchemaVersion](Models/Enums/SchemaVersion.md) | The schema version to use (default: 1.1) |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -317,8 +317,8 @@ Reads relationship tuples from a store with optional filtering and pagination.
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to read from |
 | `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | Filter tuples by this key (return all if null) |
 | `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | ?int | Maximum number of tuples to return |
-| `$consistency` | Consistency &#124; null | Override the default consistency level |
+| `$pageSize` | int &#124; null | Maximum number of tuples to return |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -456,7 +456,7 @@ Retrieves the last HTTP request made by the client.
 
 
 #### Returns
-?Psr\Http\Message\RequestInterface
+Psr\Http\Message\RequestInterface &#124; null
 
 #### getLastResponse
 
@@ -471,7 +471,7 @@ Retrieves the last HTTP response received by the client.
 
 
 #### Returns
-?Psr\Http\Message\ResponseInterface
+Psr\Http\Message\ResponseInterface &#124; null
 
 #### getStore
 
@@ -513,7 +513,7 @@ Lists authorization models in a store with pagination.
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to list models from |
 | `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | ?int | Maximum number of models to return |
+| `$pageSize` | int &#124; null | Maximum number of models to return |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -587,7 +587,7 @@ $result = $client->listObjects(
 | `$user` | string | The user to check relationships for |
 | `$context` | object &#124; null | Additional context for evaluation |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency &#124; null | Override the default consistency level |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -611,7 +611,7 @@ Lists all stores with pagination.
 | Name | Type | Description |
 |------|------|-------------|
 | `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | ?int | Maximum number of stores to return |
+| `$pageSize` | int &#124; null | Maximum number of stores to return |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -639,7 +639,7 @@ Lists changes to relationship tuples in a store.
 |------|------|-------------|
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to list changes for |
 | `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | ?int | Maximum number of changes to return |
+| `$pageSize` | int &#124; null | Maximum number of changes to return |
 | `$type` | string &#124; null | Filter changes by type |
 | `$startTime` | DateTimeImmutable &#124; null | Only include changes at or after this time (inclusive) |
 
@@ -718,7 +718,7 @@ $result = $client->listUsers(
 | `$userFilters` | [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)&lt;[UserTypeFilterInterface](Models/UserTypeFilterInterface.md)&gt; | Filters for user types to include |
 | `$context` | object &#124; null | Additional context for evaluation |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency &#124; null | Override the default consistency level |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
@@ -754,7 +754,7 @@ Streams objects that a user has a specific relationship with. Returns all object
 | `$user` | string | The user to check relationships for |
 | `$context` | object &#124; null | Additional context for evaluation |
 | `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | Consistency &#124; null | Override the default consistency level |
+| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
 
 #### Returns
 [FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)

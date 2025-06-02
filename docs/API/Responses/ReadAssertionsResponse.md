@@ -35,7 +35,7 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 
 #### Returns
-?[AssertionsInterface](Models/Collections/AssertionsInterface.md)
+[AssertionsInterface](Models/Collections/AssertionsInterface.md) &#124; null
  The collection of assertions, or null if no assertions are defined
 
 #### getModel

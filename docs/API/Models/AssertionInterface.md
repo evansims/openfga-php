@@ -34,7 +34,7 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 
 
 #### Returns
-?array
+array &#124; null
 
 #### getContextualTuples
 
@@ -49,7 +49,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
 
 #### getExpectation
 

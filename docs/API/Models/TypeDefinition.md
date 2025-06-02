@@ -40,7 +40,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 
 #### Returns
-?[MetadataInterface](MetadataInterface.md)
+[MetadataInterface](MetadataInterface.md) &#124; null
  The metadata, or null if not specified
 
 #### getRelations
@@ -56,7 +56,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 
 #### Returns
-?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
+[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md) &#124; null
 
 #### getType
 

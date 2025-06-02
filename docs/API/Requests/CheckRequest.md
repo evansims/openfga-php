@@ -50,7 +50,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 
 #### Returns
-?Consistency
+[Consistency](Models/Enums/Consistency.md) &#124; null
  The consistency level, or null to use the default consistency setting
 
 #### getContext
@@ -66,7 +66,7 @@ Get additional context data for conditional evaluation. This provides contextual
 
 
 #### Returns
-?object
+object &#124; null
  The context object containing additional data for evaluation, or null if no context is provided
 
 #### getContextualTuples
@@ -82,7 +82,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
  Additional relationship tuples for evaluation, or null if none provided
 
 #### getRequest
@@ -134,7 +134,7 @@ Get whether to include evaluation trace in the response. When enabled, the respo
 
 
 #### Returns
-?bool
+bool &#124; null
  Whether to include trace information, or null to use the default setting
 
 #### getTupleKey

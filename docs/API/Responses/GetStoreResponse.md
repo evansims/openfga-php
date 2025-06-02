@@ -51,7 +51,7 @@ Get the timestamp when the store was deleted, if applicable. Returns the deletio
 
 
 #### Returns
-?DateTimeImmutable
+DateTimeImmutable &#124; null
  The deletion timestamp, or null if the store is not deleted
 
 #### getUpdatedAt

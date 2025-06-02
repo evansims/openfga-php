@@ -86,7 +86,7 @@ Get a specific property definition by name. This method retrieves the schema def
 | `$name` | string | The name of the property to retrieve |
 
 #### Returns
-?[SchemaProperty](SchemaProperty.md)
+[SchemaProperty](SchemaProperty.md) &#124; null
  The property definition if it exists, or null if the property is not defined in this schema
 
 #### getWrapperKey
@@ -102,7 +102,7 @@ Get the wrapper key for the collection data if any. Some collections expect data
 
 
 #### Returns
-?string
+string &#124; null
  The wrapper key or null if data is not wrapped
 
 ### Other

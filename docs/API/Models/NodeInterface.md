@@ -34,7 +34,7 @@ Get the difference operation for this node. The difference operation represents 
 
 
 #### Returns
-?[UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md)
+[UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md) &#124; null
 
 #### getIntersection
 
@@ -65,7 +65,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 
 #### Returns
-?[LeafInterface](LeafInterface.md)
+[LeafInterface](LeafInterface.md) &#124; null
 
 #### getName
 

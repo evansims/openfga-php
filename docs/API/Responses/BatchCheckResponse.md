@@ -55,7 +55,7 @@ Get the result for a specific correlation ID. Returns the check result for the g
 | `$correlationId` | string | The correlation ID to look up |
 
 #### Returns
-?[BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md)
+[BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) &#124; null
 
 ### Other
 #### fromResponse

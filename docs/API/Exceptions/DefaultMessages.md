@@ -34,10 +34,10 @@ Get the default message key for an authentication error. Maps authentication-rel
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | AuthenticationError | The specific authentication error type that occurred |
+| `$error` | [AuthenticationError](AuthenticationError.md) | The specific authentication error type that occurred |
 
 #### Returns
-Messages
+[Messages](Messages.md)
  The corresponding message enum case for translation
 
 #### forClientError
@@ -55,10 +55,10 @@ Get the default message key for a general client error. Maps high-level client e
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | ClientError | The specific client error type that occurred |
+| `$error` | [ClientError](ClientError.md) | The specific client error type that occurred |
 
 #### Returns
-Messages
+[Messages](Messages.md)
  The corresponding message enum case for translation
 
 #### forConfigurationError
@@ -76,10 +76,10 @@ Get the default message key for a configuration error. Maps configuration-relate
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | ConfigurationError | The specific configuration error type that occurred |
+| `$error` | [ConfigurationError](ConfigurationError.md) | The specific configuration error type that occurred |
 
 #### Returns
-Messages
+[Messages](Messages.md)
  The corresponding message enum case for translation
 
 #### forError
@@ -99,10 +99,10 @@ Get the default message key for any supported error type. Generic method that ac
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | AuthenticationError &#124; ClientError &#124; ConfigurationError &#124; NetworkError &#124; SerializationError | The error enum of any supported type |
+| `$error` | [AuthenticationError](AuthenticationError.md) &#124; [ClientError](ClientError.md) &#124; [ConfigurationError](ConfigurationError.md) &#124; [NetworkError](NetworkError.md) &#124; [SerializationError](SerializationError.md) | The error enum of any supported type |
 
 #### Returns
-Messages
+[Messages](Messages.md)
  The corresponding message enum case for translation
 
 #### forNetworkError
@@ -120,10 +120,10 @@ Get the default message key for a network error. Maps network and HTTP-related e
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | NetworkError | The specific network error type that occurred |
+| `$error` | [NetworkError](NetworkError.md) | The specific network error type that occurred |
 
 #### Returns
-Messages
+[Messages](Messages.md)
  The corresponding message enum case for translation
 
 #### forSerializationError
@@ -141,9 +141,9 @@ Get the default message key for a serialization error. Maps data serialization a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | SerializationError | The specific serialization error type that occurred |
+| `$error` | [SerializationError](SerializationError.md) | The specific serialization error type that occurred |
 
 #### Returns
-Messages
+[Messages](Messages.md)
  The corresponding message enum case for translation
 

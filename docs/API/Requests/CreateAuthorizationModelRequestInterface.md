@@ -69,7 +69,7 @@ Get the schema version for the authorization model. Specifies which version of t
 
 
 #### Returns
-SchemaVersion
+[SchemaVersion](Models/Enums/SchemaVersion.md)
  The modeling language schema version for this authorization model
 
 #### getStore

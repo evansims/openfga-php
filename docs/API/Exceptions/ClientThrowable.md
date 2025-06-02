@@ -80,7 +80,7 @@ public function getPrevious(): ?Throwable
 
 
 #### Returns
-?Throwable
+Throwable &#124; null
 
 #### getTrace
 
@@ -138,7 +138,7 @@ Get the specific error category for this exception. Returns the error classifica
 
 
 #### Returns
-AuthenticationError &#124; ClientError &#124; ConfigurationError &#124; NetworkError &#124; SerializationError
+[AuthenticationError](AuthenticationError.md) &#124; [ClientError](ClientError.md) &#124; [ConfigurationError](ConfigurationError.md) &#124; [NetworkError](NetworkError.md) &#124; [SerializationError](SerializationError.md)
  The error category enum indicating the type of failure
 
 #### previous

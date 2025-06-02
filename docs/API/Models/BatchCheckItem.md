@@ -36,7 +36,7 @@ Get the context object for this check. This provides additional context data tha
 
 
 #### Returns
-?object
+object &#124; null
 
 #### getContextualTuples
 
@@ -51,7 +51,7 @@ Get the contextual tuples for this check. These are additional tuples that are e
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
 
 #### getCorrelationId
 

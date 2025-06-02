@@ -56,7 +56,7 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 
 
 #### Returns
-?DateTimeInterface
+DateTimeInterface &#124; null
  The deletion timestamp in UTC timezone, or null if the store is active
 
 #### getUpdatedAt

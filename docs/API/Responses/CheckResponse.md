@@ -35,7 +35,7 @@ Get whether the permission check was allowed. This is the primary result of the 
 
 
 #### Returns
-?bool
+bool &#124; null
  True if permission is granted, false if denied, or null if the result is indeterminate
 
 ### List Operations
@@ -52,7 +52,7 @@ Get the resolution details for the permission decision. This provides additional
 
 
 #### Returns
-?string
+string &#124; null
  The resolution details explaining the permission decision, or null if not provided
 
 ### Model Management

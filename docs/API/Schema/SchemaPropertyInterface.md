@@ -31,7 +31,7 @@ Get the fully qualified class name for object types.
 
 
 #### Returns
-?string
+string &#124; null
 
 #### getDefault
 
@@ -94,7 +94,7 @@ Get the type specification for array items.
 
 
 #### Returns
-?array
+array &#124; null
 
 #### getName
 

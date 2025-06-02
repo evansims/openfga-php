@@ -40,7 +40,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 
 #### Returns
-TupleOperation
+[TupleOperation](Models/Enums/TupleOperation.md)
  The operation type (write or delete)
 
 #### getTimestamp

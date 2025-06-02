@@ -66,7 +66,7 @@ Get the schema version of this authorization model. The schema version indicates
 
 
 #### Returns
-SchemaVersion
+[SchemaVersion](Models/Enums/SchemaVersion.md)
  The schema version enumeration indicating the model format specification
 
 #### getTypeDefinitions

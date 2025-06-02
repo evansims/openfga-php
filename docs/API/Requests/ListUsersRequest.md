@@ -34,7 +34,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 
 #### Returns
-?Consistency
+[Consistency](Models/Enums/Consistency.md) &#124; null
  The consistency level for the operation, or null to use the default consistency setting
 
 #### getContext
@@ -50,7 +50,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 
 #### Returns
-?object
+object &#124; null
  The context object containing additional data for evaluation, or null if no context is provided
 
 #### getContextualTuples
@@ -66,7 +66,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
  Additional relationship tuples for evaluation, or null if none provided
 
 #### getModel

@@ -61,7 +61,7 @@ Get an item by its offset key.
 | `value` | mixed |  |
 
 #### Returns
-?[ModelInterface](../Models/ModelInterface.md)
+[ModelInterface](../Models/ModelInterface.md) &#124; null
 
 ### Model Management
 #### schema

@@ -34,7 +34,7 @@ Get whether this check was allowed. Returns true if the user has the specified r
 
 
 #### Returns
-?bool
+bool &#124; null
 
 ### List Operations
 #### getError
@@ -50,7 +50,7 @@ Get any error that occurred during this check. Returns error information if the 
 
 
 #### Returns
-?object
+object &#124; null
 
 ### Other
 #### jsonSerialize

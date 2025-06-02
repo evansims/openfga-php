@@ -59,7 +59,7 @@ public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 | `value` | mixed |  |
 
 #### Returns
-?[ModelInterface](../Models/ModelInterface.md)
+[ModelInterface](../Models/ModelInterface.md) &#124; null
 
 ### Model Management
 #### schema

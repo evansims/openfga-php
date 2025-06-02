@@ -34,7 +34,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 
 #### Returns
-?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+[ConditionsInterface](Models/Collections/ConditionsInterface.md) &#124; null
  Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
 #### getRequest
@@ -70,7 +70,7 @@ Get the schema version for the authorization model. Specifies which version of t
 
 
 #### Returns
-SchemaVersion
+[SchemaVersion](Models/Enums/SchemaVersion.md)
  The modeling language schema version for this authorization model
 
 #### getStore

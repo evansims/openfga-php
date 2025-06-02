@@ -40,7 +40,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 
 #### Returns
-?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md) &#124; null
 
 #### getTypeName
 
@@ -55,7 +55,7 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 
 #### Returns
-TypeName
+[TypeName](Models/Enums/TypeName.md)
  The type name enum value for this parameter
 
 ### Model Management

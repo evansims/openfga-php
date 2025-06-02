@@ -34,7 +34,7 @@ Get the object identifier in an object-relation pair. The object represents the 
 
 
 #### Returns
-?string
+string &#124; null
 
 #### getRelation
 
@@ -49,7 +49,7 @@ Get the relation name that defines the type of relationship to the object. The r
 
 
 #### Returns
-?string
+string &#124; null
 
 ### Other
 #### jsonSerialize

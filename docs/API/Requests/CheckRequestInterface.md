@@ -49,7 +49,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 
 #### Returns
-Consistency &#124; null
+[Consistency](Models/Enums/Consistency.md) &#124; null
  The consistency level, or null to use the default consistency setting
 
 #### getContext

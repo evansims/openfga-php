@@ -34,7 +34,7 @@ Get the consistency requirement for this request.
 
 
 #### Returns
-?Consistency
+[Consistency](Models/Enums/Consistency.md) &#124; null
  The consistency requirement, or null if not specified
 
 #### getContext
@@ -50,7 +50,7 @@ Get the context object for this request.
 
 
 #### Returns
-?object
+object &#124; null
  The context object, or null if not specified
 
 #### getContextualTuples
@@ -66,7 +66,7 @@ Get the contextual tuples for this request.
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
  The contextual tuples collection, or null if not specified
 
 #### getModel
@@ -82,7 +82,7 @@ Get the authorization model ID for this request.
 
 
 #### Returns
-?string
+string &#124; null
  The authorization model ID, or null if not specified
 
 #### getRelation

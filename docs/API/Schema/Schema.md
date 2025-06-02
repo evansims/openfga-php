@@ -68,6 +68,6 @@ Get a specific property definition by name. This method retrieves the schema def
 | `$name` | string | The name of the property to retrieve |
 
 #### Returns
-?[SchemaProperty](SchemaProperty.md)
+[SchemaProperty](SchemaProperty.md) &#124; null
  The property definition if it exists, or null if the property is not defined in this schema
 

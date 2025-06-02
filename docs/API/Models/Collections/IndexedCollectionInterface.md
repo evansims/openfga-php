@@ -253,7 +253,7 @@ Get the first item in the collection, optionally matching a condition. When call
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | ?callable |  |
+| `$callback` | callable &#124; null |  |
 
 #### Returns
 T &#124; null

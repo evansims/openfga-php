@@ -36,7 +36,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 | Name | Type | Description |
 |------|------|-------------|
 | `$span` | mixed | The span identifier returned by startHttpRequest() |
-| `$response` | ?Psr\Http\Message\ResponseInterface | The HTTP response received, if any |
+| `$response` | Psr\Http\Message\ResponseInterface &#124; null | The HTTP response received, if any |
 | `attributes` | array |  |
 
 #### Returns
@@ -63,7 +63,7 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 |------|------|-------------|
 | `$span` | mixed | The span identifier returned by startOperation() |
 | `$success` | bool | Whether the operation completed successfully |
-| `$exception` | ?Throwable | Optional exception that occurred during the operation |
+| `$exception` | Throwable &#124; null | Optional exception that occurred during the operation |
 | `attributes` | array |  |
 
 #### Returns
@@ -146,7 +146,7 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 | `$operation` | string | The OpenFGA operation name |
 | `$duration` | float | The operation duration in seconds |
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store being operated on |
-| `$model` | ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string &#124; null | The authorization model used |
+| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; null &#124; string &#124; null | The authorization model used |
 | `exception` | ?Throwable |  |
 
 #### Returns
@@ -198,7 +198,7 @@ Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP req
 | `attributes` | array |  |
 
 #### Returns
-?null
+null &#124; null
  A span identifier or context that can be passed to endHttpRequest()
 
 #### startOperation
@@ -222,10 +222,10 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 |------|------|-------------|
 | `$operation` | string | The OpenFGA operation name (e.g., &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
 | `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store being operated on |
-| `$model` | ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string &#124; null | The authorization model being used |
+| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; null &#124; string &#124; null | The authorization model being used |
 | `$attributes` | array |  |
 
 #### Returns
-?null
+null &#124; null
  A span identifier or context that can be passed to endOperation()
 

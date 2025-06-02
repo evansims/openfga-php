@@ -37,7 +37,7 @@ Get an authentication request context if this strategy requires token acquisitio
 | `response` | Psr\Http\Message\ResponseInterface |  |
 
 #### Returns
-?[RequestContext](Network/RequestContext.md)
+[RequestContext](Network/RequestContext.md) &#124; null
  The authentication request context, or null if not needed
 
 #### getAuthorizationHeader
@@ -53,7 +53,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 
 #### Returns
-?string
+string &#124; null
  The authorization header value, or null if no authentication is needed
 
 #### getToken

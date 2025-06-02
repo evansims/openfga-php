@@ -40,7 +40,7 @@ Get the difference operation for this node. The difference operation represents 
 
 
 #### Returns
-?[UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md)
+[UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md) &#124; null
 
 #### getIntersection
 
@@ -55,7 +55,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 
 #### Returns
-?[NodeInterface](NodeInterface.md) &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
+[NodeInterface](NodeInterface.md) &#124; null &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
  The intersection node or null if not applicable
 
 #### getLeaf
@@ -71,7 +71,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 
 #### Returns
-?[LeafInterface](LeafInterface.md)
+[LeafInterface](LeafInterface.md) &#124; null
 
 #### getName
 
@@ -102,7 +102,7 @@ Get the union operation for this node. The union operation represents the combin
 
 
 #### Returns
-?[NodeInterface](NodeInterface.md) &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
+[NodeInterface](NodeInterface.md) &#124; null &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
  The union node or null if not applicable
 
 ### Model Management

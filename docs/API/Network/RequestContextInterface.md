@@ -63,7 +63,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 
 #### Returns
-RequestMethod
+[RequestMethod](RequestMethod.md)
  The HTTP method enum value indicating the request type
 
 #### getUrl

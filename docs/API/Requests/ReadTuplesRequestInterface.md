@@ -33,7 +33,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 
 #### Returns
-Consistency &#124; null
+[Consistency](Models/Enums/Consistency.md) &#124; null
  The consistency level for the operation, or null to use the default consistency setting
 
 #### getContinuationToken

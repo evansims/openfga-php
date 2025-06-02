@@ -39,7 +39,7 @@ Get the optional relation filter for limiting user types. When specified, this f
 
 
 #### Returns
-?string
+string &#124; null
 
 #### getType
 

@@ -33,7 +33,7 @@ Get the fully qualified class name for object types.
 
 
 #### Returns
-?string
+string &#124; null
 
 #### getDefault
 
@@ -64,7 +64,7 @@ Get the array of allowed values for enumeration validation.
 
 
 #### Returns
-?array
+array &#124; null
  Array of allowed values or null if not an enumeration
 
 #### getFormat
@@ -80,7 +80,7 @@ Get the additional format constraint for this property.
 
 
 #### Returns
-?string
+string &#124; null
  Format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) or null if none
 
 #### getItems
@@ -96,7 +96,7 @@ Get the type specification for array items.
 
 
 #### Returns
-?array
+array &#124; null
 
 #### getName
 
@@ -127,7 +127,7 @@ Get the alternative parameter name for constructor mapping.
 
 
 #### Returns
-?string
+string &#124; null
  Alternative parameter name or null if using default mapping
 
 #### getType
