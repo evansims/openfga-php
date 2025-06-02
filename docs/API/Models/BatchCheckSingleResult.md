@@ -16,14 +16,10 @@ Represents the result of a single check within a batch check response. Each resu
 ## Related Classes
 * [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                            
 ### Authorization
 #### getAllowed
-
 
 ```php
 public function getAllowed(): ?bool
@@ -33,12 +29,10 @@ Get whether this check was allowed. Returns true if the user has the specified r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L87)
 
-
 #### Returns
 `bool` &#124; `null`
 ### List Operations
 #### getError
-
 
 ```php
 public function getError(): ?object
@@ -48,13 +42,12 @@ Get any error that occurred during this check. Returns error information if the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L96)
 
-
 #### Returns
 `object` &#124; `null`
 ### Model Management
 #### schema
 
-*<small>Implements Models\BatchCheckSingleResultInterface</small>*  
+*<small>Implements Models\BatchCheckSingleResultInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -64,33 +57,26 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L107)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`
 #### toArray
 
-
 ```php
 public function toArray(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L120)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`

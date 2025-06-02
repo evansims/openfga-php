@@ -15,14 +15,10 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 ## Related Classes
 * [Metadata](Models/Metadata.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getModule
-
 
 ```php
 public function getModule(): string|null
@@ -32,11 +28,9 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/MetadataInterface.php#L33)
 
-
 #### Returns
 `string` &#124; `null` — The module name, or null if not specified
 #### getRelations
-
 
 ```php
 public function getRelations(): RelationMetadataCollection|null
@@ -46,11 +40,9 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/MetadataInterface.php#L45)
 
-
 #### Returns
 [`RelationMetadataCollection`](Models/Collections/RelationMetadataCollection.md) &#124; `null` — The relation metadata collection, or null if not specified
 #### getSourceInfo
-
 
 ```php
 public function getSourceInfo(): SourceInfoInterface|null
@@ -60,20 +52,16 @@ Get the source code information for this metadata. Source information provides d
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/MetadataInterface.php#L56)
 
-
 #### Returns
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source information, or null if not available
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/MetadataInterface.php#L62)
-
 
 #### Returns
 `array`

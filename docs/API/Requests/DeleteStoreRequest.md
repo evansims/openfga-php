@@ -16,13 +16,9 @@ Request for permanently deleting a store and all its data. This request removes 
 * [DeleteStoreResponse](Responses/DeleteStoreResponse.md) (response)
 * [DeleteStoreRequestInterface](Requests/DeleteStoreRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                    
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -41,7 +37,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -49,7 +44,6 @@ public function getStore(): string
 Get the ID of the store to delete. Returns the unique identifier of the store that will be permanently removed from OpenFGA. This operation will delete all data associated with the store, including relationship tuples, authorization models, and configuration settings. Important:** This is a destructive operation that cannot be reversed. Ensure you have the correct store ID and proper authorization before proceeding with the deletion.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/DeleteStoreRequest.php#L62)
-
 
 #### Returns
 `string` — The unique identifier of the store to permanently delete

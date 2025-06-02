@@ -16,14 +16,10 @@ Response containing a paginated list of available stores. This response provides
 * [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (interface)
 * [ListStoresRequest](Requests/ListStoresRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): ?string
@@ -33,11 +29,9 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponse.php#L92)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 #### getStores
-
 
 ```php
 public function getStores(): OpenFGA\Models\Collections\StoresInterface
@@ -47,13 +41,12 @@ Get the collection of stores. Returns a type-safe collection containing the stor
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponse.php#L101)
 
-
 #### Returns
 [`StoresInterface`](Models/Collections/StoresInterface.md) — The collection of stores
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ListStoresResponseInterface</small>*  
+*<small>Implements Responses\ListStoresResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -63,13 +56,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponseInterface.php#L34)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ListStoresResponseInterface</small>*  
+*<small>Implements Responses\ListStoresResponseInterface</small>*
 
 ```php
 public function fromResponse(

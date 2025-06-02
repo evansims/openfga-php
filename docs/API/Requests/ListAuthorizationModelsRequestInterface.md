@@ -15,13 +15,9 @@ Interface for listing authorization models in a store. This interface defines th
 * [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (response)
 * [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): string|null
@@ -31,11 +27,9 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequestInterface.php#L42)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 #### getPageSize
-
 
 ```php
 public function getPageSize(): int|null
@@ -45,11 +39,9 @@ Get the maximum number of models to return per page. Specifies the page size for
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequestInterface.php#L54)
 
-
 #### Returns
 `int` &#124; `null` — The maximum number of models to return per page, or null to use the default page size
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -68,7 +60,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -76,7 +67,6 @@ public function getStore(): string
 Get the store ID containing the authorization models to list. Identifies which OpenFGA store contains the authorization models to enumerate. Each store maintains its own independent collection of model versions, representing the evolution of that store&#039;s authorization schema over time.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequestInterface.php#L66)
-
 
 #### Returns
 `string` — The store ID containing the authorization models to list

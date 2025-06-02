@@ -15,13 +15,9 @@ Interface for relationship expansion response objects. This interface defines th
 * [ExpandResponse](Responses/ExpandResponse.md) (implementation)
 * [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (request)
 
-
-
 ## Methods
 
-                        
 #### getTree
-
 
 ```php
 public function getTree(): UsersetTreeInterface|null
@@ -30,7 +26,6 @@ public function getTree(): UsersetTreeInterface|null
 Get the expansion tree for the queried relationship. Returns a hierarchical tree structure that represents all users and usersets that have the specified relationship with the target object. The tree shows both direct relationships and computed relationships through other relations.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ExpandResponseInterface.php#L45)
-
 
 #### Returns
 [`UsersetTreeInterface`](Models/UsersetTreeInterface.md) &#124; `null` — The relationship expansion tree, or null if no relationships found

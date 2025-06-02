@@ -12,7 +12,6 @@ Network error types for the OpenFGA SDK. Defines specific network and HTTP-relat
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -41,9 +40,7 @@ Network error types for the OpenFGA SDK. Defines specific network and HTTP-relat
 
 ## Methods
 
-                        
 #### exception
-
 
 ```php
 public function exception(

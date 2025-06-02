@@ -8,18 +8,13 @@ Represents the context for an HTTP request to the OpenFGA API. This interface en
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestContextInterface.php)
 
-
 ## Related Classes
 * [RequestContext](Network/RequestContext.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getBody
-
 
 ```php
 public function getBody(): StreamInterface|null
@@ -29,11 +24,9 @@ Get the request body stream. Returns the PSR-7 stream containing the request bod
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestContextInterface.php#L49)
 
-
 #### Returns
 `StreamInterface` &#124; `null` — The request body stream containing JSON data, or null for operations without body content
 #### getHeaders
-
 
 ```php
 public function getHeaders(): array<string, string>
@@ -43,11 +36,9 @@ Get the request headers. Returns an associative array of HTTP headers that shoul
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestContextInterface.php#L65)
 
-
 #### Returns
 `array&lt;`string`, `string`&gt;` — Associative array mapping header names to their values
 #### getMethod
-
 
 ```php
 public function getMethod(): RequestMethod
@@ -57,11 +48,9 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestContextInterface.php#L80)
 
-
 #### Returns
 [`RequestMethod`](RequestMethod.md) — The HTTP method enum value indicating the request type
 #### getUrl
-
 
 ```php
 public function getUrl(): string
@@ -71,12 +60,10 @@ Get the URL for the request. Returns the target URL path for this API operation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestContextInterface.php#L95)
 
-
 #### Returns
 `string` — The target URL path for the API operation
 ### Other
 #### useApiUrl
-
 
 ```php
 public function useApiUrl(): bool
@@ -85,7 +72,6 @@ public function useApiUrl(): bool
 Determine if the API URL should be used as a prefix. Controls whether the base API URL should be prepended to the request URL. Most OpenFGA API operations use the standard API base URL, but some operations (like health checks or custom endpoints) might use alternative base URLs or absolute URLs. When true, the RequestManager will prepend the configured API base URL to the request URL. When false, the URL is used as-is, allowing for complete URL override when necessary.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestContextInterface.php#L111)
-
 
 #### Returns
 `bool` — True if the API base URL should be prepended to the request URL, false to use the URL as-is

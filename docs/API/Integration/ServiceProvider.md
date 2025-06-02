@@ -8,15 +8,9 @@ Service provider for automatic dependency injection container registration. This
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Integration/ServiceProvider.php)
 
-
-
-
-
 ## Methods
 
-                        
 #### register
-
 
 ```php
 public function register(object $container): void

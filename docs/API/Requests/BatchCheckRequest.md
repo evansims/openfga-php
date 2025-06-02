@@ -16,14 +16,10 @@ Request for performing multiple authorization checks in a single batch. This req
 * [BatchCheckResponse](Responses/BatchCheckResponse.md) (response)
 * [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                
 ### Authorization
 #### getChecks
-
 
 ```php
 public function getChecks(): OpenFGA\Models\Collections\BatchCheckItemsInterface
@@ -33,12 +29,10 @@ Get the collection of checks to perform in this batch. Each item contains a tupl
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/BatchCheckRequest.php#L63)
 
-
 #### Returns
 [`BatchCheckItemsInterface`](Models/Collections/BatchCheckItemsInterface.md) — The batch check items
 ### List Operations
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext

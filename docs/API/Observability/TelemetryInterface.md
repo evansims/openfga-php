@@ -8,15 +8,9 @@ Interface for OpenTelemetry integration in the OpenFGA SDK. This interface provi
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php)
 
-
-
-
-
 ## Methods
 
-                                                                                                            
 #### endHttpRequest
-
 
 ```php
 public function endHttpRequest(
@@ -40,7 +34,6 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 #### Returns
 `void`
 #### endOperation
-
 
 ```php
 public function endOperation(
@@ -67,7 +60,6 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 `void`
 #### recordAuthenticationEvent
 
-
 ```php
 public function recordAuthenticationEvent(
     string $event,
@@ -93,7 +85,6 @@ Record authentication events. Records metrics and traces related to authenticati
 `void`
 #### recordCircuitBreakerState
 
-
 ```php
 public function recordCircuitBreakerState(
     string $endpoint,
@@ -118,7 +109,6 @@ Record circuit breaker state changes. Records metrics about circuit breaker stat
 #### Returns
 `void`
 #### recordOperationMetrics
-
 
 ```php
 public function recordOperationMetrics(
@@ -147,7 +137,6 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 `void`
 #### recordRetryAttempt
 
-
 ```php
 public function recordRetryAttempt(
     string $endpoint,
@@ -175,7 +164,6 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 `void`
 #### startHttpRequest
 
-
 ```php
 public function startHttpRequest(RequestInterface $request): mixed
 ```
@@ -192,7 +180,6 @@ Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP req
 #### Returns
 `mixed` — A span identifier or context that can be passed to endHttpRequest()
 #### startOperation
-
 
 ```php
 public function startOperation(

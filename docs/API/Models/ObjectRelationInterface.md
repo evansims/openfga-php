@@ -15,14 +15,10 @@ Represents an object-relation pair in OpenFGA authorization models. Object-relat
 ## Related Classes
 * [ObjectRelation](Models/ObjectRelation.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getObject
-
 
 ```php
 public function getObject(): ?string
@@ -32,11 +28,9 @@ Get the object identifier in an object-relation pair. The object represents the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelationInterface.php#L40)
 
-
 #### Returns
 `string` &#124; `null`
 #### getRelation
-
 
 ```php
 public function getRelation(): ?string
@@ -46,20 +40,16 @@ Get the relation name that defines the type of relationship to the object. The r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelationInterface.php#L50)
 
-
 #### Returns
 `string` &#124; `null`
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelationInterface.php#L56)
-
 
 #### Returns
 `array`

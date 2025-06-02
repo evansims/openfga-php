@@ -15,14 +15,10 @@ Represents an assertion used to test authorization model correctness. Assertions
 ## Related Classes
 * [Assertion](Models/Assertion.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getContext
-
 
 ```php
 public function getContext(): ?array
@@ -32,11 +28,9 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionInterface.php#L32)
 
-
 #### Returns
 `array` &#124; `null`
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -46,11 +40,9 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionInterface.php#L44)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 #### getExpectation
-
 
 ```php
 public function getExpectation(): bool
@@ -60,11 +52,9 @@ Get the expected result for this assertion. The expectation defines whether the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionInterface.php#L55)
 
-
 #### Returns
 `bool` — True if access should be granted, false if access should be denied
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): AssertionTupleKeyInterface
@@ -74,20 +64,16 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionInterface.php#L66)
 
-
 #### Returns
 [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md) — The tuple key defining the authorization question
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionInterface.php#L77)
-
 
 #### Returns
 `array`

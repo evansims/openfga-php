@@ -15,13 +15,9 @@ Interface for authorization model retrieval response objects. This interface def
 * [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (implementation)
 * [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md) (request)
 
-
-
 ## Methods
 
-                        
 #### getModel
-
 
 ```php
 public function getModel(): AuthorizationModelInterface|null
@@ -30,7 +26,6 @@ public function getModel(): AuthorizationModelInterface|null
 Get the retrieved authorization model. Returns the complete authorization model including its type definitions, schema version, and any conditions. The model defines the relationship types and permission logic that govern authorization decisions within the store.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponseInterface.php#L44)
-
 
 #### Returns
 [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` — The authorization model, or null if not found

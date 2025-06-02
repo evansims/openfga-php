@@ -16,14 +16,10 @@ Response containing a list of users that have a specific relationship with an ob
 * [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md) (interface)
 * [ListUsersRequest](Requests/ListUsersRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getUsers
-
 
 ```php
 public function getUsers(): OpenFGA\Models\Collections\UsersInterface
@@ -33,13 +29,12 @@ Get the collection of users with the specified relationship. Returns a type-safe
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponse.php#L97)
 
-
 #### Returns
 [`UsersInterface`](Models/Collections/UsersInterface.md) — The collection of users with the relationship
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ListUsersResponseInterface</small>*  
+*<small>Implements Responses\ListUsersResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -49,13 +44,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponseInterface.php#L36)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ListUsersResponseInterface</small>*  
+*<small>Implements Responses\ListUsersResponseInterface</small>*
 
 ```php
 public function fromResponse(

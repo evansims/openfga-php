@@ -8,18 +8,13 @@ Interface for schema validation and object transformation in the OpenFGA system.
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidatorInterface.php)
 
-
 ## Related Classes
 * [SchemaValidator](Schema/SchemaValidator.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### Authorization
 #### validateAndTransform
-
 
 ```php
 public function validateAndTransform(mixed $data, string $className): T
@@ -40,7 +35,6 @@ Validate data against a registered schema and transform it into the target class
 ### List Operations
 #### getSchemas
 
-
 ```php
 public function getSchemas(): array<string, SchemaInterface>
 ```
@@ -49,12 +43,10 @@ Get all currently registered schemas. Returns a comprehensive map of all schemas
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidatorInterface.php#L39)
 
-
 #### Returns
 `array&lt;`string`, [`SchemaInterface`](SchemaInterface.md)&gt;` — Map of class names to their schema definitions
 ### Model Management
 #### registerSchema
-
 
 ```php
 public function registerSchema(SchemaInterface $schema): self

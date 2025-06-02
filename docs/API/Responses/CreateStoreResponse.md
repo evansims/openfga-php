@@ -16,14 +16,10 @@ Response confirming successful creation of a new store. This response provides t
 * [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (interface)
 * [CreateStoreRequest](Requests/CreateStoreRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                                                                        
 ### CRUD Operations
 #### getCreatedAt
-
 
 ```php
 public function getCreatedAt(): DateTimeImmutable
@@ -33,11 +29,9 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponse.php#L97)
 
-
 #### Returns
 `DateTimeImmutable` — The creation timestamp of the store
 #### getUpdatedAt
-
 
 ```php
 public function getUpdatedAt(): DateTimeImmutable
@@ -47,12 +41,10 @@ Get the timestamp when the store was last updated. Returns the timestamp of the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponse.php#L124)
 
-
 #### Returns
 `DateTimeImmutable` — The last update timestamp of the store
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -62,11 +54,9 @@ Get the unique identifier of the created store. Returns the system-generated uni
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponse.php#L106)
 
-
 #### Returns
 `string` — The unique store identifier
 #### getName
-
 
 ```php
 public function getName(): string
@@ -76,13 +66,12 @@ Get the human-readable name of the created store. Returns the descriptive name t
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponse.php#L115)
 
-
 #### Returns
 `string` — The descriptive name of the store
 ### Model Management
 #### schema
 
-*<small>Implements Responses\CreateStoreResponseInterface</small>*  
+*<small>Implements Responses\CreateStoreResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -92,13 +81,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L32)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\CreateStoreResponseInterface</small>*  
+*<small>Implements Responses\CreateStoreResponseInterface</small>*
 
 ```php
 public function fromResponse(

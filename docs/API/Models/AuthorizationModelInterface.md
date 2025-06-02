@@ -15,14 +15,10 @@ Represents an OpenFGA authorization model that defines permission structures. Au
 ## Related Classes
 * [AuthorizationModel](Models/AuthorizationModel.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getConditions
-
 
 ```php
 public function getConditions(): ConditionsInterface<ConditionInterface>|null
@@ -32,11 +28,9 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L84)
 
-
 #### Returns
 [`ConditionsInterface`](Models/Collections/ConditionsInterface.md)&lt;[`ConditionInterface`](ConditionInterface.md)&gt; &#124; `null` — The collection of reusable conditions defined in this model, or null if no conditions are defined
 #### getId
-
 
 ```php
 public function getId(): string
@@ -46,11 +40,9 @@ Get the unique identifier for this authorization model. The model ID serves as a
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L102)
 
-
 #### Returns
 `string` — The globally unique identifier for this authorization model version
 #### getSchemaVersion
-
 
 ```php
 public function getSchemaVersion(): SchemaVersion
@@ -60,11 +52,9 @@ Get the schema version of this authorization model. The schema version indicates
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L121)
 
-
 #### Returns
 [`SchemaVersion`](Models/Enums/SchemaVersion.md) — The schema version enumeration indicating the model format specification
 #### getTypeDefinitions
-
 
 ```php
 public function getTypeDefinitions(): TypeDefinitionsInterface<TypeDefinitionInterface>
@@ -74,12 +64,10 @@ Get the type definitions that define the structure of this authorization model. 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L142)
 
-
 #### Returns
 [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md)&lt;[`TypeDefinitionInterface`](TypeDefinitionInterface.md)&gt; — The collection of type definitions that structure this authorization model
 ### Other
 #### dsl
-
 
 ```php
 public function dsl(): string
@@ -89,11 +77,9 @@ Generate a DSL (Domain Specific Language) representation of this authorization m
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L64)
 
-
 #### Returns
 `string` — The authorization model expressed in OpenFGA DSL format for human readability
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array
@@ -102,7 +88,6 @@ public function jsonSerialize(): array
 Serialize the authorization model for JSON encoding. This method prepares the complete authorization model data for API communication with the OpenFGA service, converting all components into the format specified by the OpenFGA API. The serialization includes: - Model identification and versioning information - Complete type definitions with relations and metadata - Optional conditions with expressions and parameters - All nested structures properly formatted for JSON transmission The resulting structure is suitable for creating new authorization models, updating existing models, or storing model definitions in external systems. All data is formatted according to the OpenFGA API specification to ensure compatibility and correct interpretation by the authorization service.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L168)
-
 
 #### Returns
 `array`

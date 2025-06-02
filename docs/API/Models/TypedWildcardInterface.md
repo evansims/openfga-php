@@ -16,14 +16,10 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 ## Related Classes
 * [TypedWildcard](Models/TypedWildcard.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 ### List Operations
 #### getType
-
 
 ```php
 public function getType(): string
@@ -33,20 +29,16 @@ Get the object type that this wildcard represents. This returns the type name fo
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcardInterface.php#L41)
 
-
 #### Returns
 `string` — The object type that this wildcard represents
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcardInterface.php#L47)
-
 
 #### Returns
 `array`

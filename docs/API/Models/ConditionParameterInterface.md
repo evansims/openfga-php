@@ -15,14 +15,10 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 ## Related Classes
 * [ConditionParameter](Models/ConditionParameter.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getGenericTypes
-
 
 ```php
 public function getGenericTypes(): ?OpenFGA\Models\Collections\ConditionParametersInterface
@@ -32,11 +28,9 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameterInterface.php#L33)
 
-
 #### Returns
 [`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null`
 #### getTypeName
-
 
 ```php
 public function getTypeName(): TypeName
@@ -46,20 +40,16 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameterInterface.php#L44)
 
-
 #### Returns
 [`TypeName`](Models/Enums/TypeName.md) — The type name enum value for this parameter
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameterInterface.php#L50)
-
 
 #### Returns
 `array`

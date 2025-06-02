@@ -16,14 +16,10 @@ Response containing test assertions associated with an authorization model. This
 * [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (interface)
 * [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getAssertions
-
 
 ```php
 public function getAssertions(): ?OpenFGA\Models\Collections\AssertionsInterface
@@ -33,11 +29,9 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponse.php#L95)
 
-
 #### Returns
 [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) &#124; `null` — The collection of assertions, or null if no assertions are defined
 #### getModel
-
 
 ```php
 public function getModel(): string
@@ -47,13 +41,12 @@ Get the authorization model identifier for these assertions. Returns the unique 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponse.php#L104)
 
-
 #### Returns
 `string` — The authorization model identifier
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ReadAssertionsResponseInterface</small>*  
+*<small>Implements Responses\ReadAssertionsResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -63,13 +56,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponseInterface.php#L35)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ReadAssertionsResponseInterface</small>*  
+*<small>Implements Responses\ReadAssertionsResponseInterface</small>*
 
 ```php
 public function fromResponse(

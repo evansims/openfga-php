@@ -21,13 +21,10 @@ Contains metadata information about type definitions in your authorization model
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'Metadata'` |  |
 
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getModule
-
 
 ```php
 public function getModule(): ?string
@@ -37,11 +34,9 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L62)
 
-
 #### Returns
 `string` &#124; `null` — The module name, or null if not specified
 #### getRelations
-
 
 ```php
 public function getRelations(): ?OpenFGA\Models\Collections\RelationMetadataCollection
@@ -51,11 +46,9 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L71)
 
-
 #### Returns
 [`RelationMetadataCollection`](Models/Collections/RelationMetadataCollection.md) &#124; `null` — The relation metadata collection, or null if not specified
 #### getSourceInfo
-
 
 ```php
 public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
@@ -65,13 +58,12 @@ Get the source code information for this metadata. Source information provides d
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L80)
 
-
 #### Returns
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source information, or null if not available
 ### Model Management
 #### schema
 
-*<small>Implements Models\MetadataInterface</small>*  
+*<small>Implements Models\MetadataInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -81,20 +73,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L89)
-
 
 #### Returns
 `array`

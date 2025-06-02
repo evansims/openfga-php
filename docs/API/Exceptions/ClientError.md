@@ -12,7 +12,6 @@ General client error types for the OpenFGA SDK. Defines high-level error categor
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -33,9 +32,7 @@ General client error types for the OpenFGA SDK. Defines high-level error categor
 
 ## Methods
 
-                        
 #### exception
-
 
 ```php
 public function exception(

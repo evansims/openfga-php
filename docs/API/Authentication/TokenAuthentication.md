@@ -11,15 +11,10 @@ Token-based authentication strategy for OpenFGA client. This authentication stra
 ## Implements
 * [`AuthenticationInterface`](AuthenticationInterface.md)
 
-
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getAuthenticationRequest
-
 
 ```php
 public function getAuthenticationRequest(
@@ -40,7 +35,6 @@ Get an authentication request context if this strategy requires token acquisitio
 [`RequestContext`](Network/RequestContext.md) &#124; `null` — The authentication request context, or null if not needed
 #### getAuthorizationHeader
 
-
 ```php
 public function getAuthorizationHeader(): ?string
 ```
@@ -49,11 +43,9 @@ Get the authorization header value for API requests. Returns the authorization h
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/TokenAuthentication.php#L56)
 
-
 #### Returns
 `string` &#124; `null` — The authorization header value, or null if no authentication is needed
 #### getToken
-
 
 ```php
 public function getToken(): AccessTokenInterface|string
@@ -63,12 +55,10 @@ Get the current authentication token. Returns the token that was provided during
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/TokenAuthentication.php#L78)
 
-
 #### Returns
 [`AccessTokenInterface`](AccessTokenInterface.md) &#124; `string` — The authentication token used by this strategy
 ### Other
 #### handleAuthenticationResponse
-
 
 ```php
 public function handleAuthenticationResponse(Psr\Http\Message\ResponseInterface $response): void
@@ -87,7 +77,6 @@ Handle the authentication response and update internal state. This method is cal
 `void`
 #### requiresAuthentication
 
-
 ```php
 public function requiresAuthentication(): bool
 ```
@@ -95,7 +84,6 @@ public function requiresAuthentication(): bool
 Check if authentication is required for this strategy.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/TokenAuthentication.php#L95)
-
 
 #### Returns
 `bool` — True if this strategy provides authentication, false for no-auth strategies

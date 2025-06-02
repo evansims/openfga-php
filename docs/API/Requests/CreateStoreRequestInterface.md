@@ -15,13 +15,9 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 * [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (response)
 * [CreateStoreRequest](Requests/CreateStoreRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                    
 #### getName
-
 
 ```php
 public function getName(): string
@@ -31,11 +27,9 @@ Get the name for the new store. Returns the human-readable name that will be ass
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateStoreRequestInterface.php#L45)
 
-
 #### Returns
 `string` — The descriptive name for the new authorization store
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

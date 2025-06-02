@@ -15,14 +15,10 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 ## Related Classes
 * [RelationMetadata](Models/RelationMetadata.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getDirectlyRelatedUserTypes
-
 
 ```php
 public function getDirectlyRelatedUserTypes(): RelationReferencesInterface<RelationReferenceInterface>|null
@@ -32,11 +28,9 @@ Get the user types that can be directly related through this relation. This defi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadataInterface.php#L41)
 
-
 #### Returns
 [`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md)&lt;[`RelationReferenceInterface`](RelationReferenceInterface.md)&gt; &#124; `null` — The directly related user types, or null if not specified
 #### getModule
-
 
 ```php
 public function getModule(): string|null
@@ -46,11 +40,9 @@ Get the optional module name for organization. This provides organizational info
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadataInterface.php#L52)
 
-
 #### Returns
 `string` &#124; `null` — The module name, or null if not specified
 #### getSourceInfo
-
 
 ```php
 public function getSourceInfo(): SourceInfoInterface|null
@@ -60,20 +52,16 @@ Get optional source file information for debugging and tooling. This provides in
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadataInterface.php#L63)
 
-
 #### Returns
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source file information, or null if not available
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadataInterface.php#L69)
-
 
 #### Returns
 `array`

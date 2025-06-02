@@ -15,13 +15,9 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 * [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (response)
 * [ListStoresRequest](Requests/ListStoresRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): string|null
@@ -31,11 +27,9 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListStoresRequestInterface.php#L41)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 #### getPageSize
-
 
 ```php
 public function getPageSize(): int|null
@@ -45,11 +39,9 @@ Get the maximum number of stores to return per page. Specifies the page size for
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListStoresRequestInterface.php#L53)
 
-
 #### Returns
 `int` &#124; `null` — The maximum number of stores to return per page, or null to use the default page size
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

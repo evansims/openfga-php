@@ -15,14 +15,10 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 ## Related Classes
 * [UsersetTree](Models/UsersetTree.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 ### List Operations
 #### getRoot
-
 
 ```php
 public function getRoot(): NodeInterface
@@ -32,20 +28,16 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeInterface.php#L33)
 
-
 #### Returns
 [`NodeInterface`](NodeInterface.md) — The root node of the userset tree
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeInterface.php#L39)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`

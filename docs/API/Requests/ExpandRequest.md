@@ -16,13 +16,9 @@ Request for expanding a relationship to show all users who have that relationshi
 * [ExpandResponse](Responses/ExpandResponse.md) (response)
 * [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                    
 #### getConsistency
-
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -32,11 +28,9 @@ Get the read consistency level for the expand operation. Determines the consiste
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ExpandRequest.php#L64)
 
-
 #### Returns
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -46,11 +40,9 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ExpandRequest.php#L73)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getModel
-
 
 ```php
 public function getModel(): ?string
@@ -60,11 +52,9 @@ Get the authorization model ID to use for the expansion. Specifies which version
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ExpandRequest.php#L82)
 
-
 #### Returns
 `string` &#124; `null` — The authorization model ID for evaluation, or null to use the latest model version
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -83,7 +73,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -92,11 +81,9 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ExpandRequest.php#L117)
 
-
 #### Returns
 `string` — The store ID containing the authorization data
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
@@ -105,7 +92,6 @@ public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
 Get the relationship tuple to expand. Specifies the starting point for the relationship expansion. This defines the object and relation for which the authorization graph should be expanded. The expansion will show all users and user sets that have the specified relation to the specified object.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ExpandRequest.php#L126)
-
 
 #### Returns
 [`TupleKeyInterface`](Models/TupleKeyInterface.md) — The relationship tuple specifying what to expand (object and relation)

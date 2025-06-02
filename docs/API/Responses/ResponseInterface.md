@@ -8,10 +8,6 @@ Base interface for all OpenFGA API response objects. This interface establishes 
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ResponseInterface.php)
 
-
 ## Related Classes
 * [Response](Responses/Response.md) (implementation)
 * [RequestInterface](Requests/RequestInterface.md) (request)
-
-
-

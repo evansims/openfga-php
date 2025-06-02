@@ -14,14 +14,10 @@ Fluent builder for creating JSON schemas for data validation and transformation.
 ## Related Classes
 * [SchemaBuilderInterface](Schema/SchemaBuilderInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                                                    
 ### Utility
 #### register
-
 
 ```php
 public function register(): OpenFGA\Schema\Schema
@@ -31,12 +27,10 @@ Build and register the schema. Creates a Schema instance with all defined proper
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilder.php#L154)
 
-
 #### Returns
 [`Schema`](Schema.md) — The built and registered schema
 ### Other
 #### array
-
 
 ```php
 public function array(
@@ -63,7 +57,6 @@ Add an array property to the schema.
 `self` — Returns the builder instance for method chaining
 #### boolean
 
-
 ```php
 public function boolean(string $name, bool $required = false, mixed $default = NULL): self
 ```
@@ -82,7 +75,6 @@ Add a boolean property to the schema.
 #### Returns
 `self` — Returns the builder instance for method chaining
 #### date
-
 
 ```php
 public function date(string $name, bool $required = false, mixed $default = NULL): self
@@ -103,7 +95,6 @@ Add a date property to the schema.
 `self` — Returns the builder instance for method chaining
 #### datetime
 
-
 ```php
 public function datetime(string $name, bool $required = false, mixed $default = NULL): self
 ```
@@ -122,7 +113,6 @@ Add a datetime property to the schema.
 #### Returns
 `self` — Returns the builder instance for method chaining
 #### integer
-
 
 ```php
 public function integer(string $name, bool $required = false, mixed $default = NULL): self
@@ -143,7 +133,6 @@ Add an integer property to the schema.
 `self` — Returns the builder instance for method chaining
 #### number
 
-
 ```php
 public function number(string $name, bool $required = false, mixed $default = NULL): self
 ```
@@ -163,7 +152,6 @@ Add a number (float) property to the schema.
 `self` — Returns the builder instance for method chaining
 #### object
 
-
 ```php
 public function object(string $name, string $className, bool $required = false): self
 ```
@@ -182,7 +170,6 @@ Add an object property to the schema.
 #### Returns
 `self` — Returns the builder instance for method chaining
 #### string
-
 
 ```php
 public function string(

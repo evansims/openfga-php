@@ -14,6 +14,3 @@ Interface for tuple writing response objects. This interface defines the contrac
 ## Related Classes
 * [WriteTuplesResponse](Responses/WriteTuplesResponse.md) (implementation)
 * [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md) (request)
-
-
-

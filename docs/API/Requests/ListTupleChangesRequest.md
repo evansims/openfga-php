@@ -16,13 +16,9 @@ Request for listing changes to relationship tuples over time. This request retri
 * [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (response)
 * [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                    
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): ?string
@@ -32,11 +28,9 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListTupleChangesRequest.php#L65)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 #### getPageSize
-
 
 ```php
 public function getPageSize(): ?int
@@ -46,11 +40,9 @@ Get the maximum number of changes to return per page. Specifies the page size fo
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListTupleChangesRequest.php#L74)
 
-
 #### Returns
 `int` &#124; `null` — The maximum number of changes to return per page, or null to use the default page size
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -69,7 +61,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStartTime
 
-
 ```php
 public function getStartTime(): ?DateTimeImmutable
 ```
@@ -78,11 +69,9 @@ Get the earliest time to include in the change history. Specifies the starting p
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListTupleChangesRequest.php#L104)
 
-
 #### Returns
 `DateTimeImmutable` &#124; `null` — The earliest timestamp to include in results, or null to include all changes from the beginning
 #### getStore
-
 
 ```php
 public function getStore(): string
@@ -92,11 +81,9 @@ Get the store ID containing the tuple changes to list. Identifies which OpenFGA 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListTupleChangesRequest.php#L113)
 
-
 #### Returns
 `string` — The store ID containing the tuple change history to retrieve
 #### getType
-
 
 ```php
 public function getType(): ?string
@@ -105,7 +92,6 @@ public function getType(): ?string
 Get the object type filter for changes. Specifies an optional filter to only include changes affecting tuples of a specific object type. This helps narrow the results to changes relevant to particular resource types, such as &quot;document&quot;, &quot;folder&quot;, or &quot;organization&quot;.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListTupleChangesRequest.php#L122)
-
 
 #### Returns
 `string` &#124; `null` — The object type to filter changes by, or null to include changes for all object types

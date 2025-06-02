@@ -21,13 +21,10 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'NodeUnion'` |  |
 
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getNodes
-
 
 ```php
 public function getNodes(): array<int, NodeInterface>
@@ -37,13 +34,12 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnion.php#L55)
 
-
 #### Returns
 `array&lt;`int`, [`NodeInterface`](NodeInterface.md)&gt;` — The array of nodes in the union
 ### Model Management
 #### schema
 
-*<small>Implements Models\NodeUnionInterface</small>*  
+*<small>Implements Models\NodeUnionInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -53,12 +49,10 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array
@@ -67,7 +61,6 @@ public function jsonSerialize(): array
 Serialize the node union to its JSON representation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnion.php#L64)
-
 
 #### Returns
 `array`

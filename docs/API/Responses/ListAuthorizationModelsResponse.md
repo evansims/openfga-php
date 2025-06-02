@@ -16,14 +16,10 @@ Response containing a paginated list of authorization models. This response prov
 * [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (interface)
 * [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): ?string
@@ -33,11 +29,9 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponse.php#L95)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 #### getModels
-
 
 ```php
 public function getModels(): OpenFGA\Models\Collections\AuthorizationModelsInterface
@@ -47,13 +41,12 @@ Get the collection of authorization models. Returns a type-safe collection conta
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponse.php#L104)
 
-
 #### Returns
 [`AuthorizationModelsInterface`](Models/Collections/AuthorizationModelsInterface.md) — The collection of authorization models
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ListAuthorizationModelsResponseInterface</small>*  
+*<small>Implements Responses\ListAuthorizationModelsResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -63,13 +56,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponseInterface.php#L34)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ListAuthorizationModelsResponseInterface</small>*  
+*<small>Implements Responses\ListAuthorizationModelsResponseInterface</small>*
 
 ```php
 public function fromResponse(

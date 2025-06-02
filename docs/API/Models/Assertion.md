@@ -21,13 +21,10 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'Assertion'` |  |
 
-
 ## Methods
 
-                                                                                                            
 ### List Operations
 #### getContext
-
 
 ```php
 public function getContext(): ?array
@@ -37,11 +34,9 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L174)
 
-
 #### Returns
 `array` &#124; `null`
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -51,11 +46,9 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L183)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 #### getExpectation
-
 
 ```php
 public function getExpectation(): bool
@@ -65,11 +58,9 @@ Get the expected result for this assertion. The expectation defines whether the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L192)
 
-
 #### Returns
 `bool` — True if access should be granted, false if access should be denied
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): OpenFGA\Models\AssertionTupleKeyInterface
@@ -79,13 +70,12 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L201)
 
-
 #### Returns
 [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md) — The tuple key defining the authorization question
 ### Model Management
 #### schema
 
-*<small>Implements Models\AssertionInterface</small>*  
+*<small>Implements Models\AssertionInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -95,20 +85,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L210)
-
 
 #### Returns
 `array`

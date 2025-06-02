@@ -21,13 +21,10 @@ Represents source file information for debugging and development tools. SourceIn
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'SourceInfo'` |  |
 
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getFile
-
 
 ```php
 public function getFile(): string
@@ -37,13 +34,12 @@ Get the source file path where the model element was defined. This provides debu
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfo.php#L65)
 
-
 #### Returns
 `string` — The source file path where the element was defined
 ### Model Management
 #### schema
 
-*<small>Implements Models\SourceInfoInterface</small>*  
+*<small>Implements Models\SourceInfoInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -53,20 +49,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfo.php#L74)
-
 
 #### Returns
 `array`

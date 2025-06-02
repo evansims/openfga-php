@@ -8,9 +8,5 @@ Translation service interface for OpenFGA SDK messages. This interface defines t
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php)
 
-
 ## Related Classes
 * [Translator](Translation/Translator.md) (implementation)
-
-
-

@@ -22,13 +22,10 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'TypedWildcard'` |  |
 
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getType
-
 
 ```php
 public function getType(): string
@@ -38,13 +35,12 @@ Get the object type that this wildcard represents. This returns the type name fo
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcard.php#L81)
 
-
 #### Returns
 `string` — The object type that this wildcard represents
 ### Model Management
 #### schema
 
-*<small>Implements Models\TypedWildcardInterface</small>*  
+*<small>Implements Models\TypedWildcardInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -54,20 +50,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcard.php#L90)
-
 
 #### Returns
 `array`

@@ -15,14 +15,10 @@ Represents source file information for OpenFGA model elements. Source informatio
 ## Related Classes
 * [SourceInfo](Models/SourceInfo.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 ### List Operations
 #### getFile
-
 
 ```php
 public function getFile(): string
@@ -32,20 +28,16 @@ Get the source file path where the model element was defined. This provides debu
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfoInterface.php#L39)
 
-
 #### Returns
 `string` — The source file path where the element was defined
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfoInterface.php#L45)
-
 
 #### Returns
 `array`

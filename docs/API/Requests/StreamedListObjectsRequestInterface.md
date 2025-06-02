@@ -15,13 +15,9 @@ Request interface for streaming objects that a user has a specific relationship 
 * [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (response)
 * [StreamedListObjectsRequest](Requests/StreamedListObjectsRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                                        
 #### getConsistency
-
 
 ```php
 public function getConsistency(): Consistency|null
@@ -31,11 +27,9 @@ Get the consistency requirement for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L28)
 
-
 #### Returns
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency requirement, or null if not specified
 #### getContext
-
 
 ```php
 public function getContext(): object|null
@@ -45,11 +39,9 @@ Get the context object for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L35)
 
-
 #### Returns
 `object` &#124; `null` — The context object, or null if not specified
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>|null
@@ -59,11 +51,9 @@ Get the contextual tuples for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L42)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — The contextual tuples collection, or null if not specified
 #### getModel
-
 
 ```php
 public function getModel(): string|null
@@ -73,11 +63,9 @@ Get the authorization model ID for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L49)
 
-
 #### Returns
 `string` &#124; `null` — The authorization model ID, or null if not specified
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -87,11 +75,9 @@ Get the relation name for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L56)
 
-
 #### Returns
 `string` — The relation name to check
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -110,7 +96,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -119,11 +104,9 @@ Get the store ID for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L63)
 
-
 #### Returns
 `string` — The store ID
 #### getType
-
 
 ```php
 public function getType(): string
@@ -133,11 +116,9 @@ Get the object type for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L70)
 
-
 #### Returns
 `string` — The object type to list
 #### getUser
-
 
 ```php
 public function getUser(): string
@@ -146,7 +127,6 @@ public function getUser(): string
 Get the user identifier for this request.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L77)
-
 
 #### Returns
 `string` — The user identifier

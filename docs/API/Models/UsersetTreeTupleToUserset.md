@@ -21,13 +21,10 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'UsersetTree.TupleToUserset'` |  |
 
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getComputed
-
 
 ```php
 public function getComputed(): array<int, ComputedInterface>
@@ -37,11 +34,9 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeTupleToUserset.php#L58)
 
-
 #### Returns
 `array&lt;`int`, [`ComputedInterface`](ComputedInterface.md)&gt;` — Array of computed userset references
 #### getTupleset
-
 
 ```php
 public function getTupleset(): string
@@ -51,13 +46,12 @@ Get the tupleset string identifying which tuples to use for computation. This st
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeTupleToUserset.php#L67)
 
-
 #### Returns
 `string` — The tupleset identifier string
 ### Model Management
 #### schema
 
-*<small>Implements Models\UsersetTreeTupleToUsersetInterface</small>*  
+*<small>Implements Models\UsersetTreeTupleToUsersetInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -67,20 +61,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeTupleToUserset.php#L76)
-
 
 #### Returns
 `array`

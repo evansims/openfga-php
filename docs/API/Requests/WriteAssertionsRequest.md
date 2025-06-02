@@ -16,13 +16,9 @@ Request for writing test assertions to validate authorization model behavior. Th
 * [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (response)
 * [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                            
 #### getAssertions
-
 
 ```php
 public function getAssertions(): OpenFGA\Models\Collections\AssertionsInterface
@@ -32,11 +28,9 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequest.php#L62)
 
-
 #### Returns
 [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) — Collection of test assertions to validate authorization model behavior
 #### getModel
-
 
 ```php
 public function getModel(): string
@@ -46,11 +40,9 @@ Get the authorization model ID to associate assertions with. Specifies which ver
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequest.php#L71)
 
-
 #### Returns
 `string` — The authorization model ID that these assertions will test
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -69,7 +61,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -77,7 +68,6 @@ public function getStore(): string
 Get the store ID where assertions will be written. Identifies the OpenFGA store that contains the authorization model and where the test assertions will be stored. Assertions are stored alongside the model they test, providing a complete testing framework within each store.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequest.php#L99)
-
 
 #### Returns
 `string` — The store ID where the test assertions will be written

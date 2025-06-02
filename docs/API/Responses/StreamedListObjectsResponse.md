@@ -15,14 +15,10 @@ Response containing streaming objects that a user has a specific relationship wi
 * [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (interface)
 * [StreamedListObjectsRequest](Requests/StreamedListObjectsRequest.md) (request)
 
-
-
 ## Methods
 
-                                                
 ### List Operations
 #### getObject
-
 
 ```php
 public function getObject(): string
@@ -32,13 +28,12 @@ Get a single object identifier from a streamed response chunk.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponse.php#L125)
 
-
 #### Returns
 `string` — The object identifier
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\StreamedListObjectsResponseInterface</small>*  
+*<small>Implements Responses\StreamedListObjectsResponseInterface</small>*
 
 ```php
 public function fromResponse(

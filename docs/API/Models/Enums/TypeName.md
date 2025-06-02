@@ -12,7 +12,6 @@ Data types supported in OpenFGA condition parameters. This enum defines the avai
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -47,10 +46,8 @@ Data types supported in OpenFGA condition parameters. This enum defines the avai
 
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getPhpType
-
 
 ```php
 public function getPhpType(): string
@@ -60,12 +57,10 @@ Get the corresponding PHP type for this OpenFGA type. Returns the equivalent PHP
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TypeName.php#L122)
 
-
 #### Returns
 `string` — The PHP type name
 ### Utility
 #### isCollection
-
 
 ```php
 public function isCollection(): bool
@@ -75,11 +70,9 @@ Check if this type represents a collection of values. Useful for determining if 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TypeName.php#L148)
 
-
 #### Returns
 `bool` — True if the type is a collection, false otherwise
 #### isFlexible
-
 
 ```php
 public function isFlexible(): bool
@@ -89,11 +82,9 @@ Check if this type accepts flexible or dynamic values. Useful for determining if
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TypeName.php#L166)
 
-
 #### Returns
 `bool` — True if the type is flexible, false otherwise
 #### isNumeric
-
 
 ```php
 public function isNumeric(): bool
@@ -103,11 +94,9 @@ Check if this type represents a numeric value. Useful for validation and type ch
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TypeName.php#L184)
 
-
 #### Returns
 `bool` — True if the type is numeric, false otherwise
 #### isTemporal
-
 
 ```php
 public function isTemporal(): bool
@@ -116,7 +105,6 @@ public function isTemporal(): bool
 Check if this type represents a temporal value. Useful for determining if time-based operations can be performed on parameters of this type.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TypeName.php#L202)
-
 
 #### Returns
 `bool` — True if the type is temporal, false otherwise

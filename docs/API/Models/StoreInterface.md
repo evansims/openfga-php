@@ -15,14 +15,10 @@ Represents an OpenFGA store that contains authorization models and relationship 
 ## Related Classes
 * [Store](Models/Store.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                            
 ### CRUD Operations
 #### getCreatedAt
-
 
 ```php
 public function getCreatedAt(): DateTimeInterface
@@ -32,11 +28,9 @@ Get the timestamp when the store was created. The creation timestamp provides es
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L44)
 
-
 #### Returns
 `DateTimeInterface` — The creation timestamp in UTC timezone
 #### getDeletedAt
-
 
 ```php
 public function getDeletedAt(): DateTimeInterface|null
@@ -46,11 +40,9 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L56)
 
-
 #### Returns
 `DateTimeInterface` &#124; `null` — The deletion timestamp in UTC timezone, or null if the store is active
 #### getUpdatedAt
-
 
 ```php
 public function getUpdatedAt(): DateTimeInterface
@@ -60,12 +52,10 @@ Get the timestamp when the store was last updated. The update timestamp tracks w
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L92)
 
-
 #### Returns
 `DateTimeInterface` — The last update timestamp in UTC timezone
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -75,11 +65,9 @@ Get the unique identifier of the store. The store ID is a globally unique identi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L68)
 
-
 #### Returns
 `string` — The store&#039;s unique identifier
 #### getName
-
 
 ```php
 public function getName(): string
@@ -89,12 +77,10 @@ Get the human-readable name of the store. The store name provides a user-friendl
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L80)
 
-
 #### Returns
 `string` — The store&#039;s display name
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array<'created_at'|'deleted_at'|'id'|'name'|'updated_at', string>
@@ -103,7 +89,6 @@ public function jsonSerialize(): array<'created_at'|'deleted_at'|'id'|'name'|'up
 Serialize the store for JSON encoding. This method prepares the store data for API communication, converting all properties into a format compatible with the OpenFGA API specification. Timestamps are converted to RFC3339 format in UTC timezone, ensuring consistent date handling across different systems and timezones. The resulting array contains all store properties with their API-compatible names and values, ready for transmission to the OpenFGA service or storage in JSON format.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L109)
-
 
 #### Returns
 `array&lt;'created_at'` &#124; `'deleted_at'` &#124; `'id'` &#124; `'name'` &#124; `'updated_at', string&gt;` — Store data formatted for JSON encoding with API-compatible field names

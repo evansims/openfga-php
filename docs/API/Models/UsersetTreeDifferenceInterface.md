@@ -15,14 +15,10 @@ Defines a difference operation node in authorization evaluation trees. UsersetTr
 ## Related Classes
 * [UsersetTreeDifference](Models/UsersetTreeDifference.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getBase
-
 
 ```php
 public function getBase(): NodeInterface
@@ -32,11 +28,9 @@ Get the base node from which the subtract node will be removed. This represents 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifferenceInterface.php#L30)
 
-
 #### Returns
 [`NodeInterface`](NodeInterface.md) — The base node for the difference operation
 #### getSubtract
-
 
 ```php
 public function getSubtract(): NodeInterface
@@ -46,20 +40,16 @@ Get the node representing users to subtract from the base. This represents the n
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifferenceInterface.php#L40)
 
-
 #### Returns
 [`NodeInterface`](NodeInterface.md) — The node to subtract from the base
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifferenceInterface.php#L46)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`

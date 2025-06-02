@@ -17,14 +17,10 @@ Represents a single item in a batch check request. Each batch check item contain
 * [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
 * [BatchCheckItems](Models/Collections/BatchCheckItems.md) (collection)
 
-
-
 ## Methods
 
-                                                                                                                        
 ### List Operations
 #### getContext
-
 
 ```php
 public function getContext(): ?object
@@ -34,11 +30,9 @@ Get the context object for this check. This provides additional context data tha
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L187)
 
-
 #### Returns
 `object` &#124; `null`
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -48,11 +42,9 @@ Get the contextual tuples for this check. These are additional tuples that are e
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L196)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 #### getCorrelationId
-
 
 ```php
 public function getCorrelationId(): string
@@ -62,11 +54,9 @@ Get the correlation ID for this batch check item. This unique identifier maps th
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L205)
 
-
 #### Returns
 `string` — The correlation ID
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
@@ -76,13 +66,12 @@ Get the tuple key to be checked. This defines the user, relation, and object for
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L214)
 
-
 #### Returns
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key for this check
 ### Model Management
 #### schema
 
-*<small>Implements Models\BatchCheckItemInterface</small>*  
+*<small>Implements Models\BatchCheckItemInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -92,33 +81,26 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L225)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`
 #### toArray
 
-
 ```php
 public function toArray(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L240)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`

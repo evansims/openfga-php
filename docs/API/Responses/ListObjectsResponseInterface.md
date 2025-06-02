@@ -15,13 +15,9 @@ Interface for object listing response objects. This interface defines the contra
 * [ListObjectsResponse](Responses/ListObjectsResponse.md) (implementation)
 * [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md) (request)
 
-
-
 ## Methods
 
-                        
 #### getObjects
-
 
 ```php
 public function getObjects(): array<int, string>
@@ -30,7 +26,6 @@ public function getObjects(): array<int, string>
 Get the array of object identifiers the user has access to. Returns an array of object identifiers that the queried user has the specified relationship with. Each string represents an object ID of the requested type that the user can access through the specified relation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponseInterface.php#L44)
-
 
 #### Returns
 `array&lt;`int`, `string`&gt;` — Array of object identifiers the user has access to

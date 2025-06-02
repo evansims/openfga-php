@@ -16,14 +16,10 @@ Response containing a paginated list of tuple changes from the store. This respo
 * [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (interface)
 * [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getChanges
-
 
 ```php
 public function getChanges(): OpenFGA\Models\Collections\TupleChangesInterface
@@ -33,11 +29,9 @@ Get the collection of tuple changes. Returns a type-safe collection containing t
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L94)
 
-
 #### Returns
 [`TupleChangesInterface`](Models/Collections/TupleChangesInterface.md) — The collection of tuple changes
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): ?string
@@ -47,13 +41,12 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L103)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
+*<small>Implements Responses\ListTupleChangesResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -63,13 +56,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L35)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
+*<small>Implements Responses\ListTupleChangesResponseInterface</small>*
 
 ```php
 public function fromResponse(

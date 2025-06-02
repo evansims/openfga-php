@@ -16,14 +16,11 @@ Response confirming successful writing of test assertions. This response indicat
 * [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (interface)
 * [WriteAssertionsRequest](Requests/WriteAssertionsRequest.md) (request)
 
-
-
 ## Methods
 
-                        
 #### fromResponse
 
-*<small>Implements Responses\WriteAssertionsResponseInterface</small>*  
+*<small>Implements Responses\WriteAssertionsResponseInterface</small>*
 
 ```php
 public function fromResponse(

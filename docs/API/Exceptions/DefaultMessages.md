@@ -14,14 +14,11 @@ Maps exception error enums to their default message keys. This class provides th
 ## Related Classes
 * [DefaultMessagesInterface](Exceptions/DefaultMessagesInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                    
 #### forAuthenticationError
 
-*<small>Implements Exceptions\DefaultMessagesInterface</small>*  
+*<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
 ```php
 public function forAuthenticationError(AuthenticationError $error): Messages
@@ -40,7 +37,7 @@ Get the default message key for an authentication error. Maps authentication-rel
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 #### forClientError
 
-*<small>Implements Exceptions\DefaultMessagesInterface</small>*  
+*<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
 ```php
 public function forClientError(ClientError $error): Messages
@@ -59,7 +56,7 @@ Get the default message key for a general client error. Maps high-level client e
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 #### forConfigurationError
 
-*<small>Implements Exceptions\DefaultMessagesInterface</small>*  
+*<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
 ```php
 public function forConfigurationError(ConfigurationError $error): Messages
@@ -78,7 +75,7 @@ Get the default message key for a configuration error. Maps configuration-relate
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 #### forError
 
-*<small>Implements Exceptions\DefaultMessagesInterface</small>*  
+*<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
 ```php
 public function forError(
@@ -99,7 +96,7 @@ Get the default message key for any supported error type. Generic method that ac
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 #### forNetworkError
 
-*<small>Implements Exceptions\DefaultMessagesInterface</small>*  
+*<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
 ```php
 public function forNetworkError(NetworkError $error): Messages
@@ -118,7 +115,7 @@ Get the default message key for a network error. Maps network and HTTP-related e
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 #### forSerializationError
 
-*<small>Implements Exceptions\DefaultMessagesInterface</small>*  
+*<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
 ```php
 public function forSerializationError(SerializationError $error): Messages

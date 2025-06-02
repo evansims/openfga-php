@@ -22,13 +22,10 @@ Represents a specific user object with type and identifier. A UserObject provide
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'UserObject'` |  |
 
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -38,11 +35,9 @@ Get the unique identifier of the user object. The ID is unique within the contex
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L69)
 
-
 #### Returns
 `string` — The object identifier
 #### getType
-
 
 ```php
 public function getType(): string
@@ -52,13 +47,12 @@ Get the type of the user object. The type defines the category or class of the o
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L78)
 
-
 #### Returns
 `string` — The object type
 ### Model Management
 #### schema
 
-*<small>Implements Models\UserObjectInterface</small>*  
+*<small>Implements Models\UserObjectInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -68,12 +62,10 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array
@@ -82,7 +74,6 @@ public function jsonSerialize(): array
 Serialize the user object to its JSON representation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L87)
-
 
 #### Returns
 `array`

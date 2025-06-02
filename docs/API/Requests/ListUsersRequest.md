@@ -16,13 +16,9 @@ Request for listing users who have a specific relationship with an object. This 
 * [ListUsersResponse](Responses/ListUsersResponse.md) (response)
 * [ListUsersRequestInterface](Requests/ListUsersRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                                        
 #### getConsistency
-
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -32,11 +28,9 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L82)
 
-
 #### Returns
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContext
-
 
 ```php
 public function getContext(): ?object
@@ -46,11 +40,9 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L91)
 
-
 #### Returns
 `object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -60,11 +52,9 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L100)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getModel
-
 
 ```php
 public function getModel(): string
@@ -74,11 +64,9 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L109)
 
-
 #### Returns
 `string` — The authorization model ID for evaluating user relationships
 #### getObject
-
 
 ```php
 public function getObject(): string
@@ -88,11 +76,9 @@ Get the object to list users for. Specifies the target object for which users wi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L118)
 
-
 #### Returns
 `string` — The object identifier to list users for
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -102,11 +88,9 @@ Get the relation to check for user access. Specifies the relationship type to ev
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L127)
 
-
 #### Returns
 `string` — The relation name to check for user access
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -125,7 +109,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -134,11 +117,9 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L172)
 
-
 #### Returns
 `string` — The store ID containing the authorization data
 #### getUserFilters
-
 
 ```php
 public function getUserFilters(): OpenFGA\Models\Collections\UserTypeFiltersInterface
@@ -147,7 +128,6 @@ public function getUserFilters(): OpenFGA\Models\Collections\UserTypeFiltersInte
 Get the user type filters to apply to results. Returns a collection of filters that control which types of users are included in the results. This allows you to narrow the scope of the query to specific user types, such as individual users, groups, or service accounts, based on your application&#039;s needs. User filters help optimize performance and focus results by excluding user types that are not relevant to the current operation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L181)
-
 
 #### Returns
 [`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md) — Collection of user type filters to apply to the results

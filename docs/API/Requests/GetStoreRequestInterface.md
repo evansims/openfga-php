@@ -15,13 +15,9 @@ Interface for retrieving information about an OpenFGA store. This interface defi
 * [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md) (response)
 * [GetStoreRequest](Requests/GetStoreRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                    
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -40,7 +36,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -48,7 +43,6 @@ public function getStore(): string
 Get the ID of the store to retrieve. Returns the unique identifier of the store whose information should be fetched. This will return metadata about the store including its name, creation timestamp, and other administrative details.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/GetStoreRequestInterface.php#L36)
-
 
 #### Returns
 `string` — The unique identifier of the store to retrieve information for

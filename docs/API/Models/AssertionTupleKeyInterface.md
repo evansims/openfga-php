@@ -15,14 +15,10 @@ Defines the contract for assertion tuple keys used in authorization model testin
 ## Related Classes
 * [AssertionTupleKey](Models/AssertionTupleKey.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getObject
-
 
 ```php
 public function getObject(): string
@@ -32,11 +28,9 @@ Get the object being tested in the assertion. This represents the resource or en
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKeyInterface.php#L30)
 
-
 #### Returns
 `string` — The object identifier being tested
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -46,11 +40,9 @@ Get the relation being tested in the assertion. This represents the type of rela
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKeyInterface.php#L41)
 
-
 #### Returns
 `string` — The relation name being tested
 #### getUser
-
 
 ```php
 public function getUser(): string
@@ -60,20 +52,16 @@ Get the user being tested in the assertion. This represents the subject (user, g
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKeyInterface.php#L52)
 
-
 #### Returns
 `string` — The user identifier being tested
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKeyInterface.php#L62)
-
 
 #### Returns
 `array`

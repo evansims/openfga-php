@@ -16,14 +16,10 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 ## Related Classes
 * [UserObject](Models/UserObject.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -33,11 +29,9 @@ Get the unique identifier of the user object. The ID is unique within the contex
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php#L36)
 
-
 #### Returns
 `string` — The object identifier
 #### getType
-
 
 ```php
 public function getType(): string
@@ -47,12 +41,10 @@ Get the type of the user object. The type defines the category or class of the o
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php#L46)
 
-
 #### Returns
 `string` — The object type
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array
@@ -61,7 +53,6 @@ public function jsonSerialize(): array
 Serialize the user object to its JSON representation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php#L54)
-
 
 #### Returns
 `array`

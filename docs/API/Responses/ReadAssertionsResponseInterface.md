@@ -15,13 +15,9 @@ Interface for assertions reading response objects. This interface defines the co
 * [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (implementation)
 * [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (request)
 
-
-
 ## Methods
 
-                                    
 #### getAssertions
-
 
 ```php
 public function getAssertions(): AssertionsInterface<AssertionInterface>|null
@@ -31,11 +27,9 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponseInterface.php#L46)
 
-
 #### Returns
 [`AssertionsInterface`](Models/Collections/AssertionsInterface.md)&lt;[`AssertionInterface`](Models/AssertionInterface.md)&gt; &#124; `null` — The collection of assertions, or null if no assertions are defined
 #### getModel
-
 
 ```php
 public function getModel(): string
@@ -44,7 +38,6 @@ public function getModel(): string
 Get the authorization model identifier for these assertions. Returns the unique identifier of the authorization model that contains these assertions. This ties the assertions to a specific model version for validation and testing purposes.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponseInterface.php#L57)
-
 
 #### Returns
 `string` — The authorization model identifier

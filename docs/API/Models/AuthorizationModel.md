@@ -22,13 +22,10 @@ Defines the authorization rules and relationships for your application. An Autho
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'AuthorizationModel'` |  |
 
-
 ## Methods
 
-                                                                                                                        
 ### List Operations
 #### getConditions
-
 
 ```php
 public function getConditions(): ?OpenFGA\Models\Collections\ConditionsInterface
@@ -38,11 +35,9 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L82)
 
-
 #### Returns
 [`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` — The collection of reusable conditions defined in this model, or null if no conditions are defined
 #### getId
-
 
 ```php
 public function getId(): string
@@ -52,11 +47,9 @@ Get the unique identifier for this authorization model. The model ID serves as a
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L91)
 
-
 #### Returns
 `string` — The globally unique identifier for this authorization model version
 #### getSchemaVersion
-
 
 ```php
 public function getSchemaVersion(): OpenFGA\Models\Enums\SchemaVersion
@@ -66,11 +59,9 @@ Get the schema version of this authorization model. The schema version indicates
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L100)
 
-
 #### Returns
 [`SchemaVersion`](Models/Enums/SchemaVersion.md) — The schema version enumeration indicating the model format specification
 #### getTypeDefinitions
-
 
 ```php
 public function getTypeDefinitions(): OpenFGA\Models\Collections\TypeDefinitionsInterface
@@ -80,13 +71,12 @@ Get the type definitions that define the structure of this authorization model. 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L109)
 
-
 #### Returns
 [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) — The collection of type definitions that structure this authorization model
 ### Model Management
 #### schema
 
-*<small>Implements Models\AuthorizationModelInterface</small>*  
+*<small>Implements Models\AuthorizationModelInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -96,12 +86,10 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### dsl
-
 
 ```php
 public function dsl(): string
@@ -111,11 +99,9 @@ Generate a DSL (Domain Specific Language) representation of this authorization m
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L73)
 
-
 #### Returns
 `string` — The authorization model expressed in OpenFGA DSL format for human readability
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array
@@ -124,7 +110,6 @@ public function jsonSerialize(): array
 Serialize the authorization model for JSON encoding. This method prepares the complete authorization model data for API communication with the OpenFGA service, converting all components into the format specified by the OpenFGA API. The serialization includes: - Model identification and versioning information - Complete type definitions with relations and metadata - Optional conditions with expressions and parameters - All nested structures properly formatted for JSON transmission The resulting structure is suitable for creating new authorization models, updating existing models, or storing model definitions in external systems. All data is formatted according to the OpenFGA API specification to ensure compatibility and correct interpretation by the authorization service.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L118)
-
 
 #### Returns
 `array`

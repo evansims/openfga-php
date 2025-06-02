@@ -15,14 +15,10 @@ Defines the contract for relation references with optional conditions. A relatio
 ## Related Classes
 * [RelationReference](Models/RelationReference.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getCondition
-
 
 ```php
 public function getCondition(): string|null
@@ -32,11 +28,9 @@ Get the optional condition name that must be satisfied. When specified, this con
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReferenceInterface.php#L31)
 
-
 #### Returns
 `string` &#124; `null` — The condition name, or null if no condition is required
 #### getRelation
-
 
 ```php
 public function getRelation(): string|null
@@ -46,11 +40,9 @@ Get the optional specific relation on the referenced type. When specified, this 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReferenceInterface.php#L42)
 
-
 #### Returns
 `string` &#124; `null` — The relation name, or null to reference the entire type
 #### getType
-
 
 ```php
 public function getType(): string
@@ -60,11 +52,9 @@ Get the type being referenced. This is the object type that this reference point
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReferenceInterface.php#L52)
 
-
 #### Returns
 `string` — The type name being referenced
 #### getWildcard
-
 
 ```php
 public function getWildcard(): object|null
@@ -74,20 +64,16 @@ Get the optional wildcard marker for type-level permissions. When present, this 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReferenceInterface.php#L63)
 
-
 #### Returns
 `object` &#124; `null` — The wildcard marker, or null for instance-specific references
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReferenceInterface.php#L69)
-
 
 #### Returns
 `array`

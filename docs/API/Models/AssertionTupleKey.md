@@ -21,13 +21,10 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'AssertionTupleKey'` |  |
 
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getObject
-
 
 ```php
 public function getObject(): string
@@ -37,11 +34,9 @@ Get the object being tested in the assertion. This represents the resource or en
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L59)
 
-
 #### Returns
 `string` — The object identifier being tested
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -51,11 +46,9 @@ Get the relation being tested in the assertion. This represents the type of rela
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L68)
 
-
 #### Returns
 `string` — The relation name being tested
 #### getUser
-
 
 ```php
 public function getUser(): string
@@ -65,13 +58,12 @@ Get the user being tested in the assertion. This represents the subject (user, g
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L77)
 
-
 #### Returns
 `string` — The user identifier being tested
 ### Model Management
 #### schema
 
-*<small>Implements Models\AssertionTupleKeyInterface</small>*  
+*<small>Implements Models\AssertionTupleKeyInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -81,20 +73,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L86)
-
 
 #### Returns
 `array`

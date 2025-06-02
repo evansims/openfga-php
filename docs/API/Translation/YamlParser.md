@@ -7,8 +7,3 @@ Simple YAML parser for translation files. This lightweight YAML parser handles t
 
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Translation/YamlParser.php)
-
-
-
-
-

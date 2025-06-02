@@ -15,14 +15,10 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 ## Related Classes
 * [TupleToUsersetV1](Models/TupleToUsersetV1.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getComputedUserset
-
 
 ```php
 public function getComputedUserset(): ObjectRelationInterface
@@ -32,11 +28,9 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1Interface.php#L32)
 
-
 #### Returns
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the computed userset
 #### getTupleset
-
 
 ```php
 public function getTupleset(): ObjectRelationInterface
@@ -46,20 +40,16 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1Interface.php#L43)
 
-
 #### Returns
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the tupleset
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1Interface.php#L49)
-
 
 #### Returns
 `array`

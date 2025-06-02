@@ -16,14 +16,10 @@ Response containing a paginated list of relationship tuples. This response provi
 * [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (interface)
 * [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): ?string
@@ -33,11 +29,9 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadTuplesResponse.php#L95)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 #### getTuples
-
 
 ```php
 public function getTuples(): OpenFGA\Models\Collections\TuplesInterface
@@ -47,13 +41,12 @@ Get the collection of relationship tuples. Returns a type-safe collection contai
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadTuplesResponse.php#L104)
 
-
 #### Returns
 [`TuplesInterface`](Models/Collections/TuplesInterface.md) — The collection of relationship tuples
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ReadTuplesResponseInterface</small>*  
+*<small>Implements Responses\ReadTuplesResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -63,13 +56,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadTuplesResponseInterface.php#L34)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ReadTuplesResponseInterface</small>*  
+*<small>Implements Responses\ReadTuplesResponseInterface</small>*
 
 ```php
 public function fromResponse(

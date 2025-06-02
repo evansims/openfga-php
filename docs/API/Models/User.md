@@ -21,13 +21,10 @@ Represents a user or user specification in authorization contexts. A User can re
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'User'` |  |
 
-
 ## Methods
 
-                                                                                                            
 ### List Operations
 #### getDifference
-
 
 ```php
 public function getDifference(): ?OpenFGA\Models\DifferenceV1Interface
@@ -37,11 +34,9 @@ Get the difference operation for this user. Difference operations enable sophist
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L67)
 
-
 #### Returns
 [`DifferenceV1Interface`](DifferenceV1Interface.md) &#124; `null` — The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 #### getObject
-
 
 ```php
 public function getObject(): ?OpenFGA\Models\UserObjectInterface|string|null
@@ -51,11 +46,9 @@ Get the user object representation. User objects represent direct, concrete user
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L76)
 
-
 #### Returns
 [`UserObjectInterface`](UserObjectInterface.md) &#124; `null` &#124; `string` &#124; `null` — The direct user identifier as a structured object or string, or null if this is not a direct user reference
 #### getUserset
-
 
 ```php
 public function getUserset(): ?OpenFGA\Models\UsersetUserInterface
@@ -65,11 +58,9 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L130)
 
-
 #### Returns
 [`UsersetUserInterface`](UsersetUserInterface.md) &#124; `null` — The userset definition specifying users through relationships, or null if this is not a userset-based user
 #### getWildcard
-
 
 ```php
 public function getWildcard(): ?OpenFGA\Models\TypedWildcardInterface
@@ -79,13 +70,12 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L139)
 
-
 #### Returns
 [`TypedWildcardInterface`](TypedWildcardInterface.md) &#124; `null` — The wildcard definition specifying the user type, or null if this is not a wildcard user
 ### Model Management
 #### schema
 
-*<small>Implements Models\UserInterface</small>*  
+*<small>Implements Models\UserInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -95,12 +85,10 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array<string, mixed>
@@ -109,7 +97,6 @@ public function jsonSerialize(): array<string, mixed>
 Serialize the user for JSON encoding. This method prepares the user data for API communication with the OpenFGA service, converting the user representation into the format expected by the OpenFGA API. The serialization handles all user types (direct objects, usersets, wildcards, and difference operations) and ensures the resulting structure matches the OpenFGA API specification. Only the appropriate user type fields are included in the output: - Direct users include object field with type:id or structured object - Usersets include userset field with type, id, and relation - Wildcards include wildcard field with type specification - Difference operations include difference field with base and subtract sets
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L150)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;` — User data formatted for JSON encoding with the appropriate user type representation

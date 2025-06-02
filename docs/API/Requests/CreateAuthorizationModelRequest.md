@@ -16,13 +16,9 @@ Request for creating a new authorization model in OpenFGA. Authorization models 
 * [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (response)
 * [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                        
 #### getConditions
-
 
 ```php
 public function getConditions(): ?OpenFGA\Models\Collections\ConditionsInterface
@@ -32,11 +28,9 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateAuthorizationModelRequest.php#L60)
 
-
 #### Returns
 [`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` — Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -55,7 +49,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getSchemaVersion
 
-
 ```php
 public function getSchemaVersion(): OpenFGA\Models\Enums\SchemaVersion
 ```
@@ -64,11 +57,9 @@ Get the schema version for the authorization model. Specifies which version of t
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateAuthorizationModelRequest.php#L99)
 
-
 #### Returns
 [`SchemaVersion`](Models/Enums/SchemaVersion.md) — The modeling language schema version for this authorization model
 #### getStore
-
 
 ```php
 public function getStore(): string
@@ -78,11 +69,9 @@ Get the store ID where the authorization model will be created. Identifies the O
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateAuthorizationModelRequest.php#L108)
 
-
 #### Returns
 `string` — The store ID where the authorization model will be created
 #### getTypeDefinitions
-
 
 ```php
 public function getTypeDefinitions(): OpenFGA\Models\Collections\TypeDefinitionsInterface
@@ -91,7 +80,6 @@ public function getTypeDefinitions(): OpenFGA\Models\Collections\TypeDefinitions
 Get the type definitions for the authorization model. Returns a collection of type definitions that specify the object types and their allowed relationships within the authorization model. Type definitions form the core schema that defines what objects exist in your system and how they can be related to users and other objects. Each type definition includes: - Object type name (e.g., &quot;document&quot;, &quot;folder&quot;, &quot;organization&quot;) - Allowed relationships (e.g., &quot;owner&quot;, &quot;editor&quot;, &quot;viewer&quot;) - Relationship inheritance and computation rules - References to conditional logic for dynamic authorization
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateAuthorizationModelRequest.php#L117)
-
 
 #### Returns
 [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) — Collection of object type definitions that define the authorization schema

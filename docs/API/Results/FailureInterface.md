@@ -14,13 +14,9 @@ Represents a failed result containing an error. Failure results indicate that an
 ## Related Classes
 * [Failure](Results/Failure.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                                                    
 #### err
-
 
 ```php
 public function err(): Throwable
@@ -30,11 +26,9 @@ Retrieves the error from a failed result. This method should only be called on F
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L71)
 
-
 #### Returns
 `Throwable` — The error that caused the failure
 #### failed
-
 
 ```php
 public function failed(): bool
@@ -44,11 +38,9 @@ Determines if this result represents a failure.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L78)
 
-
 #### Returns
 `bool` — True if this is a Failure result, false if it&#039;s a Success
 #### failure
-
 
 ```php
 public function failure(callable $fn): ResultInterface
@@ -67,7 +59,6 @@ Executes a callback when the result is a failure and continues the chain. The ca
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 #### recover
 
-
 ```php
 public function recover(callable $fn): ResultInterface
 ```
@@ -84,7 +75,6 @@ Recovers from a failure by transforming it into a success or different failure. 
 #### Returns
 [`ResultInterface`](ResultInterface.md) — The recovered result or original success
 #### rethrow
-
 
 ```php
 public function rethrow(Throwable|null $throwable = NULL): ResultInterface
@@ -103,7 +93,6 @@ Throws the contained error or continues the chain. For Failure results, this thr
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 #### succeeded
 
-
 ```php
 public function succeeded(): bool
 ```
@@ -112,11 +101,9 @@ Determines if this result represents a success.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L121)
 
-
 #### Returns
 `bool` — True if this is a Success result, false if it&#039;s a Failure
 #### success
-
 
 ```php
 public function success(callable $fn): ResultInterface
@@ -135,7 +122,6 @@ Executes a callback when the result is a success and continues the chain. The ca
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 #### then
 
-
 ```php
 public function then(callable $fn): ResultInterface
 ```
@@ -152,7 +138,6 @@ Transforms a successful result using a callback and continues the chain. The cal
 #### Returns
 [`ResultInterface`](ResultInterface.md) — The transformed result or original failure
 #### unwrap
-
 
 ```php
 public function unwrap(?callable $fn = NULL): mixed
@@ -171,7 +156,6 @@ Extracts the value from the result or applies a transformation. Without a callba
 `mixed` — The response interface, callback result, or throws the error
 #### val
 
-
 ```php
 public function val(): mixed
 ```
@@ -179,7 +163,6 @@ public function val(): mixed
 Retrieves the value from a successful result. This method should only be called on Success results. Use succeeded() to check the result type before calling this method to avoid exceptions. Returns the specific response interface documented in the calling method&#039;s @return annotation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Results/ResultInterface.php#L172)
-
 
 #### Returns
 `mixed` — The response interface (e.g., CheckResponseInterface, StoreInterface)

@@ -15,14 +15,10 @@ Represents a computed userset in OpenFGA authorization models. Computed usersets
 ## Related Classes
 * [Computed](Models/Computed.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 ### List Operations
 #### getUserset
-
 
 ```php
 public function getUserset(): string
@@ -32,20 +28,16 @@ Get the userset reference string that defines a computed relationship. This repr
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ComputedInterface.php#L39)
 
-
 #### Returns
 `string` — The userset reference string defining the computed relationship
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ComputedInterface.php#L45)
-
 
 #### Returns
 `array`

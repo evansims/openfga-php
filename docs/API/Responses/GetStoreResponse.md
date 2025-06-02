@@ -16,14 +16,10 @@ Response containing detailed information about a specific store. This response p
 * [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md) (interface)
 * [GetStoreRequest](Requests/GetStoreRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                                                                                                
 ### CRUD Operations
 #### getCreatedAt
-
 
 ```php
 public function getCreatedAt(): DateTimeImmutable
@@ -33,11 +29,9 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponse.php#L101)
 
-
 #### Returns
 `DateTimeImmutable` — The creation timestamp of the store
 #### getDeletedAt
-
 
 ```php
 public function getDeletedAt(): ?DateTimeImmutable
@@ -47,11 +41,9 @@ Get the timestamp when the store was deleted, if applicable. Returns the deletio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponse.php#L110)
 
-
 #### Returns
 `DateTimeImmutable` &#124; `null` — The deletion timestamp, or null if the store is not deleted
 #### getUpdatedAt
-
 
 ```php
 public function getUpdatedAt(): DateTimeImmutable
@@ -61,12 +53,10 @@ Get the timestamp when the store was last updated. Returns the timestamp of the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponse.php#L152)
 
-
 #### Returns
 `DateTimeImmutable` — The last update timestamp of the store
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -76,11 +66,9 @@ Get the unique identifier of the store. Returns the system-generated unique iden
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponse.php#L119)
 
-
 #### Returns
 `string` — The unique store identifier
 #### getName
-
 
 ```php
 public function getName(): string
@@ -90,11 +78,9 @@ Get the human-readable name of the store. Returns the descriptive name that was 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponse.php#L128)
 
-
 #### Returns
 `string` — The descriptive name of the store
 #### getStore
-
 
 ```php
 public function getStore(): OpenFGA\Models\StoreInterface
@@ -104,13 +90,12 @@ Get the complete store object. Returns the full store object containing all stor
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponse.php#L137)
 
-
 #### Returns
 [`StoreInterface`](Models/StoreInterface.md) — The complete store object
 ### Model Management
 #### schema
 
-*<small>Implements Responses\GetStoreResponseInterface</small>*  
+*<small>Implements Responses\GetStoreResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -120,13 +105,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L34)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\GetStoreResponseInterface</small>*  
+*<small>Implements Responses\GetStoreResponseInterface</small>*
 
 ```php
 public function fromResponse(

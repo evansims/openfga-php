@@ -12,7 +12,6 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -35,10 +34,8 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 
 ## Methods
 
-                                                            
 ### Utility
 #### isCollectionError
-
 
 ```php
 public function isCollectionError(): bool
@@ -48,11 +45,9 @@ Check if this serialization error is related to collection operations. Useful fo
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/SerializationError.php#L86)
 
-
 #### Returns
 `bool` — True if the error is collection-related, false otherwise
 #### isTypeValidationError
-
 
 ```php
 public function isTypeValidationError(): bool
@@ -62,12 +57,10 @@ Check if this serialization error indicates a data type validation failure. Usef
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/SerializationError.php#L106)
 
-
 #### Returns
 `bool` — True if the error is type-related, false otherwise
 ### Other
 #### exception
-
 
 ```php
 public function exception(

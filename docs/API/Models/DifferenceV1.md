@@ -21,13 +21,10 @@ Represents a set difference operation between two usersets. In authorization mod
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'v1.Difference'` |  |
 
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getBase
-
 
 ```php
 public function getBase(): OpenFGA\Models\UsersetInterface
@@ -37,11 +34,9 @@ Get the base userset from which users will be subtracted. This represents the in
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1.php#L56)
 
-
 #### Returns
 [`UsersetInterface`](UsersetInterface.md) — The base userset for the difference operation
 #### getSubtract
-
 
 ```php
 public function getSubtract(): OpenFGA\Models\UsersetInterface
@@ -51,13 +46,12 @@ Get the userset of users to subtract from the base userset. This represents the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1.php#L65)
 
-
 #### Returns
 [`UsersetInterface`](UsersetInterface.md) — The userset to subtract from the base
 ### Model Management
 #### schema
 
-*<small>Implements Models\DifferenceV1Interface</small>*  
+*<small>Implements Models\DifferenceV1Interface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -67,20 +61,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1.php#L74)
-
 
 #### Returns
 `array`

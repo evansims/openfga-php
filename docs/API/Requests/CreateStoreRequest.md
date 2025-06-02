@@ -16,13 +16,9 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 * [CreateStoreResponse](Responses/CreateStoreResponse.md) (response)
 * [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                    
 #### getName
-
 
 ```php
 public function getName(): string
@@ -32,11 +28,9 @@ Get the name for the new store. Returns the human-readable name that will be ass
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateStoreRequest.php#L53)
 
-
 #### Returns
 `string` — The descriptive name for the new authorization store
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext

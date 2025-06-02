@@ -16,13 +16,9 @@ Request for listing all available stores with pagination support. This request r
 * [ListStoresResponse](Responses/ListStoresResponse.md) (response)
 * [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): ?string
@@ -32,11 +28,9 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListStoresRequest.php#L52)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 #### getPageSize
-
 
 ```php
 public function getPageSize(): ?int
@@ -46,11 +40,9 @@ Get the maximum number of stores to return per page. Specifies the page size for
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListStoresRequest.php#L61)
 
-
 #### Returns
 `int` &#124; `null` — The maximum number of stores to return per page, or null to use the default page size
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext

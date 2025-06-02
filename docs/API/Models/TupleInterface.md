@@ -15,14 +15,10 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 ## Related Classes
 * [Tuple](Models/Tuple.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getKey
-
 
 ```php
 public function getKey(): TupleKeyInterface
@@ -32,11 +28,9 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleInterface.php#L54)
 
-
 #### Returns
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key defining this relationship with user, relation, object, and optional condition
 #### getTimestamp
-
 
 ```php
 public function getTimestamp(): DateTimeImmutable
@@ -46,12 +40,10 @@ Get the timestamp when this tuple was created or last modified. Timestamps provi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleInterface.php#L73)
 
-
 #### Returns
 `DateTimeImmutable` — The creation or last modification timestamp in UTC timezone
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array<string, mixed>
@@ -60,7 +52,6 @@ public function jsonSerialize(): array<string, mixed>
 Serialize the tuple for JSON encoding. This method prepares the tuple data for API communication with the OpenFGA service, converting the tuple key and timestamp into the format expected by the OpenFGA API. The tuple key is serialized to include all relationship components (user, relation, object, and optional condition), while the timestamp is formatted as an RFC3339 string in UTC timezone. The resulting structure matches the OpenFGA API specification for tuple objects, ensuring seamless integration with write operations, read queries, and other tuple-related API endpoints.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleInterface.php#L91)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;` — Tuple data formatted for JSON encoding with API-compatible structure

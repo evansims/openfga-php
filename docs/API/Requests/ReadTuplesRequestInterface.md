@@ -15,13 +15,9 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 * [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (response)
 * [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                    
 #### getConsistency
-
 
 ```php
 public function getConsistency(): Consistency|null
@@ -31,11 +27,9 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequestInterface.php#L43)
 
-
 #### Returns
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContinuationToken
-
 
 ```php
 public function getContinuationToken(): string|null
@@ -45,11 +39,9 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequestInterface.php#L55)
 
-
 #### Returns
 `string` &#124; `null` — The continuation token from a previous read operation, or null for the first page
 #### getPageSize
-
 
 ```php
 public function getPageSize(): int|null
@@ -59,11 +51,9 @@ Get the maximum number of tuples to return. Specifies the page size for paginate
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequestInterface.php#L67)
 
-
 #### Returns
 `int` &#124; `null` — The maximum number of tuples to return per page, or null to use the default page size
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -82,7 +72,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -91,11 +80,9 @@ Get the store ID containing the tuples to read. Identifies which OpenFGA store c
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequestInterface.php#L78)
 
-
 #### Returns
 `string` — The store ID containing the relationship tuples to read
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): TupleKeyInterface
@@ -104,7 +91,6 @@ public function getTupleKey(): TupleKeyInterface
 Get the tuple key pattern for filtering results. Specifies the relationship pattern to match when reading tuples. This can include specific values for object, user, and relation, or use partial patterns with wildcards to match multiple tuples. Empty or null values in the tuple key act as wildcards.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequestInterface.php#L90)
-
 
 #### Returns
 [`TupleKeyInterface`](Models/TupleKeyInterface.md) — The relationship tuple pattern for filtering results

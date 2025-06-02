@@ -22,13 +22,10 @@ Represents a relationship tuple key defining a connection between user, relation
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'TupleKey'` |  |
 
-
 ## Methods
 
-                                                                                                            
 ### List Operations
 #### getCondition
-
 
 ```php
 public function getCondition(): ?OpenFGA\Models\ConditionInterface
@@ -38,11 +35,9 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L62)
 
-
 #### Returns
 [`ConditionInterface`](ConditionInterface.md) &#124; `null` — The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 #### getObject
-
 
 ```php
 public function getObject(): string
@@ -52,11 +47,9 @@ Get the object in this relationship tuple. The object represents the resource or
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L71)
 
-
 #### Returns
 `string` — The object identifier, or null if not specified
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -66,11 +59,9 @@ Get the relation that defines the type of relationship. The relation describes w
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L80)
 
-
 #### Returns
 `string` — The relation name defining the type of relationship, or null if not specified
 #### getUser
-
 
 ```php
 public function getUser(): string
@@ -80,13 +71,12 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L89)
 
-
 #### Returns
 `string` — The user identifier, or null if not specified
 ### Model Management
 #### schema
 
-*<small>Implements Models\TupleKeyInterface</small>*  
+*<small>Implements Models\TupleKeyInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -96,12 +86,10 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array
@@ -110,7 +98,6 @@ public function jsonSerialize(): array
 Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L98)
-
 
 #### Returns
 `array` — The serialized tuple key data ready for JSON encoding

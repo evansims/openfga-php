@@ -15,13 +15,9 @@ Interface for writing test assertions to an authorization model. This interface 
 * [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (response)
 * [WriteAssertionsRequest](Requests/WriteAssertionsRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 #### getAssertions
-
 
 ```php
 public function getAssertions(): AssertionsInterface<AssertionInterface>
@@ -31,11 +27,9 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequestInterface.php#L62)
 
-
 #### Returns
 [`AssertionsInterface`](Models/Collections/AssertionsInterface.md)&lt;[`AssertionInterface`](Models/AssertionInterface.md)&gt; — Collection of test assertions to validate authorization model behavior
 #### getModel
-
 
 ```php
 public function getModel(): string
@@ -45,11 +39,9 @@ Get the authorization model ID to associate assertions with. Specifies which ver
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequestInterface.php#L74)
 
-
 #### Returns
 `string` — The authorization model ID that these assertions will test
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -68,7 +60,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -76,7 +67,6 @@ public function getStore(): string
 Get the store ID where assertions will be written. Identifies the OpenFGA store that contains the authorization model and where the test assertions will be stored. Assertions are stored alongside the model they test, providing a complete testing framework within each store.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequestInterface.php#L86)
-
 
 #### Returns
 `string` — The store ID where the test assertions will be written

@@ -8,18 +8,13 @@ Manages HTTP requests and responses for OpenFGA API communication. This interfac
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php)
 
-
 ## Related Classes
 * [RequestManager](Network/RequestManager.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getHttpClient
-
 
 ```php
 public function getHttpClient(): ClientInterface
@@ -29,11 +24,9 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php#L96)
 
-
 #### Returns
 [`ClientInterface`](ClientInterface.md) — The PSR-18 HTTP client instance for executing requests
 #### getHttpRequestFactory
-
 
 ```php
 public function getHttpRequestFactory(): RequestFactoryInterface
@@ -43,11 +36,9 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php#L112)
 
-
 #### Returns
 `RequestFactoryInterface` — The PSR-17 factory for creating HTTP request objects
 #### getHttpResponseFactory
-
 
 ```php
 public function getHttpResponseFactory(): ResponseFactoryInterface
@@ -57,11 +48,9 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php#L128)
 
-
 #### Returns
 `ResponseFactoryInterface` — The PSR-17 factory for creating HTTP response objects
 #### getHttpStreamFactory
-
 
 ```php
 public function getHttpStreamFactory(): StreamFactoryInterface
@@ -71,12 +60,10 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php#L144)
 
-
 #### Returns
 `StreamFactoryInterface` — The PSR-17 factory for creating HTTP message body streams
 ### Other
 #### request
-
 
 ```php
 public function request(RequestInterface $request): HttpRequestInterface
@@ -94,7 +81,6 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 #### Returns
 `HttpRequestInterface` — The PSR-7 HTTP request ready for execution
 #### send
-
 
 ```php
 public function send(HttpRequestInterface $request): ResponseInterface

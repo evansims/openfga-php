@@ -16,14 +16,11 @@ Response confirming successful deletion of a store. This response is returned wh
 * [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (interface)
 * [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (request)
 
-
-
 ## Methods
 
-                        
 #### fromResponse
 
-*<small>Implements Responses\DeleteStoreResponseInterface</small>*  
+*<small>Implements Responses\DeleteStoreResponseInterface</small>*
 
 ```php
 public function fromResponse(

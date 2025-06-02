@@ -14,13 +14,9 @@ JSON schema definition for validating and transforming data structures. This sch
 ## Related Classes
 * [SchemaInterface](Schema/SchemaInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                
 #### getClassName
-
 
 ```php
 public function getClassName(): string
@@ -30,11 +26,9 @@ Get the fully qualified class name this schema defines. This method returns the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/Schema.php#L44)
 
-
 #### Returns
 `string` — The fully qualified class name for the model this schema defines
 #### getProperties
-
 
 ```php
 public function getProperties(): array
@@ -44,11 +38,9 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/Schema.php#L53)
 
-
 #### Returns
 `array` — An associative array of property names to their schema property definitions
 #### getProperty
-
 
 ```php
 public function getProperty(string $name): ?OpenFGA\Schema\SchemaProperty

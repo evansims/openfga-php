@@ -16,14 +16,10 @@ Represents a user in a list context for authorization operations. UsersListUser 
 ## Related Classes
 * [UsersListUser](Models/UsersListUser.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 ### List Operations
 #### getUser
-
 
 ```php
 public function getUser(): string
@@ -33,12 +29,10 @@ Get the user identifier string. This returns the user identifier in the format e
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUserInterface.php#L42)
 
-
 #### Returns
 `string` — The user identifier string
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): string
@@ -47,7 +41,6 @@ public function jsonSerialize(): string
 Serialize the user to its JSON representation. Returns the user identifier as a string for API serialization. This differs from most models which serialize to arrays.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUserInterface.php#L53)
-
 
 #### Returns
 `string` — The user identifier string

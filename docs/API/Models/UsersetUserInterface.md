@@ -15,14 +15,10 @@ Defines the contract for userset user specifications. A userset user represents 
 ## Related Classes
 * [UsersetUser](Models/UsersetUser.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -32,11 +28,9 @@ Get the object identifier in the userset reference. This represents the specific
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php#L30)
 
-
 #### Returns
 `string` — The object identifier
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -46,11 +40,9 @@ Get the relation name in the userset reference. This represents the specific rel
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php#L40)
 
-
 #### Returns
 `string` — The relation name
 #### getType
-
 
 ```php
 public function getType(): string
@@ -60,20 +52,16 @@ Get the object type in the userset reference. This represents the type of object
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php#L50)
 
-
 #### Returns
 `string` — The object type
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php#L56)
-
 
 #### Returns
 `array`

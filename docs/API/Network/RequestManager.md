@@ -14,14 +14,10 @@ Concrete implementation of HTTP request management for OpenFGA API communication
 ## Related Classes
 * [RequestManagerInterface](Network/RequestManagerInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                            
 ### List Operations
 #### getHttpClient
-
 
 ```php
 public function getHttpClient(): Psr\Http\Client\ClientInterface
@@ -31,11 +27,9 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L133)
 
-
 #### Returns
 `ClientInterface` — The PSR-18 HTTP client instance for executing requests
 #### getHttpRequestFactory
-
 
 ```php
 public function getHttpRequestFactory(): Psr\Http\Message\RequestFactoryInterface
@@ -45,11 +39,9 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L155)
 
-
 #### Returns
 `RequestFactoryInterface` — The PSR-17 factory for creating HTTP request objects
 #### getHttpResponseFactory
-
 
 ```php
 public function getHttpResponseFactory(): Psr\Http\Message\ResponseFactoryInterface
@@ -59,11 +51,9 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L177)
 
-
 #### Returns
 `ResponseFactoryInterface` — The PSR-17 factory for creating HTTP response objects
 #### getHttpStreamFactory
-
 
 ```php
 public function getHttpStreamFactory(): Psr\Http\Message\StreamFactoryInterface
@@ -73,13 +63,12 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L199)
 
-
 #### Returns
 `StreamFactoryInterface` — The PSR-17 factory for creating HTTP message body streams
 ### Other
 #### handleResponseException
 
-*<small>Implements Network\RequestManagerInterface</small>*  
+*<small>Implements Network\RequestManagerInterface</small>*
 
 ```php
 public function handleResponseException(ResponseInterface $response, HttpRequestInterface|null $request = NULL): never
@@ -99,7 +88,6 @@ Handle error responses by throwing appropriate exceptions. Analyzes HTTP error r
 `never` — This method always throws an exception and never returns normally
 #### request
 
-
 ```php
 public function request(OpenFGA\Requests\RequestInterface $request): Psr\Http\Message\RequestInterface
 ```
@@ -116,7 +104,6 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 #### Returns
 `Psr\Http\Message\RequestInterface` — The PSR-7 HTTP request ready for execution
 #### send
-
 
 ```php
 public function send(Psr\Http\Message\RequestInterface $request): Psr\Http\Message\ResponseInterface

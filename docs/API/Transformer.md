@@ -14,14 +14,11 @@ OpenFGA DSL Transformer implementation for authorization model conversions. This
 ## Related Classes
 * [TransformerInterface](TransformerInterface.md) (interface)
 
-
-
 ## Methods
 
-                                    
 #### fromDsl
 
-*<small>Implements TransformerInterface</small>*  
+*<small>Implements TransformerInterface</small>*
 
 ```php
 public function fromDsl(string $dsl, SchemaValidator $validator): AuthorizationModelInterface
@@ -41,7 +38,7 @@ Parse a DSL string into an authorization model. This method converts a human-rea
 [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) — The parsed authorization model ready for API operations
 #### toDsl
 
-*<small>Implements TransformerInterface</small>*  
+*<small>Implements TransformerInterface</small>*
 
 ```php
 public function toDsl(AuthorizationModelInterface $model): string

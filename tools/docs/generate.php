@@ -392,6 +392,9 @@ class DocumentationGenerator
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
         echo "Writing to: $outputFile\n";
         $content = $this->twig->render('documentation.twig', $classData);
+        
+        // Clean up markdown formatting
+        $content = $this->cleanupMarkdown($content);
 
         $result = file_put_contents($outputFile, $content);
         if ($result === false) {
@@ -1258,6 +1261,103 @@ class DocumentationGenerator
         }
         
         return "[$targetShortName]($relativePath)";
+    }
+
+    /**
+     * Clean up markdown formatting for better readability and consistency.
+     *
+     * This method applies markdown best practices:
+     * - Removes excessive blank lines (max 2 consecutive)
+     * - Removes trailing whitespace from lines
+     * - Removes lines with only whitespace
+     * - Ensures proper spacing around headers and sections
+     * - Normalizes line endings
+     *
+     * @param string $content Raw markdown content
+     * @return string Cleaned markdown content
+     */
+    private function cleanupMarkdown(string $content): string
+    {
+        // Normalize line endings
+        $content = str_replace("\r\n", "\n", $content);
+        $content = str_replace("\r", "\n", $content);
+        
+        // Split into lines for processing
+        $lines = explode("\n", $content);
+        $cleanedLines = [];
+        $consecutiveBlankLines = 0;
+        
+        foreach ($lines as $line) {
+            // Remove trailing whitespace
+            $line = rtrim($line);
+            
+            // Check if line is blank (empty or only whitespace)
+            if (trim($line) === '') {
+                $consecutiveBlankLines++;
+                
+                // Only allow maximum of 2 consecutive blank lines
+                if ($consecutiveBlankLines <= 2) {
+                    $cleanedLines[] = '';
+                }
+            } else {
+                $consecutiveBlankLines = 0;
+                $cleanedLines[] = $line;
+            }
+        }
+        
+        // Remove trailing blank lines at the end
+        while (!empty($cleanedLines) && end($cleanedLines) === '') {
+            array_pop($cleanedLines);
+        }
+        
+        // Ensure file ends with single newline
+        $cleanedLines[] = '';
+        
+        // Join lines back together
+        $content = implode("\n", $cleanedLines);
+        
+        // Apply additional cleanup patterns
+        $content = $this->applyMarkdownCleanupPatterns($content);
+        
+        return $content;
+    }
+
+    /**
+     * Apply specific markdown cleanup patterns.
+     *
+     * @param string $content Markdown content
+     * @return string Cleaned content
+     */
+    private function applyMarkdownCleanupPatterns(string $content): string
+    {
+        // Remove excessive blank lines around headers
+        $content = preg_replace('/\n{3,}(#{1,6}\s)/', "\n\n$1", $content);
+        
+        // Ensure proper spacing after headers
+        $content = preg_replace('/(#{1,6}\s[^\n]+)\n{3,}/', "$1\n\n", $content);
+        
+        // Remove excessive blank lines before code blocks
+        $content = preg_replace('/\n{3,}(```)/', "\n\n$1", $content);
+        
+        // Remove excessive blank lines after code blocks
+        $content = preg_replace('/(```)\n{3,}/', "$1\n\n", $content);
+        
+        // Clean up around table separators (ensure single blank line before/after tables)
+        $content = preg_replace('/\n{3,}(\|[^\n]*\|)\n(\|[-:\s\|]+\|)\n/', "\n\n$1\n$2\n", $content);
+        
+        // Remove excessive blank lines before lists
+        $content = preg_replace('/\n{3,}([\*\-\+]\s)/', "\n\n$1", $content);
+        
+        // Remove blank lines that are just long sequences of spaces
+        $content = preg_replace('/\n\s{10,}\n/', "\n\n", $content);
+        
+        // Ensure single blank line before "## Methods" section
+        $content = preg_replace('/\n{3,}(## Methods)/', "\n\n$1", $content);
+        
+        // Clean up excessive blank lines around method sections
+        $content = preg_replace('/\n{3,}(#### \w+)/', "\n\n$1", $content);
+        
+        return $content;
     }
 
     public static function deleteDir(string $dir): void

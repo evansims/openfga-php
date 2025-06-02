@@ -15,13 +15,9 @@ Interface for listing objects that a user has access to. This interface defines 
 * [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (response)
 * [ListObjectsRequest](Requests/ListObjectsRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                                        
 #### getConsistency
-
 
 ```php
 public function getConsistency(): Consistency|null
@@ -31,11 +27,9 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L46)
 
-
 #### Returns
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContext
-
 
 ```php
 public function getContext(): object|null
@@ -45,11 +39,9 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L58)
 
-
 #### Returns
 `object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>|null
@@ -59,11 +51,9 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L70)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getModel
-
 
 ```php
 public function getModel(): string|null
@@ -73,11 +63,9 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L82)
 
-
 #### Returns
 `string` &#124; `null` — The authorization model ID for evaluation, or null to use the latest model version
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -87,11 +75,9 @@ Get the relation to check for object access. Specifies the relationship type to 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L93)
 
-
 #### Returns
 `string` — The relation name to check for object access
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -110,7 +96,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -119,11 +104,9 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L104)
 
-
 #### Returns
 `string` — The store ID containing the authorization data
 #### getType
-
 
 ```php
 public function getType(): string
@@ -133,11 +116,9 @@ Get the object type to filter results by. Specifies the type of objects to inclu
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L115)
 
-
 #### Returns
 `string` — The object type to filter results by
 #### getUser
-
 
 ```php
 public function getUser(): string
@@ -146,7 +127,6 @@ public function getUser(): string
 Get the user to check object access for. Identifies the user for whom object access is being evaluated. This can be a direct user identifier or a userset expression. The operation will return all objects of the specified type that this user can access through the specified relation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L127)
-
 
 #### Returns
 `string` — The user identifier or userset to check object access for

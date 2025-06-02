@@ -12,7 +12,6 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -27,10 +26,8 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getNumericVersion
-
 
 ```php
 public function getNumericVersion(): float
@@ -40,12 +37,10 @@ Get the numeric version as a float for comparison operations. Useful for version
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L93)
 
-
 #### Returns
 `float` — The numeric representation of the schema version
 ### Utility
 #### isLatest
-
 
 ```php
 public function isLatest(): bool
@@ -55,11 +50,9 @@ Check if this is the latest schema version. Useful for determining if an authori
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L106)
 
-
 #### Returns
 `bool` — True if this is the latest schema version, false otherwise
 #### isLegacy
-
 
 ```php
 public function isLegacy(): bool
@@ -69,12 +62,10 @@ Check if this is a legacy schema version. Legacy versions are still supported bu
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L119)
 
-
 #### Returns
 `bool` — True if this is a legacy version, false otherwise
 ### Other
 #### compareTo
-
 
 ```php
 public function compareTo(SchemaVersion $other): int
@@ -93,7 +84,6 @@ Compare this schema version with another version. Returns negative, zero, or pos
 `int` — Comparison result (-1, 0, or 1)
 #### supportsConditions
 
-
 ```php
 public function supportsConditions(): bool
 ```
@@ -101,7 +91,6 @@ public function supportsConditions(): bool
 Check if this schema version supports conditional relationships. Conditional relationships allow runtime parameter evaluation to determine relationship validity, enabling context-aware authorization decisions.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L135)
-
 
 #### Returns
 `bool` — True if conditional relationships are supported, false otherwise

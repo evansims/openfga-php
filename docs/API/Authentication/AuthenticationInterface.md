@@ -8,16 +8,10 @@ Interface for OpenFGA authentication strategies. This interface defines the cont
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AuthenticationInterface.php)
 
-
-
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getAuthenticationRequest
-
 
 ```php
 public function getAuthenticationRequest(StreamFactoryInterface $streamFactory): RequestContext|null
@@ -36,7 +30,6 @@ Get an authentication request context if this strategy requires token acquisitio
 `RequestContext` &#124; `null` — The authentication request context, or null if not needed
 #### getAuthorizationHeader
 
-
 ```php
 public function getAuthorizationHeader(): string|null
 ```
@@ -45,12 +38,10 @@ Get the authorization header value for API requests. Returns the authorization h
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AuthenticationInterface.php#L45)
 
-
 #### Returns
 `string` &#124; `null` — The authorization header value, or null if no authentication is needed
 ### Other
 #### handleAuthenticationResponse
-
 
 ```php
 public function handleAuthenticationResponse(ResponseInterface $response): void
@@ -69,7 +60,6 @@ Handle the authentication response and update internal state. This method is cal
 `void`
 #### requiresAuthentication
 
-
 ```php
 public function requiresAuthentication(): bool
 ```
@@ -77,7 +67,6 @@ public function requiresAuthentication(): bool
 Check if authentication is required for this strategy.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AuthenticationInterface.php#L63)
-
 
 #### Returns
 `bool` — True if this strategy provides authentication, false for no-auth strategies

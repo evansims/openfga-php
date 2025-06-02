@@ -15,14 +15,10 @@ Represents the result of a single check within a batch check response. Each resu
 ## Related Classes
 * [BatchCheckSingleResult](Models/BatchCheckSingleResult.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### Authorization
 #### getAllowed
-
 
 ```php
 public function getAllowed(): ?bool
@@ -32,12 +28,10 @@ Get whether this check was allowed. Returns true if the user has the specified r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResultInterface.php#L25)
 
-
 #### Returns
 `bool` &#124; `null`
 ### List Operations
 #### getError
-
 
 ```php
 public function getError(): ?object
@@ -47,18 +41,11 @@ Get any error that occurred during this check. Returns error information if the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResultInterface.php#L35)
 
-
 #### Returns
 `object` &#124; `null`
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize()
 ```
-
-
-
-
-

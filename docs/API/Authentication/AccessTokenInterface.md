@@ -14,14 +14,10 @@ Represents an access token for OpenFGA API authentication. Access tokens are cre
 ## Related Classes
 * [AccessToken](Authentication/AccessToken.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getExpires
-
 
 ```php
 public function getExpires(): int
@@ -31,11 +27,9 @@ Get the Unix timestamp when this access token expires. The expiration timestamp 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessTokenInterface.php#L79)
 
-
 #### Returns
 `int` — Unix timestamp representing when the token expires
 #### getScope
-
 
 ```php
 public function getScope(): string|null
@@ -45,11 +39,9 @@ Get the scope that defines the permissions granted by this access token. The sco
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessTokenInterface.php#L91)
 
-
 #### Returns
 `string` &#124; `null` — The token scope defining granted permissions, or null if no scope is specified
 #### getToken
-
 
 ```php
 public function getToken(): string
@@ -59,12 +51,10 @@ Get the raw access token value. This method returns the actual token string that
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessTokenInterface.php#L102)
 
-
 #### Returns
 `string` — The raw access token value
 ### Utility
 #### isExpired
-
 
 ```php
 public function isExpired(): bool
@@ -73,7 +63,6 @@ public function isExpired(): bool
 Check whether this access token has expired and needs to be refreshed. This method compares the token&#039;s expiration time against the current time to determine if the token is still valid. Expired tokens cannot be used for API requests as they result in authentication failures.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessTokenInterface.php#L113)
-
 
 #### Returns
 `bool` — True if the token has expired and should be refreshed, false if still valid

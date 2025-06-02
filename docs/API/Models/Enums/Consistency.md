@@ -12,7 +12,6 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -29,10 +28,8 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 
 ## Methods
 
-                                                                        
 ### List Operations
 #### getDescription
-
 
 ```php
 public function getDescription(): string
@@ -42,12 +39,10 @@ Get a user-friendly description of this consistency level. Provides a descriptiv
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/Consistency.php#L55)
 
-
 #### Returns
 `string` — A descriptive explanation of the consistency level
 ### Utility
 #### prioritizesConsistency
-
 
 ```php
 public function prioritizesConsistency(): bool
@@ -57,12 +52,10 @@ Check if this consistency level prioritizes data freshness. Useful for determini
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/Consistency.php#L72)
 
-
 #### Returns
 `bool` — True if consistency is prioritized over performance, false otherwise
 ### Other
 #### prioritizesPerformance
-
 
 ```php
 public function prioritizesPerformance(): bool
@@ -71,7 +64,6 @@ public function prioritizesPerformance(): bool
 Check if this consistency level prioritizes query performance. Useful for determining if a query will potentially use stale data in exchange for better performance.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/Consistency.php#L88)
-
 
 #### Returns
 `bool` — True if performance is prioritized over consistency, false otherwise

@@ -16,14 +16,10 @@ Response containing the expanded userset tree for a relationship query. This res
 * [ExpandResponseInterface](Responses/ExpandResponseInterface.md) (interface)
 * [ExpandRequest](Requests/ExpandRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getTree
-
 
 ```php
 public function getTree(): ?OpenFGA\Models\UsersetTreeInterface
@@ -33,13 +29,12 @@ Get the expansion tree for the queried relationship. Returns a hierarchical tree
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ExpandResponse.php#L107)
 
-
 #### Returns
 [`UsersetTreeInterface`](Models/UsersetTreeInterface.md) &#124; `null` — The relationship expansion tree, or null if no relationships found
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ExpandResponseInterface</small>*  
+*<small>Implements Responses\ExpandResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -49,13 +44,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ExpandResponseInterface.php#L34)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ExpandResponseInterface</small>*  
+*<small>Implements Responses\ExpandResponseInterface</small>*
 
 ```php
 public function fromResponse(

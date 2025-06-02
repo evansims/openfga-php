@@ -21,13 +21,10 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'UsersetTree'` |  |
 
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getRoot
-
 
 ```php
 public function getRoot(): OpenFGA\Models\NodeInterface
@@ -37,13 +34,12 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTree.php#L53)
 
-
 #### Returns
 [`NodeInterface`](NodeInterface.md) — The root node of the userset tree
 ### Model Management
 #### schema
 
-*<small>Implements Models\UsersetTreeInterface</small>*  
+*<small>Implements Models\UsersetTreeInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -53,20 +49,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTree.php#L62)
-
 
 #### Returns
 `array`

@@ -22,13 +22,10 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'Computed'` |  |
 
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getUserset
-
 
 ```php
 public function getUserset(): string
@@ -38,13 +35,12 @@ Get the userset reference string that defines a computed relationship. This repr
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Computed.php#L53)
 
-
 #### Returns
 `string` — The userset reference string defining the computed relationship
 ### Model Management
 #### schema
 
-*<small>Implements Models\ComputedInterface</small>*  
+*<small>Implements Models\ComputedInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -54,20 +50,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Computed.php#L62)
-
 
 #### Returns
 `array`

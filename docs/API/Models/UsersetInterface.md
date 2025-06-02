@@ -15,14 +15,10 @@ Defines the contract for userset specifications in authorization models. A users
 ## Related Classes
 * [Userset](Models/Userset.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                            
 ### List Operations
 #### getComputedUserset
-
 
 ```php
 public function getComputedUserset(): ObjectRelationInterface|null
@@ -32,11 +28,9 @@ Get the computed userset specification for this userset. A computed userset defi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetInterface.php#L32)
 
-
 #### Returns
 [`ObjectRelationInterface`](ObjectRelationInterface.md) &#124; `null` — The computed userset specification, or null if not used
 #### getDifference
-
 
 ```php
 public function getDifference(): DifferenceV1Interface|null
@@ -46,11 +40,9 @@ Get the difference operation specification for this userset. A difference operat
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetInterface.php#L43)
 
-
 #### Returns
 [`DifferenceV1Interface`](DifferenceV1Interface.md) &#124; `null` — The difference operation specification, or null if not used
 #### getDirect
-
 
 ```php
 public function getDirect(): object|null
@@ -60,11 +52,9 @@ Get the direct userset value for this userset. A direct userset represents an im
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetInterface.php#L54)
 
-
 #### Returns
 `object` &#124; `null` — The direct userset value, or null if not used
 #### getIntersection
-
 
 ```php
 public function getIntersection(): UsersetsInterface<UsersetInterface>|null
@@ -74,11 +64,9 @@ Get the intersection operation specification for this userset. An intersection o
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetInterface.php#L65)
 
-
 #### Returns
 [`UsersetsInterface`](Models/Collections/UsersetsInterface.md)&lt;[`UsersetInterface`](UsersetInterface.md)&gt; &#124; `null` — The collection of usersets to intersect, or null if not used
 #### getTupleToUserset
-
 
 ```php
 public function getTupleToUserset(): TupleToUsersetV1Interface|null
@@ -88,11 +76,9 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetInterface.php#L76)
 
-
 #### Returns
 [`TupleToUsersetV1Interface`](TupleToUsersetV1Interface.md) &#124; `null` — The tuple-to-userset operation specification, or null if not used
 #### getUnion
-
 
 ```php
 public function getUnion(): UsersetsInterface<UsersetInterface>|null
@@ -102,20 +88,16 @@ Get the union operation specification for this userset. A union operation repres
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetInterface.php#L87)
 
-
 #### Returns
 [`UsersetsInterface`](Models/Collections/UsersetsInterface.md)&lt;[`UsersetInterface`](UsersetInterface.md)&gt; &#124; `null` — The collection of usersets to unite, or null if not used
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetInterface.php#L100)
-
 
 #### Returns
 `array`

@@ -16,14 +16,10 @@ Response confirming successful creation of a new authorization model. This respo
 * [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (interface)
 * [CreateAuthorizationModelRequest](Requests/CreateAuthorizationModelRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getModel
-
 
 ```php
 public function getModel(): string
@@ -33,13 +29,12 @@ Get the unique identifier of the created authorization model. Returns the system
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponse.php#L85)
 
-
 #### Returns
 `string` — The unique authorization model identifier
 ### Model Management
 #### schema
 
-*<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*  
+*<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -49,13 +44,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponseInterface.php#L32)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*  
+*<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*
 
 ```php
 public function fromResponse(

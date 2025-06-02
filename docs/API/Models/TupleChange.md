@@ -22,13 +22,10 @@ Represents a change to a relationship tuple in your authorization store. When yo
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'TupleChange'` |  |
 
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getOperation
-
 
 ```php
 public function getOperation(): OpenFGA\Models\Enums\TupleOperation
@@ -38,11 +35,9 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L80)
 
-
 #### Returns
 [`TupleOperation`](Models/Enums/TupleOperation.md) — The operation type (write or delete)
 #### getTimestamp
-
 
 ```php
 public function getTimestamp(): DateTimeImmutable
@@ -52,11 +47,9 @@ Get the timestamp when this tuple change occurred. Timestamps help track the chr
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L89)
 
-
 #### Returns
 `DateTimeImmutable` — The change timestamp
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
@@ -66,13 +59,12 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L98)
 
-
 #### Returns
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key that was modified
 ### Model Management
 #### schema
 
-*<small>Implements Models\TupleChangeInterface</small>*  
+*<small>Implements Models\TupleChangeInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -82,20 +74,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L107)
-
 
 #### Returns
 `array`

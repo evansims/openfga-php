@@ -15,14 +15,10 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 ## Related Classes
 * [ConditionMetadata](Models/ConditionMetadata.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getModule
-
 
 ```php
 public function getModule(): string
@@ -32,11 +28,9 @@ Get the module name where the condition is defined. This provides organizational
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionMetadataInterface.php#L31)
 
-
 #### Returns
 `string` — The module name containing the condition
 #### getSourceInfo
-
 
 ```php
 public function getSourceInfo(): SourceInfoInterface
@@ -46,20 +40,16 @@ Get source file information for debugging and tooling. This provides information
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionMetadataInterface.php#L42)
 
-
 #### Returns
 [`SourceInfoInterface`](SourceInfoInterface.md) — The source file information
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionMetadataInterface.php#L48)
-
 
 #### Returns
 `array`

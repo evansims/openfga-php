@@ -15,14 +15,10 @@ Interface for store creation response objects. This interface defines the contra
 * [CreateStoreResponse](Responses/CreateStoreResponse.md) (implementation)
 * [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (request)
 
-
-
 ## Methods
 
-                                                                        
 ### CRUD Operations
 #### getCreatedAt
-
 
 ```php
 public function getCreatedAt(): DateTimeImmutable
@@ -32,11 +28,9 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L42)
 
-
 #### Returns
 `DateTimeImmutable` — The creation timestamp of the store
 #### getUpdatedAt
-
 
 ```php
 public function getUpdatedAt(): DateTimeImmutable
@@ -46,12 +40,10 @@ Get the timestamp when the store was last updated. Returns the timestamp of the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L72)
 
-
 #### Returns
 `DateTimeImmutable` — The last update timestamp of the store
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -61,11 +53,9 @@ Get the unique identifier of the created store. Returns the system-generated uni
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L52)
 
-
 #### Returns
 `string` — The unique store identifier
 #### getName
-
 
 ```php
 public function getName(): string
@@ -74,7 +64,6 @@ public function getName(): string
 Get the human-readable name of the created store. Returns the descriptive name that was assigned to the store during creation. This name is used for identification and administrative purposes.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L62)
-
 
 #### Returns
 `string` — The descriptive name of the store

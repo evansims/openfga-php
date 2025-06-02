@@ -21,13 +21,10 @@ Contains metadata information about a relation in your authorization model. Rela
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'RelationMetadata'` |  |
 
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getDirectlyRelatedUserTypes
-
 
 ```php
 public function getDirectlyRelatedUserTypes(): ?OpenFGA\Models\Collections\RelationReferencesInterface
@@ -37,11 +34,9 @@ Get the user types that can be directly related through this relation. This defi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L60)
 
-
 #### Returns
 [`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md) &#124; `null` — The directly related user types, or null if not specified
 #### getModule
-
 
 ```php
 public function getModule(): ?string
@@ -51,11 +46,9 @@ Get the optional module name for organization. This provides organizational info
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L69)
 
-
 #### Returns
 `string` &#124; `null` — The module name, or null if not specified
 #### getSourceInfo
-
 
 ```php
 public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
@@ -65,13 +58,12 @@ Get optional source file information for debugging and tooling. This provides in
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L78)
 
-
 #### Returns
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source file information, or null if not available
 ### Model Management
 #### schema
 
-*<small>Implements Models\RelationMetadataInterface</small>*  
+*<small>Implements Models\RelationMetadataInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -81,20 +73,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L87)
-
 
 #### Returns
 `array`

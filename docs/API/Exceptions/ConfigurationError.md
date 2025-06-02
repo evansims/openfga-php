@@ -12,7 +12,6 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -31,10 +30,8 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 
 ## Methods
 
-                                                                        
 ### List Operations
 #### getRequiredPsrInterface
-
 
 ```php
 public function getRequiredPsrInterface(): string
@@ -44,12 +41,10 @@ Get the recommended PSR interface for this configuration error. Provides the spe
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L82)
 
-
 #### Returns
 `string` — The PSR interface name
 ### Utility
 #### isHttpComponentMissing
-
 
 ```php
 public function isHttpComponentMissing(): true
@@ -59,12 +54,10 @@ Check if this configuration error is related to missing PSR HTTP components. Use
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L100)
 
-
 #### Returns
 `true` — True if the error is related to missing HTTP components, false otherwise
 ### Other
 #### exception
-
 
 ```php
 public function exception(

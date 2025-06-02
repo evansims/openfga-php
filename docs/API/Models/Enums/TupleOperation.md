@@ -12,7 +12,6 @@ Operations that can be performed on relationship tuples in OpenFGA. This enum de
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -27,10 +26,8 @@ Operations that can be performed on relationship tuples in OpenFGA. This enum de
 
 ## Methods
 
-                                                                        
 ### List Operations
 #### getDescription
-
 
 ```php
 public function getDescription(): string
@@ -40,12 +37,10 @@ Get a user-friendly description of what this operation does. Provides a clear ex
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TupleOperation.php#L84)
 
-
 #### Returns
 `string` — A descriptive explanation of the operation
 ### Utility
 #### grantsPermissions
-
 
 ```php
 public function grantsPermissions(): bool
@@ -55,11 +50,9 @@ Check if this operation adds permissions to the authorization store. Useful for 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TupleOperation.php#L100)
 
-
 #### Returns
 `bool` — True if the operation adds permissions, false otherwise
 #### isIdempotent
-
 
 ```php
 public function isIdempotent(): true
@@ -69,11 +62,9 @@ Check if this operation is safe to retry in case of failures. Idempotent operati
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TupleOperation.php#L116)
 
-
 #### Returns
 `true` — True if the operation is idempotent, false otherwise
 #### revokesPermissions
-
 
 ```php
 public function revokesPermissions(): bool
@@ -82,7 +73,6 @@ public function revokesPermissions(): bool
 Check if this operation removes permissions from the authorization store. Useful for understanding whether an operation will revoke existing access or capabilities from users within the system.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TupleOperation.php#L129)
-
 
 #### Returns
 `bool` — True if the operation removes permissions, false otherwise

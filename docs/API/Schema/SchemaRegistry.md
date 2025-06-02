@@ -14,15 +14,12 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 ## Related Classes
 * [SchemaRegistryInterface](Schema/SchemaRegistryInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                        
 ### CRUD Operations
 #### create
 
-*<small>Implements Schema\SchemaRegistryInterface</small>*  
+*<small>Implements Schema\SchemaRegistryInterface</small>*
 
 ```php
 public function create(string $className): SchemaBuilder
@@ -42,7 +39,7 @@ Create a new schema builder for the specified class.
 ### List Operations
 #### get
 
-*<small>Implements Schema\SchemaRegistryInterface</small>*  
+*<small>Implements Schema\SchemaRegistryInterface</small>*
 
 ```php
 public function get(string $className): ?OpenFGA\Schema\Schema
@@ -62,7 +59,7 @@ Retrieve a registered schema by class name.
 ### Utility
 #### register
 
-*<small>Implements Schema\SchemaRegistryInterface</small>*  
+*<small>Implements Schema\SchemaRegistryInterface</small>*
 
 ```php
 public function register(Schema $schema): void

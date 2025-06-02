@@ -19,13 +19,10 @@ OpenFGA Client implementation for relationship-based access control operations. 
 |------|-------|-------------|
 | `VERSION` | `'1.2.0'` | The version of the OpenFGA PHP SDK. |
 
-
 ## Methods
 
-                                                                                                                                                                                                                                                                                                                                                
 ### Authorization
 #### batchCheck
-
 
 ```php
 public function batchCheck(
@@ -82,7 +79,6 @@ if ($result->success()) {
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — The batch check results
 #### check
-
 
 ```php
 public function check(
@@ -146,7 +142,6 @@ $result = $client->check(
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CheckResponseInterface, Failure contains Throwable
 #### expand
 
-
 ```php
 public function expand(
     OpenFGA\Models\StoreInterface|string $store,
@@ -174,7 +169,6 @@ Expands a relationship tuple to show all users that have the relationship.
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ExpandResponseInterface, Failure contains Throwable
 ### CRUD Operations
 #### createAuthorizationModel
-
 
 ```php
 public function createAuthorizationModel(
@@ -230,7 +224,6 @@ if ($result->success()) {
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
 #### createStore
 
-
 ```php
 public function createStore(string $name): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 ```
@@ -247,7 +240,6 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateStoreResponseInterface, Failure contains Throwable
 #### deleteStore
-
 
 ```php
 public function deleteStore(
@@ -267,7 +259,6 @@ Deletes a store.
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains DeleteStoreResponseInterface, Failure contains Throwable
 #### readAssertions
-
 
 ```php
 public function readAssertions(
@@ -289,7 +280,6 @@ Retrieves assertions for an authorization model.
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadAssertionsResponseInterface, Failure contains Throwable
 #### readTuples
-
 
 ```php
 public function readTuples(
@@ -318,7 +308,6 @@ Reads relationship tuples from a store with optional filtering and pagination.
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadTuplesResponseInterface, Failure contains Throwable
 #### writeAssertions
 
-
 ```php
 public function writeAssertions(
     OpenFGA\Models\StoreInterface|string $store,
@@ -341,7 +330,6 @@ Creates or updates assertions for an authorization model.
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains WriteAssertionsResponseInterface, Failure contains Throwable
 #### writeTuples
-
 
 ```php
 public function writeTuples(
@@ -409,7 +397,6 @@ $client->writeTuples(
 ### List Operations
 #### getAuthorizationModel
 
-
 ```php
 public function getAuthorizationModel(
     OpenFGA\Models\StoreInterface|string $store,
@@ -431,7 +418,6 @@ Retrieves an authorization model by ID.
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
 #### getLanguage
 
-
 ```php
 public function getLanguage(): string
 ```
@@ -440,11 +426,9 @@ Get the configured language for i18n translations.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L366)
 
-
 #### Returns
 `string` — The configured language code
 #### getLastRequest
-
 
 ```php
 public function getLastRequest(): ?Psr\Http\Message\RequestInterface
@@ -454,11 +438,9 @@ Retrieves the last HTTP request made by the client.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L375)
 
-
 #### Returns
 `Psr\Http\Message\RequestInterface` &#124; `null`
 #### getLastResponse
-
 
 ```php
 public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
@@ -468,11 +450,9 @@ Retrieves the last HTTP response received by the client.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L384)
 
-
 #### Returns
 `Psr\Http\Message\ResponseInterface` &#124; `null`
 #### getStore
-
 
 ```php
 public function getStore(
@@ -492,7 +472,6 @@ Retrieves store details by ID.
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetStoreResponseInterface, Failure contains Throwable
 #### listAuthorizationModels
-
 
 ```php
 public function listAuthorizationModels(
@@ -516,7 +495,6 @@ Lists authorization models in a store with pagination.
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
 #### listObjects
-
 
 ```php
 public function listObjects(
@@ -589,7 +567,6 @@ $result = $client->listObjects(
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListObjectsResponseInterface, Failure contains Throwable
 #### listStores
 
-
 ```php
 public function listStores(
     ?string $continuationToken = NULL,
@@ -610,7 +587,6 @@ Lists all stores with pagination.
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListStoresResponseInterface, Failure contains Throwable
 #### listTupleChanges
-
 
 ```php
 public function listTupleChanges(
@@ -638,7 +614,6 @@ Lists changes to relationship tuples in a store.
 #### Returns
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListTupleChangesResponseInterface, Failure contains Throwable
 #### listUsers
-
 
 ```php
 public function listUsers(
@@ -714,7 +689,6 @@ $result = $client->listUsers(
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListUsersResponseInterface, Failure contains Throwable
 #### streamedListObjects
 
-
 ```php
 public function streamedListObjects(
     OpenFGA\Models\StoreInterface|string $store,
@@ -749,7 +723,6 @@ Streams objects that a user has a specific relationship with. Returns all object
 ### Utility
 #### assertLastRequest
 
-
 ```php
 public function assertLastRequest(): Psr\Http\Message\RequestInterface
 ```
@@ -775,12 +748,10 @@ echo "Headers: " . json_encode($lastRequest->getHeaders());
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L117)
 
-
 #### Returns
 `Psr\Http\Message\RequestInterface` — The last request
 ### Other
 #### dsl
-
 
 ```php
 public function dsl(string $dsl): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface

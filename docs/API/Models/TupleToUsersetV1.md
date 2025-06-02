@@ -21,13 +21,10 @@ Represents a tuple-to-userset relationship that derives permissions from related
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'v1.TupleToUserset'` |  |
 
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getComputedUserset
-
 
 ```php
 public function getComputedUserset(): OpenFGA\Models\ObjectRelationInterface
@@ -37,11 +34,9 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1.php#L55)
 
-
 #### Returns
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the computed userset
 #### getTupleset
-
 
 ```php
 public function getTupleset(): OpenFGA\Models\ObjectRelationInterface
@@ -51,13 +46,12 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1.php#L64)
 
-
 #### Returns
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the tupleset
 ### Model Management
 #### schema
 
-*<small>Implements Models\TupleToUsersetV1Interface</small>*  
+*<small>Implements Models\TupleToUsersetV1Interface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -67,20 +61,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1.php#L73)
-
 
 #### Returns
 `array`

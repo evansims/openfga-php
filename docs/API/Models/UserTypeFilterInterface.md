@@ -15,14 +15,10 @@ Represents a filter for limiting users by their relationships to specific object
 ## Related Classes
 * [UserTypeFilter](Models/UserTypeFilter.md) (implementation)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getRelation
-
 
 ```php
 public function getRelation(): ?string
@@ -32,11 +28,9 @@ Get the optional relation filter for limiting user types. When specified, this f
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php#L39)
 
-
 #### Returns
 `string` &#124; `null`
 #### getType
-
 
 ```php
 public function getType(): string
@@ -46,20 +40,16 @@ Get the object type to filter by. This specifies the type of objects that users 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php#L50)
 
-
 #### Returns
 `string` — The object type to filter by
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array<'relation'|'type', string>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php#L56)
-
 
 #### Returns
 `array&lt;'relation'` &#124; `'type', string&gt;`

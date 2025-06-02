@@ -14,14 +14,10 @@ Validates and transforms data according to registered JSON schemas. This validat
 ## Related Classes
 * [SchemaValidatorInterface](Schema/SchemaValidatorInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                        
 ### Authorization
 #### validateAndTransform
-
 
 ```php
 public function validateAndTransform(mixed $data, string $className): object
@@ -42,7 +38,6 @@ Validate data against a registered schema and transform it into the target class
 ### List Operations
 #### getSchemas
 
-
 ```php
 public function getSchemas(): array
 ```
@@ -51,12 +46,10 @@ Get all currently registered schemas. Returns a comprehensive map of all schemas
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaValidator.php#L57)
 
-
 #### Returns
 `array` — Map of class names to their schema definitions
 ### Model Management
 #### registerSchema
-
 
 ```php
 public function registerSchema(OpenFGA\Schema\SchemaInterface $schema): self

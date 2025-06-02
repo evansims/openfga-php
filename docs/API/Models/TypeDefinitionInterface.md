@@ -15,14 +15,10 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 ## Related Classes
 * [TypeDefinition](Models/TypeDefinition.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getMetadata
-
 
 ```php
 public function getMetadata(): MetadataInterface|null
@@ -32,11 +28,9 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L39)
 
-
 #### Returns
 [`MetadataInterface`](MetadataInterface.md) &#124; `null` — The metadata, or null if not specified
 #### getRelations
-
 
 ```php
 public function getRelations(): TypeDefinitionRelationsInterface<UsersetInterface>|null
@@ -46,11 +40,9 @@ Get the collection of relations defined for this type. Relations define the auth
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L49)
 
-
 #### Returns
 [`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md)&lt;[`UsersetInterface`](UsersetInterface.md)&gt; &#124; `null`
 #### getType
-
 
 ```php
 public function getType(): string
@@ -60,20 +52,16 @@ Get the name of this type. The type name uniquely identifies this type definitio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L60)
 
-
 #### Returns
 `string` — The unique type name
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L66)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`

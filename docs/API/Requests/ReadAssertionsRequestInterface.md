@@ -15,13 +15,9 @@ Interface for reading test assertions from an authorization model. This interfac
 * [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (response)
 * [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 #### getModel
-
 
 ```php
 public function getModel(): string
@@ -31,11 +27,9 @@ Get the authorization model ID to read assertions from. Specifies which version 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadAssertionsRequestInterface.php#L42)
 
-
 #### Returns
 `string` — The authorization model ID whose assertions should be retrieved
 #### getRequest
-
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -54,7 +48,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -62,7 +55,6 @@ public function getStore(): string
 Get the store ID containing the assertions to read. Identifies which OpenFGA store contains the authorization model and its associated test assertions. Assertions are stored alongside the models they test, providing a complete testing framework within each store&#039;s context.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadAssertionsRequestInterface.php#L54)
-
 
 #### Returns
 `string` — The store ID containing the assertions to retrieve

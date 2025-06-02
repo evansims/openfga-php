@@ -15,14 +15,10 @@ Immutable access token implementation for OpenFGA API authentication. This class
 ## Related Classes
 * [AccessTokenInterface](Authentication/AccessTokenInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getExpires
-
 
 ```php
 public function getExpires(): int
@@ -32,11 +28,9 @@ Get the Unix timestamp when this access token expires. The expiration timestamp 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessToken.php#L115)
 
-
 #### Returns
 `int` — Unix timestamp representing when the token expires
 #### getScope
-
 
 ```php
 public function getScope(): ?string
@@ -46,11 +40,9 @@ Get the scope that defines the permissions granted by this access token. The sco
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessToken.php#L124)
 
-
 #### Returns
 `string` &#124; `null` — The token scope defining granted permissions, or null if no scope is specified
 #### getToken
-
 
 ```php
 public function getToken(): string
@@ -60,12 +52,10 @@ Get the raw access token value. This method returns the actual token string that
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessToken.php#L133)
 
-
 #### Returns
 `string` — The raw access token value
 ### Utility
 #### isExpired
-
 
 ```php
 public function isExpired(): bool
@@ -75,13 +65,12 @@ Check whether this access token has expired and needs to be refreshed. This meth
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessToken.php#L142)
 
-
 #### Returns
 `bool` — True if the token has expired and should be refreshed, false if still valid
 ### Other
 #### fromResponse
 
-*<small>Implements Authentication\AccessTokenInterface</small>*  
+*<small>Implements Authentication\AccessTokenInterface</small>*
 
 ```php
 public function fromResponse(

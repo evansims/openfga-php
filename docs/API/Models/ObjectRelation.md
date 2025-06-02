@@ -21,13 +21,10 @@ Represents a reference to a specific relation on an object. In authorization mod
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'ObjectRelation'` |  |
 
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getObject
-
 
 ```php
 public function getObject(): ?string
@@ -37,11 +34,9 @@ Get the object identifier in an object-relation pair. The object represents the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L56)
 
-
 #### Returns
 `string` &#124; `null`
 #### getRelation
-
 
 ```php
 public function getRelation(): ?string
@@ -51,13 +46,12 @@ Get the relation name that defines the type of relationship to the object. The r
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L65)
 
-
 #### Returns
 `string` &#124; `null`
 ### Model Management
 #### schema
 
-*<small>Implements Models\ObjectRelationInterface</small>*  
+*<small>Implements Models\ObjectRelationInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -67,20 +61,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L74)
-
 
 #### Returns
 `array`

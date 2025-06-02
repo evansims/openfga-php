@@ -22,13 +22,10 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'UsersListUser'` |  |
 
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getUser
-
 
 ```php
 public function getUser(): string
@@ -38,13 +35,12 @@ Get the user identifier string. This returns the user identifier in the format e
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUser.php#L65)
 
-
 #### Returns
 `string` — The user identifier string
 ### Model Management
 #### schema
 
-*<small>Implements Models\UsersListUserInterface</small>*  
+*<small>Implements Models\UsersListUserInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -54,12 +50,10 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): string
@@ -68,7 +62,6 @@ public function jsonSerialize(): string
 Serialize the user to its JSON representation. Returns the user identifier as a string for API serialization. This differs from most models which serialize to arrays.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUser.php#L74)
-
 
 #### Returns
 `string` — The user identifier string

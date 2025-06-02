@@ -21,13 +21,10 @@ Represents a leaf node in authorization evaluation trees containing specific use
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'Leaf'` |  |
 
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getComputed
-
 
 ```php
 public function getComputed(): ?OpenFGA\Models\ComputedInterface
@@ -37,11 +34,9 @@ Get the computed userset specification for this leaf. When present, this defines
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Leaf.php#L71)
 
-
 #### Returns
 [`ComputedInterface`](ComputedInterface.md) &#124; `null` — The computed userset specification, or null if not used
 #### getTupleToUserset
-
 
 ```php
 public function getTupleToUserset(): ?OpenFGA\Models\UsersetTreeTupleToUsersetInterface
@@ -51,11 +46,9 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Leaf.php#L80)
 
-
 #### Returns
 [`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md) &#124; `null` — The tuple-to-userset operation, or null if not used
 #### getUsers
-
 
 ```php
 public function getUsers(): ?OpenFGA\Models\Collections\UsersListInterface
@@ -65,13 +58,12 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Leaf.php#L89)
 
-
 #### Returns
 [`UsersListInterface`](Models/Collections/UsersListInterface.md) &#124; `null` — The list of users with direct access, or null if not used
 ### Model Management
 #### schema
 
-*<small>Implements Models\LeafInterface</small>*  
+*<small>Implements Models\LeafInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -81,20 +73,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Leaf.php#L98)
-
 
 #### Returns
 `array`

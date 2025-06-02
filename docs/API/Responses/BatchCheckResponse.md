@@ -16,14 +16,10 @@ Response containing the results of a batch authorization check. This response co
 * [BatchCheckResponseInterface](Responses/BatchCheckResponseInterface.md) (interface)
 * [BatchCheckRequest](Requests/BatchCheckRequest.md) (request)
 
-
-
 ## Methods
 
-                                                            
 ### List Operations
 #### getResult
-
 
 ```php
 public function getResult(): array
@@ -33,11 +29,9 @@ Get the results map from correlation IDs to check results. Each key in the map i
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php#L101)
 
-
 #### Returns
 `array` — Map of correlation ID to check result
 #### getResultForCorrelationId
-
 
 ```php
 public function getResultForCorrelationId(string $correlationId): ?OpenFGA\Models\BatchCheckSingleResultInterface
@@ -57,7 +51,7 @@ Get the result for a specific correlation ID. Returns the check result for the g
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\BatchCheckResponseInterface</small>*  
+*<small>Implements Responses\BatchCheckResponseInterface</small>*
 
 ```php
 public function fromResponse(

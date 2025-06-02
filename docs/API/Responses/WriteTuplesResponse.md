@@ -16,14 +16,11 @@ Response confirming successful writing of relationship tuples. This response is 
 * [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md) (interface)
 * [WriteTuplesRequest](Requests/WriteTuplesRequest.md) (request)
 
-
-
 ## Methods
 
-                        
 #### fromResponse
 
-*<small>Implements Responses\WriteTuplesResponseInterface</small>*  
+*<small>Implements Responses\WriteTuplesResponseInterface</small>*
 
 ```php
 public function fromResponse(

@@ -15,14 +15,10 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 ## Related Classes
 * [NodeUnion](Models/NodeUnion.md) (implementation)
 
-
-
 ## Methods
 
-                                                
 ### List Operations
 #### getNodes
-
 
 ```php
 public function getNodes(): array<int, NodeInterface>
@@ -32,12 +28,10 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnionInterface.php#L26)
 
-
 #### Returns
 `array&lt;`int`, [`NodeInterface`](NodeInterface.md)&gt;` — The array of nodes in the union
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array
@@ -46,7 +40,6 @@ public function jsonSerialize(): array
 Serialize the node union to its JSON representation.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnionInterface.php#L34)
-
 
 #### Returns
 `array`

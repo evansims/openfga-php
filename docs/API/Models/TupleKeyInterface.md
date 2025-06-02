@@ -15,14 +15,10 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 ## Related Classes
 * [TupleKey](Models/TupleKey.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getCondition
-
 
 ```php
 public function getCondition(): ConditionInterface|null
@@ -32,11 +28,9 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L52)
 
-
 #### Returns
 [`ConditionInterface`](ConditionInterface.md) &#124; `null` — The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 #### getObject
-
 
 ```php
 public function getObject(): string|null
@@ -46,11 +40,9 @@ Get the object in this relationship tuple. The object represents the resource or
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L63)
 
-
 #### Returns
 `string` &#124; `null` — The object identifier, or null if not specified
 #### getRelation
-
 
 ```php
 public function getRelation(): string|null
@@ -60,11 +52,9 @@ Get the relation that defines the type of relationship. The relation describes w
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L74)
 
-
 #### Returns
 `string` &#124; `null` — The relation name defining the type of relationship, or null if not specified
 #### getUser
-
 
 ```php
 public function getUser(): string|null
@@ -74,12 +64,10 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L85)
 
-
 #### Returns
 `string` &#124; `null` — The user identifier, or null if not specified
 ### Other
 #### jsonSerialize
-
 
 ```php
 public function jsonSerialize(): array<string, mixed>
@@ -88,7 +76,6 @@ public function jsonSerialize(): array<string, mixed>
 Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php#L97)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;` — The serialized tuple key data ready for JSON encoding

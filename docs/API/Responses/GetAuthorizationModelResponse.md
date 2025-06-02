@@ -16,14 +16,10 @@ Response containing a specific authorization model from the store. This response
 * [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (interface)
 * [GetAuthorizationModelRequest](Requests/GetAuthorizationModelRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getModel
-
 
 ```php
 public function getModel(): ?OpenFGA\Models\AuthorizationModelInterface
@@ -33,13 +29,12 @@ Get the retrieved authorization model. Returns the complete authorization model 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponse.php#L100)
 
-
 #### Returns
 [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` — The authorization model, or null if not found
 ### Model Management
 #### schema
 
-*<small>Implements Responses\GetAuthorizationModelResponseInterface</small>*  
+*<small>Implements Responses\GetAuthorizationModelResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -49,13 +44,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponseInterface.php#L33)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\GetAuthorizationModelResponseInterface</small>*  
+*<small>Implements Responses\GetAuthorizationModelResponseInterface</small>*
 
 ```php
 public function fromResponse(

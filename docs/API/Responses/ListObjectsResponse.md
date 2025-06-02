@@ -16,14 +16,10 @@ Response containing a list of objects that a user has a specific relationship wi
 * [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (interface)
 * [ListObjectsRequest](Requests/ListObjectsRequest.md) (request)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getObjects
-
 
 ```php
 public function getObjects(): array
@@ -33,13 +29,12 @@ Get the array of object identifiers the user has access to. Returns an array of 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponse.php#L87)
 
-
 #### Returns
 `array` — Array of object identifiers the user has access to
 ### Model Management
 #### schema
 
-*<small>Implements Responses\ListObjectsResponseInterface</small>*  
+*<small>Implements Responses\ListObjectsResponseInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -49,13 +44,12 @@ Get the schema definition for this response. Returns the schema that defines the
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponseInterface.php#L33)
 
-
 #### Returns
 `SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
-*<small>Implements Responses\ListObjectsResponseInterface</small>*  
+*<small>Implements Responses\ListObjectsResponseInterface</small>*
 
 ```php
 public function fromResponse(

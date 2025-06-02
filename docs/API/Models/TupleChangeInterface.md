@@ -15,14 +15,10 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 ## Related Classes
 * [TupleChange](Models/TupleChange.md) (implementation)
 
-
-
 ## Methods
 
-                                                                        
 ### List Operations
 #### getOperation
-
 
 ```php
 public function getOperation(): TupleOperation
@@ -32,11 +28,9 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L39)
 
-
 #### Returns
 [`TupleOperation`](Models/Enums/TupleOperation.md) — The operation type (write or delete)
 #### getTimestamp
-
 
 ```php
 public function getTimestamp(): DateTimeImmutable
@@ -46,11 +40,9 @@ Get the timestamp when this tuple change occurred. Timestamps help track the chr
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L50)
 
-
 #### Returns
 `DateTimeImmutable` — The change timestamp
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): TupleKeyInterface
@@ -60,20 +52,16 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L61)
 
-
 #### Returns
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key that was modified
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array<string, mixed>
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php#L67)
-
 
 #### Returns
 `array&lt;`string`, `mixed`&gt;`

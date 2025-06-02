@@ -21,13 +21,10 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'UsersetUser'` |  |
 
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getId
-
 
 ```php
 public function getId(): string
@@ -37,11 +34,9 @@ Get the object identifier in the userset reference. This represents the specific
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUser.php#L59)
 
-
 #### Returns
 `string` — The object identifier
 #### getRelation
-
 
 ```php
 public function getRelation(): string
@@ -51,11 +46,9 @@ Get the relation name in the userset reference. This represents the specific rel
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUser.php#L68)
 
-
 #### Returns
 `string` — The relation name
 #### getType
-
 
 ```php
 public function getType(): string
@@ -65,13 +58,12 @@ Get the object type in the userset reference. This represents the type of object
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUser.php#L77)
 
-
 #### Returns
 `string` — The object type
 ### Model Management
 #### schema
 
-*<small>Implements Models\UsersetUserInterface</small>*  
+*<small>Implements Models\UsersetUserInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -81,20 +73,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUser.php#L86)
-
 
 #### Returns
 `array`

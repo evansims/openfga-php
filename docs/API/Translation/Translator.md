@@ -14,15 +14,12 @@ Translation service for OpenFGA SDK messages. This implementation provides centr
 ## Related Classes
 * [TranslatorInterface](Translation/TranslatorInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                                        
 ### List Operations
 #### getDefaultLocale
 
-*<small>Implements Translation\TranslatorInterface</small>*  
+*<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
 public function getDefaultLocale(): string
@@ -32,13 +29,12 @@ Get the current default locale.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L46)
 
-
 #### Returns
 `string` — The current default locale code
 ### Utility
 #### has
 
-*<small>Implements Translation\TranslatorInterface</small>*  
+*<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
 public function has(Messages $message, string|null $locale = NULL): bool
@@ -58,7 +54,7 @@ Check if a translation exists for the given message. Determines whether a specif
 `bool` — True if translation exists, false otherwise
 #### reset
 
-*<small>Implements Translation\TranslatorInterface</small>*  
+*<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
 public function reset(): void
@@ -68,12 +64,11 @@ Reset the translator instance. Clears the current translator instance and forces
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L68)
 
-
 #### Returns
 `void`
 #### setDefaultLocale
 
-*<small>Implements Translation\TranslatorInterface</small>*  
+*<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
 public function setDefaultLocale(string $locale): void
@@ -93,7 +88,7 @@ Set the default locale for translations. Configures the default locale that is u
 ### Other
 #### addResource
 
-*<small>Implements Translation\TranslatorInterface</small>*  
+*<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
 public function addResource(
@@ -120,7 +115,7 @@ Add a translation resource to the translator. Registers a translation file with 
 `void`
 #### trans
 
-*<small>Implements Translation\TranslatorInterface</small>*  
+*<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
 public function trans(Messages $message, array<string, mixed> $parameters = [], string|null $locale = NULL): string
@@ -141,7 +136,7 @@ Translate a message using a Messages enum case. Performs type-safe message trans
 `string` — The translated and parameterized message
 #### transKey
 
-*<small>Implements Translation\TranslatorInterface</small>*  
+*<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
 public function transKey(string $key, array<string, mixed> $parameters = [], string|null $locale = NULL): string

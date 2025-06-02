@@ -21,13 +21,10 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'UserTypeFilter'` |  |
 
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getRelation
-
 
 ```php
 public function getRelation(): ?string
@@ -37,11 +34,9 @@ Get the optional relation filter for limiting user types. When specified, this f
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilter.php#L56)
 
-
 #### Returns
 `string` &#124; `null`
 #### getType
-
 
 ```php
 public function getType(): string
@@ -51,13 +46,12 @@ Get the object type to filter by. This specifies the type of objects that users 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilter.php#L65)
 
-
 #### Returns
 `string` — The object type to filter by
 ### Model Management
 #### schema
 
-*<small>Implements Models\UserTypeFilterInterface</small>*  
+*<small>Implements Models\UserTypeFilterInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -67,20 +61,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilter.php#L74)
-
 
 #### Returns
 `array`

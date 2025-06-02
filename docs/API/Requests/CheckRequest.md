@@ -16,13 +16,9 @@ Request for performing authorization checks in OpenFGA. This request determines 
 * [CheckResponse](Responses/CheckResponse.md) (response)
 * [CheckRequestInterface](Requests/CheckRequestInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                            
 #### getAuthorizationModel
-
 
 ```php
 public function getAuthorizationModel(): string
@@ -32,11 +28,9 @@ Get the authorization model ID to use for the check. This specifies which versio
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequest.php#L73)
 
-
 #### Returns
 `string` — The authorization model ID for permission evaluation
 #### getConsistency
-
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -46,11 +40,9 @@ Get the consistency level for the check operation. This determines the read cons
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequest.php#L82)
 
-
 #### Returns
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level, or null to use the default consistency setting
 #### getContext
-
 
 ```php
 public function getContext(): ?object
@@ -60,11 +52,9 @@ Get additional context data for conditional evaluation. This provides contextual
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequest.php#L91)
 
-
 #### Returns
 `object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 #### getContextualTuples
-
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -74,11 +64,9 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequest.php#L100)
 
-
 #### Returns
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getRequest
-
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -97,7 +85,6 @@ Build a request context for HTTP execution. Transforms the request object into a
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
-
 ```php
 public function getStore(): string
 ```
@@ -106,11 +93,9 @@ Get the store ID containing the authorization data. This identifies which OpenFG
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequest.php#L135)
 
-
 #### Returns
 `string` — The store ID containing the authorization data
 #### getTrace
-
 
 ```php
 public function getTrace(): ?bool
@@ -120,11 +105,9 @@ Get whether to include evaluation trace in the response. When enabled, the respo
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequest.php#L144)
 
-
 #### Returns
 `bool` &#124; `null` — Whether to include trace information, or null to use the default setting
 #### getTupleKey
-
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
@@ -133,7 +116,6 @@ public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
 Get the relationship tuple to check for permission. This defines the specific relationship (user, object, relation) to evaluate for authorization. For example, checking if &quot;user:alice&quot; has &quot;can_view&quot; permission on &quot;document:readme&quot;.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequest.php#L153)
-
 
 #### Returns
 [`TupleKeyInterface`](Models/TupleKeyInterface.md) — The relationship tuple specifying what permission to check

@@ -14,14 +14,10 @@ Circuit breaker implementation for preventing cascade failures in distributed sy
 ## Related Classes
 * [CircuitBreakerInterface](Network/CircuitBreakerInterface.md) (interface)
 
-
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getFailureCount
-
 
 ```php
 public function getFailureCount(string $endpoint): int
@@ -41,7 +37,6 @@ Get the current failure count for an endpoint. Returns the number of consecutive
 ### Utility
 #### isOpen
 
-
 ```php
 public function isOpen(string $endpoint): bool
 ```
@@ -60,7 +55,6 @@ Check if the circuit is currently open for an endpoint. Returns true if the circ
 ### Other
 #### recordFailure
 
-
 ```php
 public function recordFailure(string $endpoint): void
 ```
@@ -78,7 +72,6 @@ Record a failure for the specified endpoint. Increments the failure count for th
 `void`
 #### recordSuccess
 
-
 ```php
 public function recordSuccess(string $endpoint): void
 ```
@@ -95,7 +88,6 @@ Record a successful request for the specified endpoint. Resets the failure state
 #### Returns
 `void`
 #### shouldRetry
-
 
 ```php
 public function shouldRetry(string $endpoint): bool

@@ -8,17 +8,12 @@ Retry handler interface for advanced HTTP request retry strategies. This interfa
 ## Source
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RetryHandlerInterface.php)
 
-
 ## Related Classes
 * [RetryHandler](Network/RetryHandler.md) (implementation)
 
-
-
 ## Methods
 
-                        
 #### executeWithRetry
-
 
 ```php
 public function executeWithRetry(

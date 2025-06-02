@@ -15,14 +15,10 @@ Interface for collection schema definitions in the OpenFGA system. This interfac
 * [SchemaInterface](Schema/SchemaInterface.md) (item)
 * [CollectionSchema](Schema/CollectionSchema.md) (implementation)
 
-
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getClassName
-
 
 ```php
 public function getClassName(): string
@@ -32,11 +28,9 @@ Get the fully qualified class name this schema defines. This method returns the 
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaInterface.php#L38)
 
-
 #### Returns
 `string` — The fully qualified class name for the model this schema defines
 #### getItemType
-
 
 ```php
 public function getItemType(): string
@@ -46,11 +40,9 @@ Get the type of each item in the collection.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/CollectionSchemaInterface.php#L38)
 
-
 #### Returns
 `string`
 #### getProperties
-
 
 ```php
 public function getProperties(): array<string, SchemaProperty>
@@ -60,11 +52,9 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaInterface.php#L49)
 
-
 #### Returns
 `array&lt;`string`, [`SchemaProperty`](SchemaProperty.md)&gt;` — An associative array of property names to their schema property definitions
 #### getProperty
-
 
 ```php
 public function getProperty(string $name): SchemaProperty|null
@@ -83,7 +73,6 @@ Get a specific property definition by name. This method retrieves the schema def
 [`SchemaProperty`](SchemaProperty.md) &#124; `null` — The property definition if it exists, or null if the property is not defined in this schema
 #### getWrapperKey
 
-
 ```php
 public function getWrapperKey(): string|null
 ```
@@ -92,12 +81,10 @@ Get the wrapper key for the collection data if any. Some collections expect data
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/CollectionSchemaInterface.php#L47)
 
-
 #### Returns
 `string` &#124; `null` — The wrapper key or null if data is not wrapped
 ### Other
 #### requiresItems
-
 
 ```php
 public function requiresItems(): bool
@@ -106,7 +93,6 @@ public function requiresItems(): bool
 Whether the collection requires at least one item.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Schema/CollectionSchemaInterface.php#L54)
-
 
 #### Returns
 `bool` — True if the collection must contain at least one item, false if empty collections are allowed

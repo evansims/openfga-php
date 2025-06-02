@@ -12,7 +12,6 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 * `UnitEnum`
 * `BackedEnum`
 
-
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -27,10 +26,8 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 
 ## Methods
 
-                                                                        
 ### List Operations
 #### getUserMessage
-
 
 ```php
 public function getUserMessage(string|null $locale = NULL): string
@@ -50,7 +47,6 @@ Get a user-friendly error message for this authentication error. Provides approp
 ### Utility
 #### isTokenRefreshable
 
-
 ```php
 public function isTokenRefreshable(): bool
 ```
@@ -59,12 +55,10 @@ Check if this authentication error indicates the token should be refreshed. Usef
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php#L108)
 
-
 #### Returns
 `bool` — True if token refresh should be attempted, false otherwise
 ### Other
 #### exception
-
 
 ```php
 public function exception(

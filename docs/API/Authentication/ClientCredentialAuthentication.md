@@ -11,15 +11,10 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 ## Implements
 * [`AuthenticationInterface`](AuthenticationInterface.md)
 
-
-
-
 ## Methods
 
-                                                                                                
 ### List Operations
 #### getAuthenticationRequest
-
 
 ```php
 public function getAuthenticationRequest(
@@ -40,7 +35,6 @@ Get an authentication request context if this strategy requires token acquisitio
 [`RequestContext`](Network/RequestContext.md) &#124; `null` — The authentication request context, or null if not needed
 #### getAuthorizationHeader
 
-
 ```php
 public function getAuthorizationHeader(): ?string
 ```
@@ -49,11 +43,9 @@ Get the authorization header value for API requests. Returns the authorization h
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L128)
 
-
 #### Returns
 `string` &#124; `null` — The authorization header value, or null if no authentication is needed
 #### getToken
-
 
 ```php
 public function getToken(): AccessTokenInterface|null
@@ -63,12 +55,10 @@ Get the current access token if available. Returns the stored access token, whic
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L147)
 
-
 #### Returns
 [`AccessTokenInterface`](AccessTokenInterface.md) &#124; `null` — The current access token, or null if not authenticated
 ### Other
 #### clearToken
-
 
 ```php
 public function clearToken(): void
@@ -78,11 +68,9 @@ Clear the current access token and force re-authentication. Removes the stored a
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L75)
 
-
 #### Returns
 `void`
 #### handleAuthenticationResponse
-
 
 ```php
 public function handleAuthenticationResponse(ResponseInterface $response): void
@@ -101,7 +89,6 @@ Handle the authentication response and update the stored token. Processes the OA
 `void`
 #### requiresAuthentication
 
-
 ```php
 public function requiresAuthentication(): bool
 ```
@@ -109,7 +96,6 @@ public function requiresAuthentication(): bool
 Check if authentication is required for this strategy.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L187)
-
 
 #### Returns
 `bool` — True if this strategy provides authentication, false for no-auth strategies

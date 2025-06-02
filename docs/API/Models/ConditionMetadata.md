@@ -21,13 +21,10 @@ Contains metadata information about conditions in your authorization model. Cond
 |------|-------|-------------|
 | `OPENAPI_MODEL` | `'ConditionMetadata'` |  |
 
-
 ## Methods
 
-                                                                                    
 ### List Operations
 #### getModule
-
 
 ```php
 public function getModule(): string
@@ -37,11 +34,9 @@ Get the module name where the condition is defined. This provides organizational
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionMetadata.php#L56)
 
-
 #### Returns
 `string` — The module name containing the condition
 #### getSourceInfo
-
 
 ```php
 public function getSourceInfo(): OpenFGA\Models\SourceInfoInterface
@@ -51,13 +46,12 @@ Get source file information for debugging and tooling. This provides information
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionMetadata.php#L65)
 
-
 #### Returns
 [`SourceInfoInterface`](SourceInfoInterface.md) — The source file information
 ### Model Management
 #### schema
 
-*<small>Implements Models\ConditionMetadataInterface</small>*  
+*<small>Implements Models\ConditionMetadataInterface</small>*
 
 ```php
 public function schema(): SchemaInterface
@@ -67,20 +61,16 @@ Get the schema definition for this model. This method returns the schema that de
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php#L52)
 
-
 #### Returns
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
-
 ```php
 public function jsonSerialize(): array
 ```
 
-
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionMetadata.php#L74)
-
 
 #### Returns
 `array`
