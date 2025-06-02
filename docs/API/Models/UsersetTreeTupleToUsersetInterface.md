@@ -9,8 +9,8 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeTupleToUsersetInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [UsersetTreeTupleToUserset](Models/UsersetTreeTupleToUserset.md) (implementation)
@@ -34,9 +34,7 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 
 
 #### Returns
-array&lt;int, [ComputedInterface](ComputedInterface.md)&gt;
- Array of computed userset references
-
+`array&lt;`int`, [`ComputedInterface`](ComputedInterface.md)&gt;` — Array of computed userset references
 #### getTupleset
 
 
@@ -50,9 +48,7 @@ Get the tupleset string identifying which tuples to use for computation. This st
 
 
 #### Returns
-string
- The tupleset identifier string
-
+`string` — The tupleset identifier string
 ### Other
 #### jsonSerialize
 
@@ -66,5 +62,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

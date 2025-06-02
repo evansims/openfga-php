@@ -9,8 +9,8 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameterInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [ConditionParameter](Models/ConditionParameter.md) (implementation)
@@ -34,8 +34,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 
 #### Returns
-[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md) &#124; null
-
+[`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null`
 #### getTypeName
 
 
@@ -49,9 +48,7 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 
 #### Returns
-[TypeName](Models/Enums/TypeName.md)
- The type name enum value for this parameter
-
+[`TypeName`](Models/Enums/TypeName.md) — The type name enum value for this parameter
 ### Other
 #### jsonSerialize
 
@@ -65,5 +62,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

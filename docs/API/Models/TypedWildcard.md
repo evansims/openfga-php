@@ -9,10 +9,10 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcard.php)
 
 ## Implements
-* [TypedWildcardInterface](TypedWildcardInterface.md)
-* Stringable
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`TypedWildcardInterface`](TypedWildcardInterface.md)
+* `Stringable`
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [TypedWildcardInterface](Models/TypedWildcardInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the object type that this wildcard represents. This returns the type name fo
 
 
 #### Returns
-string
- The object type that this wildcard represents
-
+`string` — The object type that this wildcard represents
 ### Model Management
 #### schema
 
@@ -58,9 +56,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -74,5 +70,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

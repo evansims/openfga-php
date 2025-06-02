@@ -8,13 +8,13 @@
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/TypeDefinitionRelations.php)
 
 ## Implements
-* [KeyedCollectionInterface](KeyedCollectionInterface.md)
-* Traversable
-* JsonSerializable
-* Iterator
-* Countable
-* ArrayAccess
-* [TypeDefinitionRelationsInterface](TypeDefinitionRelationsInterface.md)
+* [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
+* `Traversable`
+* `JsonSerializable`
+* `Iterator`
+* `Countable`
+* `ArrayAccess`
+* [`TypeDefinitionRelationsInterface`](TypeDefinitionRelationsInterface.md)
 
 ## Related Classes
 * [TypeDefinitionRelationsInterface](../Models/Collections/TypeDefinitionRelationsInterface.md) (interface)
@@ -39,7 +39,7 @@ Get an item by its string key. This method retrieves the item associated with th
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string | The key of the item to retrieve |
+| `$key` | `string` | The key of the item to retrieve |
 
 
 #### offsetGet
@@ -56,11 +56,10 @@ Get an item by its offset key.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
+| `$offset` | `mixed` |  |
 
 #### Returns
-[ModelInterface](../Models/ModelInterface.md) &#124; null
-
+[`ModelInterface`](../Models/ModelInterface.md) &#124; `null`
 ### Model Management
 #### schema
 
@@ -76,9 +75,7 @@ Get the schema definition for this collection type. Returns the schema that defi
 
 
 #### Returns
-CollectionSchemaInterface
- The collection schema
-
+`CollectionSchemaInterface` — The collection schema
 ### Utility
 #### has
 
@@ -94,12 +91,10 @@ Check if a key exists in the collection. This method determines whether the coll
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string | The key to check for existence |
+| `$key` | `string` | The key to check for existence |
 
 #### Returns
-bool
- True if the key exists, false otherwise
-
+`bool` — True if the key exists, false otherwise
 #### isEmpty
 
 
@@ -113,9 +108,7 @@ Check if the collection contains no items. This method provides a convenient way
 
 
 #### Returns
-bool
- True if the collection is empty, false otherwise
-
+`bool` — True if the collection is empty, false otherwise
 #### offsetExists
 
 
@@ -130,12 +123,10 @@ Check if an offset exists in the collection. This method determines whether the 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed | The key to check for existence |
+| `$offset` | `mixed` | The key to check for existence |
 
 #### Returns
-bool
- True if the key exists, false otherwise
-
+`bool` — True if the key exists, false otherwise
 #### offsetSet
 
 
@@ -149,12 +140,11 @@ public function offsetSet(mixed $offset, mixed $value): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
-| `$value` | mixed |  |
+| `$offset` | `mixed` |  |
+| `$value` | `mixed` |  |
 
 #### Returns
-void
-
+`void`
 #### offsetUnset
 
 
@@ -168,11 +158,10 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
+| `$offset` | `mixed` |  |
 
 #### Returns
-void
-
+`void`
 ### Other
 #### add
 
@@ -188,12 +177,11 @@ Add an item to the collection with the specified key. This method associates an 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string | The string key to associate with the item |
-| `$item` | [ModelInterface](../Models/ModelInterface.md) | The item to add to the collection |
+| `$key` | `string` | The string key to associate with the item |
+| `$item` | [`ModelInterface`](../Models/ModelInterface.md) | The item to add to the collection |
 
 #### Returns
-static
-
+`static`
 #### count
 
 
@@ -206,8 +194,7 @@ public function count(): int<0, max>
 
 
 #### Returns
-int&lt;0, max&gt;
-
+`int&lt;`0`, `max`&gt;`
 #### current
 
 
@@ -220,8 +207,7 @@ public function current(): OpenFGA\Models\ModelInterface
 
 
 #### Returns
-[ModelInterface](../Models/ModelInterface.md)
-
+[`ModelInterface`](../Models/ModelInterface.md)
 #### jsonSerialize
 
 
@@ -234,8 +220,7 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`
 #### key
 
 
@@ -249,9 +234,7 @@ Get the current iterator key. This method returns the current string key in the 
 
 
 #### Returns
-string
- The current iterator key
-
+`string` — The current iterator key
 #### next
 
 
@@ -265,8 +248,7 @@ Move the iterator to the next position. This method advances the internal iterat
 
 
 #### Returns
-void
-
+`void`
 #### rewind
 
 
@@ -280,8 +262,7 @@ Reset the iterator to the beginning of the collection. This method moves the int
 
 
 #### Returns
-void
-
+`void`
 #### toArray
 
 
@@ -295,9 +276,7 @@ Convert the collection to a standard PHP associative array. This method creates 
 
 
 #### Returns
-array
- An associative array containing all collection items
-
+`array` — An associative array containing all collection items
 #### valid
 
 
@@ -311,6 +290,4 @@ Check if the current iterator position is valid. This method determines whether 
 
 
 #### Returns
-bool
- True if the current position is valid, false otherwise
-
+`bool` — True if the current position is valid, false otherwise

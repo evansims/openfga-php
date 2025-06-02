@@ -9,8 +9,8 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [TypeDefinition](Models/TypeDefinition.md) (implementation)
@@ -34,9 +34,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 
 #### Returns
-[MetadataInterface](MetadataInterface.md) &#124; null
- The metadata, or null if not specified
-
+[`MetadataInterface`](MetadataInterface.md) &#124; `null` — The metadata, or null if not specified
 #### getRelations
 
 
@@ -50,8 +48,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 
 #### Returns
-[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)&lt;[UsersetInterface](UsersetInterface.md)&gt; &#124; null
-
+[`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md)&lt;[`UsersetInterface`](UsersetInterface.md)&gt; &#124; `null`
 #### getType
 
 
@@ -65,9 +62,7 @@ Get the name of this type. The type name uniquely identifies this type definitio
 
 
 #### Returns
-string
- The unique type name
-
+`string` — The unique type name
 ### Other
 #### jsonSerialize
 
@@ -81,5 +76,4 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`

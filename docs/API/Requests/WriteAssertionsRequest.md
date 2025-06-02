@@ -9,8 +9,8 @@ Request for writing test assertions to validate authorization model behavior. Th
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequest.php)
 
 ## Implements
-* [WriteAssertionsRequestInterface](WriteAssertionsRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`WriteAssertionsRequestInterface`](WriteAssertionsRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (response)
@@ -34,9 +34,7 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 
 #### Returns
-[AssertionsInterface](Models/Collections/AssertionsInterface.md)
- Collection of test assertions to validate authorization model behavior
-
+[`AssertionsInterface`](Models/Collections/AssertionsInterface.md) — Collection of test assertions to validate authorization model behavior
 #### getModel
 
 
@@ -50,9 +48,7 @@ Get the authorization model ID to associate assertions with. Specifies which ver
 
 
 #### Returns
-string
- The authorization model ID that these assertions will test
-
+`string` — The authorization model ID that these assertions will test
 #### getRequest
 
 
@@ -67,12 +63,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -86,6 +80,4 @@ Get the store ID where assertions will be written. Identifies the OpenFGA store 
 
 
 #### Returns
-string
- The store ID where the test assertions will be written
-
+`string` — The store ID where the test assertions will be written

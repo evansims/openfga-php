@@ -8,13 +8,13 @@
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/Nodes.php)
 
 ## Implements
-* [IndexedCollectionInterface](IndexedCollectionInterface.md)
-* Traversable
-* JsonSerializable
-* Iterator
-* Countable
-* ArrayAccess
-* [NodesInterface](NodesInterface.md)
+* [`IndexedCollectionInterface`](IndexedCollectionInterface.md)
+* `Traversable`
+* `JsonSerializable`
+* `Iterator`
+* `Countable`
+* `ArrayAccess`
+* [`NodesInterface`](NodesInterface.md)
 
 ## Related Classes
 * [NodesInterface](../Models/Collections/NodesInterface.md) (interface)
@@ -39,7 +39,7 @@ Get an item by its position in the collection. This method retrieves the item at
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | int | The index position of the item to retrieve |
+| `$offset` | `int` | The index position of the item to retrieve |
 
 
 #### offsetGet
@@ -55,11 +55,10 @@ public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
+| `$offset` | `mixed` |  |
 
 #### Returns
-[ModelInterface](../Models/ModelInterface.md) &#124; null
-
+[`ModelInterface`](../Models/ModelInterface.md) &#124; `null`
 ### Model Management
 #### schema
 
@@ -75,9 +74,7 @@ Get the schema definition for this collection type. Returns the schema that defi
 
 
 #### Returns
-CollectionSchemaInterface
- The schema definition containing validation rules and type constraints for this collection
-
+`CollectionSchemaInterface` — The schema definition containing validation rules and type constraints for this collection
 ### Utility
 #### isEmpty
 
@@ -92,9 +89,7 @@ Check if the collection contains no items. This method provides a convenient way
 
 
 #### Returns
-bool
- True if the collection is empty, false otherwise
-
+`bool` — True if the collection is empty, false otherwise
 #### offsetExists
 
 
@@ -109,12 +104,10 @@ Check if an offset exists in the collection. This method determines whether the 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed | The offset to check for existence |
+| `$offset` | `mixed` | The offset to check for existence |
 
 #### Returns
-bool
- True if the offset exists, false otherwise
-
+`bool` — True if the offset exists, false otherwise
 #### offsetSet
 
 
@@ -128,12 +121,11 @@ public function offsetSet(mixed $offset, mixed $value): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
-| `$value` | mixed |  |
+| `$offset` | `mixed` |  |
+| `$value` | `mixed` |  |
 
 #### Returns
-void
-
+`void`
 #### offsetUnset
 
 
@@ -147,11 +139,10 @@ public function offsetUnset(mixed $offset): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | mixed |  |
+| `$offset` | `mixed` |  |
 
 #### Returns
-void
-
+`void`
 ### Other
 #### add
 
@@ -170,8 +161,7 @@ Add an item to the end of the collection. This method appends a new model object
 | `$item` | mixed | The OpenFGA model object to add to the collection |
 
 #### Returns
-static
-
+`static`
 #### clear
 
 
@@ -185,8 +175,7 @@ Remove all items from the collection. This method empties the collection, resett
 
 
 #### Returns
-void
-
+`void`
 #### count
 
 
@@ -199,8 +188,7 @@ public function count(): int<0, max>
 
 
 #### Returns
-int&lt;0, max&gt;
-
+`int&lt;`0`, `max`&gt;`
 #### current
 
 
@@ -213,8 +201,7 @@ public function current(): OpenFGA\Models\ModelInterface
 
 
 #### Returns
-[ModelInterface](../Models/ModelInterface.md)
-
+[`ModelInterface`](../Models/ModelInterface.md)
 #### every
 
 
@@ -229,12 +216,10 @@ Check if all items in the collection match the given condition. This method test
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | callable |  |
+| `$callback` | `callable` |  |
 
 #### Returns
-bool
- True if all items match the condition, false otherwise
-
+`bool` — True if all items match the condition, false otherwise
 #### filter
 
 
@@ -249,12 +234,10 @@ Create a new collection containing only items that match the condition. This met
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | callable |  |
+| `$callback` | `callable` |  |
 
 #### Returns
-static
- A new collection containing only the matching items
-
+`static` — A new collection containing only the matching items
 #### first
 
 
@@ -269,7 +252,7 @@ Get the first item in the collection, optionally matching a condition. When call
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | callable &#124; null |  |
+| `$callback` | `callable` &#124; `null` |  |
 
 
 #### jsonSerialize
@@ -284,8 +267,7 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`
 #### key
 
 
@@ -299,9 +281,7 @@ Get the current iterator key. This method returns the current position in the co
 
 
 #### Returns
-int
- The current iterator position
-
+`int` — The current iterator position
 #### next
 
 
@@ -315,8 +295,7 @@ Move the iterator to the next position. This method advances the internal iterat
 
 
 #### Returns
-void
-
+`void`
 #### reduce
 
 
@@ -331,13 +310,11 @@ Reduce the collection to a single value using a callback function. This method i
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$initial` | mixed | The initial value to start the reduction |
-| `$callback` | callable |  |
+| `$initial` | `mixed` | The initial value to start the reduction |
+| `$callback` | `callable` |  |
 
 #### Returns
-mixed
- The final accumulated value
-
+`mixed` — The final accumulated value
 #### rewind
 
 
@@ -351,8 +328,7 @@ Reset the iterator to the beginning of the collection. This method moves the int
 
 
 #### Returns
-void
-
+`void`
 #### some
 
 
@@ -367,12 +343,10 @@ Check if at least one item in the collection matches the given condition. This m
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$callback` | callable |  |
+| `$callback` | `callable` |  |
 
 #### Returns
-bool
- True if any item matches the condition, false otherwise
-
+`bool` — True if any item matches the condition, false otherwise
 #### toArray
 
 
@@ -386,9 +360,7 @@ Convert the collection to a standard PHP array. This method creates a native PHP
 
 
 #### Returns
-array
- A standard PHP array containing all collection items
-
+`array` — A standard PHP array containing all collection items
 #### valid
 
 
@@ -402,9 +374,7 @@ Check if the current iterator position is valid. This method determines whether 
 
 
 #### Returns
-bool
- True if the current position is valid, false otherwise
-
+`bool` — True if the current position is valid, false otherwise
 #### withItems
 
 
@@ -422,6 +392,4 @@ Create a new collection with the specified items. This method creates a fresh co
 | `$items` | mixed |  |
 
 #### Returns
-static
- A new collection instance containing the specified items
-
+`static` — A new collection instance containing the specified items

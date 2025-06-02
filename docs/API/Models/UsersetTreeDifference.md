@@ -9,9 +9,9 @@ Represents a difference operation node in authorization evaluation trees. Userse
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifference.php)
 
 ## Implements
-* [UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the base node from which the subtract node will be removed. This represents 
 
 
 #### Returns
-[NodeInterface](NodeInterface.md)
- The base node for the difference operation
-
+[`NodeInterface`](NodeInterface.md) — The base node for the difference operation
 #### getSubtract
 
 
@@ -55,9 +53,7 @@ Get the node representing users to subtract from the base. This represents the n
 
 
 #### Returns
-[NodeInterface](NodeInterface.md)
- The node to subtract from the base
-
+[`NodeInterface`](NodeInterface.md) — The node to subtract from the base
 ### Model Management
 #### schema
 
@@ -73,9 +69,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -89,5 +83,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

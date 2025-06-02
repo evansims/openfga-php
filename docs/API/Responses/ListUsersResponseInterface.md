@@ -9,7 +9,7 @@ Interface for user listing response objects. This interface defines the contract
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ListUsersResponse](Responses/ListUsersResponse.md) (implementation)
@@ -33,6 +33,4 @@ Get the collection of users with the specified relationship. Returns a type-safe
 
 
 #### Returns
-[UsersInterface](Models/Collections/UsersInterface.md)&lt;[UserInterface](Models/UserInterface.md)&gt;
- The collection of users with the relationship
-
+[`UsersInterface`](Models/Collections/UsersInterface.md)&lt;[`UserInterface`](Models/UserInterface.md)&gt; — The collection of users with the relationship

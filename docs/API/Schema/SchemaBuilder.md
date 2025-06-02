@@ -9,7 +9,7 @@ Fluent builder for creating JSON schemas for data validation and transformation.
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaBuilder.php)
 
 ## Implements
-* [SchemaBuilderInterface](SchemaBuilderInterface.md)
+* [`SchemaBuilderInterface`](SchemaBuilderInterface.md)
 
 ## Related Classes
 * [SchemaBuilderInterface](Schema/SchemaBuilderInterface.md) (interface)
@@ -33,9 +33,7 @@ Build and register the schema. Creates a Schema instance with all defined proper
 
 
 #### Returns
-[Schema](Schema.md)
- The built and registered schema
-
+[`Schema`](Schema.md) — The built and registered schema
 ### Other
 #### array
 
@@ -56,15 +54,13 @@ Add an array property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$items` | array |  |
-| `$required` | bool | Whether the property is required |
-| `$default` | mixed | Default value for optional properties |
+| `$name` | `string` | The property name |
+| `$items` | `array` |  |
+| `$required` | `bool` | Whether the property is required |
+| `$default` | `mixed` | Default value for optional properties |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining
 #### boolean
 
 
@@ -79,14 +75,12 @@ Add a boolean property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$required` | bool | Whether the property is required |
-| `$default` | mixed | Default value for optional properties |
+| `$name` | `string` | The property name |
+| `$required` | `bool` | Whether the property is required |
+| `$default` | `mixed` | Default value for optional properties |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining
 #### date
 
 
@@ -101,14 +95,12 @@ Add a date property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$required` | bool | Whether the property is required |
-| `$default` | mixed | Default value for optional properties |
+| `$name` | `string` | The property name |
+| `$required` | `bool` | Whether the property is required |
+| `$default` | `mixed` | Default value for optional properties |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining
 #### datetime
 
 
@@ -123,14 +115,12 @@ Add a datetime property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$required` | bool | Whether the property is required |
-| `$default` | mixed | Default value for optional properties |
+| `$name` | `string` | The property name |
+| `$required` | `bool` | Whether the property is required |
+| `$default` | `mixed` | Default value for optional properties |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining
 #### integer
 
 
@@ -145,14 +135,12 @@ Add an integer property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$required` | bool | Whether the property is required |
-| `$default` | mixed | Default value for optional properties |
+| `$name` | `string` | The property name |
+| `$required` | `bool` | Whether the property is required |
+| `$default` | `mixed` | Default value for optional properties |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining
 #### number
 
 
@@ -167,14 +155,12 @@ Add a number (float) property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$required` | bool | Whether the property is required |
-| `$default` | mixed | Default value for optional properties |
+| `$name` | `string` | The property name |
+| `$required` | `bool` | Whether the property is required |
+| `$default` | `mixed` | Default value for optional properties |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining
 #### object
 
 
@@ -189,14 +175,12 @@ Add an object property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$className` | string | The class name for the object property |
-| `$required` | bool | Whether the property is required |
+| `$name` | `string` | The property name |
+| `$className` | `string` | The class name for the object property |
+| `$required` | `bool` | Whether the property is required |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining
 #### string
 
 
@@ -217,13 +201,11 @@ Add a string property to the schema.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The property name |
-| `$required` | bool | Whether the property is required |
-| `$format` | string &#124; null | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
-| `$enum` | array &#124; null | Array of allowed string values |
-| `$default` | mixed | Default value for optional properties |
+| `$name` | `string` | The property name |
+| `$required` | `bool` | Whether the property is required |
+| `$format` | `string` &#124; `null` | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
+| `$enum` | `array` &#124; `null` | Array of allowed string values |
+| `$default` | `mixed` | Default value for optional properties |
 
 #### Returns
-self
- Returns the builder instance for method chaining
-
+`self` — Returns the builder instance for method chaining

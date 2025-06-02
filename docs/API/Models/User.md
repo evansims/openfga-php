@@ -9,9 +9,9 @@ Represents a user or user specification in authorization contexts. A User can re
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php)
 
 ## Implements
-* [UserInterface](UserInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UserInterface`](UserInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UserInterface](Models/UserInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the difference operation for this user. Difference operations enable sophist
 
 
 #### Returns
-[DifferenceV1Interface](DifferenceV1Interface.md) &#124; null
- The difference operation defining included and excluded user sets, or null if this is not a difference-based user
-
+[`DifferenceV1Interface`](DifferenceV1Interface.md) &#124; `null` — The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 #### getObject
 
 
@@ -55,9 +53,7 @@ Get the user object representation. User objects represent direct, concrete user
 
 
 #### Returns
-[UserObjectInterface](UserObjectInterface.md) &#124; null &#124; string &#124; null
- The direct user identifier as a structured object or string, or null if this is not a direct user reference
-
+[`UserObjectInterface`](UserObjectInterface.md) &#124; `null` &#124; `string` &#124; `null` — The direct user identifier as a structured object or string, or null if this is not a direct user reference
 #### getUserset
 
 
@@ -71,9 +67,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 
 
 #### Returns
-[UsersetUserInterface](UsersetUserInterface.md) &#124; null
- The userset definition specifying users through relationships, or null if this is not a userset-based user
-
+[`UsersetUserInterface`](UsersetUserInterface.md) &#124; `null` — The userset definition specifying users through relationships, or null if this is not a userset-based user
 #### getWildcard
 
 
@@ -87,9 +81,7 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 
 
 #### Returns
-[TypedWildcardInterface](TypedWildcardInterface.md) &#124; null
- The wildcard definition specifying the user type, or null if this is not a wildcard user
-
+[`TypedWildcardInterface`](TypedWildcardInterface.md) &#124; `null` — The wildcard definition specifying the user type, or null if this is not a wildcard user
 ### Model Management
 #### schema
 
@@ -105,9 +97,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -122,6 +112,4 @@ Serialize the user for JSON encoding. This method prepares the user data for API
 
 
 #### Returns
-array&lt;string, mixed&gt;
- User data formatted for JSON encoding with the appropriate user type representation
-
+`array&lt;`string`, `mixed`&gt;` — User data formatted for JSON encoding with the appropriate user type representation

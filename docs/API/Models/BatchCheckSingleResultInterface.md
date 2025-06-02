@@ -9,8 +9,8 @@ Represents the result of a single check within a batch check response. Each resu
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResultInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [BatchCheckSingleResult](Models/BatchCheckSingleResult.md) (implementation)
@@ -34,8 +34,7 @@ Get whether this check was allowed. Returns true if the user has the specified r
 
 
 #### Returns
-bool &#124; null
-
+`bool` &#124; `null`
 ### List Operations
 #### getError
 
@@ -50,8 +49,7 @@ Get any error that occurred during this check. Returns error information if the 
 
 
 #### Returns
-object &#124; null
-
+`object` &#124; `null`
 ### Other
 #### jsonSerialize
 

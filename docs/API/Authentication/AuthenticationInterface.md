@@ -30,12 +30,10 @@ Get an authentication request context if this strategy requires token acquisitio
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | Factory for creating request body streams |
+| `$streamFactory` | `StreamFactoryInterface` | Factory for creating request body streams |
 
 #### Returns
-RequestContext &#124; null
- The authentication request context, or null if not needed
-
+`RequestContext` &#124; `null` — The authentication request context, or null if not needed
 #### getAuthorizationHeader
 
 
@@ -49,9 +47,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 
 #### Returns
-string &#124; null
- The authorization header value, or null if no authentication is needed
-
+`string` &#124; `null` — The authorization header value, or null if no authentication is needed
 ### Other
 #### handleAuthenticationResponse
 
@@ -67,11 +63,10 @@ Handle the authentication response and update internal state. This method is cal
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The authentication response |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The authentication response |
 
 #### Returns
-void
-
+`void`
 #### requiresAuthentication
 
 
@@ -85,6 +80,4 @@ Check if authentication is required for this strategy.
 
 
 #### Returns
-bool
- True if this strategy provides authentication, false for no-auth strategies
-
+`bool` — True if this strategy provides authentication, false for no-auth strategies

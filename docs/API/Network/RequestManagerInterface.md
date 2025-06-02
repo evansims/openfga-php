@@ -31,9 +31,7 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 
 
 #### Returns
-[ClientInterface](ClientInterface.md)
- The PSR-18 HTTP client instance for executing requests
-
+[`ClientInterface`](ClientInterface.md) — The PSR-18 HTTP client instance for executing requests
 #### getHttpRequestFactory
 
 
@@ -47,9 +45,7 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 
 
 #### Returns
-RequestFactoryInterface
- The PSR-17 factory for creating HTTP request objects
-
+`RequestFactoryInterface` — The PSR-17 factory for creating HTTP request objects
 #### getHttpResponseFactory
 
 
@@ -63,9 +59,7 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 
 
 #### Returns
-ResponseFactoryInterface
- The PSR-17 factory for creating HTTP response objects
-
+`ResponseFactoryInterface` — The PSR-17 factory for creating HTTP response objects
 #### getHttpStreamFactory
 
 
@@ -79,9 +73,7 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 
 
 #### Returns
-StreamFactoryInterface
- The PSR-17 factory for creating HTTP message body streams
-
+`StreamFactoryInterface` — The PSR-17 factory for creating HTTP message body streams
 ### Other
 #### request
 
@@ -97,12 +89,10 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | [RequestInterface](Requests/RequestInterface.md) | The high-level OpenFGA API request to convert |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) | The high-level OpenFGA API request to convert |
 
 #### Returns
-HttpRequestInterface
- The PSR-7 HTTP request ready for execution
-
+`HttpRequestInterface` — The PSR-7 HTTP request ready for execution
 #### send
 
 
@@ -117,9 +107,7 @@ Send an HTTP request and return the response. Executes the provided PSR-7 HTTP r
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | HttpRequestInterface | The PSR-7 HTTP request to execute |
+| `$request` | `HttpRequestInterface` | The PSR-7 HTTP request to execute |
 
 #### Returns
-[ResponseInterface](Responses/ResponseInterface.md)
- The HTTP response from the OpenFGA API
-
+[`ResponseInterface`](Responses/ResponseInterface.md) — The HTTP response from the OpenFGA API

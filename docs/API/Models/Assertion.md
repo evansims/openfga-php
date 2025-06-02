@@ -9,9 +9,9 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php)
 
 ## Implements
-* [AssertionInterface](AssertionInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`AssertionInterface`](AssertionInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [AssertionInterface](Models/AssertionInterface.md) (interface)
@@ -39,8 +39,7 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 
 
 #### Returns
-array &#124; null
-
+`array` &#124; `null`
 #### getContextualTuples
 
 
@@ -54,8 +53,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 #### getExpectation
 
 
@@ -69,9 +67,7 @@ Get the expected result for this assertion. The expectation defines whether the 
 
 
 #### Returns
-bool
- True if access should be granted, false if access should be denied
-
+`bool` — True if access should be granted, false if access should be denied
 #### getTupleKey
 
 
@@ -85,9 +81,7 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 
 #### Returns
-[AssertionTupleKeyInterface](AssertionTupleKeyInterface.md)
- The tuple key defining the authorization question
-
+[`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md) — The tuple key defining the authorization question
 ### Model Management
 #### schema
 
@@ -103,9 +97,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -119,5 +111,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

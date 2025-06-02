@@ -9,8 +9,8 @@ Defines the contract for relation references with optional conditions. A relatio
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReferenceInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [RelationReference](Models/RelationReference.md) (implementation)
@@ -34,9 +34,7 @@ Get the optional condition name that must be satisfied. When specified, this con
 
 
 #### Returns
-string &#124; null
- The condition name, or null if no condition is required
-
+`string` &#124; `null` — The condition name, or null if no condition is required
 #### getRelation
 
 
@@ -50,9 +48,7 @@ Get the optional specific relation on the referenced type. When specified, this 
 
 
 #### Returns
-string &#124; null
- The relation name, or null to reference the entire type
-
+`string` &#124; `null` — The relation name, or null to reference the entire type
 #### getType
 
 
@@ -66,9 +62,7 @@ Get the type being referenced. This is the object type that this reference point
 
 
 #### Returns
-string
- The type name being referenced
-
+`string` — The type name being referenced
 #### getWildcard
 
 
@@ -82,9 +76,7 @@ Get the optional wildcard marker for type-level permissions. When present, this 
 
 
 #### Returns
-object &#124; null
- The wildcard marker, or null for instance-specific references
-
+`object` &#124; `null` — The wildcard marker, or null for instance-specific references
 ### Other
 #### jsonSerialize
 
@@ -98,5 +90,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

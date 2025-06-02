@@ -9,8 +9,8 @@ Defines a difference operation node in authorization evaluation trees. UsersetTr
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifferenceInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [UsersetTreeDifference](Models/UsersetTreeDifference.md) (implementation)
@@ -34,9 +34,7 @@ Get the base node from which the subtract node will be removed. This represents 
 
 
 #### Returns
-[NodeInterface](NodeInterface.md)
- The base node for the difference operation
-
+[`NodeInterface`](NodeInterface.md) — The base node for the difference operation
 #### getSubtract
 
 
@@ -50,9 +48,7 @@ Get the node representing users to subtract from the base. This represents the n
 
 
 #### Returns
-[NodeInterface](NodeInterface.md)
- The node to subtract from the base
-
+[`NodeInterface`](NodeInterface.md) — The node to subtract from the base
 ### Other
 #### jsonSerialize
 
@@ -66,5 +62,4 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`

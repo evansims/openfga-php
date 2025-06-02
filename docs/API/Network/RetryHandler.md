@@ -9,7 +9,7 @@ Advanced retry handler with exponential backoff, jitter, and circuit breaker int
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RetryHandler.php)
 
 ## Implements
-* [RetryHandlerInterface](RetryHandlerInterface.md)
+* [`RetryHandlerInterface`](RetryHandlerInterface.md)
 
 ## Related Classes
 * [RetryHandlerInterface](Network/RetryHandlerInterface.md) (interface)
@@ -37,11 +37,9 @@ Execute an HTTP request with automatic retry logic. Performs the HTTP request wi
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$requestExecutor` | callable |  |
-| `$request` | Psr\Http\Message\RequestInterface | The original HTTP request for context |
-| `$endpoint` | string | The endpoint URL for circuit breaker tracking |
+| `$requestExecutor` | `callable` |  |
+| `$request` | `Psr\Http\Message\RequestInterface` | The original HTTP request for context |
+| `$endpoint` | `string` | The endpoint URL for circuit breaker tracking |
 
 #### Returns
-Psr\Http\Message\ResponseInterface
- The successful HTTP response
-
+`Psr\Http\Message\ResponseInterface` — The successful HTTP response

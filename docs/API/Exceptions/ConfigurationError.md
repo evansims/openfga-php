@@ -9,8 +9,8 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -46,9 +46,7 @@ Get the recommended PSR interface for this configuration error. Provides the spe
 
 
 #### Returns
-string
- The PSR interface name
-
+`string` — The PSR interface name
 ### Utility
 #### isHttpComponentMissing
 
@@ -63,9 +61,7 @@ Check if this configuration error is related to missing PSR HTTP components. Use
 
 
 #### Returns
-true
- True if the error is related to missing HTTP components, false otherwise
-
+`true` — True if the error is related to missing HTTP components, false otherwise
 ### Other
 #### exception
 
@@ -86,12 +82,10 @@ Create a new ConfigurationException for this error type. Factory method that cre
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | [RequestInterface](Requests/RequestInterface.md) &#124; null | The PSR-7 HTTP request being processed when configuration error occurred, if applicable |
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) &#124; null | The PSR-7 HTTP response received, if applicable |
-| `$context` | array&lt;string, mixed&gt; |  |
-| `$prev` | Throwable &#124; null | The previous throwable used for exception chaining, if any |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request being processed when configuration error occurred, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response received, if applicable |
+| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
+| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
 
 #### Returns
-[ConfigurationException](ConfigurationException.md)
- The newly created ConfigurationException instance with comprehensive error context
-
+[`ConfigurationException`](ConfigurationException.md) — The newly created ConfigurationException instance with comprehensive error context

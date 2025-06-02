@@ -9,7 +9,7 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php)
 
 ## Implements
-* [AuthenticationInterface](AuthenticationInterface.md)
+* [`AuthenticationInterface`](AuthenticationInterface.md)
 
 
 
@@ -34,12 +34,10 @@ Get an authentication request context if this strategy requires token acquisitio
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | Factory for creating request body streams |
+| `$streamFactory` | `StreamFactoryInterface` | Factory for creating request body streams |
 
 #### Returns
-[RequestContext](Network/RequestContext.md) &#124; null
- The authentication request context, or null if not needed
-
+[`RequestContext`](Network/RequestContext.md) &#124; `null` — The authentication request context, or null if not needed
 #### getAuthorizationHeader
 
 
@@ -53,9 +51,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 
 #### Returns
-string &#124; null
- The authorization header value, or null if no authentication is needed
-
+`string` &#124; `null` — The authorization header value, or null if no authentication is needed
 #### getToken
 
 
@@ -69,9 +65,7 @@ Get the current access token if available. Returns the stored access token, whic
 
 
 #### Returns
-[AccessTokenInterface](AccessTokenInterface.md) &#124; null
- The current access token, or null if not authenticated
-
+[`AccessTokenInterface`](AccessTokenInterface.md) &#124; `null` — The current access token, or null if not authenticated
 ### Other
 #### clearToken
 
@@ -86,8 +80,7 @@ Clear the current access token and force re-authentication. Removes the stored a
 
 
 #### Returns
-void
-
+`void`
 #### handleAuthenticationResponse
 
 
@@ -102,11 +95,10 @@ Handle the authentication response and update the stored token. Processes the OA
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The authentication response from the OAuth server |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The authentication response from the OAuth server |
 
 #### Returns
-void
-
+`void`
 #### requiresAuthentication
 
 
@@ -120,6 +112,4 @@ Check if authentication is required for this strategy.
 
 
 #### Returns
-bool
- True if this strategy provides authentication, false for no-auth strategies
-
+`bool` — True if this strategy provides authentication, false for no-auth strategies

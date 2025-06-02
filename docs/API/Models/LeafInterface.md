@@ -9,8 +9,8 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/LeafInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Leaf](Models/Leaf.md) (implementation)
@@ -34,9 +34,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 
 #### Returns
-[ComputedInterface](ComputedInterface.md) &#124; null
- The computed userset specification, or null if not used
-
+[`ComputedInterface`](ComputedInterface.md) &#124; `null` — The computed userset specification, or null if not used
 #### getTupleToUserset
 
 
@@ -50,9 +48,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 
 #### Returns
-[UsersetTreeTupleToUsersetInterface](UsersetTreeTupleToUsersetInterface.md) &#124; null
- The tuple-to-userset operation, or null if not used
-
+[`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md) &#124; `null` — The tuple-to-userset operation, or null if not used
 #### getUsers
 
 
@@ -66,9 +62,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 
 #### Returns
-[UsersListInterface](Models/Collections/UsersListInterface.md)&lt;[UsersListUserInterface](UsersListUserInterface.md)&gt; &#124; null
- The list of users with direct access, or null if not used
-
+[`UsersListInterface`](Models/Collections/UsersListInterface.md)&lt;[`UsersListUserInterface`](UsersListUserInterface.md)&gt; &#124; `null` — The list of users with direct access, or null if not used
 ### Other
 #### jsonSerialize
 
@@ -82,5 +76,4 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`

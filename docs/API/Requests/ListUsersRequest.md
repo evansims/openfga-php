@@ -9,8 +9,8 @@ Request for listing users who have a specific relationship with an object. This 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php)
 
 ## Implements
-* [ListUsersRequestInterface](ListUsersRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`ListUsersRequestInterface`](ListUsersRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [ListUsersResponse](Responses/ListUsersResponse.md) (response)
@@ -34,9 +34,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 
 #### Returns
-[Consistency](Models/Enums/Consistency.md) &#124; null
- The consistency level for the operation, or null to use the default consistency setting
-
+[`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContext
 
 
@@ -50,9 +48,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 
 #### Returns
-object &#124; null
- The context object containing additional data for evaluation, or null if no context is provided
-
+`object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 #### getContextualTuples
 
 
@@ -66,9 +62,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
- Additional relationship tuples for evaluation, or null if none provided
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getModel
 
 
@@ -82,9 +76,7 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 
 
 #### Returns
-string
- The authorization model ID for evaluating user relationships
-
+`string` — The authorization model ID for evaluating user relationships
 #### getObject
 
 
@@ -98,9 +90,7 @@ Get the object to list users for. Specifies the target object for which users wi
 
 
 #### Returns
-string
- The object identifier to list users for
-
+`string` — The object identifier to list users for
 #### getRelation
 
 
@@ -114,9 +104,7 @@ Get the relation to check for user access. Specifies the relationship type to ev
 
 
 #### Returns
-string
- The relation name to check for user access
-
+`string` — The relation name to check for user access
 #### getRequest
 
 
@@ -131,12 +119,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -150,9 +136,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 
 #### Returns
-string
- The store ID containing the authorization data
-
+`string` — The store ID containing the authorization data
 #### getUserFilters
 
 
@@ -166,6 +150,4 @@ Get the user type filters to apply to results. Returns a collection of filters t
 
 
 #### Returns
-[UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)
- Collection of user type filters to apply to the results
-
+[`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md) — Collection of user type filters to apply to the results

@@ -9,9 +9,9 @@ Contains metadata information about type definitions in your authorization model
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php)
 
 ## Implements
-* [MetadataInterface](MetadataInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`MetadataInterface`](MetadataInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [MetadataInterface](Models/MetadataInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 
 #### Returns
-string &#124; null
- The module name, or null if not specified
-
+`string` &#124; `null` — The module name, or null if not specified
 #### getRelations
 
 
@@ -55,9 +53,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 
 #### Returns
-[RelationMetadataCollection](Models/Collections/RelationMetadataCollection.md) &#124; null
- The relation metadata collection, or null if not specified
-
+[`RelationMetadataCollection`](Models/Collections/RelationMetadataCollection.md) &#124; `null` — The relation metadata collection, or null if not specified
 #### getSourceInfo
 
 
@@ -71,9 +67,7 @@ Get the source code information for this metadata. Source information provides d
 
 
 #### Returns
-[SourceInfoInterface](SourceInfoInterface.md) &#124; null
- The source information, or null if not available
-
+[`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source information, or null if not available
 ### Model Management
 #### schema
 
@@ -89,9 +83,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -105,5 +97,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

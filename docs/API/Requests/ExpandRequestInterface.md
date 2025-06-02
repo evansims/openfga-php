@@ -9,7 +9,7 @@ Interface for expanding relationship graphs in OpenFGA. This interface defines t
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/ExpandRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [ExpandResponseInterface](Responses/ExpandResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 
 
 #### Returns
-[Consistency](Models/Enums/Consistency.md) &#124; null
- The consistency level for the operation, or null to use the default consistency setting
-
+[`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContextualTuples
 
 
@@ -49,9 +47,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null
- Additional relationship tuples for evaluation, or null if none provided
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getModel
 
 
@@ -65,9 +61,7 @@ Get the authorization model ID to use for the expansion. Specifies which version
 
 
 #### Returns
-string &#124; null
- The authorization model ID for evaluation, or null to use the latest model version
-
+`string` &#124; `null` — The authorization model ID for evaluation, or null to use the latest model version
 #### getRequest
 
 
@@ -82,12 +76,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -101,9 +93,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 
 #### Returns
-string
- The store ID containing the authorization data
-
+`string` — The store ID containing the authorization data
 #### getTupleKey
 
 
@@ -117,6 +107,4 @@ Get the relationship tuple to expand. Specifies the starting point for the relat
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
- The relationship tuple specifying what to expand (object and relation)
-
+[`TupleKeyInterface`](Models/TupleKeyInterface.md) — The relationship tuple specifying what to expand (object and relation)

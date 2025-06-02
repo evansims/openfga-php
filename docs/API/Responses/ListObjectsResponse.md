@@ -9,8 +9,8 @@ Response containing a list of objects that a user has a specific relationship wi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponse.php)
 
 ## Implements
-* [ListObjectsResponseInterface](ListObjectsResponseInterface.md)
-* [ResponseInterface](ResponseInterface.md)
+* [`ListObjectsResponseInterface`](ListObjectsResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (interface)
@@ -35,9 +35,7 @@ Get the array of object identifiers the user has access to. Returns an array of 
 
 
 #### Returns
-array
- Array of object identifiers the user has access to
-
+`array` — Array of object identifiers the user has access to
 ### Model Management
 #### schema
 
@@ -53,9 +51,7 @@ Get the schema definition for this response. Returns the schema that defines the
 
 
 #### Returns
-SchemaInterface
- The schema definition for response validation
-
+`SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
@@ -76,11 +72,9 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
-| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
-| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
+| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
+| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
+| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
 
 #### Returns
-static
- The parsed and validated response instance containing the API response data
-
+`static` — The parsed and validated response instance containing the API response data

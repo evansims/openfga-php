@@ -9,7 +9,7 @@ Interface for authorization model retrieval response objects. This interface def
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (implementation)
@@ -33,6 +33,4 @@ Get the retrieved authorization model. Returns the complete authorization model 
 
 
 #### Returns
-[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; null
- The authorization model, or null if not found
-
+[`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` — The authorization model, or null if not found

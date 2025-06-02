@@ -9,7 +9,7 @@ Concrete implementation of HTTP request management for OpenFGA API communication
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php)
 
 ## Implements
-* [RequestManagerInterface](RequestManagerInterface.md)
+* [`RequestManagerInterface`](RequestManagerInterface.md)
 
 ## Related Classes
 * [RequestManagerInterface](Network/RequestManagerInterface.md) (interface)
@@ -33,9 +33,7 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 
 
 #### Returns
-ClientInterface
- The PSR-18 HTTP client instance for executing requests
-
+`ClientInterface` — The PSR-18 HTTP client instance for executing requests
 #### getHttpRequestFactory
 
 
@@ -49,9 +47,7 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 
 
 #### Returns
-RequestFactoryInterface
- The PSR-17 factory for creating HTTP request objects
-
+`RequestFactoryInterface` — The PSR-17 factory for creating HTTP request objects
 #### getHttpResponseFactory
 
 
@@ -65,9 +61,7 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 
 
 #### Returns
-ResponseFactoryInterface
- The PSR-17 factory for creating HTTP response objects
-
+`ResponseFactoryInterface` — The PSR-17 factory for creating HTTP response objects
 #### getHttpStreamFactory
 
 
@@ -81,9 +75,7 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 
 
 #### Returns
-StreamFactoryInterface
- The PSR-17 factory for creating HTTP message body streams
-
+`StreamFactoryInterface` — The PSR-17 factory for creating HTTP message body streams
 ### Other
 #### handleResponseException
 
@@ -100,13 +92,11 @@ Handle error responses by throwing appropriate exceptions. Analyzes HTTP error r
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The HTTP error response to analyze and convert to an exception |
-| `$request` | HttpRequestInterface &#124; null | Optional request context for enhanced error reporting |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The HTTP error response to analyze and convert to an exception |
+| `$request` | `HttpRequestInterface` &#124; `null` | Optional request context for enhanced error reporting |
 
 #### Returns
-never
- This method always throws an exception and never returns normally
-
+`never` — This method always throws an exception and never returns normally
 #### request
 
 
@@ -121,12 +111,10 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | [RequestInterface](Requests/RequestInterface.md) | The high-level OpenFGA API request to convert |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) | The high-level OpenFGA API request to convert |
 
 #### Returns
-Psr\Http\Message\RequestInterface
- The PSR-7 HTTP request ready for execution
-
+`Psr\Http\Message\RequestInterface` — The PSR-7 HTTP request ready for execution
 #### send
 
 
@@ -141,9 +129,7 @@ Send an HTTP request and return the response. Executes the provided PSR-7 HTTP r
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | Psr\Http\Message\RequestInterface | The PSR-7 HTTP request to execute |
+| `$request` | `Psr\Http\Message\RequestInterface` | The PSR-7 HTTP request to execute |
 
 #### Returns
-Psr\Http\Message\ResponseInterface
- The HTTP response from the OpenFGA API
-
+`Psr\Http\Message\ResponseInterface` — The HTTP response from the OpenFGA API

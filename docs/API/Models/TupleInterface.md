@@ -9,8 +9,8 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Tuple](Models/Tuple.md) (implementation)
@@ -34,9 +34,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 
 
 #### Returns
-[TupleKeyInterface](TupleKeyInterface.md)
- The tuple key defining this relationship with user, relation, object, and optional condition
-
+[`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key defining this relationship with user, relation, object, and optional condition
 #### getTimestamp
 
 
@@ -50,9 +48,7 @@ Get the timestamp when this tuple was created or last modified. Timestamps provi
 
 
 #### Returns
-DateTimeImmutable
- The creation or last modification timestamp in UTC timezone
-
+`DateTimeImmutable` — The creation or last modification timestamp in UTC timezone
 ### Other
 #### jsonSerialize
 
@@ -67,6 +63,4 @@ Serialize the tuple for JSON encoding. This method prepares the tuple data for A
 
 
 #### Returns
-array&lt;string, mixed&gt;
- Tuple data formatted for JSON encoding with API-compatible structure
-
+`array&lt;`string`, `mixed`&gt;` — Tuple data formatted for JSON encoding with API-compatible structure

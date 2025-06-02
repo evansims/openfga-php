@@ -9,8 +9,8 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKeyInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [TupleKey](Models/TupleKey.md) (implementation)
@@ -34,9 +34,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 
 #### Returns
-[ConditionInterface](ConditionInterface.md) &#124; null
- The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
-
+[`ConditionInterface`](ConditionInterface.md) &#124; `null` — The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 #### getObject
 
 
@@ -50,9 +48,7 @@ Get the object in this relationship tuple. The object represents the resource or
 
 
 #### Returns
-string &#124; null
- The object identifier, or null if not specified
-
+`string` &#124; `null` — The object identifier, or null if not specified
 #### getRelation
 
 
@@ -66,9 +62,7 @@ Get the relation that defines the type of relationship. The relation describes w
 
 
 #### Returns
-string &#124; null
- The relation name defining the type of relationship, or null if not specified
-
+`string` &#124; `null` — The relation name defining the type of relationship, or null if not specified
 #### getUser
 
 
@@ -82,9 +76,7 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 
 #### Returns
-string &#124; null
- The user identifier, or null if not specified
-
+`string` &#124; `null` — The user identifier, or null if not specified
 ### Other
 #### jsonSerialize
 
@@ -99,6 +91,4 @@ Serialize the tuple key for JSON encoding. This method prepares the tuple key da
 
 
 #### Returns
-array&lt;string, mixed&gt;
- The serialized tuple key data ready for JSON encoding
-
+`array&lt;`string`, `mixed`&gt;` — The serialized tuple key data ready for JSON encoding

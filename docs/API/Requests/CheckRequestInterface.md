@@ -9,7 +9,7 @@ Interface for authorization check request specifications. This interface defines
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [CheckResponseInterface](Responses/CheckResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the authorization model ID to use for the check. This specifies which versio
 
 
 #### Returns
-string
- The authorization model ID for permission evaluation
-
+`string` — The authorization model ID for permission evaluation
 #### getConsistency
 
 
@@ -49,9 +47,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 
 #### Returns
-[Consistency](Models/Enums/Consistency.md) &#124; null
- The consistency level, or null to use the default consistency setting
-
+[`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level, or null to use the default consistency setting
 #### getContext
 
 
@@ -65,9 +61,7 @@ Get additional context data for conditional evaluation. This provides contextual
 
 
 #### Returns
-object &#124; null
- The context object containing additional data for evaluation, or null if no context is provided
-
+`object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 #### getContextualTuples
 
 
@@ -81,9 +75,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null
- Additional relationship tuples for evaluation, or null if none provided
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getRequest
 
 
@@ -98,12 +90,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -117,9 +107,7 @@ Get the store ID containing the authorization data. This identifies which OpenFG
 
 
 #### Returns
-string
- The store ID containing the authorization data
-
+`string` — The store ID containing the authorization data
 #### getTrace
 
 
@@ -133,9 +121,7 @@ Get whether to include evaluation trace in the response. When enabled, the respo
 
 
 #### Returns
-bool &#124; null
- Whether to include trace information, or null to use the default setting
-
+`bool` &#124; `null` — Whether to include trace information, or null to use the default setting
 #### getTupleKey
 
 
@@ -149,6 +135,4 @@ Get the relationship tuple to check for permission. This defines the specific re
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
- The relationship tuple specifying what permission to check
-
+[`TupleKeyInterface`](Models/TupleKeyInterface.md) — The relationship tuple specifying what permission to check

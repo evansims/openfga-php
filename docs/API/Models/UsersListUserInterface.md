@@ -9,9 +9,9 @@ Represents a user in a list context for authorization operations. UsersListUser 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUserInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* Stringable
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `Stringable`
+* `JsonSerializable`
 
 ## Related Classes
 * [UsersListUser](Models/UsersListUser.md) (implementation)
@@ -35,9 +35,7 @@ Get the user identifier string. This returns the user identifier in the format e
 
 
 #### Returns
-string
- The user identifier string
-
+`string` — The user identifier string
 ### Other
 #### jsonSerialize
 
@@ -52,6 +50,4 @@ Serialize the user to its JSON representation. Returns the user identifier as a 
 
 
 #### Returns
-string
- The user identifier string
-
+`string` — The user identifier string

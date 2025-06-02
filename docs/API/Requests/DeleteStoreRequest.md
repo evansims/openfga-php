@@ -9,8 +9,8 @@ Request for permanently deleting a store and all its data. This request removes 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/DeleteStoreRequest.php)
 
 ## Implements
-* [DeleteStoreRequestInterface](DeleteStoreRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`DeleteStoreRequestInterface`](DeleteStoreRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [DeleteStoreResponse](Responses/DeleteStoreResponse.md) (response)
@@ -35,12 +35,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -54,6 +52,4 @@ Get the ID of the store to delete. Returns the unique identifier of the store th
 
 
 #### Returns
-string
- The unique identifier of the store to permanently delete
-
+`string` — The unique identifier of the store to permanently delete

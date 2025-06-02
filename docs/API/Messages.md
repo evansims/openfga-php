@@ -9,8 +9,8 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Messages.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -201,5 +201,4 @@ Get the translation key for this message.
 
 
 #### Returns
-string
-
+`string`

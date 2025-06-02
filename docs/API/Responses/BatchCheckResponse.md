@@ -9,8 +9,8 @@ Response containing the results of a batch authorization check. This response co
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php)
 
 ## Implements
-* [BatchCheckResponseInterface](BatchCheckResponseInterface.md)
-* [ResponseInterface](ResponseInterface.md)
+* [`BatchCheckResponseInterface`](BatchCheckResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [BatchCheckResponseInterface](Responses/BatchCheckResponseInterface.md) (interface)
@@ -35,9 +35,7 @@ Get the results map from correlation IDs to check results. Each key in the map i
 
 
 #### Returns
-array
- Map of correlation ID to check result
-
+`array` — Map of correlation ID to check result
 #### getResultForCorrelationId
 
 
@@ -52,11 +50,10 @@ Get the result for a specific correlation ID. Returns the check result for the g
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$correlationId` | string | The correlation ID to look up |
+| `$correlationId` | `string` | The correlation ID to look up |
 
 #### Returns
-[BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) &#124; null
-
+[`BatchCheckSingleResultInterface`](Models/BatchCheckSingleResultInterface.md) &#124; `null`
 ### Other
 #### fromResponse
 
@@ -77,11 +74,9 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
-| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
-| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
+| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
+| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
+| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
 
 #### Returns
-static
- The parsed and validated response instance containing the API response data
-
+`static` — The parsed and validated response instance containing the API response data

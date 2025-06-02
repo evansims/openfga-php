@@ -9,7 +9,7 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/DeleteStoreRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (response)
@@ -34,12 +34,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -53,6 +51,4 @@ Get the ID of the store to delete. Returns the unique identifier of the store th
 
 
 #### Returns
-string
- The unique identifier of the store to permanently delete
-
+`string` — The unique identifier of the store to permanently delete

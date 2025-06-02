@@ -9,9 +9,9 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Tuple.php)
 
 ## Implements
-* [TupleInterface](TupleInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`TupleInterface`](TupleInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [TupleInterface](Models/TupleInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 
 
 #### Returns
-[TupleKeyInterface](TupleKeyInterface.md)
- The tuple key defining this relationship with user, relation, object, and optional condition
-
+[`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key defining this relationship with user, relation, object, and optional condition
 #### getTimestamp
 
 
@@ -56,9 +54,7 @@ Get the timestamp when this tuple was created or last modified. Timestamps provi
 
 
 #### Returns
-DateTimeImmutable
- The creation or last modification timestamp in UTC timezone
-
+`DateTimeImmutable` — The creation or last modification timestamp in UTC timezone
 ### Model Management
 #### schema
 
@@ -74,9 +70,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -91,6 +85,4 @@ Serialize the tuple for JSON encoding. This method prepares the tuple data for A
 
 
 #### Returns
-array
- Tuple data formatted for JSON encoding with API-compatible structure
-
+`array` — Tuple data formatted for JSON encoding with API-compatible structure

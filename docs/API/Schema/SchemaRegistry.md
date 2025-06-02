@@ -9,7 +9,7 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistry.php)
 
 ## Implements
-* [SchemaRegistryInterface](SchemaRegistryInterface.md)
+* [`SchemaRegistryInterface`](SchemaRegistryInterface.md)
 
 ## Related Classes
 * [SchemaRegistryInterface](Schema/SchemaRegistryInterface.md) (interface)
@@ -35,12 +35,10 @@ Create a new schema builder for the specified class.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$className` | string | The fully qualified class name |
+| `$className` | `string` | The fully qualified class name |
 
 #### Returns
-[SchemaBuilder](SchemaBuilder.md)
- A new schema builder instance
-
+[`SchemaBuilder`](SchemaBuilder.md) — A new schema builder instance
 ### List Operations
 #### get
 
@@ -57,11 +55,10 @@ Retrieve a registered schema by class name.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$className` | string | The fully qualified class name |
+| `$className` | `string` | The fully qualified class name |
 
 #### Returns
-[Schema](Schema.md) &#124; null
-
+[`Schema`](Schema.md) &#124; `null`
 ### Utility
 #### register
 
@@ -78,8 +75,7 @@ Register a schema in the registry.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | [Schema](Schema.md) | The schema instance to register |
+| `$schema` | [`Schema`](Schema.md) | The schema instance to register |
 
 #### Returns
-void
-
+`void`

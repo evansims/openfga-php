@@ -9,9 +9,9 @@ Represents a leaf node in authorization evaluation trees containing specific use
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Leaf.php)
 
 ## Implements
-* [LeafInterface](LeafInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`LeafInterface`](LeafInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [LeafInterface](Models/LeafInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 
 #### Returns
-[ComputedInterface](ComputedInterface.md) &#124; null
- The computed userset specification, or null if not used
-
+[`ComputedInterface`](ComputedInterface.md) &#124; `null` — The computed userset specification, or null if not used
 #### getTupleToUserset
 
 
@@ -55,9 +53,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 
 #### Returns
-[UsersetTreeTupleToUsersetInterface](UsersetTreeTupleToUsersetInterface.md) &#124; null
- The tuple-to-userset operation, or null if not used
-
+[`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md) &#124; `null` — The tuple-to-userset operation, or null if not used
 #### getUsers
 
 
@@ -71,9 +67,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 
 #### Returns
-[UsersListInterface](Models/Collections/UsersListInterface.md) &#124; null
- The list of users with direct access, or null if not used
-
+[`UsersListInterface`](Models/Collections/UsersListInterface.md) &#124; `null` — The list of users with direct access, or null if not used
 ### Model Management
 #### schema
 
@@ -89,9 +83,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -105,5 +97,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

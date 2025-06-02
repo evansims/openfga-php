@@ -9,8 +9,8 @@ Immutable access token implementation for OpenFGA API authentication. This class
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessToken.php)
 
 ## Implements
-* [AccessTokenInterface](AccessTokenInterface.md)
-* Stringable
+* [`AccessTokenInterface`](AccessTokenInterface.md)
+* `Stringable`
 
 ## Related Classes
 * [AccessTokenInterface](Authentication/AccessTokenInterface.md) (interface)
@@ -34,9 +34,7 @@ Get the Unix timestamp when this access token expires. The expiration timestamp 
 
 
 #### Returns
-int
- Unix timestamp representing when the token expires
-
+`int` — Unix timestamp representing when the token expires
 #### getScope
 
 
@@ -50,9 +48,7 @@ Get the scope that defines the permissions granted by this access token. The sco
 
 
 #### Returns
-string &#124; null
- The token scope defining granted permissions, or null if no scope is specified
-
+`string` &#124; `null` — The token scope defining granted permissions, or null if no scope is specified
 #### getToken
 
 
@@ -66,9 +62,7 @@ Get the raw access token value. This method returns the actual token string that
 
 
 #### Returns
-string
- The raw access token value
-
+`string` — The raw access token value
 ### Utility
 #### isExpired
 
@@ -83,9 +77,7 @@ Check whether this access token has expired and needs to be refreshed. This meth
 
 
 #### Returns
-bool
- True if the token has expired and should be refreshed, false if still valid
-
+`bool` — True if the token has expired and should be refreshed, false if still valid
 ### Other
 #### fromResponse
 
@@ -106,11 +98,9 @@ Create an access token instance from an OAuth server response. This factory meth
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The HTTP response from the OAuth token endpoint |
-| `$expectedIssuer` | string &#124; null | Optional expected issuer for JWT validation |
-| `$expectedAudience` | string &#124; null | Optional expected audience for JWT validation |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) | The HTTP response from the OAuth token endpoint |
+| `$expectedIssuer` | `string` &#124; `null` | Optional expected issuer for JWT validation |
+| `$expectedAudience` | `string` &#124; `null` | Optional expected audience for JWT validation |
 
 #### Returns
-self
- A new access token instance created from the response data
-
+`self` — A new access token instance created from the response data

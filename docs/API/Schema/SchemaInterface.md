@@ -30,9 +30,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 
 
 #### Returns
-string
- The fully qualified class name for the model this schema defines
-
+`string` — The fully qualified class name for the model this schema defines
 #### getProperties
 
 
@@ -46,9 +44,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 
 #### Returns
-array&lt;string, [SchemaProperty](SchemaProperty.md)&gt;
- An associative array of property names to their schema property definitions
-
+`array&lt;`string`, [`SchemaProperty`](SchemaProperty.md)&gt;` — An associative array of property names to their schema property definitions
 #### getProperty
 
 
@@ -63,9 +59,7 @@ Get a specific property definition by name. This method retrieves the schema def
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The name of the property to retrieve |
+| `$name` | `string` | The name of the property to retrieve |
 
 #### Returns
-[SchemaProperty](SchemaProperty.md) &#124; null
- The property definition if it exists, or null if the property is not defined in this schema
-
+[`SchemaProperty`](SchemaProperty.md) &#124; `null` — The property definition if it exists, or null if the property is not defined in this schema

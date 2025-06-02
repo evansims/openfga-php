@@ -9,8 +9,8 @@ HTTP request methods supported by the OpenFGA API. This enum defines the specifi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestMethod.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -45,9 +45,7 @@ Check if this HTTP method typically expects a request body. Useful for client im
 
 
 #### Returns
-bool
- True if the method typically has a request body, false otherwise
-
+`bool` — True if the method typically has a request body, false otherwise
 #### isIdempotent
 
 
@@ -61,9 +59,7 @@ Check if this HTTP method is idempotent. Idempotent methods can be called multip
 
 
 #### Returns
-bool
- True if the method is idempotent, false otherwise
-
+`bool` — True if the method is idempotent, false otherwise
 #### isSafe
 
 
@@ -77,6 +73,4 @@ Check if this HTTP method is safe. Safe methods do not modify server state and c
 
 
 #### Returns
-bool
- True if the method is safe, false otherwise
-
+`bool` — True if the method is safe, false otherwise

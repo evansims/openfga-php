@@ -9,8 +9,8 @@ Represents a filter for limiting users by their relationships to specific object
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilterInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [UserTypeFilter](Models/UserTypeFilter.md) (implementation)
@@ -34,8 +34,7 @@ Get the optional relation filter for limiting user types. When specified, this f
 
 
 #### Returns
-string &#124; null
-
+`string` &#124; `null`
 #### getType
 
 
@@ -49,9 +48,7 @@ Get the object type to filter by. This specifies the type of objects that users 
 
 
 #### Returns
-string
- The object type to filter by
-
+`string` — The object type to filter by
 ### Other
 #### jsonSerialize
 
@@ -65,5 +62,4 @@ public function jsonSerialize(): array<'relation'|'type', string>
 
 
 #### Returns
-array&lt;'relation' &#124; 'type', string&gt;
-
+`array&lt;'relation'` &#124; `'type', string&gt;`

@@ -9,8 +9,8 @@ Request for listing objects that a user has a specific relationship with. This r
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequest.php)
 
 ## Implements
-* [ListObjectsRequestInterface](ListObjectsRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`ListObjectsRequestInterface`](ListObjectsRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [ListObjectsResponse](Responses/ListObjectsResponse.md) (response)
@@ -34,9 +34,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 
 #### Returns
-[Consistency](Models/Enums/Consistency.md) &#124; null
- The consistency level for the operation, or null to use the default consistency setting
-
+[`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContext
 
 
@@ -50,9 +48,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 
 #### Returns
-object &#124; null
- The context object containing additional data for evaluation, or null if no context is provided
-
+`object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 #### getContextualTuples
 
 
@@ -66,9 +62,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
- Additional relationship tuples for evaluation, or null if none provided
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 #### getModel
 
 
@@ -82,9 +76,7 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 
 
 #### Returns
-string &#124; null
- The authorization model ID for evaluation, or null to use the latest model version
-
+`string` &#124; `null` — The authorization model ID for evaluation, or null to use the latest model version
 #### getRelation
 
 
@@ -98,9 +90,7 @@ Get the relation to check for object access. Specifies the relationship type to 
 
 
 #### Returns
-string
- The relation name to check for object access
-
+`string` — The relation name to check for object access
 #### getRequest
 
 
@@ -115,12 +105,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -134,9 +122,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 
 #### Returns
-string
- The store ID containing the authorization data
-
+`string` — The store ID containing the authorization data
 #### getType
 
 
@@ -150,9 +136,7 @@ Get the object type to filter results by. Specifies the type of objects to inclu
 
 
 #### Returns
-string
- The object type to filter results by
-
+`string` — The object type to filter results by
 #### getUser
 
 
@@ -166,6 +150,4 @@ Get the user to check object access for. Identifies the user for whom object acc
 
 
 #### Returns
-string
- The user identifier or userset to check object access for
-
+`string` — The user identifier or userset to check object access for

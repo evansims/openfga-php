@@ -9,7 +9,7 @@ Response containing streaming objects that a user has a specific relationship wi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponse.php)
 
 ## Implements
-* [StreamedListObjectsResponseInterface](StreamedListObjectsResponseInterface.md)
+* [`StreamedListObjectsResponseInterface`](StreamedListObjectsResponseInterface.md)
 
 ## Related Classes
 * [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (interface)
@@ -34,9 +34,7 @@ Get a single object identifier from a streamed response chunk.
 
 
 #### Returns
-string
- The object identifier
-
+`string` — The object identifier
 ### Other
 #### fromResponse
 
@@ -57,11 +55,9 @@ Create a streaming response from an HTTP response. Processes the streaming HTTP 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | HttpResponseInterface | The HTTP response from the API |
-| `$request` | HttpRequestInterface | The original HTTP request |
-| `$validator` | SchemaValidator | Schema validator for response validation |
+| `$response` | `HttpResponseInterface` | The HTTP response from the API |
+| `$request` | `HttpRequestInterface` | The original HTTP request |
+| `$validator` | `SchemaValidator` | Schema validator for response validation |
 
 #### Returns
-Generator&lt;int, [StreamedListObjectsResponseInterface](StreamedListObjectsResponseInterface.md)&gt;
- Generator yielding response objects
-
+`Generator`&lt;`int`, [`StreamedListObjectsResponseInterface`](StreamedListObjectsResponseInterface.md)&gt; — Generator yielding response objects

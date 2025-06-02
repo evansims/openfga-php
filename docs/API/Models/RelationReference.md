@@ -9,9 +9,9 @@ Represents a reference to a specific relation with optional conditions. A Relati
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReference.php)
 
 ## Implements
-* [RelationReferenceInterface](RelationReferenceInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`RelationReferenceInterface`](RelationReferenceInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [RelationReferenceInterface](Models/RelationReferenceInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the optional condition name that must be satisfied. When specified, this con
 
 
 #### Returns
-string &#124; null
- The condition name, or null if no condition is required
-
+`string` &#124; `null` — The condition name, or null if no condition is required
 #### getRelation
 
 
@@ -56,9 +54,7 @@ Get the optional specific relation on the referenced type. When specified, this 
 
 
 #### Returns
-string &#124; null
- The relation name, or null to reference the entire type
-
+`string` &#124; `null` — The relation name, or null to reference the entire type
 #### getType
 
 
@@ -72,9 +68,7 @@ Get the type being referenced. This is the object type that this reference point
 
 
 #### Returns
-string
- The type name being referenced
-
+`string` — The type name being referenced
 #### getWildcard
 
 
@@ -88,9 +82,7 @@ Get the optional wildcard marker for type-level permissions. When present, this 
 
 
 #### Returns
-object &#124; null
- The wildcard marker, or null for instance-specific references
-
+`object` &#124; `null` — The wildcard marker, or null for instance-specific references
 ### Model Management
 #### schema
 
@@ -106,9 +98,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -122,5 +112,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

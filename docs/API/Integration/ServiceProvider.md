@@ -29,8 +29,7 @@ Register OpenFGA services with the dependency injection container. This method r
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$container` | object | The dependency injection container |
+| `$container` | `object` | The dependency injection container |
 
 #### Returns
-void
-
+`void`

@@ -9,9 +9,9 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilter.php)
 
 ## Implements
-* [UserTypeFilterInterface](UserTypeFilterInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UserTypeFilterInterface`](UserTypeFilterInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UserTypeFilterInterface](Models/UserTypeFilterInterface.md) (interface)
@@ -39,8 +39,7 @@ Get the optional relation filter for limiting user types. When specified, this f
 
 
 #### Returns
-string &#124; null
-
+`string` &#124; `null`
 #### getType
 
 
@@ -54,9 +53,7 @@ Get the object type to filter by. This specifies the type of objects that users 
 
 
 #### Returns
-string
- The object type to filter by
-
+`string` — The object type to filter by
 ### Model Management
 #### schema
 
@@ -72,9 +69,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -88,5 +83,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

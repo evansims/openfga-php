@@ -9,9 +9,9 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameter.php)
 
 ## Implements
-* [ConditionParameterInterface](ConditionParameterInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`ConditionParameterInterface`](ConditionParameterInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [ConditionParameterInterface](Models/ConditionParameterInterface.md) (interface)
@@ -40,8 +40,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 
 #### Returns
-[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md) &#124; null
-
+[`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null`
 #### getTypeName
 
 
@@ -55,9 +54,7 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 
 #### Returns
-[TypeName](Models/Enums/TypeName.md)
- The type name enum value for this parameter
-
+[`TypeName`](Models/Enums/TypeName.md) — The type name enum value for this parameter
 ### Model Management
 #### schema
 
@@ -73,9 +70,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -89,5 +84,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

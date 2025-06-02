@@ -9,8 +9,8 @@ Request for reading test assertions associated with an authorization model. This
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadAssertionsRequest.php)
 
 ## Implements
-* [ReadAssertionsRequestInterface](ReadAssertionsRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`ReadAssertionsRequestInterface`](ReadAssertionsRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (response)
@@ -34,9 +34,7 @@ Get the authorization model ID to read assertions from. Specifies which version 
 
 
 #### Returns
-string
- The authorization model ID whose assertions should be retrieved
-
+`string` — The authorization model ID whose assertions should be retrieved
 #### getRequest
 
 
@@ -51,12 +49,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -70,6 +66,4 @@ Get the store ID containing the assertions to read. Identifies which OpenFGA sto
 
 
 #### Returns
-string
- The store ID containing the assertions to retrieve
-
+`string` — The store ID containing the assertions to retrieve

@@ -9,9 +9,9 @@ Defines the authorization rules and relationships for your application. An Autho
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php)
 
 ## Implements
-* [AuthorizationModelInterface](AuthorizationModelInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`AuthorizationModelInterface`](AuthorizationModelInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 
 #### Returns
-[ConditionsInterface](Models/Collections/ConditionsInterface.md) &#124; null
- The collection of reusable conditions defined in this model, or null if no conditions are defined
-
+[`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` — The collection of reusable conditions defined in this model, or null if no conditions are defined
 #### getId
 
 
@@ -56,9 +54,7 @@ Get the unique identifier for this authorization model. The model ID serves as a
 
 
 #### Returns
-string
- The globally unique identifier for this authorization model version
-
+`string` — The globally unique identifier for this authorization model version
 #### getSchemaVersion
 
 
@@ -72,9 +68,7 @@ Get the schema version of this authorization model. The schema version indicates
 
 
 #### Returns
-[SchemaVersion](Models/Enums/SchemaVersion.md)
- The schema version enumeration indicating the model format specification
-
+[`SchemaVersion`](Models/Enums/SchemaVersion.md) — The schema version enumeration indicating the model format specification
 #### getTypeDefinitions
 
 
@@ -88,9 +82,7 @@ Get the type definitions that define the structure of this authorization model. 
 
 
 #### Returns
-[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
- The collection of type definitions that structure this authorization model
-
+[`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) — The collection of type definitions that structure this authorization model
 ### Model Management
 #### schema
 
@@ -106,9 +98,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### dsl
 
@@ -123,9 +113,7 @@ Generate a DSL (Domain Specific Language) representation of this authorization m
 
 
 #### Returns
-string
- The authorization model expressed in OpenFGA DSL format for human readability
-
+`string` — The authorization model expressed in OpenFGA DSL format for human readability
 #### jsonSerialize
 
 
@@ -139,5 +127,4 @@ Serialize the authorization model for JSON encoding. This method prepares the co
 
 
 #### Returns
-array
-
+`array`

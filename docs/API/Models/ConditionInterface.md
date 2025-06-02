@@ -9,8 +9,8 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Condition](Models/Condition.md) (implementation)
@@ -34,9 +34,7 @@ Get the condition expression. This returns the logical expression that defines w
 
 
 #### Returns
-string
- The condition expression defining the evaluation logic
-
+`string` — The condition expression defining the evaluation logic
 #### getMetadata
 
 
@@ -50,9 +48,7 @@ Get metadata about the condition definition. This provides additional informatio
 
 
 #### Returns
-[ConditionMetadataInterface](ConditionMetadataInterface.md) &#124; null
- The condition metadata, or null if not provided
-
+[`ConditionMetadataInterface`](ConditionMetadataInterface.md) &#124; `null` — The condition metadata, or null if not provided
 #### getName
 
 
@@ -66,9 +62,7 @@ Get the name of the condition. This is a unique identifier for the condition wit
 
 
 #### Returns
-string
- The unique name identifying this condition
-
+`string` — The unique name identifying this condition
 #### getParameters
 
 
@@ -82,9 +76,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 
 #### Returns
-[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)&lt;[ConditionParameterInterface](ConditionParameterInterface.md)&gt; &#124; null
- The condition parameters, or null if the condition uses no parameters
-
+[`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md)&lt;[`ConditionParameterInterface`](ConditionParameterInterface.md)&gt; &#124; `null` — The condition parameters, or null if the condition uses no parameters
 ### Other
 #### jsonSerialize
 
@@ -99,6 +91,4 @@ Serialize the condition for JSON encoding. This method prepares the condition da
 
 
 #### Returns
-array&lt;string, mixed&gt;
- The serialized condition data
-
+`array&lt;`string`, `mixed`&gt;` — The serialized condition data

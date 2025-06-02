@@ -9,9 +9,9 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Store.php)
 
 ## Implements
-* [StoreInterface](StoreInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`StoreInterface`](StoreInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [StoreInterface](Models/StoreInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the timestamp when the store was created. The creation timestamp provides es
 
 
 #### Returns
-DateTimeInterface
- The creation timestamp in UTC timezone
-
+`DateTimeInterface` — The creation timestamp in UTC timezone
 #### getDeletedAt
 
 
@@ -56,9 +54,7 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 
 
 #### Returns
-DateTimeInterface &#124; null
- The deletion timestamp in UTC timezone, or null if the store is active
-
+`DateTimeInterface` &#124; `null` — The deletion timestamp in UTC timezone, or null if the store is active
 #### getUpdatedAt
 
 
@@ -72,9 +68,7 @@ Get the timestamp when the store was last updated. The update timestamp tracks w
 
 
 #### Returns
-DateTimeInterface
- The last update timestamp in UTC timezone
-
+`DateTimeInterface` — The last update timestamp in UTC timezone
 ### List Operations
 #### getId
 
@@ -89,9 +83,7 @@ Get the unique identifier of the store. The store ID is a globally unique identi
 
 
 #### Returns
-string
- The store&#039;s unique identifier
-
+`string` — The store&#039;s unique identifier
 #### getName
 
 
@@ -105,9 +97,7 @@ Get the human-readable name of the store. The store name provides a user-friendl
 
 
 #### Returns
-string
- The store&#039;s display name
-
+`string` — The store&#039;s display name
 ### Model Management
 #### schema
 
@@ -123,9 +113,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -140,6 +128,4 @@ Serialize the store for JSON encoding. This method prepares the store data for A
 
 
 #### Returns
-array
- Store data formatted for JSON encoding with API-compatible field names
-
+`array` — Store data formatted for JSON encoding with API-compatible field names

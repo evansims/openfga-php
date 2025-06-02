@@ -9,8 +9,8 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnionInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [NodeUnion](Models/NodeUnion.md) (implementation)
@@ -34,9 +34,7 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 
 #### Returns
-array&lt;int, [NodeInterface](NodeInterface.md)&gt;
- The array of nodes in the union
-
+`array&lt;`int`, [`NodeInterface`](NodeInterface.md)&gt;` — The array of nodes in the union
 ### Other
 #### jsonSerialize
 
@@ -51,5 +49,4 @@ Serialize the node union to its JSON representation.
 
 
 #### Returns
-array
-
+`array`

@@ -9,8 +9,8 @@ Represents a computed userset in OpenFGA authorization models. Computed usersets
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ComputedInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Computed](Models/Computed.md) (implementation)
@@ -34,9 +34,7 @@ Get the userset reference string that defines a computed relationship. This repr
 
 
 #### Returns
-string
- The userset reference string defining the computed relationship
-
+`string` — The userset reference string defining the computed relationship
 ### Other
 #### jsonSerialize
 
@@ -50,5 +48,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

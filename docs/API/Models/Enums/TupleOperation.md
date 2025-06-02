@@ -9,8 +9,8 @@ Operations that can be performed on relationship tuples in OpenFGA. This enum de
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TupleOperation.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -42,9 +42,7 @@ Get a user-friendly description of what this operation does. Provides a clear ex
 
 
 #### Returns
-string
- A descriptive explanation of the operation
-
+`string` — A descriptive explanation of the operation
 ### Utility
 #### grantsPermissions
 
@@ -59,9 +57,7 @@ Check if this operation adds permissions to the authorization store. Useful for 
 
 
 #### Returns
-bool
- True if the operation adds permissions, false otherwise
-
+`bool` — True if the operation adds permissions, false otherwise
 #### isIdempotent
 
 
@@ -75,9 +71,7 @@ Check if this operation is safe to retry in case of failures. Idempotent operati
 
 
 #### Returns
-true
- True if the operation is idempotent, false otherwise
-
+`true` — True if the operation is idempotent, false otherwise
 #### revokesPermissions
 
 
@@ -91,6 +85,4 @@ Check if this operation removes permissions from the authorization store. Useful
 
 
 #### Returns
-bool
- True if the operation removes permissions, false otherwise
-
+`bool` — True if the operation removes permissions, false otherwise

@@ -9,7 +9,7 @@ Token-based authentication strategy for OpenFGA client. This authentication stra
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Authentication/TokenAuthentication.php)
 
 ## Implements
-* [AuthenticationInterface](AuthenticationInterface.md)
+* [`AuthenticationInterface`](AuthenticationInterface.md)
 
 
 
@@ -34,12 +34,10 @@ Get an authentication request context if this strategy requires token acquisitio
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | Factory for creating request body streams |
+| `$streamFactory` | `StreamFactoryInterface` | Factory for creating request body streams |
 
 #### Returns
-[RequestContext](Network/RequestContext.md) &#124; null
- The authentication request context, or null if not needed
-
+[`RequestContext`](Network/RequestContext.md) &#124; `null` — The authentication request context, or null if not needed
 #### getAuthorizationHeader
 
 
@@ -53,9 +51,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 
 #### Returns
-string &#124; null
- The authorization header value, or null if no authentication is needed
-
+`string` &#124; `null` — The authorization header value, or null if no authentication is needed
 #### getToken
 
 
@@ -69,9 +65,7 @@ Get the current authentication token. Returns the token that was provided during
 
 
 #### Returns
-[AccessTokenInterface](AccessTokenInterface.md) &#124; string
- The authentication token used by this strategy
-
+[`AccessTokenInterface`](AccessTokenInterface.md) &#124; `string` — The authentication token used by this strategy
 ### Other
 #### handleAuthenticationResponse
 
@@ -87,11 +81,10 @@ Handle the authentication response and update internal state. This method is cal
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | Psr\Http\Message\ResponseInterface | The authentication response |
+| `$response` | `Psr\Http\Message\ResponseInterface` | The authentication response |
 
 #### Returns
-void
-
+`void`
 #### requiresAuthentication
 
 
@@ -105,6 +98,4 @@ Check if authentication is required for this strategy.
 
 
 #### Returns
-bool
- True if this strategy provides authentication, false for no-auth strategies
-
+`bool` — True if this strategy provides authentication, false for no-auth strategies

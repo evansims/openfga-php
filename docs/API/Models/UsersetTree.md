@@ -9,9 +9,9 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTree.php)
 
 ## Implements
-* [UsersetTreeInterface](UsersetTreeInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UsersetTreeInterface`](UsersetTreeInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UsersetTreeInterface](Models/UsersetTreeInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 
 #### Returns
-[NodeInterface](NodeInterface.md)
- The root node of the userset tree
-
+[`NodeInterface`](NodeInterface.md) — The root node of the userset tree
 ### Model Management
 #### schema
 
@@ -57,9 +55,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -73,5 +69,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

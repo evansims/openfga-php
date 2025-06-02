@@ -9,7 +9,7 @@ Implementation of request context for OpenFGA API operations. This class provide
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestContext.php)
 
 ## Implements
-* [RequestContextInterface](RequestContextInterface.md)
+* [`RequestContextInterface`](RequestContextInterface.md)
 
 ## Related Classes
 * [RequestContextInterface](Network/RequestContextInterface.md) (interface)
@@ -33,9 +33,7 @@ Get the request body stream. Returns the PSR-7 stream containing the request bod
 
 
 #### Returns
-Psr\Http\Message\StreamInterface &#124; null
- The request body stream containing JSON data, or null for operations without body content
-
+`Psr\Http\Message\StreamInterface` &#124; `null` — The request body stream containing JSON data, or null for operations without body content
 #### getHeaders
 
 
@@ -49,9 +47,7 @@ Get the request headers. Returns an associative array of HTTP headers that shoul
 
 
 #### Returns
-array
- Associative array mapping header names to their values
-
+`array` — Associative array mapping header names to their values
 #### getMethod
 
 
@@ -65,9 +61,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 
 #### Returns
-[RequestMethod](RequestMethod.md)
- The HTTP method enum value indicating the request type
-
+[`RequestMethod`](RequestMethod.md) — The HTTP method enum value indicating the request type
 #### getUrl
 
 
@@ -81,9 +75,7 @@ Get the URL for the request. Returns the target URL path for this API operation.
 
 
 #### Returns
-string
- The target URL path for the API operation
-
+`string` — The target URL path for the API operation
 ### Other
 #### useApiUrl
 
@@ -98,6 +90,4 @@ Determine if the API URL should be used as a prefix. Controls whether the base A
 
 
 #### Returns
-bool
- True if the API base URL should be prepended to the request URL, false to use the URL as-is
-
+`bool` — True if the API base URL should be prepended to the request URL, false to use the URL as-is

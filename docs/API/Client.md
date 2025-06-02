@@ -9,7 +9,7 @@ OpenFGA Client implementation for relationship-based access control operations. 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Client.php)
 
 ## Implements
-* [ClientInterface](ClientInterface.md)
+* [`ClientInterface`](ClientInterface.md)
 
 ## Related Classes
 * [ClientInterface](ClientInterface.md) (interface)
@@ -75,14 +75,12 @@ if ($result->success()) {
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to check against |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The authorization model to use |
-| `$checks` | [BatchCheckItemsInterface](Models/Collections/BatchCheckItemsInterface.md) | The batch check items |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to check against |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use |
+| `$checks` | [`BatchCheckItemsInterface`](Models/Collections/BatchCheckItemsInterface.md) | The batch check items |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- The batch check results
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — The batch check results
 #### check
 
 
@@ -136,18 +134,16 @@ $result = $client->check(
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to check against |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The authorization model to use |
-| `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | The relationship to check |
-| `$trace` | bool &#124; null | Whether to include a trace in the response |
-| `$context` | object &#124; null | Additional context for the check |
-| `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to check against |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use |
+| `$tupleKey` | [`TupleKeyInterface`](Models/TupleKeyInterface.md) | The relationship to check |
+| `$trace` | `bool` &#124; `null` | Whether to include a trace in the response |
+| `$context` | `object` &#124; `null` | Additional context for the check |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` | Additional tuples for contextual evaluation |
+| `$consistency` | [`Consistency`](Models/Enums/Consistency.md) &#124; `null` | Override the default consistency level |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains CheckResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CheckResponseInterface, Failure contains Throwable
 #### expand
 
 
@@ -168,16 +164,14 @@ Expands a relationship tuple to show all users that have the relationship.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store containing the tuple |
-| `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | The tuple to expand |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; null &#124; string &#124; null | The authorization model to use |
-| `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store containing the tuple |
+| `$tupleKey` | [`TupleKeyInterface`](Models/TupleKeyInterface.md) | The tuple to expand |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` &#124; `string` &#124; `null` | The authorization model to use |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` | Additional tuples for contextual evaluation |
+| `$consistency` | [`Consistency`](Models/Enums/Consistency.md) &#124; `null` | Override the default consistency level |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ExpandResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ExpandResponseInterface, Failure contains Throwable
 ### CRUD Operations
 #### createAuthorizationModel
 
@@ -227,15 +221,13 @@ if ($result->success()) {
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to create the model in |
-| `$typeDefinitions` | [TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md) | The type definitions for the model |
-| `$conditions` | [ConditionsInterface](Models/Collections/ConditionsInterface.md) &#124; null | The conditions for the model |
-| `$schemaVersion` | [SchemaVersion](Models/Enums/SchemaVersion.md) | The schema version to use (default: 1.1) |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to create the model in |
+| `$typeDefinitions` | [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) | The type definitions for the model |
+| `$conditions` | [`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` | The conditions for the model |
+| `$schemaVersion` | [`SchemaVersion`](Models/Enums/SchemaVersion.md) | The schema version to use (default: 1.1) |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
 #### createStore
 
 
@@ -250,12 +242,10 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The name for the new store |
+| `$name` | `string` | The name for the new store |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains CreateStoreResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateStoreResponseInterface, Failure contains Throwable
 #### deleteStore
 
 
@@ -272,12 +262,10 @@ Deletes a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to delete |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to delete |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains DeleteStoreResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains DeleteStoreResponseInterface, Failure contains Throwable
 #### readAssertions
 
 
@@ -295,13 +283,11 @@ Retrieves assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store containing the model |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The model to get assertions for |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store containing the model |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to get assertions for |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ReadAssertionsResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadAssertionsResponseInterface, Failure contains Throwable
 #### readTuples
 
 
@@ -322,16 +308,14 @@ Reads relationship tuples from a store with optional filtering and pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to read from |
-| `$tupleKey` | [TupleKeyInterface](Models/TupleKeyInterface.md) | Filter tuples by this key (return all if null) |
-| `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | int &#124; null | Maximum number of tuples to return |
-| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to read from |
+| `$tupleKey` | [`TupleKeyInterface`](Models/TupleKeyInterface.md) | Filter tuples by this key (return all if null) |
+| `$continuationToken` | `string` &#124; `null` | Token for pagination |
+| `$pageSize` | `int` &#124; `null` | Maximum number of tuples to return |
+| `$consistency` | [`Consistency`](Models/Enums/Consistency.md) &#124; `null` | Override the default consistency level |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ReadTuplesResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadTuplesResponseInterface, Failure contains Throwable
 #### writeAssertions
 
 
@@ -350,14 +334,12 @@ Creates or updates assertions for an authorization model.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store containing the model |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The model to update assertions for |
-| `$assertions` | [AssertionsInterface](Models/Collections/AssertionsInterface.md) | The assertions to upsert |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store containing the model |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to update assertions for |
+| `$assertions` | [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) | The assertions to upsert |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains WriteAssertionsResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains WriteAssertionsResponseInterface, Failure contains Throwable
 #### writeTuples
 
 
@@ -417,15 +399,13 @@ $client->writeTuples(
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to modify |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The authorization model to use |
-| `$writes` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Tuples to write (create or update) |
-| `$deletes` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Tuples to delete |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to modify |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use |
+| `$writes` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` | Tuples to write (create or update) |
+| `$deletes` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` | Tuples to delete |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains WriteTuplesResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains WriteTuplesResponseInterface, Failure contains Throwable
 ### List Operations
 #### getAuthorizationModel
 
@@ -444,13 +424,11 @@ Retrieves an authorization model by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store containing the model |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The model to retrieve |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store containing the model |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to retrieve |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
 #### getLanguage
 
 
@@ -464,9 +442,7 @@ Get the configured language for i18n translations.
 
 
 #### Returns
-string
- The configured language code
-
+`string` — The configured language code
 #### getLastRequest
 
 
@@ -480,8 +456,7 @@ Retrieves the last HTTP request made by the client.
 
 
 #### Returns
-Psr\Http\Message\RequestInterface &#124; null
-
+`Psr\Http\Message\RequestInterface` &#124; `null`
 #### getLastResponse
 
 
@@ -495,8 +470,7 @@ Retrieves the last HTTP response received by the client.
 
 
 #### Returns
-Psr\Http\Message\ResponseInterface &#124; null
-
+`Psr\Http\Message\ResponseInterface` &#124; `null`
 #### getStore
 
 
@@ -513,12 +487,10 @@ Retrieves store details by ID.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to retrieve |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to retrieve |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains GetStoreResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetStoreResponseInterface, Failure contains Throwable
 #### listAuthorizationModels
 
 
@@ -537,14 +509,12 @@ Lists authorization models in a store with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to list models from |
-| `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | int &#124; null | Maximum number of models to return |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from |
+| `$continuationToken` | `string` &#124; `null` | Token for pagination |
+| `$pageSize` | `int` &#124; `null` | Maximum number of models to return |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
 #### listObjects
 
 
@@ -606,19 +576,17 @@ $result = $client->listObjects(
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to query |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The authorization model to use |
-| `$type` | string | The type of objects to list |
-| `$relation` | string | The relationship to check |
-| `$user` | string | The user to check relationships for |
-| `$context` | object &#124; null | Additional context for evaluation |
-| `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to query |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use |
+| `$type` | `string` | The type of objects to list |
+| `$relation` | `string` | The relationship to check |
+| `$user` | `string` | The user to check relationships for |
+| `$context` | `object` &#124; `null` | Additional context for evaluation |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` | Additional tuples for contextual evaluation |
+| `$consistency` | [`Consistency`](Models/Enums/Consistency.md) &#124; `null` | Override the default consistency level |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ListObjectsResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListObjectsResponseInterface, Failure contains Throwable
 #### listStores
 
 
@@ -636,13 +604,11 @@ Lists all stores with pagination.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | int &#124; null | Maximum number of stores to return |
+| `$continuationToken` | `string` &#124; `null` | Token for pagination |
+| `$pageSize` | `int` &#124; `null` | Maximum number of stores to return |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ListStoresResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListStoresResponseInterface, Failure contains Throwable
 #### listTupleChanges
 
 
@@ -663,16 +629,14 @@ Lists changes to relationship tuples in a store.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to list changes for |
-| `$continuationToken` | string &#124; null | Token for pagination |
-| `$pageSize` | int &#124; null | Maximum number of changes to return |
-| `$type` | string &#124; null | Filter changes by type |
-| `$startTime` | DateTimeImmutable &#124; null | Only include changes at or after this time (inclusive) |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list changes for |
+| `$continuationToken` | `string` &#124; `null` | Token for pagination |
+| `$pageSize` | `int` &#124; `null` | Maximum number of changes to return |
+| `$type` | `string` &#124; `null` | Filter changes by type |
+| `$startTime` | `DateTimeImmutable` &#124; `null` | Only include changes at or after this time (inclusive) |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ListTupleChangesResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListTupleChangesResponseInterface, Failure contains Throwable
 #### listUsers
 
 
@@ -737,19 +701,17 @@ $result = $client->listUsers(
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to query |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The authorization model to use |
-| `$object` | string | The object to check relationships for |
-| `$relation` | string | The relationship to check |
-| `$userFilters` | [UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md) | Filters for user types to include |
-| `$context` | object &#124; null | Additional context for evaluation |
-| `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to query |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use |
+| `$object` | `string` | The object to check relationships for |
+| `$relation` | `string` | The relationship to check |
+| `$userFilters` | [`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md) | Filters for user types to include |
+| `$context` | `object` &#124; `null` | Additional context for evaluation |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` | Additional tuples for contextual evaluation |
+| `$consistency` | [`Consistency`](Models/Enums/Consistency.md) &#124; `null` | Override the default consistency level |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains ListUsersResponseInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListUsersResponseInterface, Failure contains Throwable
 #### streamedListObjects
 
 
@@ -773,19 +735,17 @@ Streams objects that a user has a specific relationship with. Returns all object
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$store` | [StoreInterface](Models/StoreInterface.md) &#124; string | The store to query |
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) &#124; string | The authorization model to use |
-| `$type` | string | The object type to find |
-| `$relation` | string | The relationship to check |
-| `$user` | string | The user to check relationships for |
-| `$context` | object &#124; null | Additional context for evaluation |
-| `$contextualTuples` | [TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null | Additional tuples for contextual evaluation |
-| `$consistency` | [Consistency](Models/Enums/Consistency.md) &#124; null | Override the default consistency level |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to query |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use |
+| `$type` | `string` | The object type to find |
+| `$relation` | `string` | The relationship to check |
+| `$user` | `string` | The user to check relationships for |
+| `$context` | `object` &#124; `null` | Additional context for evaluation |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` | Additional tuples for contextual evaluation |
+| `$consistency` | [`Consistency`](Models/Enums/Consistency.md) &#124; `null` | Override the default consistency level |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
 ### Utility
 #### assertLastRequest
 
@@ -817,9 +777,7 @@ echo "Headers: " . json_encode($lastRequest->getHeaders());
 
 
 #### Returns
-Psr\Http\Message\RequestInterface
- The last request
-
+`Psr\Http\Message\RequestInterface` — The last request
 ### Other
 #### dsl
 
@@ -863,9 +821,7 @@ if ($result->success()) {
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$dsl` | string | The DSL string to parse |
+| `$dsl` | `string` | The DSL string to parse |
 
 #### Returns
-[FailureInterface](Results/FailureInterface.md) &#124; [SuccessInterface](Results/SuccessInterface.md)
- Success contains AuthorizationModelInterface, Failure contains Throwable
-
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains AuthorizationModelInterface, Failure contains Throwable

@@ -9,7 +9,7 @@ Interface for tuple reading response objects. This interface defines the contrac
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadTuplesResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (implementation)
@@ -33,9 +33,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string &#124; null
- The continuation token for fetching more results, or null if no more pages exist
-
+`string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 #### getTuples
 
 
@@ -49,6 +47,4 @@ Get the collection of relationship tuples. Returns a type-safe collection contai
 
 
 #### Returns
-[TuplesInterface](Models/Collections/TuplesInterface.md)&lt;[TupleInterface](Models/TupleInterface.md)&gt;
- The collection of relationship tuples
-
+[`TuplesInterface`](Models/Collections/TuplesInterface.md)&lt;[`TupleInterface`](Models/TupleInterface.md)&gt; — The collection of relationship tuples

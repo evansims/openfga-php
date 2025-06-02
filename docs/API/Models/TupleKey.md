@@ -9,9 +9,9 @@ Represents a relationship tuple key defining a connection between user, relation
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php)
 
 ## Implements
-* [TupleKeyInterface](TupleKeyInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`TupleKeyInterface`](TupleKeyInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [TupleKeyInterface](Models/TupleKeyInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 
 #### Returns
-[ConditionInterface](ConditionInterface.md) &#124; null
- The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
-
+[`ConditionInterface`](ConditionInterface.md) &#124; `null` — The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 #### getObject
 
 
@@ -56,9 +54,7 @@ Get the object in this relationship tuple. The object represents the resource or
 
 
 #### Returns
-string
- The object identifier, or null if not specified
-
+`string` — The object identifier, or null if not specified
 #### getRelation
 
 
@@ -72,9 +68,7 @@ Get the relation that defines the type of relationship. The relation describes w
 
 
 #### Returns
-string
- The relation name defining the type of relationship, or null if not specified
-
+`string` — The relation name defining the type of relationship, or null if not specified
 #### getUser
 
 
@@ -88,9 +82,7 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 
 #### Returns
-string
- The user identifier, or null if not specified
-
+`string` — The user identifier, or null if not specified
 ### Model Management
 #### schema
 
@@ -106,9 +98,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -123,6 +113,4 @@ Serialize the tuple key for JSON encoding. This method prepares the tuple key da
 
 
 #### Returns
-array
- The serialized tuple key data ready for JSON encoding
-
+`array` — The serialized tuple key data ready for JSON encoding

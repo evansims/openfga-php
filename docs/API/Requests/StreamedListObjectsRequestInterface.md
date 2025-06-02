@@ -9,7 +9,7 @@ Request interface for streaming objects that a user has a specific relationship 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the consistency requirement for this request.
 
 
 #### Returns
-[Consistency](Models/Enums/Consistency.md) &#124; null
- The consistency requirement, or null if not specified
-
+[`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency requirement, or null if not specified
 #### getContext
 
 
@@ -49,9 +47,7 @@ Get the context object for this request.
 
 
 #### Returns
-object &#124; null
- The context object, or null if not specified
-
+`object` &#124; `null` — The context object, or null if not specified
 #### getContextualTuples
 
 
@@ -65,9 +61,7 @@ Get the contextual tuples for this request.
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null
- The contextual tuples collection, or null if not specified
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — The contextual tuples collection, or null if not specified
 #### getModel
 
 
@@ -81,9 +75,7 @@ Get the authorization model ID for this request.
 
 
 #### Returns
-string &#124; null
- The authorization model ID, or null if not specified
-
+`string` &#124; `null` — The authorization model ID, or null if not specified
 #### getRelation
 
 
@@ -97,9 +89,7 @@ Get the relation name for this request.
 
 
 #### Returns
-string
- The relation name to check
-
+`string` — The relation name to check
 #### getRequest
 
 
@@ -114,12 +104,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -133,9 +121,7 @@ Get the store ID for this request.
 
 
 #### Returns
-string
- The store ID
-
+`string` — The store ID
 #### getType
 
 
@@ -149,9 +135,7 @@ Get the object type for this request.
 
 
 #### Returns
-string
- The object type to list
-
+`string` — The object type to list
 #### getUser
 
 
@@ -165,6 +149,4 @@ Get the user identifier for this request.
 
 
 #### Returns
-string
- The user identifier
-
+`string` — The user identifier

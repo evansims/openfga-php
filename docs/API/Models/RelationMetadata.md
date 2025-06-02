@@ -9,9 +9,9 @@ Contains metadata information about a relation in your authorization model. Rela
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php)
 
 ## Implements
-* [RelationMetadataInterface](RelationMetadataInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`RelationMetadataInterface`](RelationMetadataInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [RelationMetadataInterface](Models/RelationMetadataInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the user types that can be directly related through this relation. This defi
 
 
 #### Returns
-[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md) &#124; null
- The directly related user types, or null if not specified
-
+[`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md) &#124; `null` — The directly related user types, or null if not specified
 #### getModule
 
 
@@ -55,9 +53,7 @@ Get the optional module name for organization. This provides organizational info
 
 
 #### Returns
-string &#124; null
- The module name, or null if not specified
-
+`string` &#124; `null` — The module name, or null if not specified
 #### getSourceInfo
 
 
@@ -71,9 +67,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 
 #### Returns
-[SourceInfoInterface](SourceInfoInterface.md) &#124; null
- The source file information, or null if not available
-
+[`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source file information, or null if not available
 ### Model Management
 #### schema
 
@@ -89,9 +83,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -105,5 +97,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

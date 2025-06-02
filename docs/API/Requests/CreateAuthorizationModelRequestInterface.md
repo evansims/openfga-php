@@ -9,7 +9,7 @@ Interface for creating new authorization models in OpenFGA. This interface defin
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateAuthorizationModelRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 
 #### Returns
-[ConditionsInterface](Models/Collections/ConditionsInterface.md)&lt;[ConditionInterface](Models/ConditionInterface.md)&gt; &#124; null
- Collection of conditional rules for dynamic authorization, or null if no conditions are defined
-
+[`ConditionsInterface`](Models/Collections/ConditionsInterface.md)&lt;[`ConditionInterface`](Models/ConditionInterface.md)&gt; &#124; `null` — Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 #### getRequest
 
 
@@ -50,12 +48,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getSchemaVersion
 
 
@@ -69,9 +65,7 @@ Get the schema version for the authorization model. Specifies which version of t
 
 
 #### Returns
-[SchemaVersion](Models/Enums/SchemaVersion.md)
- The modeling language schema version for this authorization model
-
+[`SchemaVersion`](Models/Enums/SchemaVersion.md) — The modeling language schema version for this authorization model
 #### getStore
 
 
@@ -85,9 +79,7 @@ Get the store ID where the authorization model will be created. Identifies the O
 
 
 #### Returns
-string
- The store ID where the authorization model will be created
-
+`string` — The store ID where the authorization model will be created
 #### getTypeDefinitions
 
 
@@ -101,6 +93,4 @@ Get the type definitions for the authorization model. Returns a collection of ty
 
 
 #### Returns
-[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)&lt;[TypeDefinitionInterface](Models/TypeDefinitionInterface.md)&gt;
- Collection of object type definitions that define the authorization schema
-
+[`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md)&lt;[`TypeDefinitionInterface`](Models/TypeDefinitionInterface.md)&gt; — Collection of object type definitions that define the authorization schema

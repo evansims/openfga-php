@@ -9,7 +9,7 @@ Base interface for all OpenFGA model objects. This interface establishes the fou
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ModelInterface.php)
 
 ## Implements
-* JsonSerializable
+* `JsonSerializable`
 
 
 

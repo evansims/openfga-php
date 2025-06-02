@@ -9,8 +9,8 @@ Request for listing all available stores with pagination support. This request r
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListStoresRequest.php)
 
 ## Implements
-* [ListStoresRequestInterface](ListStoresRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`ListStoresRequestInterface`](ListStoresRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [ListStoresResponse](Responses/ListStoresResponse.md) (response)
@@ -34,9 +34,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string &#124; null
- The continuation token from a previous operation, or null for the first page
-
+`string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 #### getPageSize
 
 
@@ -50,9 +48,7 @@ Get the maximum number of stores to return per page. Specifies the page size for
 
 
 #### Returns
-int &#124; null
- The maximum number of stores to return per page, or null to use the default page size
-
+`int` &#124; `null` — The maximum number of stores to return per page, or null to use the default page size
 #### getRequest
 
 
@@ -67,9 +63,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution

@@ -9,8 +9,8 @@ Response confirming successful creation of a new store. This response provides t
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponse.php)
 
 ## Implements
-* [CreateStoreResponseInterface](CreateStoreResponseInterface.md)
-* [ResponseInterface](ResponseInterface.md)
+* [`CreateStoreResponseInterface`](CreateStoreResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (interface)
@@ -35,9 +35,7 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 
 
 #### Returns
-DateTimeImmutable
- The creation timestamp of the store
-
+`DateTimeImmutable` — The creation timestamp of the store
 #### getUpdatedAt
 
 
@@ -51,9 +49,7 @@ Get the timestamp when the store was last updated. Returns the timestamp of the 
 
 
 #### Returns
-DateTimeImmutable
- The last update timestamp of the store
-
+`DateTimeImmutable` — The last update timestamp of the store
 ### List Operations
 #### getId
 
@@ -68,9 +64,7 @@ Get the unique identifier of the created store. Returns the system-generated uni
 
 
 #### Returns
-string
- The unique store identifier
-
+`string` — The unique store identifier
 #### getName
 
 
@@ -84,9 +78,7 @@ Get the human-readable name of the created store. Returns the descriptive name t
 
 
 #### Returns
-string
- The descriptive name of the store
-
+`string` — The descriptive name of the store
 ### Model Management
 #### schema
 
@@ -102,9 +94,7 @@ Get the schema definition for this response. Returns the schema that defines the
 
 
 #### Returns
-SchemaInterface
- The schema definition for response validation
-
+`SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
@@ -125,11 +115,9 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
-| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
-| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
+| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
+| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
+| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
 
 #### Returns
-static
- The parsed and validated response instance containing the API response data
-
+`static` — The parsed and validated response instance containing the API response data

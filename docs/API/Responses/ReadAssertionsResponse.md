@@ -9,8 +9,8 @@ Response containing test assertions associated with an authorization model. This
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponse.php)
 
 ## Implements
-* [ReadAssertionsResponseInterface](ReadAssertionsResponseInterface.md)
-* [ResponseInterface](ResponseInterface.md)
+* [`ReadAssertionsResponseInterface`](ReadAssertionsResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (interface)
@@ -35,9 +35,7 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 
 #### Returns
-[AssertionsInterface](Models/Collections/AssertionsInterface.md) &#124; null
- The collection of assertions, or null if no assertions are defined
-
+[`AssertionsInterface`](Models/Collections/AssertionsInterface.md) &#124; `null` — The collection of assertions, or null if no assertions are defined
 #### getModel
 
 
@@ -51,9 +49,7 @@ Get the authorization model identifier for these assertions. Returns the unique 
 
 
 #### Returns
-string
- The authorization model identifier
-
+`string` — The authorization model identifier
 ### Model Management
 #### schema
 
@@ -69,9 +65,7 @@ Get the schema definition for this response. Returns the schema that defines the
 
 
 #### Returns
-SchemaInterface
- The schema definition for response validation
-
+`SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
@@ -92,11 +86,9 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
-| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
-| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
+| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
+| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
+| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
 
 #### Returns
-static
- The parsed and validated response instance containing the API response data
-
+`static` — The parsed and validated response instance containing the API response data

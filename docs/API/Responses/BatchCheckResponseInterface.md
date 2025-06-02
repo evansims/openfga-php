@@ -9,7 +9,7 @@ Response containing the results of a batch authorization check. This response co
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [BatchCheckResponse](Responses/BatchCheckResponse.md) (implementation)
@@ -33,9 +33,7 @@ Get the results map from correlation IDs to check results. Each key in the map i
 
 
 #### Returns
-array&lt;string, [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md)&gt;
- Map of correlation ID to check result
-
+`array&lt;`string`, [`BatchCheckSingleResultInterface`](Models/BatchCheckSingleResultInterface.md)&gt;` — Map of correlation ID to check result
 #### getResultForCorrelationId
 
 
@@ -50,8 +48,7 @@ Get the result for a specific correlation ID. Returns the check result for the g
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$correlationId` | string | The correlation ID to look up |
+| `$correlationId` | `string` | The correlation ID to look up |
 
 #### Returns
-[BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) &#124; null
-
+[`BatchCheckSingleResultInterface`](Models/BatchCheckSingleResultInterface.md) &#124; `null`

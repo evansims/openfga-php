@@ -9,7 +9,7 @@ Request for performing multiple authorization checks in a single batch. This req
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/BatchCheckRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [BatchCheckResponseInterface](Responses/BatchCheckResponseInterface.md) (response)
@@ -34,9 +34,7 @@ Get the collection of checks to perform in this batch. Each item contains a tupl
 
 
 #### Returns
-[BatchCheckItemsInterface](Models/Collections/BatchCheckItemsInterface.md)
- The batch check items
-
+[`BatchCheckItemsInterface`](Models/Collections/BatchCheckItemsInterface.md) — The batch check items
 ### List Operations
 #### getRequest
 
@@ -52,9 +50,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution

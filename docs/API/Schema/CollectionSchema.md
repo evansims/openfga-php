@@ -9,8 +9,8 @@ Schema definition specifically for validating and transforming collection data s
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/CollectionSchema.php)
 
 ## Implements
-* [CollectionSchemaInterface](CollectionSchemaInterface.md)
-* [SchemaInterface](SchemaInterface.md)
+* [`CollectionSchemaInterface`](CollectionSchemaInterface.md)
+* [`SchemaInterface`](SchemaInterface.md)
 
 ## Related Classes
 * [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md) (interface)
@@ -35,9 +35,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 
 
 #### Returns
-string
- The fully qualified class name for the model this schema defines
-
+`string` — The fully qualified class name for the model this schema defines
 #### getItemType
 
 
@@ -51,8 +49,7 @@ Get the type of each item in the collection.
 
 
 #### Returns
-string
-
+`string`
 #### getProperties
 
 
@@ -66,9 +63,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 
 #### Returns
-array
- An associative array of property names to their schema property definitions
-
+`array` — An associative array of property names to their schema property definitions
 #### getProperty
 
 
@@ -83,12 +78,10 @@ Get a specific property definition by name. This method retrieves the schema def
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$name` | string | The name of the property to retrieve |
+| `$name` | `string` | The name of the property to retrieve |
 
 #### Returns
-[SchemaProperty](SchemaProperty.md) &#124; null
- The property definition if it exists, or null if the property is not defined in this schema
-
+[`SchemaProperty`](SchemaProperty.md) &#124; `null` — The property definition if it exists, or null if the property is not defined in this schema
 #### getWrapperKey
 
 
@@ -102,9 +95,7 @@ Get the wrapper key for the collection data if any. Some collections expect data
 
 
 #### Returns
-string &#124; null
- The wrapper key or null if data is not wrapped
-
+`string` &#124; `null` — The wrapper key or null if data is not wrapped
 ### Other
 #### requiresItems
 
@@ -119,6 +110,4 @@ Whether the collection requires at least one item.
 
 
 #### Returns
-bool
- True if the collection must contain at least one item, false if empty collections are allowed
-
+`bool` — True if the collection must contain at least one item, false if empty collections are allowed

@@ -9,8 +9,8 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/SerializationError.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -50,9 +50,7 @@ Check if this serialization error is related to collection operations. Useful fo
 
 
 #### Returns
-bool
- True if the error is collection-related, false otherwise
-
+`bool` — True if the error is collection-related, false otherwise
 #### isTypeValidationError
 
 
@@ -66,9 +64,7 @@ Check if this serialization error indicates a data type validation failure. Usef
 
 
 #### Returns
-bool
- True if the error is type-related, false otherwise
-
+`bool` — True if the error is type-related, false otherwise
 ### Other
 #### exception
 
@@ -89,12 +85,10 @@ Create a new SerializationException for this error type. Factory method that cre
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | [RequestInterface](Requests/RequestInterface.md) &#124; null | The PSR-7 HTTP request being processed when serialization failed, if applicable |
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) &#124; null | The PSR-7 HTTP response containing invalid data, if applicable |
-| `$context` | array&lt;string, mixed&gt; |  |
-| `$prev` | Throwable &#124; null | The previous throwable used for exception chaining, if any |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request being processed when serialization failed, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response containing invalid data, if applicable |
+| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
+| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
 
 #### Returns
-[SerializationException](SerializationException.md)
- The newly created SerializationException instance with comprehensive error context
-
+[`SerializationException`](SerializationException.md) — The newly created SerializationException instance with comprehensive error context

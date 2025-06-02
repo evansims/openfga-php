@@ -9,9 +9,9 @@ Configuration-related exception for the OpenFGA SDK. Thrown when configuration e
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationException.php)
 
 ## Implements
-* Stringable
-* Throwable
-* [ClientThrowable](ClientThrowable.md)
+* `Stringable`
+* `Throwable`
+* [`ClientThrowable`](ClientThrowable.md)
 
 
 
@@ -42,8 +42,7 @@ public function getFile(): string
 
 
 #### Returns
-string
-
+`string`
 #### getLine
 
 
@@ -55,8 +54,7 @@ public function getLine(): int
 
 
 #### Returns
-int
-
+`int`
 #### getMessage
 
 
@@ -68,8 +66,7 @@ public function getMessage(): string
 
 
 #### Returns
-string
-
+`string`
 #### getPrevious
 
 
@@ -81,8 +78,7 @@ public function getPrevious(): ?Throwable
 
 
 #### Returns
-Throwable &#124; null
-
+`Throwable` &#124; `null`
 #### getTrace
 
 
@@ -94,8 +90,7 @@ public function getTrace(): array
 
 
 #### Returns
-array
-
+`array`
 #### getTraceAsString
 
 
@@ -107,8 +102,7 @@ public function getTraceAsString(): string
 
 
 #### Returns
-string
-
+`string`
 ### Other
 #### context
 
@@ -123,9 +117,7 @@ Get additional context information about the exception. Provides access to conte
 
 
 #### Returns
-array&lt;string, mixed&gt;
- Associative array of context data including parameter values, error details, and debugging information
-
+`array&lt;`string`, `mixed`&gt;` — Associative array of context data including parameter values, error details, and debugging information
 #### kind
 
 
@@ -139,9 +131,7 @@ Get the specific error category for this exception. Returns the error classifica
 
 
 #### Returns
-[ClientError](ClientError.md) &#124; [AuthenticationError](AuthenticationError.md) &#124; [ConfigurationError](ConfigurationError.md) &#124; [NetworkError](NetworkError.md) &#124; [SerializationError](SerializationError.md)
- The error category enum indicating the type of failure
-
+[`ClientError`](ClientError.md) &#124; [`AuthenticationError`](AuthenticationError.md) &#124; [`ConfigurationError`](ConfigurationError.md) &#124; [`NetworkError`](NetworkError.md) &#124; [`SerializationError`](SerializationError.md) — The error category enum indicating the type of failure
 #### previous
 
 
@@ -155,9 +145,7 @@ Get the previous exception that caused this one. Provides access to the exceptio
 
 
 #### Returns
-Throwable &#124; null
- The previous exception in the chain, or null if this is the root exception
-
+`Throwable` &#124; `null` — The previous exception in the chain, or null if this is the root exception
 #### request
 
 
@@ -171,9 +159,7 @@ Get the HTTP request associated with this exception. Returns the PSR-7 HTTP requ
 
 
 #### Returns
-Psr\Http\Message\RequestInterface &#124; null
- The PSR-7 HTTP request that triggered the exception, or null if not applicable
-
+`Psr\Http\Message\RequestInterface` &#124; `null` — The PSR-7 HTTP request that triggered the exception, or null if not applicable
 #### response
 
 
@@ -187,6 +173,4 @@ Get the HTTP response associated with this exception. Returns the PSR-7 HTTP res
 
 
 #### Returns
-Psr\Http\Message\ResponseInterface &#124; null
- The PSR-7 HTTP response received from the API, or null if no response was received
-
+`Psr\Http\Message\ResponseInterface` &#124; `null` — The PSR-7 HTTP response received from the API, or null if no response was received

@@ -9,8 +9,8 @@ Represents an OpenFGA store that contains authorization models and relationship 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Store](Models/Store.md) (implementation)
@@ -34,9 +34,7 @@ Get the timestamp when the store was created. The creation timestamp provides es
 
 
 #### Returns
-DateTimeInterface
- The creation timestamp in UTC timezone
-
+`DateTimeInterface` — The creation timestamp in UTC timezone
 #### getDeletedAt
 
 
@@ -50,9 +48,7 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 
 
 #### Returns
-DateTimeInterface &#124; null
- The deletion timestamp in UTC timezone, or null if the store is active
-
+`DateTimeInterface` &#124; `null` — The deletion timestamp in UTC timezone, or null if the store is active
 #### getUpdatedAt
 
 
@@ -66,9 +62,7 @@ Get the timestamp when the store was last updated. The update timestamp tracks w
 
 
 #### Returns
-DateTimeInterface
- The last update timestamp in UTC timezone
-
+`DateTimeInterface` — The last update timestamp in UTC timezone
 ### List Operations
 #### getId
 
@@ -83,9 +77,7 @@ Get the unique identifier of the store. The store ID is a globally unique identi
 
 
 #### Returns
-string
- The store&#039;s unique identifier
-
+`string` — The store&#039;s unique identifier
 #### getName
 
 
@@ -99,9 +91,7 @@ Get the human-readable name of the store. The store name provides a user-friendl
 
 
 #### Returns
-string
- The store&#039;s display name
-
+`string` — The store&#039;s display name
 ### Other
 #### jsonSerialize
 
@@ -116,6 +106,4 @@ Serialize the store for JSON encoding. This method prepares the store data for A
 
 
 #### Returns
-array&lt;'created_at' &#124; 'deleted_at' &#124; 'id' &#124; 'name' &#124; 'updated_at', string&gt;
- Store data formatted for JSON encoding with API-compatible field names
-
+`array&lt;'created_at'` &#124; `'deleted_at'` &#124; `'id'` &#124; `'name'` &#124; `'updated_at', string&gt;` — Store data formatted for JSON encoding with API-compatible field names

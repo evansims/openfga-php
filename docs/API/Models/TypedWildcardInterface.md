@@ -9,9 +9,9 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcardInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* Stringable
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `Stringable`
+* `JsonSerializable`
 
 ## Related Classes
 * [TypedWildcard](Models/TypedWildcard.md) (implementation)
@@ -35,9 +35,7 @@ Get the object type that this wildcard represents. This returns the type name fo
 
 
 #### Returns
-string
- The object type that this wildcard represents
-
+`string` — The object type that this wildcard represents
 ### Other
 #### jsonSerialize
 
@@ -51,5 +49,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

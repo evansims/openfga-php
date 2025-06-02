@@ -681,9 +681,9 @@ class DocumentationGenerator
 
         $lowerType = strtolower($type);
         if (in_array($lowerType, array_map('strtolower', $builtInTypes), true)) {
-            $result = $type . $genericSuffix;
+            $result = '`' . $type . $genericSuffix . '`';
             if ($isArray) $result .= '[]';
-            if ($isNullable) $result .= ' | null';
+            if ($isNullable) $result .= ' | `null`';
             return $result;
         }
 
@@ -761,19 +761,20 @@ class DocumentationGenerator
                     $targetPath = str_repeat('../', $currentDepth) . $targetPath;
                 }
             }
-            $result = "[$displayName]($targetPath)";
+            $result = "[`$displayName`]($targetPath)";
         } else {
-            // For external types, just use the short name
+            // For external types, wrap in backticks and use the short name
             $result = $type;
             if (str_contains($type, '\\')) {
                 $result = substr($type, strrpos($type, '\\') + 1);
             }
+            $result = '`' . $result . '`';
         }
 
         // Add back generic suffix, array brackets, and nullable
         $result .= $genericSuffix;
         if ($isArray) $result .= '[]';
-        if ($isNullable) $result .= ' | null';
+        if ($isNullable) $result .= ' | `null`';
         return $result;
     }
 

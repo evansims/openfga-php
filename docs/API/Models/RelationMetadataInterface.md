@@ -9,8 +9,8 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadataInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [RelationMetadata](Models/RelationMetadata.md) (implementation)
@@ -34,9 +34,7 @@ Get the user types that can be directly related through this relation. This defi
 
 
 #### Returns
-[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)&lt;[RelationReferenceInterface](RelationReferenceInterface.md)&gt; &#124; null
- The directly related user types, or null if not specified
-
+[`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md)&lt;[`RelationReferenceInterface`](RelationReferenceInterface.md)&gt; &#124; `null` — The directly related user types, or null if not specified
 #### getModule
 
 
@@ -50,9 +48,7 @@ Get the optional module name for organization. This provides organizational info
 
 
 #### Returns
-string &#124; null
- The module name, or null if not specified
-
+`string` &#124; `null` — The module name, or null if not specified
 #### getSourceInfo
 
 
@@ -66,9 +62,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 
 #### Returns
-[SourceInfoInterface](SourceInfoInterface.md) &#124; null
- The source file information, or null if not available
-
+[`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source file information, or null if not available
 ### Other
 #### jsonSerialize
 
@@ -82,5 +76,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

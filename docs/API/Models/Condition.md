@@ -9,9 +9,9 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Condition.php)
 
 ## Implements
-* [ConditionInterface](ConditionInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`ConditionInterface`](ConditionInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [ConditionInterface](Models/ConditionInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the condition expression. This returns the logical expression that defines w
 
 
 #### Returns
-string
- The condition expression defining the evaluation logic
-
+`string` — The condition expression defining the evaluation logic
 #### getMetadata
 
 
@@ -56,9 +54,7 @@ Get metadata about the condition definition. This provides additional informatio
 
 
 #### Returns
-[ConditionMetadataInterface](ConditionMetadataInterface.md) &#124; null
- The condition metadata, or null if not provided
-
+[`ConditionMetadataInterface`](ConditionMetadataInterface.md) &#124; `null` — The condition metadata, or null if not provided
 #### getName
 
 
@@ -72,9 +68,7 @@ Get the name of the condition. This is a unique identifier for the condition wit
 
 
 #### Returns
-string
- The unique name identifying this condition
-
+`string` — The unique name identifying this condition
 #### getParameters
 
 
@@ -88,9 +82,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 
 #### Returns
-[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md) &#124; null
- The condition parameters, or null if the condition uses no parameters
-
+[`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null` — The condition parameters, or null if the condition uses no parameters
 ### Model Management
 #### schema
 
@@ -106,9 +98,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -123,6 +113,4 @@ Serialize the condition for JSON encoding. This method prepares the condition da
 
 
 #### Returns
-array&lt;string, mixed&gt;
- The serialized condition data
-
+`array&lt;`string`, `mixed`&gt;` — The serialized condition data

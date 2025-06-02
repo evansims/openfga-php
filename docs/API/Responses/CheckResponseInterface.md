@@ -9,7 +9,7 @@ Interface for permission check response objects. This interface defines the cont
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [CheckResponse](Responses/CheckResponse.md) (implementation)
@@ -34,9 +34,7 @@ Get whether the permission check was allowed. This is the primary result of the 
 
 
 #### Returns
-bool &#124; null
- True if permission is granted, false if denied, or null if the result is indeterminate
-
+`bool` &#124; `null` — True if permission is granted, false if denied, or null if the result is indeterminate
 ### List Operations
 #### getResolution
 
@@ -51,6 +49,4 @@ Get the resolution details for the permission decision. This provides additional
 
 
 #### Returns
-string &#124; null
- The resolution details explaining the permission decision, or null if not provided
-
+`string` &#124; `null` — The resolution details explaining the permission decision, or null if not provided

@@ -9,8 +9,8 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1Interface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [TupleToUsersetV1](Models/TupleToUsersetV1.md) (implementation)
@@ -34,9 +34,7 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 
 #### Returns
-[ObjectRelationInterface](ObjectRelationInterface.md)
- The object-relation pair defining the computed userset
-
+[`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the computed userset
 #### getTupleset
 
 
@@ -50,9 +48,7 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 
 #### Returns
-[ObjectRelationInterface](ObjectRelationInterface.md)
- The object-relation pair defining the tupleset
-
+[`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the tupleset
 ### Other
 #### jsonSerialize
 
@@ -66,5 +62,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

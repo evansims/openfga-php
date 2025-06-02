@@ -9,8 +9,8 @@ Represents an assertion used to test authorization model correctness. Assertions
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Assertion](Models/Assertion.md) (implementation)
@@ -34,8 +34,7 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 
 
 #### Returns
-array &#124; null
-
+`array` &#124; `null`
 #### getContextualTuples
 
 
@@ -49,8 +48,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 #### getExpectation
 
 
@@ -64,9 +62,7 @@ Get the expected result for this assertion. The expectation defines whether the 
 
 
 #### Returns
-bool
- True if access should be granted, false if access should be denied
-
+`bool` — True if access should be granted, false if access should be denied
 #### getTupleKey
 
 
@@ -80,9 +76,7 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 
 #### Returns
-[AssertionTupleKeyInterface](AssertionTupleKeyInterface.md)
- The tuple key defining the authorization question
-
+[`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md) — The tuple key defining the authorization question
 ### Other
 #### jsonSerialize
 
@@ -96,5 +90,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

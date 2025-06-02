@@ -9,8 +9,8 @@ Response confirming successful creation of a new authorization model. This respo
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponse.php)
 
 ## Implements
-* [CreateAuthorizationModelResponseInterface](CreateAuthorizationModelResponseInterface.md)
-* [ResponseInterface](ResponseInterface.md)
+* [`CreateAuthorizationModelResponseInterface`](CreateAuthorizationModelResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (interface)
@@ -35,9 +35,7 @@ Get the unique identifier of the created authorization model. Returns the system
 
 
 #### Returns
-string
- The unique authorization model identifier
-
+`string` — The unique authorization model identifier
 ### Model Management
 #### schema
 
@@ -53,9 +51,7 @@ Get the schema definition for this response. Returns the schema that defines the
 
 
 #### Returns
-SchemaInterface
- The schema definition for response validation
-
+`SchemaInterface` — The schema definition for response validation
 ### Other
 #### fromResponse
 
@@ -76,11 +72,9 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | HttpResponseInterface | The raw HTTP response from the OpenFGA API |
-| `$request` | HttpRequestInterface | The original HTTP request that generated this response |
-| `$validator` | SchemaValidator | Schema validator for parsing and validating response data |
+| `$response` | `HttpResponseInterface` | The raw HTTP response from the OpenFGA API |
+| `$request` | `HttpRequestInterface` | The original HTTP request that generated this response |
+| `$validator` | `SchemaValidator` | Schema validator for parsing and validating response data |
 
 #### Returns
-static
- The parsed and validated response instance containing the API response data
-
+`static` — The parsed and validated response instance containing the API response data

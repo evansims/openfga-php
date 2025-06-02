@@ -9,8 +9,8 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionMetadataInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [ConditionMetadata](Models/ConditionMetadata.md) (implementation)
@@ -34,9 +34,7 @@ Get the module name where the condition is defined. This provides organizational
 
 
 #### Returns
-string
- The module name containing the condition
-
+`string` — The module name containing the condition
 #### getSourceInfo
 
 
@@ -50,9 +48,7 @@ Get source file information for debugging and tooling. This provides information
 
 
 #### Returns
-[SourceInfoInterface](SourceInfoInterface.md)
- The source file information
-
+[`SourceInfoInterface`](SourceInfoInterface.md) — The source file information
 ### Other
 #### jsonSerialize
 
@@ -66,5 +62,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

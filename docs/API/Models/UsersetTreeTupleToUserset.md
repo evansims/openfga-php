@@ -9,9 +9,9 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeTupleToUserset.php)
 
 ## Implements
-* [UsersetTreeTupleToUsersetInterface](UsersetTreeTupleToUsersetInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 
 
 #### Returns
-array&lt;int, [ComputedInterface](ComputedInterface.md)&gt;
- Array of computed userset references
-
+`array&lt;`int`, [`ComputedInterface`](ComputedInterface.md)&gt;` — Array of computed userset references
 #### getTupleset
 
 
@@ -55,9 +53,7 @@ Get the tupleset string identifying which tuples to use for computation. This st
 
 
 #### Returns
-string
- The tupleset identifier string
-
+`string` — The tupleset identifier string
 ### Model Management
 #### schema
 
@@ -73,9 +69,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -89,5 +83,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

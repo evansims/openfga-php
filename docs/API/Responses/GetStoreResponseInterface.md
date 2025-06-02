@@ -9,7 +9,7 @@ Interface for store retrieval response objects. This interface defines the contr
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [GetStoreResponse](Responses/GetStoreResponse.md) (implementation)
@@ -34,9 +34,7 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 
 
 #### Returns
-DateTimeImmutable
- The creation timestamp of the store
-
+`DateTimeImmutable` — The creation timestamp of the store
 #### getDeletedAt
 
 
@@ -50,9 +48,7 @@ Get the timestamp when the store was deleted, if applicable. Returns the deletio
 
 
 #### Returns
-DateTimeImmutable &#124; null
- The deletion timestamp, or null if the store is not deleted
-
+`DateTimeImmutable` &#124; `null` — The deletion timestamp, or null if the store is not deleted
 #### getUpdatedAt
 
 
@@ -66,9 +62,7 @@ Get the timestamp when the store was last updated. Returns the timestamp of the 
 
 
 #### Returns
-DateTimeImmutable
- The last update timestamp of the store
-
+`DateTimeImmutable` — The last update timestamp of the store
 ### List Operations
 #### getId
 
@@ -83,9 +77,7 @@ Get the unique identifier of the store. Returns the system-generated unique iden
 
 
 #### Returns
-string
- The unique store identifier
-
+`string` — The unique store identifier
 #### getName
 
 
@@ -99,9 +91,7 @@ Get the human-readable name of the store. Returns the descriptive name that was 
 
 
 #### Returns
-string
- The descriptive name of the store
-
+`string` — The descriptive name of the store
 #### getStore
 
 
@@ -115,6 +105,4 @@ Get the complete store object. Returns the full store object containing all stor
 
 
 #### Returns
-[StoreInterface](Models/StoreInterface.md)
- The complete store object
-
+[`StoreInterface`](Models/StoreInterface.md) — The complete store object

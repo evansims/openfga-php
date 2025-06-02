@@ -31,8 +31,7 @@ Get the fully qualified class name for object types.
 
 
 #### Returns
-string &#124; null
-
+`string` &#124; `null`
 #### getDefault
 
 
@@ -46,9 +45,7 @@ Get the default value to use when property is missing.
 
 
 #### Returns
-mixed
- Default value for optional properties
-
+`mixed` — Default value for optional properties
 #### getEnum
 
 
@@ -62,9 +59,7 @@ Get the array of allowed values for enumeration validation.
 
 
 #### Returns
-array&lt;string&gt; &#124; null
- Array of allowed values or null if not an enumeration
-
+`array&lt;`string`&gt;` &#124; `null` — Array of allowed values or null if not an enumeration
 #### getFormat
 
 
@@ -78,9 +73,7 @@ Get the additional format constraint for this property.
 
 
 #### Returns
-string &#124; null
- Format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) or null if none
-
+`string` &#124; `null` — Format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) or null if none
 #### getItems
 
 
@@ -94,8 +87,7 @@ Get the type specification for array items.
 
 
 #### Returns
-array &#124; null
-
+`array` &#124; `null`
 #### getName
 
 
@@ -109,9 +101,7 @@ Get the property name as it appears in the data.
 
 
 #### Returns
-string
- The property name
-
+`string` — The property name
 #### getParameterName
 
 
@@ -125,9 +115,7 @@ Get the alternative parameter name for constructor mapping.
 
 
 #### Returns
-string &#124; null
- Alternative parameter name or null if using default mapping
-
+`string` &#124; `null` — Alternative parameter name or null if using default mapping
 #### getType
 
 
@@ -141,9 +129,7 @@ Get the data type for this property.
 
 
 #### Returns
-string
- The data type (string, integer, boolean, array, object, etc.)
-
+`string` — The data type (string, integer, boolean, array, object, etc.)
 ### Utility
 #### isRequired
 
@@ -158,6 +144,4 @@ Check if this property is required for validation.
 
 
 #### Returns
-bool
- True if the property is required, false otherwise
-
+`bool` — True if the property is required, false otherwise

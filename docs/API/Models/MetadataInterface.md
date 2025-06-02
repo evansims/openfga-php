@@ -9,8 +9,8 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/MetadataInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Metadata](Models/Metadata.md) (implementation)
@@ -34,9 +34,7 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 
 #### Returns
-string &#124; null
- The module name, or null if not specified
-
+`string` &#124; `null` — The module name, or null if not specified
 #### getRelations
 
 
@@ -50,9 +48,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 
 #### Returns
-[RelationMetadataCollection](Models/Collections/RelationMetadataCollection.md) &#124; null
- The relation metadata collection, or null if not specified
-
+[`RelationMetadataCollection`](Models/Collections/RelationMetadataCollection.md) &#124; `null` — The relation metadata collection, or null if not specified
 #### getSourceInfo
 
 
@@ -66,9 +62,7 @@ Get the source code information for this metadata. Source information provides d
 
 
 #### Returns
-[SourceInfoInterface](SourceInfoInterface.md) &#124; null
- The source information, or null if not available
-
+[`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source information, or null if not available
 ### Other
 #### jsonSerialize
 
@@ -82,5 +76,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

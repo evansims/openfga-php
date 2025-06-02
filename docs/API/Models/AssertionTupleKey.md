@@ -9,9 +9,9 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php)
 
 ## Implements
-* [AssertionTupleKeyInterface](AssertionTupleKeyInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the object being tested in the assertion. This represents the resource or en
 
 
 #### Returns
-string
- The object identifier being tested
-
+`string` — The object identifier being tested
 #### getRelation
 
 
@@ -55,9 +53,7 @@ Get the relation being tested in the assertion. This represents the type of rela
 
 
 #### Returns
-string
- The relation name being tested
-
+`string` — The relation name being tested
 #### getUser
 
 
@@ -71,9 +67,7 @@ Get the user being tested in the assertion. This represents the subject (user, g
 
 
 #### Returns
-string
- The user identifier being tested
-
+`string` — The user identifier being tested
 ### Model Management
 #### schema
 
@@ -89,9 +83,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -105,5 +97,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

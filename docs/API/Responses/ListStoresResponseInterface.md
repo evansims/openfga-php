@@ -9,7 +9,7 @@ Interface for stores listing response objects. This interface defines the contra
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ListStoresResponse](Responses/ListStoresResponse.md) (implementation)
@@ -33,9 +33,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string &#124; null
- The continuation token for fetching more results, or null if no more pages exist
-
+`string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 #### getStores
 
 
@@ -49,6 +47,4 @@ Get the collection of stores. Returns a type-safe collection containing the stor
 
 
 #### Returns
-[StoresInterface](Models/Collections/StoresInterface.md)&lt;[StoreInterface](Models/StoreInterface.md)&gt;
- The collection of stores
-
+[`StoresInterface`](Models/Collections/StoresInterface.md)&lt;[`StoreInterface`](Models/StoreInterface.md)&gt; — The collection of stores

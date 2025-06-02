@@ -9,7 +9,7 @@ Represents an access token for OpenFGA API authentication. Access tokens are cre
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Authentication/AccessTokenInterface.php)
 
 ## Implements
-* Stringable
+* `Stringable`
 
 ## Related Classes
 * [AccessToken](Authentication/AccessToken.md) (implementation)
@@ -33,9 +33,7 @@ Get the Unix timestamp when this access token expires. The expiration timestamp 
 
 
 #### Returns
-int
- Unix timestamp representing when the token expires
-
+`int` — Unix timestamp representing when the token expires
 #### getScope
 
 
@@ -49,9 +47,7 @@ Get the scope that defines the permissions granted by this access token. The sco
 
 
 #### Returns
-string &#124; null
- The token scope defining granted permissions, or null if no scope is specified
-
+`string` &#124; `null` — The token scope defining granted permissions, or null if no scope is specified
 #### getToken
 
 
@@ -65,9 +61,7 @@ Get the raw access token value. This method returns the actual token string that
 
 
 #### Returns
-string
- The raw access token value
-
+`string` — The raw access token value
 ### Utility
 #### isExpired
 
@@ -82,6 +76,4 @@ Check whether this access token has expired and needs to be refreshed. This meth
 
 
 #### Returns
-bool
- True if the token has expired and should be refreshed, false if still valid
-
+`bool` — True if the token has expired and should be refreshed, false if still valid

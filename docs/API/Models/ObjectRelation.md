@@ -9,9 +9,9 @@ Represents a reference to a specific relation on an object. In authorization mod
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php)
 
 ## Implements
-* [ObjectRelationInterface](ObjectRelationInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`ObjectRelationInterface`](ObjectRelationInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [ObjectRelationInterface](Models/ObjectRelationInterface.md) (interface)
@@ -39,8 +39,7 @@ Get the object identifier in an object-relation pair. The object represents the 
 
 
 #### Returns
-string &#124; null
-
+`string` &#124; `null`
 #### getRelation
 
 
@@ -54,8 +53,7 @@ Get the relation name that defines the type of relationship to the object. The r
 
 
 #### Returns
-string &#124; null
-
+`string` &#124; `null`
 ### Model Management
 #### schema
 
@@ -71,9 +69,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -87,5 +83,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

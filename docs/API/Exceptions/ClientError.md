@@ -9,8 +9,8 @@ General client error types for the OpenFGA SDK. Defines high-level error categor
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ClientError.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -53,12 +53,10 @@ Create a new ClientException for this error type. Factory method that creates a 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | [RequestInterface](Requests/RequestInterface.md) &#124; null | The PSR-7 HTTP request that triggered the exception, if applicable |
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) &#124; null | The PSR-7 HTTP response received, if applicable |
-| `$context` | array&lt;string, mixed&gt; |  |
-| `$prev` | Throwable &#124; null | The previous throwable used for exception chaining, if any |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request that triggered the exception, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response received, if applicable |
+| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
+| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
 
 #### Returns
-[ClientException](ClientException.md)
- The newly created ClientException instance with comprehensive error context
-
+[`ClientException`](ClientException.md) — The newly created ClientException instance with comprehensive error context

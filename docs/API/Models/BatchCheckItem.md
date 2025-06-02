@@ -9,9 +9,9 @@ Represents a single item in a batch check request. Each batch check item contain
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php)
 
 ## Implements
-* [BatchCheckItemInterface](BatchCheckItemInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`BatchCheckItemInterface`](BatchCheckItemInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
@@ -36,8 +36,7 @@ Get the context object for this check. This provides additional context data tha
 
 
 #### Returns
-object &#124; null
-
+`object` &#124; `null`
 #### getContextualTuples
 
 
@@ -51,8 +50,7 @@ Get the contextual tuples for this check. These are additional tuples that are e
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 #### getCorrelationId
 
 
@@ -66,9 +64,7 @@ Get the correlation ID for this batch check item. This unique identifier maps th
 
 
 #### Returns
-string
- The correlation ID
-
+`string` — The correlation ID
 #### getTupleKey
 
 
@@ -82,9 +78,7 @@ Get the tuple key to be checked. This defines the user, relation, and object for
 
 
 #### Returns
-[TupleKeyInterface](TupleKeyInterface.md)
- The tuple key for this check
-
+[`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key for this check
 ### Model Management
 #### schema
 
@@ -100,9 +94,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -116,8 +108,7 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`
 #### toArray
 
 
@@ -130,5 +121,4 @@ public function toArray(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`

@@ -30,9 +30,7 @@ Retrieves the error from a failed result. This method should only be called on F
 
 
 #### Returns
-Throwable
- The error that caused the failure
-
+`Throwable` — The error that caused the failure
 #### failed
 
 
@@ -46,9 +44,7 @@ Determines if this result represents a failure.
 
 
 #### Returns
-bool
- True if this is a Failure result, false if it&#039;s a Success
-
+`bool` — True if this is a Failure result, false if it&#039;s a Success
 #### failure
 
 
@@ -63,12 +59,10 @@ Executes a callback when the result is a failure and continues the chain. The ca
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | callable |  |
+| `$fn` | `callable` |  |
 
 #### Returns
-[ResultInterface](ResultInterface.md)
- The original result for method chaining
-
+[`ResultInterface`](ResultInterface.md) — The original result for method chaining
 #### recover
 
 
@@ -83,12 +77,10 @@ Recovers from a failure by transforming it into a success or different failure. 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | callable |  |
+| `$fn` | `callable` |  |
 
 #### Returns
-[ResultInterface](ResultInterface.md)
- The recovered result or original success
-
+[`ResultInterface`](ResultInterface.md) — The recovered result or original success
 #### rethrow
 
 
@@ -103,12 +95,10 @@ Throws the contained error or continues the chain. For Failure results, this thr
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$throwable` | Throwable &#124; null | Optional throwable to throw instead of the contained error |
+| `$throwable` | `Throwable` &#124; `null` | Optional throwable to throw instead of the contained error |
 
 #### Returns
-[ResultInterface](ResultInterface.md)
- The original result for method chaining
-
+[`ResultInterface`](ResultInterface.md) — The original result for method chaining
 #### succeeded
 
 
@@ -122,9 +112,7 @@ Determines if this result represents a success.
 
 
 #### Returns
-bool
- True if this is a Success result, false if it&#039;s a Failure
-
+`bool` — True if this is a Success result, false if it&#039;s a Failure
 #### success
 
 
@@ -139,12 +127,10 @@ Executes a callback when the result is a success and continues the chain. The ca
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | callable |  |
+| `$fn` | `callable` |  |
 
 #### Returns
-[ResultInterface](ResultInterface.md)
- The original result for method chaining
-
+[`ResultInterface`](ResultInterface.md) — The original result for method chaining
 #### then
 
 
@@ -159,12 +145,10 @@ Transforms a successful result using a callback and continues the chain. The cal
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | callable |  |
+| `$fn` | `callable` |  |
 
 #### Returns
-[ResultInterface](ResultInterface.md)
- The transformed result or original failure
-
+[`ResultInterface`](ResultInterface.md) — The transformed result or original failure
 #### unwrap
 
 
@@ -179,12 +163,10 @@ Extracts the value from the result or applies a transformation. Without a callba
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$fn` | callable &#124; null |  |
+| `$fn` | `callable` &#124; `null` |  |
 
 #### Returns
-mixed
- The response interface, callback result, or throws the error
-
+`mixed` — The response interface, callback result, or throws the error
 #### val
 
 
@@ -198,6 +180,4 @@ Retrieves the value from a successful result. This method should only be called 
 
 
 #### Returns
-mixed
- The response interface (e.g., CheckResponseInterface, StoreInterface)
-
+`mixed` — The response interface (e.g., CheckResponseInterface, StoreInterface)

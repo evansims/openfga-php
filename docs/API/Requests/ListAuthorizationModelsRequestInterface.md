@@ -9,7 +9,7 @@ Interface for listing authorization models in a store. This interface defines th
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string &#124; null
- The continuation token from a previous operation, or null for the first page
-
+`string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 #### getPageSize
 
 
@@ -49,9 +47,7 @@ Get the maximum number of models to return per page. Specifies the page size for
 
 
 #### Returns
-int &#124; null
- The maximum number of models to return per page, or null to use the default page size
-
+`int` &#124; `null` — The maximum number of models to return per page, or null to use the default page size
 #### getRequest
 
 
@@ -66,12 +62,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -85,6 +79,4 @@ Get the store ID containing the authorization models to list. Identifies which O
 
 
 #### Returns
-string
- The store ID containing the authorization models to list
-
+`string` — The store ID containing the authorization models to list

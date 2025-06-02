@@ -9,9 +9,9 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Computed.php)
 
 ## Implements
-* [ComputedInterface](ComputedInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`ComputedInterface`](ComputedInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [ComputedInterface](Models/ComputedInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the userset reference string that defines a computed relationship. This repr
 
 
 #### Returns
-string
- The userset reference string defining the computed relationship
-
+`string` — The userset reference string defining the computed relationship
 ### Model Management
 #### schema
 
@@ -58,9 +56,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -74,5 +70,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

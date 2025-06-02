@@ -9,8 +9,8 @@ Network error types for the OpenFGA SDK. Defines specific network and HTTP-relat
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/NetworkError.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -61,12 +61,10 @@ Create a new NetworkException for this error type. Factory method that creates a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | [RequestInterface](Requests/RequestInterface.md) &#124; null | The PSR-7 HTTP request that triggered the network failure, if applicable |
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) &#124; null | The PSR-7 HTTP response containing error details, if applicable |
-| `$context` | array&lt;string, mixed&gt; |  |
-| `$prev` | Throwable &#124; null | The previous throwable used for exception chaining, if any |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request that triggered the network failure, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response containing error details, if applicable |
+| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
+| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
 
 #### Returns
-[NetworkException](NetworkException.md)
- The newly created NetworkException instance with comprehensive error context
-
+[`NetworkException`](NetworkException.md) — The newly created NetworkException instance with comprehensive error context

@@ -9,7 +9,7 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 
 #### Returns
-[Consistency](Models/Enums/Consistency.md) &#124; null
- The consistency level for the operation, or null to use the default consistency setting
-
+[`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 #### getContinuationToken
 
 
@@ -49,9 +47,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string &#124; null
- The continuation token from a previous read operation, or null for the first page
-
+`string` &#124; `null` — The continuation token from a previous read operation, or null for the first page
 #### getPageSize
 
 
@@ -65,9 +61,7 @@ Get the maximum number of tuples to return. Specifies the page size for paginate
 
 
 #### Returns
-int &#124; null
- The maximum number of tuples to return per page, or null to use the default page size
-
+`int` &#124; `null` — The maximum number of tuples to return per page, or null to use the default page size
 #### getRequest
 
 
@@ -82,12 +76,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -101,9 +93,7 @@ Get the store ID containing the tuples to read. Identifies which OpenFGA store c
 
 
 #### Returns
-string
- The store ID containing the relationship tuples to read
-
+`string` — The store ID containing the relationship tuples to read
 #### getTupleKey
 
 
@@ -117,6 +107,4 @@ Get the tuple key pattern for filtering results. Specifies the relationship patt
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
- The relationship tuple pattern for filtering results
-
+[`TupleKeyInterface`](Models/TupleKeyInterface.md) — The relationship tuple pattern for filtering results

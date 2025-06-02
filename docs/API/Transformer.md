@@ -9,7 +9,7 @@ OpenFGA DSL Transformer implementation for authorization model conversions. This
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Transformer.php)
 
 ## Implements
-* [TransformerInterface](TransformerInterface.md)
+* [`TransformerInterface`](TransformerInterface.md)
 
 ## Related Classes
 * [TransformerInterface](TransformerInterface.md) (interface)
@@ -34,13 +34,11 @@ Parse a DSL string into an authorization model. This method converts a human-rea
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$dsl` | string | The DSL string containing the authorization model definition |
-| `$validator` | SchemaValidator | Schema validator for validating the parsed model structure |
+| `$dsl` | `string` | The DSL string containing the authorization model definition |
+| `$validator` | `SchemaValidator` | Schema validator for validating the parsed model structure |
 
 #### Returns
-[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
- The parsed authorization model ready for API operations
-
+[`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) — The parsed authorization model ready for API operations
 #### toDsl
 
 *<small>Implements TransformerInterface</small>*  
@@ -56,9 +54,7 @@ Convert an authorization model to its DSL string representation. This method tra
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | The authorization model to convert to DSL format |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) | The authorization model to convert to DSL format |
 
 #### Returns
-string
- The DSL string representation of the authorization model
-
+`string` — The DSL string representation of the authorization model

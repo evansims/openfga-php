@@ -9,8 +9,8 @@ Data types supported in OpenFGA condition parameters. This enum defines the avai
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/TypeName.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -62,9 +62,7 @@ Get the corresponding PHP type for this OpenFGA type. Returns the equivalent PHP
 
 
 #### Returns
-string
- The PHP type name
-
+`string` — The PHP type name
 ### Utility
 #### isCollection
 
@@ -79,9 +77,7 @@ Check if this type represents a collection of values. Useful for determining if 
 
 
 #### Returns
-bool
- True if the type is a collection, false otherwise
-
+`bool` — True if the type is a collection, false otherwise
 #### isFlexible
 
 
@@ -95,9 +91,7 @@ Check if this type accepts flexible or dynamic values. Useful for determining if
 
 
 #### Returns
-bool
- True if the type is flexible, false otherwise
-
+`bool` — True if the type is flexible, false otherwise
 #### isNumeric
 
 
@@ -111,9 +105,7 @@ Check if this type represents a numeric value. Useful for validation and type ch
 
 
 #### Returns
-bool
- True if the type is numeric, false otherwise
-
+`bool` — True if the type is numeric, false otherwise
 #### isTemporal
 
 
@@ -127,6 +119,4 @@ Check if this type represents a temporal value. Useful for determining if time-b
 
 
 #### Returns
-bool
- True if the type is temporal, false otherwise
-
+`bool` — True if the type is temporal, false otherwise

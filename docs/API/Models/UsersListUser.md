@@ -9,10 +9,10 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUser.php)
 
 ## Implements
-* [UsersListUserInterface](UsersListUserInterface.md)
-* Stringable
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UsersListUserInterface`](UsersListUserInterface.md)
+* `Stringable`
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UsersListUserInterface](Models/UsersListUserInterface.md) (interface)
@@ -40,9 +40,7 @@ Get the user identifier string. This returns the user identifier in the format e
 
 
 #### Returns
-string
- The user identifier string
-
+`string` — The user identifier string
 ### Model Management
 #### schema
 
@@ -58,9 +56,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -75,6 +71,4 @@ Serialize the user to its JSON representation. Returns the user identifier as a 
 
 
 #### Returns
-string
- The user identifier string
-
+`string` — The user identifier string

@@ -9,8 +9,8 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateStoreRequest.php)
 
 ## Implements
-* [CreateStoreRequestInterface](CreateStoreRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`CreateStoreRequestInterface`](CreateStoreRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [CreateStoreResponse](Responses/CreateStoreResponse.md) (response)
@@ -34,9 +34,7 @@ Get the name for the new store. Returns the human-readable name that will be ass
 
 
 #### Returns
-string
- The descriptive name for the new authorization store
-
+`string` — The descriptive name for the new authorization store
 #### getRequest
 
 
@@ -51,9 +49,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution

@@ -9,8 +9,8 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -43,12 +43,10 @@ Get a user-friendly error message for this authentication error. Provides approp
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$locale` | string &#124; null | Optional locale override for message translation |
+| `$locale` | `string` &#124; `null` | Optional locale override for message translation |
 
 #### Returns
-string
- A descriptive, localized error message
-
+`string` — A descriptive, localized error message
 ### Utility
 #### isTokenRefreshable
 
@@ -63,9 +61,7 @@ Check if this authentication error indicates the token should be refreshed. Usef
 
 
 #### Returns
-bool
- True if token refresh should be attempted, false otherwise
-
+`bool` — True if token refresh should be attempted, false otherwise
 ### Other
 #### exception
 
@@ -86,12 +82,10 @@ Create a new AuthenticationException for this error type. Factory method that cr
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$request` | [RequestInterface](Requests/RequestInterface.md) &#124; null | The PSR-7 HTTP request that triggered the authentication failure, if applicable |
-| `$response` | [ResponseInterface](Responses/ResponseInterface.md) &#124; null | The PSR-7 HTTP response containing authentication error details, if applicable |
-| `$context` | array&lt;string, mixed&gt; |  |
-| `$prev` | Throwable &#124; null | The previous throwable used for exception chaining, if any |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` | The PSR-7 HTTP request that triggered the authentication failure, if applicable |
+| `$response` | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The PSR-7 HTTP response containing authentication error details, if applicable |
+| `$context` | `array&lt;`string`, `mixed`&gt;` |  |
+| `$prev` | `Throwable` &#124; `null` | The previous throwable used for exception chaining, if any |
 
 #### Returns
-[AuthenticationException](AuthenticationException.md)
- The newly created AuthenticationException instance with comprehensive error context
-
+[`AuthenticationException`](AuthenticationException.md) — The newly created AuthenticationException instance with comprehensive error context

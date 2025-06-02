@@ -9,8 +9,8 @@ Defines the contract for userset user specifications. A userset user represents 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [UsersetUser](Models/UsersetUser.md) (implementation)
@@ -34,9 +34,7 @@ Get the object identifier in the userset reference. This represents the specific
 
 
 #### Returns
-string
- The object identifier
-
+`string` — The object identifier
 #### getRelation
 
 
@@ -50,9 +48,7 @@ Get the relation name in the userset reference. This represents the specific rel
 
 
 #### Returns
-string
- The relation name
-
+`string` — The relation name
 #### getType
 
 
@@ -66,9 +62,7 @@ Get the object type in the userset reference. This represents the type of object
 
 
 #### Returns
-string
- The object type
-
+`string` — The object type
 ### Other
 #### jsonSerialize
 
@@ -82,5 +76,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

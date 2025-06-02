@@ -9,7 +9,7 @@ Interface for retrieving a specific authorization model. This interface defines 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/GetAuthorizationModelRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the authorization model ID to retrieve. Specifies which version of the autho
 
 
 #### Returns
-string
- The unique identifier of the authorization model to retrieve
-
+`string` — The unique identifier of the authorization model to retrieve
 #### getRequest
 
 
@@ -50,12 +48,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -69,6 +65,4 @@ Get the store ID containing the authorization model. Identifies which OpenFGA st
 
 
 #### Returns
-string
- The store ID containing the authorization model to retrieve
-
+`string` — The store ID containing the authorization model to retrieve

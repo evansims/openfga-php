@@ -9,7 +9,7 @@ Interface for object listing response objects. This interface defines the contra
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ListObjectsResponse](Responses/ListObjectsResponse.md) (implementation)
@@ -33,6 +33,4 @@ Get the array of object identifiers the user has access to. Returns an array of 
 
 
 #### Returns
-array&lt;int, string&gt;
- Array of object identifiers the user has access to
-
+`array&lt;`int`, `string`&gt;` — Array of object identifiers the user has access to

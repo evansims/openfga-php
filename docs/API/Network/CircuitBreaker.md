@@ -9,7 +9,7 @@ Circuit breaker implementation for preventing cascade failures in distributed sy
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/CircuitBreaker.php)
 
 ## Implements
-* [CircuitBreakerInterface](CircuitBreakerInterface.md)
+* [`CircuitBreakerInterface`](CircuitBreakerInterface.md)
 
 ## Related Classes
 * [CircuitBreakerInterface](Network/CircuitBreakerInterface.md) (interface)
@@ -34,12 +34,10 @@ Get the current failure count for an endpoint. Returns the number of consecutive
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$endpoint` | string | The endpoint URL or identifier to check |
+| `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns
-int
- The current failure count (0 if no failures recorded)
-
+`int` — The current failure count (0 if no failures recorded)
 ### Utility
 #### isOpen
 
@@ -55,12 +53,10 @@ Check if the circuit is currently open for an endpoint. Returns true if the circ
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$endpoint` | string | The endpoint URL or identifier to check |
+| `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns
-bool
- True if the circuit is open (blocking requests), false otherwise
-
+`bool` — True if the circuit is open (blocking requests), false otherwise
 ### Other
 #### recordFailure
 
@@ -76,11 +72,10 @@ Record a failure for the specified endpoint. Increments the failure count for th
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$endpoint` | string | The endpoint URL or identifier that failed |
+| `$endpoint` | `string` | The endpoint URL or identifier that failed |
 
 #### Returns
-void
-
+`void`
 #### recordSuccess
 
 
@@ -95,11 +90,10 @@ Record a successful request for the specified endpoint. Resets the failure state
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$endpoint` | string | The endpoint URL or identifier that succeeded |
+| `$endpoint` | `string` | The endpoint URL or identifier that succeeded |
 
 #### Returns
-void
-
+`void`
 #### shouldRetry
 
 
@@ -114,9 +108,7 @@ Check if the circuit breaker should allow a request to the specified endpoint. E
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$endpoint` | string | The endpoint URL or identifier to check |
+| `$endpoint` | `string` | The endpoint URL or identifier to check |
 
 #### Returns
-bool
- True if requests should be allowed, false if the circuit is open
-
+`bool` — True if requests should be allowed, false if the circuit is open

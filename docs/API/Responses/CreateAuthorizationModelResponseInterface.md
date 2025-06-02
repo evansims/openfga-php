@@ -9,7 +9,7 @@ Interface for authorization model creation response objects. This interface defi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (implementation)
@@ -33,6 +33,4 @@ Get the unique identifier of the created authorization model. Returns the system
 
 
 #### Returns
-string
- The unique authorization model identifier
-
+`string` — The unique authorization model identifier

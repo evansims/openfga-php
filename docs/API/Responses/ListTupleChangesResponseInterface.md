@@ -9,7 +9,7 @@ Interface for tuple changes listing response objects. This interface defines the
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (implementation)
@@ -33,9 +33,7 @@ Get the collection of tuple changes. Returns a type-safe collection containing t
 
 
 #### Returns
-[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)&lt;[TupleChangeInterface](Models/TupleChangeInterface.md)&gt;
- The collection of tuple changes
-
+[`TupleChangesInterface`](Models/Collections/TupleChangesInterface.md)&lt;[`TupleChangeInterface`](Models/TupleChangeInterface.md)&gt; — The collection of tuple changes
 #### getContinuationToken
 
 
@@ -49,6 +47,4 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string &#124; null
- The continuation token for fetching more results, or null if no more pages exist
-
+`string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist

@@ -9,7 +9,7 @@ Interface for relationship expansion response objects. This interface defines th
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ExpandResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ExpandResponse](Responses/ExpandResponse.md) (implementation)
@@ -33,6 +33,4 @@ Get the expansion tree for the queried relationship. Returns a hierarchical tree
 
 
 #### Returns
-[UsersetTreeInterface](Models/UsersetTreeInterface.md) &#124; null
- The relationship expansion tree, or null if no relationships found
-
+[`UsersetTreeInterface`](Models/UsersetTreeInterface.md) &#124; `null` — The relationship expansion tree, or null if no relationships found

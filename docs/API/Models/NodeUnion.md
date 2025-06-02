@@ -9,9 +9,9 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnion.php)
 
 ## Implements
-* [NodeUnionInterface](NodeUnionInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`NodeUnionInterface`](NodeUnionInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [NodeUnionInterface](Models/NodeUnionInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 
 #### Returns
-array&lt;int, [NodeInterface](NodeInterface.md)&gt;
- The array of nodes in the union
-
+`array&lt;`int`, [`NodeInterface`](NodeInterface.md)&gt;` — The array of nodes in the union
 ### Model Management
 #### schema
 
@@ -57,9 +55,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -74,5 +70,4 @@ Serialize the node union to its JSON representation.
 
 
 #### Returns
-array
-
+`array`

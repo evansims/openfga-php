@@ -9,8 +9,8 @@ Request for retrieving store information by its ID. This request fetches the det
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/GetStoreRequest.php)
 
 ## Implements
-* [GetStoreRequestInterface](GetStoreRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`GetStoreRequestInterface`](GetStoreRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [GetStoreResponse](Responses/GetStoreResponse.md) (response)
@@ -35,12 +35,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -54,6 +52,4 @@ Get the ID of the store to retrieve. Returns the unique identifier of the store 
 
 
 #### Returns
-string
- The unique identifier of the store to retrieve information for
-
+`string` — The unique identifier of the store to retrieve information for

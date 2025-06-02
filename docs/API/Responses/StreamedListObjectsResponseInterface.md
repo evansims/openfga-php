@@ -31,6 +31,4 @@ Get a single object identifier from a streamed response chunk.
 
 
 #### Returns
-string
- The object identifier
-
+`string` — The object identifier

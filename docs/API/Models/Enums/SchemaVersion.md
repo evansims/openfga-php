@@ -9,8 +9,8 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -42,9 +42,7 @@ Get the numeric version as a float for comparison operations. Useful for version
 
 
 #### Returns
-float
- The numeric representation of the schema version
-
+`float` — The numeric representation of the schema version
 ### Utility
 #### isLatest
 
@@ -59,9 +57,7 @@ Check if this is the latest schema version. Useful for determining if an authori
 
 
 #### Returns
-bool
- True if this is the latest schema version, false otherwise
-
+`bool` — True if this is the latest schema version, false otherwise
 #### isLegacy
 
 
@@ -75,9 +71,7 @@ Check if this is a legacy schema version. Legacy versions are still supported bu
 
 
 #### Returns
-bool
- True if this is a legacy version, false otherwise
-
+`bool` — True if this is a legacy version, false otherwise
 ### Other
 #### compareTo
 
@@ -93,12 +87,10 @@ Compare this schema version with another version. Returns negative, zero, or pos
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$other` | [SchemaVersion](SchemaVersion.md) | The version to compare against |
+| `$other` | [`SchemaVersion`](SchemaVersion.md) | The version to compare against |
 
 #### Returns
-int
- Comparison result (-1, 0, or 1)
-
+`int` — Comparison result (-1, 0, or 1)
 #### supportsConditions
 
 
@@ -112,6 +104,4 @@ Check if this schema version supports conditional relationships. Conditional rel
 
 
 #### Returns
-bool
- True if conditional relationships are supported, false otherwise
-
+`bool` — True if conditional relationships are supported, false otherwise

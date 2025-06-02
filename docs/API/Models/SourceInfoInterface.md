@@ -9,8 +9,8 @@ Represents source file information for OpenFGA model elements. Source informatio
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfoInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [SourceInfo](Models/SourceInfo.md) (implementation)
@@ -34,9 +34,7 @@ Get the source file path where the model element was defined. This provides debu
 
 
 #### Returns
-string
- The source file path where the element was defined
-
+`string` — The source file path where the element was defined
 ### Other
 #### jsonSerialize
 
@@ -50,5 +48,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

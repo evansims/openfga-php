@@ -9,9 +9,9 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* Stringable
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `Stringable`
+* `JsonSerializable`
 
 ## Related Classes
 * [UserObject](Models/UserObject.md) (implementation)
@@ -35,9 +35,7 @@ Get the unique identifier of the user object. The ID is unique within the contex
 
 
 #### Returns
-string
- The object identifier
-
+`string` — The object identifier
 #### getType
 
 
@@ -51,9 +49,7 @@ Get the type of the user object. The type defines the category or class of the o
 
 
 #### Returns
-string
- The object type
-
+`string` — The object type
 ### Other
 #### jsonSerialize
 
@@ -68,5 +64,4 @@ Serialize the user object to its JSON representation.
 
 
 #### Returns
-array
-
+`array`

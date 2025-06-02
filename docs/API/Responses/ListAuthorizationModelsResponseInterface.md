@@ -9,7 +9,7 @@ Interface for authorization models listing response objects. This interface defi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponseInterface.php)
 
 ## Implements
-* [ResponseInterface](ResponseInterface.md)
+* [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 * [ListAuthorizationModelsResponse](Responses/ListAuthorizationModelsResponse.md) (implementation)
@@ -33,9 +33,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string &#124; null
- The continuation token for fetching more results, or null if no more pages exist
-
+`string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 #### getModels
 
 
@@ -49,6 +47,4 @@ Get the collection of authorization models. Returns a type-safe collection conta
 
 
 #### Returns
-[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)&lt;[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)&gt;
- The collection of authorization models
-
+[`AuthorizationModelsInterface`](Models/Collections/AuthorizationModelsInterface.md)&lt;[`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md)&gt; — The collection of authorization models

@@ -9,9 +9,9 @@ Represents a userset specification for computing groups of users. A Userset defi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Userset.php)
 
 ## Implements
-* [UsersetInterface](UsersetInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UsersetInterface`](UsersetInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UsersetInterface](Models/UsersetInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the computed userset specification for this userset. A computed userset defi
 
 
 #### Returns
-[ObjectRelationInterface](ObjectRelationInterface.md) &#124; null
- The computed userset specification, or null if not used
-
+[`ObjectRelationInterface`](ObjectRelationInterface.md) &#124; `null` — The computed userset specification, or null if not used
 #### getDifference
 
 
@@ -55,9 +53,7 @@ Get the difference operation specification for this userset. A difference operat
 
 
 #### Returns
-[DifferenceV1Interface](DifferenceV1Interface.md) &#124; null
- The difference operation specification, or null if not used
-
+[`DifferenceV1Interface`](DifferenceV1Interface.md) &#124; `null` — The difference operation specification, or null if not used
 #### getDirect
 
 
@@ -71,9 +67,7 @@ Get the direct userset value for this userset. A direct userset represents an im
 
 
 #### Returns
-object &#124; null
- The direct userset value, or null if not used
-
+`object` &#124; `null` — The direct userset value, or null if not used
 #### getIntersection
 
 
@@ -87,9 +81,7 @@ Get the intersection operation specification for this userset. An intersection o
 
 
 #### Returns
-[UsersetsInterface](Models/Collections/UsersetsInterface.md) &#124; null
- The collection of usersets to intersect, or null if not used
-
+[`UsersetsInterface`](Models/Collections/UsersetsInterface.md) &#124; `null` — The collection of usersets to intersect, or null if not used
 #### getTupleToUserset
 
 
@@ -103,9 +95,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 
 
 #### Returns
-[TupleToUsersetV1Interface](TupleToUsersetV1Interface.md) &#124; null
- The tuple-to-userset operation specification, or null if not used
-
+[`TupleToUsersetV1Interface`](TupleToUsersetV1Interface.md) &#124; `null` — The tuple-to-userset operation specification, or null if not used
 #### getUnion
 
 
@@ -119,9 +109,7 @@ Get the union operation specification for this userset. A union operation repres
 
 
 #### Returns
-[UsersetsInterface](Models/Collections/UsersetsInterface.md) &#124; null
- The collection of usersets to unite, or null if not used
-
+[`UsersetsInterface`](Models/Collections/UsersetsInterface.md) &#124; `null` — The collection of usersets to unite, or null if not used
 ### Model Management
 #### schema
 
@@ -137,9 +125,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -153,5 +139,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

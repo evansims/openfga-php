@@ -9,9 +9,9 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUser.php)
 
 ## Implements
-* [UsersetUserInterface](UsersetUserInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`UsersetUserInterface`](UsersetUserInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [UsersetUserInterface](Models/UsersetUserInterface.md) (interface)
@@ -39,9 +39,7 @@ Get the object identifier in the userset reference. This represents the specific
 
 
 #### Returns
-string
- The object identifier
-
+`string` — The object identifier
 #### getRelation
 
 
@@ -55,9 +53,7 @@ Get the relation name in the userset reference. This represents the specific rel
 
 
 #### Returns
-string
- The relation name
-
+`string` — The relation name
 #### getType
 
 
@@ -71,9 +67,7 @@ Get the object type in the userset reference. This represents the type of object
 
 
 #### Returns
-string
- The object type
-
+`string` — The object type
 ### Model Management
 #### schema
 
@@ -89,9 +83,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -105,5 +97,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

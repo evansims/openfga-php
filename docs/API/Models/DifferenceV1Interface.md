@@ -9,8 +9,8 @@ Defines a difference operation between two usersets in authorization models. Dif
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1Interface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [DifferenceV1](Models/DifferenceV1.md) (implementation)
@@ -34,9 +34,7 @@ Get the base userset from which users will be subtracted. This represents the in
 
 
 #### Returns
-[UsersetInterface](UsersetInterface.md)
- The base userset for the difference operation
-
+[`UsersetInterface`](UsersetInterface.md) — The base userset for the difference operation
 #### getSubtract
 
 
@@ -50,9 +48,7 @@ Get the userset of users to subtract from the base userset. This represents the 
 
 
 #### Returns
-[UsersetInterface](UsersetInterface.md)
- The userset to subtract from the base
-
+[`UsersetInterface`](UsersetInterface.md) — The userset to subtract from the base
 ### Other
 #### jsonSerialize
 
@@ -66,5 +62,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

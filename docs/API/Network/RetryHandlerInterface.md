@@ -35,11 +35,9 @@ Execute an HTTP request with automatic retry logic. Performs the HTTP request wi
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$requestExecutor` | callable |  |
-| `$request` | [RequestInterface](Requests/RequestInterface.md) | The original HTTP request for context |
-| `$endpoint` | string | The endpoint URL for circuit breaker tracking |
+| `$requestExecutor` | `callable` |  |
+| `$request` | [`RequestInterface`](Requests/RequestInterface.md) | The original HTTP request for context |
+| `$endpoint` | `string` | The endpoint URL for circuit breaker tracking |
 
 #### Returns
-[ResponseInterface](Responses/ResponseInterface.md)
- The successful HTTP response
-
+[`ResponseInterface`](Responses/ResponseInterface.md) — The successful HTTP response

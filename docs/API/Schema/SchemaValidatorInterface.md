@@ -32,13 +32,11 @@ Validate data against a registered schema and transform it into the target class
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$data` | mixed | The raw data to validate (typically an array from JSON) |
-| `$className` | string | The fully qualified class name to validate against |
+| `$data` | `mixed` | The raw data to validate (typically an array from JSON) |
+| `$className` | `string` | The fully qualified class name to validate against |
 
 #### Returns
-T
- The validated and transformed object instance
-
+`T` — The validated and transformed object instance
 ### List Operations
 #### getSchemas
 
@@ -53,9 +51,7 @@ Get all currently registered schemas. Returns a comprehensive map of all schemas
 
 
 #### Returns
-array&lt;string, [SchemaInterface](SchemaInterface.md)&gt;
- Map of class names to their schema definitions
-
+`array&lt;`string`, [`SchemaInterface`](SchemaInterface.md)&gt;` — Map of class names to their schema definitions
 ### Model Management
 #### registerSchema
 
@@ -71,9 +67,7 @@ Register a schema for validation use. Adds a schema to the validator&#039;s regi
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | [SchemaInterface](SchemaInterface.md) | The schema definition to register |
+| `$schema` | [`SchemaInterface`](SchemaInterface.md) | The schema definition to register |
 
 #### Returns
-self
- Returns the validator instance for method chaining
-
+`self` — Returns the validator instance for method chaining

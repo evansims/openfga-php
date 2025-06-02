@@ -9,7 +9,7 @@ Translation service for OpenFGA SDK messages. This implementation provides centr
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Translation/Translator.php)
 
 ## Implements
-* [TranslatorInterface](TranslatorInterface.md)
+* [`TranslatorInterface`](TranslatorInterface.md)
 
 ## Related Classes
 * [TranslatorInterface](Translation/TranslatorInterface.md) (interface)
@@ -34,9 +34,7 @@ Get the current default locale.
 
 
 #### Returns
-string
- The current default locale code
-
+`string` — The current default locale code
 ### Utility
 #### has
 
@@ -53,13 +51,11 @@ Check if a translation exists for the given message. Determines whether a specif
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$message` | [Messages](Messages.md) | The message enum case to check |
-| `$locale` | string &#124; null | Locale to check (defaults to configured locale) |
+| `$message` | [`Messages`](Messages.md) | The message enum case to check |
+| `$locale` | `string` &#124; `null` | Locale to check (defaults to configured locale) |
 
 #### Returns
-bool
- True if translation exists, false otherwise
-
+`bool` — True if translation exists, false otherwise
 #### reset
 
 *<small>Implements Translation\TranslatorInterface</small>*  
@@ -74,8 +70,7 @@ Reset the translator instance. Clears the current translator instance and forces
 
 
 #### Returns
-void
-
+`void`
 #### setDefaultLocale
 
 *<small>Implements Translation\TranslatorInterface</small>*  
@@ -91,11 +86,10 @@ Set the default locale for translations. Configures the default locale that is u
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$locale` | string | The locale code (for example, &#039;en&#039;, &#039;es&#039;, &#039;fr&#039;) |
+| `$locale` | `string` | The locale code (for example, &#039;en&#039;, &#039;es&#039;, &#039;fr&#039;) |
 
 #### Returns
-void
-
+`void`
 ### Other
 #### addResource
 
@@ -117,14 +111,13 @@ Add a translation resource to the translator. Registers a translation file with 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$format` | string | The file format (for example, &#039;yaml&#039;, &#039;json&#039;, &#039;php&#039;) |
-| `$resource` | string | The path to the translation file |
-| `$locale` | string | The locale code (for example, &#039;en&#039;, &#039;es&#039;, &#039;fr&#039;) |
-| `$domain` | string | The translation domain (defaults to &#039;messages&#039;) |
+| `$format` | `string` | The file format (for example, &#039;yaml&#039;, &#039;json&#039;, &#039;php&#039;) |
+| `$resource` | `string` | The path to the translation file |
+| `$locale` | `string` | The locale code (for example, &#039;en&#039;, &#039;es&#039;, &#039;fr&#039;) |
+| `$domain` | `string` | The translation domain (defaults to &#039;messages&#039;) |
 
 #### Returns
-void
-
+`void`
 #### trans
 
 *<small>Implements Translation\TranslatorInterface</small>*  
@@ -140,14 +133,12 @@ Translate a message using a Messages enum case. Performs type-safe message trans
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$message` | [Messages](Messages.md) | The message enum case to translate |
-| `$parameters` | array&lt;string, mixed&gt; |  |
-| `$locale` | string &#124; null | Locale to use (defaults to configured locale) |
+| `$message` | [`Messages`](Messages.md) | The message enum case to translate |
+| `$parameters` | `array&lt;`string`, `mixed`&gt;` |  |
+| `$locale` | `string` &#124; `null` | Locale to use (defaults to configured locale) |
 
 #### Returns
-string
- The translated and parameterized message
-
+`string` — The translated and parameterized message
 #### transKey
 
 *<small>Implements Translation\TranslatorInterface</small>*  
@@ -163,11 +154,9 @@ Translate a message using a translation key string. Provides direct translation 
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$key` | string | The translation key to look up |
-| `$parameters` | array&lt;string, mixed&gt; |  |
-| `$locale` | string &#124; null | Locale to use (defaults to configured locale) |
+| `$key` | `string` | The translation key to look up |
+| `$parameters` | `array&lt;`string`, `mixed`&gt;` |  |
+| `$locale` | `string` &#124; `null` | Locale to use (defaults to configured locale) |
 
 #### Returns
-string
- The translated and parameterized message, or the key itself if no translation found
-
+`string` — The translated and parameterized message, or the key itself if no translation found

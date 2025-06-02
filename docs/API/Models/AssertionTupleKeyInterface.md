@@ -9,8 +9,8 @@ Defines the contract for assertion tuple keys used in authorization model testin
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKeyInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [AssertionTupleKey](Models/AssertionTupleKey.md) (implementation)
@@ -34,9 +34,7 @@ Get the object being tested in the assertion. This represents the resource or en
 
 
 #### Returns
-string
- The object identifier being tested
-
+`string` — The object identifier being tested
 #### getRelation
 
 
@@ -50,9 +48,7 @@ Get the relation being tested in the assertion. This represents the type of rela
 
 
 #### Returns
-string
- The relation name being tested
-
+`string` — The relation name being tested
 #### getUser
 
 
@@ -66,9 +62,7 @@ Get the user being tested in the assertion. This represents the subject (user, g
 
 
 #### Returns
-string
- The user identifier being tested
-
+`string` — The user identifier being tested
 ### Other
 #### jsonSerialize
 
@@ -82,5 +76,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

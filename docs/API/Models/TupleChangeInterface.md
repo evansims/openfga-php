@@ -9,8 +9,8 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChangeInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [TupleChange](Models/TupleChange.md) (implementation)
@@ -34,9 +34,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 
 #### Returns
-[TupleOperation](Models/Enums/TupleOperation.md)
- The operation type (write or delete)
-
+[`TupleOperation`](Models/Enums/TupleOperation.md) — The operation type (write or delete)
 #### getTimestamp
 
 
@@ -50,9 +48,7 @@ Get the timestamp when this tuple change occurred. Timestamps help track the chr
 
 
 #### Returns
-DateTimeImmutable
- The change timestamp
-
+`DateTimeImmutable` — The change timestamp
 #### getTupleKey
 
 
@@ -66,9 +62,7 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 
 #### Returns
-[TupleKeyInterface](TupleKeyInterface.md)
- The tuple key that was modified
-
+[`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key that was modified
 ### Other
 #### jsonSerialize
 
@@ -82,5 +76,4 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`

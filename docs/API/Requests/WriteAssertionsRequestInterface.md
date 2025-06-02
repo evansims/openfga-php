@@ -9,7 +9,7 @@ Interface for writing test assertions to an authorization model. This interface 
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteAssertionsRequestInterface.php)
 
 ## Implements
-* [RequestInterface](RequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (response)
@@ -33,9 +33,7 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 
 #### Returns
-[AssertionsInterface](Models/Collections/AssertionsInterface.md)&lt;[AssertionInterface](Models/AssertionInterface.md)&gt;
- Collection of test assertions to validate authorization model behavior
-
+[`AssertionsInterface`](Models/Collections/AssertionsInterface.md)&lt;[`AssertionInterface`](Models/AssertionInterface.md)&gt; — Collection of test assertions to validate authorization model behavior
 #### getModel
 
 
@@ -49,9 +47,7 @@ Get the authorization model ID to associate assertions with. Specifies which ver
 
 
 #### Returns
-string
- The authorization model ID that these assertions will test
-
+`string` — The authorization model ID that these assertions will test
 #### getRequest
 
 
@@ -66,12 +62,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-RequestContext
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+`RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -85,6 +79,4 @@ Get the store ID where assertions will be written. Identifies the OpenFGA store 
 
 
 #### Returns
-string
- The store ID where the test assertions will be written
-
+`string` — The store ID where the test assertions will be written

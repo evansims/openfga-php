@@ -9,8 +9,8 @@ Represents an object-relation pair in OpenFGA authorization models. Object-relat
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelationInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [ObjectRelation](Models/ObjectRelation.md) (implementation)
@@ -34,8 +34,7 @@ Get the object identifier in an object-relation pair. The object represents the 
 
 
 #### Returns
-string &#124; null
-
+`string` &#124; `null`
 #### getRelation
 
 
@@ -49,8 +48,7 @@ Get the relation name that defines the type of relationship to the object. The r
 
 
 #### Returns
-string &#124; null
-
+`string` &#124; `null`
 ### Other
 #### jsonSerialize
 
@@ -64,5 +62,4 @@ public function jsonSerialize(): array
 
 
 #### Returns
-array
-
+`array`

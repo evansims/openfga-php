@@ -9,9 +9,9 @@ Represents the result of a single check within a batch check response. Each resu
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php)
 
 ## Implements
-* [BatchCheckSingleResultInterface](BatchCheckSingleResultInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`BatchCheckSingleResultInterface`](BatchCheckSingleResultInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) (interface)
@@ -35,8 +35,7 @@ Get whether this check was allowed. Returns true if the user has the specified r
 
 
 #### Returns
-bool &#124; null
-
+`bool` &#124; `null`
 ### List Operations
 #### getError
 
@@ -51,8 +50,7 @@ Get any error that occurred during this check. Returns error information if the 
 
 
 #### Returns
-object &#124; null
-
+`object` &#124; `null`
 ### Model Management
 #### schema
 
@@ -68,9 +66,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -84,8 +80,7 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`
 #### toArray
 
 
@@ -98,5 +93,4 @@ public function toArray(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`

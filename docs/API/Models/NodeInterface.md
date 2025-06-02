@@ -9,8 +9,8 @@ Represents a node in a userset tree structure. Nodes are fundamental building bl
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [Node](Models/Node.md) (implementation)
@@ -34,8 +34,7 @@ Get the difference operation for this node. The difference operation represents 
 
 
 #### Returns
-[UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md) &#124; null
-
+[`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md) &#124; `null`
 #### getIntersection
 
 
@@ -49,9 +48,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 
 #### Returns
-[NodeUnionInterface](NodeUnionInterface.md) &#124; self &#124; null
- The intersection node or null if not applicable
-
+[`NodeUnionInterface`](NodeUnionInterface.md) &#124; `self` &#124; `null` — The intersection node or null if not applicable
 #### getLeaf
 
 
@@ -65,8 +62,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 
 #### Returns
-[LeafInterface](LeafInterface.md) &#124; null
-
+[`LeafInterface`](LeafInterface.md) &#124; `null`
 #### getName
 
 
@@ -80,9 +76,7 @@ Get the name identifier for this node. The name is used to identify the node wit
 
 
 #### Returns
-string
- The node name
-
+`string` — The node name
 #### getUnion
 
 
@@ -96,9 +90,7 @@ Get the union operation for this node. The union operation represents the combin
 
 
 #### Returns
-[NodeUnionInterface](NodeUnionInterface.md) &#124; self &#124; null
- The union node or null if not applicable
-
+[`NodeUnionInterface`](NodeUnionInterface.md) &#124; `self` &#124; `null` — The union node or null if not applicable
 ### Other
 #### jsonSerialize
 
@@ -113,6 +105,4 @@ Serialize the node to its JSON representation.
 
 
 #### Returns
-array&lt;string, mixed&gt;
- The serialized node data
-
+`array&lt;`string`, `mixed`&gt;` — The serialized node data

@@ -9,8 +9,8 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequest.php)
 
 ## Implements
-* [WriteTuplesRequestInterface](WriteTuplesRequestInterface.md)
-* [RequestInterface](RequestInterface.md)
+* [`WriteTuplesRequestInterface`](WriteTuplesRequestInterface.md)
+* [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 * [WriteTuplesResponse](Responses/WriteTuplesResponse.md) (response)
@@ -35,9 +35,7 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
- Collection of relationship tuples to remove, or null if no deletions are requested
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to remove, or null if no deletions are requested
 #### getWrites
 
 
@@ -51,9 +49,7 @@ Get the relationship tuples to write to the store. Returns a collection of relat
 
 
 #### Returns
-[TupleKeysInterface](Models/Collections/TupleKeysInterface.md) &#124; null
- Collection of relationship tuples to add, or null if no writes are requested
-
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to add, or null if no writes are requested
 ### List Operations
 #### getModel
 
@@ -68,9 +64,7 @@ Get the authorization model ID to use for tuple validation. Specifies which vers
 
 
 #### Returns
-string
- The authorization model ID for validating tuple operations
-
+`string` — The authorization model ID for validating tuple operations
 #### getRequest
 
 
@@ -85,12 +79,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | `StreamFactoryInterface` | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
- The prepared request context containing HTTP method, URL, headers, and body ready for execution
-
+[`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 #### getStore
 
 
@@ -104,6 +96,4 @@ Get the store ID where tuples will be written. Identifies the OpenFGA store that
 
 
 #### Returns
-string
- The store ID containing the authorization data to modify
-
+`string` — The store ID containing the authorization data to modify

@@ -9,8 +9,8 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/Consistency.php)
 
 ## Implements
-* UnitEnum
-* BackedEnum
+* `UnitEnum`
+* `BackedEnum`
 
 
 ## Constants
@@ -44,9 +44,7 @@ Get a user-friendly description of this consistency level. Provides a descriptiv
 
 
 #### Returns
-string
- A descriptive explanation of the consistency level
-
+`string` — A descriptive explanation of the consistency level
 ### Utility
 #### prioritizesConsistency
 
@@ -61,9 +59,7 @@ Check if this consistency level prioritizes data freshness. Useful for determini
 
 
 #### Returns
-bool
- True if consistency is prioritized over performance, false otherwise
-
+`bool` — True if consistency is prioritized over performance, false otherwise
 ### Other
 #### prioritizesPerformance
 
@@ -78,6 +74,4 @@ Check if this consistency level prioritizes query performance. Useful for determ
 
 
 #### Returns
-bool
- True if performance is prioritized over consistency, false otherwise
-
+`bool` — True if performance is prioritized over consistency, false otherwise

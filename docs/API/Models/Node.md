@@ -9,9 +9,9 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/Node.php)
 
 ## Implements
-* [NodeInterface](NodeInterface.md)
-* JsonSerializable
-* [ModelInterface](ModelInterface.md)
+* [`NodeInterface`](NodeInterface.md)
+* `JsonSerializable`
+* [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 * [NodeInterface](Models/NodeInterface.md) (interface)
@@ -40,8 +40,7 @@ Get the difference operation for this node. The difference operation represents 
 
 
 #### Returns
-[UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md) &#124; null
-
+[`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md) &#124; `null`
 #### getIntersection
 
 
@@ -55,9 +54,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 
 #### Returns
-[NodeInterface](NodeInterface.md) &#124; null &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
- The intersection node or null if not applicable
-
+[`NodeInterface`](NodeInterface.md) &#124; `null` &#124; [`NodeUnionInterface`](NodeUnionInterface.md) &#124; `null` — The intersection node or null if not applicable
 #### getLeaf
 
 
@@ -71,8 +68,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 
 #### Returns
-[LeafInterface](LeafInterface.md) &#124; null
-
+[`LeafInterface`](LeafInterface.md) &#124; `null`
 #### getName
 
 
@@ -86,9 +82,7 @@ Get the name identifier for this node. The name is used to identify the node wit
 
 
 #### Returns
-string
- The node name
-
+`string` — The node name
 #### getUnion
 
 
@@ -102,9 +96,7 @@ Get the union operation for this node. The union operation represents the combin
 
 
 #### Returns
-[NodeInterface](NodeInterface.md) &#124; null &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
- The union node or null if not applicable
-
+[`NodeInterface`](NodeInterface.md) &#124; `null` &#124; [`NodeUnionInterface`](NodeUnionInterface.md) &#124; `null` — The union node or null if not applicable
 ### Model Management
 #### schema
 
@@ -120,9 +112,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 
 #### Returns
-SchemaInterface
- The schema definition containing validation rules and property specifications for this model
-
+`SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 ### Other
 #### jsonSerialize
 
@@ -137,6 +127,4 @@ Serialize the node to its JSON representation.
 
 
 #### Returns
-array
- The serialized node data
-
+`array` — The serialized node data

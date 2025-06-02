@@ -9,8 +9,8 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeInterface.php)
 
 ## Implements
-* [ModelInterface](ModelInterface.md)
-* JsonSerializable
+* [`ModelInterface`](ModelInterface.md)
+* `JsonSerializable`
 
 ## Related Classes
 * [UsersetTree](Models/UsersetTree.md) (implementation)
@@ -34,9 +34,7 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 
 #### Returns
-[NodeInterface](NodeInterface.md)
- The root node of the userset tree
-
+[`NodeInterface`](NodeInterface.md) — The root node of the userset tree
 ### Other
 #### jsonSerialize
 
@@ -50,5 +48,4 @@ public function jsonSerialize(): array<string, mixed>
 
 
 #### Returns
-array&lt;string, mixed&gt;
-
+`array&lt;`string`, `mixed`&gt;`
