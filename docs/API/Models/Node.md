@@ -13,6 +13,10 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [NodeInterface](Models/NodeInterface.md) (interface)
+* [Nodes](Models/Collections/Nodes.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 
 
 ## Methods
-### getDifference
+
+                                                                                                                        
+### List Operations
+#### getDifference
 
 
 ```php
@@ -35,7 +42,7 @@ Get the difference operation for this node. The difference operation represents 
 #### Returns
 ?OpenFGA\Models\UsersetTreeDifferenceInterface
 
-### getIntersection
+#### getIntersection
 
 
 ```php
@@ -51,7 +58,7 @@ Get the intersection operation for this node. The intersection operation represe
 ?OpenFGA\Models\NodeInterface&#124;OpenFGA\Models\NodeUnionInterface&#124;null
  The intersection node or null if not applicable
 
-### getLeaf
+#### getLeaf
 
 
 ```php
@@ -66,7 +73,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 #### Returns
 ?OpenFGA\Models\LeafInterface
 
-### getName
+#### getName
 
 
 ```php
@@ -82,7 +89,7 @@ Get the name identifier for this node. The name is used to identify the node wit
 string
  The node name
 
-### getUnion
+#### getUnion
 
 
 ```php
@@ -98,23 +105,8 @@ Get the union operation for this node. The union operation represents the combin
 ?OpenFGA\Models\NodeInterface&#124;OpenFGA\Models\NodeUnionInterface&#124;null
  The union node or null if not applicable
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-Serialize the node to its JSON representation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Node.php#L109)
-
-
-#### Returns
-array
- The serialized node data
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\NodeInterface</small>*  
 
@@ -130,4 +122,21 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+Serialize the node to its JSON representation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Node.php#L109)
+
+
+#### Returns
+array
+ The serialized node data
 

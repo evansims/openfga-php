@@ -13,6 +13,9 @@ Represents a userset specification for computing groups of users. A Userset defi
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [UsersetInterface](Models/UsersetInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Represents a userset specification for computing groups of users. A Userset defi
 
 
 ## Methods
-### getComputedUserset
+
+                                                                                                                                    
+### List Operations
+#### getComputedUserset
 
 
 ```php
@@ -36,7 +42,7 @@ Get the computed userset specification for this userset. A computed userset defi
 ?OpenFGA\Models\ObjectRelationInterface
  The computed userset specification, or null if not used
 
-### getDifference
+#### getDifference
 
 
 ```php
@@ -52,7 +58,7 @@ Get the difference operation specification for this userset. A difference operat
 ?OpenFGA\Models\DifferenceV1Interface
  The difference operation specification, or null if not used
 
-### getDirect
+#### getDirect
 
 
 ```php
@@ -68,7 +74,7 @@ Get the direct userset value for this userset. A direct userset represents an im
 ?object
  The direct userset value, or null if not used
 
-### getIntersection
+#### getIntersection
 
 
 ```php
@@ -84,7 +90,7 @@ Get the intersection operation specification for this userset. An intersection o
 ?OpenFGA\Models\Collections\UsersetsInterface
  The collection of usersets to intersect, or null if not used
 
-### getTupleToUserset
+#### getTupleToUserset
 
 
 ```php
@@ -100,7 +106,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 ?OpenFGA\Models\TupleToUsersetV1Interface
  The tuple-to-userset operation specification, or null if not used
 
-### getUnion
+#### getUnion
 
 
 ```php
@@ -116,21 +122,8 @@ Get the union operation specification for this userset. A union operation repres
 ?OpenFGA\Models\Collections\UsersetsInterface
  The collection of usersets to unite, or null if not used
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Userset.php#L124)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\UsersetInterface</small>*  
 
@@ -146,4 +139,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Userset.php#L124)
+
+
+#### Returns
+array
 

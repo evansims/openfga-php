@@ -12,10 +12,16 @@ Request for listing all authorization models in a store. This request retrieves 
 * [ListAuthorizationModelsRequestInterface](ListAuthorizationModelsRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ListAuthorizationModelsResponse](Responses/ListAuthorizationModelsResponse.md) (response)
+* [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                                            
+#### getContinuationToken
 
 
 ```php
@@ -31,7 +37,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 ?string
  The continuation token from a previous operation, or null for the first page
 
-### getPageSize
+#### getPageSize
 
 
 ```php
@@ -47,7 +53,7 @@ Get the maximum number of models to return per page. Specifies the page size for
 ?int
  The maximum number of models to return per page, or null to use the default page size
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -67,7 +73,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

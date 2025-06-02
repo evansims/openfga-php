@@ -12,10 +12,16 @@ Request for streaming objects that a user has a specific relationship with. This
 * [StreamedListObjectsRequestInterface](StreamedListObjectsRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [StreamedListObjectsResponse](Responses/StreamedListObjectsResponse.md) (response)
+* [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getConsistency
+
+                                                                                                                        
+#### getConsistency
 
 
 ```php
@@ -31,7 +37,7 @@ Get the consistency requirement for this request.
 ?OpenFGA\Models\Enums\Consistency
  The consistency requirement, or null if not specified
 
-### getContext
+#### getContext
 
 
 ```php
@@ -47,7 +53,7 @@ Get the context object for this request.
 ?object
  The context object, or null if not specified
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -63,7 +69,7 @@ Get the contextual tuples for this request.
 ?OpenFGA\Models\Collections\TupleKeysInterface
  The contextual tuples collection, or null if not specified
 
-### getModel
+#### getModel
 
 
 ```php
@@ -79,7 +85,7 @@ Get the authorization model ID for this request.
 ?string
  The authorization model ID, or null if not specified
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -95,7 +101,7 @@ Get the relation name for this request.
 string
  The relation name to check
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -115,7 +121,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php
@@ -131,7 +137,7 @@ Get the store ID for this request.
 string
  The store ID
 
-### getType
+#### getType
 
 
 ```php
@@ -147,7 +153,7 @@ Get the object type for this request.
 string
  The object type to list
 
-### getUser
+#### getUser
 
 
 ```php

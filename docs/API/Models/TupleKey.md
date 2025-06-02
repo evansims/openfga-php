@@ -13,6 +13,10 @@ Represents a relationship tuple key defining a connection between user, relation
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [TupleKeyInterface](Models/TupleKeyInterface.md) (interface)
+* [TupleKeys](Models/Collections/TupleKeys.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a relationship tuple key defining a connection between user, relation
 
 
 ## Methods
-### getCondition
+
+                                                                                                            
+### List Operations
+#### getCondition
 
 
 ```php
@@ -36,7 +43,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 ?OpenFGA\Models\ConditionInterface
  The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 
-### getObject
+#### getObject
 
 
 ```php
@@ -52,7 +59,7 @@ Get the object in this relationship tuple. The object represents the resource or
 string
  The object identifier, or null if not specified
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -68,7 +75,7 @@ Get the relation that defines the type of relationship. The relation describes w
 string
  The relation name defining the type of relationship, or null if not specified
 
-### getUser
+#### getUser
 
 
 ```php
@@ -84,23 +91,8 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 string
  The user identifier, or null if not specified
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L98)
-
-
-#### Returns
-array
- The serialized tuple key data ready for JSON encoding
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\TupleKeyInterface</small>*  
 
@@ -116,4 +108,21 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L98)
+
+
+#### Returns
+array
+ The serialized tuple key data ready for JSON encoding
 

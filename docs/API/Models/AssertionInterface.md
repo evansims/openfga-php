@@ -12,10 +12,16 @@ Represents an assertion used to test authorization model correctness. Assertions
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Assertion](Models/Assertion.md) (implementation)
+
 
 
 ## Methods
-### getContext
+
+                                                                                    
+### List Operations
+#### getContext
 
 
 ```php
@@ -30,7 +36,7 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 #### Returns
 ?array
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -45,7 +51,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 #### Returns
 ?OpenFGA\Models\Collections\TupleKeysInterface
 
-### getExpectation
+#### getExpectation
 
 
 ```php
@@ -61,7 +67,7 @@ Get the expected result for this assertion. The expectation defines whether the 
 bool
  True if access should be granted, false if access should be denied
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php
@@ -77,7 +83,8 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 AssertionTupleKeyInterface
  The tuple key defining the authorization question
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

@@ -13,6 +13,9 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 
 
 ## Methods
-### getObject
+
+                                                                                                
+### List Operations
+#### getObject
 
 
 ```php
@@ -36,7 +42,7 @@ Get the object being tested in the assertion. This represents the resource or en
 string
  The object identifier being tested
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -52,7 +58,7 @@ Get the relation being tested in the assertion. This represents the type of rela
 string
  The relation name being tested
 
-### getUser
+#### getUser
 
 
 ```php
@@ -68,21 +74,8 @@ Get the user being tested in the assertion. This represents the subject (user, g
 string
  The user identifier being tested
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L86)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\AssertionTupleKeyInterface</small>*  
 
@@ -98,4 +91,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L86)
+
+
+#### Returns
+array
 

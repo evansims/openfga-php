@@ -17,58 +17,17 @@ Collection implementation for OpenFGA relation metadata objects. This class prov
 * ArrayAccess
 * [RelationMetadataCollectionInterface](RelationMetadataCollectionInterface.md)
 
+## Related Classes
+* [RelationMetadata](../Models/RelationMetadata.md) (item)
+* [RelationMetadataCollectionInterface](../Models/Collections/RelationMetadataCollectionInterface.md) (interface)
+
 
 
 ## Methods
-### add
 
-
-```php
-public function add(string $key, OpenFGA\Models\ModelInterface $item): static
-```
-
-Add an item to the collection with the specified key. This method associates an item with a string key, allowing for named access to collection elements similar to an associative array.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L135)
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$key` | string | The string key to associate with the item |
-| `key` | string |  |
-
-#### Returns
-static
-
-### count
-
-
-```php
-public function count(): int<0, max>
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L152)
-
-
-#### Returns
-int&lt;0, max&gt;
-
-### current
-
-
-```php
-public function current(): OpenFGA\Models\ModelInterface
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L166)
-
-
-#### Returns
-OpenFGA\Models\ModelInterface
-
-### get
+                                                                                                                                                                                                                                                            
+### List Operations
+#### get
 
 
 ```php
@@ -85,7 +44,45 @@ Get an item by its string key. This method retrieves the item associated with th
 | `key` | string |  |
 
 
-### has
+#### offsetGet
+
+
+```php
+public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
+```
+
+Get an item by its offset key.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L267)
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `value` | mixed |  |
+
+#### Returns
+?OpenFGA\Models\ModelInterface
+
+### Model Management
+#### schema
+
+*<small>Implements Models\Collections\KeyedCollectionInterface</small>*  
+
+```php
+public function schema(): CollectionSchemaInterface
+```
+
+Get the schema definition for this collection type. Returns the schema that defines the structure and validation rules for this collection, including the expected item type and constraints.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L37)
+
+
+#### Returns
+CollectionSchemaInterface
+ The collection schema
+
+### Utility
+#### has
 
 
 ```php
@@ -105,7 +102,7 @@ Check if a key exists in the collection. This method determines whether the coll
 bool
  True if the key exists, false otherwise
 
-### isEmpty
+#### isEmpty
 
 
 ```php
@@ -121,52 +118,7 @@ Check if the collection contains no items. This method provides a convenient way
 bool
  True if the collection is empty, false otherwise
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array<string, mixed>
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L206)
-
-
-#### Returns
-array&lt;string, mixed&gt;
-
-### key
-
-
-```php
-public function key(): string
-```
-
-Get the current iterator key. This method returns the current string key in the collection iteration. For keyed collections, this is always a string identifier.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L230)
-
-
-#### Returns
-string
- The current iterator key
-
-### next
-
-
-```php
-public function next(): void
-```
-
-Move the iterator to the next position. This method advances the internal iterator pointer to the next key-value pair in the collection.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L245)
-
-
-#### Returns
-void
-
-### offsetExists
+#### offsetExists
 
 
 ```php
@@ -186,26 +138,7 @@ Check if an offset exists in the collection. This method determines whether the 
 bool
  True if the key exists, false otherwise
 
-### offsetGet
-
-
-```php
-public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
-```
-
-Get an item by its offset key.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L267)
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `value` | mixed |  |
-
-#### Returns
-?OpenFGA\Models\ModelInterface
-
-### offsetSet
+#### offsetSet
 
 
 ```php
@@ -224,7 +157,7 @@ public function offsetSet(mixed $offset, mixed $value): void
 #### Returns
 void
 
-### offsetUnset
+#### offsetUnset
 
 
 ```php
@@ -242,7 +175,101 @@ public function offsetUnset(mixed $offset): void
 #### Returns
 void
 
-### rewind
+### Other
+#### add
+
+
+```php
+public function add(string $key, OpenFGA\Models\ModelInterface $item): static
+```
+
+Add an item to the collection with the specified key. This method associates an item with a string key, allowing for named access to collection elements similar to an associative array.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L135)
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$key` | string | The string key to associate with the item |
+| `key` | string |  |
+
+#### Returns
+static
+
+#### count
+
+
+```php
+public function count(): int<0, max>
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L152)
+
+
+#### Returns
+int&lt;0, max&gt;
+
+#### current
+
+
+```php
+public function current(): OpenFGA\Models\ModelInterface
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L166)
+
+
+#### Returns
+OpenFGA\Models\ModelInterface
+
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array<string, mixed>
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L206)
+
+
+#### Returns
+array&lt;string, mixed&gt;
+
+#### key
+
+
+```php
+public function key(): string
+```
+
+Get the current iterator key. This method returns the current string key in the collection iteration. For keyed collections, this is always a string identifier.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L230)
+
+
+#### Returns
+string
+ The current iterator key
+
+#### next
+
+
+```php
+public function next(): void
+```
+
+Move the iterator to the next position. This method advances the internal iterator pointer to the next key-value pair in the collection.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollection.php#L245)
+
+
+#### Returns
+void
+
+#### rewind
 
 
 ```php
@@ -257,24 +284,7 @@ Reset the iterator to the beginning of the collection. This method moves the int
 #### Returns
 void
 
-### schema
-
-*<small>Implements Models\Collections\KeyedCollectionInterface</small>*  
-
-```php
-public function schema(): CollectionSchemaInterface
-```
-
-Get the schema definition for this collection type. Returns the schema that defines the structure and validation rules for this collection, including the expected item type and constraints.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L37)
-
-
-#### Returns
-CollectionSchemaInterface
- The collection schema
-
-### toArray
+#### toArray
 
 
 ```php
@@ -290,7 +300,7 @@ Convert the collection to a standard PHP associative array. This method creates 
 array
  An associative array containing all collection items
 
-### valid
+#### valid
 
 
 ```php

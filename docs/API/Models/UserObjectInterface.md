@@ -13,10 +13,16 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 * Stringable
 * JsonSerializable
 
+## Related Classes
+* [UserObject](Models/UserObject.md) (implementation)
+
 
 
 ## Methods
-### getId
+
+                                                            
+### List Operations
+#### getId
 
 
 ```php
@@ -32,7 +38,7 @@ Get the unique identifier of the user object. The ID is unique within the contex
 string
  The object identifier
 
-### getType
+#### getType
 
 
 ```php
@@ -48,7 +54,8 @@ Get the type of the user object. The type defines the category or class of the o
 string
  The object type
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

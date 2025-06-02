@@ -12,10 +12,16 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [UsersetTreeTupleToUserset](Models/UsersetTreeTupleToUserset.md) (implementation)
+
 
 
 ## Methods
-### getComputed
+
+                                                            
+### List Operations
+#### getComputed
 
 
 ```php
@@ -31,7 +37,7 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 array&lt;int, ComputedInterface&gt;
  Array of computed userset references
 
-### getTupleset
+#### getTupleset
 
 
 ```php
@@ -47,7 +53,8 @@ Get the tupleset string identifying which tuples to use for computation. This st
 string
  The tupleset identifier string
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

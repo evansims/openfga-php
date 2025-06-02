@@ -12,10 +12,16 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 * [CreateStoreRequestInterface](CreateStoreRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [CreateStoreResponse](Responses/CreateStoreResponse.md) (response)
+* [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getName
+
+                                    
+#### getName
 
 
 ```php
@@ -31,7 +37,7 @@ Get the name for the new store. Returns the human-readable name that will be ass
 string
  The descriptive name for the new authorization store
 
-### getRequest
+#### getRequest
 
 
 ```php

@@ -12,10 +12,16 @@ Represents the result of a single check within a batch check response. Each resu
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [BatchCheckSingleResult](Models/BatchCheckSingleResult.md) (implementation)
+
 
 
 ## Methods
-### getAllowed
+
+                                                                        
+### Authorization
+#### getAllowed
 
 
 ```php
@@ -30,7 +36,8 @@ Get whether this check was allowed. Returns true if the user has the specified r
 #### Returns
 ?bool
 
-### getError
+### List Operations
+#### getError
 
 
 ```php
@@ -45,7 +52,8 @@ Get any error that occurred during this check. Returns error information if the 
 #### Returns
 ?object
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

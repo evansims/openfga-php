@@ -13,6 +13,9 @@ Contains metadata information about type definitions in your authorization model
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [MetadataInterface](Models/MetadataInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Contains metadata information about type definitions in your authorization model
 
 
 ## Methods
-### getModule
+
+                                                                                                
+### List Operations
+#### getModule
 
 
 ```php
@@ -36,7 +42,7 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 ?string
  The module name, or null if not specified
 
-### getRelations
+#### getRelations
 
 
 ```php
@@ -52,7 +58,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 ?OpenFGA\Models\Collections\RelationMetadataCollection
  The relation metadata collection, or null if not specified
 
-### getSourceInfo
+#### getSourceInfo
 
 
 ```php
@@ -68,21 +74,8 @@ Get the source code information for this metadata. Source information provides d
 ?OpenFGA\Models\SourceInfoInterface
  The source information, or null if not available
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L89)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\MetadataInterface</small>*  
 
@@ -98,4 +91,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L89)
+
+
+#### Returns
+array
 

@@ -11,10 +11,15 @@ Advanced retry handler with exponential backoff, jitter, and circuit breaker int
 ## Implements
 * [RetryHandlerInterface](RetryHandlerInterface.md)
 
+## Related Classes
+* [RetryHandlerInterface](Network/RetryHandlerInterface.md) (interface)
+
 
 
 ## Methods
-### executeWithRetry
+
+                        
+#### executeWithRetry
 
 
 ```php

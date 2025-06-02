@@ -13,6 +13,10 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [ConditionInterface](Models/ConditionInterface.md) (interface)
+* [Conditions](Models/Collections/Conditions.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 
 
 ## Methods
-### getExpression
+
+                                                                                                            
+### List Operations
+#### getExpression
 
 
 ```php
@@ -36,7 +43,7 @@ Get the condition expression. This returns the logical expression that defines w
 string
  The condition expression defining the evaluation logic
 
-### getMetadata
+#### getMetadata
 
 
 ```php
@@ -52,7 +59,7 @@ Get metadata about the condition definition. This provides additional informatio
 ?OpenFGA\Models\ConditionMetadataInterface
  The condition metadata, or null if not provided
 
-### getName
+#### getName
 
 
 ```php
@@ -68,7 +75,7 @@ Get the name of the condition. This is a unique identifier for the condition wit
 string
  The unique name identifying this condition
 
-### getParameters
+#### getParameters
 
 
 ```php
@@ -84,23 +91,8 @@ Get the parameters available to the condition expression. These parameters defin
 ?OpenFGA\Models\Collections\ConditionParametersInterface
  The condition parameters, or null if the condition uses no parameters
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array<string, mixed>
-```
-
-Serialize the condition for JSON encoding. This method prepares the condition data for API requests or storage, ensuring all components are properly formatted according to the OpenFGA API specification.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Condition.php#L101)
-
-
-#### Returns
-array&lt;string, mixed&gt;
- The serialized condition data
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\ConditionInterface</small>*  
 
@@ -116,4 +108,21 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array<string, mixed>
+```
+
+Serialize the condition for JSON encoding. This method prepares the condition data for API requests or storage, ensuring all components are properly formatted according to the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Condition.php#L101)
+
+
+#### Returns
+array&lt;string, mixed&gt;
+ The serialized condition data
 

@@ -12,10 +12,16 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [NodeUnion](Models/NodeUnion.md) (implementation)
+
 
 
 ## Methods
-### getNodes
+
+                                                
+### List Operations
+#### getNodes
 
 
 ```php
@@ -31,7 +37,8 @@ Get the collection of nodes that participate in this union. Returns all the node
 array&lt;int, NodeInterface&gt;
  The array of nodes in the union
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

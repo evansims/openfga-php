@@ -11,10 +11,16 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (response)
+* [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (implementation)
+
 
 
 ## Methods
-### getConsistency
+
+                                                                                    
+#### getConsistency
 
 
 ```php
@@ -30,7 +36,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 Consistency&#124;null
  The consistency level for the operation, or null to use the default consistency setting
 
-### getContinuationToken
+#### getContinuationToken
 
 
 ```php
@@ -46,7 +52,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 string&#124;null
  The continuation token from a previous read operation, or null for the first page
 
-### getPageSize
+#### getPageSize
 
 
 ```php
@@ -62,7 +68,7 @@ Get the maximum number of tuples to return. Specifies the page size for paginate
 int&#124;null
  The maximum number of tuples to return per page, or null to use the default page size
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -82,7 +88,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php
@@ -98,7 +104,7 @@ Get the store ID containing the tuples to read. Identifies which OpenFGA store c
 string
  The store ID containing the relationship tuples to read
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php

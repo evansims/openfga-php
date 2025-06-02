@@ -11,10 +11,16 @@ Interface for authorization models listing response objects. This interface defi
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [ListAuthorizationModelsResponse](Responses/ListAuthorizationModelsResponse.md) (implementation)
+* [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md) (request)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                    
+#### getContinuationToken
 
 
 ```php
@@ -30,7 +36,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 string&#124;null
  The continuation token for fetching more results, or null if no more pages exist
 
-### getModels
+#### getModels
 
 
 ```php

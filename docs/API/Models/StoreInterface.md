@@ -12,10 +12,16 @@ Represents an OpenFGA store that contains authorization models and relationship 
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Store](Models/Store.md) (implementation)
+
 
 
 ## Methods
-### getCreatedAt
+
+                                                                                                            
+### CRUD Operations
+#### getCreatedAt
 
 
 ```php
@@ -31,7 +37,7 @@ Get the timestamp when the store was created. The creation timestamp provides es
 DateTimeInterface
  The creation timestamp in UTC timezone
 
-### getDeletedAt
+#### getDeletedAt
 
 
 ```php
@@ -47,39 +53,7 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 DateTimeInterface&#124;null
  The deletion timestamp in UTC timezone, or null if the store is active
 
-### getId
-
-
-```php
-public function getId(): string
-```
-
-Get the unique identifier of the store. The store ID is a globally unique identifier that serves as the primary key for all operations within this authorization context. This ID is used in API requests to target specific stores and ensure isolation between different authorization domains in multi-tenant applications.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L68)
-
-
-#### Returns
-string
- The store&#039;s unique identifier
-
-### getName
-
-
-```php
-public function getName(): string
-```
-
-Get the human-readable name of the store. The store name provides a user-friendly identifier for administrative and debugging purposes. Unlike the store ID, names can be changed and are intended to be meaningful to developers and administrators managing authorization systems. Names help identify stores in dashboards, logs, and management interfaces.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L80)
-
-
-#### Returns
-string
- The store&#039;s display name
-
-### getUpdatedAt
+#### getUpdatedAt
 
 
 ```php
@@ -95,7 +69,41 @@ Get the timestamp when the store was last updated. The update timestamp tracks w
 DateTimeInterface
  The last update timestamp in UTC timezone
 
-### jsonSerialize
+### List Operations
+#### getId
+
+
+```php
+public function getId(): string
+```
+
+Get the unique identifier of the store. The store ID is a globally unique identifier that serves as the primary key for all operations within this authorization context. This ID is used in API requests to target specific stores and ensure isolation between different authorization domains in multi-tenant applications.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L68)
+
+
+#### Returns
+string
+ The store&#039;s unique identifier
+
+#### getName
+
+
+```php
+public function getName(): string
+```
+
+Get the human-readable name of the store. The store name provides a user-friendly identifier for administrative and debugging purposes. Unlike the store ID, names can be changed and are intended to be meaningful to developers and administrators managing authorization systems. Names help identify stores in dashboards, logs, and management interfaces.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L80)
+
+
+#### Returns
+string
+ The store&#039;s display name
+
+### Other
+#### jsonSerialize
 
 
 ```php

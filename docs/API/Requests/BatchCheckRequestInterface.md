@@ -11,10 +11,17 @@ Request for performing multiple authorization checks in a single batch. This req
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [BatchCheckResponseInterface](Responses/BatchCheckResponseInterface.md) (response)
+* [BatchCheckRequest](Requests/BatchCheckRequest.md) (implementation)
+
 
 
 ## Methods
-### getChecks
+
+                                                
+### Authorization
+#### getChecks
 
 
 ```php
@@ -30,7 +37,8 @@ Get the collection of checks to perform in this batch. Each item contains a tupl
 BatchCheckItemsInterface
  The batch check items
 
-### getRequest
+### List Operations
+#### getRequest
 
 
 ```php

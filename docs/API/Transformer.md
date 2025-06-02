@@ -11,10 +11,15 @@ OpenFGA DSL Transformer implementation for authorization model conversions. This
 ## Implements
 * [TransformerInterface](TransformerInterface.md)
 
+## Related Classes
+* [TransformerInterface](TransformerInterface.md) (interface)
+
 
 
 ## Methods
-### fromDsl
+
+                                    
+#### fromDsl
 
 *<small>Implements TransformerInterface</small>*  
 
@@ -36,7 +41,7 @@ Parse a DSL string into an authorization model. This method converts a human-rea
 AuthorizationModelInterface
  The parsed authorization model ready for API operations
 
-### toDsl
+#### toDsl
 
 *<small>Implements TransformerInterface</small>*  
 

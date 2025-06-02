@@ -12,10 +12,69 @@ Response containing the result of an authorization check. This response indicate
 * [CheckResponseInterface](CheckResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [CheckResponseInterface](Responses/CheckResponseInterface.md) (interface)
+* [CheckRequest](Requests/CheckRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                                                                                                
+### Authorization
+#### getAllowed
+
+
+```php
+public function getAllowed(): ?bool
+```
+
+Get whether the permission check was allowed. This is the primary result of the permission check operation, indicating whether the specified user has the requested permission on the given object according to the authorization model and current relationship data.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L88)
+
+
+#### Returns
+?bool
+ True if permission is granted, false if denied, or null if the result is indeterminate
+
+### List Operations
+#### getResolution
+
+
+```php
+public function getResolution(): ?string
+```
+
+Get the resolution details for the permission decision. This provides additional information about how the permission decision was reached, which can be useful for understanding complex authorization logic or debugging permission issues.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L97)
+
+
+#### Returns
+?string
+ The resolution details explaining the permission decision, or null if not provided
+
+### Model Management
+#### schema
+
+*<small>Implements Responses\CheckResponseInterface</small>*  
+
+```php
+public function schema(): SchemaInterface
+```
+
+Get the schema definition for this response. This method returns the schema that defines the structure and validation rules for check response data, ensuring consistent parsing and validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponseInterface.php#L32)
+
+
+#### Returns
+SchemaInterface
+ The schema definition for check response validation
+
+### Other
+#### fromResponse
 
 *<small>Implements Responses\CheckResponseInterface</small>*  
 
@@ -37,53 +96,4 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 static
  The parsed and validated response instance containing the API response data
-
-### getAllowed
-
-
-```php
-public function getAllowed(): ?bool
-```
-
-Get whether the permission check was allowed. This is the primary result of the permission check operation, indicating whether the specified user has the requested permission on the given object according to the authorization model and current relationship data.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L88)
-
-
-#### Returns
-?bool
- True if permission is granted, false if denied, or null if the result is indeterminate
-
-### getResolution
-
-
-```php
-public function getResolution(): ?string
-```
-
-Get the resolution details for the permission decision. This provides additional information about how the permission decision was reached, which can be useful for understanding complex authorization logic or debugging permission issues.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L97)
-
-
-#### Returns
-?string
- The resolution details explaining the permission decision, or null if not provided
-
-### schema
-
-*<small>Implements Responses\CheckResponseInterface</small>*  
-
-```php
-public function schema(): SchemaInterface
-```
-
-Get the schema definition for this response. This method returns the schema that defines the structure and validation rules for check response data, ensuring consistent parsing and validation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponseInterface.php#L32)
-
-
-#### Returns
-SchemaInterface
- The schema definition for check response validation
 

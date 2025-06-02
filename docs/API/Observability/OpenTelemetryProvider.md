@@ -13,8 +13,11 @@ OpenTelemetry implementation for OpenFGA SDK observability. This class provides 
 
 
 
+
 ## Methods
-### endHttpRequest
+
+                                                                                                            
+#### endHttpRequest
 
 
 ```php
@@ -35,7 +38,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 #### Returns
 void
 
-### endOperation
+#### endOperation
 
 
 ```php
@@ -57,7 +60,7 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 #### Returns
 void
 
-### recordAuthenticationEvent
+#### recordAuthenticationEvent
 
 
 ```php
@@ -79,7 +82,7 @@ Record authentication events. Records metrics and traces related to authenticati
 #### Returns
 void
 
-### recordCircuitBreakerState
+#### recordCircuitBreakerState
 
 
 ```php
@@ -101,7 +104,7 @@ Record circuit breaker state changes. Records metrics about circuit breaker stat
 #### Returns
 void
 
-### recordOperationMetrics
+#### recordOperationMetrics
 
 
 ```php
@@ -124,7 +127,7 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 #### Returns
 void
 
-### recordRetryAttempt
+#### recordRetryAttempt
 
 
 ```php
@@ -147,7 +150,7 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 #### Returns
 void
 
-### startHttpRequest
+#### startHttpRequest
 
 
 ```php
@@ -167,7 +170,7 @@ Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP req
 object
  A span identifier or context that can be passed to endHttpRequest()
 
-### startOperation
+#### startOperation
 
 
 ```php
@@ -184,7 +187,7 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 | `$operation` | string | The OpenFGA operation name (e.g., &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
 | `$store` | OpenFGA\Models\StoreInterface&#124;string | The store being operated on |
 | `$model` | ?OpenFGA\Models\AuthorizationModelInterface&#124;string&#124;null | The authorization model being used |
-| `$attributes` | array | Additional span attributes |
+| `$attributes` | array |  |
 
 #### Returns
 object

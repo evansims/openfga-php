@@ -12,10 +12,16 @@ Request for retrieving store information by its ID. This request fetches the det
 * [GetStoreRequestInterface](GetStoreRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [GetStoreResponse](Responses/GetStoreResponse.md) (response)
+* [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getRequest
+
+                                    
+#### getRequest
 
 
 ```php
@@ -35,7 +41,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

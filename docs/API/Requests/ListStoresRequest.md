@@ -12,10 +12,16 @@ Request for listing all available stores with pagination support. This request r
 * [ListStoresRequestInterface](ListStoresRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ListStoresResponse](Responses/ListStoresResponse.md) (response)
+* [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                                
+#### getContinuationToken
 
 
 ```php
@@ -31,7 +37,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 ?string
  The continuation token from a previous operation, or null for the first page
 
-### getPageSize
+#### getPageSize
 
 
 ```php
@@ -47,7 +53,7 @@ Get the maximum number of stores to return per page. Specifies the page size for
 ?int
  The maximum number of stores to return per page, or null to use the default page size
 
-### getRequest
+#### getRequest
 
 
 ```php

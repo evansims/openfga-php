@@ -12,10 +12,16 @@ Represents a filter for limiting users by their relationships to specific object
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [UserTypeFilter](Models/UserTypeFilter.md) (implementation)
+
 
 
 ## Methods
-### getRelation
+
+                                                            
+### List Operations
+#### getRelation
 
 
 ```php
@@ -30,7 +36,7 @@ Get the optional relation filter for limiting user types. When specified, this f
 #### Returns
 ?string
 
-### getType
+#### getType
 
 
 ```php
@@ -46,7 +52,8 @@ Get the object type to filter by. This specifies the type of objects that users 
 string
  The object type to filter by
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

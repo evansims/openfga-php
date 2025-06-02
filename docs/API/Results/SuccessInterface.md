@@ -11,10 +11,15 @@ Represents a successful result containing a value. Success results indicate that
 ## Implements
 * [ResultInterface](ResultInterface.md)
 
+## Related Classes
+* [Success](Results/Success.md) (implementation)
+
 
 
 ## Methods
-### err
+
+                                                                                                                                    
+#### err
 
 
 ```php
@@ -30,7 +35,7 @@ Retrieves the error from a failed result. This method should only be called on F
 Throwable
  The error that caused the failure
 
-### failed
+#### failed
 
 
 ```php
@@ -46,7 +51,7 @@ Determines if this result represents a failure.
 bool
  True if this is a Failure result, false if it&#039;s a Success
 
-### failure
+#### failure
 
 
 ```php
@@ -66,7 +71,7 @@ Executes a callback when the result is a failure and continues the chain. The ca
 ResultInterface
  The original result for method chaining
 
-### recover
+#### recover
 
 
 ```php
@@ -86,7 +91,7 @@ Recovers from a failure by transforming it into a success or different failure. 
 ResultInterface
  The recovered result or original success
 
-### rethrow
+#### rethrow
 
 
 ```php
@@ -106,7 +111,7 @@ Throws the contained error or continues the chain. For Failure results, this thr
 ResultInterface
  The original result for method chaining
 
-### succeeded
+#### succeeded
 
 
 ```php
@@ -122,7 +127,7 @@ Determines if this result represents a success.
 bool
  True if this is a Success result, false if it&#039;s a Failure
 
-### success
+#### success
 
 
 ```php
@@ -142,7 +147,7 @@ Executes a callback when the result is a success and continues the chain. The ca
 ResultInterface
  The original result for method chaining
 
-### then
+#### then
 
 
 ```php
@@ -162,7 +167,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 ResultInterface
  The transformed result or original failure
 
-### unwrap
+#### unwrap
 
 
 ```php
@@ -182,7 +187,7 @@ Extracts the value from the result or applies a transformation. Without a callba
 mixed
  The response interface, callback result, or throws the error
 
-### val
+#### val
 
 
 ```php

@@ -11,10 +11,16 @@ Interface for assertions reading response objects. This interface defines the co
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (implementation)
+* [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (request)
+
 
 
 ## Methods
-### getAssertions
+
+                                    
+#### getAssertions
 
 
 ```php
@@ -30,7 +36,7 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 AssertionsInterface&lt;AssertionInterface&gt;&#124;null
  The collection of assertions, or null if no assertions are defined
 
-### getModel
+#### getModel
 
 
 ```php

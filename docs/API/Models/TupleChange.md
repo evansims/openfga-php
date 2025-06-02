@@ -13,6 +13,10 @@ Represents a change to a relationship tuple in your authorization store. When yo
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [TupleChangeInterface](Models/TupleChangeInterface.md) (interface)
+* [TupleChanges](Models/Collections/TupleChanges.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a change to a relationship tuple in your authorization store. When yo
 
 
 ## Methods
-### getOperation
+
+                                                                                                
+### List Operations
+#### getOperation
 
 
 ```php
@@ -36,7 +43,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 OpenFGA\Models\Enums\TupleOperation
  The operation type (write or delete)
 
-### getTimestamp
+#### getTimestamp
 
 
 ```php
@@ -52,7 +59,7 @@ Get the timestamp when this tuple change occurred. Timestamps help track the chr
 DateTimeImmutable
  The change timestamp
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php
@@ -68,21 +75,8 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 OpenFGA\Models\TupleKeyInterface
  The tuple key that was modified
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L107)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\TupleChangeInterface</small>*  
 
@@ -98,4 +92,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L107)
+
+
+#### Returns
+array
 

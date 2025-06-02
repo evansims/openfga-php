@@ -14,6 +14,9 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [TypedWildcardInterface](Models/TypedWildcardInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -21,7 +24,10 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 
 
 ## Methods
-### getType
+
+                                                                        
+### List Operations
+#### getType
 
 
 ```php
@@ -37,21 +43,8 @@ Get the object type that this wildcard represents. This returns the type name fo
 string
  The object type that this wildcard represents
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcard.php#L90)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\TypedWildcardInterface</small>*  
 
@@ -67,4 +60,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcard.php#L90)
+
+
+#### Returns
+array
 

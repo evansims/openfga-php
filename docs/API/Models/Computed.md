@@ -13,6 +13,10 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [ComputedInterface](Models/ComputedInterface.md) (interface)
+* [Computeds](Models/Collections/Computeds.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 
 
 ## Methods
-### getUserset
+
+                                                                        
+### List Operations
+#### getUserset
 
 
 ```php
@@ -36,21 +43,8 @@ Get the userset reference string that defines a computed relationship. This repr
 string
  The userset reference string defining the computed relationship
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Computed.php#L62)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\ComputedInterface</small>*  
 
@@ -66,4 +60,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Computed.php#L62)
+
+
+#### Returns
+array
 

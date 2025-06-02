@@ -9,10 +9,16 @@ Manages HTTP requests and responses for OpenFGA API communication. This interfac
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerInterface.php)
 
 
+## Related Classes
+* [RequestManager](Network/RequestManager.md) (implementation)
+
 
 
 ## Methods
-### getHttpClient
+
+                                                                                                
+### List Operations
+#### getHttpClient
 
 
 ```php
@@ -28,7 +34,7 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 ClientInterface
  The PSR-18 HTTP client instance for executing requests
 
-### getHttpRequestFactory
+#### getHttpRequestFactory
 
 
 ```php
@@ -44,7 +50,7 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 RequestFactoryInterface
  The PSR-17 factory for creating HTTP request objects
 
-### getHttpResponseFactory
+#### getHttpResponseFactory
 
 
 ```php
@@ -60,7 +66,7 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 ResponseFactoryInterface
  The PSR-17 factory for creating HTTP response objects
 
-### getHttpStreamFactory
+#### getHttpStreamFactory
 
 
 ```php
@@ -76,7 +82,8 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 StreamFactoryInterface
  The PSR-17 factory for creating HTTP message body streams
 
-### request
+### Other
+#### request
 
 
 ```php
@@ -96,7 +103,7 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 HttpRequestInterface
  The PSR-7 HTTP request ready for execution
 
-### send
+#### send
 
 
 ```php

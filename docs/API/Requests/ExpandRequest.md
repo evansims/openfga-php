@@ -12,10 +12,16 @@ Request for expanding a relationship to show all users who have that relationshi
 * [ExpandRequestInterface](ExpandRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ExpandResponse](Responses/ExpandResponse.md) (response)
+* [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getConsistency
+
+                                                                                    
+#### getConsistency
 
 
 ```php
@@ -31,7 +37,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 ?OpenFGA\Models\Enums\Consistency
  The consistency level for the operation, or null to use the default consistency setting
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -47,7 +53,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 ?OpenFGA\Models\Collections\TupleKeysInterface
  Additional relationship tuples for evaluation, or null if none provided
 
-### getModel
+#### getModel
 
 
 ```php
@@ -63,7 +69,7 @@ Get the authorization model ID to use for the expansion. Specifies which version
 ?string
  The authorization model ID for evaluation, or null to use the latest model version
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -83,7 +89,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php
@@ -99,7 +105,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 string
  The store ID containing the authorization data
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php

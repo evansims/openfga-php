@@ -11,10 +11,16 @@ Interface for authorization model retrieval response objects. This interface def
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (implementation)
+* [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md) (request)
+
 
 
 ## Methods
-### getModel
+
+                        
+#### getModel
 
 
 ```php

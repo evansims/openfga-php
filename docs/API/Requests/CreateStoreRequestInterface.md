@@ -11,10 +11,16 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (response)
+* [CreateStoreRequest](Requests/CreateStoreRequest.md) (implementation)
+
 
 
 ## Methods
-### getName
+
+                                    
+#### getName
 
 
 ```php
@@ -30,7 +36,7 @@ Get the name for the new store. Returns the human-readable name that will be ass
 string
  The descriptive name for the new authorization store
 
-### getRequest
+#### getRequest
 
 
 ```php

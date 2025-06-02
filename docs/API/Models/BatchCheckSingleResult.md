@@ -13,10 +13,16 @@ Represents the result of a single check within a batch check response. Each resu
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) (interface)
+
 
 
 ## Methods
-### getAllowed
+
+                                                                                                            
+### Authorization
+#### getAllowed
 
 
 ```php
@@ -31,7 +37,8 @@ Get whether this check was allowed. Returns true if the user has the specified r
 #### Returns
 ?bool
 
-### getError
+### List Operations
+#### getError
 
 
 ```php
@@ -46,21 +53,8 @@ Get any error that occurred during this check. Returns error information if the 
 #### Returns
 ?object
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array<string, mixed>
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L107)
-
-
-#### Returns
-array&lt;string, mixed&gt;
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\BatchCheckSingleResultInterface</small>*  
 
@@ -77,7 +71,22 @@ Get the schema definition for this model. This method returns the schema that de
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
 
-### toArray
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array<string, mixed>
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L107)
+
+
+#### Returns
+array&lt;string, mixed&gt;
+
+#### toArray
 
 
 ```php

@@ -12,10 +12,16 @@ Represents a single item in a batch check request. Each batch check item contain
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [BatchCheckItem](Models/BatchCheckItem.md) (implementation)
+
 
 
 ## Methods
-### getContext
+
+                                                                                    
+### List Operations
+#### getContext
 
 
 ```php
@@ -30,7 +36,7 @@ Get the context object for this check. This provides additional context data tha
 #### Returns
 ?object
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -45,7 +51,7 @@ Get the contextual tuples for this check. These are additional tuples that are e
 #### Returns
 ?OpenFGA\Models\Collections\TupleKeysInterface
 
-### getCorrelationId
+#### getCorrelationId
 
 
 ```php
@@ -61,7 +67,7 @@ Get the correlation ID for this batch check item. This unique identifier maps th
 string
  The correlation ID
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php
@@ -77,7 +83,8 @@ Get the tuple key to be checked. This defines the user, relation, and object for
 TupleKeyInterface
  The tuple key for this check
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

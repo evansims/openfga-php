@@ -13,8 +13,12 @@ Token-based authentication strategy for OpenFGA client. This authentication stra
 
 
 
+
 ## Methods
-### getAuthenticationRequest
+
+                                                                                    
+### List Operations
+#### getAuthenticationRequest
 
 
 ```php
@@ -34,7 +38,7 @@ Get an authentication request context if this strategy requires token acquisitio
 ?OpenFGA\Network\RequestContext
  The authentication request context, or null if not needed
 
-### getAuthorizationHeader
+#### getAuthorizationHeader
 
 
 ```php
@@ -50,7 +54,7 @@ Get the authorization header value for API requests. Returns the authorization h
 ?string
  The authorization header value, or null if no authentication is needed
 
-### getToken
+#### getToken
 
 
 ```php
@@ -66,7 +70,8 @@ Get the current authentication token. Returns the token that was provided during
 AccessTokenInterface&#124;string
  The authentication token used by this strategy
 
-### handleAuthenticationResponse
+### Other
+#### handleAuthenticationResponse
 
 
 ```php
@@ -85,7 +90,7 @@ Handle the authentication response and update internal state. This method is cal
 #### Returns
 void
 
-### requiresAuthentication
+#### requiresAuthentication
 
 
 ```php

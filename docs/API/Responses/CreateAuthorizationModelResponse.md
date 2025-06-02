@@ -12,10 +12,52 @@ Response confirming successful creation of a new authorization model. This respo
 * [CreateAuthorizationModelResponseInterface](CreateAuthorizationModelResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (interface)
+* [CreateAuthorizationModelRequest](Requests/CreateAuthorizationModelRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                                                                        
+### List Operations
+#### getModel
+
+
+```php
+public function getModel(): string
+```
+
+Get the unique identifier of the created authorization model. Returns the system-generated unique identifier for the newly created authorization model. This ID is used in subsequent API operations to reference this specific model version for authorization checks and other operations.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponse.php#L85)
+
+
+#### Returns
+string
+ The unique authorization model identifier
+
+### Model Management
+#### schema
+
+*<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*  
+
+```php
+public function schema(): SchemaInterface
+```
+
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for authorization model creation response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponseInterface.php#L32)
+
+
+#### Returns
+SchemaInterface
+ The schema definition for response validation
+
+### Other
+#### fromResponse
 
 *<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*  
 
@@ -37,37 +79,4 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 static
  The parsed and validated response instance containing the API response data
-
-### getModel
-
-
-```php
-public function getModel(): string
-```
-
-Get the unique identifier of the created authorization model. Returns the system-generated unique identifier for the newly created authorization model. This ID is used in subsequent API operations to reference this specific model version for authorization checks and other operations.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponse.php#L85)
-
-
-#### Returns
-string
- The unique authorization model identifier
-
-### schema
-
-*<small>Implements Responses\CreateAuthorizationModelResponseInterface</small>*  
-
-```php
-public function schema(): SchemaInterface
-```
-
-Get the schema definition for this response. Returns the schema that defines the structure and validation rules for authorization model creation response data, ensuring consistent parsing and validation of API responses.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateAuthorizationModelResponseInterface.php#L32)
-
-
-#### Returns
-SchemaInterface
- The schema definition for response validation
 

@@ -12,10 +12,16 @@ Defines a difference operation between two usersets in authorization models. Dif
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [DifferenceV1](Models/DifferenceV1.md) (implementation)
+
 
 
 ## Methods
-### getBase
+
+                                                            
+### List Operations
+#### getBase
 
 
 ```php
@@ -31,7 +37,7 @@ Get the base userset from which users will be subtracted. This represents the in
 UsersetInterface
  The base userset for the difference operation
 
-### getSubtract
+#### getSubtract
 
 
 ```php
@@ -47,7 +53,8 @@ Get the userset of users to subtract from the base userset. This represents the 
 UsersetInterface
  The userset to subtract from the base
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

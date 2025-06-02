@@ -11,8 +11,11 @@ Service provider for automatic dependency injection container registration. This
 
 
 
+
 ## Methods
-### register
+
+                        
+#### register
 
 
 ```php

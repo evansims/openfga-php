@@ -9,10 +9,16 @@ Circuit breaker interface for preventing cascade failures in distributed systems
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Network/CircuitBreakerInterface.php)
 
 
+## Related Classes
+* [CircuitBreaker](Network/CircuitBreaker.md) (implementation)
+
 
 
 ## Methods
-### getFailureCount
+
+                                                                                                
+### List Operations
+#### getFailureCount
 
 
 ```php
@@ -32,7 +38,8 @@ Get the current failure count for an endpoint. Returns the number of consecutive
 int
  The current failure count (0 if no failures recorded)
 
-### isOpen
+### Utility
+#### isOpen
 
 
 ```php
@@ -52,7 +59,8 @@ Check if the circuit is currently open for an endpoint. Returns true if the circ
 bool
  True if the circuit is open (blocking requests), false otherwise
 
-### recordFailure
+### Other
+#### recordFailure
 
 
 ```php
@@ -71,7 +79,7 @@ Record a failure for the specified endpoint. Increments the failure count for th
 #### Returns
 void
 
-### recordSuccess
+#### recordSuccess
 
 
 ```php
@@ -90,7 +98,7 @@ Record a successful request for the specified endpoint. Resets the failure state
 #### Returns
 void
 
-### shouldRetry
+#### shouldRetry
 
 
 ```php

@@ -11,10 +11,16 @@ Implementation of request context for OpenFGA API operations. This class provide
 ## Implements
 * [RequestContextInterface](RequestContextInterface.md)
 
+## Related Classes
+* [RequestContextInterface](Network/RequestContextInterface.md) (interface)
+
 
 
 ## Methods
-### getBody
+
+                                                                                    
+### List Operations
+#### getBody
 
 
 ```php
@@ -30,7 +36,7 @@ Get the request body stream. Returns the PSR-7 stream containing the request bod
 ?Psr\Http\Message\StreamInterface
  The request body stream containing JSON data, or null for operations without body content
 
-### getHeaders
+#### getHeaders
 
 
 ```php
@@ -46,7 +52,7 @@ Get the request headers. Returns an associative array of HTTP headers that shoul
 array
  Associative array mapping header names to their values
 
-### getMethod
+#### getMethod
 
 
 ```php
@@ -62,7 +68,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 OpenFGA\Network\RequestMethod
  The HTTP method enum value indicating the request type
 
-### getUrl
+#### getUrl
 
 
 ```php
@@ -78,7 +84,8 @@ Get the URL for the request. Returns the target URL path for this API operation.
 string
  The target URL path for the API operation
 
-### useApiUrl
+### Other
+#### useApiUrl
 
 
 ```php

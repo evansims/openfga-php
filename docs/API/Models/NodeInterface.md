@@ -12,10 +12,16 @@ Represents a node in a userset tree structure. Nodes are fundamental building bl
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Node](Models/Node.md) (implementation)
+
 
 
 ## Methods
-### getDifference
+
+                                                                                                
+### List Operations
+#### getDifference
 
 
 ```php
@@ -30,7 +36,7 @@ Get the difference operation for this node. The difference operation represents 
 #### Returns
 ?OpenFGA\Models\UsersetTreeDifferenceInterface
 
-### getIntersection
+#### getIntersection
 
 
 ```php
@@ -46,7 +52,7 @@ Get the intersection operation for this node. The intersection operation represe
 NodeUnionInterface&#124;self&#124;null
  The intersection node or null if not applicable
 
-### getLeaf
+#### getLeaf
 
 
 ```php
@@ -61,7 +67,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 #### Returns
 ?OpenFGA\Models\LeafInterface
 
-### getName
+#### getName
 
 
 ```php
@@ -77,7 +83,7 @@ Get the name identifier for this node. The name is used to identify the node wit
 string
  The node name
 
-### getUnion
+#### getUnion
 
 
 ```php
@@ -93,7 +99,8 @@ Get the union operation for this node. The union operation represents the combin
 NodeUnionInterface&#124;self&#124;null
  The union node or null if not applicable
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

@@ -12,10 +12,16 @@ Defines the contract for userset specifications in authorization models. A users
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Userset](Models/Userset.md) (implementation)
+
 
 
 ## Methods
-### getComputedUserset
+
+                                                                                                            
+### List Operations
+#### getComputedUserset
 
 
 ```php
@@ -31,7 +37,7 @@ Get the computed userset specification for this userset. A computed userset defi
 ObjectRelationInterface&#124;null
  The computed userset specification, or null if not used
 
-### getDifference
+#### getDifference
 
 
 ```php
@@ -47,7 +53,7 @@ Get the difference operation specification for this userset. A difference operat
 DifferenceV1Interface&#124;null
  The difference operation specification, or null if not used
 
-### getDirect
+#### getDirect
 
 
 ```php
@@ -63,7 +69,7 @@ Get the direct userset value for this userset. A direct userset represents an im
 object&#124;null
  The direct userset value, or null if not used
 
-### getIntersection
+#### getIntersection
 
 
 ```php
@@ -79,7 +85,7 @@ Get the intersection operation specification for this userset. An intersection o
 UsersetsInterface&lt;UsersetInterface&gt;&#124;null
  The collection of usersets to intersect, or null if not used
 
-### getTupleToUserset
+#### getTupleToUserset
 
 
 ```php
@@ -95,7 +101,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 TupleToUsersetV1Interface&#124;null
  The tuple-to-userset operation specification, or null if not used
 
-### getUnion
+#### getUnion
 
 
 ```php
@@ -111,7 +117,8 @@ Get the union operation specification for this userset. A union operation repres
 UsersetsInterface&lt;UsersetInterface&gt;&#124;null
  The collection of usersets to unite, or null if not used
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

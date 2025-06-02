@@ -13,6 +13,10 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [TupleInterface](Models/TupleInterface.md) (interface)
+* [Tuples](Models/Collections/Tuples.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 
 
 ## Methods
-### getKey
+
+                                                                                    
+### List Operations
+#### getKey
 
 
 ```php
@@ -36,7 +43,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 OpenFGA\Models\TupleKeyInterface
  The tuple key defining this relationship with user, relation, object, and optional condition
 
-### getTimestamp
+#### getTimestamp
 
 
 ```php
@@ -52,23 +59,8 @@ Get the timestamp when this tuple was created or last modified. Timestamps provi
 DateTimeImmutable
  The creation or last modification timestamp in UTC timezone
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-Serialize the tuple for JSON encoding. This method prepares the tuple data for API communication with the OpenFGA service, converting the tuple key and timestamp into the format expected by the OpenFGA API. The tuple key is serialized to include all relationship components (user, relation, object, and optional condition), while the timestamp is formatted as an RFC3339 string in UTC timezone. The resulting structure matches the OpenFGA API specification for tuple objects, ensuring seamless integration with write operations, read queries, and other tuple-related API endpoints.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Tuple.php#L78)
-
-
-#### Returns
-array
- Tuple data formatted for JSON encoding with API-compatible structure
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\TupleInterface</small>*  
 
@@ -84,4 +76,21 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+Serialize the tuple for JSON encoding. This method prepares the tuple data for API communication with the OpenFGA service, converting the tuple key and timestamp into the format expected by the OpenFGA API. The tuple key is serialized to include all relationship components (user, relation, object, and optional condition), while the timestamp is formatted as an RFC3339 string in UTC timezone. The resulting structure matches the OpenFGA API specification for tuple objects, ensuring seamless integration with write operations, read queries, and other tuple-related API endpoints.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Tuple.php#L78)
+
+
+#### Returns
+array
+ Tuple data formatted for JSON encoding with API-compatible structure
 

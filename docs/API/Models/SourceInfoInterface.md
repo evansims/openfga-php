@@ -12,10 +12,16 @@ Represents source file information for OpenFGA model elements. Source informatio
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [SourceInfo](Models/SourceInfo.md) (implementation)
+
 
 
 ## Methods
-### getFile
+
+                                                
+### List Operations
+#### getFile
 
 
 ```php
@@ -31,7 +37,8 @@ Get the source file path where the model element was defined. This provides debu
 string
  The source file path where the element was defined
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

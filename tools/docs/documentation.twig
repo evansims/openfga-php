@@ -18,6 +18,13 @@
 {% endfor %}
 {% endif %}
 
+{% if relatedClasses is defined and relatedClasses|length > 0 %}
+## Related Classes
+{% for related in relatedClasses %}
+* {{ related.link }} ({{ related.relationship }})
+{% endfor %}
+{% endif %}
+
 {% if constants is defined and constants|length > 0 %}
 ## Constants
 | Name | Value | Description |
@@ -37,8 +44,22 @@
 
 {% if methods is not empty %}
 ## Methods
+
+{% set categorized = {} %}
 {% for method in methods %}
-### {{ method.name }}
+    {% set category = method.category|default('Other') %}
+    {% if categorized[category] is not defined %}
+        {% set categorized = categorized|merge({(category): []}) %}
+    {% endif %}
+    {% set categorized = categorized|merge({(category): categorized[category]|merge([method])}) %}
+{% endfor %}
+
+{% for category, categoryMethods in categorized %}
+{% if categorized|length > 1 %}
+### {{ category }}
+{% endif %}
+{% for method in categoryMethods %}
+#### {{ method.name }}
 
 {% if method.isFromInterface is defined and method.isFromInterface %}
 *<small>Implements {{ method.fromInterface|replace({'OpenFGA\\': ''}) }}</small>*  
@@ -51,6 +72,16 @@
 {% if method.description %}{{ method.description }}
 {% endif %}
 
+{% if method.examples is defined and method.examples|length > 0 %}
+
+{% for example in method.examples %}
+**{{ example.title }}:**
+```php
+{{ example.code }}
+```
+
+{% endfor %}
+{% endif %}
 {% if method.sourceLink is defined and method.sourceLink is not empty %}
 [View source]({{ method.sourceLink }})
 {% endif %}
@@ -77,5 +108,6 @@
 {% endif %}
 {% endif %}
 
+{% endfor %}
 {% endfor %}
 {% endif %}

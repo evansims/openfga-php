@@ -13,6 +13,9 @@ Represents a reference to a specific relation on an object. In authorization mod
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [ObjectRelationInterface](Models/ObjectRelationInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Represents a reference to a specific relation on an object. In authorization mod
 
 
 ## Methods
-### getObject
+
+                                                                                    
+### List Operations
+#### getObject
 
 
 ```php
@@ -35,7 +41,7 @@ Get the object identifier in an object-relation pair. The object represents the 
 #### Returns
 ?string
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -50,21 +56,8 @@ Get the relation name that defines the type of relationship to the object. The r
 #### Returns
 ?string
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L74)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\ObjectRelationInterface</small>*  
 
@@ -80,4 +73,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L74)
+
+
+#### Returns
+array
 

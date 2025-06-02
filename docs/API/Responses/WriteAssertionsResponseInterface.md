@@ -11,5 +11,9 @@ Interface for assertions writing response objects. This interface defines the co
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (implementation)
+* [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (request)
+
 
 

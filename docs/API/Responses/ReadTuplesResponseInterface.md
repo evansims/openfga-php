@@ -11,10 +11,16 @@ Interface for tuple reading response objects. This interface defines the contrac
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (implementation)
+* [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md) (request)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                    
+#### getContinuationToken
 
 
 ```php
@@ -30,7 +36,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 string&#124;null
  The continuation token for fetching more results, or null if no more pages exist
 
-### getTuples
+#### getTuples
 
 
 ```php

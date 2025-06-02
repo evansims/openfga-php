@@ -13,6 +13,9 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [NodeUnionInterface](Models/NodeUnionInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 
 
 ## Methods
-### getNodes
+
+                                                                        
+### List Operations
+#### getNodes
 
 
 ```php
@@ -36,22 +42,8 @@ Get the collection of nodes that participate in this union. Returns all the node
 array&lt;int, NodeInterface&gt;
  The array of nodes in the union
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-Serialize the node union to its JSON representation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnion.php#L64)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\NodeUnionInterface</small>*  
 
@@ -67,4 +59,20 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+Serialize the node union to its JSON representation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnion.php#L64)
+
+
+#### Returns
+array
 

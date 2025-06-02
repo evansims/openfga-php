@@ -12,10 +12,16 @@ Response confirming successful deletion of a store. This response is returned wh
 * [DeleteStoreResponseInterface](DeleteStoreResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (interface)
+* [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                        
+#### fromResponse
 
 *<small>Implements Responses\DeleteStoreResponseInterface</small>*  
 

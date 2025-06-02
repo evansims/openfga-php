@@ -13,6 +13,9 @@ Contains metadata information about a relation in your authorization model. Rela
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [RelationMetadataInterface](Models/RelationMetadataInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Contains metadata information about a relation in your authorization model. Rela
 
 
 ## Methods
-### getDirectlyRelatedUserTypes
+
+                                                                                                
+### List Operations
+#### getDirectlyRelatedUserTypes
 
 
 ```php
@@ -36,7 +42,7 @@ Get the user types that can be directly related through this relation. This defi
 ?OpenFGA\Models\Collections\RelationReferencesInterface
  The directly related user types, or null if not specified
 
-### getModule
+#### getModule
 
 
 ```php
@@ -52,7 +58,7 @@ Get the optional module name for organization. This provides organizational info
 ?string
  The module name, or null if not specified
 
-### getSourceInfo
+#### getSourceInfo
 
 
 ```php
@@ -68,21 +74,8 @@ Get optional source file information for debugging and tooling. This provides in
 ?OpenFGA\Models\SourceInfoInterface
  The source file information, or null if not available
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L87)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\RelationMetadataInterface</small>*  
 
@@ -98,4 +91,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L87)
+
+
+#### Returns
+array
 

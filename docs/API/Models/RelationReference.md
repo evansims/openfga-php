@@ -13,6 +13,10 @@ Represents a reference to a specific relation with optional conditions. A Relati
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [RelationReferenceInterface](Models/RelationReferenceInterface.md) (interface)
+* [RelationReferences](Models/Collections/RelationReferences.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a reference to a specific relation with optional conditions. A Relati
 
 
 ## Methods
-### getCondition
+
+                                                                                                            
+### List Operations
+#### getCondition
 
 
 ```php
@@ -36,7 +43,7 @@ Get the optional condition name that must be satisfied. When specified, this con
 ?string
  The condition name, or null if no condition is required
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -52,7 +59,7 @@ Get the optional specific relation on the referenced type. When specified, this 
 ?string
  The relation name, or null to reference the entire type
 
-### getType
+#### getType
 
 
 ```php
@@ -68,7 +75,7 @@ Get the type being referenced. This is the object type that this reference point
 string
  The type name being referenced
 
-### getWildcard
+#### getWildcard
 
 
 ```php
@@ -84,21 +91,8 @@ Get the optional wildcard marker for type-level permissions. When present, this 
 ?object
  The wildcard marker, or null for instance-specific references
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReference.php#L98)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\RelationReferenceInterface</small>*  
 
@@ -114,4 +108,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationReference.php#L98)
+
+
+#### Returns
+array
 

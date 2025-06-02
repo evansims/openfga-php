@@ -11,10 +11,16 @@ Interface for listing users who have a specific relation to an object. This inte
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md) (response)
+* [ListUsersRequest](Requests/ListUsersRequest.md) (implementation)
+
 
 
 ## Methods
-### getConsistency
+
+                                                                                                                        
+#### getConsistency
 
 
 ```php
@@ -30,7 +36,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 Consistency&#124;null
  The consistency level for the operation, or null to use the default consistency setting
 
-### getContext
+#### getContext
 
 
 ```php
@@ -46,7 +52,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 object&#124;null
  The context object containing additional data for evaluation, or null if no context is provided
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -62,7 +68,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
  Additional relationship tuples for evaluation, or null if none provided
 
-### getModel
+#### getModel
 
 
 ```php
@@ -78,7 +84,7 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 string
  The authorization model ID for evaluating user relationships
 
-### getObject
+#### getObject
 
 
 ```php
@@ -94,7 +100,7 @@ Get the object to list users for. Specifies the target object for which users wi
 string
  The object identifier to list users for
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -110,7 +116,7 @@ Get the relation to check for user access. Specifies the relationship type to ev
 string
  The relation name to check for user access
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -130,7 +136,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php
@@ -146,7 +152,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 string
  The store ID containing the authorization data
 
-### getUserFilters
+#### getUserFilters
 
 
 ```php

@@ -13,10 +13,17 @@ Represents a single item in a batch check request. Each batch check item contain
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
+* [BatchCheckItems](Models/Collections/BatchCheckItems.md) (collection)
+
 
 
 ## Methods
-### getContext
+
+                                                                                                                        
+### List Operations
+#### getContext
 
 
 ```php
@@ -31,7 +38,7 @@ Get the context object for this check. This provides additional context data tha
 #### Returns
 ?object
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -46,7 +53,7 @@ Get the contextual tuples for this check. These are additional tuples that are e
 #### Returns
 ?OpenFGA\Models\Collections\TupleKeysInterface
 
-### getCorrelationId
+#### getCorrelationId
 
 
 ```php
@@ -62,7 +69,7 @@ Get the correlation ID for this batch check item. This unique identifier maps th
 string
  The correlation ID
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php
@@ -78,21 +85,8 @@ Get the tuple key to be checked. This defines the user, relation, and object for
 OpenFGA\Models\TupleKeyInterface
  The tuple key for this check
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array<string, mixed>
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L225)
-
-
-#### Returns
-array&lt;string, mixed&gt;
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\BatchCheckItemInterface</small>*  
 
@@ -109,7 +103,22 @@ Get the schema definition for this model. This method returns the schema that de
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
 
-### toArray
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array<string, mixed>
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L225)
+
+
+#### Returns
+array&lt;string, mixed&gt;
+
+#### toArray
 
 
 ```php

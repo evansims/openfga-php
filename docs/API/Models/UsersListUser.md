@@ -14,6 +14,9 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [UsersListUserInterface](Models/UsersListUserInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -21,7 +24,10 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 
 
 ## Methods
-### getUser
+
+                                                                        
+### List Operations
+#### getUser
 
 
 ```php
@@ -37,23 +43,8 @@ Get the user identifier string. This returns the user identifier in the format e
 string
  The user identifier string
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): string
-```
-
-Serialize the user to its JSON representation. Returns the user identifier as a string for API serialization. This differs from most models which serialize to arrays.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUser.php#L74)
-
-
-#### Returns
-string
- The user identifier string
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\UsersListUserInterface</small>*  
 
@@ -69,4 +60,21 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): string
+```
+
+Serialize the user to its JSON representation. Returns the user identifier as a string for API serialization. This differs from most models which serialize to arrays.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersListUser.php#L74)
+
+
+#### Returns
+string
+ The user identifier string
 

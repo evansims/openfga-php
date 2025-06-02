@@ -13,10 +13,16 @@ Represents a user in a list context for authorization operations. UsersListUser 
 * Stringable
 * JsonSerializable
 
+## Related Classes
+* [UsersListUser](Models/UsersListUser.md) (implementation)
+
 
 
 ## Methods
-### getUser
+
+                                                
+### List Operations
+#### getUser
 
 
 ```php
@@ -32,7 +38,8 @@ Get the user identifier string. This returns the user identifier in the format e
 string
  The user identifier string
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

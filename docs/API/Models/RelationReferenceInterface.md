@@ -12,10 +12,16 @@ Defines the contract for relation references with optional conditions. A relatio
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [RelationReference](Models/RelationReference.md) (implementation)
+
 
 
 ## Methods
-### getCondition
+
+                                                                                    
+### List Operations
+#### getCondition
 
 
 ```php
@@ -31,7 +37,7 @@ Get the optional condition name that must be satisfied. When specified, this con
 string&#124;null
  The condition name, or null if no condition is required
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -47,7 +53,7 @@ Get the optional specific relation on the referenced type. When specified, this 
 string&#124;null
  The relation name, or null to reference the entire type
 
-### getType
+#### getType
 
 
 ```php
@@ -63,7 +69,7 @@ Get the type being referenced. This is the object type that this reference point
 string
  The type name being referenced
 
-### getWildcard
+#### getWildcard
 
 
 ```php
@@ -79,7 +85,8 @@ Get the optional wildcard marker for type-level permissions. When present, this 
 object&#124;null
  The wildcard marker, or null for instance-specific references
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

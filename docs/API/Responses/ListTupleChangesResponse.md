@@ -12,10 +12,68 @@ Response containing a paginated list of tuple changes from the store. This respo
 * [ListTupleChangesResponseInterface](ListTupleChangesResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (interface)
+* [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                                                                                    
+### List Operations
+#### getChanges
+
+
+```php
+public function getChanges(): OpenFGA\Models\Collections\TupleChangesInterface
+```
+
+Get the collection of tuple changes. Returns a type-safe collection containing the tuple change objects from the current page of results. Each change represents a modification (insert or delete) to the relationship data, including timestamps and operation details.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L94)
+
+
+#### Returns
+OpenFGA\Models\Collections\TupleChangesInterface
+ The collection of tuple changes
+
+#### getContinuationToken
+
+
+```php
+public function getContinuationToken(): ?string
+```
+
+Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of tuple changes exceeds the page size limit. If null, there are no more results to fetch.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L103)
+
+
+#### Returns
+?string
+ The continuation token for fetching more results, or null if no more pages exist
+
+### Model Management
+#### schema
+
+*<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
+
+```php
+public function schema(): SchemaInterface
+```
+
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for tuple changes listing response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L35)
+
+
+#### Returns
+SchemaInterface
+ The schema definition for response validation
+
+### Other
+#### fromResponse
 
 *<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
 
@@ -37,53 +95,4 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 static
  The parsed and validated response instance containing the API response data
-
-### getChanges
-
-
-```php
-public function getChanges(): OpenFGA\Models\Collections\TupleChangesInterface
-```
-
-Get the collection of tuple changes. Returns a type-safe collection containing the tuple change objects from the current page of results. Each change represents a modification (insert or delete) to the relationship data, including timestamps and operation details.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L94)
-
-
-#### Returns
-OpenFGA\Models\Collections\TupleChangesInterface
- The collection of tuple changes
-
-### getContinuationToken
-
-
-```php
-public function getContinuationToken(): ?string
-```
-
-Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of tuple changes exceeds the page size limit. If null, there are no more results to fetch.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L103)
-
-
-#### Returns
-?string
- The continuation token for fetching more results, or null if no more pages exist
-
-### schema
-
-*<small>Implements Responses\ListTupleChangesResponseInterface</small>*  
-
-```php
-public function schema(): SchemaInterface
-```
-
-Get the schema definition for this response. Returns the schema that defines the structure and validation rules for tuple changes listing response data, ensuring consistent parsing and validation of API responses.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L35)
-
-
-#### Returns
-SchemaInterface
- The schema definition for response validation
 

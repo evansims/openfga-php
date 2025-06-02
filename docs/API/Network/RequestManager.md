@@ -11,10 +11,16 @@ Concrete implementation of HTTP request management for OpenFGA API communication
 ## Implements
 * [RequestManagerInterface](RequestManagerInterface.md)
 
+## Related Classes
+* [RequestManagerInterface](Network/RequestManagerInterface.md) (interface)
+
 
 
 ## Methods
-### getHttpClient
+
+                                                                                                            
+### List Operations
+#### getHttpClient
 
 
 ```php
@@ -30,7 +36,7 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 Psr\Http\Client\ClientInterface
  The PSR-18 HTTP client instance for executing requests
 
-### getHttpRequestFactory
+#### getHttpRequestFactory
 
 
 ```php
@@ -46,7 +52,7 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 Psr\Http\Message\RequestFactoryInterface
  The PSR-17 factory for creating HTTP request objects
 
-### getHttpResponseFactory
+#### getHttpResponseFactory
 
 
 ```php
@@ -62,7 +68,7 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 Psr\Http\Message\ResponseFactoryInterface
  The PSR-17 factory for creating HTTP response objects
 
-### getHttpStreamFactory
+#### getHttpStreamFactory
 
 
 ```php
@@ -78,7 +84,8 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 Psr\Http\Message\StreamFactoryInterface
  The PSR-17 factory for creating HTTP message body streams
 
-### handleResponseException
+### Other
+#### handleResponseException
 
 *<small>Implements Network\RequestManagerInterface</small>*  
 
@@ -100,7 +107,7 @@ Handle error responses by throwing appropriate exceptions. Analyzes HTTP error r
 never
  This method always throws an exception and never returns normally
 
-### request
+#### request
 
 
 ```php
@@ -120,7 +127,7 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 Psr\Http\Message\RequestInterface
  The PSR-7 HTTP request ready for execution
 
-### send
+#### send
 
 
 ```php

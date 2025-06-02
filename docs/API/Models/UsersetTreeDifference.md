@@ -13,6 +13,9 @@ Represents a difference operation node in authorization evaluation trees. Userse
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Represents a difference operation node in authorization evaluation trees. Userse
 
 
 ## Methods
-### getBase
+
+                                                                                    
+### List Operations
+#### getBase
 
 
 ```php
@@ -36,7 +42,7 @@ Get the base node from which the subtract node will be removed. This represents 
 OpenFGA\Models\NodeInterface
  The base node for the difference operation
 
-### getSubtract
+#### getSubtract
 
 
 ```php
@@ -52,21 +58,8 @@ Get the node representing users to subtract from the base. This represents the n
 OpenFGA\Models\NodeInterface
  The node to subtract from the base
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifference.php#L74)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\UsersetTreeDifferenceInterface</small>*  
 
@@ -82,4 +75,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTreeDifference.php#L74)
+
+
+#### Returns
+array
 

@@ -38,6 +38,19 @@ interface ClientInterface
      * @throws ClientThrowable          If no last request has been made
      *
      * @return HttpRequestInterface The last request
+     *
+     * @example Accessing the last request for debugging
+     * $result = $client->check(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget')
+     * );
+     * 
+     * $lastRequest = $client->assertLastRequest();
+     * 
+     * echo "Method: " . $lastRequest->getMethod();
+     * echo "URL: " . $lastRequest->getUri();
+     * echo "Headers: " . json_encode($lastRequest->getHeaders());
      */
     public function assertLastRequest(): HttpRequestInterface;
 
@@ -60,6 +73,36 @@ interface ClientInterface
      * @throws ClientThrowable          If the request cannot be built or sent
      *
      * @return FailureInterface|SuccessInterface The batch check results
+     *
+     * @example Batch checking multiple permissions efficiently
+     * $checks = new BatchCheckItems([
+     *     new BatchCheckItem(
+     *         tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
+     *         correlationId: 'check-anne-viewer'
+     *     ),
+     *     new BatchCheckItem(
+     *         tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
+     *         correlationId: 'check-bob-editor'
+     *     ),
+     *     new BatchCheckItem(
+     *         tupleKey: new TupleKey('user:charlie', 'owner', 'document:roadmap'),
+     *         correlationId: 'check-charlie-owner'
+     *     ),
+     * ]);
+     * 
+     * $result = $client->batchCheck(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     checks: $checks
+     * );
+     * 
+     * if ($result->success()) {
+     *     $responses = $result->value()->getResults();
+     *     foreach ($responses as $response) {
+     *         echo $response->getCorrelationId() . ': ' . 
+     *              ($response->getAllowed() ? 'ALLOWED' : 'DENIED') . "\n";
+     *     }
+     * }
      *
      * @see https://openfga.dev/docs/api#/Relationship%20Queries/BatchCheck Batch check API reference
      */
@@ -85,6 +128,31 @@ interface ClientInterface
      * @param  Consistency|null                           $consistency      Override the default consistency level
      * @return FailureInterface|SuccessInterface          Success contains CheckResponseInterface, Failure contains Throwable
      *
+     * @example Basic permission check
+     * $result = $client->check(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     tupleKey: new TupleKey('user:anne', 'reader', 'document:budget')
+     * );
+     *
+     * if ($result->success()) {
+     *     $allowed = $result->value()->getAllowed();
+     *     if ($allowed) {
+     *         // User has permission
+     *     }
+     * }
+     * @example Check with contextual tuples
+     * $contextualTuples = new TupleKeys([
+     *     new TupleKey('user:anne', 'member', 'team:finance')
+     * ]);
+     *
+     * $result = $client->check(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     tupleKey: new TupleKey('user:anne', 'reader', 'document:budget'),
+     *     contextualTuples: $contextualTuples
+     * );
+     *
      * @see https://openfga.dev/docs/getting-started/perform-check Performing authorization checks
      */
     public function check(
@@ -109,6 +177,32 @@ interface ClientInterface
      * @param  ConditionsInterface<ConditionInterface>|null      $conditions      The conditions for the model
      * @param  SchemaVersion                                     $schemaVersion   The schema version to use (default: 1.1)
      * @return FailureInterface|SuccessInterface                 Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
+     *
+     * @example Creating a document authorization model with DSL (recommended)
+     * // Using DSL is usually easier than manually building type definitions
+     * $dsl = '
+     *     model
+     *       schema 1.1
+     *     
+     *     type user
+     *     
+     *     type document
+     *       relations
+     *         define owner: [user]
+     *         define editor: [user] or owner
+     *         define viewer: [user] or editor
+     * ';
+     * 
+     * $authModel = $client->dsl($dsl)->unwrap();
+     * $result = $client->createAuthorizationModel(
+     *     store: 'store-id',
+     *     typeDefinitions: $authModel->getTypeDefinitions()
+     * );
+     * 
+     * if ($result->success()) {
+     *     $modelId = $result->value()->getAuthorizationModelId();
+     *     echo "Created model: {$modelId}";
+     * }
      *
      * @see https://openfga.dev/docs/getting-started/configure-model Configuring authorization models
      * @see https://openfga.dev/docs/getting-started/immutable-models Understanding model immutability
@@ -158,6 +252,31 @@ interface ClientInterface
      * @throws Exceptions\SerializationException If the DSL syntax is invalid
      *
      * @return FailureInterface|SuccessInterface Success contains AuthorizationModelInterface, Failure contains Throwable
+     *
+     * @example Parse a complete authorization model from DSL
+     * $dsl = '
+     *     model
+     *       schema 1.1
+     *     
+     *     type user
+     *     
+     *     type organization
+     *       relations
+     *         define member: [user]
+     *     
+     *     type document
+     *       relations
+     *         define owner: [user]
+     *         define editor: [user, organization#member] or owner
+     *         define viewer: [user, organization#member] or editor
+     * ';
+     * 
+     * $result = $client->dsl($dsl);
+     * 
+     * if ($result->success()) {
+     *     $authModel = $result->value();
+     *     echo "Parsed model with " . count($authModel->getTypeDefinitions()) . " types";
+     * }
      *
      * @see https://openfga.dev/docs/authorization-concepts OpenFGA authorization concepts
      */
@@ -246,6 +365,38 @@ interface ClientInterface
      * @param  TupleKeysInterface<TupleKeyInterface>|null $contextualTuples Additional tuples for contextual evaluation
      * @param  Consistency|null                           $consistency      Override the default consistency level
      * @return FailureInterface|SuccessInterface          Success contains ListObjectsResponseInterface, Failure contains Throwable
+     *
+     * @example List all documents a user can view
+     * $result = $client->listObjects(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     type: 'document',
+     *     relation: 'viewer',
+     *     user: 'user:anne'
+     * );
+     * 
+     * if ($result->success()) {
+     *     $objects = $result->value()->getObjects();
+     *     echo "Anne can view " . count($objects) . " documents:\n";
+     *     foreach ($objects as $object) {
+     *         echo "- {$object}\n";
+     *     }
+     * }
+     *
+     * @example List objects with contextual evaluation
+     * // Check what documents anne can edit, considering her team membership
+     * $contextualTuples = new TupleKeys([
+     *     new TupleKey('user:anne', 'member', 'team:engineering')
+     * ]);
+     * 
+     * $result = $client->listObjects(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     type: 'document',
+     *     relation: 'editor',
+     *     user: 'user:anne',
+     *     contextualTuples: $contextualTuples
+     * );
      */
     public function listObjects(
         StoreInterface | string $store,
@@ -306,6 +457,41 @@ interface ClientInterface
      * @param  TupleKeysInterface<TupleKeyInterface>|null        $contextualTuples Additional tuples for contextual evaluation
      * @param  Consistency|null                                  $consistency      Override the default consistency level
      * @return FailureInterface|SuccessInterface                 Success contains ListUsersResponseInterface, Failure contains Throwable
+     *
+     * @example List all users who can view a document
+     * $userFilters = new UserTypeFilters([
+     *     new UserTypeFilter('user') // Only include direct users, not groups
+     * ]);
+     * 
+     * $result = $client->listUsers(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     object: 'document:budget',
+     *     relation: 'viewer',
+     *     userFilters: $userFilters
+     * );
+     * 
+     * if ($result->success()) {
+     *     $users = $result->value()->getUsers();
+     *     echo "Users who can view the budget document:\n";
+     *     foreach ($users as $user) {
+     *         echo "- {$user}\n";
+     *     }
+     * }
+     *
+     * @example Find both users and groups with access
+     * $userFilters = new UserTypeFilters([
+     *     new UserTypeFilter('user'),
+     *     new UserTypeFilter('group')
+     * ]);
+     * 
+     * $result = $client->listUsers(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     object: 'document:sensitive',
+     *     relation: 'editor',
+     *     userFilters: $userFilters
+     * );
      */
     public function listUsers(
         StoreInterface | string $store,
@@ -401,6 +587,40 @@ interface ClientInterface
      * @param  TupleKeysInterface<TupleKeyInterface>|null $writes  Tuples to write (create or update)
      * @param  TupleKeysInterface<TupleKeyInterface>|null $deletes Tuples to delete
      * @return FailureInterface|SuccessInterface          Success contains WriteTuplesResponseInterface, Failure contains Throwable
+     *
+     * @example Writing and deleting relationship tuples
+     * // Create relationships
+     * $writes = new TupleKeys([
+     *     new TupleKey('user:anne', 'owner', 'document:budget'),
+     *     new TupleKey('user:bob', 'viewer', 'document:budget'),
+     *     new TupleKey('user:charlie', 'editor', 'document:roadmap'),
+     * ]);
+     * 
+     * $result = $client->writeTuples(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     writes: $writes
+     * );
+     * 
+     * if ($result->success()) {
+     *     echo "Successfully wrote " . count($writes) . " relationships";
+     * }
+     * 
+     * @example Updating permissions by adding and removing tuples
+     * $writes = new TupleKeys([
+     *     new TupleKey('user:anne', 'editor', 'document:budget'), // Promote anne to editor
+     * ]);
+     * 
+     * $deletes = new TupleKeys([
+     *     new TupleKey('user:bob', 'viewer', 'document:budget'), // Remove bob's access
+     * ]);
+     * 
+     * $client->writeTuples(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     writes: $writes,
+     *     deletes: $deletes
+     * );
      */
     public function writeTuples(
         StoreInterface | string $store,

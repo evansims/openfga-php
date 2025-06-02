@@ -12,10 +12,16 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [UsersetTree](Models/UsersetTree.md) (implementation)
+
 
 
 ## Methods
-### getRoot
+
+                                                
+### List Operations
+#### getRoot
 
 
 ```php
@@ -31,7 +37,8 @@ Get the root node of the userset tree structure. This returns the top-level node
 NodeInterface
  The root node of the userset tree
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

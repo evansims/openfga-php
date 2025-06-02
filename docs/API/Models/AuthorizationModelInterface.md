@@ -12,26 +12,16 @@ Represents an OpenFGA authorization model that defines permission structures. Au
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [AuthorizationModel](Models/AuthorizationModel.md) (implementation)
+
 
 
 ## Methods
-### dsl
 
-
-```php
-public function dsl(): string
-```
-
-Generate a DSL (Domain Specific Language) representation of this authorization model. The DSL provides a human-readable, text-based format for expressing authorization models that is easier to understand, review, and modify than raw JSON. The DSL format uses a syntax similar to configuration languages, making it accessible to both developers and non-technical stakeholders who need to understand or modify permission structures. The DSL representation includes: - Type definitions with their relations and inheritance rules - Condition expressions and parameters - Human-readable relation definitions and computed permissions - Comments and formatting that enhance comprehension This format is particularly valuable for: - Documentation and code reviews - Version control and change tracking - Model debugging and testing - Administrative interfaces and tooling
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L64)
-
-
-#### Returns
-string
- The authorization model expressed in OpenFGA DSL format for human readability
-
-### getConditions
+                                                                                                
+### List Operations
+#### getConditions
 
 
 ```php
@@ -47,7 +37,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 ConditionsInterface&lt;ConditionInterface&gt;&#124;null
  The collection of reusable conditions defined in this model, or null if no conditions are defined
 
-### getId
+#### getId
 
 
 ```php
@@ -63,7 +53,7 @@ Get the unique identifier for this authorization model. The model ID serves as a
 string
  The globally unique identifier for this authorization model version
 
-### getSchemaVersion
+#### getSchemaVersion
 
 
 ```php
@@ -79,7 +69,7 @@ Get the schema version of this authorization model. The schema version indicates
 SchemaVersion
  The schema version enumeration indicating the model format specification
 
-### getTypeDefinitions
+#### getTypeDefinitions
 
 
 ```php
@@ -95,7 +85,24 @@ Get the type definitions that define the structure of this authorization model. 
 TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt;
  The collection of type definitions that structure this authorization model
 
-### jsonSerialize
+### Other
+#### dsl
+
+
+```php
+public function dsl(): string
+```
+
+Generate a DSL (Domain Specific Language) representation of this authorization model. The DSL provides a human-readable, text-based format for expressing authorization models that is easier to understand, review, and modify than raw JSON. The DSL format uses a syntax similar to configuration languages, making it accessible to both developers and non-technical stakeholders who need to understand or modify permission structures. The DSL representation includes: - Type definitions with their relations and inheritance rules - Condition expressions and parameters - Human-readable relation definitions and computed permissions - Comments and formatting that enhance comprehension This format is particularly valuable for: - Documentation and code reviews - Version control and change tracking - Model debugging and testing - Administrative interfaces and tooling
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModelInterface.php#L64)
+
+
+#### Returns
+string
+ The authorization model expressed in OpenFGA DSL format for human readability
+
+#### jsonSerialize
 
 
 ```php

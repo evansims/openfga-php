@@ -12,10 +12,16 @@ Defines a difference operation node in authorization evaluation trees. UsersetTr
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [UsersetTreeDifference](Models/UsersetTreeDifference.md) (implementation)
+
 
 
 ## Methods
-### getBase
+
+                                                            
+### List Operations
+#### getBase
 
 
 ```php
@@ -31,7 +37,7 @@ Get the base node from which the subtract node will be removed. This represents 
 NodeInterface
  The base node for the difference operation
 
-### getSubtract
+#### getSubtract
 
 
 ```php
@@ -47,7 +53,8 @@ Get the node representing users to subtract from the base. This represents the n
 NodeInterface
  The node to subtract from the base
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

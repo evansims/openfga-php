@@ -13,8 +13,11 @@ Base interface for all OpenFGA model objects. This interface establishes the fou
 
 
 
+
 ## Methods
-### jsonSerialize
+
+                        
+#### jsonSerialize
 
 
 ```php

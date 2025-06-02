@@ -9,10 +9,16 @@ Response interface for streaming objects that a user has a specific relationship
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponseInterface.php)
 
 
+## Related Classes
+* [StreamedListObjectsResponse](Responses/StreamedListObjectsResponse.md) (implementation)
+* [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md) (request)
+
 
 
 ## Methods
-### getObject
+
+                        
+#### getObject
 
 
 ```php

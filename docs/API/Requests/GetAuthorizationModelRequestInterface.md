@@ -11,10 +11,16 @@ Interface for retrieving a specific authorization model. This interface defines 
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (response)
+* [GetAuthorizationModelRequest](Requests/GetAuthorizationModelRequest.md) (implementation)
+
 
 
 ## Methods
-### getModel
+
+                                                
+#### getModel
 
 
 ```php
@@ -30,7 +36,7 @@ Get the authorization model ID to retrieve. Specifies which version of the autho
 string
  The unique identifier of the authorization model to retrieve
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -50,7 +56,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

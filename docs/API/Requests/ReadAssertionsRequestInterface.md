@@ -11,10 +11,16 @@ Interface for reading test assertions from an authorization model. This interfac
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (response)
+* [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (implementation)
+
 
 
 ## Methods
-### getModel
+
+                                                
+#### getModel
 
 
 ```php
@@ -30,7 +36,7 @@ Get the authorization model ID to read assertions from. Specifies which version 
 string
  The authorization model ID whose assertions should be retrieved
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -50,7 +56,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

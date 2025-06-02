@@ -12,10 +12,16 @@ Response confirming successful writing of test assertions. This response indicat
 * [WriteAssertionsResponseInterface](WriteAssertionsResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (interface)
+* [WriteAssertionsRequest](Requests/WriteAssertionsRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                        
+#### fromResponse
 
 *<small>Implements Responses\WriteAssertionsResponseInterface</small>*  
 

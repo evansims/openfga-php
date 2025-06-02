@@ -11,10 +11,17 @@ Interface for store retrieval response objects. This interface defines the contr
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [GetStoreResponse](Responses/GetStoreResponse.md) (implementation)
+* [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (request)
+
 
 
 ## Methods
-### getCreatedAt
+
+                                                                                                
+### CRUD Operations
+#### getCreatedAt
 
 
 ```php
@@ -30,7 +37,7 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 DateTimeImmutable
  The creation timestamp of the store
 
-### getDeletedAt
+#### getDeletedAt
 
 
 ```php
@@ -46,7 +53,24 @@ Get the timestamp when the store was deleted, if applicable. Returns the deletio
 DateTimeImmutable&#124;null
  The deletion timestamp, or null if the store is not deleted
 
-### getId
+#### getUpdatedAt
+
+
+```php
+public function getUpdatedAt(): DateTimeImmutable
+```
+
+Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata or configuration. This is updated whenever store properties are changed.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L96)
+
+
+#### Returns
+DateTimeImmutable
+ The last update timestamp of the store
+
+### List Operations
+#### getId
 
 
 ```php
@@ -62,7 +86,7 @@ Get the unique identifier of the store. Returns the system-generated unique iden
 string
  The unique store identifier
 
-### getName
+#### getName
 
 
 ```php
@@ -78,7 +102,7 @@ Get the human-readable name of the store. Returns the descriptive name that was 
 string
  The descriptive name of the store
 
-### getStore
+#### getStore
 
 
 ```php
@@ -93,20 +117,4 @@ Get the complete store object. Returns the full store object containing all stor
 #### Returns
 StoreInterface
  The complete store object
-
-### getUpdatedAt
-
-
-```php
-public function getUpdatedAt(): DateTimeImmutable
-```
-
-Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata or configuration. This is updated whenever store properties are changed.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L96)
-
-
-#### Returns
-DateTimeImmutable
- The last update timestamp of the store
 

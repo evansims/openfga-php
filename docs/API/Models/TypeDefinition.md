@@ -13,6 +13,10 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [TypeDefinitionInterface](Models/TypeDefinitionInterface.md) (interface)
+* [TypeDefinitions](Models/Collections/TypeDefinitions.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 
 
 ## Methods
-### getMetadata
+
+                                                                                                
+### List Operations
+#### getMetadata
 
 
 ```php
@@ -36,7 +43,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 ?OpenFGA\Models\MetadataInterface
  The metadata, or null if not specified
 
-### getRelations
+#### getRelations
 
 
 ```php
@@ -51,7 +58,7 @@ Get the collection of relations defined for this type. Relations define the auth
 #### Returns
 ?OpenFGA\Models\Collections\TypeDefinitionRelationsInterface
 
-### getType
+#### getType
 
 
 ```php
@@ -67,21 +74,8 @@ Get the name of this type. The type name uniquely identifies this type definitio
 string
  The unique type name
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinition.php#L88)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\TypeDefinitionInterface</small>*  
 
@@ -97,4 +91,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinition.php#L88)
+
+
+#### Returns
+array
 

@@ -12,10 +12,52 @@ Response containing a list of objects that a user has a specific relationship wi
 * [ListObjectsResponseInterface](ListObjectsResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (interface)
+* [ListObjectsRequest](Requests/ListObjectsRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                                                                        
+### List Operations
+#### getObjects
+
+
+```php
+public function getObjects(): array
+```
+
+Get the array of object identifiers the user has access to. Returns an array of object identifiers that the queried user has the specified relationship with. Each string represents an object ID of the requested type that the user can access through the specified relation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponse.php#L87)
+
+
+#### Returns
+array
+ Array of object identifiers the user has access to
+
+### Model Management
+#### schema
+
+*<small>Implements Responses\ListObjectsResponseInterface</small>*  
+
+```php
+public function schema(): SchemaInterface
+```
+
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for object listing response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponseInterface.php#L33)
+
+
+#### Returns
+SchemaInterface
+ The schema definition for response validation
+
+### Other
+#### fromResponse
 
 *<small>Implements Responses\ListObjectsResponseInterface</small>*  
 
@@ -37,37 +79,4 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 static
  The parsed and validated response instance containing the API response data
-
-### getObjects
-
-
-```php
-public function getObjects(): array
-```
-
-Get the array of object identifiers the user has access to. Returns an array of object identifiers that the queried user has the specified relationship with. Each string represents an object ID of the requested type that the user can access through the specified relation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponse.php#L87)
-
-
-#### Returns
-array
- Array of object identifiers the user has access to
-
-### schema
-
-*<small>Implements Responses\ListObjectsResponseInterface</small>*  
-
-```php
-public function schema(): SchemaInterface
-```
-
-Get the schema definition for this response. Returns the schema that defines the structure and validation rules for object listing response data, ensuring consistent parsing and validation of API responses.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListObjectsResponseInterface.php#L33)
-
-
-#### Returns
-SchemaInterface
- The schema definition for response validation
 

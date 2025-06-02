@@ -12,10 +12,16 @@ Defines the contract for userset user specifications. A userset user represents 
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [UsersetUser](Models/UsersetUser.md) (implementation)
+
 
 
 ## Methods
-### getId
+
+                                                                        
+### List Operations
+#### getId
 
 
 ```php
@@ -31,7 +37,7 @@ Get the object identifier in the userset reference. This represents the specific
 string
  The object identifier
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -47,7 +53,7 @@ Get the relation name in the userset reference. This represents the specific rel
 string
  The relation name
 
-### getType
+#### getType
 
 
 ```php
@@ -63,7 +69,8 @@ Get the object type in the userset reference. This represents the type of object
 string
  The object type
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

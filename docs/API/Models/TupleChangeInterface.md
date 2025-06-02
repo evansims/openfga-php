@@ -12,10 +12,16 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [TupleChange](Models/TupleChange.md) (implementation)
+
 
 
 ## Methods
-### getOperation
+
+                                                                        
+### List Operations
+#### getOperation
 
 
 ```php
@@ -31,7 +37,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 TupleOperation
  The operation type (write or delete)
 
-### getTimestamp
+#### getTimestamp
 
 
 ```php
@@ -47,7 +53,7 @@ Get the timestamp when this tuple change occurred. Timestamps help track the chr
 DateTimeImmutable
  The change timestamp
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php
@@ -63,7 +69,8 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 TupleKeyInterface
  The tuple key that was modified
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

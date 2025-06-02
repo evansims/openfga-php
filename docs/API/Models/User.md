@@ -13,6 +13,9 @@ Represents a user or user specification in authorization contexts. A User can re
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [UserInterface](Models/UserInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Represents a user or user specification in authorization contexts. A User can re
 
 
 ## Methods
-### getDifference
+
+                                                                                                            
+### List Operations
+#### getDifference
 
 
 ```php
@@ -36,7 +42,7 @@ Get the difference operation for this user. Difference operations enable sophist
 ?OpenFGA\Models\DifferenceV1Interface
  The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 
-### getObject
+#### getObject
 
 
 ```php
@@ -52,7 +58,7 @@ Get the user object representation. User objects represent direct, concrete user
 ?OpenFGA\Models\UserObjectInterface&#124;string&#124;null
  The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
-### getUserset
+#### getUserset
 
 
 ```php
@@ -68,7 +74,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 ?OpenFGA\Models\UsersetUserInterface
  The userset definition specifying users through relationships, or null if this is not a userset-based user
 
-### getWildcard
+#### getWildcard
 
 
 ```php
@@ -84,23 +90,8 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 ?OpenFGA\Models\TypedWildcardInterface
  The wildcard definition specifying the user type, or null if this is not a wildcard user
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array<string, mixed>
-```
-
-Serialize the user for JSON encoding. This method prepares the user data for API communication with the OpenFGA service, converting the user representation into the format expected by the OpenFGA API. The serialization handles all user types (direct objects, usersets, wildcards, and difference operations) and ensures the resulting structure matches the OpenFGA API specification. Only the appropriate user type fields are included in the output: - Direct users include object field with type:id or structured object - Usersets include userset field with type, id, and relation - Wildcards include wildcard field with type specification - Difference operations include difference field with base and subtract sets
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L150)
-
-
-#### Returns
-array&lt;string, mixed&gt;
- User data formatted for JSON encoding with the appropriate user type representation
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\UserInterface</small>*  
 
@@ -116,4 +107,21 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array<string, mixed>
+```
+
+Serialize the user for JSON encoding. This method prepares the user data for API communication with the OpenFGA service, converting the user representation into the format expected by the OpenFGA API. The serialization handles all user types (direct objects, usersets, wildcards, and difference operations) and ensures the resulting structure matches the OpenFGA API specification. Only the appropriate user type fields are included in the output: - Direct users include object field with type:id or structured object - Usersets include userset field with type, id, and relation - Wildcards include wildcard field with type specification - Difference operations include difference field with base and subtract sets
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L150)
+
+
+#### Returns
+array&lt;string, mixed&gt;
+ User data formatted for JSON encoding with the appropriate user type representation
 

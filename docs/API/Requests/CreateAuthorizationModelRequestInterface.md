@@ -11,10 +11,16 @@ Interface for creating new authorization models in OpenFGA. This interface defin
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (response)
+* [CreateAuthorizationModelRequest](Requests/CreateAuthorizationModelRequest.md) (implementation)
+
 
 
 ## Methods
-### getConditions
+
+                                                                        
+#### getConditions
 
 
 ```php
@@ -30,7 +36,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 ConditionsInterface&lt;ConditionInterface&gt;&#124;null
  Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -50,7 +56,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getSchemaVersion
+#### getSchemaVersion
 
 
 ```php
@@ -66,7 +72,7 @@ Get the schema version for the authorization model. Specifies which version of t
 SchemaVersion
  The modeling language schema version for this authorization model
 
-### getStore
+#### getStore
 
 
 ```php
@@ -82,7 +88,7 @@ Get the store ID where the authorization model will be created. Identifies the O
 string
  The store ID where the authorization model will be created
 
-### getTypeDefinitions
+#### getTypeDefinitions
 
 
 ```php

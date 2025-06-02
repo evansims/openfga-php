@@ -11,10 +11,16 @@ Interface for authorization check request specifications. This interface defines
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [CheckResponseInterface](Responses/CheckResponseInterface.md) (response)
+* [CheckRequest](Requests/CheckRequest.md) (implementation)
+
 
 
 ## Methods
-### getAuthorizationModel
+
+                                                                                                            
+#### getAuthorizationModel
 
 
 ```php
@@ -30,7 +36,7 @@ Get the authorization model ID to use for the check. This specifies which versio
 string
  The authorization model ID for permission evaluation
 
-### getConsistency
+#### getConsistency
 
 
 ```php
@@ -46,7 +52,7 @@ Get the consistency level for the check operation. This determines the read cons
 Consistency&#124;null
  The consistency level, or null to use the default consistency setting
 
-### getContext
+#### getContext
 
 
 ```php
@@ -62,7 +68,7 @@ Get additional context data for conditional evaluation. This provides contextual
 object&#124;null
  The context object containing additional data for evaluation, or null if no context is provided
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -78,7 +84,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
  Additional relationship tuples for evaluation, or null if none provided
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -98,7 +104,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php
@@ -114,7 +120,7 @@ Get the store ID containing the authorization data. This identifies which OpenFG
 string
  The store ID containing the authorization data
 
-### getTrace
+#### getTrace
 
 
 ```php
@@ -130,7 +136,7 @@ Get whether to include evaluation trace in the response. When enabled, the respo
 bool&#124;null
  Whether to include trace information, or null to use the default setting
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php

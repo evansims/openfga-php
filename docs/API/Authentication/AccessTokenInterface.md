@@ -11,10 +11,16 @@ Represents an access token for OpenFGA API authentication. Access tokens are cre
 ## Implements
 * Stringable
 
+## Related Classes
+* [AccessToken](Authentication/AccessToken.md) (implementation)
+
 
 
 ## Methods
-### getExpires
+
+                                                                        
+### List Operations
+#### getExpires
 
 
 ```php
@@ -30,7 +36,7 @@ Get the Unix timestamp when this access token expires. The expiration timestamp 
 int
  Unix timestamp representing when the token expires
 
-### getScope
+#### getScope
 
 
 ```php
@@ -46,7 +52,7 @@ Get the scope that defines the permissions granted by this access token. The sco
 string&#124;null
  The token scope defining granted permissions, or null if no scope is specified
 
-### getToken
+#### getToken
 
 
 ```php
@@ -62,7 +68,8 @@ Get the raw access token value. This method returns the actual token string that
 string
  The raw access token value
 
-### isExpired
+### Utility
+#### isExpired
 
 
 ```php

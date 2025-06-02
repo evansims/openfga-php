@@ -12,10 +12,16 @@ Represents a computed userset in OpenFGA authorization models. Computed usersets
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Computed](Models/Computed.md) (implementation)
+
 
 
 ## Methods
-### getUserset
+
+                                                
+### List Operations
+#### getUserset
 
 
 ```php
@@ -31,7 +37,8 @@ Get the userset reference string that defines a computed relationship. This repr
 string
  The userset reference string defining the computed relationship
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

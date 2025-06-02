@@ -14,6 +14,9 @@ Represents a specific user object with type and identifier. A UserObject provide
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [UserObjectInterface](Models/UserObjectInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -21,7 +24,10 @@ Represents a specific user object with type and identifier. A UserObject provide
 
 
 ## Methods
-### getId
+
+                                                                                    
+### List Operations
+#### getId
 
 
 ```php
@@ -37,7 +43,7 @@ Get the unique identifier of the user object. The ID is unique within the contex
 string
  The object identifier
 
-### getType
+#### getType
 
 
 ```php
@@ -53,22 +59,8 @@ Get the type of the user object. The type defines the category or class of the o
 string
  The object type
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-Serialize the user object to its JSON representation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L87)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\UserObjectInterface</small>*  
 
@@ -84,4 +76,20 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+Serialize the user object to its JSON representation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L87)
+
+
+#### Returns
+array
 

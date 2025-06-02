@@ -13,10 +13,16 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 * Stringable
 * JsonSerializable
 
+## Related Classes
+* [TypedWildcard](Models/TypedWildcard.md) (implementation)
+
 
 
 ## Methods
-### getType
+
+                                                
+### List Operations
+#### getType
 
 
 ```php
@@ -32,7 +38,8 @@ Get the object type that this wildcard represents. This returns the type name fo
 string
  The object type that this wildcard represents
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

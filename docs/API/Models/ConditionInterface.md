@@ -12,10 +12,16 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Condition](Models/Condition.md) (implementation)
+
 
 
 ## Methods
-### getExpression
+
+                                                                                    
+### List Operations
+#### getExpression
 
 
 ```php
@@ -31,7 +37,7 @@ Get the condition expression. This returns the logical expression that defines w
 string
  The condition expression defining the evaluation logic
 
-### getMetadata
+#### getMetadata
 
 
 ```php
@@ -47,7 +53,7 @@ Get metadata about the condition definition. This provides additional informatio
 ConditionMetadataInterface&#124;null
  The condition metadata, or null if not provided
 
-### getName
+#### getName
 
 
 ```php
@@ -63,7 +69,7 @@ Get the name of the condition. This is a unique identifier for the condition wit
 string
  The unique name identifying this condition
 
-### getParameters
+#### getParameters
 
 
 ```php
@@ -79,7 +85,8 @@ Get the parameters available to the condition expression. These parameters defin
 ConditionParametersInterface&lt;ConditionParameterInterface&gt;&#124;null
  The condition parameters, or null if the condition uses no parameters
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

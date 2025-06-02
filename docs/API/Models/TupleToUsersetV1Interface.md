@@ -12,10 +12,16 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [TupleToUsersetV1](Models/TupleToUsersetV1.md) (implementation)
+
 
 
 ## Methods
-### getComputedUserset
+
+                                                            
+### List Operations
+#### getComputedUserset
 
 
 ```php
@@ -31,7 +37,7 @@ Get the userset that will be computed based on the tupleset. This represents the
 ObjectRelationInterface
  The object-relation pair defining the computed userset
 
-### getTupleset
+#### getTupleset
 
 
 ```php
@@ -47,7 +53,8 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 ObjectRelationInterface
  The object-relation pair defining the tupleset
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

@@ -12,10 +12,16 @@ Request for reading test assertions associated with an authorization model. This
 * [ReadAssertionsRequestInterface](ReadAssertionsRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (response)
+* [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getModel
+
+                                                
+#### getModel
 
 
 ```php
@@ -31,7 +37,7 @@ Get the authorization model ID to read assertions from. Specifies which version 
 string
  The authorization model ID whose assertions should be retrieved
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -51,7 +57,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

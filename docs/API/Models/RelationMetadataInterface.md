@@ -12,10 +12,16 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [RelationMetadata](Models/RelationMetadata.md) (implementation)
+
 
 
 ## Methods
-### getDirectlyRelatedUserTypes
+
+                                                                        
+### List Operations
+#### getDirectlyRelatedUserTypes
 
 
 ```php
@@ -31,7 +37,7 @@ Get the user types that can be directly related through this relation. This defi
 RelationReferencesInterface&lt;RelationReferenceInterface&gt;&#124;null
  The directly related user types, or null if not specified
 
-### getModule
+#### getModule
 
 
 ```php
@@ -47,7 +53,7 @@ Get the optional module name for organization. This provides organizational info
 string&#124;null
  The module name, or null if not specified
 
-### getSourceInfo
+#### getSourceInfo
 
 
 ```php
@@ -63,7 +69,8 @@ Get optional source file information for debugging and tooling. This provides in
 SourceInfoInterface&#124;null
  The source file information, or null if not available
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

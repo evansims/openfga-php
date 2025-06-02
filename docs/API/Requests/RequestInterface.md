@@ -9,10 +9,15 @@ Base interface for all OpenFGA API request objects. This interface defines the c
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Requests/RequestInterface.php)
 
 
+## Related Classes
+* [ResponseInterface](Responses/ResponseInterface.md) (response)
+
 
 
 ## Methods
-### getRequest
+
+                        
+#### getRequest
 
 
 ```php

@@ -12,10 +12,52 @@ Response containing a specific authorization model from the store. This response
 * [GetAuthorizationModelResponseInterface](GetAuthorizationModelResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (interface)
+* [GetAuthorizationModelRequest](Requests/GetAuthorizationModelRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                                                                        
+### List Operations
+#### getModel
+
+
+```php
+public function getModel(): ?OpenFGA\Models\AuthorizationModelInterface
+```
+
+Get the retrieved authorization model. Returns the complete authorization model including its type definitions, schema version, and any conditions. The model defines the relationship types and permission logic that govern authorization decisions within the store.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponse.php#L100)
+
+
+#### Returns
+?OpenFGA\Models\AuthorizationModelInterface
+ The authorization model, or null if not found
+
+### Model Management
+#### schema
+
+*<small>Implements Responses\GetAuthorizationModelResponseInterface</small>*  
+
+```php
+public function schema(): SchemaInterface
+```
+
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for authorization model response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponseInterface.php#L33)
+
+
+#### Returns
+SchemaInterface
+ The schema definition for response validation
+
+### Other
+#### fromResponse
 
 *<small>Implements Responses\GetAuthorizationModelResponseInterface</small>*  
 
@@ -37,37 +79,4 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 static
  The parsed and validated response instance containing the API response data
-
-### getModel
-
-
-```php
-public function getModel(): ?OpenFGA\Models\AuthorizationModelInterface
-```
-
-Get the retrieved authorization model. Returns the complete authorization model including its type definitions, schema version, and any conditions. The model defines the relationship types and permission logic that govern authorization decisions within the store.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponse.php#L100)
-
-
-#### Returns
-?OpenFGA\Models\AuthorizationModelInterface
- The authorization model, or null if not found
-
-### schema
-
-*<small>Implements Responses\GetAuthorizationModelResponseInterface</small>*  
-
-```php
-public function schema(): SchemaInterface
-```
-
-Get the schema definition for this response. Returns the schema that defines the structure and validation rules for authorization model response data, ensuring consistent parsing and validation of API responses.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponseInterface.php#L33)
-
-
-#### Returns
-SchemaInterface
- The schema definition for response validation
 

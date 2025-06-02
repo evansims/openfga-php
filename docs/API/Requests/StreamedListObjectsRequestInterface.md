@@ -11,10 +11,16 @@ Request interface for streaming objects that a user has a specific relationship 
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (response)
+* [StreamedListObjectsRequest](Requests/StreamedListObjectsRequest.md) (implementation)
+
 
 
 ## Methods
-### getConsistency
+
+                                                                                                                        
+#### getConsistency
 
 
 ```php
@@ -30,7 +36,7 @@ Get the consistency requirement for this request.
 Consistency&#124;null
  The consistency requirement, or null if not specified
 
-### getContext
+#### getContext
 
 
 ```php
@@ -46,7 +52,7 @@ Get the context object for this request.
 object&#124;null
  The context object, or null if not specified
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -62,7 +68,7 @@ Get the contextual tuples for this request.
 TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
  The contextual tuples collection, or null if not specified
 
-### getModel
+#### getModel
 
 
 ```php
@@ -78,7 +84,7 @@ Get the authorization model ID for this request.
 string&#124;null
  The authorization model ID, or null if not specified
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -94,7 +100,7 @@ Get the relation name for this request.
 string
  The relation name to check
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -114,7 +120,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php
@@ -130,7 +136,7 @@ Get the store ID for this request.
 string
  The store ID
 
-### getType
+#### getType
 
 
 ```php
@@ -146,7 +152,7 @@ Get the object type for this request.
 string
  The object type to list
 
-### getUser
+#### getUser
 
 
 ```php

@@ -9,10 +9,16 @@ Interface for schema property definitions. This interface defines the contract f
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaPropertyInterface.php)
 
 
+## Related Classes
+* [SchemaProperty](Schema/SchemaProperty.md) (implementation)
+
 
 
 ## Methods
-### getClassName
+
+                                                                                                                                    
+### List Operations
+#### getClassName
 
 
 ```php
@@ -27,7 +33,7 @@ Get the fully qualified class name for object types.
 #### Returns
 ?string
 
-### getDefault
+#### getDefault
 
 
 ```php
@@ -43,7 +49,7 @@ Get the default value to use when property is missing.
 mixed
  Default value for optional properties
 
-### getEnum
+#### getEnum
 
 
 ```php
@@ -59,7 +65,7 @@ Get the array of allowed values for enumeration validation.
 array&lt;string&gt;&#124;null
  Array of allowed values or null if not an enumeration
 
-### getFormat
+#### getFormat
 
 
 ```php
@@ -75,7 +81,7 @@ Get the additional format constraint for this property.
 string&#124;null
  Format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) or null if none
 
-### getItems
+#### getItems
 
 
 ```php
@@ -90,7 +96,7 @@ Get the type specification for array items.
 #### Returns
 ?array
 
-### getName
+#### getName
 
 
 ```php
@@ -106,7 +112,7 @@ Get the property name as it appears in the data.
 string
  The property name
 
-### getParameterName
+#### getParameterName
 
 
 ```php
@@ -122,7 +128,7 @@ Get the alternative parameter name for constructor mapping.
 string&#124;null
  Alternative parameter name or null if using default mapping
 
-### getType
+#### getType
 
 
 ```php
@@ -138,7 +144,8 @@ Get the data type for this property.
 string
  The data type (string, integer, boolean, array, object, etc.)
 
-### isRequired
+### Utility
+#### isRequired
 
 
 ```php

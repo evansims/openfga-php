@@ -13,6 +13,10 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [ConditionParameterInterface](Models/ConditionParameterInterface.md) (interface)
+* [ConditionParameters](Models/Collections/ConditionParameters.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +24,10 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 
 
 ## Methods
-### getGenericTypes
+
+                                                                                    
+### List Operations
+#### getGenericTypes
 
 
 ```php
@@ -35,7 +42,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 #### Returns
 ?OpenFGA\Models\Collections\ConditionParametersInterface
 
-### getTypeName
+#### getTypeName
 
 
 ```php
@@ -51,21 +58,8 @@ Get the primary type name of the parameter. This returns the fundamental type of
 OpenFGA\Models\Enums\TypeName
  The type name enum value for this parameter
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameter.php#L76)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\ConditionParameterInterface</small>*  
 
@@ -81,4 +75,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameter.php#L76)
+
+
+#### Returns
+array
 

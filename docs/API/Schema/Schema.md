@@ -11,10 +11,15 @@ JSON schema definition for validating and transforming data structures. This sch
 ## Implements
 * [SchemaInterface](SchemaInterface.md)
 
+## Related Classes
+* [SchemaInterface](Schema/SchemaInterface.md) (interface)
+
 
 
 ## Methods
-### getClassName
+
+                                                
+#### getClassName
 
 
 ```php
@@ -30,7 +35,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 string
  The fully qualified class name for the model this schema defines
 
-### getProperties
+#### getProperties
 
 
 ```php
@@ -46,7 +51,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 array
  An associative array of property names to their schema property definitions
 
-### getProperty
+#### getProperty
 
 
 ```php

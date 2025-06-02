@@ -11,10 +11,16 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (response)
+* [ListStoresRequest](Requests/ListStoresRequest.md) (implementation)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                                
+#### getContinuationToken
 
 
 ```php
@@ -30,7 +36,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 string&#124;null
  The continuation token from a previous operation, or null for the first page
 
-### getPageSize
+#### getPageSize
 
 
 ```php
@@ -46,7 +52,7 @@ Get the maximum number of stores to return per page. Specifies the page size for
 int&#124;null
  The maximum number of stores to return per page, or null to use the default page size
 
-### getRequest
+#### getRequest
 
 
 ```php

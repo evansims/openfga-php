@@ -11,10 +11,17 @@ Interface for store creation response objects. This interface defines the contra
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [CreateStoreResponse](Responses/CreateStoreResponse.md) (implementation)
+* [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (request)
+
 
 
 ## Methods
-### getCreatedAt
+
+                                                                        
+### CRUD Operations
+#### getCreatedAt
 
 
 ```php
@@ -30,7 +37,24 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 DateTimeImmutable
  The creation timestamp of the store
 
-### getId
+#### getUpdatedAt
+
+
+```php
+public function getUpdatedAt(): DateTimeImmutable
+```
+
+Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata. For newly created stores, this will typically match the creation timestamp.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L72)
+
+
+#### Returns
+DateTimeImmutable
+ The last update timestamp of the store
+
+### List Operations
+#### getId
 
 
 ```php
@@ -46,7 +70,7 @@ Get the unique identifier of the created store. Returns the system-generated uni
 string
  The unique store identifier
 
-### getName
+#### getName
 
 
 ```php
@@ -61,20 +85,4 @@ Get the human-readable name of the created store. Returns the descriptive name t
 #### Returns
 string
  The descriptive name of the store
-
-### getUpdatedAt
-
-
-```php
-public function getUpdatedAt(): DateTimeImmutable
-```
-
-Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata. For newly created stores, this will typically match the creation timestamp.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L72)
-
-
-#### Returns
-DateTimeImmutable
- The last update timestamp of the store
 

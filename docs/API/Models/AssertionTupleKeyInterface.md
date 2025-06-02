@@ -12,10 +12,16 @@ Defines the contract for assertion tuple keys used in authorization model testin
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [AssertionTupleKey](Models/AssertionTupleKey.md) (implementation)
+
 
 
 ## Methods
-### getObject
+
+                                                                        
+### List Operations
+#### getObject
 
 
 ```php
@@ -31,7 +37,7 @@ Get the object being tested in the assertion. This represents the resource or en
 string
  The object identifier being tested
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -47,7 +53,7 @@ Get the relation being tested in the assertion. This represents the type of rela
 string
  The relation name being tested
 
-### getUser
+#### getUser
 
 
 ```php
@@ -63,7 +69,8 @@ Get the user being tested in the assertion. This represents the subject (user, g
 string
  The user identifier being tested
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

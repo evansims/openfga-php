@@ -11,10 +11,16 @@ Interface for listing historical changes to relationship tuples. This interface 
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (response)
+* [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (implementation)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                                                                    
+#### getContinuationToken
 
 
 ```php
@@ -30,7 +36,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 string&#124;null
  The continuation token from a previous operation, or null for the first page
 
-### getPageSize
+#### getPageSize
 
 
 ```php
@@ -46,7 +52,7 @@ Get the maximum number of changes to return per page. Specifies the page size fo
 int&#124;null
  The maximum number of changes to return per page, or null to use the default page size
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -66,7 +72,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStartTime
+#### getStartTime
 
 
 ```php
@@ -82,7 +88,7 @@ Get the earliest time to include in the change history. Specifies the starting p
 DateTimeImmutable&#124;null
  The earliest timestamp to include in results, or null to include all changes from the beginning
 
-### getStore
+#### getStore
 
 
 ```php
@@ -98,7 +104,7 @@ Get the store ID containing the tuple changes to list. Identifies which OpenFGA 
 string
  The store ID containing the tuple change history to retrieve
 
-### getType
+#### getType
 
 
 ```php

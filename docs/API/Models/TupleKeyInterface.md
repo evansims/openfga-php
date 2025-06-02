@@ -12,10 +12,16 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [TupleKey](Models/TupleKey.md) (implementation)
+
 
 
 ## Methods
-### getCondition
+
+                                                                                    
+### List Operations
+#### getCondition
 
 
 ```php
@@ -31,7 +37,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 ConditionInterface&#124;null
  The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 
-### getObject
+#### getObject
 
 
 ```php
@@ -47,7 +53,7 @@ Get the object in this relationship tuple. The object represents the resource or
 string&#124;null
  The object identifier, or null if not specified
 
-### getRelation
+#### getRelation
 
 
 ```php
@@ -63,7 +69,7 @@ Get the relation that defines the type of relationship. The relation describes w
 string&#124;null
  The relation name defining the type of relationship, or null if not specified
 
-### getUser
+#### getUser
 
 
 ```php
@@ -79,7 +85,8 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 string&#124;null
  The user identifier, or null if not specified
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

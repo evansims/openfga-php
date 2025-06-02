@@ -246,6 +246,8 @@ class DocumentationGenerator
                 'signature' => $this->getMethodSignature($method),
                 'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
                 'sourceLink' => $this->getMethodSourceLink($method),
+                'examples' => $this->extractExamplesFromDocComment($method->getDocComment() ?: ''),
+                'category' => $this->categorizeMethod($method),
                 'parameters' => [],
                 'return' => [
                     'type' => $this->getReturnType($method, $reflection->getNamespaceName(), true, $currentFilePath),
@@ -254,13 +256,15 @@ class DocumentationGenerator
                 ],
             ];
 
-            // Process parameters
+            // Process parameters - validate against reflection
+            $paramDescriptions = $this->validateAndExtractParameters($method);
             foreach ($method->getParameters() as $param) {
+                $paramName = $param->getName();
                 $methodData['parameters'][] = [
-                    'name' => '$' . $param->getName(),
+                    'name' => '$' . $paramName,
                     'type' => $this->getParameterType($param, $reflection->getNamespaceName(), true, $currentFilePath),
                     'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $reflection->getNamespaceName(), false, $currentFilePath)),
-                    'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
+                    'description' => $paramDescriptions[$paramName] ?? '',
                 ];
             }
 
@@ -328,10 +332,32 @@ class DocumentationGenerator
             $classData['methods'][] = $methodData;
         }
 
-        // Sort methods alphabetically
+        // Sort methods by category, then alphabetically
         usort($classData['methods'], function($a, $b) {
+            $categoryOrder = [
+                'Authorization' => 1,
+                'CRUD Operations' => 2,
+                'List Operations' => 3,
+                'Store Management' => 4,
+                'Model Management' => 5,
+                'Tuple Operations' => 6,
+                'Utility' => 7,
+                'Other' => 8,
+            ];
+            
+            $aCategoryWeight = $categoryOrder[$a['category']] ?? 999;
+            $bCategoryWeight = $categoryOrder[$b['category']] ?? 999;
+            
+            if ($aCategoryWeight !== $bCategoryWeight) {
+                return $aCategoryWeight <=> $bCategoryWeight;
+            }
+            
             return strcmp($a['name'], $b['name']);
         });
+        
+        // Add method statistics and related classes
+        $classData['methodStats'] = $this->calculateMethodStatistics($classData['methods']);
+        $classData['relatedClasses'] = $this->findRelatedClasses($reflection);
 
         // Render and save
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
@@ -373,6 +399,8 @@ class DocumentationGenerator
                         'signature' => $this->getMethodSignature($method),
                         'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
                         'sourceLink' => $this->getMethodSourceLink($method),
+                        'examples' => $this->extractExamplesFromDocComment($method->getDocComment() ?: ''),
+                        'category' => $this->categorizeMethod($method),
                         'parameters' => [],
                         'return' => [
                             'type' => $this->getReturnType($method, $interface->getNamespaceName(), true, $currentFilePath),
@@ -382,13 +410,15 @@ class DocumentationGenerator
                         'fromInterface' => $interface->getName(),
                     ];
 
-                    // Process parameters
+                    // Process parameters - validate against reflection
+                    $paramDescriptions = $this->validateAndExtractParameters($method);
                     foreach ($method->getParameters() as $param) {
+                        $paramName = $param->getName();
                         $methodData['parameters'][] = [
-                            'name' => '$' . $param->getName(),
+                            'name' => '$' . $paramName,
                             'type' => $this->getParameterType($param, $interface->getNamespaceName(), true, $currentFilePath),
                             'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $interface->getNamespaceName(), false, $currentFilePath)),
-                            'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
+                            'description' => $paramDescriptions[$paramName] ?? '',
                         ];
                     }
 
@@ -908,6 +938,221 @@ class DocumentationGenerator
         }
         
         return null;
+    }
+
+    /**
+     * Validate PHPDoc parameters match method signature and extract descriptions
+     */
+    private function validateAndExtractParameters(ReflectionMethod $method): array
+    {
+        $docComment = $method->getDocComment();
+        if (!$docComment) {
+            return [];
+        }
+
+        // Get actual parameter names from reflection
+        $reflectionParams = array_map(fn($p) => $p->getName(), $method->getParameters());
+        
+        // Extract parameter descriptions from PHPDoc
+        $paramDescriptions = [];
+        $lines = explode("\n", $docComment);
+        
+        foreach ($lines as $line) {
+            $trimmedLine = trim($line, "/* \t\n\r");
+            
+            // Match @param with flexible type and parameter name
+            if (preg_match('/@param\s+[^\s]+\s+\$([a-zA-Z_][a-zA-Z0-9_]*)(?:\s+(.*))?$/', $trimmedLine, $matches)) {
+                $paramName = $matches[1];
+                $description = isset($matches[2]) ? trim($matches[2]) : '';
+                
+                // Only include if parameter actually exists in method signature
+                if (in_array($paramName, $reflectionParams, true)) {
+                    $paramDescriptions[$paramName] = $description;
+                }
+            }
+        }
+        
+        return $paramDescriptions;
+    }
+
+    /**
+     * Extract code examples from @example tags in docblocks
+     */
+    private function extractExamplesFromDocComment(string $docComment): array
+    {
+        if (empty($docComment)) {
+            return [];
+        }
+
+        $examples = [];
+        $lines = explode("\n", $docComment);
+        $currentExample = null;
+        $inExample = false;
+        
+        foreach ($lines as $line) {
+            $trimmedLine = trim($line, "/* \t\n\r");
+            
+            if (preg_match('/@example(?:\s+(.*))?$/', $trimmedLine, $matches)) {
+                // Start of new example
+                if ($currentExample !== null) {
+                    $examples[] = $currentExample;
+                }
+                $currentExample = [
+                    'title' => isset($matches[1]) ? trim($matches[1]) : 'Example',
+                    'code' => []
+                ];
+                $inExample = true;
+            } elseif ($inExample) {
+                // Check if we hit another tag
+                if (preg_match('/^@\w+/', $trimmedLine)) {
+                    $inExample = false;
+                    if ($currentExample !== null) {
+                        $examples[] = $currentExample;
+                        $currentExample = null;
+                    }
+                } else {
+                    // Add line to current example
+                    if ($currentExample !== null && !empty($trimmedLine)) {
+                        $currentExample['code'][] = $trimmedLine;
+                    }
+                }
+            }
+        }
+        
+        // Add final example if exists
+        if ($currentExample !== null) {
+            $examples[] = $currentExample;
+        }
+        
+        // Clean up examples
+        foreach ($examples as &$example) {
+            $example['code'] = implode("\n", $example['code']);
+        }
+        
+        return $examples;
+    }
+
+    /**
+     * Categorize method by common patterns
+     */
+    private function categorizeMethod(ReflectionMethod $method): string
+    {
+        $methodName = strtolower($method->getName());
+        
+        $categories = [
+            'Authorization' => ['check', 'expand', 'allow', 'verify', 'validate'],
+            'CRUD Operations' => ['create', 'read', 'write', 'delete', 'update', 'remove'],
+            'List Operations' => ['list', 'get', 'find', 'search', 'fetch'],
+            'Store Management' => ['store', 'createstore', 'deletestore', 'getstore'],
+            'Model Management' => ['model', 'authorization', 'schema'],
+            'Tuple Operations' => ['tuple', 'relation', 'relationship'],
+            'Utility' => ['assert', 'get', 'set', 'has', 'is'],
+        ];
+        
+        foreach ($categories as $category => $patterns) {
+            foreach ($patterns as $pattern) {
+                if (str_contains($methodName, $pattern)) {
+                    return $category;
+                }
+            }
+        }
+        
+        return 'Other';
+    }
+    
+    /**
+     * Calculate method statistics for overview
+     */
+    private function calculateMethodStatistics(array $methods): array
+    {
+        $stats = [
+            'total' => count($methods),
+            'categories' => [],
+            'withExamples' => 0,
+            'withDescription' => 0,
+        ];
+        
+        foreach ($methods as $method) {
+            $category = $method['category'];
+            $stats['categories'][$category] = ($stats['categories'][$category] ?? 0) + 1;
+            
+            if (!empty($method['examples'])) {
+                $stats['withExamples']++;
+            }
+            
+            if (!empty($method['description'])) {
+                $stats['withDescription']++;
+            }
+        }
+        
+        return $stats;
+    }
+    
+    /**
+     * Find classes related to the current class
+     */
+    private function findRelatedClasses(ReflectionClass $class): array
+    {
+        $related = [];
+        $className = $class->getName();
+        $shortName = $class->getShortName();
+        
+        foreach ($this->classMap as $otherClassName => $filePath) {
+            if ($otherClassName === $className) {
+                continue;
+            }
+            
+            $otherShortName = substr($otherClassName, strrpos($otherClassName, '\\') + 1);
+            
+            // Look for naming patterns that suggest relationships
+            $patterns = [
+                // Interface/Implementation pairs
+                $shortName . 'Interface' => 'interface',
+                str_replace('Interface', '', $shortName) => 'implementation',
+                // Request/Response pairs
+                str_replace('Request', 'Response', $shortName) => 'response',
+                str_replace('Response', 'Request', $shortName) => 'request',
+                // Collection relationships
+                str_replace('s', '', $shortName) . 's' => 'collection',
+                str_replace('Collection', '', $shortName) => 'item',
+            ];
+            
+            foreach ($patterns as $pattern => $relationship) {
+                if ($otherShortName === $pattern) {
+                    $related[] = [
+                        'class' => $otherClassName,
+                        'shortName' => $otherShortName,
+                        'relationship' => $relationship,
+                        'link' => $this->generateRelatedClassLink($otherClassName, $class->getNamespaceName())
+                    ];
+                }
+            }
+        }
+        
+        return $related;
+    }
+    
+    /**
+     * Generate markdown link for related class
+     */
+    private function generateRelatedClassLink(string $targetClassName, string $currentNamespace): string
+    {
+        $targetPath = str_replace('OpenFGA\\', '', $targetClassName);
+        $targetPath = str_replace('\\', '/', $targetPath);
+        $currentPath = str_replace('OpenFGA\\', '', $currentNamespace);
+        $currentPath = str_replace('\\', '/', $currentPath);
+        
+        $targetShortName = substr($targetClassName, strrpos($targetClassName, '\\') + 1);
+        
+        // Calculate relative path
+        if ($currentPath !== '') {
+            $currentDepth = substr_count($currentPath, '/');
+            $relativePath = str_repeat('../', $currentDepth) . $targetPath . '.md';
+        } else {
+            $relativePath = $targetPath . '.md';
+        }
+        
+        return "[$targetShortName]($relativePath)";
     }
 
     public static function deleteDir(string $dir): void

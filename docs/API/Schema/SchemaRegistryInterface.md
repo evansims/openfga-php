@@ -9,5 +9,8 @@ Registry for managing schema definitions in the OpenFGA system. This interface p
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaRegistryInterface.php)
 
 
+## Related Classes
+* [SchemaRegistry](Schema/SchemaRegistry.md) (implementation)
+
 
 

@@ -13,23 +13,12 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 
 
 
+
 ## Methods
-### clearToken
 
-
-```php
-public function clearToken(): void
-```
-
-Clear the current access token and force re-authentication. Removes the stored access token, forcing the authentication strategy to request a new token on the next API call. This is useful for handling authentication errors or forcing token refresh.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L75)
-
-
-#### Returns
-void
-
-### getAuthenticationRequest
+                                                                                                
+### List Operations
+#### getAuthenticationRequest
 
 
 ```php
@@ -49,7 +38,7 @@ Get an authentication request context if this strategy requires token acquisitio
 ?OpenFGA\Network\RequestContext
  The authentication request context, or null if not needed
 
-### getAuthorizationHeader
+#### getAuthorizationHeader
 
 
 ```php
@@ -65,7 +54,7 @@ Get the authorization header value for API requests. Returns the authorization h
 ?string
  The authorization header value, or null if no authentication is needed
 
-### getToken
+#### getToken
 
 
 ```php
@@ -81,7 +70,23 @@ Get the current access token if available. Returns the stored access token, whic
 AccessTokenInterface&#124;null
  The current access token, or null if not authenticated
 
-### handleAuthenticationResponse
+### Other
+#### clearToken
+
+
+```php
+public function clearToken(): void
+```
+
+Clear the current access token and force re-authentication. Removes the stored access token, forcing the authentication strategy to request a new token on the next API call. This is useful for handling authentication errors or forcing token refresh.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L75)
+
+
+#### Returns
+void
+
+#### handleAuthenticationResponse
 
 
 ```php
@@ -100,7 +105,7 @@ Handle the authentication response and update the stored token. Processes the OA
 #### Returns
 void
 
-### requiresAuthentication
+#### requiresAuthentication
 
 
 ```php

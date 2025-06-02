@@ -12,10 +12,17 @@ Schema definition specifically for validating and transforming collection data s
 * [CollectionSchemaInterface](CollectionSchemaInterface.md)
 * [SchemaInterface](SchemaInterface.md)
 
+## Related Classes
+* [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md) (interface)
+* [Schema](Schema/Schema.md) (item)
+
 
 
 ## Methods
-### getClassName
+
+                                                                                                
+### List Operations
+#### getClassName
 
 
 ```php
@@ -31,7 +38,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 string
  The fully qualified class name for the model this schema defines
 
-### getItemType
+#### getItemType
 
 
 ```php
@@ -46,7 +53,7 @@ Get the type of each item in the collection.
 #### Returns
 string
 
-### getProperties
+#### getProperties
 
 
 ```php
@@ -62,7 +69,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 array
  An associative array of property names to their schema property definitions
 
-### getProperty
+#### getProperty
 
 
 ```php
@@ -82,7 +89,7 @@ Get a specific property definition by name. This method retrieves the schema def
 ?OpenFGA\Schema\SchemaProperty
  The property definition if it exists, or null if the property is not defined in this schema
 
-### getWrapperKey
+#### getWrapperKey
 
 
 ```php
@@ -98,7 +105,8 @@ Get the wrapper key for the collection data if any. Some collections expect data
 ?string
  The wrapper key or null if data is not wrapped
 
-### requiresItems
+### Other
+#### requiresItems
 
 
 ```php

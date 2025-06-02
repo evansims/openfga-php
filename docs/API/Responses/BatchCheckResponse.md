@@ -12,10 +12,53 @@ Response containing the results of a batch authorization check. This response co
 * [BatchCheckResponseInterface](BatchCheckResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [BatchCheckResponseInterface](Responses/BatchCheckResponseInterface.md) (interface)
+* [BatchCheckRequest](Requests/BatchCheckRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                                                            
+### List Operations
+#### getResult
+
+
+```php
+public function getResult(): array
+```
+
+Get the results map from correlation IDs to check results. Each key in the map is a correlation ID from the original request, and each value is the result of that specific check.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php#L101)
+
+
+#### Returns
+array
+ Map of correlation ID to check result
+
+#### getResultForCorrelationId
+
+
+```php
+public function getResultForCorrelationId(string $correlationId): ?OpenFGA\Models\BatchCheckSingleResultInterface
+```
+
+Get the result for a specific correlation ID. Returns the check result for the given correlation ID, or null if no result exists for that ID.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php#L110)
+
+#### Parameters
+| Name | Type | Description |
+|------|------|-------------|
+| `$correlationId` | string | The correlation ID to look up |
+
+#### Returns
+?OpenFGA\Models\BatchCheckSingleResultInterface
+
+### Other
+#### fromResponse
 
 *<small>Implements Responses\BatchCheckResponseInterface</small>*  
 
@@ -37,39 +80,4 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 static
  The parsed and validated response instance containing the API response data
-
-### getResult
-
-
-```php
-public function getResult(): array
-```
-
-Get the results map from correlation IDs to check results. Each key in the map is a correlation ID from the original request, and each value is the result of that specific check.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php#L101)
-
-
-#### Returns
-array
- Map of correlation ID to check result
-
-### getResultForCorrelationId
-
-
-```php
-public function getResultForCorrelationId(string $correlationId): ?OpenFGA\Models\BatchCheckSingleResultInterface
-```
-
-Get the result for a specific correlation ID. Returns the check result for the given correlation ID, or null if no result exists for that ID.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/BatchCheckResponse.php#L110)
-
-#### Parameters
-| Name | Type | Description |
-|------|------|-------------|
-| `$correlationId` | string | The correlation ID to look up |
-
-#### Returns
-?OpenFGA\Models\BatchCheckSingleResultInterface
 

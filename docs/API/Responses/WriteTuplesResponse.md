@@ -12,10 +12,16 @@ Response confirming successful writing of relationship tuples. This response is 
 * [WriteTuplesResponseInterface](WriteTuplesResponseInterface.md)
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md) (interface)
+* [WriteTuplesRequest](Requests/WriteTuplesRequest.md) (request)
+
 
 
 ## Methods
-### fromResponse
+
+                        
+#### fromResponse
 
 *<small>Implements Responses\WriteTuplesResponseInterface</small>*  
 

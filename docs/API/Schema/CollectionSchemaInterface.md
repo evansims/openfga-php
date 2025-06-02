@@ -11,10 +11,17 @@ Interface for collection schema definitions in the OpenFGA system. This interfac
 ## Implements
 * [SchemaInterface](SchemaInterface.md)
 
+## Related Classes
+* [SchemaInterface](Schema/SchemaInterface.md) (item)
+* [CollectionSchema](Schema/CollectionSchema.md) (implementation)
+
 
 
 ## Methods
-### getClassName
+
+                                                                                                
+### List Operations
+#### getClassName
 
 
 ```php
@@ -30,7 +37,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 string
  The fully qualified class name for the model this schema defines
 
-### getItemType
+#### getItemType
 
 
 ```php
@@ -45,7 +52,7 @@ Get the type of each item in the collection.
 #### Returns
 string
 
-### getProperties
+#### getProperties
 
 
 ```php
@@ -61,7 +68,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 array&lt;string, SchemaProperty&gt;
  An associative array of property names to their schema property definitions
 
-### getProperty
+#### getProperty
 
 
 ```php
@@ -81,7 +88,7 @@ Get a specific property definition by name. This method retrieves the schema def
 SchemaProperty&#124;null
  The property definition if it exists, or null if the property is not defined in this schema
 
-### getWrapperKey
+#### getWrapperKey
 
 
 ```php
@@ -97,7 +104,8 @@ Get the wrapper key for the collection data if any. Some collections expect data
 string&#124;null
  The wrapper key or null if data is not wrapped
 
-### requiresItems
+### Other
+#### requiresItems
 
 
 ```php

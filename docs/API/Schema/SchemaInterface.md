@@ -9,10 +9,15 @@ Base interface for schema definitions in the OpenFGA system. This interface defi
 [View source code](https://github.com/evansims/openfga-php/blob/main/src/Schema/SchemaInterface.php)
 
 
+## Related Classes
+* [Schema](Schema/Schema.md) (implementation)
+
 
 
 ## Methods
-### getClassName
+
+                                                
+#### getClassName
 
 
 ```php
@@ -28,7 +33,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 string
  The fully qualified class name for the model this schema defines
 
-### getProperties
+#### getProperties
 
 
 ```php
@@ -44,7 +49,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 array&lt;string, SchemaProperty&gt;
  An associative array of property names to their schema property definitions
 
-### getProperty
+#### getProperty
 
 
 ```php

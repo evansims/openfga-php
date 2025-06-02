@@ -13,6 +13,9 @@ Represents source file information for debugging and development tools. SourceIn
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [SourceInfoInterface](Models/SourceInfoInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Represents source file information for debugging and development tools. SourceIn
 
 
 ## Methods
-### getFile
+
+                                                                        
+### List Operations
+#### getFile
 
 
 ```php
@@ -36,21 +42,8 @@ Get the source file path where the model element was defined. This provides debu
 string
  The source file path where the element was defined
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfo.php#L74)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\SourceInfoInterface</small>*  
 
@@ -66,4 +59,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfo.php#L74)
+
+
+#### Returns
+array
 

@@ -12,10 +12,16 @@ Request for permanently deleting a store and all its data. This request removes 
 * [DeleteStoreRequestInterface](DeleteStoreRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [DeleteStoreResponse](Responses/DeleteStoreResponse.md) (response)
+* [DeleteStoreRequestInterface](Requests/DeleteStoreRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getRequest
+
+                                    
+#### getRequest
 
 
 ```php
@@ -35,7 +41,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

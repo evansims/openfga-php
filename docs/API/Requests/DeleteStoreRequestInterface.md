@@ -11,10 +11,16 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (response)
+* [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (implementation)
+
 
 
 ## Methods
-### getRequest
+
+                                    
+#### getRequest
 
 
 ```php
@@ -34,7 +40,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

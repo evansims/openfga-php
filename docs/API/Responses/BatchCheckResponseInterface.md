@@ -11,10 +11,16 @@ Response containing the results of a batch authorization check. This response co
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [BatchCheckResponse](Responses/BatchCheckResponse.md) (implementation)
+* [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (request)
+
 
 
 ## Methods
-### getResult
+
+                                    
+#### getResult
 
 
 ```php
@@ -30,7 +36,7 @@ Get the results map from correlation IDs to check results. Each key in the map i
 array&lt;string, BatchCheckSingleResultInterface&gt;
  Map of correlation ID to check result
 
-### getResultForCorrelationId
+#### getResultForCorrelationId
 
 
 ```php

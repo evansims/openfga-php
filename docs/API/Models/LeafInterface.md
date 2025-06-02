@@ -12,10 +12,16 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Leaf](Models/Leaf.md) (implementation)
+
 
 
 ## Methods
-### getComputed
+
+                                                                        
+### List Operations
+#### getComputed
 
 
 ```php
@@ -31,7 +37,7 @@ Get the computed userset specification for this leaf. When present, this defines
 ComputedInterface&#124;null
  The computed userset specification, or null if not used
 
-### getTupleToUserset
+#### getTupleToUserset
 
 
 ```php
@@ -47,7 +53,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 UsersetTreeTupleToUsersetInterface&#124;null
  The tuple-to-userset operation, or null if not used
 
-### getUsers
+#### getUsers
 
 
 ```php
@@ -63,7 +69,8 @@ Get the direct list of users for this leaf node. When present, this provides an 
 UsersListInterface&lt;UsersListUserInterface&gt;&#124;null
  The list of users with direct access, or null if not used
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

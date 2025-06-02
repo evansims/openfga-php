@@ -12,10 +12,16 @@ Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexi
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [User](Models/User.md) (implementation)
+
 
 
 ## Methods
-### getDifference
+
+                                                                                    
+### List Operations
+#### getDifference
 
 
 ```php
@@ -31,7 +37,7 @@ Get the difference operation for this user. Difference operations enable sophist
 DifferenceV1Interface&#124;null
  The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 
-### getObject
+#### getObject
 
 
 ```php
@@ -47,7 +53,7 @@ Get the user object representation. User objects represent direct, concrete user
 string&#124;UserObjectInterface&#124;null
  The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
-### getUserset
+#### getUserset
 
 
 ```php
@@ -63,7 +69,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 UsersetUserInterface&#124;null
  The userset definition specifying users through relationships, or null if this is not a userset-based user
 
-### getWildcard
+#### getWildcard
 
 
 ```php
@@ -79,7 +85,8 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 TypedWildcardInterface&#124;null
  The wildcard definition specifying the user type, or null if this is not a wildcard user
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

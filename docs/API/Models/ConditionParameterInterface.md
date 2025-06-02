@@ -12,10 +12,16 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [ConditionParameter](Models/ConditionParameter.md) (implementation)
+
 
 
 ## Methods
-### getGenericTypes
+
+                                                            
+### List Operations
+#### getGenericTypes
 
 
 ```php
@@ -30,7 +36,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 #### Returns
 ?OpenFGA\Models\Collections\ConditionParametersInterface
 
-### getTypeName
+#### getTypeName
 
 
 ```php
@@ -46,7 +52,8 @@ Get the primary type name of the parameter. This returns the fundamental type of
 TypeName
  The type name enum value for this parameter
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

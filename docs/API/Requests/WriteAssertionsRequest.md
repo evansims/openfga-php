@@ -12,10 +12,16 @@ Request for writing test assertions to validate authorization model behavior. Th
 * [WriteAssertionsRequestInterface](WriteAssertionsRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (response)
+* [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getAssertions
+
+                                                            
+#### getAssertions
 
 
 ```php
@@ -31,7 +37,7 @@ Get the test assertions to write to the authorization model. Returns a collectio
 OpenFGA\Models\Collections\AssertionsInterface
  Collection of test assertions to validate authorization model behavior
 
-### getModel
+#### getModel
 
 
 ```php
@@ -47,7 +53,7 @@ Get the authorization model ID to associate assertions with. Specifies which ver
 string
  The authorization model ID that these assertions will test
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -67,7 +73,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

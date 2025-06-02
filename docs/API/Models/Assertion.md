@@ -13,6 +13,9 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [AssertionInterface](Models/AssertionInterface.md) (interface)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,7 +23,10 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 
 
 ## Methods
-### getContext
+
+                                                                                                            
+### List Operations
+#### getContext
 
 
 ```php
@@ -35,7 +41,7 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 #### Returns
 ?array
 
-### getContextualTuples
+#### getContextualTuples
 
 
 ```php
@@ -50,7 +56,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 #### Returns
 ?OpenFGA\Models\Collections\TupleKeysInterface
 
-### getExpectation
+#### getExpectation
 
 
 ```php
@@ -66,7 +72,7 @@ Get the expected result for this assertion. The expectation defines whether the 
 bool
  True if access should be granted, false if access should be denied
 
-### getTupleKey
+#### getTupleKey
 
 
 ```php
@@ -82,21 +88,8 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 OpenFGA\Models\AssertionTupleKeyInterface
  The tuple key defining the authorization question
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L210)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\AssertionInterface</small>*  
 
@@ -112,4 +105,19 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L210)
+
+
+#### Returns
+array
 

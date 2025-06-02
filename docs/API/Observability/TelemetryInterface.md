@@ -11,8 +11,11 @@ Interface for OpenTelemetry integration in the OpenFGA SDK. This interface provi
 
 
 
+
 ## Methods
-### endHttpRequest
+
+                                                                                                            
+#### endHttpRequest
 
 
 ```php
@@ -33,7 +36,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 #### Returns
 void
 
-### endOperation
+#### endOperation
 
 
 ```php
@@ -50,12 +53,12 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 | `$span` | mixed | The span identifier returned by startOperation() |
 | `$success` | bool | Whether the operation completed successfully |
 | `$exception` | Throwable&#124;null | Optional exception that occurred during the operation |
-| `$attributes` | array&lt;string, mixed&gt; | Additional attributes to record |
+| `$attributes` | array&lt;string, mixed&gt; |  |
 
 #### Returns
 void
 
-### recordAuthenticationEvent
+#### recordAuthenticationEvent
 
 
 ```php
@@ -72,12 +75,12 @@ Record authentication events. Records metrics and traces related to authenticati
 | `$event` | string | The authentication event type (&#039;token_request&#039;, &#039;token_refresh&#039;, &#039;auth_failure&#039;) |
 | `$success` | bool | Whether the authentication event was successful |
 | `$duration` | float | The duration of the authentication operation in seconds |
-| `$attributes` | array&lt;string, mixed&gt; | Additional event attributes |
+| `$attributes` | array&lt;string, mixed&gt; |  |
 
 #### Returns
 void
 
-### recordCircuitBreakerState
+#### recordCircuitBreakerState
 
 
 ```php
@@ -99,7 +102,7 @@ Record circuit breaker state changes. Records metrics about circuit breaker stat
 #### Returns
 void
 
-### recordOperationMetrics
+#### recordOperationMetrics
 
 
 ```php
@@ -117,12 +120,12 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 | `$duration` | float | The operation duration in seconds |
 | `$store` | StoreInterface&#124;string | The store being operated on |
 | `$model` | AuthorizationModelInterface&#124;string&#124;null | The authorization model used |
-| `$attributes` | array&lt;string, mixed&gt; | Additional metric attributes |
+| `$attributes` | array&lt;string, mixed&gt; |  |
 
 #### Returns
 void
 
-### recordRetryAttempt
+#### recordRetryAttempt
 
 
 ```php
@@ -145,7 +148,7 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 #### Returns
 void
 
-### startHttpRequest
+#### startHttpRequest
 
 
 ```php
@@ -165,7 +168,7 @@ Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP req
 mixed
  A span identifier or context that can be passed to endHttpRequest()
 
-### startOperation
+#### startOperation
 
 
 ```php
@@ -182,7 +185,7 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 | `$operation` | string | The OpenFGA operation name (e.g., &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
 | `$store` | StoreInterface&#124;string | The store being operated on |
 | `$model` | AuthorizationModelInterface&#124;string&#124;null | The authorization model being used |
-| `$attributes` | array&lt;string, mixed&gt; | Additional span attributes |
+| `$attributes` | array&lt;string, mixed&gt; |  |
 
 #### Returns
 mixed

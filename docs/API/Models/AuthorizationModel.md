@@ -13,6 +13,10 @@ Defines the authorization rules and relationships for your application. An Autho
 * JsonSerializable
 * [ModelInterface](ModelInterface.md)
 
+## Related Classes
+* [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) (interface)
+* [AuthorizationModels](Models/Collections/AuthorizationModels.md) (collection)
+
 ## Constants
 | Name | Value | Description |
 |------|-------|-------------|
@@ -20,23 +24,10 @@ Defines the authorization rules and relationships for your application. An Autho
 
 
 ## Methods
-### dsl
 
-
-```php
-public function dsl(): string
-```
-
-Generate a DSL (Domain Specific Language) representation of this authorization model. The DSL provides a human-readable, text-based format for expressing authorization models that is easier to understand, review, and modify than raw JSON. The DSL format uses a syntax similar to configuration languages, making it accessible to both developers and non-technical stakeholders who need to understand or modify permission structures. The DSL representation includes: - Type definitions with their relations and inheritance rules - Condition expressions and parameters - Human-readable relation definitions and computed permissions - Comments and formatting that enhance comprehension This format is particularly valuable for: - Documentation and code reviews - Version control and change tracking - Model debugging and testing - Administrative interfaces and tooling
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L73)
-
-
-#### Returns
-string
- The authorization model expressed in OpenFGA DSL format for human readability
-
-### getConditions
+                                                                                                                        
+### List Operations
+#### getConditions
 
 
 ```php
@@ -52,7 +43,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 ?OpenFGA\Models\Collections\ConditionsInterface
  The collection of reusable conditions defined in this model, or null if no conditions are defined
 
-### getId
+#### getId
 
 
 ```php
@@ -68,7 +59,7 @@ Get the unique identifier for this authorization model. The model ID serves as a
 string
  The globally unique identifier for this authorization model version
 
-### getSchemaVersion
+#### getSchemaVersion
 
 
 ```php
@@ -84,7 +75,7 @@ Get the schema version of this authorization model. The schema version indicates
 OpenFGA\Models\Enums\SchemaVersion
  The schema version enumeration indicating the model format specification
 
-### getTypeDefinitions
+#### getTypeDefinitions
 
 
 ```php
@@ -100,22 +91,8 @@ Get the type definitions that define the structure of this authorization model. 
 OpenFGA\Models\Collections\TypeDefinitionsInterface
  The collection of type definitions that structure this authorization model
 
-### jsonSerialize
-
-
-```php
-public function jsonSerialize(): array
-```
-
-Serialize the authorization model for JSON encoding. This method prepares the complete authorization model data for API communication with the OpenFGA service, converting all components into the format specified by the OpenFGA API. The serialization includes: - Model identification and versioning information - Complete type definitions with relations and metadata - Optional conditions with expressions and parameters - All nested structures properly formatted for JSON transmission The resulting structure is suitable for creating new authorization models, updating existing models, or storing model definitions in external systems. All data is formatted according to the OpenFGA API specification to ensure compatibility and correct interpretation by the authorization service.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L118)
-
-
-#### Returns
-array
-
-### schema
+### Model Management
+#### schema
 
 *<small>Implements Models\AuthorizationModelInterface</small>*  
 
@@ -131,4 +108,36 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 SchemaInterface
  The schema definition containing validation rules and property specifications for this model
+
+### Other
+#### dsl
+
+
+```php
+public function dsl(): string
+```
+
+Generate a DSL (Domain Specific Language) representation of this authorization model. The DSL provides a human-readable, text-based format for expressing authorization models that is easier to understand, review, and modify than raw JSON. The DSL format uses a syntax similar to configuration languages, making it accessible to both developers and non-technical stakeholders who need to understand or modify permission structures. The DSL representation includes: - Type definitions with their relations and inheritance rules - Condition expressions and parameters - Human-readable relation definitions and computed permissions - Comments and formatting that enhance comprehension This format is particularly valuable for: - Documentation and code reviews - Version control and change tracking - Model debugging and testing - Administrative interfaces and tooling
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L73)
+
+
+#### Returns
+string
+ The authorization model expressed in OpenFGA DSL format for human readability
+
+#### jsonSerialize
+
+
+```php
+public function jsonSerialize(): array
+```
+
+Serialize the authorization model for JSON encoding. This method prepares the complete authorization model data for API communication with the OpenFGA service, converting all components into the format specified by the OpenFGA API. The serialization includes: - Model identification and versioning information - Complete type definitions with relations and metadata - Optional conditions with expressions and parameters - All nested structures properly formatted for JSON transmission The resulting structure is suitable for creating new authorization models, updating existing models, or storing model definitions in external systems. All data is formatted according to the OpenFGA API specification to ensure compatibility and correct interpretation by the authorization service.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AuthorizationModel.php#L118)
+
+
+#### Returns
+array
 

@@ -11,10 +11,15 @@ Maps exception error enums to their default message keys. This class provides th
 ## Implements
 * [DefaultMessagesInterface](DefaultMessagesInterface.md)
 
+## Related Classes
+* [DefaultMessagesInterface](Exceptions/DefaultMessagesInterface.md) (interface)
+
 
 
 ## Methods
-### forAuthenticationError
+
+                                                                                    
+#### forAuthenticationError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*  
 
@@ -35,7 +40,7 @@ Get the default message key for an authentication error. Maps authentication-rel
 Messages
  The corresponding message enum case for translation
 
-### forClientError
+#### forClientError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*  
 
@@ -56,7 +61,7 @@ Get the default message key for a general client error. Maps high-level client e
 Messages
  The corresponding message enum case for translation
 
-### forConfigurationError
+#### forConfigurationError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*  
 
@@ -77,7 +82,7 @@ Get the default message key for a configuration error. Maps configuration-relate
 Messages
  The corresponding message enum case for translation
 
-### forError
+#### forError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*  
 
@@ -98,7 +103,7 @@ Get the default message key for any supported error type. Generic method that ac
 Messages
  The corresponding message enum case for translation
 
-### forNetworkError
+#### forNetworkError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*  
 
@@ -119,7 +124,7 @@ Get the default message key for a network error. Maps network and HTTP-related e
 Messages
  The corresponding message enum case for translation
 
-### forSerializationError
+#### forSerializationError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*  
 

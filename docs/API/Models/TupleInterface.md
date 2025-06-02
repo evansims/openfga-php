@@ -12,10 +12,16 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [Tuple](Models/Tuple.md) (implementation)
+
 
 
 ## Methods
-### getKey
+
+                                                            
+### List Operations
+#### getKey
 
 
 ```php
@@ -31,7 +37,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 TupleKeyInterface
  The tuple key defining this relationship with user, relation, object, and optional condition
 
-### getTimestamp
+#### getTimestamp
 
 
 ```php
@@ -47,7 +53,8 @@ Get the timestamp when this tuple was created or last modified. Timestamps provi
 DateTimeImmutable
  The creation or last modification timestamp in UTC timezone
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

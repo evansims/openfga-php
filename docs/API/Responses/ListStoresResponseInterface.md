@@ -11,10 +11,16 @@ Interface for stores listing response objects. This interface defines the contra
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [ListStoresResponse](Responses/ListStoresResponse.md) (implementation)
+* [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (request)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                    
+#### getContinuationToken
 
 
 ```php
@@ -30,7 +36,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 string&#124;null
  The continuation token for fetching more results, or null if no more pages exist
 
-### getStores
+#### getStores
 
 
 ```php

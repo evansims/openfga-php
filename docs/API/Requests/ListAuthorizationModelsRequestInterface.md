@@ -11,10 +11,16 @@ Interface for listing authorization models in a store. This interface defines th
 ## Implements
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (response)
+* [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (implementation)
+
 
 
 ## Methods
-### getContinuationToken
+
+                                                            
+#### getContinuationToken
 
 
 ```php
@@ -30,7 +36,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 string&#124;null
  The continuation token from a previous operation, or null for the first page
 
-### getPageSize
+#### getPageSize
 
 
 ```php
@@ -46,7 +52,7 @@ Get the maximum number of models to return per page. Specifies the page size for
 int&#124;null
  The maximum number of models to return per page, or null to use the default page size
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -66,7 +72,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php

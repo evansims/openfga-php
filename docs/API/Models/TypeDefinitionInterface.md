@@ -12,10 +12,16 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 * [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
+## Related Classes
+* [TypeDefinition](Models/TypeDefinition.md) (implementation)
+
 
 
 ## Methods
-### getMetadata
+
+                                                                        
+### List Operations
+#### getMetadata
 
 
 ```php
@@ -31,7 +37,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 MetadataInterface&#124;null
  The metadata, or null if not specified
 
-### getRelations
+#### getRelations
 
 
 ```php
@@ -46,7 +52,7 @@ Get the collection of relations defined for this type. Relations define the auth
 #### Returns
 TypeDefinitionRelationsInterface&lt;UsersetInterface&gt;&#124;null
 
-### getType
+#### getType
 
 
 ```php
@@ -62,7 +68,8 @@ Get the name of this type. The type name uniquely identifies this type definitio
 string
  The unique type name
 
-### jsonSerialize
+### Other
+#### jsonSerialize
 
 
 ```php

@@ -11,8 +11,12 @@ Interface for OpenFGA authentication strategies. This interface defines the cont
 
 
 
+
 ## Methods
-### getAuthenticationRequest
+
+                                                                        
+### List Operations
+#### getAuthenticationRequest
 
 
 ```php
@@ -32,7 +36,7 @@ Get an authentication request context if this strategy requires token acquisitio
 RequestContext&#124;null
  The authentication request context, or null if not needed
 
-### getAuthorizationHeader
+#### getAuthorizationHeader
 
 
 ```php
@@ -48,7 +52,8 @@ Get the authorization header value for API requests. Returns the authorization h
 string&#124;null
  The authorization header value, or null if no authentication is needed
 
-### handleAuthenticationResponse
+### Other
+#### handleAuthenticationResponse
 
 
 ```php
@@ -67,7 +72,7 @@ Handle the authentication response and update internal state. This method is cal
 #### Returns
 void
 
-### requiresAuthentication
+#### requiresAuthentication
 
 
 ```php

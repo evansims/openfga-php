@@ -11,10 +11,16 @@ Interface for tuple changes listing response objects. This interface defines the
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (implementation)
+* [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (request)
+
 
 
 ## Methods
-### getChanges
+
+                                    
+#### getChanges
 
 
 ```php
@@ -30,7 +36,7 @@ Get the collection of tuple changes. Returns a type-safe collection containing t
 TupleChangesInterface&lt;TupleChangeInterface&gt;
  The collection of tuple changes
 
-### getContinuationToken
+#### getContinuationToken
 
 
 ```php

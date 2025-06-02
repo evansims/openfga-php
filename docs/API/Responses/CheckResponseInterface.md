@@ -11,10 +11,17 @@ Interface for permission check response objects. This interface defines the cont
 ## Implements
 * [ResponseInterface](ResponseInterface.md)
 
+## Related Classes
+* [CheckResponse](Responses/CheckResponse.md) (implementation)
+* [CheckRequestInterface](Requests/CheckRequestInterface.md) (request)
+
 
 
 ## Methods
-### getAllowed
+
+                                                
+### Authorization
+#### getAllowed
 
 
 ```php
@@ -30,7 +37,8 @@ Get whether the permission check was allowed. This is the primary result of the 
 bool&#124;null
  True if permission is granted, false if denied, or null if the result is indeterminate
 
-### getResolution
+### List Operations
+#### getResolution
 
 
 ```php

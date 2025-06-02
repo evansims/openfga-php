@@ -14,8 +14,102 @@ Base interface for all OpenFGA SDK exceptions. Extends the standard PHP Throwabl
 
 
 
+
 ## Methods
-### context
+
+                                                                                                                                                                        
+### List Operations
+#### getCode
+
+
+```php
+public function getCode()
+```
+
+
+
+
+
+#### getFile
+
+
+```php
+public function getFile(): string
+```
+
+
+
+
+#### Returns
+string
+
+#### getLine
+
+
+```php
+public function getLine(): int
+```
+
+
+
+
+#### Returns
+int
+
+#### getMessage
+
+
+```php
+public function getMessage(): string
+```
+
+
+
+
+#### Returns
+string
+
+#### getPrevious
+
+
+```php
+public function getPrevious(): ?Throwable
+```
+
+
+
+
+#### Returns
+?Throwable
+
+#### getTrace
+
+
+```php
+public function getTrace(): array
+```
+
+
+
+
+#### Returns
+array
+
+#### getTraceAsString
+
+
+```php
+public function getTraceAsString(): string
+```
+
+
+
+
+#### Returns
+string
+
+### Other
+#### context
 
 
 ```php
@@ -31,96 +125,7 @@ Get additional context information about the exception. Provides access to conte
 array&lt;string, mixed&gt;
  Associative array of context data including parameter values, error details, and debugging information
 
-### getCode
-
-
-```php
-public function getCode()
-```
-
-
-
-
-
-### getFile
-
-
-```php
-public function getFile(): string
-```
-
-
-
-
-#### Returns
-string
-
-### getLine
-
-
-```php
-public function getLine(): int
-```
-
-
-
-
-#### Returns
-int
-
-### getMessage
-
-
-```php
-public function getMessage(): string
-```
-
-
-
-
-#### Returns
-string
-
-### getPrevious
-
-
-```php
-public function getPrevious(): ?Throwable
-```
-
-
-
-
-#### Returns
-?Throwable
-
-### getTrace
-
-
-```php
-public function getTrace(): array
-```
-
-
-
-
-#### Returns
-array
-
-### getTraceAsString
-
-
-```php
-public function getTraceAsString(): string
-```
-
-
-
-
-#### Returns
-string
-
-### kind
+#### kind
 
 
 ```php
@@ -136,7 +141,7 @@ Get the specific error category for this exception. Returns the error classifica
 AuthenticationError&#124;ClientError&#124;ConfigurationError&#124;NetworkError&#124;SerializationError
  The error category enum indicating the type of failure
 
-### previous
+#### previous
 
 
 ```php
@@ -152,7 +157,7 @@ Get the previous exception that caused this one. Provides access to the exceptio
 Throwable&#124;null
  The previous exception in the chain, or null if this is the root exception
 
-### request
+#### request
 
 
 ```php
@@ -168,7 +173,7 @@ Get the HTTP request associated with this exception. Returns the PSR-7 HTTP requ
 RequestInterface&#124;null
  The PSR-7 HTTP request that triggered the exception, or null if not applicable
 
-### response
+#### response
 
 
 ```php

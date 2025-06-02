@@ -12,10 +12,16 @@ Request for retrieving a specific authorization model by its ID. This request fe
 * [GetAuthorizationModelRequestInterface](GetAuthorizationModelRequestInterface.md)
 * [RequestInterface](RequestInterface.md)
 
+## Related Classes
+* [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (response)
+* [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md) (interface)
+
 
 
 ## Methods
-### getModel
+
+                                                
+#### getModel
 
 
 ```php
@@ -31,7 +37,7 @@ Get the authorization model ID to retrieve. Specifies which version of the autho
 string
  The unique identifier of the authorization model to retrieve
 
-### getRequest
+#### getRequest
 
 
 ```php
@@ -51,7 +57,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-### getStore
+#### getStore
 
 
 ```php
