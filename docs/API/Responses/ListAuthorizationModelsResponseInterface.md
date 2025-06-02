@@ -33,7 +33,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The continuation token for fetching more results, or null if no more pages exist
 
 #### getModels
@@ -49,6 +49,6 @@ Get the collection of authorization models. Returns a type-safe collection conta
 
 
 #### Returns
-AuthorizationModelsInterface&lt;AuthorizationModelInterface&gt;
+[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)&lt;[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)&gt;
  The collection of authorization models
 

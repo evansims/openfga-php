@@ -39,7 +39,7 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 
 #### Returns
-OpenFGA\Models\NodeInterface
+[NodeInterface](NodeInterface.md)
  The root node of the userset tree
 
 ### Model Management

@@ -33,6 +33,6 @@ Get the collection of users with the specified relationship. Returns a type-safe
 
 
 #### Returns
-UsersInterface&lt;UserInterface&gt;
+[UsersInterface](Models/Collections/UsersInterface.md)&lt;[UserInterface](Models/UserInterface.md)&gt;
  The collection of users with the relationship
 

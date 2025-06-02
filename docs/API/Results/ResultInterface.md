@@ -66,7 +66,7 @@ Executes a callback when the result is a failure and continues the chain. The ca
 | `$fn` | callable |  |
 
 #### Returns
-ResultInterface
+[ResultInterface](ResultInterface.md)
  The original result for method chaining
 
 #### recover
@@ -86,7 +86,7 @@ Recovers from a failure by transforming it into a success or different failure. 
 | `$fn` | callable |  |
 
 #### Returns
-ResultInterface
+[ResultInterface](ResultInterface.md)
  The recovered result or original success
 
 #### rethrow
@@ -103,10 +103,10 @@ Throws the contained error or continues the chain. For Failure results, this thr
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$throwable` | Throwable&#124;null | Optional throwable to throw instead of the contained error |
+| `$throwable` | Throwable &#124; null | Optional throwable to throw instead of the contained error |
 
 #### Returns
-ResultInterface
+[ResultInterface](ResultInterface.md)
  The original result for method chaining
 
 #### succeeded
@@ -142,7 +142,7 @@ Executes a callback when the result is a success and continues the chain. The ca
 | `$fn` | callable |  |
 
 #### Returns
-ResultInterface
+[ResultInterface](ResultInterface.md)
  The original result for method chaining
 
 #### then
@@ -162,7 +162,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 | `$fn` | callable |  |
 
 #### Returns
-ResultInterface
+[ResultInterface](ResultInterface.md)
  The transformed result or original failure
 
 #### unwrap

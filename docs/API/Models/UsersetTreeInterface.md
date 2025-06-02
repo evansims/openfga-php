@@ -34,7 +34,7 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 
 #### Returns
-NodeInterface
+[NodeInterface](NodeInterface.md)
  The root node of the userset tree
 
 ### Other

@@ -59,7 +59,7 @@ Get an item by its offset key.
 | `value` | mixed |  |
 
 #### Returns
-?OpenFGA\Models\ModelInterface
+?[ModelInterface](../Models/ModelInterface.md)
 
 ### Model Management
 #### schema
@@ -220,7 +220,7 @@ public function current(): OpenFGA\Models\ModelInterface
 
 
 #### Returns
-OpenFGA\Models\ModelInterface
+[ModelInterface](../Models/ModelInterface.md)
 
 #### jsonSerialize
 

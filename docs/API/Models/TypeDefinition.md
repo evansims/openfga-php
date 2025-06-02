@@ -40,7 +40,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 
 #### Returns
-?OpenFGA\Models\MetadataInterface
+?[MetadataInterface](MetadataInterface.md)
  The metadata, or null if not specified
 
 #### getRelations
@@ -56,7 +56,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 
 #### Returns
-?OpenFGA\Models\Collections\TypeDefinitionRelationsInterface
+?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
 
 #### getType
 

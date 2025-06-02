@@ -33,7 +33,7 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 
 #### Returns
-AssertionsInterface&lt;AssertionInterface&gt;
+[AssertionsInterface](Models/Collections/AssertionsInterface.md)&lt;[AssertionInterface](Models/AssertionInterface.md)&gt;
  Collection of test assertions to validate authorization model behavior
 
 #### getModel

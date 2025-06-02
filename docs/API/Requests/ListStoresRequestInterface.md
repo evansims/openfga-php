@@ -33,7 +33,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The continuation token from a previous operation, or null for the first page
 
 #### getPageSize
@@ -49,7 +49,7 @@ Get the maximum number of stores to return per page. Specifies the page size for
 
 
 #### Returns
-int&#124;null
+int &#124; null
  The maximum number of stores to return per page, or null to use the default page size
 
 #### getRequest

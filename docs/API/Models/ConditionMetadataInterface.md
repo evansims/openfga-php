@@ -50,7 +50,7 @@ Get source file information for debugging and tooling. This provides information
 
 
 #### Returns
-SourceInfoInterface
+[SourceInfoInterface](SourceInfoInterface.md)
  The source file information
 
 ### Other

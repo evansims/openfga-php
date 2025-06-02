@@ -35,7 +35,7 @@ Get an authentication request context if this strategy requires token acquisitio
 | `response` | Psr\Http\Message\ResponseInterface |  |
 
 #### Returns
-?OpenFGA\Network\RequestContext
+?[RequestContext](Network/RequestContext.md)
  The authentication request context, or null if not needed
 
 #### getAuthorizationHeader
@@ -67,7 +67,7 @@ Get the current access token if available. Returns the stored access token, whic
 
 
 #### Returns
-AccessTokenInterface&#124;null
+[AccessTokenInterface](AccessTokenInterface.md) &#124; null
  The current access token, or null if not authenticated
 
 ### Other
@@ -100,7 +100,7 @@ Handle the authentication response and update the stored token. Processes the OA
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | ResponseInterface | The authentication response from the OAuth server |
+| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The authentication response from the OAuth server |
 
 #### Returns
 void

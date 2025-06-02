@@ -33,7 +33,7 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 
 
 #### Returns
-Psr\Http\Client\ClientInterface
+ClientInterface
  The PSR-18 HTTP client instance for executing requests
 
 #### getHttpRequestFactory
@@ -49,7 +49,7 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 
 
 #### Returns
-Psr\Http\Message\RequestFactoryInterface
+RequestFactoryInterface
  The PSR-17 factory for creating HTTP request objects
 
 #### getHttpResponseFactory
@@ -65,7 +65,7 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 
 
 #### Returns
-Psr\Http\Message\ResponseFactoryInterface
+ResponseFactoryInterface
  The PSR-17 factory for creating HTTP response objects
 
 #### getHttpStreamFactory
@@ -81,7 +81,7 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 
 
 #### Returns
-Psr\Http\Message\StreamFactoryInterface
+StreamFactoryInterface
  The PSR-17 factory for creating HTTP message body streams
 
 ### Other
@@ -100,8 +100,8 @@ Handle error responses by throwing appropriate exceptions. Analyzes HTTP error r
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | ResponseInterface | The HTTP error response to analyze and convert to an exception |
-| `$request` | HttpRequestInterface&#124;null | Optional request context for enhanced error reporting |
+| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The HTTP error response to analyze and convert to an exception |
+| `$request` | HttpRequestInterface &#124; null | Optional request context for enhanced error reporting |
 
 #### Returns
 never

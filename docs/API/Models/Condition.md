@@ -56,7 +56,7 @@ Get metadata about the condition definition. This provides additional informatio
 
 
 #### Returns
-?OpenFGA\Models\ConditionMetadataInterface
+?[ConditionMetadataInterface](ConditionMetadataInterface.md)
  The condition metadata, or null if not provided
 
 #### getName
@@ -88,7 +88,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 
 #### Returns
-?OpenFGA\Models\Collections\ConditionParametersInterface
+?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
  The condition parameters, or null if the condition uses no parameters
 
 ### Model Management

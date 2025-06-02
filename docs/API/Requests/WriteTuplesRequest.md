@@ -35,7 +35,7 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 
 #### Returns
-?OpenFGA\Models\Collections\TupleKeysInterface
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
  Collection of relationship tuples to remove, or null if no deletions are requested
 
 #### getWrites
@@ -51,7 +51,7 @@ Get the relationship tuples to write to the store. Returns a collection of relat
 
 
 #### Returns
-?OpenFGA\Models\Collections\TupleKeysInterface
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
  Collection of relationship tuples to add, or null if no writes are requested
 
 ### List Operations
@@ -85,10 +85,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-OpenFGA\Network\RequestContext
+[RequestContext](Network/RequestContext.md)
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 #### getStore

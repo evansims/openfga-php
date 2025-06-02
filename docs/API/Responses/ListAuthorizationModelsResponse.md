@@ -51,7 +51,7 @@ Get the collection of authorization models. Returns a type-safe collection conta
 
 
 #### Returns
-OpenFGA\Models\Collections\AuthorizationModelsInterface
+[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)
  The collection of authorization models
 
 ### Model Management

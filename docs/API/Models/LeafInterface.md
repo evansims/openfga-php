@@ -34,7 +34,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 
 #### Returns
-ComputedInterface&#124;null
+[ComputedInterface](ComputedInterface.md) &#124; null
  The computed userset specification, or null if not used
 
 #### getTupleToUserset
@@ -50,7 +50,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 
 #### Returns
-UsersetTreeTupleToUsersetInterface&#124;null
+[UsersetTreeTupleToUsersetInterface](UsersetTreeTupleToUsersetInterface.md) &#124; null
  The tuple-to-userset operation, or null if not used
 
 #### getUsers
@@ -66,7 +66,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 
 #### Returns
-UsersListInterface&lt;UsersListUserInterface&gt;&#124;null
+[UsersListInterface](Models/Collections/UsersListInterface.md)&lt;[UsersListUserInterface](UsersListUserInterface.md)&gt; &#124; null
  The list of users with direct access, or null if not used
 
 ### Other

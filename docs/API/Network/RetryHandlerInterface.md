@@ -32,10 +32,10 @@ Execute an HTTP request with automatic retry logic. Performs the HTTP request wi
 | Name | Type | Description |
 |------|------|-------------|
 | `$requestExecutor` | callable |  |
-| `$request` | RequestInterface | The original HTTP request for context |
+| `$request` | [RequestInterface](Requests/RequestInterface.md) | The original HTTP request for context |
 | `$endpoint` | string | The endpoint URL for circuit breaker tracking |
 
 #### Returns
-ResponseInterface
+[ResponseInterface](Responses/ResponseInterface.md)
  The successful HTTP response
 

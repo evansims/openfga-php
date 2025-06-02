@@ -34,7 +34,7 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 
 #### Returns
-OpenFGA\Models\Collections\AssertionsInterface
+[AssertionsInterface](Models/Collections/AssertionsInterface.md)
  Collection of test assertions to validate authorization model behavior
 
 #### getModel
@@ -67,10 +67,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-OpenFGA\Network\RequestContext
+[RequestContext](Network/RequestContext.md)
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 #### getStore

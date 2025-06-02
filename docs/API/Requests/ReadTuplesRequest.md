@@ -34,7 +34,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 
 #### Returns
-?OpenFGA\Models\Enums\Consistency
+?Consistency
  The consistency level for the operation, or null to use the default consistency setting
 
 #### getContinuationToken
@@ -83,10 +83,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-OpenFGA\Network\RequestContext
+[RequestContext](Network/RequestContext.md)
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 #### getStore
@@ -118,6 +118,6 @@ Get the tuple key pattern for filtering results. Specifies the relationship patt
 
 
 #### Returns
-OpenFGA\Models\TupleKeyInterface
+[TupleKeyInterface](Models/TupleKeyInterface.md)
  The relationship tuple pattern for filtering results
 

@@ -40,7 +40,7 @@ Get the difference operation for this node. The difference operation represents 
 
 
 #### Returns
-?OpenFGA\Models\UsersetTreeDifferenceInterface
+?[UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md)
 
 #### getIntersection
 
@@ -55,7 +55,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 
 #### Returns
-?OpenFGA\Models\NodeInterface&#124;OpenFGA\Models\NodeUnionInterface&#124;null
+?[NodeInterface](NodeInterface.md) &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
  The intersection node or null if not applicable
 
 #### getLeaf
@@ -71,7 +71,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 
 #### Returns
-?OpenFGA\Models\LeafInterface
+?[LeafInterface](LeafInterface.md)
 
 #### getName
 
@@ -102,7 +102,7 @@ Get the union operation for this node. The union operation represents the combin
 
 
 #### Returns
-?OpenFGA\Models\NodeInterface&#124;OpenFGA\Models\NodeUnionInterface&#124;null
+?[NodeInterface](NodeInterface.md) &#124; [NodeUnionInterface](NodeUnionInterface.md) &#124; null
  The union node or null if not applicable
 
 ### Model Management

@@ -35,7 +35,7 @@ Get the collection of users with the specified relationship. Returns a type-safe
 
 
 #### Returns
-OpenFGA\Models\Collections\UsersInterface
+[UsersInterface](Models/Collections/UsersInterface.md)
  The collection of users with the relationship
 
 ### Model Management

@@ -33,7 +33,7 @@ Build and register the schema. Creates a Schema instance with all defined proper
 
 
 #### Returns
-OpenFGA\Schema\Schema
+[Schema](Schema.md)
  The built and registered schema
 
 ### Other

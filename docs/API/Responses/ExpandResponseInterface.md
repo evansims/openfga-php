@@ -33,6 +33,6 @@ Get the expansion tree for the queried relationship. Returns a hierarchical tree
 
 
 #### Returns
-UsersetTreeInterface&#124;null
+[UsersetTreeInterface](Models/UsersetTreeInterface.md) &#124; null
  The relationship expansion tree, or null if no relationships found
 

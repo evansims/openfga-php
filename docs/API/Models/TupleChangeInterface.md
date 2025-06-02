@@ -66,7 +66,7 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 
 #### Returns
-TupleKeyInterface
+[TupleKeyInterface](TupleKeyInterface.md)
  The tuple key that was modified
 
 ### Other

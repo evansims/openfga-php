@@ -50,7 +50,7 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 
 
 #### Returns
-DateTimeInterface&#124;null
+DateTimeInterface &#124; null
  The deletion timestamp in UTC timezone, or null if the store is active
 
 #### getUpdatedAt
@@ -116,6 +116,6 @@ Serialize the store for JSON encoding. This method prepares the store data for A
 
 
 #### Returns
-array&lt;'created_at'&#124;'deleted_at'&#124;'id'&#124;'name'&#124;'updated_at', string&gt;
+array&lt;'created_at' &#124; 'deleted_at' &#124; 'id' &#124; 'name' &#124; 'updated_at', string&gt;
  Store data formatted for JSON encoding with API-compatible field names
 

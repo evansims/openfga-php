@@ -51,7 +51,7 @@ Get the collection of stores. Returns a type-safe collection containing the stor
 
 
 #### Returns
-OpenFGA\Models\Collections\StoresInterface
+[StoresInterface](Models/Collections/StoresInterface.md)
  The collection of stores
 
 ### Model Management

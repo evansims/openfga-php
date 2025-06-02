@@ -33,7 +33,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The continuation token from a previous operation, or null for the first page
 
 #### getPageSize
@@ -49,7 +49,7 @@ Get the maximum number of changes to return per page. Specifies the page size fo
 
 
 #### Returns
-int&#124;null
+int &#124; null
  The maximum number of changes to return per page, or null to use the default page size
 
 #### getRequest
@@ -85,7 +85,7 @@ Get the earliest time to include in the change history. Specifies the starting p
 
 
 #### Returns
-DateTimeImmutable&#124;null
+DateTimeImmutable &#124; null
  The earliest timestamp to include in results, or null to include all changes from the beginning
 
 #### getStore
@@ -117,6 +117,6 @@ Get the object type filter for changes. Specifies an optional filter to only inc
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The object type to filter changes by, or null to include changes for all object types
 

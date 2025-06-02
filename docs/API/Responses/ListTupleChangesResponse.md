@@ -35,7 +35,7 @@ Get the collection of tuple changes. Returns a type-safe collection containing t
 
 
 #### Returns
-OpenFGA\Models\Collections\TupleChangesInterface
+[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)
  The collection of tuple changes
 
 #### getContinuationToken

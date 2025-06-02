@@ -51,7 +51,7 @@ Get the collection of relationship tuples. Returns a type-safe collection contai
 
 
 #### Returns
-OpenFGA\Models\Collections\TuplesInterface
+[TuplesInterface](Models/Collections/TuplesInterface.md)
  The collection of relationship tuples
 
 ### Model Management

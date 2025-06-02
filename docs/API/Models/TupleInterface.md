@@ -34,7 +34,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 
 
 #### Returns
-TupleKeyInterface
+[TupleKeyInterface](TupleKeyInterface.md)
  The tuple key defining this relationship with user, relation, object, and optional condition
 
 #### getTimestamp

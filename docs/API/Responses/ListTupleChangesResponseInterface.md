@@ -33,7 +33,7 @@ Get the collection of tuple changes. Returns a type-safe collection containing t
 
 
 #### Returns
-TupleChangesInterface&lt;TupleChangeInterface&gt;
+[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)&lt;[TupleChangeInterface](Models/TupleChangeInterface.md)&gt;
  The collection of tuple changes
 
 #### getContinuationToken
@@ -49,6 +49,6 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The continuation token for fetching more results, or null if no more pages exist
 

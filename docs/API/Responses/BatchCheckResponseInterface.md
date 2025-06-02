@@ -33,7 +33,7 @@ Get the results map from correlation IDs to check results. Each key in the map i
 
 
 #### Returns
-array&lt;string, BatchCheckSingleResultInterface&gt;
+array&lt;string, [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md)&gt;
  Map of correlation ID to check result
 
 #### getResultForCorrelationId
@@ -53,5 +53,5 @@ Get the result for a specific correlation ID. Returns the check result for the g
 | `$correlationId` | string | The correlation ID to look up |
 
 #### Returns
-?OpenFGA\Models\BatchCheckSingleResultInterface
+?[BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md)
 

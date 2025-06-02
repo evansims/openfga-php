@@ -34,7 +34,7 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null
  Collection of relationship tuples to remove, or null if no deletions are requested
 
 #### getWrites
@@ -50,7 +50,7 @@ Get the relationship tuples to write to the store. Returns a collection of relat
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null
  Collection of relationship tuples to add, or null if no writes are requested
 
 ### List Operations

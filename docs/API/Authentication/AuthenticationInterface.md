@@ -33,7 +33,7 @@ Get an authentication request context if this strategy requires token acquisitio
 | `$streamFactory` | StreamFactoryInterface | Factory for creating request body streams |
 
 #### Returns
-RequestContext&#124;null
+RequestContext &#124; null
  The authentication request context, or null if not needed
 
 #### getAuthorizationHeader
@@ -49,7 +49,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The authorization header value, or null if no authentication is needed
 
 ### Other
@@ -67,7 +67,7 @@ Handle the authentication response and update internal state. This method is cal
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | ResponseInterface | The authentication response |
+| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The authentication response |
 
 #### Returns
 void

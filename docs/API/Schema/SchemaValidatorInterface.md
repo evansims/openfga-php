@@ -53,7 +53,7 @@ Get all currently registered schemas. Returns a comprehensive map of all schemas
 
 
 #### Returns
-array&lt;string, SchemaInterface&gt;
+array&lt;string, [SchemaInterface](SchemaInterface.md)&gt;
  Map of class names to their schema definitions
 
 ### Model Management
@@ -71,7 +71,7 @@ Register a schema for validation use. Adds a schema to the validator&#039;s regi
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | SchemaInterface | The schema definition to register |
+| `$schema` | [SchemaInterface](SchemaInterface.md) | The schema definition to register |
 
 #### Returns
 self

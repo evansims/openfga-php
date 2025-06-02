@@ -34,7 +34,7 @@ Get the collection of checks to perform in this batch. Each item contains a tupl
 
 
 #### Returns
-BatchCheckItemsInterface
+[BatchCheckItemsInterface](Models/Collections/BatchCheckItemsInterface.md)
  The batch check items
 
 ### List Operations

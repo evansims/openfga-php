@@ -39,7 +39,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 
 #### Returns
-?OpenFGA\Models\ComputedInterface
+?[ComputedInterface](ComputedInterface.md)
  The computed userset specification, or null if not used
 
 #### getTupleToUserset
@@ -55,7 +55,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 
 #### Returns
-?OpenFGA\Models\UsersetTreeTupleToUsersetInterface
+?[UsersetTreeTupleToUsersetInterface](UsersetTreeTupleToUsersetInterface.md)
  The tuple-to-userset operation, or null if not used
 
 #### getUsers
@@ -71,7 +71,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 
 #### Returns
-?OpenFGA\Models\Collections\UsersListInterface
+?[UsersListInterface](Models/Collections/UsersListInterface.md)
  The list of users with direct access, or null if not used
 
 ### Model Management

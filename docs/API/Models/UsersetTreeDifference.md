@@ -39,7 +39,7 @@ Get the base node from which the subtract node will be removed. This represents 
 
 
 #### Returns
-OpenFGA\Models\NodeInterface
+[NodeInterface](NodeInterface.md)
  The base node for the difference operation
 
 #### getSubtract
@@ -55,7 +55,7 @@ Get the node representing users to subtract from the base. This represents the n
 
 
 #### Returns
-OpenFGA\Models\NodeInterface
+[NodeInterface](NodeInterface.md)
  The node to subtract from the base
 
 ### Model Management

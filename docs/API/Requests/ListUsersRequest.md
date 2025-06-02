@@ -34,7 +34,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 
 #### Returns
-?OpenFGA\Models\Enums\Consistency
+?Consistency
  The consistency level for the operation, or null to use the default consistency setting
 
 #### getContext
@@ -66,7 +66,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 
 #### Returns
-?OpenFGA\Models\Collections\TupleKeysInterface
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
  Additional relationship tuples for evaluation, or null if none provided
 
 #### getModel
@@ -131,10 +131,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-OpenFGA\Network\RequestContext
+[RequestContext](Network/RequestContext.md)
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 #### getStore
@@ -166,6 +166,6 @@ Get the user type filters to apply to results. Returns a collection of filters t
 
 
 #### Returns
-OpenFGA\Models\Collections\UserTypeFiltersInterface
+[UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)
  Collection of user type filters to apply to the results
 

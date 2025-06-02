@@ -33,7 +33,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The continuation token for fetching more results, or null if no more pages exist
 
 #### getStores
@@ -49,6 +49,6 @@ Get the collection of stores. Returns a type-safe collection containing the stor
 
 
 #### Returns
-StoresInterface&lt;StoreInterface&gt;
+[StoresInterface](Models/Collections/StoresInterface.md)&lt;[StoreInterface](Models/StoreInterface.md)&gt;
  The collection of stores
 

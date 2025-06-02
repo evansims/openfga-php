@@ -35,7 +35,7 @@ Get the retrieved authorization model. Returns the complete authorization model 
 
 
 #### Returns
-?OpenFGA\Models\AuthorizationModelInterface
+?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
  The authorization model, or null if not found
 
 ### Model Management

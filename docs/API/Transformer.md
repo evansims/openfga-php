@@ -38,7 +38,7 @@ Parse a DSL string into an authorization model. This method converts a human-rea
 | `$validator` | SchemaValidator | Schema validator for validating the parsed model structure |
 
 #### Returns
-AuthorizationModelInterface
+[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
  The parsed authorization model ready for API operations
 
 #### toDsl
@@ -56,7 +56,7 @@ Convert an authorization model to its DSL string representation. This method tra
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$model` | AuthorizationModelInterface | The authorization model to convert to DSL format |
+| `$model` | [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | The authorization model to convert to DSL format |
 
 #### Returns
 string

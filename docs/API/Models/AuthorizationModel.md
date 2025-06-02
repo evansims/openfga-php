@@ -40,7 +40,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 
 #### Returns
-?OpenFGA\Models\Collections\ConditionsInterface
+?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
  The collection of reusable conditions defined in this model, or null if no conditions are defined
 
 #### getId
@@ -72,7 +72,7 @@ Get the schema version of this authorization model. The schema version indicates
 
 
 #### Returns
-OpenFGA\Models\Enums\SchemaVersion
+SchemaVersion
  The schema version enumeration indicating the model format specification
 
 #### getTypeDefinitions
@@ -88,7 +88,7 @@ Get the type definitions that define the structure of this authorization model. 
 
 
 #### Returns
-OpenFGA\Models\Collections\TypeDefinitionsInterface
+[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
  The collection of type definitions that structure this authorization model
 
 ### Model Management

@@ -41,7 +41,7 @@ Get an item by its position in the collection. This method retrieves the item at
 | `$offset` | int | The index position of the item to retrieve |
 
 #### Returns
-T&#124;null
+T &#124; null
  The item at the specified position, or null if not found
 
 #### offsetGet
@@ -60,7 +60,7 @@ public function offsetGet(mixed $offset): T|null
 | `$offset` | mixed |  |
 
 #### Returns
-T&#124;null
+T &#124; null
 
 ### Utility
 #### isEmpty
@@ -112,7 +112,7 @@ public function offsetSet(int|string|null $offset, T $value): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | int&#124;string&#124;null |  |
+| `$offset` | int &#124; string &#124; null |  |
 | `$value` | T |  |
 
 #### Returns
@@ -256,7 +256,7 @@ Get the first item in the collection, optionally matching a condition. When call
 | `$callback` | ?callable |  |
 
 #### Returns
-T&#124;null
+T &#124; null
  The first matching item, or null if none found
 
 #### jsonSerialize
@@ -271,7 +271,7 @@ public function jsonSerialize(): array<int|string, mixed>
 
 
 #### Returns
-array&lt;int&#124;string, mixed&gt;
+array&lt;int &#124; string, mixed&gt;
 
 #### key
 
@@ -373,7 +373,7 @@ Convert the collection to a standard PHP array. This method creates a native PHP
 
 
 #### Returns
-array&lt;int&#124;string, T&gt;
+array&lt;int &#124; string, T&gt;
  A standard PHP array containing all collection items
 
 #### valid

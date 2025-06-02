@@ -251,7 +251,7 @@ class DocumentationGenerator
                 'parameters' => [],
                 'return' => [
                     'type' => $this->getReturnType($method, $reflection->getNamespaceName(), true, $currentFilePath),
-                    'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $reflection->getNamespaceName(), false, $currentFilePath)),
+                    'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $reflection->getNamespaceName(), true, $currentFilePath)),
                     'description' => $this->extractReturnDescription($method->getDocComment() ?: ''),
                 ],
             ];
@@ -263,7 +263,7 @@ class DocumentationGenerator
                 $methodData['parameters'][] = [
                     'name' => '$' . $paramName,
                     'type' => $this->getParameterType($param, $reflection->getNamespaceName(), true, $currentFilePath),
-                    'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $reflection->getNamespaceName(), false, $currentFilePath)),
+                    'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $reflection->getNamespaceName(), true, $currentFilePath)),
                     'description' => $paramDescriptions[$paramName] ?? '',
                 ];
             }
@@ -409,7 +409,7 @@ class DocumentationGenerator
                         'parameters' => [],
                         'return' => [
                             'type' => $this->getReturnType($method, $interface->getNamespaceName(), true, $currentFilePath),
-                            'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $interface->getNamespaceName(), false, $currentFilePath)),
+                            'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $interface->getNamespaceName(), true, $currentFilePath)),
                             'description' => $this->extractReturnDescription($method->getDocComment() ?: ''),
                         ],
                         'fromInterface' => $interface->getName(),
@@ -422,7 +422,7 @@ class DocumentationGenerator
                         $methodData['parameters'][] = [
                             'name' => '$' . $paramName,
                             'type' => $this->getParameterType($param, $interface->getNamespaceName(), true, $currentFilePath),
-                            'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $interface->getNamespaceName(), false, $currentFilePath)),
+                            'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $interface->getNamespaceName(), true, $currentFilePath)),
                             'description' => $paramDescriptions[$paramName] ?? '',
                         ];
                     }
@@ -675,6 +675,30 @@ class DocumentationGenerator
                 $relativePath = str_replace('OpenFGA\\', '', $possibleFullName);
                 $relativePath = str_replace('\\', '/', $relativePath);
                 $displayName = $type;
+            } else {
+                // If not found in current namespace, try common OpenFGA sub-namespaces
+                $commonNamespaces = [
+                    'OpenFGA\\Models',
+                    'OpenFGA\\Models\\Collections',
+                    'OpenFGA\\Results',
+                    'OpenFGA\\Requests',
+                    'OpenFGA\\Responses',
+                    'OpenFGA\\Authentication',
+                    'OpenFGA\\Exceptions',
+                    'OpenFGA\\Models\\Enums',
+                ];
+                
+                foreach ($commonNamespaces as $namespace) {
+                    $possibleFullName = $namespace . '\\' . $type;
+                    if (array_key_exists($possibleFullName, $this->classMap)) {
+                        $isInternalClass = true;
+                        $fullTypeName = $possibleFullName;
+                        $relativePath = str_replace('OpenFGA\\', '', $possibleFullName);
+                        $relativePath = str_replace('\\', '/', $relativePath);
+                        $displayName = $type;
+                        break;
+                    }
+                }
             }
         }
 

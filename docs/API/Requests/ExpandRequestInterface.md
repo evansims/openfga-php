@@ -33,7 +33,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 
 
 #### Returns
-Consistency&#124;null
+Consistency &#124; null
  The consistency level for the operation, or null to use the default consistency setting
 
 #### getContextualTuples
@@ -49,7 +49,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null
  Additional relationship tuples for evaluation, or null if none provided
 
 #### getModel
@@ -65,7 +65,7 @@ Get the authorization model ID to use for the expansion. Specifies which version
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The authorization model ID for evaluation, or null to use the latest model version
 
 #### getRequest
@@ -117,6 +117,6 @@ Get the relationship tuple to expand. Specifies the starting point for the relat
 
 
 #### Returns
-TupleKeyInterface
+[TupleKeyInterface](Models/TupleKeyInterface.md)
  The relationship tuple specifying what to expand (object and relation)
 

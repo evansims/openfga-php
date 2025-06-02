@@ -65,5 +65,5 @@ public function jsonSerialize(): array<'relation'|'type', string>
 
 
 #### Returns
-array&lt;'relation'&#124;'type', string&gt;
+array&lt;'relation' &#124; 'type', string&gt;
 

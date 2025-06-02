@@ -55,7 +55,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 
 #### Returns
-?OpenFGA\Models\Collections\RelationMetadataCollection
+?[RelationMetadataCollection](Models/Collections/RelationMetadataCollection.md)
  The relation metadata collection, or null if not specified
 
 #### getSourceInfo
@@ -71,7 +71,7 @@ Get the source code information for this metadata. Source information provides d
 
 
 #### Returns
-?OpenFGA\Models\SourceInfoInterface
+?[SourceInfoInterface](SourceInfoInterface.md)
  The source information, or null if not available
 
 ### Model Management

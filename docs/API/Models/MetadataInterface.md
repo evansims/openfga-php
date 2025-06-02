@@ -34,7 +34,7 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The module name, or null if not specified
 
 #### getRelations
@@ -50,7 +50,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 
 #### Returns
-RelationMetadataCollection&#124;null
+[RelationMetadataCollection](Models/Collections/RelationMetadataCollection.md) &#124; null
  The relation metadata collection, or null if not specified
 
 #### getSourceInfo
@@ -66,7 +66,7 @@ Get the source code information for this metadata. Source information provides d
 
 
 #### Returns
-SourceInfoInterface&#124;null
+[SourceInfoInterface](SourceInfoInterface.md) &#124; null
  The source information, or null if not available
 
 ### Other

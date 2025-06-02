@@ -39,7 +39,7 @@ Get the difference operation for this user. Difference operations enable sophist
 
 
 #### Returns
-?OpenFGA\Models\DifferenceV1Interface
+?[DifferenceV1Interface](DifferenceV1Interface.md)
  The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 
 #### getObject
@@ -55,7 +55,7 @@ Get the user object representation. User objects represent direct, concrete user
 
 
 #### Returns
-?OpenFGA\Models\UserObjectInterface&#124;string&#124;null
+?[UserObjectInterface](UserObjectInterface.md) &#124; string &#124; null
  The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
 #### getUserset
@@ -71,7 +71,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 
 
 #### Returns
-?OpenFGA\Models\UsersetUserInterface
+?[UsersetUserInterface](UsersetUserInterface.md)
  The userset definition specifying users through relationships, or null if this is not a userset-based user
 
 #### getWildcard
@@ -87,7 +87,7 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 
 
 #### Returns
-?OpenFGA\Models\TypedWildcardInterface
+?[TypedWildcardInterface](TypedWildcardInterface.md)
  The wildcard definition specifying the user type, or null if this is not a wildcard user
 
 ### Model Management

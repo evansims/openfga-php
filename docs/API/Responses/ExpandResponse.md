@@ -35,7 +35,7 @@ Get the expansion tree for the queried relationship. Returns a hierarchical tree
 
 
 #### Returns
-?OpenFGA\Models\UsersetTreeInterface
+?[UsersetTreeInterface](Models/UsersetTreeInterface.md)
  The relationship expansion tree, or null if no relationships found
 
 ### Model Management

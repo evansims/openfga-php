@@ -38,7 +38,7 @@ Create a new schema builder for the specified class.
 | `$className` | string | The fully qualified class name |
 
 #### Returns
-SchemaBuilder
+[SchemaBuilder](SchemaBuilder.md)
  A new schema builder instance
 
 ### List Operations
@@ -60,7 +60,7 @@ Retrieve a registered schema by class name.
 | `$className` | string | The fully qualified class name |
 
 #### Returns
-?OpenFGA\Schema\Schema
+?[Schema](Schema.md)
 
 ### Utility
 #### register
@@ -78,7 +78,7 @@ Register a schema in the registry.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | Schema | The schema instance to register |
+| `$schema` | [Schema](Schema.md) | The schema instance to register |
 
 #### Returns
 void

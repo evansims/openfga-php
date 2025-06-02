@@ -39,7 +39,7 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 
 #### Returns
-array&lt;int, NodeInterface&gt;
+array&lt;int, [NodeInterface](NodeInterface.md)&gt;
  The array of nodes in the union
 
 ### Model Management

@@ -34,7 +34,7 @@ Get the base userset from which users will be subtracted. This represents the in
 
 
 #### Returns
-UsersetInterface
+[UsersetInterface](UsersetInterface.md)
  The base userset for the difference operation
 
 #### getSubtract
@@ -50,7 +50,7 @@ Get the userset of users to subtract from the base userset. This represents the 
 
 
 #### Returns
-UsersetInterface
+[UsersetInterface](UsersetInterface.md)
  The userset to subtract from the base
 
 ### Other

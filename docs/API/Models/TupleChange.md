@@ -40,7 +40,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 
 #### Returns
-OpenFGA\Models\Enums\TupleOperation
+TupleOperation
  The operation type (write or delete)
 
 #### getTimestamp
@@ -72,7 +72,7 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 
 #### Returns
-OpenFGA\Models\TupleKeyInterface
+[TupleKeyInterface](TupleKeyInterface.md)
  The tuple key that was modified
 
 ### Model Management

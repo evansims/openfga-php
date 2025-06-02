@@ -34,7 +34,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 
 #### Returns
-ConditionsInterface&lt;ConditionInterface&gt;&#124;null
+[ConditionsInterface](Models/Collections/ConditionsInterface.md)&lt;[ConditionInterface](ConditionInterface.md)&gt; &#124; null
  The collection of reusable conditions defined in this model, or null if no conditions are defined
 
 #### getId
@@ -82,7 +82,7 @@ Get the type definitions that define the structure of this authorization model. 
 
 
 #### Returns
-TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt;
+[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)&lt;[TypeDefinitionInterface](TypeDefinitionInterface.md)&gt;
  The collection of type definitions that structure this authorization model
 
 ### Other

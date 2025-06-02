@@ -33,7 +33,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 
 #### Returns
-ConditionsInterface&lt;ConditionInterface&gt;&#124;null
+[ConditionsInterface](Models/Collections/ConditionsInterface.md)&lt;[ConditionInterface](Models/ConditionInterface.md)&gt; &#124; null
  Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
 #### getRequest
@@ -101,6 +101,6 @@ Get the type definitions for the authorization model. Returns a collection of ty
 
 
 #### Returns
-TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt;
+[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)&lt;[TypeDefinitionInterface](Models/TypeDefinitionInterface.md)&gt;
  Collection of object type definitions that define the authorization schema
 

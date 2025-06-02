@@ -69,7 +69,7 @@ Executes a callback when the result is a failure and continues the chain. The ca
 | `fn` | callable |  |
 
 #### Returns
-OpenFGA\Results\ResultInterface
+[ResultInterface](ResultInterface.md)
  The original result for method chaining
 
 #### recover
@@ -89,7 +89,7 @@ Recovers from a failure by transforming it into a success or different failure. 
 | `throwable` | ?Throwable |  |
 
 #### Returns
-OpenFGA\Results\ResultInterface
+[ResultInterface](ResultInterface.md)
  The recovered result or original success
 
 #### rethrow
@@ -109,7 +109,7 @@ Throws the contained error or continues the chain. For Failure results, this thr
 | `fn` | callable |  |
 
 #### Returns
-OpenFGA\Results\ResultInterface
+[ResultInterface](ResultInterface.md)
  The original result for method chaining
 
 #### succeeded
@@ -145,7 +145,7 @@ Executes a callback when the result is a success and continues the chain. The ca
 | `fn` | callable |  |
 
 #### Returns
-OpenFGA\Results\ResultInterface
+[ResultInterface](ResultInterface.md)
  The original result for method chaining
 
 #### then
@@ -165,7 +165,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 | `fn` | ?callable |  |
 
 #### Returns
-OpenFGA\Results\ResultInterface
+[ResultInterface](ResultInterface.md)
  The transformed result or original failure
 
 #### unwrap

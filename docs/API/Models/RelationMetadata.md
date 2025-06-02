@@ -39,7 +39,7 @@ Get the user types that can be directly related through this relation. This defi
 
 
 #### Returns
-?OpenFGA\Models\Collections\RelationReferencesInterface
+?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
  The directly related user types, or null if not specified
 
 #### getModule
@@ -71,7 +71,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 
 #### Returns
-?OpenFGA\Models\SourceInfoInterface
+?[SourceInfoInterface](SourceInfoInterface.md)
  The source file information, or null if not available
 
 ### Model Management

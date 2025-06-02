@@ -34,7 +34,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 
 #### Returns
-?OpenFGA\Models\Collections\ConditionParametersInterface
+?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 
 #### getTypeName
 

@@ -54,7 +54,7 @@ Check if a translation exists for the given message. Determines whether a specif
 | Name | Type | Description |
 |------|------|-------------|
 | `$message` | Messages | The message enum case to check |
-| `$locale` | string&#124;null | Locale to check (defaults to configured locale) |
+| `$locale` | string &#124; null | Locale to check (defaults to configured locale) |
 
 #### Returns
 bool
@@ -137,7 +137,7 @@ Translate a message using a Messages enum case. Performs type-safe message trans
 |------|------|-------------|
 | `$message` | Messages | The message enum case to translate |
 | `$parameters` | array&lt;string, mixed&gt; |  |
-| `$locale` | string&#124;null | Locale to use (defaults to configured locale) |
+| `$locale` | string &#124; null | Locale to use (defaults to configured locale) |
 
 #### Returns
 string
@@ -160,7 +160,7 @@ Translate a message using a translation key string. Provides direct translation 
 |------|------|-------------|
 | `$key` | string | The translation key to look up |
 | `$parameters` | array&lt;string, mixed&gt; |  |
-| `$locale` | string&#124;null | Locale to use (defaults to configured locale) |
+| `$locale` | string &#124; null | Locale to use (defaults to configured locale) |
 
 #### Returns
 string

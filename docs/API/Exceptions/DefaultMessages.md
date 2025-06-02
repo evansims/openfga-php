@@ -97,7 +97,7 @@ Get the default message key for any supported error type. Generic method that ac
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | AuthenticationError&#124;ClientError&#124;ConfigurationError&#124;NetworkError&#124;SerializationError | The error enum of any supported type |
+| `$error` | AuthenticationError &#124; ClientError &#124; ConfigurationError &#124; NetworkError &#124; SerializationError | The error enum of any supported type |
 
 #### Returns
 Messages

@@ -40,7 +40,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 
 #### Returns
-?OpenFGA\Models\ConditionInterface
+?[ConditionInterface](ConditionInterface.md)
  The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 
 #### getObject

@@ -116,7 +116,7 @@ Get the complete store object. Returns the full store object containing all stor
 
 
 #### Returns
-OpenFGA\Models\StoreInterface
+[StoreInterface](Models/StoreInterface.md)
  The complete store object
 
 ### Model Management

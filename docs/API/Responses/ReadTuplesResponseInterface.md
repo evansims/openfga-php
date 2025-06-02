@@ -33,7 +33,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string&#124;null
+string &#124; null
  The continuation token for fetching more results, or null if no more pages exist
 
 #### getTuples
@@ -49,6 +49,6 @@ Get the collection of relationship tuples. Returns a type-safe collection contai
 
 
 #### Returns
-TuplesInterface&lt;TupleInterface&gt;
+[TuplesInterface](Models/Collections/TuplesInterface.md)&lt;[TupleInterface](Models/TupleInterface.md)&gt;
  The collection of relationship tuples
 

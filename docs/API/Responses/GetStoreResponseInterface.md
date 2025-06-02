@@ -50,7 +50,7 @@ Get the timestamp when the store was deleted, if applicable. Returns the deletio
 
 
 #### Returns
-DateTimeImmutable&#124;null
+DateTimeImmutable &#124; null
  The deletion timestamp, or null if the store is not deleted
 
 #### getUpdatedAt
@@ -115,6 +115,6 @@ Get the complete store object. Returns the full store object containing all stor
 
 
 #### Returns
-StoreInterface
+[StoreInterface](Models/StoreInterface.md)
  The complete store object
 

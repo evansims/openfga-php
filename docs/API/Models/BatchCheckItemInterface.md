@@ -49,7 +49,7 @@ Get the contextual tuples for this check. These are additional tuples that are e
 
 
 #### Returns
-?OpenFGA\Models\Collections\TupleKeysInterface
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 
 #### getCorrelationId
 
@@ -80,7 +80,7 @@ Get the tuple key to be checked. This defines the user, relation, and object for
 
 
 #### Returns
-TupleKeyInterface
+[TupleKeyInterface](TupleKeyInterface.md)
  The tuple key for this check
 
 ### Other

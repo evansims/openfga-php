@@ -65,7 +65,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 
 #### Returns
-OpenFGA\Network\RequestMethod
+RequestMethod
  The HTTP method enum value indicating the request type
 
 #### getUrl

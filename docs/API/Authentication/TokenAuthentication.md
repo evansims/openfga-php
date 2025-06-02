@@ -35,7 +35,7 @@ Get an authentication request context if this strategy requires token acquisitio
 | `response` | Psr\Http\Message\ResponseInterface |  |
 
 #### Returns
-?OpenFGA\Network\RequestContext
+?[RequestContext](Network/RequestContext.md)
  The authentication request context, or null if not needed
 
 #### getAuthorizationHeader
@@ -67,7 +67,7 @@ Get the current authentication token. Returns the token that was provided during
 
 
 #### Returns
-AccessTokenInterface&#124;string
+[AccessTokenInterface](AccessTokenInterface.md) &#124; string
  The authentication token used by this strategy
 
 ### Other

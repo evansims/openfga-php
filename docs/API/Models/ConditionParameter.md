@@ -40,7 +40,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 
 #### Returns
-?OpenFGA\Models\Collections\ConditionParametersInterface
+?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
 
 #### getTypeName
 
@@ -55,7 +55,7 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 
 #### Returns
-OpenFGA\Models\Enums\TypeName
+TypeName
  The type name enum value for this parameter
 
 ### Model Management

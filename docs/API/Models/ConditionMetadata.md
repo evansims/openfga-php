@@ -55,7 +55,7 @@ Get source file information for debugging and tooling. This provides information
 
 
 #### Returns
-OpenFGA\Models\SourceInfoInterface
+[SourceInfoInterface](SourceInfoInterface.md)
  The source file information
 
 ### Model Management

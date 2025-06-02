@@ -34,7 +34,7 @@ Get the consistency requirement for this request.
 
 
 #### Returns
-?OpenFGA\Models\Enums\Consistency
+?Consistency
  The consistency requirement, or null if not specified
 
 #### getContext
@@ -66,7 +66,7 @@ Get the contextual tuples for this request.
 
 
 #### Returns
-?OpenFGA\Models\Collections\TupleKeysInterface
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
  The contextual tuples collection, or null if not specified
 
 #### getModel
@@ -115,10 +115,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-OpenFGA\Network\RequestContext
+[RequestContext](Network/RequestContext.md)
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 #### getStore

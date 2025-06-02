@@ -39,7 +39,7 @@ Get the computed userset specification for this userset. A computed userset defi
 
 
 #### Returns
-?OpenFGA\Models\ObjectRelationInterface
+?[ObjectRelationInterface](ObjectRelationInterface.md)
  The computed userset specification, or null if not used
 
 #### getDifference
@@ -55,7 +55,7 @@ Get the difference operation specification for this userset. A difference operat
 
 
 #### Returns
-?OpenFGA\Models\DifferenceV1Interface
+?[DifferenceV1Interface](DifferenceV1Interface.md)
  The difference operation specification, or null if not used
 
 #### getDirect
@@ -87,7 +87,7 @@ Get the intersection operation specification for this userset. An intersection o
 
 
 #### Returns
-?OpenFGA\Models\Collections\UsersetsInterface
+?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
  The collection of usersets to intersect, or null if not used
 
 #### getTupleToUserset
@@ -103,7 +103,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 
 
 #### Returns
-?OpenFGA\Models\TupleToUsersetV1Interface
+?[TupleToUsersetV1Interface](TupleToUsersetV1Interface.md)
  The tuple-to-userset operation specification, or null if not used
 
 #### getUnion
@@ -119,7 +119,7 @@ Get the union operation specification for this userset. A union operation repres
 
 
 #### Returns
-?OpenFGA\Models\Collections\UsersetsInterface
+?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
  The collection of usersets to unite, or null if not used
 
 ### Model Management

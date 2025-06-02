@@ -50,7 +50,7 @@ Get metadata about the condition definition. This provides additional informatio
 
 
 #### Returns
-ConditionMetadataInterface&#124;null
+[ConditionMetadataInterface](ConditionMetadataInterface.md) &#124; null
  The condition metadata, or null if not provided
 
 #### getName
@@ -82,7 +82,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 
 #### Returns
-ConditionParametersInterface&lt;ConditionParameterInterface&gt;&#124;null
+[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)&lt;[ConditionParameterInterface](ConditionParameterInterface.md)&gt; &#124; null
  The condition parameters, or null if the condition uses no parameters
 
 ### Other

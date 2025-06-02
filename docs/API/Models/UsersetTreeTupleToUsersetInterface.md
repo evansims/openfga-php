@@ -34,7 +34,7 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 
 
 #### Returns
-array&lt;int, ComputedInterface&gt;
+array&lt;int, [ComputedInterface](ComputedInterface.md)&gt;
  Array of computed userset references
 
 #### getTupleset

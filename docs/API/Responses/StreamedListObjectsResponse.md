@@ -58,6 +58,6 @@ Create a streaming response from an HTTP response. Processes the streaming HTTP 
 | `$validator` | SchemaValidator | Schema validator for response validation |
 
 #### Returns
-Generator&lt;int, StreamedListObjectsResponseInterface&gt;
+Generator&lt;int, [StreamedListObjectsResponseInterface](StreamedListObjectsResponseInterface.md)&gt;
  Generator yielding response objects
 

@@ -54,7 +54,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 
 #### Returns
-?OpenFGA\Models\Collections\TupleKeysInterface
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
 
 #### getExpectation
 
@@ -85,7 +85,7 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 
 #### Returns
-OpenFGA\Models\AssertionTupleKeyInterface
+[AssertionTupleKeyInterface](AssertionTupleKeyInterface.md)
  The tuple key defining the authorization question
 
 ### Model Management

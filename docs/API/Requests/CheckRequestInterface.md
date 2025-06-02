@@ -49,7 +49,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 
 #### Returns
-Consistency&#124;null
+Consistency &#124; null
  The consistency level, or null to use the default consistency setting
 
 #### getContext
@@ -65,7 +65,7 @@ Get additional context data for conditional evaluation. This provides contextual
 
 
 #### Returns
-object&#124;null
+object &#124; null
  The context object containing additional data for evaluation, or null if no context is provided
 
 #### getContextualTuples
@@ -81,7 +81,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt;&#124;null
+[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)&lt;[TupleKeyInterface](Models/TupleKeyInterface.md)&gt; &#124; null
  Additional relationship tuples for evaluation, or null if none provided
 
 #### getRequest
@@ -133,7 +133,7 @@ Get whether to include evaluation trace in the response. When enabled, the respo
 
 
 #### Returns
-bool&#124;null
+bool &#124; null
  Whether to include trace information, or null to use the default setting
 
 #### getTupleKey
@@ -149,6 +149,6 @@ Get the relationship tuple to check for permission. This defines the specific re
 
 
 #### Returns
-TupleKeyInterface
+[TupleKeyInterface](Models/TupleKeyInterface.md)
  The relationship tuple specifying what permission to check
 

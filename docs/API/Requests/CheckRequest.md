@@ -50,7 +50,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 
 #### Returns
-?OpenFGA\Models\Enums\Consistency
+?Consistency
  The consistency level, or null to use the default consistency setting
 
 #### getContext
@@ -82,7 +82,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 
 #### Returns
-?OpenFGA\Models\Collections\TupleKeysInterface
+?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
  Additional relationship tuples for evaluation, or null if none provided
 
 #### getRequest
@@ -99,10 +99,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-OpenFGA\Network\RequestContext
+[RequestContext](Network/RequestContext.md)
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 #### getStore
@@ -150,6 +150,6 @@ Get the relationship tuple to check for permission. This defines the specific re
 
 
 #### Returns
-OpenFGA\Models\TupleKeyInterface
+[TupleKeyInterface](Models/TupleKeyInterface.md)
  The relationship tuple specifying what permission to check
 

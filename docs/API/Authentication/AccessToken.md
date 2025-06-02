@@ -102,9 +102,9 @@ Create an access token instance from an OAuth server response. This factory meth
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$response` | ResponseInterface | The HTTP response from the OAuth token endpoint |
-| `$expectedIssuer` | string&#124;null | Optional expected issuer for JWT validation |
-| `$expectedAudience` | string&#124;null | Optional expected audience for JWT validation |
+| `$response` | [ResponseInterface](Responses/ResponseInterface.md) | The HTTP response from the OAuth token endpoint |
+| `$expectedIssuer` | string &#124; null | Optional expected issuer for JWT validation |
+| `$expectedAudience` | string &#124; null | Optional expected audience for JWT validation |
 
 #### Returns
 self

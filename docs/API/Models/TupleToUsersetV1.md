@@ -39,7 +39,7 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 
 #### Returns
-OpenFGA\Models\ObjectRelationInterface
+[ObjectRelationInterface](ObjectRelationInterface.md)
  The object-relation pair defining the computed userset
 
 #### getTupleset
@@ -55,7 +55,7 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 
 #### Returns
-OpenFGA\Models\ObjectRelationInterface
+[ObjectRelationInterface](ObjectRelationInterface.md)
  The object-relation pair defining the tupleset
 
 ### Model Management
