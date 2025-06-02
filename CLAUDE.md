@@ -2,8 +2,6 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Essential Commands
-
 ### Testing
 
 - `composer test` - Run all our tests (unit, integration, contract)

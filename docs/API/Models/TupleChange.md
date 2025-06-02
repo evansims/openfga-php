@@ -23,9 +23,9 @@ Represents a change to a relationship tuple in your authorization store. When yo
 
 ## Constants
 
-| Name            | Value           | Description |
-| --------------- | --------------- | ----------- |
-| `OPENAPI_MODEL` | `'TupleChange'` |             |
+| Name            | Value         | Description |
+| --------------- | ------------- | ----------- |
+| `OPENAPI_MODEL` | `TupleChange` |             |
 
 ## Methods
 

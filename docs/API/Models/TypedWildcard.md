@@ -23,9 +23,9 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 
 ## Constants
 
-| Name            | Value             | Description |
-| --------------- | ----------------- | ----------- |
-| `OPENAPI_MODEL` | `'TypedWildcard'` |             |
+| Name            | Value           | Description |
+| --------------- | --------------- | ----------- |
+| `OPENAPI_MODEL` | `TypedWildcard` |             |
 
 ## Methods
 

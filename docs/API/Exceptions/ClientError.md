@@ -17,13 +17,13 @@ General client error types for the OpenFGA SDK. Defines high-level error categor
 
 ## Constants
 
-| Name             | Value                                             | Description                                                                                                                                                                              |
-| ---------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Authentication` | `\OpenFGA\Exceptions\ClientError::Authentication` | Authentication-related failures when communicating with OpenFGA. Includes token expiration, invalid credentials, OAuth flow failures, or other authentication mechanism issues.          |
-| `Configuration`  | `\OpenFGA\Exceptions\ClientError::Configuration`  | SDK configuration issues that prevent proper operation. Includes missing PSR HTTP components, invalid configuration parameters, or improper SDK setup that prevents API communication.   |
-| `Network`        | `\OpenFGA\Exceptions\ClientError::Network`        | Network and HTTP communication failures with the OpenFGA API. Includes connectivity issues, timeouts, HTTP errors, or other network-level problems that prevent successful API requests. |
-| `Serialization`  | `\OpenFGA\Exceptions\ClientError::Serialization`  | Data serialization and deserialization failures. Includes JSON parsing errors, schema validation failures, data type conversion issues, or other data format problems.                   |
-| `Validation`     | `\OpenFGA\Exceptions\ClientError::Validation`     | Parameter validation and API usage errors. Includes invalid parameter values, constraint violations, improper API usage, or other validation failures before sending requests.           |
+| Name             | Value            | Description                                                                                                                                                                              |
+| ---------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Authentication` | `authentication` | Authentication-related failures when communicating with OpenFGA. Includes token expiration, invalid credentials, OAuth flow failures, or other authentication mechanism issues.          |
+| `Configuration`  | `configuration`  | SDK configuration issues that prevent proper operation. Includes missing PSR HTTP components, invalid configuration parameters, or improper SDK setup that prevents API communication.   |
+| `Network`        | `network`        | Network and HTTP communication failures with the OpenFGA API. Includes connectivity issues, timeouts, HTTP errors, or other network-level problems that prevent successful API requests. |
+| `Serialization`  | `serialization`  | Data serialization and deserialization failures. Includes JSON parsing errors, schema validation failures, data type conversion issues, or other data format problems.                   |
+| `Validation`     | `validation`     | Parameter validation and API usage errors. Includes invalid parameter values, constraint violations, improper API usage, or other validation failures before sending requests.           |
 
 ## Cases
 

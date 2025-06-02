@@ -22,9 +22,9 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 
 ## Constants
 
-| Name            | Value           | Description |
-| --------------- | --------------- | ----------- |
-| `OPENAPI_MODEL` | `'UsersetTree'` |             |
+| Name            | Value         | Description |
+| --------------- | ------------- | ----------- |
+| `OPENAPI_MODEL` | `UsersetTree` |             |
 
 ## Methods
 

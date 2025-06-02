@@ -23,6 +23,8 @@ use function is_object;
  */
 final class BatchCheckSingleResult implements BatchCheckSingleResultInterface
 {
+    public const string OPENAPI_MODEL = 'BatchCheckSingleResult';
+
     private static ?SchemaInterface $schema = null;
 
     /**

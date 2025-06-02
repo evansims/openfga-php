@@ -22,9 +22,9 @@ Represents a difference operation node in authorization evaluation trees. Userse
 
 ## Constants
 
-| Name            | Value                      | Description |
-| --------------- | -------------------------- | ----------- |
-| `OPENAPI_MODEL` | `'UsersetTree.Difference'` |             |
+| Name            | Value                    | Description |
+| --------------- | ------------------------ | ----------- |
+| `OPENAPI_MODEL` | `UsersetTree.Difference` |             |
 
 ## Methods
 

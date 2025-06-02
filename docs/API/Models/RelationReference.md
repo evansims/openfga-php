@@ -23,9 +23,9 @@ Represents a reference to a specific relation with optional conditions. A Relati
 
 ## Constants
 
-| Name            | Value                 | Description |
-| --------------- | --------------------- | ----------- |
-| `OPENAPI_MODEL` | `'RelationReference'` |             |
+| Name            | Value               | Description |
+| --------------- | ------------------- | ----------- |
+| `OPENAPI_MODEL` | `RelationReference` |             |
 
 ## Methods
 

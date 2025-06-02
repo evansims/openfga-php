@@ -22,9 +22,9 @@ Contains metadata information about conditions in your authorization model. Cond
 
 ## Constants
 
-| Name            | Value                 | Description |
-| --------------- | --------------------- | ----------- |
-| `OPENAPI_MODEL` | `'ConditionMetadata'` |             |
+| Name            | Value               | Description |
+| --------------- | ------------------- | ----------- |
+| `OPENAPI_MODEL` | `ConditionMetadata` |             |
 
 ## Methods
 

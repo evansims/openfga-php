@@ -22,9 +22,9 @@ Represents a tuple-to-userset relationship that derives permissions from related
 
 ## Constants
 
-| Name            | Value                 | Description |
-| --------------- | --------------------- | ----------- |
-| `OPENAPI_MODEL` | `'v1.TupleToUserset'` |             |
+| Name            | Value               | Description |
+| --------------- | ------------------- | ----------- |
+| `OPENAPI_MODEL` | `v1.TupleToUserset` |             |
 
 ## Methods
 

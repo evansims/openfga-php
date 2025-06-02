@@ -22,9 +22,9 @@ Represents a userset specification for computing groups of users. A Userset defi
 
 ## Constants
 
-| Name            | Value       | Description |
-| --------------- | ----------- | ----------- |
-| `OPENAPI_MODEL` | `'Userset'` |             |
+| Name            | Value     | Description |
+| --------------- | --------- | ----------- |
+| `OPENAPI_MODEL` | `Userset` |             |
 
 ## Methods
 

@@ -23,9 +23,9 @@ Represents a relationship tuple key defining a connection between user, relation
 
 ## Constants
 
-| Name            | Value        | Description |
-| --------------- | ------------ | ----------- |
-| `OPENAPI_MODEL` | `'TupleKey'` |             |
+| Name            | Value      | Description |
+| --------------- | ---------- | ----------- |
+| `OPENAPI_MODEL` | `TupleKey` |             |
 
 ## Methods
 

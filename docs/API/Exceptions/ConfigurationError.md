@@ -17,12 +17,12 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 
 ## Constants
 
-| Name                         | Value                                                                | Description |
-| ---------------------------- | -------------------------------------------------------------------- | ----------- |
-| `HttpClientMissing`          | `\OpenFGA\Exceptions\ConfigurationError::HttpClientMissing`          |             |
-| `HttpRequestFactoryMissing`  | `\OpenFGA\Exceptions\ConfigurationError::HttpRequestFactoryMissing`  |             |
-| `HttpResponseFactoryMissing` | `\OpenFGA\Exceptions\ConfigurationError::HttpResponseFactoryMissing` |             |
-| `HttpStreamFactoryMissing`   | `\OpenFGA\Exceptions\ConfigurationError::HttpStreamFactoryMissing`   |             |
+| Name                         | Value                           | Description |
+| ---------------------------- | ------------------------------- | ----------- |
+| `HttpClientMissing`          | `http_client_missing`           |             |
+| `HttpRequestFactoryMissing`  | `http_request_factory_missing`  |             |
+| `HttpResponseFactoryMissing` | `http_response_factory_missing` |             |
+| `HttpStreamFactoryMissing`   | `http_stream_factory_missing`   |             |
 
 ## Cases
 

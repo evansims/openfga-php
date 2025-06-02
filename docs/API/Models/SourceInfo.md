@@ -22,9 +22,9 @@ Represents source file information for debugging and development tools. SourceIn
 
 ## Constants
 
-| Name            | Value          | Description |
-| --------------- | -------------- | ----------- |
-| `OPENAPI_MODEL` | `'SourceInfo'` |             |
+| Name            | Value        | Description |
+| --------------- | ------------ | ----------- |
+| `OPENAPI_MODEL` | `SourceInfo` |             |
 
 ## Methods
 

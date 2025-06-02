@@ -22,9 +22,9 @@ Represents a leaf node in authorization evaluation trees containing specific use
 
 ## Constants
 
-| Name            | Value    | Description |
-| --------------- | -------- | ----------- |
-| `OPENAPI_MODEL` | `'Leaf'` |             |
+| Name            | Value  | Description |
+| --------------- | ------ | ----------- |
+| `OPENAPI_MODEL` | `Leaf` |             |
 
 ## Methods
 

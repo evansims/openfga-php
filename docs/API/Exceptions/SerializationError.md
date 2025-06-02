@@ -17,14 +17,14 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 
 ## Constants
 
-| Name                                  | Value                                                                         | Description |
-| ------------------------------------- | ----------------------------------------------------------------------------- | ----------- |
-| `CouldNotAddItemsToCollection`        | `\OpenFGA\Exceptions\SerializationError::CouldNotAddItemsToCollection`        |             |
-| `EmptyCollection`                     | `\OpenFGA\Exceptions\SerializationError::EmptyCollection`                     |             |
-| `InvalidItemType`                     | `\OpenFGA\Exceptions\SerializationError::InvalidItemType`                     |             |
-| `MissingRequiredConstructorParameter` | `\OpenFGA\Exceptions\SerializationError::MissingRequiredConstructorParameter` |             |
-| `Response`                            | `\OpenFGA\Exceptions\SerializationError::Response`                            |             |
-| `UndefinedItemType`                   | `\OpenFGA\Exceptions\SerializationError::UndefinedItemType`                   |             |
+| Name                                  | Value                                    | Description |
+| ------------------------------------- | ---------------------------------------- | ----------- |
+| `CouldNotAddItemsToCollection`        | `could_not_add_items_to_collection`      |             |
+| `EmptyCollection`                     | `empty_collection`                       |             |
+| `InvalidItemType`                     | `invalid_item_type`                      |             |
+| `MissingRequiredConstructorParameter` | `missing_required_constructor_parameter` |             |
+| `Response`                            | `response`                               |             |
+| `UndefinedItemType`                   | `undefined_item_type`                    |             |
 
 ## Cases
 

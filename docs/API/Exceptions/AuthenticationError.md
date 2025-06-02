@@ -17,10 +17,10 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 
 ## Constants
 
-| Name           | Value                                                   | Description                                                                                                                                                                     |
-| -------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `TokenExpired` | `\OpenFGA\Exceptions\AuthenticationError::TokenExpired` | Access token has expired and needs to be refreshed. Occurs when an access token&#039;s expiration time has passed, requiring a new token to be obtained through the OAuth flow. |
-| `TokenInvalid` | `\OpenFGA\Exceptions\AuthenticationError::TokenInvalid` | Access token is invalid or malformed. Occurs when the provided token is not recognized by the authorization server or has an invalid format.                                    |
+| Name           | Value           | Description                                                                                                                                                                     |
+| -------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `TokenExpired` | `token_expired` | Access token has expired and needs to be refreshed. Occurs when an access token&#039;s expiration time has passed, requiring a new token to be obtained through the OAuth flow. |
+| `TokenInvalid` | `token_invalid` | Access token is invalid or malformed. Occurs when the provided token is not recognized by the authorization server or has an invalid format.                                    |
 
 ## Cases
 

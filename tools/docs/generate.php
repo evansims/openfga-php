@@ -227,7 +227,7 @@ class DocumentationGenerator
                 if ($constant->isPublic()) {
                     $classData['constants'][] = [
                         'name' => $constant->getName(),
-                        'value' => var_export($constant->getValue(), true),
+                        'value' => $this->formatConstantValue($constant->getValue()),
                         'description' => $this->extractDescriptionFromDocComment($constant->getDocComment() ?: ''),
                     ];
                 }
@@ -1531,6 +1531,55 @@ class DocumentationGenerator
         $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
         
         return $text;
+    }
+
+    /**
+     * Format a constant value for display in documentation.
+     * 
+     * Removes unnecessary quotes from string values while preserving proper
+     * formatting for other types.
+     */
+    private function formatConstantValue(mixed $value): string
+    {
+        if (is_string($value)) {
+            return $value;
+        }
+        
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
+        }
+        
+        if (is_null($value)) {
+            return 'null';
+        }
+        
+        if (is_array($value)) {
+            if (empty($value)) {
+                return '[]';
+            }
+            // For simple arrays, show a formatted representation
+            return '[' . implode(', ', array_map(fn($v) => $this->formatConstantValue($v), $value)) . ']';
+        }
+        
+        if (is_object($value)) {
+            // For enum cases or other objects, try to get a meaningful representation
+            if ($value instanceof \BackedEnum) {
+                return (string) $value->value;
+            }
+            
+            if ($value instanceof \UnitEnum) {
+                return $value->name;
+            }
+            
+            if (method_exists($value, '__toString')) {
+                return (string) $value;
+            }
+            
+            return get_class($value);
+        }
+        
+        // For numbers and other scalar types
+        return (string) $value;
     }
 
     /**

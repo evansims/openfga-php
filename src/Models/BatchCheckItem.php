@@ -30,6 +30,8 @@ use function preg_match;
  */
 final class BatchCheckItem implements BatchCheckItemInterface
 {
+    public const string OPENAPI_MODEL = 'BatchCheckItem';
+
     private static ?SchemaInterface $schema = null;
 
     /**

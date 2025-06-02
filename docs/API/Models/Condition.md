@@ -23,9 +23,9 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 
 ## Constants
 
-| Name            | Value         | Description |
-| --------------- | ------------- | ----------- |
-| `OPENAPI_MODEL` | `'Condition'` |             |
+| Name            | Value       | Description |
+| --------------- | ----------- | ----------- |
+| `OPENAPI_MODEL` | `Condition` |             |
 
 ## Methods
 

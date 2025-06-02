@@ -23,9 +23,9 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 
 ## Constants
 
-| Name            | Value     | Description |
-| --------------- | --------- | ----------- |
-| `OPENAPI_MODEL` | `'Store'` |             |
+| Name            | Value   | Description |
+| --------------- | ------- | ----------- |
+| `OPENAPI_MODEL` | `Store` |             |
 
 ## Methods
 

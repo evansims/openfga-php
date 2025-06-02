@@ -20,6 +20,12 @@ Represents the result of a single check within a batch check response. Each resu
 
 * [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) (interface)
 
+## Constants
+
+| Name            | Value                    | Description |
+| --------------- | ------------------------ | ----------- |
+| `OPENAPI_MODEL` | `BatchCheckSingleResult` |             |
+
 ## Methods
 
 ### Authorization
@@ -33,7 +39,7 @@ public function getAllowed(): ?bool
 
 Get whether this check was allowed. Returns true if the user has the specified relationship with the object, false if they don&#039;t, or null if the check encountered an error.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L87)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L89)
 
 #### Returns
 
@@ -50,7 +56,7 @@ public function getError(): ?object
 
 Get any error that occurred during this check. Returns error information if the check failed to complete successfully, or null if the check completed without errors.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L96)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L98)
 
 #### Returns
 
@@ -84,7 +90,7 @@ public function jsonSerialize(): array<string, mixed>
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L107)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L109)
 
 #### Returns
 
@@ -97,7 +103,7 @@ public function toArray(): array<string, mixed>
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L120)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L122)
 
 #### Returns
 

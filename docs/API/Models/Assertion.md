@@ -22,9 +22,9 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 
 ## Constants
 
-| Name            | Value         | Description |
-| --------------- | ------------- | ----------- |
-| `OPENAPI_MODEL` | `'Assertion'` |             |
+| Name            | Value       | Description |
+| --------------- | ----------- | ----------- |
+| `OPENAPI_MODEL` | `Assertion` |             |
 
 ## Methods
 

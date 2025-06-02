@@ -22,9 +22,9 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 
 ## Constants
 
-| Name            | Value              | Description |
-| --------------- | ------------------ | ----------- |
-| `OPENAPI_MODEL` | `'UserTypeFilter'` |             |
+| Name            | Value            | Description |
+| --------------- | ---------------- | ----------- |
+| `OPENAPI_MODEL` | `UserTypeFilter` |             |
 
 ## Methods
 

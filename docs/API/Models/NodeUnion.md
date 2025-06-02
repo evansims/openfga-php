@@ -22,9 +22,9 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 
 ## Constants
 
-| Name            | Value         | Description |
-| --------------- | ------------- | ----------- |
-| `OPENAPI_MODEL` | `'NodeUnion'` |             |
+| Name            | Value       | Description |
+| --------------- | ----------- | ----------- |
+| `OPENAPI_MODEL` | `NodeUnion` |             |
 
 ## Methods
 

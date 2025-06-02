@@ -23,9 +23,9 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 
 ## Constants
 
-| Name            | Value        | Description |
-| --------------- | ------------ | ----------- |
-| `OPENAPI_MODEL` | `'Computed'` |             |
+| Name            | Value      | Description |
+| --------------- | ---------- | ----------- |
+| `OPENAPI_MODEL` | `Computed` |             |
 
 ## Methods
 
