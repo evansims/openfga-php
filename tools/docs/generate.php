@@ -193,13 +193,18 @@ class DocumentationGenerator
             return;
         }
 
+        // Calculate the output file path for relative link generation
+        $namespacePath = str_replace('OpenFGA\\', '', $className);
+        $namespacePath = str_replace('\\', '/', $namespacePath);
+        $currentFilePath = $namespacePath . '.md';
+
         $classData = [
             'className' => $reflection->getShortName(),
             'namespace' => $reflection->getNamespaceName(),
             'isInterface' => $isInterface,
             'classDescription' => $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
-            'interfaces' => array_map(function($interface) use ($reflection) {
-                return $this->convertToMarkdownLink($interface->getName(), $reflection->getNamespaceName());
+            'interfaces' => array_map(function($interface) use ($reflection, $currentFilePath) {
+                return $this->convertToMarkdownLink($interface->getName(), $reflection->getNamespaceName(), $currentFilePath);
             }, $reflection->getInterfaces()),
             'methods' => [],
             'constants' => [],
@@ -222,7 +227,7 @@ class DocumentationGenerator
         // Get interface methods documentation if this is a class (not an interface)
         $interfaceMethods = [];
         if (!$isInterface) {
-            $interfaceMethods = $this->getInterfaceMethodsDocumentation($reflection);
+            $interfaceMethods = $this->getInterfaceMethodsDocumentation($reflection, $currentFilePath);
         }
 
         // Process methods
@@ -241,8 +246,8 @@ class DocumentationGenerator
                 'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
                 'parameters' => [],
                 'return' => [
-                    'type' => $this->getReturnType($method, $reflection->getNamespaceName()),
-                    'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $reflection->getNamespaceName())),
+                    'type' => $this->getReturnType($method, $reflection->getNamespaceName(), true, $currentFilePath),
+                    'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $reflection->getNamespaceName(), false, $currentFilePath)),
                     'description' => $this->extractReturnDescription($method->getDocComment() ?: ''),
                 ],
             ];
@@ -251,8 +256,8 @@ class DocumentationGenerator
             foreach ($method->getParameters() as $param) {
                 $methodData['parameters'][] = [
                     'name' => '$' . $param->getName(),
-                    'type' => $this->getParameterType($param, $reflection->getNamespaceName()),
-                    'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $reflection->getNamespaceName())),
+                    'type' => $this->getParameterType($param, $reflection->getNamespaceName(), true, $currentFilePath),
+                    'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $reflection->getNamespaceName(), false, $currentFilePath)),
                     'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
                 ];
             }
@@ -343,7 +348,7 @@ class DocumentationGenerator
      * @param ReflectionClass $reflection The reflection of the class to get interface methods from
      * @return array Array of method documentation keyed by method name
      */
-    private function getInterfaceMethodsDocumentation(ReflectionClass $reflection): array
+    private function getInterfaceMethodsDocumentation(ReflectionClass $reflection, string $currentFilePath = ''): array
     {
         $interfaceMethods = [];
 
@@ -367,8 +372,8 @@ class DocumentationGenerator
                         'description' => $this->extractDescriptionFromDocComment($method->getDocComment() ?: ''),
                         'parameters' => [],
                         'return' => [
-                            'type' => $this->getReturnType($method, $interface->getNamespaceName()),
-                            'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $interface->getNamespaceName())),
+                            'type' => $this->getReturnType($method, $interface->getNamespaceName(), true, $currentFilePath),
+                            'typeDisplay' => $this->escapeForTable($this->getReturnType($method, $interface->getNamespaceName(), false, $currentFilePath)),
                             'description' => $this->extractReturnDescription($method->getDocComment() ?: ''),
                         ],
                         'fromInterface' => $interface->getName(),
@@ -378,8 +383,8 @@ class DocumentationGenerator
                     foreach ($method->getParameters() as $param) {
                         $methodData['parameters'][] = [
                             'name' => '$' . $param->getName(),
-                            'type' => $this->getParameterType($param, $interface->getNamespaceName()),
-                            'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $interface->getNamespaceName())),
+                            'type' => $this->getParameterType($param, $interface->getNamespaceName(), true, $currentFilePath),
+                            'typeDisplay' => $this->escapeForTable($this->getParameterType($param, $interface->getNamespaceName(), false, $currentFilePath)),
                             'description' => $this->extractParamDescription($method->getDocComment() ?: '', $param->getName()),
                         ];
                     }
@@ -469,7 +474,7 @@ class DocumentationGenerator
         );
     }
 
-    private function getParameterType(ReflectionParameter $param, string $namespace = 'OpenFGA', bool $withLinks = true): string
+    private function getParameterType(ReflectionParameter $param, string $namespace = 'OpenFGA', bool $withLinks = true, string $currentFilePath = ''): string
     {
         // Try to get the type from PHPDoc first
         $method = $param->getDeclaringFunction();
@@ -478,7 +483,7 @@ class DocumentationGenerator
             if ($docComment) {
                 $paramType = $this->extractParamTypeFromDocComment($docComment, $param->getName());
                 if ($paramType) {
-                    return $withLinks ? $this->convertToMarkdownLink($paramType, $namespace) : $paramType;
+                    return $withLinks ? $this->convertToMarkdownLink($paramType, $namespace, $currentFilePath) : $paramType;
                 }
             }
         }
@@ -493,20 +498,20 @@ class DocumentationGenerator
                 $typeStr = '?' . $typeStr;
             }
 
-            return $withLinks ? $this->convertToMarkdownLink($typeStr, $namespace) : $typeStr;
+            return $withLinks ? $this->convertToMarkdownLink($typeStr, $namespace, $currentFilePath) : $typeStr;
         }
 
         return 'mixed';
     }
 
-    private function getReturnType(ReflectionMethod $method, string $namespace = 'OpenFGA', bool $withLinks = true): string
+    private function getReturnType(ReflectionMethod $method, string $namespace = 'OpenFGA', bool $withLinks = true, string $currentFilePath = ''): string
     {
         // First, try to get the return type from PHPDoc
         $docComment = $method->getDocComment();
         if ($docComment) {
             $returnType = $this->extractReturnTypeFromDocComment($docComment);
             if ($returnType) {
-                return $withLinks ? $this->convertToMarkdownLink($returnType, $namespace) : $returnType;
+                return $withLinks ? $this->convertToMarkdownLink($returnType, $namespace, $currentFilePath) : $returnType;
             }
         }
 
@@ -520,18 +525,18 @@ class DocumentationGenerator
                 $typeStr = '?' . $typeStr;
             }
 
-            return $withLinks ? $this->convertToMarkdownLink($typeStr, $namespace) : $typeStr;
+            return $withLinks ? $this->convertToMarkdownLink($typeStr, $namespace, $currentFilePath) : $typeStr;
         }
 
         return '';
     }
 
-    private function convertToMarkdownLink(string $type, string $currentNamespace = 'OpenFGA'): string
+    private function convertToMarkdownLink(string $type, string $currentNamespace = 'OpenFGA', string $currentFilePath = ''): string
     {
         // Handle union types
         if (str_contains($type, '|')) {
             $types = array_map('trim', explode('|', $type));
-            $convertedTypes = array_map(fn($t) => $this->convertToMarkdownLink($t, $currentNamespace), $types);
+            $convertedTypes = array_map(fn($t) => $this->convertToMarkdownLink($t, $currentNamespace, $currentFilePath), $types);
             return implode(' | ', $convertedTypes); // Added spaces around |
         }
 
@@ -551,7 +556,7 @@ class DocumentationGenerator
         if (preg_match('/([^<]*)<(.+)>/', $type, $matches)) {
             $type = $matches[1];
             $genericParams = array_map('trim', explode(',', $matches[2]));
-            $convertedParams = array_map(fn($p) => $this->convertToMarkdownLink($p, $currentNamespace), $genericParams);
+            $convertedParams = array_map(fn($p) => $this->convertToMarkdownLink($p, $currentNamespace, $currentFilePath), $genericParams);
             $genericSuffix = '<' . implode(', ', $convertedParams) . '>';
         }
 
@@ -637,7 +642,22 @@ class DocumentationGenerator
 
         // If it's an internal class, create a markdown link
         if ($isInternalClass) {
-            $result = "[$displayName]($relativePath.md)";
+            // Calculate relative path from current file to target file
+            $targetPath = $relativePath . '.md';
+            if (!empty($currentFilePath)) {
+                $currentDir = dirname($currentFilePath);
+                $targetDir = dirname($relativePath);
+                
+                // If both files are in the same directory, use just the filename
+                if ($currentDir === $targetDir) {
+                    $targetPath = basename($relativePath) . '.md';
+                } elseif ($currentDir !== '.') {
+                    // Calculate relative path between different directories
+                    $currentDepth = substr_count($currentDir, '/');
+                    $targetPath = str_repeat('../', $currentDepth) . $targetPath;
+                }
+            }
+            $result = "[$displayName]($targetPath)";
         } else {
             // For external types, just use the short name
             $result = $type;

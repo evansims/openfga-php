@@ -6,7 +6,7 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -37,7 +37,7 @@ Get source file information for debugging and tooling. This provides information
 
 
 #### Returns
-[SourceInfoInterface](Models/SourceInfoInterface.md)
+SourceInfoInterface
  The source file information
 
 ### jsonSerialize

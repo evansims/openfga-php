@@ -6,7 +6,7 @@ Defines the contract for assertion tuple keys used in authorization model testin
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 

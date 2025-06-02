@@ -6,8 +6,8 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
 `OpenFGA\Requests`
 
 ## Implements
-* [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [WriteTuplesRequestInterface](WriteTuplesRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
  Collection of relationship tuples to remove, or null if no deletions are requested
 
 ### getModel
@@ -52,10 +52,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore
@@ -83,6 +83,6 @@ Get the relationship tuples to write to the store. Returns a collection of relat
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
  Collection of relationship tuples to add, or null if no writes are requested
 

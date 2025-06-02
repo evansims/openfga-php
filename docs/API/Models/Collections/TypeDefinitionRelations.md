@@ -5,13 +5,13 @@
 `OpenFGA\Models\Collections`
 
 ## Implements
-* [KeyedCollectionInterface](Models/Collections/KeyedCollectionInterface.md)
+* [KeyedCollectionInterface](KeyedCollectionInterface.md)
 * Traversable
 * JsonSerializable
 * Iterator
 * Countable
 * ArrayAccess
-* [TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
+* [TypeDefinitionRelationsInterface](TypeDefinitionRelationsInterface.md)
 
 
 
@@ -56,7 +56,7 @@ public function current(): OpenFGA\Models\ModelInterface
 
 
 #### Returns
-[ModelInterface](Models/ModelInterface.md)
+OpenFGA\Models\ModelInterface
 
 ### get
 
@@ -177,7 +177,7 @@ Get an item by its offset key.
 | `value` | mixed |  |
 
 #### Returns
-?[ModelInterface](Models/ModelInterface.md)
+?OpenFGA\Models\ModelInterface
 
 ### offsetSet
 

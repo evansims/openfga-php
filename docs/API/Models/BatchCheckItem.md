@@ -6,9 +6,9 @@ Represents a single item in a batch check request. Each batch check item contain
 `OpenFGA\Models`
 
 ## Implements
-* [BatchCheckItemInterface](Models/BatchCheckItemInterface.md)
+* [BatchCheckItemInterface](BatchCheckItemInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 
 
@@ -37,7 +37,7 @@ Get the contextual tuples for this check. These are additional tuples that are e
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
 
 ### getCorrelationId
 
@@ -64,7 +64,7 @@ Get the tuple key to be checked. This defines the user, relation, and object for
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+OpenFGA\Models\TupleKeyInterface
  The tuple key for this check
 
 ### jsonSerialize

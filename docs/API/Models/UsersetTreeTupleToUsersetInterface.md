@@ -6,7 +6,7 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 
 
 #### Returns
-array&lt;int, [ComputedInterface](Models/ComputedInterface.md)&gt;
+array&lt;int, ComputedInterface&gt;
  Array of computed userset references
 
 ### getTupleset

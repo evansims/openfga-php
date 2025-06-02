@@ -6,8 +6,8 @@ Request for retrieving store information by its ID. This request fetches the det
 `OpenFGA\Requests`
 
 ## Implements
-* [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [GetStoreRequestInterface](GetStoreRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -24,10 +24,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore

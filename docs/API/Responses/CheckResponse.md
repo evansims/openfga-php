@@ -6,8 +6,8 @@ Response containing the result of an authorization check. This response indicate
 `OpenFGA\Responses`
 
 ## Implements
-* [CheckResponseInterface](Responses/CheckResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [CheckResponseInterface](CheckResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

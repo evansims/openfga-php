@@ -6,9 +6,9 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 `OpenFGA\Models`
 
 ## Implements
-* [ComputedInterface](Models/ComputedInterface.md)
+* [ComputedInterface](ComputedInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

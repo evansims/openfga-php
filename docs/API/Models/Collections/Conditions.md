@@ -6,13 +6,13 @@ Collection implementation for OpenFGA condition objects. This class provides a c
 `OpenFGA\Models\Collections`
 
 ## Implements
-* [IndexedCollectionInterface](Models/Collections/IndexedCollectionInterface.md)
+* [IndexedCollectionInterface](IndexedCollectionInterface.md)
 * Traversable
 * JsonSerializable
 * Iterator
 * Countable
 * ArrayAccess
-* [ConditionsInterface](Models/Collections/ConditionsInterface.md)
+* [ConditionsInterface](ConditionsInterface.md)
 
 
 
@@ -69,7 +69,7 @@ public function current(): OpenFGA\Models\ModelInterface
 
 
 #### Returns
-[ModelInterface](Models/ModelInterface.md)
+OpenFGA\Models\ModelInterface
 
 ### every
 
@@ -222,7 +222,7 @@ public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 | `value` | mixed |  |
 
 #### Returns
-?[ModelInterface](Models/ModelInterface.md)
+?OpenFGA\Models\ModelInterface
 
 ### offsetSet
 

@@ -6,7 +6,7 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * Stringable
 * JsonSerializable
 

@@ -6,7 +6,7 @@ Advanced retry handler with exponential backoff, jitter, and circuit breaker int
 `OpenFGA\Network`
 
 ## Implements
-* [RetryHandlerInterface](Network/RetryHandlerInterface.md)
+* [RetryHandlerInterface](RetryHandlerInterface.md)
 
 
 

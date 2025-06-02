@@ -6,7 +6,7 @@ Validates and transforms data according to registered JSON schemas. This validat
 `OpenFGA\Schema`
 
 ## Implements
-* [SchemaValidatorInterface](Schema/SchemaValidatorInterface.md)
+* [SchemaValidatorInterface](SchemaValidatorInterface.md)
 
 
 

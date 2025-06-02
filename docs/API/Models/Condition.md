@@ -6,9 +6,9 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 `OpenFGA\Models`
 
 ## Implements
-* [ConditionInterface](Models/ConditionInterface.md)
+* [ConditionInterface](ConditionInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -42,7 +42,7 @@ Get metadata about the condition definition. This provides additional informatio
 
 
 #### Returns
-?[ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
+?OpenFGA\Models\ConditionMetadataInterface
  The condition metadata, or null if not provided
 
 ### getName
@@ -70,7 +70,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 
 #### Returns
-?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+?OpenFGA\Models\Collections\ConditionParametersInterface
  The condition parameters, or null if the condition uses no parameters
 
 ### jsonSerialize

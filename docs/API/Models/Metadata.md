@@ -6,9 +6,9 @@ Contains metadata information about type definitions in your authorization model
 `OpenFGA\Models`
 
 ## Implements
-* [MetadataInterface](Models/MetadataInterface.md)
+* [MetadataInterface](MetadataInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -42,7 +42,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 
 #### Returns
-?[RelationMetadataCollection](Models/Collections/RelationMetadataCollection.md)
+?OpenFGA\Models\Collections\RelationMetadataCollection
  The relation metadata collection, or null if not specified
 
 ### getSourceInfo
@@ -56,7 +56,7 @@ Get the source code information for this metadata. Source information provides d
 
 
 #### Returns
-?[SourceInfoInterface](Models/SourceInfoInterface.md)
+?OpenFGA\Models\SourceInfoInterface
  The source information, or null if not available
 
 ### jsonSerialize

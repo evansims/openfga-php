@@ -6,7 +6,7 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 
 #### Returns
-array&lt;int, [NodeInterface](Models/NodeInterface.md)&gt;
+array&lt;int, NodeInterface&gt;
  The array of nodes in the union
 
 ### jsonSerialize

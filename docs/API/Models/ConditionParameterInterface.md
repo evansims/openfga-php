@@ -6,7 +6,7 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 
 #### Returns
-?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+?OpenFGA\Models\Collections\ConditionParametersInterface
 
 ### getTypeName
 

@@ -6,8 +6,8 @@ Schema definition specifically for validating and transforming collection data s
 `OpenFGA\Schema`
 
 ## Implements
-* [CollectionSchemaInterface](Schema/CollectionSchemaInterface.md)
-* [SchemaInterface](Schema/SchemaInterface.md)
+* [CollectionSchemaInterface](CollectionSchemaInterface.md)
+* [SchemaInterface](SchemaInterface.md)
 
 
 
@@ -68,7 +68,7 @@ Get a specific property definition by name. This method retrieves the schema def
 | `$name` | string | The name of the property to retrieve |
 
 #### Returns
-?[SchemaProperty](Schema/SchemaProperty.md)
+?OpenFGA\Schema\SchemaProperty
  The property definition if it exists, or null if the property is not defined in this schema
 
 ### getWrapperKey

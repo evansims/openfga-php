@@ -6,10 +6,10 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 `OpenFGA\Models`
 
 ## Implements
-* [TypedWildcardInterface](Models/TypedWildcardInterface.md)
+* [TypedWildcardInterface](TypedWildcardInterface.md)
 * Stringable
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

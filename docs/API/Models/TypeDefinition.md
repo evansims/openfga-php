@@ -6,9 +6,9 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 `OpenFGA\Models`
 
 ## Implements
-* [TypeDefinitionInterface](Models/TypeDefinitionInterface.md)
+* [TypeDefinitionInterface](TypeDefinitionInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 
 #### Returns
-?[MetadataInterface](Models/MetadataInterface.md)
+?OpenFGA\Models\MetadataInterface
  The metadata, or null if not specified
 
 ### getRelations
@@ -42,7 +42,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 
 #### Returns
-?[TypeDefinitionRelationsInterface](Models/Collections/TypeDefinitionRelationsInterface.md)
+?OpenFGA\Models\Collections\TypeDefinitionRelationsInterface
 
 ### getType
 

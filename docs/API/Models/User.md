@@ -6,9 +6,9 @@ Represents a user or user specification in authorization contexts. A User can re
 `OpenFGA\Models`
 
 ## Implements
-* [UserInterface](Models/UserInterface.md)
+* [UserInterface](UserInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the difference operation for this user. Difference operations enable sophist
 
 
 #### Returns
-?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
+?OpenFGA\Models\DifferenceV1Interface
  The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 
 ### getObject
@@ -42,7 +42,7 @@ Get the user object representation. User objects represent direct, concrete user
 
 
 #### Returns
-?[UserObjectInterface](Models/UserObjectInterface.md) | string | null
+?OpenFGA\Models\UserObjectInterface|string|null
  The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
 ### getUserset
@@ -56,7 +56,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 
 
 #### Returns
-?[UsersetUserInterface](Models/UsersetUserInterface.md)
+?OpenFGA\Models\UsersetUserInterface
  The userset definition specifying users through relationships, or null if this is not a userset-based user
 
 ### getWildcard
@@ -70,7 +70,7 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 
 
 #### Returns
-?[TypedWildcardInterface](Models/TypedWildcardInterface.md)
+?OpenFGA\Models\TypedWildcardInterface
  The wildcard definition specifying the user type, or null if this is not a wildcard user
 
 ### jsonSerialize

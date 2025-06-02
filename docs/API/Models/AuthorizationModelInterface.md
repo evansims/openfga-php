@@ -6,7 +6,7 @@ Represents an OpenFGA authorization model that defines permission structures. Au
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -37,7 +37,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 
 #### Returns
-ConditionsInterface&lt;[ConditionInterface](Models/ConditionInterface.md)&gt; | null
+ConditionsInterface&lt;ConditionInterface&gt;|null
  The collection of reusable conditions defined in this model, or null if no conditions are defined
 
 ### getId
@@ -79,7 +79,7 @@ Get the type definitions that define the structure of this authorization model. 
 
 
 #### Returns
-TypeDefinitionsInterface&lt;[TypeDefinitionInterface](Models/TypeDefinitionInterface.md)&gt;
+TypeDefinitionsInterface&lt;TypeDefinitionInterface&gt;
  The collection of type definitions that structure this authorization model
 
 ### jsonSerialize

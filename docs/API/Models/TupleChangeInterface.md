@@ -6,7 +6,7 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -51,7 +51,7 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+TupleKeyInterface
  The tuple key that was modified
 
 ### jsonSerialize

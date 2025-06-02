@@ -6,7 +6,7 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 
 #### Returns
-Consistency | null
+Consistency|null
  The consistency level for the operation, or null to use the default consistency setting
 
 ### getContinuationToken
@@ -36,7 +36,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string | null
+string|null
  The continuation token from a previous read operation, or null for the first page
 
 ### getPageSize
@@ -50,7 +50,7 @@ Get the maximum number of tuples to return. Specifies the page size for paginate
 
 
 #### Returns
-int | null
+int|null
  The maximum number of tuples to return per page, or null to use the default page size
 
 ### getRequest

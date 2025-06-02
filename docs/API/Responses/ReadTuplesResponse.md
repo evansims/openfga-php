@@ -6,8 +6,8 @@ Response containing a paginated list of relationship tuples. This response provi
 `OpenFGA\Responses`
 
 ## Implements
-* [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ReadTuplesResponseInterface](ReadTuplesResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -58,7 +58,7 @@ Get the collection of relationship tuples. Returns a type-safe collection contai
 
 
 #### Returns
-[TuplesInterface](Models/Collections/TuplesInterface.md)
+OpenFGA\Models\Collections\TuplesInterface
  The collection of relationship tuples
 
 ### schema

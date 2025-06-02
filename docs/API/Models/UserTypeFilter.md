@@ -6,9 +6,9 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 `OpenFGA\Models`
 
 ## Implements
-* [UserTypeFilterInterface](Models/UserTypeFilterInterface.md)
+* [UserTypeFilterInterface](UserTypeFilterInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

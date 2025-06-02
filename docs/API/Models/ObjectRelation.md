@@ -6,9 +6,9 @@ Represents a reference to a specific relation on an object. In authorization mod
 `OpenFGA\Models`
 
 ## Implements
-* [ObjectRelationInterface](Models/ObjectRelationInterface.md)
+* [ObjectRelationInterface](ObjectRelationInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

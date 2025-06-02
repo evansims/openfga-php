@@ -6,7 +6,7 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 
 #### Returns
-[ComputedInterface](Models/ComputedInterface.md) | null
+ComputedInterface|null
  The computed userset specification, or null if not used
 
 ### getTupleToUserset
@@ -37,7 +37,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 
 #### Returns
-[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md) | null
+UsersetTreeTupleToUsersetInterface|null
  The tuple-to-userset operation, or null if not used
 
 ### getUsers
@@ -51,7 +51,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 
 #### Returns
-UsersListInterface&lt;[UsersListUserInterface](Models/UsersListUserInterface.md)&gt; | null
+UsersListInterface&lt;UsersListUserInterface&gt;|null
  The list of users with direct access, or null if not used
 
 ### jsonSerialize

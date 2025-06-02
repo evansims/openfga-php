@@ -6,7 +6,7 @@ Represents a user in a list context for authorization operations. UsersListUser 
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * Stringable
 * JsonSerializable
 

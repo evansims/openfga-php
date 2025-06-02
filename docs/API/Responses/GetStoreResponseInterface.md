@@ -6,7 +6,7 @@ Interface for store retrieval response objects. This interface defines the contr
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -36,7 +36,7 @@ Get the timestamp when the store was deleted, if applicable. Returns the deletio
 
 
 #### Returns
-DateTimeImmutable | null
+DateTimeImmutable|null
  The deletion timestamp, or null if the store is not deleted
 
 ### getId

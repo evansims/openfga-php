@@ -6,7 +6,7 @@ Interface for object listing response objects. This interface defines the contra
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

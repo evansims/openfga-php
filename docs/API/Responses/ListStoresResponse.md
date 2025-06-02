@@ -6,8 +6,8 @@ Response containing a paginated list of available stores. This response provides
 `OpenFGA\Responses`
 
 ## Implements
-* [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ListStoresResponseInterface](ListStoresResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -58,7 +58,7 @@ Get the collection of stores. Returns a type-safe collection containing the stor
 
 
 #### Returns
-[StoresInterface](Models/Collections/StoresInterface.md)
+OpenFGA\Models\Collections\StoresInterface
  The collection of stores
 
 ### schema

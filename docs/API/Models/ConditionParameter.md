@@ -6,9 +6,9 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 `OpenFGA\Models`
 
 ## Implements
-* [ConditionParameterInterface](Models/ConditionParameterInterface.md)
+* [ConditionParameterInterface](ConditionParameterInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 
 #### Returns
-?[ConditionParametersInterface](Models/Collections/ConditionParametersInterface.md)
+?OpenFGA\Models\Collections\ConditionParametersInterface
 
 ### getTypeName
 
@@ -41,7 +41,7 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 
 #### Returns
-TypeName
+OpenFGA\Models\Enums\TypeName
  The type name enum value for this parameter
 
 ### jsonSerialize

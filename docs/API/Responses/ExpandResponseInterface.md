@@ -6,7 +6,7 @@ Interface for relationship expansion response objects. This interface defines th
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -22,6 +22,6 @@ Get the expansion tree for the queried relationship. Returns a hierarchical tree
 
 
 #### Returns
-UsersetTreeInterface | null
+UsersetTreeInterface|null
  The relationship expansion tree, or null if no relationships found
 

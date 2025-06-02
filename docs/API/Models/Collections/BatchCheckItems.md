@@ -6,13 +6,13 @@ Collection of batch check items for batch authorization requests. This collectio
 `OpenFGA\Models\Collections`
 
 ## Implements
-* [IndexedCollectionInterface](Models/Collections/IndexedCollectionInterface.md)
+* [IndexedCollectionInterface](IndexedCollectionInterface.md)
 * Traversable
 * JsonSerializable
 * Iterator
 * Countable
 * ArrayAccess
-* [BatchCheckItemsInterface](Models/Collections/BatchCheckItemsInterface.md)
+* [BatchCheckItemsInterface](BatchCheckItemsInterface.md)
 
 
 
@@ -69,7 +69,7 @@ public function current(): OpenFGA\Models\ModelInterface
 
 
 #### Returns
-[ModelInterface](Models/ModelInterface.md)
+OpenFGA\Models\ModelInterface
 
 ### every
 
@@ -222,7 +222,7 @@ public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 | `value` | mixed |  |
 
 #### Returns
-?[ModelInterface](Models/ModelInterface.md)
+?OpenFGA\Models\ModelInterface
 
 ### offsetSet
 

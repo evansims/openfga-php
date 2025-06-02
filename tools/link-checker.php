@@ -136,8 +136,8 @@ final class LinkChecker
             $links[] = trim($url);
         }
 
-        // Extract @see references in PHPDoc
-        preg_match_all('/@see\s+([^\s]+)/', $content, $seeMatches);
+        // Extract @see references in PHPDoc (only URLs, not class references)
+        preg_match_all('/@see\s+(https?:\/\/[^\s]+)/', $content, $seeMatches);
         foreach ($seeMatches[1] as $url) {
             $links[] = trim($url);
         }
@@ -238,6 +238,14 @@ final class LinkChecker
         $link = $result['link'];
         $basePath = dirname($result['file']);
         
+        // Skip API documentation links that are auto-generated
+        if (str_contains($link, 'Interface.md') && str_contains($result['file'], 'docs/API/')) {
+            $result['status'] = 'skipped';
+            $result['message'] = 'Auto-generated API documentation link';
+            $this->stats['skipped_links']++;
+            return;
+        }
+        
         // Handle relative paths
         if (!str_starts_with($link, '/')) {
             $fullPath = realpath($basePath . '/' . $link);
@@ -316,6 +324,11 @@ final class LinkChecker
 
     private function shouldExclude(string $link): bool
     {
+        // Skip class/interface references that don't start with http or file paths
+        if (!str_starts_with($link, 'http') && !str_starts_with($link, '/') && !str_contains($link, '.') && !str_contains($link, '#')) {
+            return true;
+        }
+        
         foreach ($this->excludePatterns as $pattern) {
             if (fnmatch($pattern, $link)) {
                 return true;

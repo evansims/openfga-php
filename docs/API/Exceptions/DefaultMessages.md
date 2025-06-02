@@ -6,7 +6,7 @@ Maps exception error enums to their default message keys. This class provides th
 `OpenFGA\Exceptions`
 
 ## Implements
-* [DefaultMessagesInterface](Exceptions/DefaultMessagesInterface.md)
+* [DefaultMessagesInterface](DefaultMessagesInterface.md)
 
 
 
@@ -81,7 +81,7 @@ Get the default message key for any supported error type. Generic method that ac
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$error` | AuthenticationError | ClientError | ConfigurationError | NetworkError | SerializationError | The error enum of any supported type |
+| `$error` | AuthenticationError|ClientError|ConfigurationError|NetworkError|SerializationError | The error enum of any supported type |
 
 #### Returns
 Messages

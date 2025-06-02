@@ -6,13 +6,13 @@ Collection implementation for OpenFGA tuple objects. This class provides a concr
 `OpenFGA\Models\Collections`
 
 ## Implements
-* [IndexedCollectionInterface](Models/Collections/IndexedCollectionInterface.md)
+* [IndexedCollectionInterface](IndexedCollectionInterface.md)
 * Traversable
 * JsonSerializable
 * Iterator
 * Countable
 * ArrayAccess
-* [TuplesInterface](Models/Collections/TuplesInterface.md)
+* [TuplesInterface](TuplesInterface.md)
 
 
 
@@ -69,7 +69,7 @@ public function current(): OpenFGA\Models\ModelInterface
 
 
 #### Returns
-[ModelInterface](Models/ModelInterface.md)
+OpenFGA\Models\ModelInterface
 
 ### every
 
@@ -222,7 +222,7 @@ public function offsetGet(mixed $offset): ?OpenFGA\Models\ModelInterface
 | `value` | mixed |  |
 
 #### Returns
-?[ModelInterface](Models/ModelInterface.md)
+?OpenFGA\Models\ModelInterface
 
 ### offsetSet
 

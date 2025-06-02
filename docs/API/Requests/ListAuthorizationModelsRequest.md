@@ -6,8 +6,8 @@ Request for listing all authorization models in a store. This request retrieves 
 `OpenFGA\Requests`
 
 ## Implements
-* [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [ListAuthorizationModelsRequestInterface](ListAuthorizationModelsRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -52,10 +52,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore

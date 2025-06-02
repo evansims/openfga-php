@@ -6,10 +6,10 @@ Represents a specific user object with type and identifier. A UserObject provide
 `OpenFGA\Models`
 
 ## Implements
-* [UserObjectInterface](Models/UserObjectInterface.md)
+* [UserObjectInterface](UserObjectInterface.md)
 * Stringable
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

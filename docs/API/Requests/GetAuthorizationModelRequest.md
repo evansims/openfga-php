@@ -6,8 +6,8 @@ Request for retrieving a specific authorization model by its ID. This request fe
 `OpenFGA\Requests`
 
 ## Implements
-* [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [GetAuthorizationModelRequestInterface](GetAuthorizationModelRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -38,10 +38,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore

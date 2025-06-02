@@ -6,7 +6,7 @@ OpenTelemetry implementation for OpenFGA SDK observability. This class provides 
 `OpenFGA\Observability`
 
 ## Implements
-* [TelemetryInterface](Observability/TelemetryInterface.md)
+* [TelemetryInterface](TelemetryInterface.md)
 
 
 
@@ -104,8 +104,8 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 |------|------|-------------|
 | `$operation` | string | The OpenFGA operation name |
 | `$duration` | float | The operation duration in seconds |
-| `$store` | [StoreInterface](Models/StoreInterface.md) | string | The store being operated on |
-| `$model` | ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string | null | The authorization model used |
+| `$store` | OpenFGA\Models\StoreInterface|string | The store being operated on |
+| `$model` | ?OpenFGA\Models\AuthorizationModelInterface|string|null | The authorization model used |
 | `exception` | ?Throwable |  |
 
 #### Returns
@@ -163,8 +163,8 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 | Name | Type | Description |
 |------|------|-------------|
 | `$operation` | string | The OpenFGA operation name (e.g., &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
-| `$store` | [StoreInterface](Models/StoreInterface.md) | string | The store being operated on |
-| `$model` | ?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md) | string | null | The authorization model being used |
+| `$store` | OpenFGA\Models\StoreInterface|string | The store being operated on |
+| `$model` | ?OpenFGA\Models\AuthorizationModelInterface|string|null | The authorization model being used |
 | `$attributes` | array | Additional span attributes |
 
 #### Returns

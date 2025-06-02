@@ -36,7 +36,7 @@ Get the scope that defines the permissions granted by this access token. The sco
 
 
 #### Returns
-string | null
+string|null
  The token scope defining granted permissions, or null if no scope is specified
 
 ### getToken

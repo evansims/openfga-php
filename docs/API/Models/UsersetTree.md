@@ -6,9 +6,9 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 `OpenFGA\Models`
 
 ## Implements
-* [UsersetTreeInterface](Models/UsersetTreeInterface.md)
+* [UsersetTreeInterface](UsersetTreeInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 
 #### Returns
-[NodeInterface](Models/NodeInterface.md)
+OpenFGA\Models\NodeInterface
  The root node of the userset tree
 
 ### jsonSerialize

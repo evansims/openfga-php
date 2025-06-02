@@ -6,7 +6,7 @@ Request for performing multiple authorization checks in a single batch. This req
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 

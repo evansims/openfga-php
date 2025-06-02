@@ -6,7 +6,7 @@ Interface for store deletion response objects. This interface defines the contra
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

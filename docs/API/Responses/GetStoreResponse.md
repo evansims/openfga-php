@@ -6,8 +6,8 @@ Response containing detailed information about a specific store. This response p
 `OpenFGA\Responses`
 
 ## Implements
-* [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [GetStoreResponseInterface](GetStoreResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -100,7 +100,7 @@ Get the complete store object. Returns the full store object containing all stor
 
 
 #### Returns
-[StoreInterface](Models/StoreInterface.md)
+OpenFGA\Models\StoreInterface
  The complete store object
 
 ### getUpdatedAt

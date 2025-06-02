@@ -6,8 +6,8 @@ Response confirming successful writing of test assertions. This response indicat
 `OpenFGA\Responses`
 
 ## Implements
-* [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [WriteAssertionsResponseInterface](WriteAssertionsResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

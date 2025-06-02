@@ -6,8 +6,8 @@ Response confirming successful deletion of a store. This response is returned wh
 `OpenFGA\Responses`
 
 ## Implements
-* [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [DeleteStoreResponseInterface](DeleteStoreResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

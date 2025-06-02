@@ -6,7 +6,7 @@ Response containing streaming objects that a user has a specific relationship wi
 `OpenFGA\Responses`
 
 ## Implements
-* [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md)
+* [StreamedListObjectsResponseInterface](StreamedListObjectsResponseInterface.md)
 
 
 
@@ -29,7 +29,7 @@ Create a streaming response from an HTTP response. Processes the streaming HTTP 
 | `$validator` | SchemaValidator | Schema validator for response validation |
 
 #### Returns
-Generator&lt;int, [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md)&gt;
+Generator&lt;int, StreamedListObjectsResponseInterface&gt;
  Generator yielding response objects
 
 ### getObject

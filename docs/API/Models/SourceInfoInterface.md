@@ -6,7 +6,7 @@ Represents source file information for OpenFGA model elements. Source informatio
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 

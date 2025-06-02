@@ -8,7 +8,7 @@ Configuration-related exception for the OpenFGA SDK. Thrown when configuration e
 ## Implements
 * Stringable
 * Throwable
-* [ClientThrowable](Exceptions/ClientThrowable.md)
+* [ClientThrowable](ClientThrowable.md)
 
 
 
@@ -120,7 +120,7 @@ Get the specific error category for this exception. Returns the error classifica
 
 
 #### Returns
-ClientError | AuthenticationError | ConfigurationError | NetworkError | SerializationError
+OpenFGA\Exceptions\ClientError|OpenFGA\Exceptions\AuthenticationError|OpenFGA\Exceptions\ConfigurationError|OpenFGA\Exceptions\NetworkError|OpenFGA\Exceptions\SerializationError
  The error category enum indicating the type of failure
 
 ### previous

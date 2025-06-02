@@ -6,8 +6,8 @@ Request for streaming objects that a user has a specific relationship with. This
 `OpenFGA\Requests`
 
 ## Implements
-* [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [StreamedListObjectsRequestInterface](StreamedListObjectsRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the consistency requirement for this request.
 
 
 #### Returns
-?Consistency
+?OpenFGA\Models\Enums\Consistency
  The consistency requirement, or null if not specified
 
 ### getContext
@@ -51,7 +51,7 @@ Get the contextual tuples for this request.
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
  The contextual tuples collection, or null if not specified
 
 ### getModel
@@ -94,10 +94,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore

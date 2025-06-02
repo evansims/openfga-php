@@ -6,7 +6,7 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 

@@ -6,8 +6,8 @@ Request for listing objects that a user has a specific relationship with. This r
 `OpenFGA\Requests`
 
 ## Implements
-* [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [ListObjectsRequestInterface](ListObjectsRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 
 #### Returns
-?Consistency
+?OpenFGA\Models\Enums\Consistency
  The consistency level for the operation, or null to use the default consistency setting
 
 ### getContext
@@ -51,7 +51,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
  Additional relationship tuples for evaluation, or null if none provided
 
 ### getModel
@@ -94,10 +94,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore

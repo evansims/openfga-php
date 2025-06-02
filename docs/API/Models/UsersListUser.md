@@ -6,10 +6,10 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 `OpenFGA\Models`
 
 ## Implements
-* [UsersListUserInterface](Models/UsersListUserInterface.md)
+* [UsersListUserInterface](UsersListUserInterface.md)
 * Stringable
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

@@ -6,7 +6,7 @@ Token-based authentication strategy for OpenFGA client. This authentication stra
 `OpenFGA\Authentication`
 
 ## Implements
-* [AuthenticationInterface](Authentication/AuthenticationInterface.md)
+* [AuthenticationInterface](AuthenticationInterface.md)
 
 
 
@@ -26,7 +26,7 @@ Get an authentication request context if this strategy requires token acquisitio
 | `response` | Psr\Http\Message\ResponseInterface |  |
 
 #### Returns
-?[RequestContext](Network/RequestContext.md)
+?OpenFGA\Network\RequestContext
  The authentication request context, or null if not needed
 
 ### getAuthorizationHeader
@@ -54,7 +54,7 @@ Get the current authentication token. Returns the token that was provided during
 
 
 #### Returns
-[AccessTokenInterface](Authentication/AccessTokenInterface.md) | string
+AccessTokenInterface|string
  The authentication token used by this strategy
 
 ### handleAuthenticationResponse

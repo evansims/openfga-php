@@ -6,7 +6,7 @@ Defines a difference operation between two usersets in authorization models. Dif
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the base userset from which users will be subtracted. This represents the in
 
 
 #### Returns
-[UsersetInterface](Models/UsersetInterface.md)
+UsersetInterface
  The base userset for the difference operation
 
 ### getSubtract
@@ -37,7 +37,7 @@ Get the userset of users to subtract from the base userset. This represents the 
 
 
 #### Returns
-[UsersetInterface](Models/UsersetInterface.md)
+UsersetInterface
  The userset to subtract from the base
 
 ### jsonSerialize

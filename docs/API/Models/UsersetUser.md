@@ -6,9 +6,9 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 `OpenFGA\Models`
 
 ## Implements
-* [UsersetUserInterface](Models/UsersetUserInterface.md)
+* [UsersetUserInterface](UsersetUserInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

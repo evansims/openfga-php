@@ -6,8 +6,8 @@ Response containing the expanded userset tree for a relationship query. This res
 `OpenFGA\Responses`
 
 ## Implements
-* [ExpandResponseInterface](Responses/ExpandResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ExpandResponseInterface](ExpandResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -44,7 +44,7 @@ Get the expansion tree for the queried relationship. Returns a hierarchical tree
 
 
 #### Returns
-?[UsersetTreeInterface](Models/UsersetTreeInterface.md)
+?OpenFGA\Models\UsersetTreeInterface
  The relationship expansion tree, or null if no relationships found
 
 ### schema

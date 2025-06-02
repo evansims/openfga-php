@@ -6,7 +6,7 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 
 #### Returns
-[MetadataInterface](Models/MetadataInterface.md) | null
+MetadataInterface|null
  The metadata, or null if not specified
 
 ### getRelations
@@ -37,7 +37,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 
 #### Returns
-TypeDefinitionRelationsInterface&lt;[UsersetInterface](Models/UsersetInterface.md)&gt; | null
+TypeDefinitionRelationsInterface&lt;UsersetInterface&gt;|null
 
 ### getType
 

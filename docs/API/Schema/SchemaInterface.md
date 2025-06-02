@@ -34,7 +34,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 
 #### Returns
-array&lt;string, [SchemaProperty](Schema/SchemaProperty.md)&gt;
+array&lt;string, SchemaProperty&gt;
  An associative array of property names to their schema property definitions
 
 ### getProperty
@@ -52,6 +52,6 @@ Get a specific property definition by name. This method retrieves the schema def
 | `$name` | string | The name of the property to retrieve |
 
 #### Returns
-[SchemaProperty](Schema/SchemaProperty.md) | null
+SchemaProperty|null
  The property definition if it exists, or null if the property is not defined in this schema
 

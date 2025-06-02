@@ -6,7 +6,7 @@ Interface for permission check response objects. This interface defines the cont
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get whether the permission check was allowed. This is the primary result of the 
 
 
 #### Returns
-bool | null
+bool|null
  True if permission is granted, false if denied, or null if the result is indeterminate
 
 ### getResolution
@@ -36,6 +36,6 @@ Get the resolution details for the permission decision. This provides additional
 
 
 #### Returns
-string | null
+string|null
  The resolution details explaining the permission decision, or null if not provided
 

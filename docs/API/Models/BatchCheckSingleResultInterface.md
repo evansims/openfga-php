@@ -6,7 +6,7 @@ Represents the result of a single check within a batch check response. Each resu
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 

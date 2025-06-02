@@ -6,7 +6,7 @@ JSON schema definition for validating and transforming data structures. This sch
 `OpenFGA\Schema`
 
 ## Implements
-* [SchemaInterface](Schema/SchemaInterface.md)
+* [SchemaInterface](SchemaInterface.md)
 
 
 
@@ -54,6 +54,6 @@ Get a specific property definition by name. This method retrieves the schema def
 | `$name` | string | The name of the property to retrieve |
 
 #### Returns
-?[SchemaProperty](Schema/SchemaProperty.md)
+?OpenFGA\Schema\SchemaProperty
  The property definition if it exists, or null if the property is not defined in this schema
 

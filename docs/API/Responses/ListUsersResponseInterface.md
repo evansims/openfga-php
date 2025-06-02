@@ -6,7 +6,7 @@ Interface for user listing response objects. This interface defines the contract
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

@@ -6,7 +6,7 @@ Collection interface for OpenFGA relation metadata objects. This interface defin
 `OpenFGA\Models\Collections`
 
 ## Implements
-* [KeyedCollectionInterface](Models/Collections/KeyedCollectionInterface.md)
+* [KeyedCollectionInterface](KeyedCollectionInterface.md)
 * Traversable
 * JsonSerializable
 * Iterator
@@ -73,7 +73,7 @@ Get an item by its string key. This method retrieves the item associated with th
 | `$key` | string | The key of the item to retrieve |
 
 #### Returns
-T | null
+T|null
  The item associated with the key, or null if not found
 
 ### has
@@ -180,7 +180,7 @@ Get an item by its offset key.
 | `$offset` | mixed |  |
 
 #### Returns
-T | null
+T|null
 
 ### offsetSet
 
@@ -193,7 +193,7 @@ public function offsetSet(string|null $offset, T $value): void
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$offset` | string | null |  |
+| `$offset` | string|null |  |
 | `$value` | T |  |
 
 #### Returns

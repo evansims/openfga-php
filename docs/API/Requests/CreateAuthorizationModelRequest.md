@@ -6,8 +6,8 @@ Request for creating a new authorization model in OpenFGA. Authorization models 
 `OpenFGA\Requests`
 
 ## Implements
-* [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [CreateAuthorizationModelRequestInterface](CreateAuthorizationModelRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 
 #### Returns
-?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+?OpenFGA\Models\Collections\ConditionsInterface
  Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
 ### getRequest
@@ -38,10 +38,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getSchemaVersion
@@ -55,7 +55,7 @@ Get the schema version for the authorization model. Specifies which version of t
 
 
 #### Returns
-SchemaVersion
+OpenFGA\Models\Enums\SchemaVersion
  The modeling language schema version for this authorization model
 
 ### getStore
@@ -83,6 +83,6 @@ Get the type definitions for the authorization model. Returns a collection of ty
 
 
 #### Returns
-[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
+OpenFGA\Models\Collections\TypeDefinitionsInterface
  Collection of object type definitions that define the authorization schema
 

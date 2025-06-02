@@ -6,8 +6,8 @@ Response containing a specific authorization model from the store. This response
 `OpenFGA\Responses`
 
 ## Implements
-* [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [GetAuthorizationModelResponseInterface](GetAuthorizationModelResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -44,7 +44,7 @@ Get the retrieved authorization model. Returns the complete authorization model 
 
 
 #### Returns
-?[AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+?OpenFGA\Models\AuthorizationModelInterface
  The authorization model, or null if not found
 
 ### schema

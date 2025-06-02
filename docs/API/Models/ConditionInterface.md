@@ -6,7 +6,7 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -37,7 +37,7 @@ Get metadata about the condition definition. This provides additional informatio
 
 
 #### Returns
-[ConditionMetadataInterface](Models/ConditionMetadataInterface.md) | null
+ConditionMetadataInterface|null
  The condition metadata, or null if not provided
 
 ### getName
@@ -65,7 +65,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 
 #### Returns
-ConditionParametersInterface&lt;[ConditionParameterInterface](Models/ConditionParameterInterface.md)&gt; | null
+ConditionParametersInterface&lt;ConditionParameterInterface&gt;|null
  The condition parameters, or null if the condition uses no parameters
 
 ### jsonSerialize

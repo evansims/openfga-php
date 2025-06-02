@@ -6,9 +6,9 @@ Represents source file information for debugging and development tools. SourceIn
 `OpenFGA\Models`
 
 ## Implements
-* [SourceInfoInterface](Models/SourceInfoInterface.md)
+* [SourceInfoInterface](SourceInfoInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

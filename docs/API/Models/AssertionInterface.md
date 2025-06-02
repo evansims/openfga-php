@@ -6,7 +6,7 @@ Represents an assertion used to test authorization model correctness. Assertions
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -36,7 +36,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
 
 ### getExpectation
 
@@ -63,7 +63,7 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 
 #### Returns
-[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
+AssertionTupleKeyInterface
  The tuple key defining the authorization question
 
 ### jsonSerialize

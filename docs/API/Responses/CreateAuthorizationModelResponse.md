@@ -6,8 +6,8 @@ Response confirming successful creation of a new authorization model. This respo
 `OpenFGA\Responses`
 
 ## Implements
-* [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [CreateAuthorizationModelResponseInterface](CreateAuthorizationModelResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

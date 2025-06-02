@@ -6,8 +6,8 @@ Response containing a list of users that have a specific relationship with an ob
 `OpenFGA\Responses`
 
 ## Implements
-* [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ListUsersResponseInterface](ListUsersResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -44,7 +44,7 @@ Get the collection of users with the specified relationship. Returns a type-safe
 
 
 #### Returns
-[UsersInterface](Models/Collections/UsersInterface.md)
+OpenFGA\Models\Collections\UsersInterface
  The collection of users with the relationship
 
 ### schema

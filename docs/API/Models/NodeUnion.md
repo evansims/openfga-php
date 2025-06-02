@@ -6,9 +6,9 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 `OpenFGA\Models`
 
 ## Implements
-* [NodeUnionInterface](Models/NodeUnionInterface.md)
+* [NodeUnionInterface](NodeUnionInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 
 #### Returns
-array&lt;int, [NodeInterface](Models/NodeInterface.md)&gt;
+array&lt;int, NodeInterface&gt;
  The array of nodes in the union
 
 ### jsonSerialize

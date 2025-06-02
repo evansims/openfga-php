@@ -6,9 +6,9 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 `OpenFGA\Models`
 
 ## Implements
-* [UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
+* [UsersetTreeTupleToUsersetInterface](UsersetTreeTupleToUsersetInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 
 
 #### Returns
-array&lt;int, [ComputedInterface](Models/ComputedInterface.md)&gt;
+array&lt;int, ComputedInterface&gt;
  Array of computed userset references
 
 ### getTupleset

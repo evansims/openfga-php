@@ -6,8 +6,8 @@ Request for listing users who have a specific relationship with an object. This 
 `OpenFGA\Requests`
 
 ## Implements
-* [ListUsersRequestInterface](Requests/ListUsersRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [ListUsersRequestInterface](ListUsersRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 
 #### Returns
-?Consistency
+?OpenFGA\Models\Enums\Consistency
  The consistency level for the operation, or null to use the default consistency setting
 
 ### getContext
@@ -51,7 +51,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
  Additional relationship tuples for evaluation, or null if none provided
 
 ### getModel
@@ -108,10 +108,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore
@@ -139,6 +139,6 @@ Get the user type filters to apply to results. Returns a collection of filters t
 
 
 #### Returns
-[UserTypeFiltersInterface](Models/Collections/UserTypeFiltersInterface.md)
+OpenFGA\Models\Collections\UserTypeFiltersInterface
  Collection of user type filters to apply to the results
 

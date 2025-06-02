@@ -6,8 +6,8 @@ Response containing a paginated list of tuple changes from the store. This respo
 `OpenFGA\Responses`
 
 ## Implements
-* [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ListTupleChangesResponseInterface](ListTupleChangesResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -44,7 +44,7 @@ Get the collection of tuple changes. Returns a type-safe collection containing t
 
 
 #### Returns
-[TupleChangesInterface](Models/Collections/TupleChangesInterface.md)
+OpenFGA\Models\Collections\TupleChangesInterface
  The collection of tuple changes
 
 ### getContinuationToken

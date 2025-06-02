@@ -6,7 +6,7 @@ Defines the contract for userset specifications in authorization models. A users
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the computed userset specification for this userset. A computed userset defi
 
 
 #### Returns
-[ObjectRelationInterface](Models/ObjectRelationInterface.md) | null
+ObjectRelationInterface|null
  The computed userset specification, or null if not used
 
 ### getDifference
@@ -37,7 +37,7 @@ Get the difference operation specification for this userset. A difference operat
 
 
 #### Returns
-[DifferenceV1Interface](Models/DifferenceV1Interface.md) | null
+DifferenceV1Interface|null
  The difference operation specification, or null if not used
 
 ### getDirect
@@ -51,7 +51,7 @@ Get the direct userset value for this userset. A direct userset represents an im
 
 
 #### Returns
-object | null
+object|null
  The direct userset value, or null if not used
 
 ### getIntersection
@@ -65,7 +65,7 @@ Get the intersection operation specification for this userset. An intersection o
 
 
 #### Returns
-UsersetsInterface&lt;[UsersetInterface](Models/UsersetInterface.md)&gt; | null
+UsersetsInterface&lt;UsersetInterface&gt;|null
  The collection of usersets to intersect, or null if not used
 
 ### getTupleToUserset
@@ -79,7 +79,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 
 
 #### Returns
-[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md) | null
+TupleToUsersetV1Interface|null
  The tuple-to-userset operation specification, or null if not used
 
 ### getUnion
@@ -93,7 +93,7 @@ Get the union operation specification for this userset. A union operation repres
 
 
 #### Returns
-UsersetsInterface&lt;[UsersetInterface](Models/UsersetInterface.md)&gt; | null
+UsersetsInterface&lt;UsersetInterface&gt;|null
  The collection of usersets to unite, or null if not used
 
 ### jsonSerialize

@@ -6,9 +6,9 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 `OpenFGA\Models`
 
 ## Implements
-* [AssertionInterface](Models/AssertionInterface.md)
+* [AssertionInterface](AssertionInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -41,7 +41,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
 
 ### getExpectation
 
@@ -68,7 +68,7 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 
 #### Returns
-[AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
+OpenFGA\Models\AssertionTupleKeyInterface
  The tuple key defining the authorization question
 
 ### jsonSerialize

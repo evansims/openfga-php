@@ -6,7 +6,7 @@ Implementation of request context for OpenFGA API operations. This class provide
 `OpenFGA\Network`
 
 ## Implements
-* [RequestContextInterface](Network/RequestContextInterface.md)
+* [RequestContextInterface](RequestContextInterface.md)
 
 
 
@@ -50,7 +50,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 
 #### Returns
-RequestMethod
+OpenFGA\Network\RequestMethod
  The HTTP method enum value indicating the request type
 
 ### getUrl

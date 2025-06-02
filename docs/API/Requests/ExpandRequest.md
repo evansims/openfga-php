@@ -6,8 +6,8 @@ Request for expanding a relationship to show all users who have that relationshi
 `OpenFGA\Requests`
 
 ## Implements
-* [ExpandRequestInterface](Requests/ExpandRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [ExpandRequestInterface](ExpandRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 
 
 #### Returns
-?Consistency
+?OpenFGA\Models\Enums\Consistency
  The consistency level for the operation, or null to use the default consistency setting
 
 ### getContextualTuples
@@ -37,7 +37,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
  Additional relationship tuples for evaluation, or null if none provided
 
 ### getModel
@@ -66,10 +66,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore
@@ -97,6 +97,6 @@ Get the relationship tuple to expand. Specifies the starting point for the relat
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+OpenFGA\Models\TupleKeyInterface
  The relationship tuple specifying what to expand (object and relation)
 

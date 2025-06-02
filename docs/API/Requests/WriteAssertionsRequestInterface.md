@@ -6,7 +6,7 @@ Interface for writing test assertions to an authorization model. This interface 
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 

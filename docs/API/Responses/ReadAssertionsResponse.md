@@ -6,8 +6,8 @@ Response containing test assertions associated with an authorization model. This
 `OpenFGA\Responses`
 
 ## Implements
-* [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ReadAssertionsResponseInterface](ReadAssertionsResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -44,7 +44,7 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 
 #### Returns
-?[AssertionsInterface](Models/Collections/AssertionsInterface.md)
+?OpenFGA\Models\Collections\AssertionsInterface
  The collection of assertions, or null if no assertions are defined
 
 ### getModel

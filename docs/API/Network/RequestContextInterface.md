@@ -20,7 +20,7 @@ Get the request body stream. Returns the PSR-7 stream containing the request bod
 
 
 #### Returns
-StreamInterface | null
+StreamInterface|null
  The request body stream containing JSON data, or null for operations without body content
 
 ### getHeaders

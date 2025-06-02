@@ -6,9 +6,9 @@ Contains metadata information about a relation in your authorization model. Rela
 `OpenFGA\Models`
 
 ## Implements
-* [RelationMetadataInterface](Models/RelationMetadataInterface.md)
+* [RelationMetadataInterface](RelationMetadataInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the user types that can be directly related through this relation. This defi
 
 
 #### Returns
-?[RelationReferencesInterface](Models/Collections/RelationReferencesInterface.md)
+?OpenFGA\Models\Collections\RelationReferencesInterface
  The directly related user types, or null if not specified
 
 ### getModule
@@ -56,7 +56,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 
 #### Returns
-?[SourceInfoInterface](Models/SourceInfoInterface.md)
+?OpenFGA\Models\SourceInfoInterface
  The source file information, or null if not available
 
 ### jsonSerialize

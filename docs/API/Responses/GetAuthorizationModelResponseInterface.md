@@ -6,7 +6,7 @@ Interface for authorization model retrieval response objects. This interface def
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -22,6 +22,6 @@ Get the retrieved authorization model. Returns the complete authorization model 
 
 
 #### Returns
-AuthorizationModelInterface | null
+AuthorizationModelInterface|null
  The authorization model, or null if not found
 

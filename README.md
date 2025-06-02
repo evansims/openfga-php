@@ -14,7 +14,7 @@
 
 <p align="center">
   Stop writing authorization logic. Start asking questions.<br />
-  <a href="/docs/README.md">Read the documentation</a> to get started.
+  <a href="docs/README.md">Read the documentation</a> to get started.
 </p>
 
 <br />

@@ -6,7 +6,7 @@ Interface for retrieving information about an OpenFGA store. This interface defi
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 

@@ -6,7 +6,7 @@ Interface for assertions writing response objects. This interface defines the co
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

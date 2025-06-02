@@ -6,7 +6,7 @@ Circuit breaker implementation for preventing cascade failures in distributed sy
 `OpenFGA\Network`
 
 ## Implements
-* [CircuitBreakerInterface](Network/CircuitBreakerInterface.md)
+* [CircuitBreakerInterface](CircuitBreakerInterface.md)
 
 
 

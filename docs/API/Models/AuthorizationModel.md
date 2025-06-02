@@ -6,9 +6,9 @@ Defines the authorization rules and relationships for your application. An Autho
 `OpenFGA\Models`
 
 ## Implements
-* [AuthorizationModelInterface](Models/AuthorizationModelInterface.md)
+* [AuthorizationModelInterface](AuthorizationModelInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -42,7 +42,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 
 #### Returns
-?[ConditionsInterface](Models/Collections/ConditionsInterface.md)
+?OpenFGA\Models\Collections\ConditionsInterface
  The collection of reusable conditions defined in this model, or null if no conditions are defined
 
 ### getId
@@ -70,7 +70,7 @@ Get the schema version of this authorization model. The schema version indicates
 
 
 #### Returns
-SchemaVersion
+OpenFGA\Models\Enums\SchemaVersion
  The schema version enumeration indicating the model format specification
 
 ### getTypeDefinitions
@@ -84,7 +84,7 @@ Get the type definitions that define the structure of this authorization model. 
 
 
 #### Returns
-[TypeDefinitionsInterface](Models/Collections/TypeDefinitionsInterface.md)
+OpenFGA\Models\Collections\TypeDefinitionsInterface
  The collection of type definitions that structure this authorization model
 
 ### jsonSerialize

@@ -1,9 +1,0 @@
-# DslTransformerInterface
-
-
-## Namespace
-`OpenFGA\Language`
-
-
-
-

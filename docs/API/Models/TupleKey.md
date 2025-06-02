@@ -6,9 +6,9 @@ Represents a relationship tuple key defining a connection between user, relation
 `OpenFGA\Models`
 
 ## Implements
-* [TupleKeyInterface](Models/TupleKeyInterface.md)
+* [TupleKeyInterface](TupleKeyInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 
 #### Returns
-?[ConditionInterface](Models/ConditionInterface.md)
+?OpenFGA\Models\ConditionInterface
  The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 
 ### getObject

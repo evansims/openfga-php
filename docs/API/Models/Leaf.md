@@ -6,9 +6,9 @@ Represents a leaf node in authorization evaluation trees containing specific use
 `OpenFGA\Models`
 
 ## Implements
-* [LeafInterface](Models/LeafInterface.md)
+* [LeafInterface](LeafInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 
 #### Returns
-?[ComputedInterface](Models/ComputedInterface.md)
+?OpenFGA\Models\ComputedInterface
  The computed userset specification, or null if not used
 
 ### getTupleToUserset
@@ -42,7 +42,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 
 #### Returns
-?[UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md)
+?OpenFGA\Models\UsersetTreeTupleToUsersetInterface
  The tuple-to-userset operation, or null if not used
 
 ### getUsers
@@ -56,7 +56,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 
 #### Returns
-?[UsersListInterface](Models/Collections/UsersListInterface.md)
+?OpenFGA\Models\Collections\UsersListInterface
  The list of users with direct access, or null if not used
 
 ### jsonSerialize

@@ -6,7 +6,7 @@ Interface for expanding relationship graphs in OpenFGA. This interface defines t
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 
 
 #### Returns
-Consistency | null
+Consistency|null
  The consistency level for the operation, or null to use the default consistency setting
 
 ### getContextualTuples
@@ -36,7 +36,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt; | null
+TupleKeysInterface&lt;TupleKeyInterface&gt;|null
  Additional relationship tuples for evaluation, or null if none provided
 
 ### getModel
@@ -50,7 +50,7 @@ Get the authorization model ID to use for the expansion. Specifies which version
 
 
 #### Returns
-string | null
+string|null
  The authorization model ID for evaluation, or null to use the latest model version
 
 ### getRequest

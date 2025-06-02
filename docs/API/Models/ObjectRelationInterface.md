@@ -6,7 +6,7 @@ Represents an object-relation pair in OpenFGA authorization models. Object-relat
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 

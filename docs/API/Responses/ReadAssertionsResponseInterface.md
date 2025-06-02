@@ -6,7 +6,7 @@ Interface for assertions reading response objects. This interface defines the co
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 
 #### Returns
-AssertionsInterface&lt;AssertionInterface&gt; | null
+AssertionsInterface&lt;AssertionInterface&gt;|null
  The collection of assertions, or null if no assertions are defined
 
 ### getModel

@@ -6,8 +6,8 @@ Response confirming successful creation of a new store. This response provides t
 `OpenFGA\Responses`
 
 ## Implements
-* [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [CreateStoreResponseInterface](CreateStoreResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

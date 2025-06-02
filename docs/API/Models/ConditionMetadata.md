@@ -6,9 +6,9 @@ Contains metadata information about conditions in your authorization model. Cond
 `OpenFGA\Models`
 
 ## Implements
-* [ConditionMetadataInterface](Models/ConditionMetadataInterface.md)
+* [ConditionMetadataInterface](ConditionMetadataInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -42,7 +42,7 @@ Get source file information for debugging and tooling. This provides information
 
 
 #### Returns
-[SourceInfoInterface](Models/SourceInfoInterface.md)
+OpenFGA\Models\SourceInfoInterface
  The source file information
 
 ### jsonSerialize

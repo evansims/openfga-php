@@ -6,8 +6,8 @@ Response containing a paginated list of authorization models. This response prov
 `OpenFGA\Responses`
 
 ## Implements
-* [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ListAuthorizationModelsResponseInterface](ListAuthorizationModelsResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -58,7 +58,7 @@ Get the collection of authorization models. Returns a type-safe collection conta
 
 
 #### Returns
-[AuthorizationModelsInterface](Models/Collections/AuthorizationModelsInterface.md)
+OpenFGA\Models\Collections\AuthorizationModelsInterface
  The collection of authorization models
 
 ### schema

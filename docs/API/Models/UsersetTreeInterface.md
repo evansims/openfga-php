@@ -6,7 +6,7 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 
 #### Returns
-[NodeInterface](Models/NodeInterface.md)
+NodeInterface
  The root node of the userset tree
 
 ### jsonSerialize

@@ -6,7 +6,7 @@ Interface for tuple reading response objects. This interface defines the contrac
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 
 #### Returns
-string | null
+string|null
  The continuation token for fetching more results, or null if no more pages exist
 
 ### getTuples

@@ -6,7 +6,7 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 `OpenFGA\Schema`
 
 ## Implements
-* [SchemaRegistryInterface](Schema/SchemaRegistryInterface.md)
+* [SchemaRegistryInterface](SchemaRegistryInterface.md)
 
 
 
@@ -27,7 +27,7 @@ Create a new schema builder for the specified class.
 | `$className` | string |  |
 
 #### Returns
-[SchemaBuilder](Schema/SchemaBuilder.md)
+SchemaBuilder
  A new schema builder instance
 
 ### get
@@ -46,7 +46,7 @@ Retrieve a registered schema by class name.
 | `$className` | string |  |
 
 #### Returns
-?[Schema](Schema/Schema.md)
+?OpenFGA\Schema\Schema
 
 ### register
 
@@ -61,7 +61,7 @@ Register a schema in the registry.
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$schema` | [Schema](Schema/Schema.md) | The schema instance to register |
+| `$schema` | Schema | The schema instance to register |
 
 #### Returns
 void

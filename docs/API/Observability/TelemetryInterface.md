@@ -22,8 +22,8 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 | Name | Type | Description |
 |------|------|-------------|
 | `$span` | mixed | The span identifier returned by startHttpRequest() |
-| `$response` | ResponseInterface | null | The HTTP response received, if any |
-| `$exception` | Throwable | null | Optional exception that occurred during the request |
+| `$response` | ResponseInterface|null | The HTTP response received, if any |
+| `$exception` | Throwable|null | Optional exception that occurred during the request |
 
 #### Returns
 void
@@ -42,7 +42,7 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 |------|------|-------------|
 | `$span` | mixed | The span identifier returned by startOperation() |
 | `$success` | bool | Whether the operation completed successfully |
-| `$exception` | Throwable | null | Optional exception that occurred during the operation |
+| `$exception` | Throwable|null | Optional exception that occurred during the operation |
 | `$attributes` | array&lt;string, mixed&gt; | Additional attributes to record |
 
 #### Returns
@@ -102,8 +102,8 @@ Record performance metrics for OpenFGA operations. Records timing and throughput
 |------|------|-------------|
 | `$operation` | string | The OpenFGA operation name |
 | `$duration` | float | The operation duration in seconds |
-| `$store` | StoreInterface | string | The store being operated on |
-| `$model` | AuthorizationModelInterface | string | null | The authorization model used |
+| `$store` | StoreInterface|string | The store being operated on |
+| `$model` | AuthorizationModelInterface|string|null | The authorization model used |
 | `$attributes` | array&lt;string, mixed&gt; | Additional metric attributes |
 
 #### Returns
@@ -125,7 +125,7 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 | `$attempt` | int | The current attempt number (1-based) |
 | `$delayMs` | int | The delay before this attempt in milliseconds |
 | `$outcome` | string | The outcome of this attempt (&#039;success&#039;, &#039;failure&#039;, &#039;retry&#039;) |
-| `$exception` | Throwable | null | Optional exception from this attempt |
+| `$exception` | Throwable|null | Optional exception from this attempt |
 
 #### Returns
 void
@@ -161,8 +161,8 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 | Name | Type | Description |
 |------|------|-------------|
 | `$operation` | string | The OpenFGA operation name (e.g., &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
-| `$store` | StoreInterface | string | The store being operated on |
-| `$model` | AuthorizationModelInterface | string | null | The authorization model being used |
+| `$store` | StoreInterface|string | The store being operated on |
+| `$model` | AuthorizationModelInterface|string|null | The authorization model being used |
 | `$attributes` | array&lt;string, mixed&gt; | Additional span attributes |
 
 #### Returns

@@ -6,7 +6,7 @@ Represents a computed userset in OpenFGA authorization models. Computed usersets
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 

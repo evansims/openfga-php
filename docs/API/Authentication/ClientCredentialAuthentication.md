@@ -6,7 +6,7 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 `OpenFGA\Authentication`
 
 ## Implements
-* [AuthenticationInterface](Authentication/AuthenticationInterface.md)
+* [AuthenticationInterface](AuthenticationInterface.md)
 
 
 
@@ -39,7 +39,7 @@ Get an authentication request context if this strategy requires token acquisitio
 | `response` | Psr\Http\Message\ResponseInterface |  |
 
 #### Returns
-?[RequestContext](Network/RequestContext.md)
+?OpenFGA\Network\RequestContext
  The authentication request context, or null if not needed
 
 ### getAuthorizationHeader
@@ -67,7 +67,7 @@ Get the current access token if available. Returns the stored access token, whic
 
 
 #### Returns
-[AccessTokenInterface](Authentication/AccessTokenInterface.md) | null
+AccessTokenInterface|null
  The current access token, or null if not authenticated
 
 ### handleAuthenticationResponse

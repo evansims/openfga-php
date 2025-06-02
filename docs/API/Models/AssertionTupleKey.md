@@ -6,9 +6,9 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 `OpenFGA\Models`
 
 ## Implements
-* [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md)
+* [AssertionTupleKeyInterface](AssertionTupleKeyInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

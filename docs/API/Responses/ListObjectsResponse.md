@@ -6,8 +6,8 @@ Response containing a list of objects that a user has a specific relationship wi
 `OpenFGA\Responses`
 
 ## Implements
-* [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ListObjectsResponseInterface](ListObjectsResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

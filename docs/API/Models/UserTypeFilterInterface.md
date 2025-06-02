@@ -6,7 +6,7 @@ Represents a filter for limiting users by their relationships to specific object
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -49,5 +49,5 @@ public function jsonSerialize(): array<'relation'|'type', string>
 
 
 #### Returns
-array&lt;'relation' | 'type', string&gt;
+array&lt;'relation'|'type', string&gt;
 

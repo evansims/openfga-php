@@ -6,7 +6,7 @@ Defines the contract for relation references with optional conditions. A relatio
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the optional condition name that must be satisfied. When specified, this con
 
 
 #### Returns
-string | null
+string|null
  The condition name, or null if no condition is required
 
 ### getRelation
@@ -37,7 +37,7 @@ Get the optional specific relation on the referenced type. When specified, this 
 
 
 #### Returns
-string | null
+string|null
  The relation name, or null to reference the entire type
 
 ### getType
@@ -65,7 +65,7 @@ Get the optional wildcard marker for type-level permissions. When present, this 
 
 
 #### Returns
-object | null
+object|null
  The wildcard marker, or null for instance-specific references
 
 ### jsonSerialize

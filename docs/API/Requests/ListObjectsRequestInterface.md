@@ -6,7 +6,7 @@ Interface for listing objects that a user has access to. This interface defines 
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 
 #### Returns
-Consistency | null
+Consistency|null
  The consistency level for the operation, or null to use the default consistency setting
 
 ### getContext
@@ -36,7 +36,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 
 #### Returns
-object | null
+object|null
  The context object containing additional data for evaluation, or null if no context is provided
 
 ### getContextualTuples
@@ -50,7 +50,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt; | null
+TupleKeysInterface&lt;TupleKeyInterface&gt;|null
  Additional relationship tuples for evaluation, or null if none provided
 
 ### getModel
@@ -64,7 +64,7 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 
 
 #### Returns
-string | null
+string|null
  The authorization model ID for evaluation, or null to use the latest model version
 
 ### getRelation

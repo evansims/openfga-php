@@ -6,7 +6,7 @@ Defines the contract for userset user specifications. A userset user represents 
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 

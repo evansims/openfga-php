@@ -6,9 +6,9 @@ Represents a reference to a specific relation with optional conditions. A Relati
 `OpenFGA\Models`
 
 ## Implements
-* [RelationReferenceInterface](Models/RelationReferenceInterface.md)
+* [RelationReferenceInterface](RelationReferenceInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |

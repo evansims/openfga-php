@@ -6,7 +6,7 @@ Interface for authorization check request specifications. This interface defines
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -36,7 +36,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 
 #### Returns
-Consistency | null
+Consistency|null
  The consistency level, or null to use the default consistency setting
 
 ### getContext
@@ -50,7 +50,7 @@ Get additional context data for conditional evaluation. This provides contextual
 
 
 #### Returns
-object | null
+object|null
  The context object containing additional data for evaluation, or null if no context is provided
 
 ### getContextualTuples
@@ -64,7 +64,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt; | null
+TupleKeysInterface&lt;TupleKeyInterface&gt;|null
  Additional relationship tuples for evaluation, or null if none provided
 
 ### getRequest
@@ -110,7 +110,7 @@ Get whether to include evaluation trace in the response. When enabled, the respo
 
 
 #### Returns
-bool | null
+bool|null
  Whether to include trace information, or null to use the default setting
 
 ### getTupleKey

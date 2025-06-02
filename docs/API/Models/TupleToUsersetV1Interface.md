@@ -6,7 +6,7 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 
 #### Returns
-[ObjectRelationInterface](Models/ObjectRelationInterface.md)
+ObjectRelationInterface
  The object-relation pair defining the computed userset
 
 ### getTupleset
@@ -37,7 +37,7 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 
 #### Returns
-[ObjectRelationInterface](Models/ObjectRelationInterface.md)
+ObjectRelationInterface
  The object-relation pair defining the tupleset
 
 ### jsonSerialize

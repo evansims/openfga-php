@@ -6,8 +6,8 @@ Request for performing authorization checks in OpenFGA. This request determines 
 `OpenFGA\Requests`
 
 ## Implements
-* [CheckRequestInterface](Requests/CheckRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [CheckRequestInterface](CheckRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -37,7 +37,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 
 #### Returns
-?Consistency
+?OpenFGA\Models\Enums\Consistency
  The consistency level, or null to use the default consistency setting
 
 ### getContext
@@ -65,7 +65,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 
 #### Returns
-?[TupleKeysInterface](Models/Collections/TupleKeysInterface.md)
+?OpenFGA\Models\Collections\TupleKeysInterface
  Additional relationship tuples for evaluation, or null if none provided
 
 ### getRequest
@@ -80,10 +80,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore
@@ -125,6 +125,6 @@ Get the relationship tuple to check for permission. This defines the specific re
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+OpenFGA\Models\TupleKeyInterface
  The relationship tuple specifying what permission to check
 

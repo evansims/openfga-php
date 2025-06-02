@@ -20,7 +20,7 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 
 
 #### Returns
-[ClientInterface](ClientInterface.md)
+ClientInterface
  The PSR-18 HTTP client instance for executing requests
 
 ### getHttpRequestFactory

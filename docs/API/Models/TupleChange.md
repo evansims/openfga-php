@@ -6,9 +6,9 @@ Represents a change to a relationship tuple in your authorization store. When yo
 `OpenFGA\Models`
 
 ## Implements
-* [TupleChangeInterface](Models/TupleChangeInterface.md)
+* [TupleChangeInterface](TupleChangeInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 
 #### Returns
-TupleOperation
+OpenFGA\Models\Enums\TupleOperation
  The operation type (write or delete)
 
 ### getTimestamp
@@ -56,7 +56,7 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+OpenFGA\Models\TupleKeyInterface
  The tuple key that was modified
 
 ### jsonSerialize

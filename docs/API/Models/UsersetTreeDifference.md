@@ -6,9 +6,9 @@ Represents a difference operation node in authorization evaluation trees. Userse
 `OpenFGA\Models`
 
 ## Implements
-* [UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)
+* [UsersetTreeDifferenceInterface](UsersetTreeDifferenceInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the base node from which the subtract node will be removed. This represents 
 
 
 #### Returns
-[NodeInterface](Models/NodeInterface.md)
+OpenFGA\Models\NodeInterface
  The base node for the difference operation
 
 ### getSubtract
@@ -42,7 +42,7 @@ Get the node representing users to subtract from the base. This represents the n
 
 
 #### Returns
-[NodeInterface](Models/NodeInterface.md)
+OpenFGA\Models\NodeInterface
  The node to subtract from the base
 
 ### jsonSerialize

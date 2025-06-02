@@ -6,7 +6,7 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the user types that can be directly related through this relation. This defi
 
 
 #### Returns
-RelationReferencesInterface&lt;[RelationReferenceInterface](Models/RelationReferenceInterface.md)&gt; | null
+RelationReferencesInterface&lt;RelationReferenceInterface&gt;|null
  The directly related user types, or null if not specified
 
 ### getModule
@@ -37,7 +37,7 @@ Get the optional module name for organization. This provides organizational info
 
 
 #### Returns
-string | null
+string|null
  The module name, or null if not specified
 
 ### getSourceInfo
@@ -51,7 +51,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 
 #### Returns
-[SourceInfoInterface](Models/SourceInfoInterface.md) | null
+SourceInfoInterface|null
  The source file information, or null if not available
 
 ### jsonSerialize

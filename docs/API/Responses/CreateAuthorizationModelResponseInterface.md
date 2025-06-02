@@ -6,7 +6,7 @@ Interface for authorization model creation response objects. This interface defi
 `OpenFGA\Responses`
 
 ## Implements
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

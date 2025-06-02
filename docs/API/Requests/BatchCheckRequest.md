@@ -6,8 +6,8 @@ Request for performing multiple authorization checks in a single batch. This req
 `OpenFGA\Requests`
 
 ## Implements
-* [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [BatchCheckRequestInterface](BatchCheckRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the collection of checks to perform in this batch. Each item contains a tupl
 
 
 #### Returns
-[BatchCheckItemsInterface](Models/Collections/BatchCheckItemsInterface.md)
+OpenFGA\Models\Collections\BatchCheckItemsInterface
  The batch check items
 
 ### getRequest
@@ -38,9 +38,9 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 

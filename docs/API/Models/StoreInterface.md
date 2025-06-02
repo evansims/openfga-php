@@ -6,7 +6,7 @@ Represents an OpenFGA store that contains authorization models and relationship 
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -37,7 +37,7 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 
 
 #### Returns
-DateTimeInterface | null
+DateTimeInterface|null
  The deletion timestamp in UTC timezone, or null if the store is active
 
 ### getId
@@ -93,6 +93,6 @@ Serialize the store for JSON encoding. This method prepares the store data for A
 
 
 #### Returns
-array&lt;'created_at' | 'deleted_at' | 'id' | 'name' | 'updated_at', string&gt;
+array&lt;'created_at'|'deleted_at'|'id'|'name'|'updated_at', string&gt;
  Store data formatted for JSON encoding with API-compatible field names
 

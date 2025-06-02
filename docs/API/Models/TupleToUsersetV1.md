@@ -6,9 +6,9 @@ Represents a tuple-to-userset relationship that derives permissions from related
 `OpenFGA\Models`
 
 ## Implements
-* [TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
+* [TupleToUsersetV1Interface](TupleToUsersetV1Interface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 
 #### Returns
-[ObjectRelationInterface](Models/ObjectRelationInterface.md)
+OpenFGA\Models\ObjectRelationInterface
  The object-relation pair defining the computed userset
 
 ### getTupleset
@@ -42,7 +42,7 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 
 #### Returns
-[ObjectRelationInterface](Models/ObjectRelationInterface.md)
+OpenFGA\Models\ObjectRelationInterface
  The object-relation pair defining the tupleset
 
 ### jsonSerialize

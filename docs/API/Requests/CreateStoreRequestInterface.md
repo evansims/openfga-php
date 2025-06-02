@@ -6,7 +6,7 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 

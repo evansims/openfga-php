@@ -6,7 +6,7 @@ Fluent builder for creating JSON schemas for data validation and transformation.
 `OpenFGA\Schema`
 
 ## Implements
-* [SchemaBuilderInterface](Schema/SchemaBuilderInterface.md)
+* [SchemaBuilderInterface](SchemaBuilderInterface.md)
 
 
 
@@ -163,7 +163,7 @@ Build and register the schema. Creates a Schema instance with all defined proper
 
 
 #### Returns
-[Schema](Schema/Schema.md)
+OpenFGA\Schema\Schema
  The built and registered schema
 
 ### string

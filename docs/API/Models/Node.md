@@ -6,9 +6,9 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 `OpenFGA\Models`
 
 ## Implements
-* [NodeInterface](Models/NodeInterface.md)
+* [NodeInterface](NodeInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the difference operation for this node. The difference operation represents 
 
 
 #### Returns
-?[UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md)
+?OpenFGA\Models\UsersetTreeDifferenceInterface
 
 ### getIntersection
 
@@ -41,7 +41,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 
 #### Returns
-?[NodeInterface](Models/NodeInterface.md) | [NodeUnionInterface](Models/NodeUnionInterface.md) | null
+?OpenFGA\Models\NodeInterface|OpenFGA\Models\NodeUnionInterface|null
  The intersection node or null if not applicable
 
 ### getLeaf
@@ -55,7 +55,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 
 #### Returns
-?[LeafInterface](Models/LeafInterface.md)
+?OpenFGA\Models\LeafInterface
 
 ### getName
 
@@ -82,7 +82,7 @@ Get the union operation for this node. The union operation represents the combin
 
 
 #### Returns
-?[NodeInterface](Models/NodeInterface.md) | [NodeUnionInterface](Models/NodeUnionInterface.md) | null
+?OpenFGA\Models\NodeInterface|OpenFGA\Models\NodeUnionInterface|null
  The union node or null if not applicable
 
 ### jsonSerialize

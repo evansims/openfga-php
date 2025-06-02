@@ -6,9 +6,9 @@ Represents a set difference operation between two usersets. In authorization mod
 `OpenFGA\Models`
 
 ## Implements
-* [DifferenceV1Interface](Models/DifferenceV1Interface.md)
+* [DifferenceV1Interface](DifferenceV1Interface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the base userset from which users will be subtracted. This represents the in
 
 
 #### Returns
-[UsersetInterface](Models/UsersetInterface.md)
+OpenFGA\Models\UsersetInterface
  The base userset for the difference operation
 
 ### getSubtract
@@ -42,7 +42,7 @@ Get the userset of users to subtract from the base userset. This represents the 
 
 
 #### Returns
-[UsersetInterface](Models/UsersetInterface.md)
+OpenFGA\Models\UsersetInterface
  The userset to subtract from the base
 
 ### jsonSerialize

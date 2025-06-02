@@ -6,7 +6,7 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+TupleKeyInterface
  The tuple key defining this relationship with user, relation, object, and optional condition
 
 ### getTimestamp

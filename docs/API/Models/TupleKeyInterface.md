@@ -6,7 +6,7 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 
 #### Returns
-[ConditionInterface](Models/ConditionInterface.md) | null
+ConditionInterface|null
  The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 
 ### getObject
@@ -37,7 +37,7 @@ Get the object in this relationship tuple. The object represents the resource or
 
 
 #### Returns
-string | null
+string|null
  The object identifier, or null if not specified
 
 ### getRelation
@@ -51,7 +51,7 @@ Get the relation that defines the type of relationship. The relation describes w
 
 
 #### Returns
-string | null
+string|null
  The relation name defining the type of relationship, or null if not specified
 
 ### getUser
@@ -65,7 +65,7 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 
 #### Returns
-string | null
+string|null
  The user identifier, or null if not specified
 
 ### jsonSerialize

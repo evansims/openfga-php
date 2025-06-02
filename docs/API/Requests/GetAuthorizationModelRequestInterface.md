@@ -6,7 +6,7 @@ Interface for retrieving a specific authorization model. This interface defines 
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 

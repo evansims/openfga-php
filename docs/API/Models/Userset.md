@@ -6,9 +6,9 @@ Represents a userset specification for computing groups of users. A Userset defi
 `OpenFGA\Models`
 
 ## Implements
-* [UsersetInterface](Models/UsersetInterface.md)
+* [UsersetInterface](UsersetInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the computed userset specification for this userset. A computed userset defi
 
 
 #### Returns
-?[ObjectRelationInterface](Models/ObjectRelationInterface.md)
+?OpenFGA\Models\ObjectRelationInterface
  The computed userset specification, or null if not used
 
 ### getDifference
@@ -42,7 +42,7 @@ Get the difference operation specification for this userset. A difference operat
 
 
 #### Returns
-?[DifferenceV1Interface](Models/DifferenceV1Interface.md)
+?OpenFGA\Models\DifferenceV1Interface
  The difference operation specification, or null if not used
 
 ### getDirect
@@ -70,7 +70,7 @@ Get the intersection operation specification for this userset. An intersection o
 
 
 #### Returns
-?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+?OpenFGA\Models\Collections\UsersetsInterface
  The collection of usersets to intersect, or null if not used
 
 ### getTupleToUserset
@@ -84,7 +84,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 
 
 #### Returns
-?[TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md)
+?OpenFGA\Models\TupleToUsersetV1Interface
  The tuple-to-userset operation specification, or null if not used
 
 ### getUnion
@@ -98,7 +98,7 @@ Get the union operation specification for this userset. A union operation repres
 
 
 #### Returns
-?[UsersetsInterface](Models/Collections/UsersetsInterface.md)
+?OpenFGA\Models\Collections\UsersetsInterface
  The collection of usersets to unite, or null if not used
 
 ### jsonSerialize

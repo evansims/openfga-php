@@ -6,8 +6,8 @@ Request for reading relationship tuples that match specified criteria. This requ
 `OpenFGA\Requests`
 
 ## Implements
-* [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md)
-* [RequestInterface](Requests/RequestInterface.md)
+* [ReadTuplesRequestInterface](ReadTuplesRequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -23,7 +23,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 
 #### Returns
-?Consistency
+?OpenFGA\Models\Enums\Consistency
  The consistency level for the operation, or null to use the default consistency setting
 
 ### getContinuationToken
@@ -66,10 +66,10 @@ Build a request context for HTTP execution. Transforms the request object into a
 #### Parameters
 | Name | Type | Description |
 |------|------|-------------|
-| `$streamFactory` | StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
+| `$streamFactory` | Psr\Http\Message\StreamFactoryInterface | PSR-7 stream factory for creating request body streams from serialized data |
 
 #### Returns
-[RequestContext](Network/RequestContext.md)
+OpenFGA\Network\RequestContext
  The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
 ### getStore
@@ -97,6 +97,6 @@ Get the tuple key pattern for filtering results. Specifies the relationship patt
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+OpenFGA\Models\TupleKeyInterface
  The relationship tuple pattern for filtering results
 

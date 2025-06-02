@@ -6,7 +6,7 @@ Represents a single property definition within a schema. This class defines the 
 `OpenFGA\Schema`
 
 ## Implements
-* [SchemaPropertyInterface](Schema/SchemaPropertyInterface.md)
+* [SchemaPropertyInterface](SchemaPropertyInterface.md)
 
 
 

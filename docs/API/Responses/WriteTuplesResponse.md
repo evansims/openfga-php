@@ -6,8 +6,8 @@ Response confirming successful writing of relationship tuples. This response is 
 `OpenFGA\Responses`
 
 ## Implements
-* [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md)
-* [ResponseInterface](Responses/ResponseInterface.md)
+* [WriteTuplesResponseInterface](WriteTuplesResponseInterface.md)
+* [ResponseInterface](ResponseInterface.md)
 
 
 

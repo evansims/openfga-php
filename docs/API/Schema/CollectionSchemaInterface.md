@@ -6,7 +6,7 @@ Interface for collection schema definitions in the OpenFGA system. This interfac
 `OpenFGA\Schema`
 
 ## Implements
-* [SchemaInterface](Schema/SchemaInterface.md)
+* [SchemaInterface](SchemaInterface.md)
 
 
 
@@ -49,7 +49,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 
 #### Returns
-array&lt;string, [SchemaProperty](Schema/SchemaProperty.md)&gt;
+array&lt;string, SchemaProperty&gt;
  An associative array of property names to their schema property definitions
 
 ### getProperty
@@ -67,7 +67,7 @@ Get a specific property definition by name. This method retrieves the schema def
 | `$name` | string | The name of the property to retrieve |
 
 #### Returns
-[SchemaProperty](Schema/SchemaProperty.md) | null
+SchemaProperty|null
  The property definition if it exists, or null if the property is not defined in this schema
 
 ### getWrapperKey
@@ -81,7 +81,7 @@ Get the wrapper key for the collection data if any. Some collections expect data
 
 
 #### Returns
-string | null
+string|null
  The wrapper key or null if data is not wrapped
 
 ### requiresItems

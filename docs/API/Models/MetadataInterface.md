@@ -6,7 +6,7 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 `OpenFGA\Models`
 
 ## Implements
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 * JsonSerializable
 
 
@@ -23,7 +23,7 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 
 #### Returns
-string | null
+string|null
  The module name, or null if not specified
 
 ### getRelations
@@ -37,7 +37,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 
 #### Returns
-RelationMetadataCollection | null
+RelationMetadataCollection|null
  The relation metadata collection, or null if not specified
 
 ### getSourceInfo
@@ -51,7 +51,7 @@ Get the source code information for this metadata. Source information provides d
 
 
 #### Returns
-[SourceInfoInterface](Models/SourceInfoInterface.md) | null
+SourceInfoInterface|null
  The source information, or null if not available
 
 ### jsonSerialize

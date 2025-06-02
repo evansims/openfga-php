@@ -6,9 +6,9 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 `OpenFGA\Models`
 
 ## Implements
-* [TupleInterface](Models/TupleInterface.md)
+* [TupleInterface](TupleInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
@@ -28,7 +28,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 
 
 #### Returns
-[TupleKeyInterface](Models/TupleKeyInterface.md)
+OpenFGA\Models\TupleKeyInterface
  The tuple key defining this relationship with user, relation, object, and optional condition
 
 ### getTimestamp

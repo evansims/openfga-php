@@ -6,7 +6,7 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 
 #### Returns
-string | null
+string|null
  The continuation token from a previous operation, or null for the first page
 
 ### getPageSize
@@ -36,7 +36,7 @@ Get the maximum number of stores to return per page. Specifies the page size for
 
 
 #### Returns
-int | null
+int|null
  The maximum number of stores to return per page, or null to use the default page size
 
 ### getRequest

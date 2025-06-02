@@ -6,7 +6,7 @@ Interface for creating new authorization models in OpenFGA. This interface defin
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 
 #### Returns
-ConditionsInterface&lt;ConditionInterface&gt; | null
+ConditionsInterface&lt;ConditionInterface&gt;|null
  Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
 ### getRequest

@@ -6,7 +6,7 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 `OpenFGA\Requests`
 
 ## Implements
-* [RequestInterface](Requests/RequestInterface.md)
+* [RequestInterface](RequestInterface.md)
 
 
 
@@ -22,7 +22,7 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt; | null
+TupleKeysInterface&lt;TupleKeyInterface&gt;|null
  Collection of relationship tuples to remove, or null if no deletions are requested
 
 ### getModel
@@ -82,6 +82,6 @@ Get the relationship tuples to write to the store. Returns a collection of relat
 
 
 #### Returns
-TupleKeysInterface&lt;TupleKeyInterface&gt; | null
+TupleKeysInterface&lt;TupleKeyInterface&gt;|null
  Collection of relationship tuples to add, or null if no writes are requested
 

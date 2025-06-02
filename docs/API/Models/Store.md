@@ -6,9 +6,9 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 `OpenFGA\Models`
 
 ## Implements
-* [StoreInterface](Models/StoreInterface.md)
+* [StoreInterface](StoreInterface.md)
 * JsonSerializable
-* [ModelInterface](Models/ModelInterface.md)
+* [ModelInterface](ModelInterface.md)
 
 ## Constants
 | Name | Value | Description |
