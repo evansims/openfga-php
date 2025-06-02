@@ -30,6 +30,7 @@ If PEST exits with code 255, it means there is a syntax error in the test or cod
 
 - `composer docs` - Run common documentation checks (coverage, style, links)
 - `composer docs:api` - Regenerate API documentation from code
+- `composer docs:llms` - Generate LLM-friendly llms.txt with complete guides and API references
 - `composer docs:wiki` - Regenerate and upload the GitHub repository's wiki documentation from code
 - `composer docs:coverage` - Run documentation coverage checks
 - `composer docs:links` - Run documentation link checks

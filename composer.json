@@ -134,6 +134,7 @@
     "docs:coverage": "@php tools/docs-coverage.php",
     "docs:links": "@php tools/link-checker.php",
     "docs:lint": "@php tools/docs-lint.php",
+    "docs:llms": "@php tools/llms-generator.php",
     "docs:metrics": "@php tools/docs-metrics.php",
     "docs:wiki": "./tools/sync-wiki.sh",
     "lint": [
