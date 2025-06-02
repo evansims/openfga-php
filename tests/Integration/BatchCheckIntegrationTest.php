@@ -47,9 +47,9 @@ it('performs batch authorization checks successfully', function (): void {
 
         type document
           relations
-            define reader: [user]
-            define writer: [user] or reader
-            define owner: [user] or writer
+            define reader: [user] or writer
+            define writer: [user] or owner
+            define owner: [user]
     ';
 
     $authModelResult = $client->dsl($modelDsl);
@@ -113,20 +113,20 @@ it('performs batch authorization checks successfully', function (): void {
     $results = $response->getResult();
     expect($results)->toHaveCount(4);
 
-    // Alice has owner permission, so she should have reader access (inherited)
+    // Alice has owner permission, so she should have reader access (inherited downward)
     $aliceResult = $response->getResultForCorrelationId('alice-reader-budget');
     expect($aliceResult)->not()->toBeNull();
     expect($aliceResult->getAllowed())->toBeTrue();
 
-    // Bob has reader permission, so he should have writer access (inherited)
+    // Bob has reader permission, so he should NOT have writer access (no inheritance upward)
     $bobResult = $response->getResultForCorrelationId('bob-writer-budget');
     expect($bobResult)->not()->toBeNull();
-    expect($bobResult->getAllowed())->toBeTrue();
+    expect($bobResult->getAllowed())->toBeFalse();
 
-    // Charlie has writer permission, so he should have owner access (inherited)
+    // Charlie has writer permission, so he should NOT have owner access (no inheritance upward)
     $charlieResult = $response->getResultForCorrelationId('charlie-owner-spec');
     expect($charlieResult)->not()->toBeNull();
-    expect($charlieResult->getAllowed())->toBeTrue();
+    expect($charlieResult->getAllowed())->toBeFalse();
 
     // David has no permissions, so should not have reader access
     $davidResult = $response->getResultForCorrelationId('david-reader-budget');
