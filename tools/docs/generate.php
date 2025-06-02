@@ -1333,32 +1333,38 @@ class DocumentationGenerator
      */
     private function applyMarkdownCleanupPatterns(string $content): string
     {
-        // Remove excessive blank lines around headers
-        $content = preg_replace('/\n{3,}(#{1,6}\s)/', "\n\n$1", $content);
+        // First, normalize all multiple blank lines to exactly one blank line
+        $content = preg_replace('/\n{3,}/', "\n\n", $content);
         
-        // Ensure proper spacing after headers
-        $content = preg_replace('/(#{1,6}\s[^\n]+)\n{3,}/', "$1\n\n", $content);
+        // Ensure proper spacing around headers (single blank line before and after)
+        // Add blank line before headers if missing (but not at start of document)
+        $content = preg_replace('/(?<!\n\n)(?<!^)\n(#{1,6}\s)/', "\n\n$1", $content);
         
-        // Remove excessive blank lines before code blocks
-        $content = preg_replace('/\n{3,}(```)/', "\n\n$1", $content);
+        // Add blank line after headers if missing
+        $content = preg_replace('/(#{1,6}\s[^\n]+)\n(?!\n)/', "$1\n\n", $content);
         
-        // Remove excessive blank lines after code blocks
-        $content = preg_replace('/(```)\n{3,}/', "$1\n\n", $content);
+        // Ensure proper spacing around code blocks
+        $content = preg_replace('/(?<!\n\n)\n(```)/', "\n\n$1", $content);
+        $content = preg_replace('/(```[^\n]*(?:\n(?!```)[^\n]*)*\n```)\n(?!\n)/', "$1\n\n", $content);
         
-        // Clean up around table separators (ensure single blank line before/after tables)
-        $content = preg_replace('/\n{3,}(\|[^\n]*\|)\n(\|[-:\s\|]+\|)\n/', "\n\n$1\n$2\n", $content);
+        // Ensure proper spacing around tables
+        $content = preg_replace('/(?<!\n\n)\n(\|[^\n]*\|)/', "\n\n$1", $content);
+        $content = preg_replace('/(\|[^\n]*\|(?:\n\|[^\n]*\|)*)\n(?!\n)(?!\|)/', "$1\n\n", $content);
         
-        // Remove excessive blank lines before lists
-        $content = preg_replace('/\n{3,}([\*\-\+]\s)/', "\n\n$1", $content);
+        // Ensure proper spacing around lists
+        $content = preg_replace('/(?<!\n\n)\n([\*\-\+]\s)/', "\n\n$1", $content);
         
-        // Remove blank lines that are just long sequences of spaces
-        $content = preg_replace('/\n\s{10,}\n/', "\n\n", $content);
+        // Fix spacing issues with consecutive headers (h2 followed by h3, h4, etc.)
+        $content = preg_replace('/(#{2}\s[^\n]+)\n\n\n(#{3,6}\s)/', "$1\n\n$2", $content);
         
-        // Ensure single blank line before "## Methods" section
-        $content = preg_replace('/\n{3,}(## Methods)/', "\n\n$1", $content);
+        // Remove blank lines that are just whitespace
+        $content = preg_replace('/\n[ \t]+\n/', "\n\n", $content);
         
-        // Clean up excessive blank lines around method sections
-        $content = preg_replace('/\n{3,}(#### \w+)/', "\n\n$1", $content);
+        // Specific cleanup for method sections - ensure consistent spacing
+        $content = preg_replace('/(\n#{4}\s[^\n]+)\n\n\n(```php)/', "$1\n\n$2", $content);
+        
+        // Final pass: ensure we never have more than one blank line anywhere
+        $content = preg_replace('/\n{3,}/', "\n\n", $content);
         
         return $content;
     }

@@ -33,8 +33,8 @@ use Throwable;
  *
  * This client provides a complete implementation of the OpenFGA API, supporting
  * all core operations including store management, authorization model configuration,
- * relationship tuple operations, and authorization checks. The client uses PSR-7/18
- * HTTP standards and implements the Result pattern for error handling.
+ * relationship tuple operations, and authorization checks. The client uses PSR-7,
+ * PSR-17 and PSR-18 HTTP standards and implements the Result pattern for error handling.
  *
  * The client supports multiple authentication methods including OAuth 2.0 Client
  * Credentials flow and pre-shared key authentication, with automatic token management
