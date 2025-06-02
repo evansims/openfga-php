@@ -122,7 +122,7 @@ do {
 Add conditions to make permissions context-dependent:
 
 ```php
-use OpenFGA\Models\{ConditionParameter, ConditionParameters, RelationshipCondition};
+use OpenFGA\Models\{ConditionParameter, ConditionParameters, RelationshipCondition, TupleKey, TupleKeys};
 
 // Only allow access during business hours
 $client->writeTuples(
@@ -171,30 +171,20 @@ Grant permissions to groups instead of individual users:
 
 ```php
 // Add user to a group
-$client->writeTuples(
+write(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    writes: new TupleKeys([
-        new TupleKey(
-            user: 'user:anne',
-            relation: 'member',
-            object: 'team:engineering'
-        )
-    ])
-)->unwrap();
+    tuples: tuple('user:anne', 'member', 'team:engineering')
+);
 
 // Grant permission to the entire group
-$client->writeTuples(
+write(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    writes: new TupleKeys([
-        new TupleKey(
-            user: 'team:engineering#member',
-            relation: 'editor',
-            object: 'document:technical-specs'
-        )
-    ])
-)->unwrap();
+    tuples: tuple('team:engineering#member', 'editor', 'document:technical-specs')
+);
 ```
 
 Now Anne can edit the technical specs because she's a member of the engineering team.

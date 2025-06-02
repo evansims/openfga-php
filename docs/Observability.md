@@ -362,7 +362,7 @@ try {
     )->unwrap();
     
     echo "Authorization check complete. Anne can view document: " . 
-         ($allowed->getIsAllowed() ? 'Yes' : 'No') . "\n";
+         ($allowed->getAllowed() ? 'Yes' : 'No') . "\n";
     echo "Documents Anne can view: " . count($documents->getObjects()) . "\n";
     
 } catch (Throwable $e) {

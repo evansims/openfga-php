@@ -2,6 +2,8 @@
 
 Think of a store as your authorization workspace. It contains your permission rules, user relationships, and everything needed to answer "can this user do that?" Each store is completely isolated - perfect for separating environments, tenants, or applications.
 
+Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
+
 ## What are stores?
 
 A store holds three things:
@@ -17,12 +19,12 @@ For a typical application, create one store per environment:
 
 ```php
 use OpenFGA\Client;
+use function OpenFGA\store;
 
 $client = new Client(url: $_ENV['FGA_API_URL']);
 
 // Create your production store
-$store = $client->createStore(name: 'myapp-production')->unwrap();
-$storeId = $store->getId(); // Save this!
+$storeId = store($client, 'myapp-production'); // Save this!
 
 // Configure your client to use this store
 $client = $client->withStore(store: $storeId);

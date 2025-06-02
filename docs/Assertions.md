@@ -8,7 +8,8 @@ Assertions are test cases that specify expected outcomes for permission checks. 
 
 ```php
 use OpenFGA\Client;
-use OpenFGA\Models\{TupleKey, Assertion};
+use function OpenFGA\{tuple, tuples};
+use OpenFGA\Models\Assertion;
 use OpenFGA\Collections\Assertions;
 
 $client = new Client(url: $_ENV['FGA_API_URL']);
@@ -21,7 +22,7 @@ Let's say you're building a document management system. You want to test that ow
 ```php
 // Test: Document owners can edit
 $ownerCanEdit = new Assertion(
-    tupleKey: new TupleKey(
+    tupleKey: tuple(
         user: 'user:alice',
         relation: 'can_edit',
         object: 'document:quarterly-report'
@@ -31,7 +32,7 @@ $ownerCanEdit = new Assertion(
 
 // Test: Viewers cannot edit
 $viewerCannotEdit = new Assertion(
-    tupleKey: new TupleKey(
+    tupleKey: tuple(
         user: 'user:bob',
         relation: 'can_edit', 
         object: 'document:quarterly-report'
@@ -57,19 +58,19 @@ Complex authorization models often have inherited permissions. Test these relati
 $teamFolderAccess = [
     // Direct team member access
     new Assertion(
-        tupleKey: new TupleKey('user:sarah', 'can_read', 'folder:team-docs'),
+        tupleKey: tuple('user:sarah', 'can_read', 'folder:team-docs'),
         expectation: true
     ),
     
     // Inherited document access through folder membership
     new Assertion(
-        tupleKey: new TupleKey('user:sarah', 'can_read', 'document:team-meeting-notes'),
+        tupleKey: tuple('user:sarah', 'can_read', 'document:team-meeting-notes'),
         expectation: true
     ),
     
     // Non-team members should be denied
     new Assertion(
-        tupleKey: new TupleKey('user:outsider', 'can_read', 'folder:team-docs'),
+        tupleKey: tuple('user:outsider', 'can_read', 'folder:team-docs'),
         expectation: false
     ),
 ];
@@ -83,25 +84,25 @@ Test boundary conditions and special cases in your permission model:
 $edgeCases = [
     // Public documents should be readable by anyone
     new Assertion(
-        tupleKey: new TupleKey('user:*', 'can_read', 'document:company-handbook'),
+        tupleKey: tuple('user:*', 'can_read', 'document:company-handbook'),
         expectation: true
     ),
     
     // Deleted users should lose all access
     new Assertion(
-        tupleKey: new TupleKey('user:former-employee', 'can_read', 'document:confidential'),
+        tupleKey: tuple('user:former-employee', 'can_read', 'document:confidential'),
         expectation: false
     ),
     
     // Admin override permissions
     new Assertion(
-        tupleKey: new TupleKey('user:admin', 'can_delete', 'document:any-document'),
+        tupleKey: tuple('user:admin', 'can_delete', 'document:any-document'),
         expectation: true
     ),
     
     // Cross-organization access should be blocked
     new Assertion(
-        tupleKey: new TupleKey('user:competitor', 'can_read', 'document:internal-strategy'),
+        tupleKey: tuple('user:competitor', 'can_read', 'document:internal-strategy'),
         expectation: false
     ),
 ];
@@ -118,19 +119,19 @@ class DocumentPermissionTests
     {
         return [
             // Owner permissions
-            new Assertion(new TupleKey('user:owner', 'can_read', 'document:doc1'), true),
-            new Assertion(new TupleKey('user:owner', 'can_edit', 'document:doc1'), true),
-            new Assertion(new TupleKey('user:owner', 'can_delete', 'document:doc1'), true),
+            new Assertion(tuple('user:owner', 'can_read', 'document:doc1'), true),
+            new Assertion(tuple('user:owner', 'can_edit', 'document:doc1'), true),
+            new Assertion(tuple('user:owner', 'can_delete', 'document:doc1'), true),
             
             // Editor permissions  
-            new Assertion(new TupleKey('user:editor', 'can_read', 'document:doc1'), true),
-            new Assertion(new TupleKey('user:editor', 'can_edit', 'document:doc1'), true),
-            new Assertion(new TupleKey('user:editor', 'can_delete', 'document:doc1'), false),
+            new Assertion(tuple('user:editor', 'can_read', 'document:doc1'), true),
+            new Assertion(tuple('user:editor', 'can_edit', 'document:doc1'), true),
+            new Assertion(tuple('user:editor', 'can_delete', 'document:doc1'), false),
             
             // Viewer permissions
-            new Assertion(new TupleKey('user:viewer', 'can_read', 'document:doc1'), true),
-            new Assertion(new TupleKey('user:viewer', 'can_edit', 'document:doc1'), false),
-            new Assertion(new TupleKey('user:viewer', 'can_delete', 'document:doc1'), false),
+            new Assertion(tuple('user:viewer', 'can_read', 'document:doc1'), true),
+            new Assertion(tuple('user:viewer', 'can_edit', 'document:doc1'), false),
+            new Assertion(tuple('user:viewer', 'can_delete', 'document:doc1'), false),
         ];
     }
     
@@ -138,8 +139,8 @@ class DocumentPermissionTests
     {
         return [
             // Team lead inherits team permissions
-            new Assertion(new TupleKey('user:team-lead', 'can_manage', 'team:engineering'), true),
-            new Assertion(new TupleKey('user:team-lead', 'can_read', 'document:team-roadmap'), true),
+            new Assertion(tuple('user:team-lead', 'can_manage', 'team:engineering'), true),
+            new Assertion(tuple('user:team-lead', 'can_read', 'document:team-roadmap'), true),
         ];
     }
 }

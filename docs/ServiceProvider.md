@@ -58,6 +58,8 @@ public function register()
 Then use it in controllers or services:
 
 ```php
+use function OpenFGA\tuple;
+
 // In any Laravel service, controller, or job
 class DocumentController extends Controller
 {
@@ -75,7 +77,7 @@ class DocumentController extends Controller
                 relation: 'viewer',
                 object: "document:{$documentId}"
             )
-        )->unwrap()->getIsAllowed();
+        )->unwrap()->getAllowed();
 
         if (!$canView) {
             abort(403, 'Access denied');
@@ -111,6 +113,8 @@ services:
 Then use it in services or controllers:
 
 ```php
+use function OpenFGA\tuple;
+
 // In any Symfony service or controller
 class DocumentService
 {
@@ -128,7 +132,7 @@ class DocumentService
                 relation: 'editor',
                 object: "document:{$documentId}"
             )
-        )->unwrap()->getIsAllowed();
+        )->unwrap()->getAllowed();
     }
 }
 ```
@@ -152,7 +156,7 @@ $container->singleton(ClientInterface::class, function() {
 
 // Use the configured client
 $client = $container->get(ClientInterface::class);
-$canEdit = $client->check(/* ... */)->unwrap()->getIsAllowed();
+$canEdit = $client->check(/* ... */)->unwrap()->getAllowed();
 ```
 
 ## Customizing services
