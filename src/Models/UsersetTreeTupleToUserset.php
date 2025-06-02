@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a tuple-to-userset operation node in authorization evaluation trees.
+ *
+ * UsersetTreeTupleToUserset defines how to resolve users through tuple-to-userset
+ * mappings during authorization evaluation. It specifies which tuples to examine
+ * and how to compute the resulting usersets, enabling complex authorization
+ * patterns based on indirect relationships.
+ *
+ * Use this when working with authorization evaluation trees that involve
+ * tuple-to-userset relationship resolution.
+ */
 final class UsersetTreeTupleToUserset implements UsersetTreeTupleToUsersetInterface
 {
     public const string OPENAPI_MODEL = 'UsersetTree.TupleToUserset';

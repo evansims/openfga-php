@@ -9,6 +9,17 @@ use OpenFGA\Models\Enums\TypeName;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a parameter type definition for ABAC conditions.
+ *
+ * ConditionParameter defines the type structure for parameters used in
+ * attribute-based access control conditions. It specifies the data type
+ * (string, int, list, map, etc.) and any generic type parameters for
+ * complex types like collections.
+ *
+ * Use this when defining the expected parameter types for conditions
+ * in your authorization model.
+ */
 final class ConditionParameter implements ConditionParameterInterface
 {
     public const string OPENAPI_MODEL = 'ConditionParamTypeRef';

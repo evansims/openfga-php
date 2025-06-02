@@ -367,6 +367,13 @@ return (new PhpCsFixer\Config())
         'final_class' => true, // Aligns with Rector's privatization rules
         'declare_strict_types' => true, // Aligns with PHPStan/Psalm strictness
         'native_function_invocation' => ['include' => ['@compiler_optimized'], 'scope' => 'namespaced', 'strict' => true], // Performance optimization
+
+        'phpdoc_annotation_without_dot' => true,        // Remove trailing periods from annotations
+        'phpdoc_no_alias_tag' => true,                  // Use @return instead of @returns
+        'phpdoc_tag_casing' => true,                    // Standardize tag casing
+        'general_phpdoc_annotation_remove' => [         // Remove deprecated annotations
+            'annotations' => ['author', 'package', 'subpackage']
+        ],
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a difference operation node in authorization evaluation trees.
+ *
+ * UsersetTreeDifference computes the difference between two nodes in the
+ * authorization evaluation tree, effectively calculating "users in base
+ * except those in subtract". This enables complex authorization patterns
+ * where access is granted to one group while explicitly excluding another.
+ *
+ * Use this when working with authorization evaluation trees that involve
+ * set difference operations.
+ */
 final class UsersetTreeDifference implements UsersetTreeDifferenceInterface
 {
     public const string OPENAPI_MODEL = 'UsersetTree.Difference';

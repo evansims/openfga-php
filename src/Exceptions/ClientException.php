@@ -29,11 +29,11 @@ final class ClientException extends Exception implements ClientThrowable
      * The exception message is automatically generated from the error type
      * unless a custom message is provided in the context.
      *
-     * @param ClientError            $kind     The type of client error that occurred.
-     * @param RequestInterface|null  $request  The HTTP request that triggered the exception, if applicable.
-     * @param ResponseInterface|null $response The HTTP response received, if applicable.
-     * @param array<string, mixed>   $context  Additional context for the exception.
-     * @param Throwable|null         $previous The previous throwable used for exception chaining, if any.
+     * @param ClientError            $kind     the type of client error that occurred
+     * @param RequestInterface|null  $request  the HTTP request that triggered the exception, if applicable
+     * @param ResponseInterface|null $response the HTTP response received, if applicable
+     * @param array<string, mixed>   $context  additional context for the exception
+     * @param Throwable|null         $previous the previous throwable used for exception chaining, if any
      *
      * @throws InvalidArgumentException If message translation parameters are invalid
      */

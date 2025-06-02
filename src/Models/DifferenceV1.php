@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a set difference operation between two usersets.
+ *
+ * In authorization models, you sometimes need to grant access to one group
+ * of users while explicitly excluding another group. DifferenceV1 calculates
+ * the difference between a base userset and a subtract userset, effectively
+ * giving you "all users in base except those in subtract".
+ *
+ * For example, you might want to grant access to all employees except those
+ * in a specific department, or all document viewers except the document owner.
+ */
 final class DifferenceV1 implements DifferenceV1Interface
 {
     public const string OPENAPI_MODEL = 'v1.Difference';

@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a filter for limiting users by type and optional relation.
+ *
+ * UserTypeFilter allows you to constrain authorization queries to specific
+ * user types, optionally including only users that have a particular relation.
+ * This is useful for filtering results when listing users or performing
+ * authorization checks on specific user categories.
+ *
+ * Use this when you need to limit authorization operations to specific
+ * types of users in your system.
+ */
 final class UserTypeFilter implements UserTypeFilterInterface
 {
     public const string OPENAPI_MODEL = 'UserTypeFilter';

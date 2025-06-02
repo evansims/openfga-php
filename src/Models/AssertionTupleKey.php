@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a tuple key used for testing authorization model assertions.
+ *
+ * An AssertionTupleKey defines the specific user, relation, and object combination
+ * that should be tested in authorization model assertions. This is used to verify
+ * that your authorization model behaves correctly by testing whether specific
+ * authorization questions return the expected results.
+ *
+ * Use this when creating test cases to validate your authorization rules
+ * and ensure your permission model works as intended.
+ */
 final class AssertionTupleKey implements AssertionTupleKeyInterface
 {
     public const string OPENAPI_MODEL = 'AssertionTupleKey';

@@ -721,8 +721,8 @@ final class Client implements ClientInterface
      * retrieved from the object using the getId() method. Otherwise, the value
      * will be used as the authorization model ID.
      *
-     * @param  AuthorizationModelInterface|string $model The authorization model to get the ID from.
-     * @return string                             The authorization model ID.
+     * @param  AuthorizationModelInterface|string $model the authorization model to get the ID from
+     * @return string                             the authorization model ID
      */
     private static function getModelId(AuthorizationModelInterface | string $model): string
     {
@@ -740,8 +740,8 @@ final class Client implements ClientInterface
      * from the object using the getId() method. Otherwise, the given value will be
      * used as the store ID.
      *
-     * @param  StoreInterface|string $store The store to get the ID from.
-     * @return string                The store ID.
+     * @param  StoreInterface|string $store the store to get the ID from
+     * @return string                the store ID
      */
     private static function getStoreId(StoreInterface | string $store): string
     {
@@ -887,7 +887,7 @@ final class Client implements ClientInterface
     /**
      * Sends a request to the OpenFGA API using the configured HTTP client and authentication.
      *
-     * @param RequestInterface $request The request to send.
+     * @param RequestInterface $request the request to send
      *
      * @throws ClientThrowable          If request conversion or sending fails due to configuration, authentication, or network issues
      * @throws InvalidArgumentException If request parameters are invalid
@@ -895,7 +895,7 @@ final class Client implements ClientInterface
      * @throws ReflectionException      If exception creation fails
      * @throws Throwable                Any exception that might occur during the request
      *
-     * @return HttpResponseInterface The response from the API.
+     * @return HttpResponseInterface the response from the API
      */
     private function sendRequest(RequestInterface $request): HttpResponseInterface
     {

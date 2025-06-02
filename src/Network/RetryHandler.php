@@ -83,6 +83,12 @@ final readonly class RetryHandler implements RetryHandlerInterface
      */
     private const array RETRYABLE_STATUS_CODES = [429, 502, 503, 504];
 
+    /**
+     * Create a new retry handler with circuit breaker integration.
+     *
+     * @param CircuitBreakerInterface $circuitBreaker The circuit breaker for tracking endpoint health
+     * @param int                     $maxRetries     Maximum number of retry attempts (defaults to 3)
+     */
     public function __construct(
         private CircuitBreakerInterface $circuitBreaker,
         private int $maxRetries = self::DEFAULT_MAX_RETRIES,

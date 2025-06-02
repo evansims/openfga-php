@@ -7,6 +7,16 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a user entry in a users list response.
+ *
+ * UsersListUser provides a simple wrapper around user identifiers returned
+ * from list operations. It ensures consistent representation of users in
+ * lists while providing convenient access to the user identifier string.
+ *
+ * Use this when working with user lists returned from OpenFGA queries
+ * or when you need a structured representation of user identifiers.
+ */
 final class UsersListUser implements UsersListUserInterface
 {
     public const string OPENAPI_MODEL = 'UsersListUser';

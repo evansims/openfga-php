@@ -6,6 +6,16 @@ namespace OpenFGA\Models;
 
 use Override;
 
+/**
+ * Defines the contract for typed wildcard specifications.
+ *
+ * A typed wildcard represents "all users of a specific type" in authorization
+ * rules. Instead of listing individual users, you can grant permissions to
+ * all members of a user type (like "all employees" or "all customers").
+ *
+ * Use this when you want to create broad permission grants that automatically
+ * apply to all users of a particular type without explicit enumeration.
+ */
 interface TypedWildcardInterface extends ModelInterface
 {
     /**

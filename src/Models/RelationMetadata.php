@@ -8,6 +8,17 @@ use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface}
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Contains metadata information about a relation in your authorization model.
+ *
+ * RelationMetadata provides additional context about how a relation behaves,
+ * including which user types can be directly assigned to it and source
+ * information for debugging. This helps with model validation and provides
+ * insights into your authorization structure.
+ *
+ * Use this when you need to understand the constraints and properties of
+ * specific relations in your authorization model.
+ */
 final class RelationMetadata implements RelationMetadataInterface
 {
     public const string OPENAPI_MODEL = 'RelationMetadata';

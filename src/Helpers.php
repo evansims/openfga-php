@@ -148,12 +148,12 @@ function store(ClientInterface $client, string $name): string
 /**
  * Create an authorization model.
  *
- * @param ClientInterface $client An OpenFGA client.
- * @param string          $dsl    The authorization model DSL.
+ * @param ClientInterface $client an OpenFGA client
+ * @param string          $dsl    the authorization model DSL
  *
- * @throws Throwable If the authorization model creation fails.
+ * @throws Throwable if the authorization model creation fails
  *
- * @return AuthorizationModelInterface The authorization model.
+ * @return AuthorizationModelInterface the authorization model
  */
 function dsl(ClientInterface $client, string $dsl): AuthorizationModelInterface
 {
@@ -282,12 +282,12 @@ function err(Throwable $error): Failure
 /**
  * Write relationship tuples.
  *
- * @param ClientInterface                                         $client An OpenFGA client.
- * @param StoreInterface|string                                   $store  The store to use.
- * @param AuthorizationModelInterface|string                      $model  The authorization model to use.
- * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples The tuples to write.
+ * @param ClientInterface                                         $client an OpenFGA client
+ * @param StoreInterface|string                                   $store  the store to use
+ * @param AuthorizationModelInterface|string                      $model  the authorization model to use
+ * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples the tuples to write
  *
- * @throws Throwable If the write fails.
+ * @throws Throwable if the write fails
  */
 function write(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface | string $model, TupleKeyInterface | TupleKeysInterface $tuples): void
 {
@@ -301,12 +301,12 @@ function write(ClientInterface $client, StoreInterface | string $store, Authoriz
 /**
  * Delete relationship tuples.
  *
- * @param ClientInterface                                         $client An OpenFGA client.
- * @param StoreInterface|string                                   $store  The store to use.
- * @param AuthorizationModelInterface|string                      $model  The authorization model to use.
- * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples The tuples to delete.
+ * @param ClientInterface                                         $client an OpenFGA client
+ * @param StoreInterface|string                                   $store  the store to use
+ * @param AuthorizationModelInterface|string                      $model  the authorization model to use
+ * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples the tuples to delete
  *
- * @throws Throwable If the delete fails.
+ * @throws Throwable if the delete fails
  */
 function delete(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface | string $model, TupleKeyInterface | TupleKeysInterface $tuples): void
 {
@@ -320,18 +320,18 @@ function delete(ClientInterface $client, StoreInterface | string $store, Authori
 /**
  * Check for a relationship.
  *
- * @param ClientInterface                        $client           An OpenFGA client.
- * @param StoreInterface|string                  $store            The store to use.
- * @param AuthorizationModelInterface|string     $model            The authorization model to use.
- * @param TupleKeyInterface                      $tuple            The tuple to check.
- * @param ?bool                                  $trace            Whether to trace the check.
- * @param ?object                                $context          The context to use for the check.
- * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples The contextual tuples to use for the check.
- * @param ?Consistency                           $consistency      The consistency to use for the check.
+ * @param ClientInterface                        $client           an OpenFGA client
+ * @param StoreInterface|string                  $store            the store to use
+ * @param AuthorizationModelInterface|string     $model            the authorization model to use
+ * @param TupleKeyInterface                      $tuple            the tuple to check
+ * @param ?bool                                  $trace            whether to trace the check
+ * @param ?object                                $context          the context to use for the check
+ * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples the contextual tuples to use for the check
+ * @param ?Consistency                           $consistency      the consistency to use for the check
  *
- * @throws Throwable If the check fails.
+ * @throws Throwable if the check fails
  *
- * @return bool True if the tuple is allowed, false otherwise.
+ * @return bool true if the tuple is allowed, false otherwise
  */
 function allowed(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface | string $model, TupleKeyInterface $tuple, ?bool $trace = null, ?object $context = null, ?TupleKeysInterface $contextualTuples = null, ?Consistency $consistency = null): bool
 {
@@ -345,13 +345,13 @@ function allowed(ClientInterface $client, StoreInterface | string $store, Author
 /**
  * Create an authorization model.
  *
- * @param ClientInterface             $client An OpenFGA client.
- * @param StoreInterface|string       $store  The store to use.
- * @param AuthorizationModelInterface $model  The authorization model to use.
+ * @param ClientInterface             $client an OpenFGA client
+ * @param StoreInterface|string       $store  the store to use
+ * @param AuthorizationModelInterface $model  the authorization model to use
  *
- * @throws Throwable If the model creation fails.
+ * @throws Throwable if the model creation fails
  *
- * @return string The authorization model ID.
+ * @return string the authorization model ID
  */
 function model(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface $model): string
 {

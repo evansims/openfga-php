@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents the evaluation tree for determining user access.
+ *
+ * When OpenFGA evaluates whether a user has access to an object, it builds
+ * a tree structure showing all the authorization paths that were considered.
+ * The UsersetTree contains this evaluation tree with a root node that
+ * represents the starting point of the access evaluation.
+ *
+ * This is primarily used for debugging authorization decisions and understanding
+ * why access was granted or denied in complex permission scenarios.
+ */
 final class UsersetTree implements UsersetTreeInterface
 {
     public const string OPENAPI_MODEL = 'UsersetTree';

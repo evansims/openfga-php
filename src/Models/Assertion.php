@@ -16,6 +16,17 @@ use ReflectionException;
 use function is_array;
 use function is_string;
 
+/**
+ * Tests whether your authorization model behaves correctly for specific scenarios.
+ *
+ * Assertions are test cases that verify your authorization rules work as expected.
+ * Each assertion checks if a specific authorization question (like "can user:anne read document:budget")
+ * returns the expected result (true for granted, false for denied).
+ *
+ * Use assertions to validate your authorization model during development and
+ * catch permission logic errors before they reach production. They're especially
+ * valuable when making changes to complex authorization rules.
+ */
 final class Assertion implements AssertionInterface
 {
     public const string OPENAPI_MODEL = 'Assertion';

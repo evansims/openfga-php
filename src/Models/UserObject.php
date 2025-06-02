@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a specific user object with type and identifier.
+ *
+ * A UserObject provides a structured way to represent users in your authorization
+ * system with both a type (like "user", "service", "bot") and a unique identifier.
+ * This allows for clear categorization of different kinds of entities that can
+ * have permissions in your system.
+ *
+ * Use this when you need to represent users in a structured format rather than
+ * simple string identifiers.
+ */
 final class UserObject implements UserObjectInterface
 {
     public const string OPENAPI_MODEL = 'UserObject';

@@ -10,6 +10,17 @@ use DateTimeZone;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents an OpenFGA authorization store that contains your permission data.
+ *
+ * A Store is a container for all your authorization data - the models, relationships,
+ * and permission rules for a specific application or tenant. Each store is isolated
+ * from others, allowing you to manage permissions for different applications or
+ * environments separately.
+ *
+ * Think of a store as your application's dedicated permission database that holds
+ * all the "who can do what" information for your system.
+ */
 final class Store implements StoreInterface
 {
     public const string OPENAPI_MODEL = 'Store';

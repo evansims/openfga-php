@@ -176,14 +176,34 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
     #[Override]
     public function jsonSerialize(): array;
 
+    /**
+     * Get the current iterator key.
+     *
+     * This method returns the current position in the collection iteration,
+     * which is always an integer for indexed collections.
+     *
+     * @return int The current iterator position
+     */
     #[Override]
     public function key(): int;
 
+    /**
+     * Move the iterator to the next position.
+     *
+     * This method advances the internal iterator pointer to the next
+     * item in the collection sequence.
+     */
     #[Override]
     public function next(): void;
 
     /**
-     * @param mixed $offset
+     * Check if an offset exists in the collection.
+     *
+     * This method determines whether the collection contains an item
+     * at the specified offset position.
+     *
+     * @param  mixed $offset The offset to check for existence
+     * @return bool  True if the offset exists, false otherwise
      */
     #[Override]
     public function offsetExists(mixed $offset): bool;
@@ -225,6 +245,12 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function reduce(mixed $initial, callable $callback): mixed;
 
+    /**
+     * Reset the iterator to the beginning of the collection.
+     *
+     * This method moves the internal iterator pointer back to the
+     * first item in the collection.
+     */
     #[Override]
     public function rewind(): void;
 
@@ -250,6 +276,14 @@ interface IndexedCollectionInterface extends ArrayAccess, Countable, Iterator, J
      */
     public function toArray(): array;
 
+    /**
+     * Check if the current iterator position is valid.
+     *
+     * This method determines whether the current iterator position
+     * points to a valid item in the collection.
+     *
+     * @return bool True if the current position is valid, false otherwise
+     */
     #[Override]
     public function valid(): bool;
 

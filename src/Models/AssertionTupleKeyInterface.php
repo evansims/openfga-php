@@ -6,6 +6,16 @@ namespace OpenFGA\Models;
 
 use Override;
 
+/**
+ * Defines the contract for assertion tuple keys used in authorization model testing.
+ *
+ * An assertion tuple key specifies the user, relation, and object combination
+ * that should be tested in authorization model assertions. This is used to
+ * verify that your authorization model behaves correctly for specific scenarios.
+ *
+ * Use this when creating test cases to validate your authorization rules
+ * and ensure your permission model works as expected.
+ */
 interface AssertionTupleKeyInterface extends ModelInterface
 {
     /**

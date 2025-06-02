@@ -9,6 +9,17 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 use stdClass;
 
+/**
+ * Represents a type definition in your authorization model.
+ *
+ * A TypeDefinition defines an object type (like "document", "folder", "user")
+ * and specifies the relations that can exist for objects of this type.
+ * Each relation defines how users can be related to objects, such as "owner",
+ * "editor", or "viewer" relationships.
+ *
+ * Use this when defining the schema of object types and their allowed
+ * relationships in your authorization model.
+ */
 final class TypeDefinition implements TypeDefinitionInterface
 {
     public const string OPENAPI_MODEL = 'TypeDefinition';
@@ -16,8 +27,8 @@ final class TypeDefinition implements TypeDefinitionInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                                                  $type      The type of the object that this definition is for.
-     * @param TypeDefinitionRelationsInterface<UsersetInterface>|null $relations An array of relation names to Userset definitions.
+     * @param string                                                  $type      the type of the object that this definition is for
+     * @param TypeDefinitionRelationsInterface<UsersetInterface>|null $relations an array of relation names to Userset definitions
      * @param MetadataInterface|null                                  $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
      */
     public function __construct(

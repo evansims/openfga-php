@@ -8,6 +8,17 @@ use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterfac
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents an ABAC (Attribute-Based Access Control) condition in your authorization model.
+ *
+ * A Condition defines a logical expression that must evaluate to true for
+ * authorization to be granted. It includes the expression code, parameter
+ * definitions, and optional metadata. Conditions enable context-aware
+ * authorization decisions based on attributes of users, resources, and environment.
+ *
+ * Use this when implementing fine-grained access control that depends on
+ * runtime attributes and contextual information.
+ */
 final class Condition implements ConditionInterface
 {
     public const string OPENAPI_MODEL = 'Condition';
@@ -15,10 +26,10 @@ final class Condition implements ConditionInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                                                         $name       A unique name for the condition.
-     * @param string                                                         $expression A Google CEL expression, expressed as a string.
-     * @param ConditionParametersInterface<ConditionParameterInterface>|null $parameters A collection of parameter names to the parameter's defined type reference.
-     * @param ConditionMetadataInterface|null                                $metadata   The collection of metadata that should be associated with the condition.
+     * @param string                                                         $name       a unique name for the condition
+     * @param string                                                         $expression a Google CEL expression, expressed as a string
+     * @param ConditionParametersInterface<ConditionParameterInterface>|null $parameters a collection of parameter names to the parameter's defined type reference
+     * @param ConditionMetadataInterface|null                                $metadata   the collection of metadata that should be associated with the condition
      */
     public function __construct(
         private readonly string $name,

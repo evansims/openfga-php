@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a reference to a specific relation on an object.
+ *
+ * In authorization models, you often need to reference relationships
+ * between objects. An ObjectRelation identifies both the target object
+ * and the specific relation you're interested in, like "the owner of document:budget"
+ * or "editors of folder:reports".
+ *
+ * This is commonly used in authorization rules where permissions depend
+ * on relationships with other objects in your system.
+ */
 final class ObjectRelation implements ObjectRelationInterface
 {
     public const string OPENAPI_MODEL = 'ObjectRelation';

@@ -11,12 +11,30 @@ use OpenFGA\Models\Enums\TupleOperation;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a change to a relationship tuple in your authorization store.
+ *
+ * When you modify relationships in OpenFGA (adding or removing tuples), each change
+ * is tracked as a TupleChange. This allows you to see the history of authorization
+ * changes, audit permissions over time, and understand when relationships were
+ * established or removed.
+ *
+ * Use this when you need to track or review the history of relationship changes
+ * in your application, such as for compliance auditing or debugging permission issues.
+ */
 final class TupleChange implements TupleChangeInterface
 {
     public const string OPENAPI_MODEL = 'TupleChange';
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * Create a new tuple change record.
+     *
+     * @param TupleKeyInterface $tupleKey  The relationship tuple that was changed (user, relation, object)
+     * @param TupleOperation    $operation Whether this was a WRITE (add) or DELETE (remove) operation
+     * @param DateTimeImmutable $timestamp When this change occurred
+     */
     public function __construct(
         private readonly TupleKeyInterface $tupleKey,
         private readonly TupleOperation $operation,
@@ -27,7 +45,8 @@ final class TupleChange implements TupleChangeInterface
     /**
      * Create TupleChange from array data.
      *
-     * @param array{tuple_key: TupleKeyInterface, operation: string, timestamp: DateTimeImmutable} $data
+     * @param  array{tuple_key: TupleKeyInterface, operation: string, timestamp: DateTimeImmutable} $data The array data to convert
+     * @return self                                                                                 The created TupleChange instance
      */
     public static function fromArray(array $data): self
     {

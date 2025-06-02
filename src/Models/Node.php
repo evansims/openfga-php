@@ -7,6 +7,16 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a node in the authorization evaluation tree structure.
+ *
+ * When OpenFGA evaluates complex authorization rules, it builds a tree of nodes
+ * representing different evaluation paths. Each node can contain unions, intersections,
+ * differences, or leaf computations that contribute to the final authorization decision.
+ *
+ * This is the fundamental building block for representing how authorization
+ * decisions are computed and provides insight into the evaluation process.
+ */
 final class Node implements NodeInterface
 {
     public const string OPENAPI_MODEL = 'Node';

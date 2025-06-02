@@ -12,6 +12,17 @@ use function is_array;
 use function is_object;
 use function is_string;
 
+/**
+ * Represents a user or user specification in authorization contexts.
+ *
+ * A User can represent different types of entities in your authorization system:
+ * a specific user object, a userset (group of users), a wildcard (all users
+ * of a type), or a complex difference operation between user groups.
+ *
+ * This flexible model allows OpenFGA to handle various user identification
+ * patterns, from simple "user:alice" references to complex computed user
+ * groups based on relationships and rules.
+ */
 final class User implements UserInterface
 {
     public const string OPENAPI_MODEL = 'User';

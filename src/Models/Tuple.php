@@ -10,6 +10,18 @@ use DateTimeZone;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a stored relationship tuple in your authorization system.
+ *
+ * A Tuple is a relationship record that exists in your OpenFGA store,
+ * representing a specific connection between a user, relation, and object
+ * (like "user:anne is reader of document:budget"). Unlike TupleKey which
+ * just describes the relationship, Tuple includes the timestamp when the
+ * relationship was established.
+ *
+ * Use this when working with actual stored relationships in your system,
+ * particularly when you need to know when relationships were created.
+ */
 final class Tuple implements TupleInterface
 {
     public const string OPENAPI_MODEL = 'Tuple';

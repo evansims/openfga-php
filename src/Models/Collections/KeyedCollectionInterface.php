@@ -105,16 +105,35 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
     public function jsonSerialize(): array;
 
     /**
+     * Get the current iterator key.
+     *
+     * This method returns the current string key in the collection iteration.
+     * For keyed collections, this is always a string identifier.
+     *
      * @throws ClientThrowable If the key is not a string
+     *
+     * @return string The current iterator key
      */
     #[Override]
     public function key(): string;
 
+    /**
+     * Move the iterator to the next position.
+     *
+     * This method advances the internal iterator pointer to the next
+     * key-value pair in the collection.
+     */
     #[Override]
     public function next(): void;
 
     /**
-     * @param mixed $offset
+     * Check if an offset exists in the collection.
+     *
+     * This method determines whether the collection contains an item
+     * with the specified key.
+     *
+     * @param  mixed $offset The key to check for existence
+     * @return bool  True if the key exists, false otherwise
      */
     #[Override]
     public function offsetExists(mixed $offset): bool;
@@ -144,6 +163,12 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
     #[Override]
     public function offsetUnset(mixed $offset): void;
 
+    /**
+     * Reset the iterator to the beginning of the collection.
+     *
+     * This method moves the internal iterator pointer back to the
+     * first key-value pair in the collection.
+     */
     #[Override]
     public function rewind(): void;
 
@@ -157,6 +182,14 @@ interface KeyedCollectionInterface extends ArrayAccess, Countable, Iterator, Jso
      */
     public function toArray(): array;
 
+    /**
+     * Check if the current iterator position is valid.
+     *
+     * This method determines whether the current iterator position
+     * points to a valid key-value pair in the collection.
+     *
+     * @return bool True if the current position is valid, false otherwise
+     */
     #[Override]
     public function valid(): bool;
 }

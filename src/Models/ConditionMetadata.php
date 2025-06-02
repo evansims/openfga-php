@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Contains metadata information about conditions in your authorization model.
+ *
+ * ConditionMetadata provides context about ABAC (Attribute-Based Access Control)
+ * conditions, including module organization and source information for debugging.
+ * This helps you understand where conditions are defined and how they're
+ * structured within your authorization model.
+ *
+ * Use this when working with conditional authorization rules that depend on
+ * runtime attributes and context data.
+ */
 final class ConditionMetadata implements ConditionMetadataInterface
 {
     public const string OPENAPI_MODEL = 'ConditionMetadata';

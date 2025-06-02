@@ -9,6 +9,17 @@ use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 use stdClass;
 
+/**
+ * Represents a userset specification for computing groups of users.
+ *
+ * A Userset defines how to compute a collection of users through various means:
+ * computed relationships, tuple-to-userset operations, unions, intersections,
+ * or differences. This is a fundamental building block for complex authorization
+ * patterns where user groups are derived dynamically.
+ *
+ * Use this when defining how groups of users should be computed in your
+ * authorization model rules.
+ */
 final class Userset implements UsersetInterface
 {
     public const string OPENAPI_MODEL = 'Userset';

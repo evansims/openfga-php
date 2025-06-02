@@ -7,6 +7,16 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a tuple-to-userset relationship that derives permissions from related objects.
+ *
+ * This enables complex authorization patterns where permissions on one object
+ * are determined by relationships with other objects. For example, "users who
+ * can edit a document are those who are owners of the folder containing it".
+ *
+ * The tupleset defines which related objects to look at, and computedUserset
+ * specifies which relationship on those objects grants the permission.
+ */
 final class TupleToUsersetV1 implements TupleToUsersetV1Interface
 {
     public const string OPENAPI_MODEL = 'v1.TupleToUserset';

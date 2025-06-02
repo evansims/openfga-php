@@ -12,6 +12,16 @@ use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;
 
+/**
+ * Represents a wildcard that matches all users of a specific type.
+ *
+ * In authorization models, you sometimes want to grant permissions to all
+ * users of a certain type rather than specific individuals. TypedWildcard
+ * lets you specify "all users of type X" in your authorization rules.
+ *
+ * For example, you might want to grant read access to "all employees" or
+ * "all customers" without having to list each individual user.
+ */
 final class TypedWildcard implements TypedWildcardInterface
 {
     public const string OPENAPI_MODEL = 'TypedWildcard';

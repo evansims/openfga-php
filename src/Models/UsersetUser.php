@@ -7,6 +7,17 @@ namespace OpenFGA\Models;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Represents a user reference through a userset relationship.
+ *
+ * UsersetUser defines a user specification in the format "object#relation"
+ * where users are identified through their relationship to an object rather
+ * than direct user identifiers. This enables dynamic user groups based on
+ * relationships.
+ *
+ * Use this when you need to reference users through relationship-based
+ * groups rather than explicit user lists.
+ */
 final class UsersetUser implements UsersetUserInterface
 {
     public const string OPENAPI_MODEL = 'UsersetUser';

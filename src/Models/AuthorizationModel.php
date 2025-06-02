@@ -13,6 +13,18 @@ use OpenFGA\Transformer;
 use Override;
 use ReflectionException;
 
+/**
+ * Defines the authorization rules and relationships for your application.
+ *
+ * An AuthorizationModel is the core configuration that tells OpenFGA how
+ * permissions work in your system. It defines object types (like documents, folders),
+ * relationships (like owner, editor, viewer), and the rules for how those
+ * relationships grant access.
+ *
+ * Think of this as your application's "permission blueprint" - it describes
+ * all the ways users can be related to objects and what those relationships mean
+ * for access control decisions.
+ */
 final class AuthorizationModel implements AuthorizationModelInterface
 {
     public const string OPENAPI_MODEL = 'AuthorizationModel';
@@ -20,10 +32,10 @@ final class AuthorizationModel implements AuthorizationModelInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                                            $id              Authorization model ID.
-     * @param SchemaVersion                                     $schemaVersion   Schema version of the authorization model.
-     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions Type definitions for the authorization model.
-     * @param ConditionsInterface<ConditionInterface>|null      $conditions      Conditions for the authorization model.
+     * @param string                                            $id              authorization model ID
+     * @param SchemaVersion                                     $schemaVersion   schema version of the authorization model
+     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions type definitions for the authorization model
+     * @param ConditionsInterface<ConditionInterface>|null      $conditions      conditions for the authorization model
      */
     public function __construct(
         private readonly string $id,

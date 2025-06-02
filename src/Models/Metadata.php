@@ -8,12 +8,30 @@ use OpenFGA\Models\Collections\RelationMetadataCollection;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
+/**
+ * Contains metadata information about type definitions in your authorization model.
+ *
+ * Metadata provides additional context about how your authorization types behave,
+ * including module information, relation constraints, and source details.
+ * This information helps with model validation, debugging, and understanding
+ * the structure of your authorization system.
+ *
+ * Use this when you need insights into the properties and constraints of
+ * your authorization model's type definitions.
+ */
 final class Metadata implements MetadataInterface
 {
     public const string OPENAPI_MODEL = 'Metadata';
 
     private static ?SchemaInterface $schema = null;
 
+    /**
+     * Create new metadata for a type definition.
+     *
+     * @param string|null                     $module     Optional module name for organization
+     * @param RelationMetadataCollection|null $relations  Optional collection of relation metadata
+     * @param SourceInfoInterface|null        $sourceInfo Optional source information for debugging
+     */
     public function __construct(
         private readonly ?string $module = null,
         private readonly ?RelationMetadataCollection $relations = null,

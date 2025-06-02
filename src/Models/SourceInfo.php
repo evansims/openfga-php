@@ -12,6 +12,17 @@ use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;
 
+/**
+ * Represents source file information for debugging and development tools.
+ *
+ * SourceInfo provides metadata about where elements of your authorization
+ * model were originally defined, including file paths. This information
+ * is valuable for development tools, error reporting, and debugging
+ * authorization model issues.
+ *
+ * Use this when you need to trace authorization model elements back to
+ * their source definitions for debugging or tooling purposes.
+ */
 final class SourceInfo implements SourceInfoInterface
 {
     public const string OPENAPI_MODEL = 'SourceInfo';
