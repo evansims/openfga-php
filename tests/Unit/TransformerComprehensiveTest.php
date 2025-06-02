@@ -9,7 +9,7 @@ use OpenFGA\Models\Collections\{ConditionParameters, Conditions, RelationMetadat
 use OpenFGA\Schema\SchemaValidator;
 use OpenFGA\Transformer;
 
-/**
+/*
  * Comprehensive Transformer test suite based on official OpenFGA DSL test patterns.
  *
  * This test suite implements rigorous testing using the same sample data and patterns
@@ -146,6 +146,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
+
                     break;
                 }
             }
@@ -154,12 +155,12 @@ describe('TransformerComprehensive', function (): void {
             expect($documentType->getRelations()->has('rel9'))->toBeTrue();
 
             $rel9 = $documentType->getRelations()->get('rel9');
-            
+
             // rel9 should be a difference with complex nested structure
             expect($rel9->getDifference())->not->toBeNull();
 
             $difference = $rel9->getDifference();
-            
+
             // Base should be a union of rel1 and rel2
             $base = $difference->getBase();
             expect($base->getUnion())->not->toBeNull();
@@ -196,6 +197,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
+
                     break;
                 }
             }
@@ -207,7 +209,7 @@ describe('TransformerComprehensive', function (): void {
             expect($canViewRelation->getDifference())->not->toBeNull();
 
             $difference = $canViewRelation->getDifference();
-            
+
             // Base should be a union with viewer and admin
             $base = $difference->getBase();
             expect($base->getUnion())->not->toBeNull();
@@ -242,6 +244,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('folder' === $td->getType()) {
                     $folderType = $td;
+
                     break;
                 }
             }
@@ -253,7 +256,7 @@ describe('TransformerComprehensive', function (): void {
             $metadata = $folderType->getMetadata();
             $viewerMetadata = $metadata->getRelations()->get('viewer');
             $directTypes = $viewerMetadata->getDirectlyRelatedUserTypes();
-            
+
             expect($directTypes->count())->toBe(2);
 
             $typePatterns = [];
@@ -294,6 +297,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
+
                     break;
                 }
             }
@@ -340,6 +344,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('repository' === $td->getType()) {
                     $repoType = $td;
+
                     break;
                 }
             }
@@ -392,6 +397,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('organization' === $td->getType()) {
                     $orgType = $td;
+
                     break;
                 }
             }
@@ -407,6 +413,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('repository' === $td->getType()) {
                     $repoType = $td;
+
                     break;
                 }
             }
@@ -460,6 +467,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $docType = $td;
+
                     break;
                 }
             }
@@ -510,6 +518,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('account' === $td->getType()) {
                     $accountType = $td;
+
                     break;
                 }
             }
@@ -526,6 +535,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('transaction' === $td->getType()) {
                     $transactionType = $td;
+
                     break;
                 }
             }
@@ -566,6 +576,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
+
                     break;
                 }
             }
@@ -608,6 +619,7 @@ describe('TransformerComprehensive', function (): void {
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
+
                     break;
                 }
             }

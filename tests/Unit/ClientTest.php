@@ -10,9 +10,9 @@ use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Messages;
 use OpenFGA\Models\AuthorizationModel;
-use OpenFGA\Models\Collections\{Assertions, Conditions, TupleKeys, TypeDefinitions, UserTypeFilters};
+use OpenFGA\Models\{BatchCheckItem, Store, TupleKey};
+use OpenFGA\Models\Collections\{Assertions, BatchCheckItems, Conditions, TupleKeys, TypeDefinitions, UserTypeFilters};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
-use OpenFGA\Models\{Store, TupleKey};
 use OpenFGA\Results\{Failure, ResultInterface};
 
 describe('Client', function (): void {
@@ -665,5 +665,102 @@ type document
         expect($client1)->toBeInstanceOf(Client::class);
         expect($client2)->toBeInstanceOf(Client::class);
         expect($client3)->toBeInstanceOf(Client::class);
+    });
+
+    test('Client batchCheck returns Result interface', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = new Store(
+            id: 'store-123',
+            name: 'Test Store',
+            createdAt: new DateTimeImmutable,
+            updatedAt: new DateTimeImmutable,
+        );
+        $model = 'model-456';
+        $checks = new BatchCheckItems([
+            new BatchCheckItem(
+                tupleKey: new TupleKey('user:alice', 'viewer', 'document:readme'),
+                correlationId: 'check-1',
+            ),
+        ]);
+
+        $result = $client->batchCheck($store, $model, $checks);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client batchCheck accepts string store and model IDs', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = 'store-123';
+        $model = 'model-456';
+        $checks = new BatchCheckItems([
+            new BatchCheckItem(
+                tupleKey: new TupleKey('user:alice', 'viewer', 'document:readme'),
+                correlationId: 'check-1',
+            ),
+        ]);
+
+        $result = $client->batchCheck($store, $model, $checks);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client batchCheck accepts AuthorizationModel object', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = 'store-123';
+        $model = new AuthorizationModel(
+            id: 'model-456',
+            schemaVersion: SchemaVersion::V1_1,
+            typeDefinitions: new TypeDefinitions([]),
+        );
+        $checks = new BatchCheckItems([
+            new BatchCheckItem(
+                tupleKey: new TupleKey('user:alice', 'viewer', 'document:readme'),
+                correlationId: 'check-1',
+            ),
+        ]);
+
+        $result = $client->batchCheck($store, $model, $checks);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client batchCheck handles multiple check items', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = 'store-123';
+        $model = 'model-456';
+        $checks = new BatchCheckItems([
+            new BatchCheckItem(
+                tupleKey: new TupleKey('user:alice', 'viewer', 'document:readme'),
+                correlationId: 'check-1',
+            ),
+            new BatchCheckItem(
+                tupleKey: new TupleKey('user:bob', 'editor', 'document:readme'),
+                correlationId: 'check-2',
+            ),
+            new BatchCheckItem(
+                tupleKey: new TupleKey('user:charlie', 'owner', 'document:readme'),
+                correlationId: 'check-3',
+            ),
+        ]);
+
+        $result = $client->batchCheck($store, $model, $checks);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client batchCheck handles empty check items', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $store = 'store-123';
+        $model = 'model-456';
+        $checks = new BatchCheckItems([]);
+
+        $result = $client->batchCheck($store, $model, $checks);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
     });
 });

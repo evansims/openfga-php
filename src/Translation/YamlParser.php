@@ -39,7 +39,7 @@ final class YamlParser
      */
     public static function parseFile(string $filename): array
     {
-        $content = file_get_contents($filename);
+        $content = @file_get_contents($filename);
 
         if (false === $content) {
             throw new InvalidArgumentException('Cannot read file: ' . $filename);
