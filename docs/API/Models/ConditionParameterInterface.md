@@ -1,5 +1,6 @@
 # ConditionParameterInterface
 
+Defines a parameter type for use in authorization conditions. ConditionParameter represents the type definition for parameters that can be passed to conditions during authorization evaluation. This includes simple types like strings and integers, as well as complex types like lists and maps with their own generic type parameters. Use this interface when defining conditions that accept typed parameters, ensuring type safety during authorization evaluation.
 
 ## Namespace
 `OpenFGA\Models`

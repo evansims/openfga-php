@@ -1,5 +1,6 @@
 # TypeDefinition
 
+Represents a type definition in your authorization model. A TypeDefinition defines an object type (like &quot;document&quot;, &quot;folder&quot;, &quot;user&quot;) and specifies the relations that can exist for objects of this type. Each relation defines how users can be related to objects, such as &quot;owner&quot;, &quot;editor&quot;, or &quot;viewer&quot; relationships. Use this when defining the schema of object types and their allowed relationships in your authorization model.
 
 ## Namespace
 `OpenFGA\Models`

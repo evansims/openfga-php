@@ -1,5 +1,6 @@
 # Store
 
+Represents an OpenFGA authorization store that contains your permission data. A Store is a container for all your authorization data - the models, relationships, and permission rules for a specific application or tenant. Each store is isolated from others, allowing you to manage permissions for different applications or environments separately. Think of a store as your application&#039;s dedicated permission database that holds all the &quot;who can do what&quot; information for your system.
 
 ## Namespace
 `OpenFGA\Models`

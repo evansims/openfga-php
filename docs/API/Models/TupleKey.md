@@ -1,5 +1,6 @@
 # TupleKey
 
+Represents a relationship tuple key defining a connection between user, relation, and object. A TupleKey is the fundamental unit of authorization in OpenFGA, representing a specific relationship like &quot;user:anne is reader of document:budget&quot;. It consists of three parts: user (who), relation (what type of access), and object (what resource), optionally with conditions for attribute-based access. Use this when creating, querying, or managing specific relationships in your authorization system.
 
 ## Namespace
 `OpenFGA\Models`

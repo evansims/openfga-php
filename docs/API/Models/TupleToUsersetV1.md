@@ -1,5 +1,6 @@
 # TupleToUsersetV1
 
+Represents a tuple-to-userset relationship that derives permissions from related objects. This enables complex authorization patterns where permissions on one object are determined by relationships with other objects. For example, &quot;users who can edit a document are those who are owners of the folder containing it&quot;. The tupleset defines which related objects to look at, and computedUserset specifies which relationship on those objects grants the permission.
 
 ## Namespace
 `OpenFGA\Models`

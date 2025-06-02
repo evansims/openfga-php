@@ -63,14 +63,13 @@ Here's a complete working example that sets up authorization for a document syst
 
 ```php
 use OpenFGA\Client;
-use function OpenFGA\Models\{tuple, tuples};
-use function OpenFGA\Results\unwrap;
+use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
 
 $client = new Client(url: 'http://localhost:8080');
 
 // 1. Create a store for your app
-$store = unwrap($client->createStore(name: 'document-system'));
-echo "Created store: {$store->getId()}\n";
+$storeId = store($client, 'document-system');
+echo "Created store: {$storeId}\n";
 
 // 2. Define what permissions exist
 $dsl = <<<DSL
@@ -85,31 +84,28 @@ type document
     define editor: [user] 
 DSL;
 
-$model = unwrap($client->dsl($dsl));
-$createdModel = unwrap($client->createAuthorizationModel(
-    store: $store->getId(),
-    typeDefinitions: $model->getTypeDefinitions()
-));
-echo "Created model: {$createdModel->getId()}\n";
+$model = dsl($client, $dsl);
+$modelId = model($client, $storeId, $model);
+echo "Created model: {$modelId}\n";
 
 // 3. Grant Alice permission to view the readme
-unwrap($client->writeTuples(
-    store: $store->getId(),
-    model: $createdModel->getId(),
-    writes: tuples(
-        tuple(user: 'user:alice', relation: 'viewer', object: 'document:readme')
-    )
-));
+write(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuples: tuple('user:alice', 'viewer', 'document:readme')
+);
 echo "Granted alice viewer permission on readme\n";
 
 // 4. Check if Alice can view the document
-$result = unwrap($client->check(
-    store: $store->getId(),
-    model: $createdModel->getId(),
-    tupleKey: tuple(user: 'user:alice', relation: 'viewer', object: 'document:readme')
-));
+$canView = allowed(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuple: tuple('user:alice', 'viewer', 'document:readme')
+);
 
-echo $result->getIsAllowed() ? "✅ Alice can view readme" : "❌ Access denied";
+echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
 ```
 
 **Run this example:**

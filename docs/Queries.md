@@ -17,7 +17,7 @@ This is the most common query. Use it to enforce access control in your app.
 
 ```php
 use OpenFGA\Models\TupleKey;
-use function OpenFGA\Models\tuple;
+use function OpenFGA\tuple;
 
 // Can user:alice view document:roadmap?
 $result = $client->check(
@@ -28,7 +28,7 @@ $result = $client->check(
     )
 );
 
-if ($result->unwrap()->getIsAllowed()) {
+if ($result->unwrap()->getAllowed()) {
     // Alice can view the document
     echo "Access granted";
 } else {
@@ -40,21 +40,20 @@ if ($result->unwrap()->getIsAllowed()) {
 ### Real-world usage
 
 ```php
-function canUserEdit(string $userId, string $documentId): bool 
+use function OpenFGA\{allowed, tuple};
+
+function canUserEdit(ClientInterface $client, string $storeId, string $modelId, string $userId, string $documentId): bool 
 {
-    $result = $client->check(
-        tupleKey: tuple(
-            user: "user:{$userId}",
-            relation: 'editor',
-            object: "document:{$documentId}"
-        )
+    return allowed(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
+        tuple: tuple("user:{$userId}", 'editor', "document:{$documentId}")
     );
-    
-    return $result->unwrap()->getIsAllowed();
 }
 
 // In your controller
-if (!canUserEdit($currentUserId, $documentId)) {
+if (!canUserEdit($client, $storeId, $modelId, $currentUserId, $documentId)) {
     throw new ForbiddenException('You cannot edit this document');
 }
 ```
@@ -169,7 +168,7 @@ This is mainly useful for debugging complex permission structures or understandi
 Test "what-if" scenarios without permanently saving relationships. Perfect for previewing permission changes.
 
 ```php
-use function OpenFGA\Models\{tuple, tuples};
+use function OpenFGA\{tuple, tuples};
 
 // What if alice joins the engineering team?
 $contextualTuple = tuple(

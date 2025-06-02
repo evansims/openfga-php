@@ -124,10 +124,12 @@ array&lt;string, mixed&gt;
 public function key(): string
 ```
 
+Get the current iterator key. This method returns the current string key in the collection iteration. For keyed collections, this is always a string identifier.
 
 
 #### Returns
 string
+ The current iterator key
 
 ### next
 
@@ -136,6 +138,7 @@ string
 public function next(): void
 ```
 
+Move the iterator to the next position. This method advances the internal iterator pointer to the next key-value pair in the collection.
 
 
 #### Returns
@@ -148,6 +151,7 @@ void
 public function offsetExists(mixed $offset): bool
 ```
 
+Check if an offset exists in the collection. This method determines whether the collection contains an item with the specified key.
 
 #### Parameters
 | Name | Type | Description |
@@ -156,6 +160,7 @@ public function offsetExists(mixed $offset): bool
 
 #### Returns
 bool
+ True if the key exists, false otherwise
 
 ### offsetGet
 
@@ -214,6 +219,7 @@ void
 public function rewind(): void
 ```
 
+Reset the iterator to the beginning of the collection. This method moves the internal iterator pointer back to the first key-value pair in the collection.
 
 
 #### Returns
@@ -255,8 +261,10 @@ array
 public function valid(): bool
 ```
 
+Check if the current iterator position is valid. This method determines whether the current iterator position points to a valid key-value pair in the collection.
 
 
 #### Returns
 bool
+ True if the current position is valid, false otherwise
 

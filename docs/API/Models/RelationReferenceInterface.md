@@ -1,5 +1,6 @@
 # RelationReferenceInterface
 
+Defines the contract for relation references with optional conditions. A relation reference specifies a particular relation within a type definition, optionally with an associated condition that must be satisfied. This allows for conditional access patterns where relationships are only valid when certain runtime conditions are met. Use this when you need to reference specific relations in your authorization model, especially when implementing attribute-based access control (ABAC) patterns.
 
 ## Namespace
 `OpenFGA\Models`

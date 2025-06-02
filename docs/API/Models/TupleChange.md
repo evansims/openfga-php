@@ -1,5 +1,6 @@
 # TupleChange
 
+Represents a change to a relationship tuple in your authorization store. When you modify relationships in OpenFGA (adding or removing tuples), each change is tracked as a TupleChange. This allows you to see the history of authorization changes, audit permissions over time, and understand when relationships were established or removed. Use this when you need to track or review the history of relationship changes in your application, such as for compliance auditing or debugging permission issues.
 
 ## Namespace
 `OpenFGA\Models`

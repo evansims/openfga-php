@@ -309,7 +309,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use OpenFGA\Client;
 use OpenFGA\Observability\TelemetryFactory;
-use function OpenFGA\Models\{tuple, tuples};
+use function OpenFGA\{tuple, tuples};
 
 // Configure telemetry (assumes OpenTelemetry is set up)
 $telemetry = TelemetryFactory::create(

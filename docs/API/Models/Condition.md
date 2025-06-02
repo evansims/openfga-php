@@ -1,5 +1,6 @@
 # Condition
 
+Represents an ABAC (Attribute-Based Access Control) condition in your authorization model. A Condition defines a logical expression that must evaluate to true for authorization to be granted. It includes the expression code, parameter definitions, and optional metadata. Conditions enable context-aware authorization decisions based on attributes of users, resources, and environment. Use this when implementing fine-grained access control that depends on runtime attributes and contextual information.
 
 ## Namespace
 `OpenFGA\Models`

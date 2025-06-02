@@ -1,5 +1,6 @@
 # UsersetInterface
 
+Defines the contract for userset specifications in authorization models. A userset represents a collection of users that can be computed through various means: direct assignment, computed relationships, unions, intersections, or complex tuple-to-userset operations. This interface provides the foundation for all userset types used in OpenFGA authorization models. Use this when defining how groups of users are identified and computed in your authorization system.
 
 ## Namespace
 `OpenFGA\Models`

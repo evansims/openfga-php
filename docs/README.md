@@ -16,20 +16,17 @@ composer require evansims/openfga-php
 
 ```php
 use OpenFGA\Client;
-use function OpenFGA\Models\tuple;
+use function OpenFGA\{allowed, tuple};
 
 $client = new Client(url: 'https://api.fga.example');
 
-// Check permissions
-$canEdit = $client->check(
+// Check permissions - simple and clean
+$canEdit = allowed(
+    client: $client,
     store: 'store_123',
     model: 'model_456', 
-    tupleKey: tuple(
-        user: 'user:alice',
-        relation: 'editor', 
-        object: 'document:readme'
-    )
-)->unwrap()->getIsAllowed();
+    tuple: tuple('user:alice', 'editor', 'document:readme')
+);
 
 // Find accessible resources
 $documents = $client->listObjects(

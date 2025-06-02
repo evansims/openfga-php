@@ -1,5 +1,6 @@
 # RelationReference
 
+Represents a reference to a specific relation with optional conditions. A RelationReference identifies a relation within your authorization model, optionally with an associated condition that must be satisfied. This enables conditional relationships where the relation is only valid when certain runtime conditions are met. Use this when defining relation constraints or implementing attribute-based access control patterns in your authorization model.
 
 ## Namespace
 `OpenFGA\Models`

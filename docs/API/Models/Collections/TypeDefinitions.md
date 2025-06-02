@@ -170,10 +170,12 @@ array
 public function key(): int
 ```
 
+Get the current iterator key. This method returns the current position in the collection iteration, which is always an integer for indexed collections.
 
 
 #### Returns
 int
+ The current iterator position
 
 ### next
 
@@ -182,6 +184,7 @@ int
 public function next(): void
 ```
 
+Move the iterator to the next position. This method advances the internal iterator pointer to the next item in the collection sequence.
 
 
 #### Returns
@@ -194,6 +197,7 @@ void
 public function offsetExists(mixed $offset): bool
 ```
 
+Check if an offset exists in the collection. This method determines whether the collection contains an item at the specified offset position.
 
 #### Parameters
 | Name | Type | Description |
@@ -202,6 +206,7 @@ public function offsetExists(mixed $offset): bool
 
 #### Returns
 bool
+ True if the offset exists, false otherwise
 
 ### offsetGet
 
@@ -278,6 +283,7 @@ mixed
 public function rewind(): void
 ```
 
+Reset the iterator to the beginning of the collection. This method moves the internal iterator pointer back to the first item in the collection.
 
 
 #### Returns
@@ -337,10 +343,12 @@ array
 public function valid(): bool
 ```
 
+Check if the current iterator position is valid. This method determines whether the current iterator position points to a valid item in the collection.
 
 
 #### Returns
 bool
+ True if the current position is valid, false otherwise
 
 ### withItems
 

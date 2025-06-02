@@ -9,7 +9,8 @@ For example: `(user:anne, editor, document:roadmap)` means "Anne can edit the ro
 ```php
 <?php
 
-use OpenFGA\Models\{TupleKey, TupleKeys};
+use OpenFGA\Client;
+use function OpenFGA\{tuple, tuples, write, delete};
 
 // Basic setup - see Getting Started for full client initialization
 $client = new Client(url: 'http://localhost:8080');
@@ -21,17 +22,12 @@ Give someone access by writing a tuple:
 
 ```php
 // Give Anne editor access to a document
-$client->writeTuples(
+write(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    writes: new TupleKeys([
-        new TupleKey(
-            user: 'user:anne',
-            relation: 'editor', 
-            object: 'document:roadmap'
-        )
-    ])
-)->unwrap();
+    tuples: tuple('user:anne', 'editor', 'document:roadmap')
+);
 ```
 
 ## Removing Permissions  
@@ -40,17 +36,12 @@ Take away access by deleting a tuple:
 
 ```php
 // Remove Anne's editor access
-$client->writeTuples(
+delete(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    deletes: new TupleKeys([
-        new TupleKey(
-            user: 'user:anne',
-            relation: 'editor',
-            object: 'document:roadmap'
-        )
-    ])
-)->unwrap();
+    tuples: tuple('user:anne', 'editor', 'document:roadmap')
+);
 ```
 
 ## Bulk Operations
@@ -62,14 +53,14 @@ Handle multiple permission changes in one transaction:
 $client->writeTuples(
     store: $storeId,
     model: $modelId,
-    writes: new TupleKeys([
-        new TupleKey(user: 'user:bob', relation: 'viewer', object: 'document:roadmap'),
-        new TupleKey(user: 'user:charlie', relation: 'editor', object: 'document:roadmap'),
-        new TupleKey(user: 'team:marketing#member', relation: 'viewer', object: 'folder:campaigns'),
-    ]),
-    deletes: new TupleKeys([
-        new TupleKey(user: 'user:anne', relation: 'owner', object: 'document:old-spec'),
-    ])
+    writes: tuples(
+        tuple('user:bob', 'viewer', 'document:roadmap'),
+        tuple('user:charlie', 'editor', 'document:roadmap'),
+        tuple('team:marketing#member', 'viewer', 'folder:campaigns')
+    ),
+    deletes: tuples(
+        tuple('user:anne', 'owner', 'document:old-spec')
+    )
 )->unwrap();
 ```
 ## Reading Existing Permissions
@@ -77,6 +68,8 @@ $client->writeTuples(
 Check what permissions exist by reading tuples:
 
 ```php
+use OpenFGA\Models\TupleKey;
+
 // Find all permissions for a specific document
 $response = $client->readTuples(
     store: $storeId,

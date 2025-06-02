@@ -1,5 +1,6 @@
 # UsersListUser
 
+Represents a user entry in a users list response. UsersListUser provides a simple wrapper around user identifiers returned from list operations. It ensures consistent representation of users in lists while providing convenient access to the user identifier string. Use this when working with user lists returned from OpenFGA queries or when you need a structured representation of user identifiers.
 
 ## Namespace
 `OpenFGA\Models`
@@ -38,10 +39,12 @@ string
 public function jsonSerialize(): string
 ```
 
+Serialize the user to its JSON representation. Returns the user identifier as a string for API serialization. This differs from most models which serialize to arrays.
 
 
 #### Returns
 string
+ The user identifier string
 
 ### schema
 

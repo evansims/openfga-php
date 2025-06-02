@@ -1,5 +1,6 @@
 # TupleToUsersetV1Interface
 
+Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 represents an authorization operation that computes usersets by following relationships from one object type to usersets on related objects. This enables complex authorization patterns like &quot;users who can view a document are the editors of the parent folder&quot; or &quot;viewers of a resource are the members of the associated organization&quot;. Use this interface when implementing authorization models that involve indirect relationships through tuple-to-userset operations.
 
 ## Namespace
 `OpenFGA\Models`
