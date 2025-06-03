@@ -54,6 +54,7 @@ describe('TransformerOrOperator', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -86,6 +87,7 @@ describe('TransformerOrOperator', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;

@@ -50,6 +50,8 @@
     "open-telemetry/api": "^1.1",
     "open-telemetry/sdk": "^1.1",
     "pestphp/pest": "^3",
+    "phpmd/phpmd": "^2.15",
+    "phpmetrics/phpmetrics": "^3.0@RC",
     "phpstan/phpstan": "^2",
     "phpstan/phpstan-strict-rules": "^2",
     "psr-mock/http-client-implementation": "^1",
@@ -159,6 +161,17 @@
     "lint:psalm": "@php vendor/bin/psalm",
     "lint:rector": "@php vendor/bin/rector process src --dry-run",
     "lint:rector:fix": "@php vendor/bin/rector process src",
+    "complexity": [
+      "@complexity:phpmd"
+    ],
+    "complexity:phpmd": "@php vendor/bin/phpmd src text phpmd.xml",
+    "complexity:phpmd:html": "@php vendor/bin/phpmd src html phpmd.xml --reportfile build/phpmd.html",
+    "complexity:phpmetrics": [
+      "mkdir -p build/metrics",
+      "@php vendor/bin/phpmetrics --config=.phpmetrics.json"
+    ],
+    "refactor:complexity": "@php vendor/bin/rector process --config=rector-complexity.php --dry-run",
+    "refactor:complexity:fix": "@php vendor/bin/rector process --config=rector-complexity.php",
     "release": "@php tools/release.php",
     "security:workflows": "@php tools/workflow-security-audit.php",
     "security:workflows:fix": "@php tools/workflow-security-audit.php --fix",
@@ -171,20 +184,28 @@
     "test:contract": [
       "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
-    "test:integration": [
-      "docker compose -f docker-compose.integration.yml build test",
-      "docker compose -f docker-compose.integration.yml run --rm test"
+    "test:integration": "./tools/run-integration-tests.sh",
+    "test:integration:clean": "./tools/integration-cleanup.sh",
+    "test:integration:clean:force": [
+      "./tools/integration-cleanup.sh",
+      "docker ps -a --filter label=com.openfga.test=integration -q | xargs -r docker rm -f",
+      "docker network prune -f --filter label=com.openfga.test"
     ],
+    "test:integration:start": [
+      "docker compose -f docker-compose.integration.yml up -d openfga otel-collector"
+    ],
+    "test:integration:stop": [
+      "docker compose -f docker-compose.integration.yml stop"
+    ],
+    "test:integration:debug": "./tools/debug-integration-tests.sh",
+    "test:integration:shell": "docker compose -f docker-compose.integration.yml run --rm test sh",
     "test:integration:run": [
-      "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+      "@php -d memory_limit=512M vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "test:tools": [
-      "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "test:unit": [
-      "@putenv XDEBUG_MODE=coverage",
       "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ]
   }

@@ -62,12 +62,15 @@ final readonly class StreamedListObjectsRequest implements StreamedListObjectsRe
         if ('' === $this->store) {
             throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_STORE_ID_EMPTY)]);
         }
+
         if ('' === $this->type) {
             throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_TYPE_EMPTY)]);
         }
+
         if ('' === $this->relation) {
             throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_RELATION_EMPTY)]);
         }
+
         if ('' === $this->user) {
             throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_USER_EMPTY)]);
         }

@@ -7,11 +7,13 @@ namespace OpenFGA\Network;
 use const JSON_THROW_ON_ERROR;
 
 use Exception;
+use Fiber;
 use InvalidArgumentException;
 use OpenFGA\{Client, Messages};
 use OpenFGA\Exceptions\{ConfigurationError, NetworkError, NetworkException};
 use OpenFGA\Observability\TelemetryInterface;
 use OpenFGA\Requests\RequestInterface as ClientRequestInterface;
+use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
 use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Client\ClientInterface;
@@ -20,6 +22,7 @@ use PsrDiscovery\Discover;
 use ReflectionException;
 use Throwable;
 
+use function count;
 use function is_string;
 use function sprintf;
 
@@ -121,6 +124,32 @@ final class RequestManager implements RequestManagerInterface
         }
 
         throw NetworkError::Unexpected->exception(request: $request, response: $response, context: ['%error%' => Translator::trans(Messages::NETWORK_UNEXPECTED_STATUS, ['status_code' => $response->getStatusCode()])]);
+    }
+
+    /**
+     * Execute multiple tasks concurrently using Fibers.
+     *
+     * This method creates and manages Fibers for concurrent execution of the
+     * provided tasks. It respects the maximum parallelism limit and efficiently
+     * schedules fiber execution to maximize throughput.
+     *
+     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks               Array of tasks to execute concurrently
+     * @param  int                                                    $maxParallelRequests Maximum concurrent requests
+     * @param  bool                                                   $stopOnFirstError    Whether to stop on first error
+     * @return array<FailureInterface|SuccessInterface>               Results from all tasks in the same order as input
+     */
+    public function executeParallel(array $tasks, int $maxParallelRequests, bool $stopOnFirstError): array
+    {
+        if ([] === $tasks) {
+            return [];
+        }
+
+        // If no parallelism requested or only one task, execute sequentially
+        if (1 >= $maxParallelRequests || 1 === count($tasks)) {
+            return $this->executeSequential($tasks, $stopOnFirstError);
+        }
+
+        return $this->executeConcurrent($tasks, $maxParallelRequests, $stopOnFirstError);
     }
 
     /**
@@ -258,43 +287,38 @@ final class RequestManager implements RequestManagerInterface
      *
      * @throws InvalidArgumentException If message translation parameters are invalid
      * @throws ReflectionException      If exception location capture fails
+     * @throws Throwable                If the request fails and cannot be recovered
      */
     #[Override]
     public function send(RequestInterface $request): ResponseInterface
     {
-        // Extract endpoint URL for circuit breaker tracking
-        $endpoint = $request->getUri()->__toString();
-
-        // Skip retry logic if maxRetries is 0
-        if (0 === $this->maxRetries) {
-            /** @var mixed $span */
-            $span = $this->telemetry?->startHttpRequest($request);
-
+        // Create a single-task array for unified execution
+        $task = function () use ($request): FailureInterface | SuccessInterface {
             try {
-                $response = $this->getHttpClient()->sendRequest($request);
-                $this->telemetry?->endHttpRequest($span, $response);
+                $response = $this->executeSingleRequest($request);
 
-                return $response;
+                return new Success($response);
             } catch (Throwable $throwable) {
-                $this->telemetry?->endHttpRequest($span, null, $throwable);
-
-                throw NetworkError::Request->exception(request: $request, context: ['message' => Translator::trans(Messages::NETWORK_ERROR, ['message' => $throwable->getMessage()])], prev: $throwable);
+                return new Failure($throwable);
             }
+        };
+
+        // Execute using the unified concurrent infrastructure with concurrency of 1
+        $results = $this->executeParallel([$task], 1, true);
+
+        // Extract the single result
+        if (! isset($results[0])) {
+            throw new NetworkException(kind: NetworkError::Unexpected, context: ['message' => 'No result returned from request execution']);
         }
 
-        // Use retry handler for requests with retry enabled
-        try {
-            return $this->retryHandler->executeWithRetry(
-                fn (): ResponseInterface => $this->executeRequest($request),
-                $request,
-                $endpoint,
-            );
-        } catch (NetworkException $networkException) {
-            // Preserve the response from the original NetworkException if available
-            throw NetworkError::Request->exception(request: $request, response: $networkException->response(), context: ['message' => Translator::trans(Messages::NETWORK_ERROR, ['message' => $networkException->getMessage()])], prev: $networkException);
-        } catch (Throwable $throwable) {
-            throw NetworkError::Request->exception(request: $request, context: ['message' => Translator::trans(Messages::NETWORK_ERROR, ['message' => $throwable->getMessage()])], prev: $throwable);
+        $result = $results[0];
+
+        if ($result instanceof FailureInterface) {
+            throw $result->err();
         }
+
+        /** @var ResponseInterface */
+        return $result->unwrap();
     }
 
     /**
@@ -338,6 +362,87 @@ final class RequestManager implements RequestManagerInterface
     }
 
     /**
+     * Execute tasks concurrently using Fibers.
+     *
+     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks            Array of tasks to execute
+     * @param  int                                                    $maxParallel      Maximum concurrent executions
+     * @param  bool                                                   $stopOnFirstError Whether to stop on first error
+     * @return array<FailureInterface|SuccessInterface>
+     */
+    private function executeConcurrent(array $tasks, int $maxParallel, bool $stopOnFirstError): array
+    {
+        $results = [];
+        $activeFibers = [];
+        $taskIndex = 0;
+        $totalTasks = count($tasks);
+        $shouldStop = false;
+
+        // Initialize results array with placeholders
+        for ($i = 0; $i < $totalTasks; ++$i) {
+            $results[$i] = null;
+        }
+
+        while ($taskIndex < $totalTasks || [] !== $activeFibers) {
+            // Start new fibers up to the maximum parallel limit
+            while (count($activeFibers) < $maxParallel && $taskIndex < $totalTasks && ! $shouldStop) {
+                $currentIndex = $taskIndex;
+                $task = $tasks[$taskIndex];
+
+                $fiber = new Fiber(static function () use ($task): FailureInterface | SuccessInterface {
+                    try {
+                        return $task();
+                    } catch (Throwable $throwable) {
+                        return new Failure($throwable);
+                    }
+                });
+
+                $activeFibers[$currentIndex] = $fiber;
+                $fiber->start();
+                ++$taskIndex;
+            }
+
+            // Check for completed fibers
+            foreach ($activeFibers as $index => $fiber) {
+                if ($fiber->isTerminated()) {
+                    /** @var FailureInterface|SuccessInterface $result */
+                    $result = $fiber->getReturn();
+                    $results[$index] = $result;
+                    unset($activeFibers[$index]);
+
+                    // Check if we should stop on first error
+                    if ($stopOnFirstError && $result instanceof FailureInterface) {
+                        $shouldStop = true;
+
+                        // Terminate remaining active fibers
+                        foreach ($activeFibers as $activeFiber) {
+                            if ($activeFiber->isSuspended()) {
+                                $activeFiber->resume();
+                            }
+                        }
+                        $activeFibers = [];
+
+                        break;
+                    }
+                } elseif ($fiber->isSuspended()) {
+                    // Resume suspended fibers
+                    $fiber->resume();
+                }
+            }
+
+            // Yield control to allow other operations
+            if ([] !== $activeFibers) {
+                Fiber::suspend();
+            }
+        }
+
+        // Filter out null results (from stopped executions)
+        /** @var array<FailureInterface|SuccessInterface> $filteredResults */
+        $filteredResults = array_filter($results, static fn ($result): bool => null !== $result);
+
+        return array_values($filteredResults);
+    }
+
+    /**
      * Execute a single HTTP request without retry logic.
      *
      * Performs the actual HTTP request using the configured PSR-18 client.
@@ -363,6 +468,88 @@ final class RequestManager implements RequestManagerInterface
             $this->telemetry?->endHttpRequest($span, null, $throwable);
 
             throw $throwable;
+        }
+    }
+
+    /**
+     * Execute tasks sequentially without Fibers.
+     *
+     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks            Array of tasks to execute
+     * @param  bool                                                   $stopOnFirstError Whether to stop on first error
+     * @return array<FailureInterface|SuccessInterface>
+     */
+    private function executeSequential(array $tasks, bool $stopOnFirstError): array
+    {
+        $results = [];
+
+        foreach ($tasks as $task) {
+            try {
+                $result = $task();
+                $results[] = $result;
+
+                // Stop if we encounter an error and stopOnFirstError is enabled
+                if ($stopOnFirstError && $result instanceof FailureInterface) {
+                    break;
+                }
+            } catch (Throwable $throwable) {
+                $results[] = new Failure($throwable);
+
+                if ($stopOnFirstError) {
+                    break;
+                }
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Execute a single HTTP request with retry logic.
+     *
+     * Handles the execution of a single HTTP request, applying retry logic
+     * based on the configured maxRetries setting. This method provides a
+     * unified execution path for both single and concurrent requests.
+     *
+     * @param RequestInterface $request The HTTP request to execute
+     *
+     * @throws NetworkException If the request fails after all retries
+     * @throws Throwable        For any other errors during execution
+     *
+     * @return ResponseInterface The HTTP response
+     */
+    private function executeSingleRequest(RequestInterface $request): ResponseInterface
+    {
+        $endpoint = $request->getUri()->__toString();
+
+        // Direct execution without retry if maxRetries is 0
+        if (0 === $this->maxRetries) {
+            /** @var mixed $span */
+            $span = $this->telemetry?->startHttpRequest($request);
+
+            try {
+                $response = $this->getHttpClient()->sendRequest($request);
+                $this->telemetry?->endHttpRequest($span, $response);
+
+                return $response;
+            } catch (Throwable $throwable) {
+                $this->telemetry?->endHttpRequest($span, null, $throwable);
+
+                throw NetworkError::Request->exception(request: $request, context: ['message' => Translator::trans(Messages::NETWORK_ERROR, ['message' => $throwable->getMessage()])], prev: $throwable);
+            }
+        }
+
+        // Use retry handler for requests with retry enabled
+        try {
+            return $this->retryHandler->executeWithRetry(
+                fn (): ResponseInterface => $this->executeRequest($request),
+                $request,
+                $endpoint,
+            );
+        } catch (NetworkException $networkException) {
+            // Preserve the response from the original NetworkException if available
+            throw NetworkError::Request->exception(request: $request, response: $networkException->response(), context: ['message' => Translator::trans(Messages::NETWORK_ERROR, ['message' => $networkException->getMessage()])], prev: $networkException);
+        } catch (Throwable $throwable) {
+            throw NetworkError::Request->exception(request: $request, context: ['message' => Translator::trans(Messages::NETWORK_ERROR, ['message' => $throwable->getMessage()])], prev: $throwable);
         }
     }
 }

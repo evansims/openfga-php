@@ -81,6 +81,7 @@ describe('Users Collection', function (): void {
         $collection = new Users([$user1, $user2, $user3]);
 
         $count = 0;
+
         foreach ($collection as $user) {
             expect($user)->toBeInstanceOf(User::class);
             ++$count;
@@ -213,6 +214,7 @@ describe('Users Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $_) {
             ++$count;
         }

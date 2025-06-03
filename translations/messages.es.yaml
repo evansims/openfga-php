@@ -43,6 +43,7 @@ request:
   store_id_empty: 'El ID del almacén no puede estar vacío'
   model_id_empty: 'El ID del modelo de autorización no puede estar vacío'
   store_name_empty: 'El nombre del almacén no puede estar vacío'
+  transactional_limit_exceeded: 'WriteTuples transaccional excedió el límite: %count% operaciones (máx. 100). Use modo no transaccional o divida en múltiples solicitudes.'
   continuation_token_empty: 'El token de continuación no puede estar vacío'
   page_size_invalid: 'pageSize inválido proporcionado a %className%'
   object_type_empty: 'El tipo de objeto no puede estar vacío'
@@ -57,6 +58,7 @@ validation:
 
 model:
   invalid_tuple_key: 'tuple_key inválido proporcionado a Assertion::fromArray'
+  invalid_identifier_format: 'Formato de identificador inválido: los identificadores no pueden contener espacios en blanco. Encontrado en %identifier%'
   typed_wildcard_type_empty: 'TypedWildcard::$type no puede estar vacío.'
   source_info_file_empty: 'SourceInfo::$file no puede estar vacío.'
   leaf_missing_content: 'Leaf debe contener al menos uno de: users, computed o tupleToUserset'

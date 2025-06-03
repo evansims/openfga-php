@@ -118,6 +118,8 @@ enum Messages: string
 
     case JWT_TOKEN_NOT_YET_VALID = 'auth.jwt.token_not_yet_valid';
 
+    case MODEL_INVALID_IDENTIFIER_FORMAT = 'model.invalid_identifier_format';
+
     // Model validation messages
     case MODEL_INVALID_TUPLE_KEY = 'model.invalid_tuple_key';
 
@@ -171,6 +173,8 @@ enum Messages: string
 
     case REQUEST_STORE_NAME_EMPTY = 'request.store_name_empty';
 
+    case REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED = 'request.transactional_limit_exceeded';
+
     case REQUEST_TYPE_EMPTY = 'request.type_empty';
 
     case REQUEST_USER_EMPTY = 'request.user_empty';
@@ -208,7 +212,7 @@ enum Messages: string
      *
      * @return string[][]
      *
-     * @psalm-return array{client: list{'client.no_last_request_found'}, dsl: list{'dsl.parse_failed', 'dsl.unrecognized_term', 'dsl.input_empty', 'dsl.pattern_empty', 'dsl.unbalanced_parentheses_closing', 'dsl.unbalanced_parentheses_opening', 'dsl.invalid_computed_userset'}, auth: list{'auth.invalid_response_format', 'auth.missing_required_fields', 'auth.access_token_must_be_string', 'auth.expires_in_must_be_integer', 'auth.jwt.invalid_format', 'auth.jwt.invalid_header', 'auth.jwt.invalid_payload', 'auth.jwt.missing_required_claims', 'auth.jwt.token_expired', 'auth.jwt.token_not_yet_valid', 'auth.jwt.invalid_audience', 'auth.jwt.invalid_issuer'}, network: list{'network.error', 'network.unexpected_status'}, result: list{'result.success_no_error', 'result.failure_no_value'}, request: list{'request.store_id_empty', 'request.model_id_empty'}, model: list{'model.invalid_tuple_key', 'model.typed_wildcard_type_empty', 'model.source_info_file_empty', 'model.leaf_missing_content'}, collection: list{'collection.undefined_item_type', 'collection.invalid_item_type_interface', 'collection.invalid_item_instance', 'collection.invalid_value_type', 'collection.key_must_be_string', 'collection.invalid_position', 'collection.invalid_key_type'}}
+     * @psalm-return array{client: list{'client.no_last_request_found'}, dsl: list{'dsl.parse_failed', 'dsl.unrecognized_term', 'dsl.input_empty', 'dsl.pattern_empty', 'dsl.unbalanced_parentheses_closing', 'dsl.unbalanced_parentheses_opening', 'dsl.invalid_computed_userset'}, auth: list{'auth.invalid_response_format', 'auth.missing_required_fields', 'auth.access_token_must_be_string', 'auth.expires_in_must_be_integer', 'auth.jwt.invalid_format', 'auth.jwt.invalid_header', 'auth.jwt.invalid_payload', 'auth.jwt.missing_required_claims', 'auth.jwt.token_expired', 'auth.jwt.token_not_yet_valid', 'auth.jwt.invalid_audience', 'auth.jwt.invalid_issuer'}, network: list{'network.error', 'network.unexpected_status'}, result: list{'result.success_no_error', 'result.failure_no_value'}, request: list{'request.store_id_empty', 'request.model_id_empty', 'request.transactional_limit_exceeded'}, model: list{'model.invalid_tuple_key', 'model.invalid_identifier_format', 'model.typed_wildcard_type_empty', 'model.source_info_file_empty', 'model.leaf_missing_content'}, collection: list{'collection.undefined_item_type', 'collection.invalid_item_type_interface', 'collection.invalid_item_instance', 'collection.invalid_value_type', 'collection.key_must_be_string', 'collection.invalid_position', 'collection.invalid_key_type'}}
      */
     public static function getGroupedKeys(): array
     {
@@ -250,9 +254,11 @@ enum Messages: string
             'request' => [
                 self::REQUEST_STORE_ID_EMPTY->value,
                 self::REQUEST_MODEL_ID_EMPTY->value,
+                self::REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED->value,
             ],
             'model' => [
                 self::MODEL_INVALID_TUPLE_KEY->value,
+                self::MODEL_INVALID_IDENTIFIER_FORMAT->value,
                 self::MODEL_TYPED_WILDCARD_TYPE_EMPTY->value,
                 self::MODEL_SOURCE_INFO_FILE_EMPTY->value,
                 self::MODEL_LEAF_MISSING_CONTENT->value,

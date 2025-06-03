@@ -71,6 +71,7 @@ describe('TypeDefinitions Collection', function (): void {
         $collection = new TypeDefinitions([$userType, $documentType]);
 
         $types = [];
+
         foreach ($collection as $index => $type) {
             $types[$index] = $type;
         }

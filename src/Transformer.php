@@ -64,9 +64,11 @@ final class Transformer implements TransformerInterface
 
         foreach ($lines as $line) {
             $line = trim($line);
+
             if ('' === $line) {
                 continue;
             }
+
             if (str_starts_with($line, '#')) {
                 continue;
             }
@@ -77,6 +79,7 @@ final class Transformer implements TransformerInterface
 
             if (str_starts_with($line, 'schema')) {
                 $version = trim(substr($line, strlen('schema')));
+
                 if ('' !== $version) {
                     $schemaVersion = SchemaVersion::from($version);
                 }
@@ -149,6 +152,7 @@ final class Transformer implements TransformerInterface
 
                 foreach ($relations as $name => $userset) {
                     $relMetadata = null;
+
                     // Check if the collection has the relation by key
                     if (null !== $relationMetadataCollection && (method_exists($relationMetadataCollection, 'has') && $relationMetadataCollection->has($name))) {
                         $relMetadata = $relationMetadataCollection->get($name);
@@ -221,6 +225,7 @@ final class Transformer implements TransformerInterface
             for ($i = 1; $i < $counter; ++$i) {
                 // Handle the subtract part - strip parentheses if present
                 $subtractExpr = trim($butNotParts[$i]);
+
                 if (str_starts_with($subtractExpr, '(') && str_ends_with($subtractExpr, ')')) {
                     $subtractExpr = substr($subtractExpr, 1, -1);
                 }
@@ -350,6 +355,7 @@ final class Transformer implements TransformerInterface
         // Handle direct type assignments: [user] or [user, organization#member]
         if (1 === preg_match('/^\[(.+)\]$/', $term, $m) && isset($m[1])) { /** @phpstan-ignore-line isset.offset */
             $types = array_map('trim', explode(',', $m[1]));
+
             foreach ($types as $type) {
                 if (1 === preg_match('/^(\w+)#(\w+)$/', $type, $tm) && isset($tm[1], $tm[2])) { /* @phpstan-ignore-line isset.offset */
                     // Userset type like "organization#member"
@@ -453,11 +459,13 @@ final class Transformer implements TransformerInterface
         }
 
         $directTypes = $metadata->getDirectlyRelatedUserTypes();
+
         if (! $directTypes instanceof RelationReferencesInterface || 0 === count($directTypes)) {
             return 'self';
         }
 
         $types = [];
+
         foreach ($directTypes as $directType) {
             $type = $directType->getType();
             $relation = $directType->getRelation();
@@ -484,8 +492,10 @@ final class Transformer implements TransformerInterface
     {
         // Handle union (or) operations
         $union = $userset->getUnion();
+
         if ($union instanceof UsersetsInterface) {
             $parts = [];
+
             foreach ($union as $child) {
                 $parts[] = self::renderExpression($child, $metadata);
             }
@@ -495,8 +505,10 @@ final class Transformer implements TransformerInterface
 
         // Handle intersection (and) operations
         $intersection = $userset->getIntersection();
+
         if ($intersection instanceof UsersetsInterface) {
             $parts = [];
+
             foreach ($intersection as $child) {
                 $parts[] = self::renderExpression($child, $metadata);
             }
@@ -506,12 +518,14 @@ final class Transformer implements TransformerInterface
 
         // Handle exclusion (but not) operations
         $difference = $userset->getDifference();
+
         if ($difference instanceof DifferenceV1Interface) {
             $base = self::renderExpression($difference->getBase(), $metadata);
             $subtract = self::renderExpression($difference->getSubtract(), $metadata);
 
             // Wrap subtract in parentheses if it's a union or intersection
             $subtractUserset = $difference->getSubtract();
+
             if ($subtractUserset->getUnion() instanceof UsersetsInterface || $subtractUserset->getIntersection() instanceof UsersetsInterface) {
                 $subtract = '(' . $subtract . ')';
             }
@@ -521,6 +535,7 @@ final class Transformer implements TransformerInterface
 
         // Handle tuple-to-userset (from) operations
         $tupleToUserset = $userset->getTupleToUserset();
+
         if ($tupleToUserset instanceof TupleToUsersetV1Interface) {
             $tupleset = $tupleToUserset->getTupleset();
             $computedUserset = $tupleToUserset->getComputedUserset();
@@ -533,6 +548,7 @@ final class Transformer implements TransformerInterface
 
         // Handle computed usersets
         $computedUserset = $userset->getComputedUserset();
+
         if ($computedUserset instanceof ObjectRelationInterface) {
             $object = $computedUserset->getObject();
             $relation = $computedUserset->getRelation();
@@ -606,6 +622,7 @@ final class Transformer implements TransformerInterface
             if (0 === $depth) {
                 // Look ahead to see if we have a match starting at current position
                 $remaining = substr($str, $i);
+
                 if (1 === preg_match($pattern, $remaining, $matches, PREG_OFFSET_CAPTURE) && isset($matches[0][0], $matches[0][1])) {
                     $matchStart = $matches[0][1];
                     $matchLength = strlen($matches[0][0]);

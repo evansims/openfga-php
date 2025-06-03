@@ -34,7 +34,19 @@ Lint your code:
 composer lint
 ```
 
+Lint and fix:
+
+```bash
+composer lint:fix
+```
+
 ## Tests
+
+Everything:
+
+```bash
+composer test
+```
 
 Unit tests:
 
@@ -59,13 +71,19 @@ composer test:contract
 Update the documentation:
 
 ```bash
-composer docs
+composer docs:api
 ```
 
 Update the wiki:
 
 ```bash
-composer wiki
+composer docs:wiki
 ```
 
 Note: You must have maintainer privileges to update the wiki.
+
+## Making a Release
+
+```bash
+composer release X.Y.Z
+```

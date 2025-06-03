@@ -112,6 +112,7 @@ describe('TupleChanges Collection', function (): void {
         $collection = new TupleChanges([$change1, $change2, $change3]);
 
         $operations = [];
+
         foreach ($collection as $change) {
             $operations[] = $change->getOperation()->value;
         }
@@ -216,6 +217,7 @@ describe('TupleChanges Collection', function (): void {
 
         // Filter WRITE operations
         $writes = [];
+
         foreach ($collection as $change) {
             if (TupleOperation::TUPLE_OPERATION_WRITE === $change->getOperation()) {
                 $writes[] = $change->getTupleKey()->getUser();
@@ -292,8 +294,10 @@ describe('TupleChanges Collection', function (): void {
 
         // Group by object
         $byObject = [];
+
         foreach ($collection as $change) {
             $object = $change->getTupleKey()->getObject();
+
             if (! isset($byObject[$object])) {
                 $byObject[$object] = [];
             }
@@ -339,6 +343,7 @@ describe('TupleChanges Collection', function (): void {
 
         // Verify chronological order
         $times = [];
+
         foreach ($collection as $change) {
             $times[] = $change->getTimestamp()->format('H:i');
         }
@@ -355,6 +360,7 @@ describe('TupleChanges Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $item) {
             ++$count;
         }

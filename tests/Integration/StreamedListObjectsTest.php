@@ -23,7 +23,7 @@ describe('StreamedListObjects Integration', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -35,6 +35,7 @@ describe('StreamedListObjects Integration', function (): void {
 
         // Create a temporary store for testing
         $storeResult = $this->client->createStore('integration-test-streamed-list-objects');
+
         if ($storeResult instanceof FailureInterface) {
             test()->markTestSkipped('Could not create test store: ' . $storeResult->err()->getMessage());
         }
@@ -90,6 +91,7 @@ describe('StreamedListObjects Integration', function (): void {
             model: $modelId,
             writes: $tuples,
         );
+
         if ($writeResult instanceof FailureInterface) {
             test()->fail('Failed to write tuples: ' . $writeResult->err()->getMessage());
         }
@@ -111,6 +113,7 @@ describe('StreamedListObjects Integration', function (): void {
         expect($streamGenerator)->toBeInstanceOf(Generator::class);
 
         $objects = [];
+
         foreach ($streamGenerator as $streamedResponse) {
             expect($streamedResponse)->toBeInstanceOf(StreamedListObjectsResponse::class);
             $objects[] = $streamedResponse->getObject();
@@ -199,6 +202,7 @@ describe('StreamedListObjects Integration', function (): void {
         $streamGenerator = $streamResult->unwrap();
 
         $objects = [];
+
         foreach ($streamGenerator as $streamedResponse) {
             $objects[] = $streamedResponse->getObject();
         }
@@ -271,6 +275,7 @@ describe('StreamedListObjects Integration', function (): void {
             $streamGenerator = $streamResult->unwrap();
 
             $objects = [];
+
             foreach ($streamGenerator as $streamedResponse) {
                 $objects[] = $streamedResponse->getObject();
             }
@@ -329,6 +334,7 @@ describe('StreamedListObjects Integration', function (): void {
         $streamGenerator = $streamResult->unwrap();
 
         $objects = [];
+
         foreach ($streamGenerator as $streamedResponse) {
             $objects[] = $streamedResponse->getObject();
         }
@@ -402,6 +408,7 @@ describe('StreamedListObjects Integration', function (): void {
         $streamGenerator = $streamResult->unwrap();
 
         $streamObjects = [];
+
         foreach ($streamGenerator as $streamedResponse) {
             $streamObjects[] = $streamedResponse->getObject();
         }
@@ -508,6 +515,7 @@ describe('StreamedListObjects Integration', function (): void {
 
         $streamObjects = [];
         $chunkCount = 0;
+
         foreach ($streamGenerator as $streamedResponse) {
             expect($streamedResponse)->toBeInstanceOf(StreamedListObjectsResponse::class);
             $streamObjects[] = $streamedResponse->getObject();
@@ -525,6 +533,7 @@ describe('StreamedListObjects Integration', function (): void {
 
         // Verify we got all the expected document IDs
         $expectedObjects = [];
+
         for ($i = 0; $i < $numDocuments; $i++) {
             $expectedObjects[] = "document:large-test-{$i}";
         }
@@ -542,6 +551,7 @@ describe('StreamedListObjects Integration', function (): void {
 
         // Clean up - delete in batches
         echo "Cleaning up {$numDocuments} tuples in batches...\n";
+
         for ($batch = 0; $batch < ceil($numDocuments / $batchSize); $batch++) {
             $batchTuples = [];
             $startDoc = $batch * $batchSize;

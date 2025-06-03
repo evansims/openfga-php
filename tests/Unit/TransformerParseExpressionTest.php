@@ -53,6 +53,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -90,6 +91,7 @@ describe('TransformerParseExpression', function (): void {
         expect($viewerDirectTypes->count())->toBe(2);
 
         $types = [];
+
         foreach ($viewerDirectTypes as $type) {
             $types[] = [
                 'type' => $type->getType(),
@@ -101,6 +103,7 @@ describe('TransformerParseExpression', function (): void {
         expect($types)->toHaveCount(2);
 
         $hasUserType = false;
+
         foreach ($types as $type) {
             if ('user' === $type['type']) {
                 $hasUserType = true;
@@ -128,6 +131,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -169,6 +173,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -212,6 +217,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -252,6 +258,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -299,6 +306,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -344,6 +352,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -391,6 +400,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -406,6 +416,7 @@ describe('TransformerParseExpression', function (): void {
         expect($complexRelation->getUnion()->count())->toBe(2);
 
         $unionChildren = [];
+
         foreach ($complexRelation->getUnion() as $child) {
             $unionChildren[] = $child;
         }
@@ -417,6 +428,7 @@ describe('TransformerParseExpression', function (): void {
         expect($unionChildren[1]->getIntersection()->count())->toBe(2);
 
         $intersectionChildren = [];
+
         foreach ($unionChildren[1]->getIntersection() as $child) {
             $intersectionChildren[] = $child;
         }
@@ -449,6 +461,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -485,6 +498,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -521,6 +535,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $emptyType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('emptyType' === $td->getType()) {
                 $emptyType = $td;
@@ -555,6 +570,7 @@ describe('TransformerParseExpression', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -581,6 +597,7 @@ describe('TransformerParseExpression', function (): void {
         expect($directTypes->count())->toBe(2);
 
         $typeNames = [];
+
         foreach ($directTypes as $type) {
             $typeNames[] = $type->getType();
         }

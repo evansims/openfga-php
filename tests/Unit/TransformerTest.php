@@ -110,6 +110,7 @@ describe('Transformer', function (): void {
         expect($typeDefinitions->count())->toBe(2);
 
         $documentType = null;
+
         foreach ($typeDefinitions as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -247,6 +248,7 @@ describe('Transformer', function (): void {
         expect($typeDefinitions->count())->toBe(2);
 
         $documentType = null;
+
         foreach ($typeDefinitions as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -275,6 +277,7 @@ describe('Transformer', function (): void {
 
         // Verify that all three relations are present in the union
         $relationNames = [];
+
         foreach ($unionChildren as $child) {
             if ($child->getComputedUserset()) {
                 $relationNames[] = $child->getComputedUserset()->getRelation();

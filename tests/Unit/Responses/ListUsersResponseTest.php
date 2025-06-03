@@ -117,6 +117,7 @@ describe('ListUsersResponse', function (): void {
 
     test('handles large user collections', function (): void {
         $users = [];
+
         for ($i = 0; 100 > $i; ++$i) {
             $object = (object) ['id' => "user:user{$i}"];
             $users[] = new User(object: $object);

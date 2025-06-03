@@ -396,6 +396,134 @@ describe('Client', function (): void {
         expect($result)->toBeInstanceOf(ResultInterface::class);
     });
 
+    test('Client writeTuples throws exception when transactional limit exceeded', function (): void {
+        $client = new Client('https://api.example.com');
+
+        // Create 101 tuples to exceed the limit
+        $tuples = [];
+
+        for ($i = 1; 101 >= $i; $i++) {
+            $tuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme');
+        }
+        $writes = new TupleKeys($tuples);
+
+        $result = $client->writeTuples('store-123', 'model-456', $writes, null, true);
+
+        expect($result)->toBeInstanceOf(Failure::class);
+        expect($result->err())->toBeInstanceOf(ClientException::class);
+        expect($result->err()->getMessage())->toContain('Transactional writeTuples exceeded limit: 101 operations (max 100)');
+        expect($result->err()->getMessage())->toContain('Use non-transactional mode or split into multiple requests');
+    });
+
+    test('Client writeTuples allows 100 operations in transactional mode', function (): void {
+        $client = new Client('https://api.example.com');
+
+        // Create exactly 100 tuples (at the limit)
+        $tuples = [];
+
+        for ($i = 1; 100 >= $i; $i++) {
+            $tuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme');
+        }
+        $writes = new TupleKeys($tuples);
+
+        $result = $client->writeTuples('store-123', 'model-456', $writes, null, true);
+
+        // Should succeed (not throw exception)
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client writeTuples allows unlimited operations in non-transactional mode', function (): void {
+        $client = new Client('https://api.example.com');
+
+        // Create 200 tuples to test non-transactional mode
+        $tuples = [];
+
+        for ($i = 1; 200 >= $i; $i++) {
+            $tuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme');
+        }
+        $writes = new TupleKeys($tuples);
+
+        $result = $client->writeTuples('store-123', 'model-456', $writes, null, false);
+
+        // Should succeed in non-transactional mode
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client writeTuples counts writes and deletes for transactional limit', function (): void {
+        $client = new Client('https://api.example.com');
+
+        // Create 60 writes and 41 deletes (101 total operations)
+        $writetuples = [];
+
+        for ($i = 1; 60 >= $i; $i++) {
+            $writetuples[] = new TupleKey("user:writer{$i}", 'viewer', 'document:readme');
+        }
+        $writes = new TupleKeys($writetuples);
+
+        $deletetuples = [];
+
+        for ($i = 1; 41 >= $i; $i++) {
+            $deletetuples[] = new TupleKey("user:deleter{$i}", 'viewer', 'document:readme');
+        }
+        $deletes = new TupleKeys($deletetuples);
+
+        $result = $client->writeTuples('store-123', 'model-456', $writes, $deletes, true);
+
+        expect($result)->toBeInstanceOf(Failure::class);
+        expect($result->err())->toBeInstanceOf(ClientException::class);
+        expect($result->err()->getMessage())->toContain('101 operations');
+    });
+
+    test('Client writeTuples validates limit after deduplication', function (): void {
+        $client = new Client('https://api.example.com');
+
+        // Create 120 duplicates that will deduplicate to exactly 100 unique operations
+        $writetuples = [];
+
+        for ($i = 1; 100 >= $i; $i++) {
+            // Add each tuple twice to create duplicates
+            $writetuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme');
+            $writetuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme'); // duplicate
+
+            // Add 20 extra duplicates to ensure we have > 100 raw tuples
+            if (20 >= $i) {
+                $writetuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme'); // another duplicate
+            }
+        }
+        $writes = new TupleKeys($writetuples); // 220 total tuples, but only 100 unique
+
+        // Should succeed because after deduplication, there are exactly 100 operations
+        $result = $client->writeTuples('store-123', 'model-456', $writes, null, true);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
+    test('Client writeTuples validates limit with duplicate writes and deletes', function (): void {
+        $client = new Client('https://api.example.com');
+
+        // Create duplicates and overlapping writes/deletes
+        $writetuples = [];
+        $deletetuples = [];
+
+        // Add 60 unique writes
+        for ($i = 1; 60 >= $i; $i++) {
+            $writetuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme');
+        }
+
+        // Add 50 deletes, with 10 overlapping with writes (deletes take precedence)
+        for ($i = 51; 100 >= $i; $i++) {
+            $deletetuples[] = new TupleKey("user:user{$i}", 'viewer', 'document:readme');
+        }
+
+        $writes = new TupleKeys($writetuples);
+        $deletes = new TupleKeys($deletetuples);
+
+        // After deduplication: 50 writes (60 - 10 overlaps) + 50 deletes = 100 operations
+        $result = $client->writeTuples('store-123', 'model-456', $writes, $deletes, true);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
+    });
+
     test('Client createAuthorizationModel returns Result interface', function (): void {
         $client = new Client('https://api.example.com');
 

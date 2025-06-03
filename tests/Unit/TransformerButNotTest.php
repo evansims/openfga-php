@@ -54,6 +54,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -87,6 +88,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -120,6 +122,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -153,6 +156,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -186,6 +190,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -220,6 +225,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -263,6 +269,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -306,6 +313,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -369,6 +377,7 @@ describe('TransformerButNot', function (): void {
         $model = Transformer::fromDsl($dsl, $this->validator);
 
         $documentType = null;
+
         foreach ($model->getTypeDefinitions() as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;
@@ -386,6 +395,7 @@ describe('TransformerButNot', function (): void {
 
         // Second child should be a difference
         $unionChildren = [];
+
         foreach ($viewerRelation->getUnion() as $child) {
             $unionChildren[] = $child;
         }

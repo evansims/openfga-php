@@ -203,6 +203,7 @@ describe('WriteAssertionsRequest', function (): void {
 
     test('preserves assertion order', function (): void {
         $assertions = new Assertions;
+
         for ($i = 1; 5 >= $i; ++$i) {
             $assertions->add(new Assertion(
                 tupleKey: new AssertionTupleKey("user:user{$i}", 'viewer', "doc:{$i}"),
@@ -228,6 +229,7 @@ describe('WriteAssertionsRequest', function (): void {
         $request->getRequest($this->streamFactory);
 
         expect($capturedBody['assertions'])->toHaveCount(5);
+
         for ($i = 0; 5 > $i; ++$i) {
             $num = $i + 1;
             expect($capturedBody['assertions'][$i]['tuple_key']['user'])->toBe("user:user{$num}");

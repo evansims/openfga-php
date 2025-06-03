@@ -75,6 +75,7 @@ final class BatchCheckItem implements BatchCheckItemInterface
         }
 
         $tupleKeyData = $data['tuple_key'];
+
         if (! is_string($tupleKeyData['user'] ?? null)
             || ! is_string($tupleKeyData['relation'] ?? null)
             || ! is_string($tupleKeyData['object'] ?? null)) {
@@ -82,6 +83,7 @@ final class BatchCheckItem implements BatchCheckItemInterface
         }
 
         $condition = null;
+
         if (isset($tupleKeyData['condition']) && $tupleKeyData['condition'] instanceof ConditionInterface) {
             $condition = $tupleKeyData['condition'];
         }
@@ -109,11 +111,13 @@ final class BatchCheckItem implements BatchCheckItemInterface
         $correlationId = $data['correlation_id'];
 
         $contextualTuples = null;
+
         if (isset($data['contextual_tuples']) && is_array($data['contextual_tuples'])) {
             $tuples = new TupleKeys;
 
             // Handle both serialized format (with 'tuple_keys' wrapper) and direct array format
             $tuplesArray = $data['contextual_tuples'];
+
             if (isset($tuplesArray['tuple_keys']) && is_array($tuplesArray['tuple_keys'])) {
                 $tuplesArray = $tuplesArray['tuple_keys'];
             }
@@ -126,6 +130,7 @@ final class BatchCheckItem implements BatchCheckItemInterface
                     && is_string($tupleArray['object'] ?? null)) {
                     /** @var array<string, mixed> $tupleArray */
                     $tupleCondition = null;
+
                     if (isset($tupleArray['condition']) && $tupleArray['condition'] instanceof ConditionInterface) {
                         $tupleCondition = $tupleArray['condition'];
                     }
@@ -151,6 +156,7 @@ final class BatchCheckItem implements BatchCheckItemInterface
         }
 
         $context = null;
+
         if (isset($data['context']) && is_object($data['context'])) {
             $context = $data['context'];
         }

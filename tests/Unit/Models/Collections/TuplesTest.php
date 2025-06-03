@@ -108,6 +108,7 @@ describe('Tuples Collection', function (): void {
         $collection = new Tuples([$tuple1, $tuple2, $tuple3]);
 
         $relations = [];
+
         foreach ($collection as $tuple) {
             $relations[] = $tuple->getKey()->getRelation();
         }
@@ -205,6 +206,7 @@ describe('Tuples Collection', function (): void {
 
         // Filter tuples for user:alice
         $aliceTuples = [];
+
         foreach ($collection as $tuple) {
             if ('user:alice' === $tuple->getKey()->getUser()) {
                 $aliceTuples[] = $tuple->getKey()->getObject();
@@ -225,8 +227,10 @@ describe('Tuples Collection', function (): void {
 
         // Group by relation
         $byRelation = [];
+
         foreach ($collection as $tuple) {
             $relation = $tuple->getKey()->getRelation();
+
             if (! isset($byRelation[$relation])) {
                 $byRelation[$relation] = [];
             }
@@ -271,6 +275,7 @@ describe('Tuples Collection', function (): void {
 
         // Find conditional tuples
         $conditionalTuples = [];
+
         foreach ($collection as $tuple) {
             if (null !== $tuple->getKey()->getCondition()) {
                 $conditionalTuples[] = [
@@ -319,6 +324,7 @@ describe('Tuples Collection', function (): void {
 
         // Count permission levels
         $permissionCounts = ['owner' => 0, 'editor' => 0, 'viewer' => 0];
+
         foreach ($collection as $tuple) {
             $relation = $tuple->getKey()->getRelation();
             ++$permissionCounts[$relation];
@@ -340,6 +346,7 @@ describe('Tuples Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $_) {
             ++$count;
         }

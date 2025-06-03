@@ -18,7 +18,7 @@ describe('Assertions API', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -96,6 +96,7 @@ describe('Assertions API', function (): void {
         expect($readResult->getModel())->toBe($this->modelId);
 
         $readAssertions = [];
+
         foreach ($readResult->getAssertions() as $assertion) {
             $key = $assertion->getTupleKey();
             $readAssertions[] = [
@@ -208,6 +209,7 @@ describe('Assertions API', function (): void {
         expect($readResult->getAssertions()->count())->toBe(3);
 
         $foundAssertions = [];
+
         foreach ($readResult->getAssertions() as $assertion) {
             $key = $assertion->getTupleKey();
             $contextualTuples = $assertion->getContextualTuples();

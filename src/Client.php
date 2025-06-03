@@ -11,22 +11,26 @@ use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthenticat
 use OpenFGA\Exceptions\{ClientError, ConfigurationError, NetworkException};
 use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, StoreInterface, TupleKeyInterface, TupleToUsersetV1, TypeDefinition, Userset};
-use OpenFGA\Models\Collections\{AssertionsInterface, Conditions, ConditionsInterface, RelationMetadataCollection, RelationReferences, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
+use OpenFGA\Models\Collections\{AssertionsInterface, Conditions, ConditionsInterface, RelationMetadataCollection, RelationReferences, TupleKeys, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
 use OpenFGA\Models\Collections\BatchCheckItemsInterface;
+use OpenFGA\Models\ConditionInterface;
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
-use OpenFGA\Network\{RequestContext, RequestManager};
+use OpenFGA\Network\{BatchRequestProcessor, RequestContext, RequestManager, RequestManagerFactory};
 use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryInterface};
 use OpenFGA\Requests\{BatchCheckRequest, CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, StreamedListObjectsRequest, WriteAssertionsRequest, WriteTuplesRequest};
-use OpenFGA\Responses\{BatchCheckResponse, CheckResponse, CreateAuthorizationModelResponse, CreateStoreResponse, DeleteStoreResponse, ExpandResponse, GetAuthorizationModelResponse, GetStoreResponse, ListAuthorizationModelsResponse, ListObjectsResponse, ListStoresResponse, ListTupleChangesResponse, ListUsersResponse, ReadAssertionsResponse, ReadTuplesResponse, StreamedListObjectsResponse, WriteAssertionsResponse, WriteTuplesResponse};
+use OpenFGA\Responses\{BatchCheckResponse, CheckResponse, CreateAuthorizationModelResponse, CreateStoreResponse, DeleteStoreResponse, ExpandResponse, GetAuthorizationModelResponse, GetStoreResponse, ListAuthorizationModelsResponse, ListObjectsResponse, ListStoresResponse, ListTupleChangesResponse, ListUsersResponse, ReadAssertionsResponse, ReadTuplesResponse, StreamedListObjectsResponse, WriteAssertionsResponse};
 use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
 use OpenFGA\Schema\SchemaValidator;
 use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as HttpRequestInterface, ResponseFactoryInterface, ResponseInterface as HttpResponseInterface, StreamFactoryInterface};
+use Psr\Http\Message\{ResponseInterface, StreamInterface};
 use PsrDiscovery\Discover;
 use ReflectionException;
 use Throwable;
+
+use function sprintf;
 
 /**
  * OpenFGA Client implementation for relationship-based access control operations.
@@ -697,21 +701,76 @@ final class Client implements ClientInterface
         AuthorizationModelInterface | string $model,
         ?TupleKeysInterface $writes = null,
         ?TupleKeysInterface $deletes = null,
+        bool $transactional = true,
+        int $maxParallelRequests = 1,
+        int $maxTuplesPerChunk = 100,
+        int $maxRetries = 0,
+        float $retryDelaySeconds = 1.0,
+        bool $stopOnFirstError = false,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(function () use ($store, $model, $writes, $deletes) {
-            try {
-                $request = new WriteTuplesRequest(
-                    writes: $writes,
-                    deletes: $deletes,
-                    store: self::getStoreId($store),
-                    model: self::getModelId($model),
-                );
+        return $this->withLanguageContext(
+            function () use ($store, $model, $writes, $deletes, $transactional, $maxParallelRequests, $maxTuplesPerChunk, $maxRetries, $retryDelaySeconds, $stopOnFirstError) {
+                try {
+                    // Filter duplicates intelligently
+                    [$filteredWrites, $filteredDeletes] = $this->filterDuplicateTuples($writes, $deletes);
 
-                return new Success(WriteTuplesResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
-        });
+                    // Validate transactional limit (100 operations max)
+                    if ($transactional) {
+                        $writeCount = $filteredWrites?->count() ?? 0;
+                        $deleteCount = $filteredDeletes?->count() ?? 0;
+                        $totalOperations = $writeCount + $deleteCount;
+
+                        if (100 < $totalOperations) {
+                            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED, ['count' => $totalOperations, ], $this->language)]);
+                        }
+                    }
+
+                    $request = new WriteTuplesRequest(
+                        store: self::getStoreId($store),
+                        model: self::getModelId($model),
+                        writes: $filteredWrites,
+                        deletes: $filteredDeletes,
+                        transactional: $transactional,
+                        maxParallelRequests: $maxParallelRequests,
+                        maxTuplesPerChunk: $maxTuplesPerChunk,
+                        maxRetries: $maxRetries,
+                        retryDelaySeconds: $retryDelaySeconds,
+                        stopOnFirstError: $stopOnFirstError,
+                    );
+
+                    // Create the request manager factory
+                    $requestManagerFactory = new RequestManagerFactory(
+                        url: $this->url,
+                        authorizationHeader: $this->getAuthenticationHeader(),
+                        httpClient: $this->httpClient,
+                        httpStreamFactory: $this->httpStreamFactory,
+                        httpRequestFactory: $this->httpRequestFactory,
+                        httpResponseFactory: $this->httpResponseFactory,
+                        telemetry: $this->telemetry,
+                    );
+
+                    // Process the request using the BatchRequestProcessor
+                    $processor = new BatchRequestProcessor($requestManagerFactory);
+                    $result = $processor->process($request);
+
+                    // Update last request/response from the processor
+                    if ($processor->getLastRequest() instanceof HttpRequestInterface) {
+                        $this->lastRequest = $processor->getLastRequest();
+                    }
+
+                    if ($processor->getLastResponse() instanceof ResponseInterface) {
+                        $this->lastResponse = $processor->getLastResponse();
+                    }
+
+                    return $result;
+                } catch (Throwable $throwable) {
+                    return new Failure($throwable);
+                }
+            },
+            'writeTuples',
+            $store,
+            $model,
+        );
     }
 
     /**
@@ -753,6 +812,93 @@ final class Client implements ClientInterface
     }
 
     /**
+     * Filter duplicate tuples from writes and deletes collections.
+     *
+     * This method ensures that:
+     * 1. No duplicate tuples exist within the writes collection
+     * 2. No duplicate tuples exist within the deletes collection
+     * 3. If a tuple appears in both writes and deletes, it's removed from writes
+     *    (delete takes precedence to ensure the final state is deletion)
+     *
+     * @param  TupleKeysInterface<TupleKeyInterface>|null                                                          $writes  The writes to filter
+     * @param  TupleKeysInterface<TupleKeyInterface>|null                                                          $deletes The deletes to filter
+     * @return array{0: TupleKeysInterface<TupleKeyInterface>|null, 1: TupleKeysInterface<TupleKeyInterface>|null} Filtered writes and deletes
+     */
+    private function filterDuplicateTuples(
+        ?TupleKeysInterface $writes,
+        ?TupleKeysInterface $deletes,
+    ): array {
+        // If both are null or empty, return as-is
+        if ((! $writes instanceof TupleKeysInterface || 0 === $writes->count()) && (! $deletes instanceof TupleKeysInterface || 0 === $deletes->count())) {
+            return [$writes, $deletes];
+        }
+
+        // Create unique key function for tuples
+        $getTupleKey = static function (TupleKeyInterface $tuple): string {
+            $condition = $tuple->getCondition();
+
+            return sprintf(
+                '%s#%s@%s%s',
+                $tuple->getUser() ?? '',
+                $tuple->getRelation() ?? '',
+                $tuple->getObject() ?? '',
+                $condition instanceof ConditionInterface ? '#' . spl_object_hash($condition) : '',
+            );
+        };
+
+        // Filter writes to remove duplicates
+        $uniqueWrites = [];
+        $writeKeys = [];
+
+        if ($writes instanceof TupleKeysInterface && 0 < $writes->count()) {
+            foreach ($writes as $write) {
+                $key = $getTupleKey($write);
+
+                if (! isset($writeKeys[$key])) {
+                    $writeKeys[$key] = true;
+                    $uniqueWrites[] = $write;
+                }
+            }
+        }
+
+        // Filter deletes to remove duplicates
+        $uniqueDeletes = [];
+        $deleteKeys = [];
+
+        if ($deletes instanceof TupleKeysInterface && 0 < $deletes->count()) {
+            foreach ($deletes as $delete) {
+                $key = $getTupleKey($delete);
+
+                if (! isset($deleteKeys[$key])) {
+                    $deleteKeys[$key] = true;
+                    $uniqueDeletes[] = $delete;
+                }
+            }
+        }
+
+        // Remove from writes any tuples that also appear in deletes
+        // (delete takes precedence)
+        if ([] !== $uniqueWrites && [] !== $deleteKeys) {
+            $finalWrites = [];
+
+            foreach ($uniqueWrites as $uniqueWrite) {
+                $key = $getTupleKey($uniqueWrite);
+
+                if (! isset($deleteKeys[$key])) {
+                    $finalWrites[] = $uniqueWrite;
+                }
+            }
+            $uniqueWrites = $finalWrites;
+        }
+
+        // Return filtered collections
+        return [
+            [] !== $uniqueWrites ? new TupleKeys($uniqueWrites) : null,
+            [] !== $uniqueDeletes ? new TupleKeys($uniqueDeletes) : null,
+        ];
+    }
+
+    /**
      * Return the authentication header string.
      *
      * Delegates to the configured authentication strategy to get the
@@ -770,30 +916,24 @@ final class Client implements ClientInterface
         }
 
         $authentication = $this->authentication;
+
+        // Try to get cached header first
         $header = $authentication->getAuthorizationHeader();
+
         if (null !== $header) {
             return $header;
         }
 
+        // Build authentication request
         $authRequest = $authentication->getAuthenticationRequest($this->getStreamFactory());
+
         if (! $authRequest instanceof RequestContext) {
             return null;
         }
 
         try {
-            $authWrapper = new class($authRequest) implements RequestInterface {
-                public function __construct(private readonly RequestContext $context)
-                {
-                }
-
-                #[Override]
-                public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
-                {
-                    return $this->context;
-                }
-            };
-
-            $response = $this->sendAuthenticationRequest($authWrapper);
+            // Send authentication request and handle response
+            $response = $this->sendAuthenticationRequestContext($authRequest);
 
             if ($authentication instanceof ClientCredentialAuthentication) {
                 $authentication->handleAuthenticationResponse($response);
@@ -801,6 +941,7 @@ final class Client implements ClientInterface
                 return $authentication->getAuthorizationHeader();
             }
         } catch (Throwable) {
+            // Silently fail authentication attempts
             return null;
         }
 
@@ -856,16 +997,19 @@ final class Client implements ClientInterface
     }
 
     /**
-     * Send an authentication request without authorization header.
+     * Send an authentication request using a pre-built RequestContext.
      *
-     * @param RequestInterface $request
+     * @param RequestContext $context The authentication request context
      *
-     * @throws ClientThrowable          If request conversion or sending fails
-     * @throws InvalidArgumentException If request parameters are invalid
-     * @throws JsonException            If request data serialization fails
-     * @throws ReflectionException      If exception creation fails
+     * @throws ClientThrowable          If client initialization fails
+     * @throws InvalidArgumentException If the request factory fails
+     * @throws NetworkException         If the request fails
+     * @throws ReflectionException      If reflection fails
+     * @throws Throwable                If an unexpected error occurs
+     *
+     * @return HttpResponseInterface The authentication response
      */
-    private function sendAuthenticationRequest(RequestInterface $request): HttpResponseInterface
+    private function sendAuthenticationRequestContext(RequestContext $context): HttpResponseInterface
     {
         $httpMaxRetries = max(1, min($this->httpMaxRetries ?? 3, 10));
 
@@ -877,9 +1021,24 @@ final class Client implements ClientInterface
             httpStreamFactory: $this->httpStreamFactory,
             httpRequestFactory: $this->httpRequestFactory,
             httpResponseFactory: $this->httpResponseFactory,
+            telemetry: $this->telemetry,
         );
 
-        $httpRequest = $requestManager->request($request);
+        // Build the HTTP request from the context
+        $httpRequest = $requestManager->getHttpRequestFactory()->createRequest(
+            $context->getMethod()->value,
+            $context->useApiUrl() ? $this->url . $context->getUrl() : $context->getUrl(),
+        );
+
+        // Add headers
+        foreach ($context->getHeaders() as $name => $value) {
+            $httpRequest = $httpRequest->withHeader($name, $value);
+        }
+
+        // Add body if present
+        if ($context->getBody() instanceof StreamInterface) {
+            $httpRequest = $httpRequest->withBody($context->getBody());
+        }
 
         return $requestManager->send($httpRequest);
     }

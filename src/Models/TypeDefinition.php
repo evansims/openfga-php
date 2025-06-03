@@ -93,6 +93,7 @@ final class TypeDefinition implements TypeDefinitionInterface
 
         // Always include relations (even if empty)
         $relations = $this->relations;
+
         if ($relations instanceof TypeDefinitionRelationsInterface && 0 < $relations->count()) {
             $data['relations'] = $relations->jsonSerialize();
         } else {

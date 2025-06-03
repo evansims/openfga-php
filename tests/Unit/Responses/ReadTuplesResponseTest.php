@@ -97,6 +97,7 @@ describe('ReadTuplesResponse', function (): void {
         expect($response->getTuples()->count())->toBe(1);
 
         $tupleArray = [];
+
         foreach ($response->getTuples() as $t) {
             $tupleArray[] = $t;
         }
@@ -155,6 +156,7 @@ describe('ReadTuplesResponse', function (): void {
         expect($response->getTuples()->count())->toBe(2);
 
         $tupleArray = [];
+
         foreach ($response->getTuples() as $t) {
             $tupleArray[] = $t;
         }

@@ -178,6 +178,7 @@ describe('TypeName enum', function (): void {
                 if ($typeName->isCollection()) {
                     expect($typeName->isNumeric())->toBeFalse();
                 }
+
                 if ($typeName->isNumeric()) {
                     expect($typeName->isCollection())->toBeFalse();
                 }
@@ -189,6 +190,7 @@ describe('TypeName enum', function (): void {
                 if ($typeName->isNumeric()) {
                     expect($typeName->isTemporal())->toBeFalse();
                 }
+
                 if ($typeName->isTemporal()) {
                     expect($typeName->isNumeric())->toBeFalse();
                 }
@@ -200,6 +202,7 @@ describe('TypeName enum', function (): void {
                 if ($typeName->isCollection()) {
                     expect($typeName->isTemporal())->toBeFalse();
                 }
+
                 if ($typeName->isTemporal()) {
                     expect($typeName->isCollection())->toBeFalse();
                 }

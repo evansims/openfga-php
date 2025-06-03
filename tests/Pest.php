@@ -30,3 +30,29 @@ function trans(Messages $message, array $parameters = [], ?string $locale = null
 {
     return Translator::trans($message, $parameters, $locale);
 }
+
+/**
+ * Helper function to get the OpenFGA API URL for tests.
+ *
+ * Uses the FGA_API_URL environment variable if set (assigned by docker-compose),
+ * otherwise falls back to a local URL that works for local OpenFGA instances.
+ *
+ * @return string The OpenFGA API URL
+ */
+function getOpenFgaUrl(): string
+{
+    return getenv('FGA_API_URL') ?: 'http://127.0.0.1:8080';
+}
+
+/**
+ * Helper function to get the OpenTelemetry Collector URL for tests.
+ *
+ * Uses the OTEL_COLLECTOR_URL environment variable if set (assigned by docker-compose),
+ * otherwise falls back to a local URL that works for local OpenTelemetry Collector instances.
+ *
+ * @return string The OpenTelemetry Collector metrics URL
+ */
+function getOtelCollectorUrl(): string
+{
+    return getenv('OTEL_COLLECTOR_URL') ?: 'http://127.0.0.1:8889';
+}

@@ -40,6 +40,7 @@ describe('StreamedListObjectsResponse', function (): void {
         expect($generator)->toBeInstanceOf(Generator::class);
 
         $results = [];
+
         foreach ($generator as $streamedResponse) {
             expect($streamedResponse)->toBeInstanceOf(StreamedListObjectsResponse::class);
             $results[] = $streamedResponse->getObject();
@@ -72,6 +73,7 @@ describe('StreamedListObjectsResponse', function (): void {
         $generator = StreamedListObjectsResponse::fromResponse($response, $request, $validator);
 
         $results = [];
+
         foreach ($generator as $streamedResponse) {
             $results[] = $streamedResponse->getObject();
         }
@@ -127,6 +129,7 @@ describe('StreamedListObjectsResponse', function (): void {
         $generator = StreamedListObjectsResponse::fromResponse($response, $request, $validator);
 
         $results = [];
+
         foreach ($generator as $streamedResponse) {
             $results[] = $streamedResponse->getObject();
         }
@@ -184,6 +187,7 @@ describe('StreamedListObjectsResponse', function (): void {
         $generator = StreamedListObjectsResponse::fromResponse($response, $request, $validator);
 
         $results = [];
+
         foreach ($generator as $streamedResponse) {
             $results[] = $streamedResponse->getObject();
         }
@@ -203,6 +207,7 @@ describe('StreamedListObjectsResponse', function (): void {
         $generator = StreamedListObjectsResponse::fromResponse($response, $request, $validator);
 
         $results = [];
+
         foreach ($generator as $streamedResponse) {
             $results[] = $streamedResponse->getObject();
         }

@@ -29,7 +29,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
 
     // Create OpenFGA client with OpenTelemetry instrumentation
     $client = new Client(
-        url: $_ENV['OPENFGA_API_URL'] ?? 'http://openfga:8080',
+        url: getOpenFgaUrl(),
         telemetry: TelemetryFactory::create(
             serviceName: 'openfga-php-sdk-integration-test',
             serviceVersion: 'test',
@@ -42,6 +42,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
 
     // Create a store (this should generate telemetry)
     $storeResult = $client->createStore(name: 'observability-test-store');
+
     if (! $storeResult->succeeded()) {
         throw new Exception('Store creation failed: ' . $storeResult->err()->getMessage());
     }
@@ -110,12 +111,20 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
     sleep(2);
 
     // Verify telemetry was exported to the OpenTelemetry Collector
-    $collectorMetricsUrl = 'http://otel-collector:8889/metrics';
+    $collectorMetricsUrl = getOtelCollectorUrl() . '/metrics';
     $httpClient = new FileGetContents(new Psr17Factory);
     $httpFactory = new Psr17Factory;
 
-    $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
-    $response = $httpClient->sendRequest($request);
+    // Check if OpenTelemetry Collector is available
+    try {
+        $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
+        $response = $httpClient->sendRequest($request);
+    } catch (Exception $e) {
+        // Skip test if collector is not available (e.g., running locally)
+        test()->markTestSkipped('OpenTelemetry Collector not available: ' . $e->getMessage());
+
+        return;
+    }
 
     expect($response->getStatusCode())->toBe(200);
 
@@ -149,7 +158,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
 it('handles telemetry gracefully when OpenTelemetry is not configured', function (): void {
     // Test that the SDK works without OpenTelemetry configuration
     $client = new Client(
-        url: $_ENV['OPENFGA_API_URL'] ?? 'http://openfga:8080',
+        url: getOpenFgaUrl(),
         httpClient: new FileGetContents(new Psr17Factory),
         httpResponseFactory: new Psr17Factory,
         httpStreamFactory: new Psr17Factory,
@@ -171,7 +180,7 @@ it('handles telemetry gracefully when OpenTelemetry is not configured', function
 it('records authentication telemetry events', function (): void {
     // This test verifies that authentication events don't crash with telemetry enabled
     $client = new Client(
-        url: $_ENV['OPENFGA_API_URL'] ?? 'http://openfga:8080',
+        url: getOpenFgaUrl(),
         telemetry: TelemetryFactory::create(
             serviceName: 'openfga-php-sdk-auth-test',
             serviceVersion: 'test',
@@ -192,12 +201,20 @@ it('records authentication telemetry events', function (): void {
     sleep(1);
 
     // Check that authentication metrics were recorded
-    $collectorMetricsUrl = 'http://otel-collector:8889/metrics';
+    $collectorMetricsUrl = getOtelCollectorUrl() . '/metrics';
     $httpClient = new FileGetContents(new Psr17Factory);
     $httpFactory = new Psr17Factory;
 
-    $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
-    $response = $httpClient->sendRequest($request);
+    // Check if OpenTelemetry Collector is available
+    try {
+        $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
+        $response = $httpClient->sendRequest($request);
+    } catch (Exception $e) {
+        // Skip test if collector is not available (e.g., running locally)
+        test()->markTestSkipped('OpenTelemetry Collector not available: ' . $e->getMessage());
+
+        return;
+    }
 
     expect($response->getStatusCode())->toBe(200);
     $metricsBody = $response->getBody()->getContents();
@@ -214,7 +231,7 @@ it('records authentication telemetry events', function (): void {
 it('exports detailed span attributes for OpenFGA operations', function (): void {
     // This test verifies that operations complete successfully with telemetry enabled
     $client = new Client(
-        url: $_ENV['OPENFGA_API_URL'] ?? 'http://openfga:8080',
+        url: getOpenFgaUrl(),
         telemetry: TelemetryFactory::create(
             serviceName: 'openfga-php-sdk-spans-test',
             serviceVersion: 'test',
@@ -273,12 +290,20 @@ it('exports detailed span attributes for OpenFGA operations', function (): void 
     sleep(2);
 
     // Verify detailed metrics are present
-    $collectorMetricsUrl = 'http://otel-collector:8889/metrics';
+    $collectorMetricsUrl = getOtelCollectorUrl() . '/metrics';
     $httpClient = new FileGetContents(new Psr17Factory);
     $httpFactory = new Psr17Factory;
 
-    $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
-    $response = $httpClient->sendRequest($request);
+    // Check if OpenTelemetry Collector is available
+    try {
+        $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
+        $response = $httpClient->sendRequest($request);
+    } catch (Exception $e) {
+        // Skip test if collector is not available (e.g., running locally)
+        test()->markTestSkipped('OpenTelemetry Collector not available: ' . $e->getMessage());
+
+        return;
+    }
 
     expect($response->getStatusCode())->toBe(200);
     $metricsBody = $response->getBody()->getContents();

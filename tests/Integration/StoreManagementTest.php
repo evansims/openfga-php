@@ -14,7 +14,7 @@ describe('Store Management', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -60,6 +60,7 @@ describe('Store Management', function (): void {
 
         if (null === $list->getContinuationToken()) {
             $ids = [];
+
             foreach ($list->getStores() as $store) {
                 $ids[] = $store->getId();
             }

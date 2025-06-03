@@ -43,6 +43,27 @@ interface WriteTuplesRequestInterface extends RequestInterface
     public function getDeletes(): ?TupleKeysInterface;
 
     /**
+     * Get the maximum number of parallel requests for non-transactional mode.
+     *
+     * @return int Maximum parallel requests (1 for sequential processing)
+     */
+    public function getMaxParallelRequests(): int;
+
+    /**
+     * Get the maximum number of retries for failed chunks in non-transactional mode.
+     *
+     * @return int Maximum retry attempts
+     */
+    public function getMaxRetries(): int;
+
+    /**
+     * Get the maximum number of tuples per chunk for non-transactional mode.
+     *
+     * @return int Maximum tuples per chunk (up to 100)
+     */
+    public function getMaxTuplesPerChunk(): int;
+
+    /**
      * Get the authorization model ID to use for tuple validation.
      *
      * Specifies which version of the authorization model should be used to
@@ -53,6 +74,20 @@ interface WriteTuplesRequestInterface extends RequestInterface
      * @return string The authorization model ID for validating tuple operations
      */
     public function getModel(): string;
+
+    /**
+     * Get the retry delay in seconds for non-transactional mode.
+     *
+     * @return float Retry delay in seconds
+     */
+    public function getRetryDelaySeconds(): float;
+
+    /**
+     * Check if non-transactional processing should stop on first error.
+     *
+     * @return bool True to stop on first error, false to continue
+     */
+    public function getStopOnFirstError(): bool;
 
     /**
      * Get the store ID where tuples will be written.
@@ -76,4 +111,11 @@ interface WriteTuplesRequestInterface extends RequestInterface
      * @return TupleKeysInterface<TupleKeyInterface>|null Collection of relationship tuples to add, or null if no writes are requested
      */
     public function getWrites(): ?TupleKeysInterface;
+
+    /**
+     * Check if this request should be executed in transactional mode.
+     *
+     * @return bool True for transactional mode, false for non-transactional
+     */
+    public function isTransactional(): bool;
 }

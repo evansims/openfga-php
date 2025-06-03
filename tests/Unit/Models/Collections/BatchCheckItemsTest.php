@@ -11,7 +11,7 @@ use OpenFGA\Schema\CollectionSchemaInterface;
 use TypeError;
 
 use function count;
-use function OpenFGA\{batchCheckItem, batchCheckItems, tuple, tuples};
+use function OpenFGA\{tuple, tuples};
 
 it('creates an empty collection', function (): void {
     $collection = new BatchCheckItems;
@@ -22,8 +22,8 @@ it('creates an empty collection', function (): void {
 });
 
 it('creates a collection with items in constructor', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection = new BatchCheckItems([$item1, $item2]);
 
@@ -35,8 +35,8 @@ it('creates a collection with items in constructor', function (): void {
 
 it('adds items to collection', function (): void {
     $collection = new BatchCheckItems;
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection->add($item1);
     expect($collection->count())->toBe(1);
@@ -50,7 +50,7 @@ it('adds items to collection', function (): void {
 
 it('supports array access', function (): void {
     $collection = new BatchCheckItems;
-    $item = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
+    $item = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
 
     $collection[0] = $item;
     expect($collection[0])->toBe($item);
@@ -70,9 +70,9 @@ it('throws exception when adding invalid item type', function (): void {
 });
 
 it('filters items correctly', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'alice-reader');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'bob-writer');
-    $item3 = batchCheckItem('user:charlie', 'reader', 'document:plan', 'charlie-reader');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'alice-reader');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'bob-writer');
+    $item3 = new BatchCheckItem(tuple('user:charlie', 'reader', 'document:plan'), 'charlie-reader');
 
     $collection = new BatchCheckItems([$item1, $item2, $item3]);
 
@@ -87,8 +87,8 @@ it('filters items correctly', function (): void {
 });
 
 it('finds first item correctly', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'alice-reader');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'bob-writer');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'alice-reader');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'bob-writer');
 
     $collection = new BatchCheckItems([$item1, $item2]);
 
@@ -100,8 +100,8 @@ it('finds first item correctly', function (): void {
 });
 
 it('checks if some items match condition', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'alice-reader');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'bob-writer');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'alice-reader');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'bob-writer');
 
     $collection = new BatchCheckItems([$item1, $item2]);
 
@@ -115,8 +115,8 @@ it('checks if some items match condition', function (): void {
 });
 
 it('checks if every item matches condition', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'alice-reader');
-    $item2 = batchCheckItem('user:bob', 'reader', 'document:spec', 'bob-reader');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'alice-reader');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'reader', 'document:spec'), 'bob-reader');
 
     $collection = new BatchCheckItems([$item1, $item2]);
 
@@ -130,9 +130,9 @@ it('checks if every item matches condition', function (): void {
 });
 
 it('reduces items to a single value', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'alice-reader');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'bob-writer');
-    $item3 = batchCheckItem('user:charlie', 'admin', 'document:plan', 'charlie-admin');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'alice-reader');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'bob-writer');
+    $item3 = new BatchCheckItem(tuple('user:charlie', 'admin', 'document:plan'), 'charlie-admin');
 
     $collection = new BatchCheckItems([$item1, $item2, $item3]);
 
@@ -155,12 +155,13 @@ it('reduces items to a single value', function (): void {
 });
 
 it('is iterable', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection = new BatchCheckItems([$item1, $item2]);
 
     $iterations = 0;
+
     foreach ($collection as $index => $item) {
         expect($index)->toBe($iterations);
         expect($item)->toBeInstanceOf(BatchCheckItemInterface::class);
@@ -174,14 +175,14 @@ it('is countable', function (): void {
     $collection = new BatchCheckItems;
     expect(count($collection))->toBe(0);
 
-    $item = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
+    $item = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
     $collection->add($item);
     expect(count($collection))->toBe(1);
 });
 
 it('clears all items', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection = new BatchCheckItems([$item1, $item2]);
     expect($collection->count())->toBe(2);
@@ -192,8 +193,8 @@ it('clears all items', function (): void {
 });
 
 it('creates new collection with items', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection = new BatchCheckItems;
     $newCollection = $collection->withItems([$item1, $item2]);
@@ -205,8 +206,8 @@ it('creates new collection with items', function (): void {
 });
 
 it('serializes to JSON correctly', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection = new BatchCheckItems([$item1, $item2]);
     $json = $collection->jsonSerialize();
@@ -220,8 +221,8 @@ it('serializes to JSON correctly', function (): void {
 });
 
 it('converts to array correctly', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection = new BatchCheckItems([$item1, $item2]);
     $array = $collection->toArray();
@@ -244,8 +245,8 @@ it('has valid schema', function (): void {
 });
 
 it('gets item by index', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
     $collection = new BatchCheckItems([$item1, $item2]);
 
@@ -254,12 +255,12 @@ it('gets item by index', function (): void {
     expect($collection->get(2))->toBeNull(); // Out of bounds
 });
 
-it('works with helper function', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'id-1');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'id-2');
+it('works with direct constructor', function (): void {
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'id-1');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'id-2');
 
-    // Test helper function
-    $collection = batchCheckItems($item1, $item2);
+    // Test direct constructor
+    $collection = new BatchCheckItems([$item1, $item2]);
 
     expect($collection)->toBeInstanceOf(BatchCheckItems::class);
     expect($collection->count())->toBe(2);
@@ -268,8 +269,8 @@ it('works with helper function', function (): void {
 });
 
 it('validates correlation ID uniqueness within collection', function (): void {
-    $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'duplicate-id');
-    $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'duplicate-id');
+    $item1 = new BatchCheckItem(tuple('user:alice', 'reader', 'document:budget'), 'duplicate-id');
+    $item2 = new BatchCheckItem(tuple('user:bob', 'writer', 'document:spec'), 'duplicate-id');
 
     $collection = new BatchCheckItems;
     $collection->add($item1);

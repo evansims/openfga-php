@@ -101,6 +101,7 @@ describe('ListStoresResponse', function (): void {
 
         // Access stores by iteration
         $storeArray = [];
+
         foreach ($response->getStores() as $store) {
             $storeArray[] = $store;
         }
@@ -158,6 +159,7 @@ describe('ListStoresResponse', function (): void {
         expect($response->getStores()->count())->toBe(1);
 
         $storeArray = [];
+
         foreach ($response->getStores() as $store) {
             $storeArray[] = $store;
         }

@@ -72,6 +72,7 @@ final class Assertion implements AssertionInterface
 
             // Handle wrapped format (with tuple_keys key) or direct array
             $tuplesArray = $data['contextual_tuples'];
+
             if (isset($tuplesArray['tuple_keys']) && is_array($tuplesArray['tuple_keys'])) {
                 $tuplesArray = $tuplesArray['tuple_keys'];
             }
@@ -110,6 +111,7 @@ final class Assertion implements AssertionInterface
 
         // Handle tuple_key - it might be an array that needs to be converted
         $tupleKey = $data['tuple_key'];
+
         if (is_array($tupleKey) && isset($tupleKey['user'], $tupleKey['relation'], $tupleKey['object'])) {
             $tupleKey = new AssertionTupleKey(
                 user: $tupleKey['user'],
@@ -216,6 +218,7 @@ final class Assertion implements AssertionInterface
 
         if ($this->contextualTuples instanceof TupleKeysInterface) {
             $serialized = $this->contextualTuples->jsonSerialize();
+
             if (isset($serialized['tuple_keys']) && is_array($serialized['tuple_keys'])) {
                 $data['contextual_tuples'] = $serialized['tuple_keys'];
             }

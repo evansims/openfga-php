@@ -34,7 +34,7 @@ return (new PhpCsFixer\Config())
         'blank_line_after_namespace' => true,
         'blank_line_after_opening_tag' => true,
         'blank_line_before_statement' => [
-            'statements' => ['break', 'case', 'continue', 'declare', 'default', 'exit', 'goto', 'include', 'include_once', 'phpdoc', 'require', 'require_once', 'return', 'switch', 'throw', 'try', 'yield', 'yield_from'],
+            'statements' => ['break', 'case', 'continue', 'declare', 'default', 'do', 'exit', 'for', 'foreach', 'goto', 'if', 'include', 'include_once', 'phpdoc', 'require', 'require_once', 'return', 'switch', 'throw', 'try', 'while', 'yield', 'yield_from'],
         ],
         'blank_line_between_import_groups' => true,
         'no_blank_lines_after_class_opening' => true,
@@ -357,11 +357,6 @@ return (new PhpCsFixer\Config())
         'ordered_interfaces' => ['direction' => 'ascend', 'order' => 'alpha'],
         'ordered_traits' => true,
         'php_unit_fqcn_annotation' => true,
-
-        // Remove deprecated/conflicting rules that were in original config
-        // 'braces' => replaced with 'braces_position'
-        // 'curly_braces_position' => replaced with 'braces_position'
-        // Removed duplicate 'return_type_declaration'
 
         // Additional alignment with other tools
         'final_class' => true, // Aligns with Rector's privatization rules

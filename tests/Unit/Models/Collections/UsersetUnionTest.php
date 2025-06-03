@@ -124,6 +124,7 @@ describe('UsersetUnion Collection', function (): void {
         $union = new UsersetUnion;
 
         $usersets = [];
+
         for ($i = 0; 3 > $i; ++$i) {
             $userset = new Userset(
                 computedUserset: new ObjectRelation(relation: "relation{$i}"),
@@ -133,6 +134,7 @@ describe('UsersetUnion Collection', function (): void {
         }
 
         $index = 0;
+
         foreach ($union as $key => $userset) {
             expect($key)->toBe($index);
             expect($userset)->toBe($usersets[$index]);

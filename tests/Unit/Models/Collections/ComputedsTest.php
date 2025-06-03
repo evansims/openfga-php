@@ -59,6 +59,7 @@ describe('Computeds Collection', function (): void {
         $collection = new Computeds([$computed1, $computed2, $computed3]);
 
         $usersets = [];
+
         foreach ($collection as $computed) {
             $usersets[] = $computed->getUserset();
         }
@@ -141,6 +142,7 @@ describe('Computeds Collection', function (): void {
 
         // Filter usersets containing 'viewer'
         $filtered = [];
+
         foreach ($collection as $computed) {
             if (str_contains($computed->getUserset(), 'viewer')) {
                 $filtered[] = $computed->getUserset();
@@ -181,6 +183,7 @@ describe('Computeds Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $item) {
             ++$count;
         }

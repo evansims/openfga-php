@@ -76,6 +76,7 @@ describe('ListObjectsResponse', function (): void {
 
     test('handles large object list', function (): void {
         $objects = [];
+
         for ($i = 1; 1000 >= $i; ++$i) {
             $objects[] = "document:file{$i}.pdf";
         }

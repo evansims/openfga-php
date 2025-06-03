@@ -63,6 +63,7 @@ describe('Nodes Collection', function (): void {
         $collection = new Nodes([$node1, $node2, $node3]);
 
         $names = [];
+
         foreach ($collection as $node) {
             $names[] = $node->getName();
         }
@@ -166,6 +167,7 @@ describe('Nodes Collection', function (): void {
         expect($permissions->count())->toBe(4);
 
         $permissionNames = [];
+
         foreach ($permissions as $perm) {
             $permissionNames[] = $perm->getName();
         }
@@ -183,6 +185,7 @@ describe('Nodes Collection', function (): void {
 
         // Filter nodes that have leaves
         $nodesWithLeaves = [];
+
         foreach ($collection as $node) {
             if (null !== $node->getLeaf()) {
                 $nodesWithLeaves[] = $node->getName();
@@ -201,6 +204,7 @@ describe('Nodes Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $item) {
             ++$count;
         }

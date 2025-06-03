@@ -18,7 +18,7 @@ describe('End-to-End Workflow', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -166,6 +166,7 @@ describe('End-to-End Workflow', function (): void {
         )->rethrow()->unwrap();
 
         $viewerList = [];
+
         foreach ($apiSpecViewers->getUsers() as $user) {
             $object = $user->getObject();
             $viewerList[] = is_string($object) ? $object : (string) $object;
@@ -339,6 +340,7 @@ describe('End-to-End Workflow', function (): void {
         )->rethrow()->unwrap();
 
         $viewerList = [];
+
         foreach ($projectViewers->getUsers() as $user) {
             $object = $user->getObject();
             $viewerList[] = is_string($object) ? $object : (string) $object;

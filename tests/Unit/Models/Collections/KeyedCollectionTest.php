@@ -266,6 +266,7 @@ describe('KeyedCollection', function (): void {
         ]);
 
         $iterated = [];
+
         foreach ($collection as $key => $value) {
             $iterated[$key] = $value;
         }
@@ -318,6 +319,7 @@ describe('KeyedCollection', function (): void {
         $collection = new TestKeyedCollection([]);
 
         $count = 0;
+
         foreach ($collection as $key => $value) {
             ++$count;
         }

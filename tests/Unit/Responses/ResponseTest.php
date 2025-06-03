@@ -153,6 +153,7 @@ describe('Response', function (): void {
 
     test('parseResponse handles large JSON response', function (): void {
         $largeData = [];
+
         for ($i = 0; 1000 > $i; ++$i) {
             $largeData["item_{$i}"] = [
                 'id' => $i,

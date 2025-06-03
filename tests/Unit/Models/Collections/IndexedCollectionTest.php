@@ -300,6 +300,7 @@ describe('IndexedCollection', function (): void {
         $collection = new TestIndexedCollection($tuple1, $tuple2);
 
         $iterated = [];
+
         foreach ($collection as $key => $value) {
             $iterated[$key] = $value;
         }

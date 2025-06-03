@@ -12,7 +12,7 @@ describe('Method Coverage', function (): void {
     test('all client methods exist and are callable', function (): void {
         $responseFactory = new Psr17Factory;
         $httpClient = new FileGetContents($responseFactory);
-        $url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $url = getOpenFgaUrl();
 
         $client = new Client(
             url: $url,
@@ -53,7 +53,7 @@ describe('Method Coverage', function (): void {
     test('result pattern methods', function (): void {
         $responseFactory = new Psr17Factory;
         $httpClient = new FileGetContents($responseFactory);
-        $url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $url = getOpenFgaUrl();
 
         $client = new Client(
             url: $url,

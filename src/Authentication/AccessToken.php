@@ -97,6 +97,7 @@ final readonly class AccessToken implements AccessTokenInterface
 
         // Validate JWT token if it looks like a JWT
         $accessToken = $data['access_token'];
+
         if (self::isJwtToken($accessToken)) {
             self::validateJwtToken($accessToken, $response, $expectedIssuer, $expectedAudience);
         }
@@ -164,11 +165,13 @@ final readonly class AccessToken implements AccessTokenInterface
 
         // Add padding if needed
         $padding = strlen($base64) % 4;
+
         if (0 < $padding) {
             $base64 .= str_repeat('=', 4 - $padding);
         }
 
         $decoded = base64_decode($base64, true);
+
         if (false === $decoded) {
             throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans($errorMessage)]);
         }
@@ -309,6 +312,7 @@ final readonly class AccessToken implements AccessTokenInterface
         }
 
         $parts = explode('.', $token);
+
         if (3 !== count($parts)) {
             throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_FORMAT)]);
         }
@@ -317,6 +321,7 @@ final readonly class AccessToken implements AccessTokenInterface
 
         // Validate and decode header
         $header = self::decodeJwtPart($headerEncoded, $response, Messages::JWT_INVALID_HEADER);
+
         if (! is_array($header) || ! isset($header['typ']) || ! isset($header['alg'])) {
             throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_HEADER)]);
         }
@@ -328,6 +333,7 @@ final readonly class AccessToken implements AccessTokenInterface
 
         // Validate and decode payload
         $payload = self::decodeJwtPart($payloadEncoded, $response, Messages::JWT_INVALID_PAYLOAD);
+
         if (! is_array($payload)) {
             throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
         }
