@@ -43,8 +43,6 @@ interface TypeDefinitionInterface extends ModelInterface
      *
      * Relations define the authorized relationships that can exist
      * between objects of this type and other entities in the system.
-     *
-     * @return TypeDefinitionRelationsInterface<UsersetInterface>|null
      */
     public function getRelations(): ?TypeDefinitionRelationsInterface;
 

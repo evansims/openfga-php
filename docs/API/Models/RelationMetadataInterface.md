@@ -26,7 +26,7 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 #### getDirectlyRelatedUserTypes
 
 ```php
-public function getDirectlyRelatedUserTypes(): RelationReferencesInterface<RelationReferenceInterface>|null
+public function getDirectlyRelatedUserTypes(): RelationReferencesInterface|null
 
 ```
 
@@ -36,7 +36,7 @@ Get the user types that can be directly related through this relation. This defi
 
 #### Returns
 
-[`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md)&lt;[`RelationReferenceInterface`](RelationReferenceInterface.md)&gt; &#124; `null` — The directly related user types, or null if not specified
+[`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md) &#124; `null` — The directly related user types, or null if not specified
 
 #### getModule
 

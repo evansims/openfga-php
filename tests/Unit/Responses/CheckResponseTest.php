@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 
 use Exception;
 use OpenFGA\Responses\CheckResponse;
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
 describe('CheckResponse', function (): void {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\AuthorizationModelInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for authorization model retrieval response objects.

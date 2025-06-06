@@ -278,7 +278,7 @@ public function jsonSerialize(): array<int, array{object?: mixed, userset?: arra
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/UsersInterface.php#L27)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/UsersInterface.php#L24)
 
 #### Returns
 

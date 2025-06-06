@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenFGA\Tests\Support\Network;
 
 use OpenFGA\Network\AbstractRetryHandler;

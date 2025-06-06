@@ -1,0 +1,4 @@
+pcov.directory = src
+pcov.exclude = ~vendor~
+pcov.initial.memory = 128
+pcov.initial.files = 3000

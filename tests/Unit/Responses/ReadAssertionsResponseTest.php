@@ -8,7 +8,7 @@ use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Models\{Assertion, AssertionTupleKey};
 use OpenFGA\Models\Collections\Assertions;
 use OpenFGA\Responses\{ReadAssertionsResponse, ReadAssertionsResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 

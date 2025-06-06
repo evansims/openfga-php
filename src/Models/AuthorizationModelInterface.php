@@ -79,7 +79,7 @@ interface AuthorizationModelInterface extends ModelInterface
      * conditions are only considered valid when the condition evaluates to true
      * given the current context parameters.
      *
-     * @return ConditionsInterface<ConditionInterface>|null The collection of reusable conditions defined in this model, or null if no conditions are defined
+     * @return ConditionsInterface|null The collection of reusable conditions defined in this model, or null if no conditions are defined
      */
     public function getConditions(): ?ConditionsInterface;
 
@@ -137,7 +137,7 @@ interface AuthorizationModelInterface extends ModelInterface
      * Type definitions are the foundation that OpenFGA uses to understand your
      * domain model and execute authorization queries efficiently.
      *
-     * @return TypeDefinitionsInterface<TypeDefinitionInterface> The collection of type definitions that structure this authorization model
+     * @return TypeDefinitionsInterface The collection of type definitions that structure this authorization model
      */
     public function getTypeDefinitions(): TypeDefinitionsInterface;
 

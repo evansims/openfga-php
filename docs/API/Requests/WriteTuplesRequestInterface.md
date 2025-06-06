@@ -26,7 +26,7 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 #### getDeletes
 
 ```php
-public function getDeletes(): TupleKeysInterface<TupleKeyInterface>|null
+public function getDeletes(): TupleKeysInterface|null
 
 ```
 
@@ -36,24 +36,69 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 #### Returns
 
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Collection of relationship tuples to remove, or null if no deletions are requested
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to remove, or null if no deletions are requested
 
 #### getWrites
 
 ```php
-public function getWrites(): TupleKeysInterface<TupleKeyInterface>|null
+public function getWrites(): TupleKeysInterface|null
 
 ```
 
 Get the relationship tuples to write to the store. Returns a collection of relationship tuples that should be added to the authorization store. Each tuple represents a new permission or relationship that will be granted. The write operation is atomic with any delete operations specified in the same request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L78)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L113)
 
 #### Returns
 
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Collection of relationship tuples to add, or null if no writes are requested
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to add, or null if no writes are requested
 
 ### List Operations
+
+#### getMaxParallelRequests
+
+```php
+public function getMaxParallelRequests(): int
+
+```
+
+Get the maximum number of parallel requests for non-transactional mode.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L50)
+
+#### Returns
+
+`int` — Maximum parallel requests (1 for sequential processing)
+
+#### getMaxRetries
+
+```php
+public function getMaxRetries(): int
+
+```
+
+Get the maximum number of retries for failed chunks in non-transactional mode.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L57)
+
+#### Returns
+
+`int` — Maximum retry attempts
+
+#### getMaxTuplesPerChunk
+
+```php
+public function getMaxTuplesPerChunk(): int
+
+```
+
+Get the maximum number of tuples per chunk for non-transactional mode.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L64)
+
+#### Returns
+
+`int` — Maximum tuples per chunk (up to 100)
 
 #### getModel
 
@@ -64,7 +109,7 @@ public function getModel(): string
 
 Get the authorization model ID to use for tuple validation. Specifies which version of the authorization model should be used to validate the relationship tuples being written or deleted. This ensures that all tuples conform to the expected schema and relationship types defined in the model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L55)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L76)
 
 #### Returns
 
@@ -91,6 +136,36 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
+#### getRetryDelaySeconds
+
+```php
+public function getRetryDelaySeconds(): float
+
+```
+
+Get the retry delay in seconds for non-transactional mode.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L83)
+
+#### Returns
+
+`float` — Retry delay in seconds
+
+#### getStopOnFirstError
+
+```php
+public function getStopOnFirstError(): bool
+
+```
+
+Check if non-transactional processing should stop on first error.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L90)
+
+#### Returns
+
+`bool` — True to stop on first error, false to continue
+
 #### getStore
 
 ```php
@@ -100,8 +175,25 @@ public function getStore(): string
 
 Get the store ID where tuples will be written. Identifies the OpenFGA store that contains the authorization data to be modified. All write and delete operations will be performed within the context of this specific store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L66)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L101)
 
 #### Returns
 
 `string` — The store ID containing the authorization data to modify
+
+### Utility
+
+#### isTransactional
+
+```php
+public function isTransactional(): bool
+
+```
+
+Check if this request should be executed in transactional mode.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L120)
+
+#### Returns
+
+`bool` — True for transactional mode, false for non-transactional

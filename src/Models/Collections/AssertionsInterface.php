@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\AssertionInterface;
 use Override;
 
 /**
@@ -14,9 +13,7 @@ use Override;
  * testing authorization model correctness. Assertions represent expected
  * authorization outcomes for specific tuple configurations.
  *
- * @template T of AssertionInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\AssertionInterface>
  *
  * @see https://openfga.dev/docs/modeling/testing OpenFGA Model Testing
  */

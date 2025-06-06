@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Translation;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Translation\YamlParser;
 
 describe('YamlParser', function (): void {
@@ -202,7 +202,7 @@ describe('YamlParser', function (): void {
             YAML;
 
         expect(fn () => YamlParser::parseString($yaml))
-            ->toThrow(InvalidArgumentException::class, 'Invalid YAML syntax on line 2: missing colon');
+            ->toThrow(ClientException::class);
     });
 
     test('throws exception for empty key', function (): void {
@@ -211,7 +211,7 @@ describe('YamlParser', function (): void {
             YAML;
 
         expect(fn () => YamlParser::parseString($yaml))
-            ->toThrow(InvalidArgumentException::class, 'Invalid YAML syntax on line 1: empty key');
+            ->toThrow(ClientException::class);
     });
 
     test('throws exception for malformed line', function (): void {
@@ -221,7 +221,7 @@ describe('YamlParser', function (): void {
             YAML;
 
         expect(fn () => YamlParser::parseString($yaml))
-            ->toThrow(InvalidArgumentException::class, 'Invalid YAML syntax on line 2: missing colon');
+            ->toThrow(ClientException::class);
     });
 
     test('handles keys with colons in values', function (): void {
@@ -254,7 +254,7 @@ describe('YamlParser', function (): void {
 
     test('parseFile throws exception for non-existent file', function (): void {
         expect(fn () => YamlParser::parseFile('/non/existent/file.yaml'))
-            ->toThrow(InvalidArgumentException::class, 'File does not exist: /non/existent/file.yaml');
+            ->toThrow(ClientException::class);
     });
 
     test('handles mixed indentation correctly', function (): void {

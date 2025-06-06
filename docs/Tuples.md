@@ -190,3 +190,98 @@ write(
 Now Anne can edit the technical specs because she's a member of the engineering team.
 
 For checking permissions and querying relationships, see [Queries](Queries.md).
+
+## Error Handling with Tuples
+
+When working with tuples, it's important to handle errors properly using the SDK's enum-based exception handling:
+
+```php
+use OpenFGA\Exceptions\{ClientError, ClientException};
+use function OpenFGA\{tuple, write, result};
+
+// Example: Writing tuples with robust error handling
+function addUserToDocument(string $userId, string $documentId, string $role = 'viewer'): bool 
+{
+    // Use result helper for cleaner error handling
+    return result(function() use ($userId, $documentId, $role) {
+        return write(
+            client: $this->client,
+            store: $this->storeId,
+            model: $this->modelId,
+            tuples: tuple("user:{$userId}", $role, "document:{$documentId}")
+        );
+    })
+    ->success(function() {
+        logger()->info('Access granted', [
+            'user' => $userId,
+            'document' => $documentId,
+            'role' => $role
+        ]);
+        return true;
+    })
+    ->failure(function(Throwable $error) use ($userId, $documentId, $role) {
+        // Enum-based error handling with match expression
+        if ($error instanceof ClientException) {
+            match($error->getError()) {
+                // Handle validation errors specifically
+                ClientError::Validation => logger()->warning(
+                    'Validation error granting access', 
+                    ['context' => $error->getContext()]
+                ),
+                
+                // Handle authorization model mismatches
+                ClientError::InvalidConfiguration => logger()->error(
+                    'Model configuration error', 
+                    ['message' => $error->getMessage()]
+                ),
+                
+                // Default case for other client errors
+                default => logger()->error(
+                    'Failed to grant access', 
+                    ['error_type' => $error->getError()->name]
+                )
+            };
+        } else {
+            // Handle unexpected errors
+            logger()->error('Unexpected error granting access', [
+                'error' => $error->getMessage(),
+                'user' => $userId,
+                'document' => $documentId
+            ]);
+        }
+        
+        return false;
+    })
+    ->unwrap();
+}
+```
+
+### Supporting Multiple Languages
+
+The error messages from tuple operations will automatically use the language configured in your client:
+
+```php
+// Create a client with Spanish error messages
+$client = new Client(
+    url: 'https://api.openfga.example',
+    language: 'es' // Spanish
+);
+
+try {
+    // Attempt to write an invalid tuple
+    write(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
+        tuples: tuple('', 'viewer', 'document:report')
+    );
+} catch (ClientException $e) {
+    // The error message will be in Spanish
+    echo $e->getMessage(); // "El identificador del usuario no puede estar vacío"
+    
+    // But the error enum remains the same for consistent handling
+    if ($e->getError() === ClientError::Validation) {
+        // Handle validation error regardless of language
+    }
+}
+```

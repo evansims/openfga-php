@@ -18,9 +18,7 @@ use Override;
  * This collection is commonly used in write operations to specify which
  * relationships should be created or deleted in the authorization store.
  *
- * @extends IndexedCollection<TupleKeyInterface>
- *
- * @implements TupleKeysInterface<TupleKeyInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\TupleKeyInterface>
  *
  * @see https://openfga.dev/docs/concepts#relationship-tuples OpenFGA Relationship Tuples
  */

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{UsersListUser, UsersListUserInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('UsersListUser Model', function (): void {
     test('implements UsersListUserInterface', function (): void {

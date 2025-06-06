@@ -34,12 +34,12 @@ interface TelemetryInterface
      * errors that occurred. The span should include standard HTTP response
      * attributes such as status code and response size.
      *
-     * @param mixed                  $span      The span identifier returned by startHttpRequest()
+     * @param object|null            $span      The span identifier returned by startHttpRequest()
      * @param ResponseInterface|null $response  The HTTP response received, if any
      * @param Throwable|null         $exception Optional exception that occurred during the request
      */
     public function endHttpRequest(
-        mixed $span,
+        object | null $span,
         ?ResponseInterface $response = null,
         ?Throwable $exception = null,
     ): void;
@@ -51,13 +51,13 @@ interface TelemetryInterface
      * operation outcome and any relevant metrics. If an exception occurred
      * during the operation, it should be recorded in the span.
      *
-     * @param mixed                $span       The span identifier returned by startOperation()
+     * @param object|null          $span       The span identifier returned by startOperation()
      * @param bool                 $success    Whether the operation completed successfully
      * @param Throwable|null       $exception  Optional exception that occurred during the operation
      * @param array<string, mixed> $attributes Additional attributes to record
      */
     public function endOperation(
-        mixed $span,
+        object | null $span,
         bool $success,
         ?Throwable $exception = null,
         array $attributes = [],
@@ -144,6 +144,18 @@ interface TelemetryInterface
     ): void;
 
     /**
+     * Record a telemetry span with attributes.
+     *
+     * Records a complete telemetry span for events that don't require
+     * start/end semantics. This is useful for event-driven telemetry
+     * where the event represents a point in time rather than a duration.
+     *
+     * @param string               $name       The span name
+     * @param array<string, mixed> $attributes Span attributes
+     */
+    public function recordSpan(string $name, array $attributes = []): void;
+
+    /**
      * Start tracing an HTTP request.
      *
      * Creates a new trace span for an outgoing HTTP request to the OpenFGA API.
@@ -151,9 +163,9 @@ interface TelemetryInterface
      * operations, including standard HTTP attributes.
      *
      * @param  RequestInterface $request The HTTP request being sent
-     * @return mixed            A span identifier or context that can be passed to endHttpRequest()
+     * @return object|null      A span identifier or context that can be passed to endHttpRequest()
      */
-    public function startHttpRequest(RequestInterface $request): mixed;
+    public function startHttpRequest(RequestInterface $request): object | null;
 
     /**
      * Start tracing an OpenFGA API operation.
@@ -166,12 +178,12 @@ interface TelemetryInterface
      * @param  StoreInterface|string                   $store      The store being operated on
      * @param  AuthorizationModelInterface|string|null $model      The authorization model being used
      * @param  array<string, mixed>                    $attributes Additional span attributes
-     * @return mixed                                   A span identifier or context that can be passed to endOperation()
+     * @return object|null                             A span identifier or context that can be passed to endOperation()
      */
     public function startOperation(
         string $operation,
         StoreInterface | string $store,
         AuthorizationModelInterface | string | null $model = null,
         array $attributes = [],
-    ): mixed;
+    ): object | null;
 }

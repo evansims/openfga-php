@@ -8,7 +8,7 @@ use const JSON_THROW_ON_ERROR;
 
 use InvalidArgumentException;
 use JsonException;
-use OpenFGA\Exceptions\{ClientThrowable, SerializationError};
+use OpenFGA\Exceptions\{ClientThrowable, SerializationError, SerializationException};
 use OpenFGA\Messages;
 use OpenFGA\Translation\Translator;
 use Override;
@@ -198,6 +198,123 @@ final readonly class AccessToken implements AccessTokenInterface
     }
 
     /**
+     * Validate JWT audience claim.
+     *
+     * @param array<string, mixed> $payload          The JWT payload containing the audience claim
+     * @param ResponseInterface    $response         The original response for error context
+     * @param string|null          $expectedAudience Optional expected audience to validate against
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If location capture fails during exception creation
+     * @throws SerializationException   If the audience claim is invalid or missing
+     */
+    private static function validateAudienceClaim(array $payload, ResponseInterface $response, ?string $expectedAudience): void
+    {
+        if (null === $expectedAudience) {
+            return;
+        }
+
+        if (! isset($payload['aud'])) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_AUDIENCE)]);
+        }
+
+        // Audience can be a string or array of strings
+        $audiences = is_array($payload['aud']) ? $payload['aud'] : [$payload['aud']];
+
+        /** @var mixed $audience */
+        foreach ($audiences as $audience) {
+            if (is_string($audience) && $audience === $expectedAudience) {
+                return;
+            }
+        }
+
+        throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_AUDIENCE)]);
+    }
+
+    /**
+     * Validate JWT expiration claim (exp).
+     *
+     * @param array<string, mixed> $payload
+     * @param ResponseInterface    $response
+     * @param int                  $currentTime
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If location capture fails during exception creation
+     * @throws SerializationException   If the exp claim is invalid or token is expired
+     */
+    private static function validateExpirationClaim(array $payload, ResponseInterface $response, int $currentTime): void
+    {
+        if (! isset($payload['exp'])) {
+            return;
+        }
+
+        if (! is_int($payload['exp']) && ! is_float($payload['exp'])) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
+        }
+
+        if ($payload['exp'] <= $currentTime) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_TOKEN_EXPIRED)]);
+        }
+    }
+
+    /**
+     * Validate JWT issued-at claim (iat).
+     *
+     * @param array<string, mixed> $payload
+     * @param ResponseInterface    $response
+     * @param int                  $currentTime
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If location capture fails during exception creation
+     * @throws SerializationException   If the iat claim is invalid
+     */
+    private static function validateIssuedAtClaim(array $payload, ResponseInterface $response, int $currentTime): void
+    {
+        if (! isset($payload['iat'])) {
+            return;
+        }
+
+        if (! is_int($payload['iat']) && ! is_float($payload['iat'])) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
+        }
+
+        // Allow some clock skew (5 minutes)
+        if ($payload['iat'] > $currentTime + 300) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
+        }
+    }
+
+    /**
+     * Validate JWT issuer claim.
+     *
+     * @param array<string, mixed> $payload        The JWT payload containing the issuer claim
+     * @param ResponseInterface    $response       The original response for error context
+     * @param string|null          $expectedIssuer Optional expected issuer to validate against
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If location capture fails during exception creation
+     * @throws SerializationException   If the issuer claim is invalid or missing
+     */
+    private static function validateIssuerClaim(array $payload, ResponseInterface $response, ?string $expectedIssuer): void
+    {
+        if (null === $expectedIssuer) {
+            return;
+        }
+
+        if (! isset($payload['iss'])) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_ISSUER)]);
+        }
+
+        if (! is_string($payload['iss'])) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
+        }
+
+        if ($payload['iss'] !== $expectedIssuer) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_ISSUER)]);
+        }
+    }
+
+    /**
      * Validate JWT claims including expiration, not-before times, issuer, and audience.
      *
      * @param array<string, mixed> $payload          The decoded JWT payload
@@ -213,79 +330,9 @@ final readonly class AccessToken implements AccessTokenInterface
     {
         $currentTime = time();
 
-        // Check expiration time (exp claim)
-        if (isset($payload['exp'])) {
-            if (! is_int($payload['exp']) && ! is_float($payload['exp'])) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
-            }
-
-            if ($payload['exp'] <= $currentTime) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_TOKEN_EXPIRED)]);
-            }
-        }
-
-        // Check not-before time (nbf claim)
-        if (isset($payload['nbf'])) {
-            if (! is_int($payload['nbf']) && ! is_float($payload['nbf'])) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
-            }
-
-            if ($payload['nbf'] > $currentTime) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_TOKEN_NOT_YET_VALID)]);
-            }
-        }
-
-        // Check issued at time (iat claim) - should not be in the future
-        if (isset($payload['iat'])) {
-            if (! is_int($payload['iat']) && ! is_float($payload['iat'])) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
-            }
-
-            // Allow some clock skew (5 minutes)
-            if ($payload['iat'] > $currentTime + 300) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
-            }
-        }
-
-        // Validate issuer claim (iss)
-        if (null !== $expectedIssuer) {
-            if (! isset($payload['iss'])) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_ISSUER)]);
-            }
-
-            if (! is_string($payload['iss'])) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
-            }
-
-            if ($payload['iss'] !== $expectedIssuer) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_ISSUER)]);
-            }
-        }
-
-        // Validate audience claim (aud)
-        if (null !== $expectedAudience) {
-            if (! isset($payload['aud'])) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_AUDIENCE)]);
-            }
-
-            // Audience can be a string or array of strings
-            $audiences = is_array($payload['aud']) ? $payload['aud'] : [$payload['aud']];
-
-            $audienceMatched = false;
-
-            /** @var mixed $audience */
-            foreach ($audiences as $audience) {
-                if (is_string($audience) && $audience === $expectedAudience) {
-                    $audienceMatched = true;
-
-                    break;
-                }
-            }
-
-            if (! $audienceMatched) {
-                throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_AUDIENCE)]);
-            }
-        }
+        self::validateTemporalClaims($payload, $response, $currentTime);
+        self::validateIssuerClaim($payload, $response, $expectedIssuer);
+        self::validateAudienceClaim($payload, $response, $expectedAudience);
     }
 
     /**
@@ -341,5 +388,49 @@ final readonly class AccessToken implements AccessTokenInterface
         // Validate required claims
         /** @var array<string, mixed> $payload */
         self::validateJwtClaims($payload, $response, $expectedIssuer, $expectedAudience);
+    }
+
+    /**
+     * Validate JWT not-before claim (nbf).
+     *
+     * @param array<string, mixed> $payload
+     * @param ResponseInterface    $response
+     * @param int                  $currentTime
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If location capture fails during exception creation
+     * @throws SerializationException   If the nbf claim is invalid or token is not yet valid
+     */
+    private static function validateNotBeforeClaim(array $payload, ResponseInterface $response, int $currentTime): void
+    {
+        if (! isset($payload['nbf'])) {
+            return;
+        }
+
+        if (! is_int($payload['nbf']) && ! is_float($payload['nbf'])) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_INVALID_PAYLOAD)]);
+        }
+
+        if ($payload['nbf'] > $currentTime) {
+            throw SerializationError::InvalidItemType->exception(response: $response, context: ['message' => Translator::trans(Messages::JWT_TOKEN_NOT_YET_VALID)]);
+        }
+    }
+
+    /**
+     * Validate temporal JWT claims (exp, nbf, iat).
+     *
+     * @param array<string, mixed> $payload     The JWT payload containing temporal claims
+     * @param ResponseInterface    $response    The original response for error context
+     * @param int                  $currentTime Current Unix timestamp for comparison
+     *
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If location capture fails during exception creation
+     * @throws SerializationException   If any temporal claim is invalid
+     */
+    private static function validateTemporalClaims(array $payload, ResponseInterface $response, int $currentTime): void
+    {
+        self::validateExpirationClaim($payload, $response, $currentTime);
+        self::validateNotBeforeClaim($payload, $response, $currentTime);
+        self::validateIssuedAtClaim($payload, $response, $currentTime);
     }
 }

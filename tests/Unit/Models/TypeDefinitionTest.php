@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\Collections\{RelationMetadataCollection, TypeDefinitionRelations};
 use OpenFGA\Models\{Metadata, ObjectRelation, RelationMetadata, SourceInfo, TypeDefinition, TypeDefinitionInterface, Userset};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 use stdClass;
 
 describe('TypeDefinition Model', function (): void {

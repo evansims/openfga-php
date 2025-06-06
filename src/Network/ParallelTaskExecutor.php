@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Network;
 
 use OpenFGA\Results\{FailureInterface, SuccessInterface};
+use Throwable;
 
 /**
  * Executes tasks in parallel using the RequestManager infrastructure.
@@ -22,10 +23,13 @@ final readonly class ParallelTaskExecutor
     /**
      * Execute tasks with specified parallelism.
      *
-     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks               Array of callable tasks
-     * @param  int                                                    $maxParallelRequests Maximum concurrent requests
-     * @param  bool                                                   $stopOnFirstError    Whether to stop on first error
-     * @return array<FailureInterface|SuccessInterface>               Results from each task
+     * @param array<callable(): (FailureInterface|SuccessInterface)> $tasks               Array of callable tasks
+     * @param int                                                    $maxParallelRequests Maximum concurrent requests
+     * @param bool                                                   $stopOnFirstError    Whether to stop on first error
+     *
+     * @throws Throwable If task execution fails
+     *
+     * @return array<FailureInterface|SuccessInterface> Results from each task
      */
     public function execute(array $tasks, int $maxParallelRequests, bool $stopOnFirstError): array
     {

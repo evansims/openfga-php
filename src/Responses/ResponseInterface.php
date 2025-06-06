@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Exceptions\{ClientThrowable};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReturnTypeWillChange;
 

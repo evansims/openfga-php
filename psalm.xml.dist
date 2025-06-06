@@ -31,6 +31,10 @@
         <directory name="src" />
     </projectFiles>
 
+    <stubs>
+        <file name=".psalm/stubs/Fiber.phpstub" />
+    </stubs>
+
     <!-- Suppress issues that conflict with modern PHP patterns -->
     <issueHandlers>
         <!-- Support for modern PHP union and intersection types -->

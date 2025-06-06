@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\RelationReferenceInterface;
 use Override;
 
 /**
- * @template T of RelationReferenceInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\RelationReferenceInterface>
  */
 interface RelationReferencesInterface extends IndexedCollectionInterface
 {

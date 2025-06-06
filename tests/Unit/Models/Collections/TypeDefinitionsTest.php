@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface};
 use OpenFGA\Models\{ObjectRelation, TypeDefinition, Userset};
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schemas\CollectionSchemaInterface;
 use stdClass;
 
 use function count;

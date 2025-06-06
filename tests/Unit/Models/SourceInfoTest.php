@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Messages;
 use OpenFGA\Models\{SourceInfo, SourceInfoInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('SourceInfo Model', function (): void {
     test('implements SourceInfoInterface', function (): void {

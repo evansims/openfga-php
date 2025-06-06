@@ -37,6 +37,12 @@ enum ConfigurationError: string
 
     case HttpStreamFactoryMissing = 'http_stream_factory_missing';
 
+    case InvalidLanguage = 'invalid_language';
+
+    case InvalidRetryCount = 'invalid_retry_count';
+
+    case InvalidUrl = 'invalid_url';
+
     /**
      * Create a new ConfigurationException for this error type.
      *
@@ -86,6 +92,9 @@ enum ConfigurationError: string
             self::HttpRequestFactoryMissing => 'Psr\\Http\\Message\\RequestFactoryInterface',
             self::HttpResponseFactoryMissing => 'Psr\\Http\\Message\\ResponseFactoryInterface',
             self::HttpStreamFactoryMissing => 'Psr\\Http\\Message\\StreamFactoryInterface',
+            self::InvalidUrl,
+            self::InvalidLanguage,
+            self::InvalidRetryCount => '',
         };
     }
 
@@ -95,7 +104,7 @@ enum ConfigurationError: string
      * Useful for providing specific error handling and setup guidance
      * when PSR HTTP dependencies are not properly configured.
      *
-     * @return true True if the error is related to missing HTTP components, false otherwise
+     * @return bool True if the error is related to missing HTTP components, false otherwise
      */
     public function isHttpComponentMissing(): bool
     {
@@ -104,6 +113,9 @@ enum ConfigurationError: string
             self::HttpRequestFactoryMissing,
             self::HttpResponseFactoryMissing,
             self::HttpStreamFactoryMissing => true,
+            self::InvalidUrl,
+            self::InvalidLanguage,
+            self::InvalidRetryCount => false,
         };
     }
 }

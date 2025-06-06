@@ -74,16 +74,16 @@ function tuples(TupleKey ...$tuples): TupleKeys
  * success or failure of each chunk. It's designed to work with the non-transaction
  * mode similar to the OpenFGA Go SDK.
  *
- * @param ClientInterface                            $client              The OpenFGA client to use
- * @param StoreInterface|string                      $store               The store to operate on
- * @param AuthorizationModelInterface|string         $model               The authorization model to use
- * @param TupleKeysInterface<TupleKeyInterface>|null $writes              Collection of tuples to write
- * @param TupleKeysInterface<TupleKeyInterface>|null $deletes             Collection of tuples to delete
- * @param int                                        $maxParallelRequests Maximum concurrent requests (default: 1)
- * @param int                                        $maxTuplesPerChunk   Maximum tuples per chunk (default: 100)
- * @param int                                        $maxRetries          Maximum retry attempts for failed chunks (default: 0)
- * @param float                                      $retryDelaySeconds   Delay between retries in seconds (default: 1.0)
- * @param bool                                       $stopOnFirstError    Stop processing remaining chunks on first error (default: false)
+ * @param ClientInterface                    $client              The OpenFGA client to use
+ * @param StoreInterface|string              $store               The store to operate on
+ * @param AuthorizationModelInterface|string $model               The authorization model to use
+ * @param TupleKeysInterface|null            $writes              Collection of tuples to write
+ * @param TupleKeysInterface|null            $deletes             Collection of tuples to delete
+ * @param int                                $maxParallelRequests Maximum concurrent requests (default: 1)
+ * @param int                                $maxTuplesPerChunk   Maximum tuples per chunk (default: 100)
+ * @param int                                $maxRetries          Maximum retry attempts for failed chunks (default: 0)
+ * @param float                              $retryDelaySeconds   Delay between retries in seconds (default: 1.0)
+ * @param bool                               $stopOnFirstError    Stop processing remaining chunks on first error (default: false)
  *
  * @throws Throwable If the batch operation fails completely
  *
@@ -297,11 +297,11 @@ function err(Throwable $error): Failure
  * By default, it uses transactional mode (all-or-nothing). For bulk operations
  * with partial success handling, use the `batch()` helper instead.
  *
- * @param ClientInterface                                         $client        The OpenFGA client
- * @param StoreInterface|string                                   $store         The store to write to
- * @param AuthorizationModelInterface|string                      $model         The authorization model to use
- * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples        The tuple(s) to write
- * @param bool                                                    $transactional Whether to use transactional mode (default: true)
+ * @param ClientInterface                      $client        The OpenFGA client
+ * @param StoreInterface|string                $store         The store to write to
+ * @param AuthorizationModelInterface|string   $model         The authorization model to use
+ * @param TupleKeyInterface|TupleKeysInterface $tuples        The tuple(s) to write
+ * @param bool                                 $transactional Whether to use transactional mode (default: true)
  *
  * @throws Throwable If the write operation fails
  *
@@ -341,11 +341,11 @@ function write(
  * By default, it uses transactional mode (all-or-nothing). For bulk operations
  * with partial success handling, use the `batch()` helper instead.
  *
- * @param ClientInterface                                         $client        The OpenFGA client
- * @param StoreInterface|string                                   $store         The store to delete from
- * @param AuthorizationModelInterface|string                      $model         The authorization model to use
- * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples        The tuple(s) to delete
- * @param bool                                                    $transactional Whether to use transactional mode (default: true)
+ * @param ClientInterface                      $client        The OpenFGA client
+ * @param StoreInterface|string                $store         The store to delete from
+ * @param AuthorizationModelInterface|string   $model         The authorization model to use
+ * @param TupleKeyInterface|TupleKeysInterface $tuples        The tuple(s) to delete
+ * @param bool                                 $transactional Whether to use transactional mode (default: true)
  *
  * @throws Throwable If the delete operation fails
  *
@@ -381,14 +381,14 @@ function delete(
 /**
  * Check for a relationship.
  *
- * @param ClientInterface                        $client           an OpenFGA client
- * @param StoreInterface|string                  $store            the store to use
- * @param AuthorizationModelInterface|string     $model            the authorization model to use
- * @param TupleKeyInterface                      $tuple            the tuple to check
- * @param ?bool                                  $trace            whether to trace the check
- * @param ?object                                $context          the context to use for the check
- * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples the contextual tuples to use for the check
- * @param ?Consistency                           $consistency      the consistency to use for the check
+ * @param ClientInterface                    $client           an OpenFGA client
+ * @param StoreInterface|string              $store            the store to use
+ * @param AuthorizationModelInterface|string $model            the authorization model to use
+ * @param TupleKeyInterface                  $tuple            the tuple to check
+ * @param ?bool                              $trace            whether to trace the check
+ * @param ?object                            $context          the context to use for the check
+ * @param ?TupleKeysInterface                $contextualTuples the contextual tuples to use for the check
+ * @param ?Consistency                       $consistency      the consistency to use for the check
  *
  * @throws Throwable if the check fails
  *

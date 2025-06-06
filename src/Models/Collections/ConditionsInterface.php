@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\ConditionInterface;
 use Override;
 
 /**
@@ -18,9 +17,7 @@ use Override;
  * Each condition includes an expression, parameters, and optional metadata
  * that define how the condition should be evaluated during authorization checks.
  *
- * @template T of ConditionInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\ConditionInterface>
  *
  * @see https://openfga.dev/docs/modeling/conditions OpenFGA Conditions
  */

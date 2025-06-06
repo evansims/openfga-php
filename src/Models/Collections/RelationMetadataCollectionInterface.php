@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\RelationMetadataInterface;
-
 /**
  * Collection interface for OpenFGA relation metadata objects.
  *
@@ -17,9 +15,7 @@ use OpenFGA\Models\RelationMetadataInterface;
  * The collection is keyed by relation names, allowing efficient access to metadata
  * for specific relations within a type definition.
  *
- * @template T of RelationMetadataInterface
- *
- * @extends KeyedCollectionInterface<T>
+ * @extends KeyedCollectionInterface<\OpenFGA\Models\RelationMetadataInterface>
  *
  * @see https://openfga.dev/docs/modeling/getting-started OpenFGA Authorization Models
  */

@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace OpenFGA\Translation;
 
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use Override;
+use ReflectionException;
 
 use function array_key_exists;
 use function array_merge;
+use function dirname;
 use function file_exists;
 use function is_array;
 use function is_object;
@@ -46,16 +49,20 @@ final class Translator implements TranslatorInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws ClientThrowable          If format is unsupported or translation file is not found
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public static function addResource(string $format, string $resource, string $locale, string $domain = 'messages'): void
     {
         if ('yaml' !== $format) {
-            throw new InvalidArgumentException('Unsupported file format: ' . $format);
+            throw ClientError::Configuration->exception(context: ['message' => self::trans(Messages::TRANSLATION_UNSUPPORTED_FORMAT, ['format' => $format])]);
         }
 
         if (! file_exists($resource)) {
-            throw new InvalidArgumentException('Translation file not found: ' . $resource);
+            throw ClientError::Configuration->exception(context: ['message' => self::trans(Messages::TRANSLATION_FILE_NOT_FOUND, ['resource' => $resource])]);
         }
 
         $data = YamlParser::parseFile($resource);
@@ -185,7 +192,7 @@ final class Translator implements TranslatorInterface
         }
 
         // Load available translations
-        $translationsDir = __DIR__ . '/../../translations';
+        $translationsDir = dirname(__DIR__, 2) . '/translations';
         $locales = ['en', 'es']; // Add more locales as they become available
 
         foreach ($locales as $locale) {

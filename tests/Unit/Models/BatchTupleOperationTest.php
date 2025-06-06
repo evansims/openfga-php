@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models;
 
-use InvalidArgumentException;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\{BatchTupleOperation, BatchTupleOperationInterface};
 use OpenFGA\Models\Collections\TupleKeys;
 
@@ -157,17 +157,17 @@ describe('BatchTupleOperation', function (): void {
         $operation = new BatchTupleOperation(writes: tuples(tuple('user:alice', 'reader', 'document:1')));
 
         expect(fn () => $operation->chunk(0))
-            ->toThrow(InvalidArgumentException::class);
+            ->toThrow(ClientException::class);
 
         expect(fn () => $operation->chunk(-1))
-            ->toThrow(InvalidArgumentException::class);
+            ->toThrow(ClientException::class);
     });
 
     test('respects maximum chunk size limit', function (): void {
         $operation = new BatchTupleOperation(writes: tuples(tuple('user:alice', 'reader', 'document:1')));
 
         expect(fn () => $operation->chunk(101))
-            ->toThrow(InvalidArgumentException::class);
+            ->toThrow(ClientException::class);
     });
 
     test('chunks preserve tuple order within writes', function (): void {
@@ -290,7 +290,7 @@ describe('BatchTupleOperation', function (): void {
         $operation = new BatchTupleOperation(writes: tuples(tuple('user:alice', 'reader', 'document:1')));
 
         expect(fn () => $operation->chunk(BatchTupleOperation::MAX_TUPLES_PER_REQUEST + 1))
-            ->toThrow(InvalidArgumentException::class);
+            ->toThrow(ClientException::class);
     });
 
     test('can handle empty writes and deletes collections', function (): void {

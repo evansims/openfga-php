@@ -30,7 +30,7 @@ public function getConsistency(): Consistency|null
 
 Get the consistency requirement for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L28)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L27)
 
 #### Returns
 
@@ -45,7 +45,7 @@ public function getContext(): object|null
 
 Get the context object for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L35)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L34)
 
 #### Returns
 
@@ -54,17 +54,17 @@ Get the context object for this request.
 #### getContextualTuples
 
 ```php
-public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>|null
+public function getContextualTuples(): TupleKeysInterface|null
 
 ```
 
 Get the contextual tuples for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L42)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L41)
 
 #### Returns
 
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — The contextual tuples collection, or null if not specified
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — The contextual tuples collection, or null if not specified
 
 #### getModel
 
@@ -75,7 +75,7 @@ public function getModel(): string|null
 
 Get the authorization model ID for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L49)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L48)
 
 #### Returns
 
@@ -90,7 +90,7 @@ public function getRelation(): string
 
 Get the relation name for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L56)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L55)
 
 #### Returns
 
@@ -126,7 +126,7 @@ public function getStore(): string
 
 Get the store ID for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L63)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L62)
 
 #### Returns
 
@@ -141,7 +141,7 @@ public function getType(): string
 
 Get the object type for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L70)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L69)
 
 #### Returns
 
@@ -156,7 +156,7 @@ public function getUser(): string
 
 Get the user identifier for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L77)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequestInterface.php#L76)
 
 #### Returns
 

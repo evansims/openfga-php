@@ -27,8 +27,8 @@ That's it! The OpenFGA services will be automatically available in your containe
 The service provider automatically registers these configuration-free interfaces:
 
 - **`OpenFGA\Observability\TelemetryInterface`** - No-op telemetry provider (can be overridden)
-- **`OpenFGA\TransformerInterface`** - DSL to model transformation
-- **`OpenFGA\Schema\SchemaValidatorInterface`** - JSON schema validation for models
+- **`OpenFGA\Language\TransformerInterface`** - DSL to model transformation
+- **`OpenFGA\Schemas\SchemaValidatorInterface`** - JSON schema validation for models
 
 **Note:** `ClientInterface` and `RequestManagerInterface` are NOT automatically registered because they require configuration (URL, authentication, etc.). You'll need to register these manually in your application.
 

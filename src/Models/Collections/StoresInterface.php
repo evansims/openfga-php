@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\StoreInterface;
 use Override;
 
 /**
@@ -15,9 +14,7 @@ use Override;
  * authorization domain with its own models, tuples, and configuration,
  * providing multi-tenancy within the OpenFGA system.
  *
- * @template T of StoreInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\StoreInterface>
  *
  * @see https://openfga.dev/docs/concepts#stores OpenFGA Stores
  */

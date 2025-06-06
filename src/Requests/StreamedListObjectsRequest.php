@@ -12,7 +12,6 @@ use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
-use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use OpenFGA\Translation\Translator;
 use Override;
@@ -36,14 +35,14 @@ use function is_array;
 final readonly class StreamedListObjectsRequest implements StreamedListObjectsRequestInterface
 {
     /**
-     * @param string                                 $store            The store ID
-     * @param string                                 $type             The object type
-     * @param string                                 $relation         The relation
-     * @param string                                 $user             The user
-     * @param ?string                                $model            Authorization model ID (optional)
-     * @param ?object                                $context          Context object (optional)
-     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples Contextual tuples (optional)
-     * @param ?Consistency                           $consistency      Consistency requirement (optional)
+     * @param string              $store            The store ID
+     * @param string              $type             The object type
+     * @param string              $relation         The relation
+     * @param string              $user             The user
+     * @param ?string             $model            Authorization model ID (optional)
+     * @param ?object             $context          Context object (optional)
+     * @param ?TupleKeysInterface $contextualTuples Contextual tuples (optional)
+     * @param ?Consistency        $consistency      Consistency requirement (optional)
      *
      * @throws ClientThrowable          If the store ID, type, relation, user, or model ID (when provided) is empty
      * @throws InvalidArgumentException If message translation parameters are invalid

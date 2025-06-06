@@ -16,7 +16,7 @@ Interface for OpenTelemetry integration in the OpenFGA SDK. This interface provi
 
 ```php
 public function endHttpRequest(
-    mixed $span,
+    object|null $span,
     ResponseInterface|null $response = NULL,
     Throwable|null $exception = NULL,
 ): void
@@ -31,7 +31,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 
 | Name         | Type                                                                | Description                                         |
 | ------------ | ------------------------------------------------------------------- | --------------------------------------------------- |
-| `$span`      | `mixed`                                                             | The span identifier returned by startHttpRequest()  |
+| `$span`      | `object` &#124; `null`                                              | The span identifier returned by startHttpRequest()  |
 | `$response`  | [`ResponseInterface`](Responses/ResponseInterface.md) &#124; `null` | The HTTP response received, if any                  |
 | `$exception` | `Throwable` &#124; `null`                                           | Optional exception that occurred during the request |
 
@@ -43,7 +43,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 
 ```php
 public function endOperation(
-    mixed $span,
+    object|null $span,
     bool $success,
     Throwable|null $exception = NULL,
     array<string, mixed> $attributes = [],
@@ -59,7 +59,7 @@ End tracing for an OpenFGA API operation. Completes the trace span started with 
 
 | Name          | Type                             | Description                                           |
 | ------------- | -------------------------------- | ----------------------------------------------------- |
-| `$span`       | `mixed`                          | The span identifier returned by startOperation()      |
+| `$span`       | `object` &#124; `null`           | The span identifier returned by startOperation()      |
 | `$success`    | `bool`                           | Whether the operation completed successfully          |
 | `$exception`  | `Throwable` &#124; `null`        | Optional exception that occurred during the operation |
 | `$attributes` | `array&lt;`string`, `mixed`&gt;` |                                                       |
@@ -188,16 +188,38 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 
 `void`
 
+#### recordSpan
+
+```php
+public function recordSpan(string $name, array<string, mixed> $attributes = []): void
+
+```
+
+Record a telemetry span with attributes. Records a complete telemetry span for events that don&#039;t require start/end semantics. This is useful for event-driven telemetry where the event represents a point in time rather than a duration.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L156)
+
+#### Parameters
+
+| Name          | Type                             | Description   |
+| ------------- | -------------------------------- | ------------- |
+| `$name`       | `string`                         | The span name |
+| `$attributes` | `array&lt;`string`, `mixed`&gt;` |               |
+
+#### Returns
+
+`void`
+
 #### startHttpRequest
 
 ```php
-public function startHttpRequest(RequestInterface $request): mixed
+public function startHttpRequest(RequestInterface $request): object|null
 
 ```
 
 Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP request to the OpenFGA API. The span should follow OpenTelemetry semantic conventions for HTTP client operations, including standard HTTP attributes.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L156)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L168)
 
 #### Parameters
 
@@ -207,7 +229,7 @@ Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP req
 
 #### Returns
 
-`mixed` — A span identifier or context that can be passed to endHttpRequest()
+`object` &#124; `null` — A span identifier or context that can be passed to endHttpRequest()
 
 #### startOperation
 
@@ -217,13 +239,13 @@ public function startOperation(
     StoreInterface|string $store,
     AuthorizationModelInterface|string|null $model = NULL,
     array<string, mixed> $attributes = [],
-): mixed
+): object|null
 
 ```
 
 Start tracing an OpenFGA API operation. Creates a new trace span for a high-level OpenFGA operation such as check, expand, or write operations. The span should include relevant attributes such as store ID, authorization model ID, and operation-specific metadata.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L171)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/TelemetryInterface.php#L183)
 
 #### Parameters
 
@@ -236,4 +258,4 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 
 #### Returns
 
-`mixed` — A span identifier or context that can be passed to endOperation()
+`object` &#124; `null` — A span identifier or context that can be passed to endOperation()

@@ -100,16 +100,74 @@ $client->writeTuples($store, $model, $tuples)
 
 ## Error handling patterns
 
-### Fail gracefully
+### Fail gracefully with helper functions
 
 ```php
+use function OpenFGA\{result, ok, err, unwrap, success, failure};
+
 // Return a sensible default when things go wrong
 function getUserPermissions(string $userId): array 
 {
-    return $client->listObjects(user: $userId, relation: 'can_access')
-        ->then(fn($response) => $response->getObjects())
-        ->recover(fn($error) => []) // Empty permissions on error
-        ->unwrap();
+    // Use the helper functions from Helpers.php
+    return result(function() use ($userId) {
+        return $this->client->listObjects(
+            user: $userId, 
+            relation: 'can_access'
+        );
+    })
+    ->then(fn($response) => $response->getObjects())
+    ->recover(function(Throwable $error) {
+        logger()->warning('Failed to get user permissions', [
+            'error_type' => $error::class,
+            'message' => $error->getMessage() 
+        ]);
+        return []; // Empty permissions on error
+    })
+    ->unwrap();
+}
+```
+
+### Handling specific error types with enum-based exceptions
+
+```php
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+use function OpenFGA\{tuple, allowed};
+
+function canUserAccess(string $userId, string $documentId): bool 
+{
+    try {
+        return allowed(
+            client: $this->client,
+            store: $this->storeId,
+            model: $this->modelId,
+            tuple: tuple("user:{$userId}", 'viewer', "document:{$documentId}")
+        );
+    } catch (Throwable $e) {
+        // Handle specific enum-based errors with match expression
+        if ($e instanceof ClientException) {
+            return match($e->getError()) {
+                // Network errors can be retried
+                ClientError::Network => $this->retryAfterDelay(function() use ($userId, $documentId) {
+                    return $this->canUserAccess($userId, $documentId);
+                }, $maxRetries = 3),
+                
+                // Authentication errors should trigger re-auth
+                ClientError::Authentication => $this->handleAuthError($e),
+                
+                // Fall back to cached permissions for other errors
+                default => $this->getCachedPermission($userId, $documentId, false)
+            };
+        }
+        
+        // Unknown error types - fail closed for security
+        logger()->error('Unexpected error checking permissions', [
+            'error_type' => $e::class,
+            'user' => $userId,
+            'document' => $documentId
+        ]);
+        
+        return false;
+    }
 }
 ```
 

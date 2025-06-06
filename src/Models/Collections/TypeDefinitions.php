@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, TypeDefinition, TypeDefinitionInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
@@ -16,9 +16,7 @@ use Override;
  * within an authorization model. Type definitions are fundamental building
  * blocks that define the schema for authorization relationships.
  *
- * @extends IndexedCollection<TypeDefinitionInterface>
- *
- * @implements TypeDefinitionsInterface<TypeDefinitionInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\TypeDefinitionInterface>
  */
 final class TypeDefinitions extends IndexedCollection implements TypeDefinitionsInterface
 {

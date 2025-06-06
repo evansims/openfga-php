@@ -7,9 +7,7 @@ namespace OpenFGA\Models\Collections;
 use OpenFGA\Models\{ConditionParameter, ConditionParameterInterface, ModelInterface};
 
 /**
- * @extends IndexedCollection<ConditionParameterInterface>
- *
- * @implements ConditionParametersInterface<ConditionParameterInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\ConditionParameterInterface>
  */
 final class ConditionParameters extends IndexedCollection implements ConditionParametersInterface
 {

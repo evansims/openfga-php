@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{Computed, ComputedInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('Computed Model', function (): void {
     test('implements ComputedInterface', function (): void {

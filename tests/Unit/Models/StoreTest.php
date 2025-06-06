@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models;
 use DateTimeImmutable;
 use DateTimeZone;
 use OpenFGA\Models\{Store, StoreInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 use function in_array;
 

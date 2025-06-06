@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use DateTimeImmutable;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for store creation response objects.

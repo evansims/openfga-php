@@ -29,8 +29,8 @@ jobs:
         with:
           php-version: "8.3"
           extensions: dom, curl, libxml, mbstring, zip, fileinfo
-          ini-values: error_reporting=E_ALL
-          coverage: xdebug
+          ini-values: error_reporting=E_ALL, memory_limit=2G
+          coverage: pcov
           tools: composer:v2
 
       - name: Install dependencies
@@ -40,7 +40,7 @@ jobs:
         run: cd tools/docs && composer update --prefer-stable --no-interaction --no-progress --ansi && cd ../../
 
       - name: Execute PEST tests
-        run: composer test:unit
+        run: composer test:unit:ci
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@4650159d642e33fdc30954ca22638caf0df6cac8 # v5.4.3

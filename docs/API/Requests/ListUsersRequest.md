@@ -31,7 +31,7 @@ public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
 
 Get the read consistency level for the list operation. Determines the consistency guarantees for reading authorization data during the user listing operation. This allows you to balance between read performance and data freshness based on your application&#039;s requirements.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L82)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L81)
 
 #### Returns
 
@@ -46,7 +46,7 @@ public function getContext(): ?object
 
 Get additional context data for conditional evaluation. Provides contextual information that can be used in conditional expressions within the authorization model. This enables dynamic permission evaluation based on runtime data such as time-based access, location restrictions, or resource attributes when determining user access.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L91)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L90)
 
 #### Returns
 
@@ -61,7 +61,7 @@ public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInte
 
 Get additional tuples to consider during the list operation. Returns a collection of temporary relationship tuples that are added to the authorization data during evaluation. This allows you to test access scenarios with hypothetical or pending relationship changes without permanently modifying the store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L100)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L99)
 
 #### Returns
 
@@ -76,7 +76,7 @@ public function getModel(): string
 
 Get the authorization model ID to use for the list operation. Specifies which version of the authorization model should be used when evaluating user access. Using a specific model ID ensures consistent results even when the model is being updated.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L109)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L108)
 
 #### Returns
 
@@ -91,7 +91,7 @@ public function getObject(): string
 
 Get the object to list users for. Specifies the target object for which users will be listed. This identifies the specific resource, document, or entity for which you want to know which users have the specified relationship.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L118)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L117)
 
 #### Returns
 
@@ -106,7 +106,7 @@ public function getRelation(): string
 
 Get the relation to check for user access. Specifies the relationship type to evaluate when determining which users have access to the object. For example, &quot;owner&quot;, &quot;editor&quot;, &quot;viewer&quot;, or &quot;member&quot;. This defines what type of permission or relationship is being queried.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L127)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L126)
 
 #### Returns
 
@@ -121,7 +121,7 @@ public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactor
 
 Build a request context for HTTP execution. Transforms the request object into a standardized HTTP request context that can be executed by the OpenFGA HTTP client. This method handles all aspects of request preparation including parameter serialization, URL construction, header configuration, and body stream creation. The method validates that all required parameters are present and properly formatted, serializes complex objects to JSON, constructs the appropriate API endpoint URL, and creates the necessary HTTP message body streams.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L138)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L137)
 
 #### Parameters
 
@@ -142,7 +142,7 @@ public function getStore(): string
 
 Get the store ID containing the authorization data. Identifies which OpenFGA store contains the relationship tuples and configuration to use for the list operation. All evaluation will be performed within the context of this specific store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L172)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L171)
 
 #### Returns
 
@@ -157,7 +157,7 @@ public function getUserFilters(): OpenFGA\Models\Collections\UserTypeFiltersInte
 
 Get the user type filters to apply to results. Returns a collection of filters that control which types of users are included in the results. This allows you to narrow the scope of the query to specific user types, such as individual users, groups, or service accounts, based on your application&#039;s needs. User filters help optimize performance and focus results by excluding user types that are not relevant to the current operation.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L181)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L180)
 
 #### Returns
 

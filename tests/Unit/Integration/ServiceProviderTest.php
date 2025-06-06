@@ -6,12 +6,12 @@ namespace OpenFGA\Tests\Unit\Integration;
 
 use ArrayAccess;
 use Exception;
-use OpenFGA\{ClientInterface, TransformerInterface};
+use OpenFGA\{ClientInterface, Language\TransformerInterface};
 use OpenFGA\Integration\ServiceProvider;
+use OpenFGA\Language\Transformer;
 use OpenFGA\Network\RequestManagerInterface;
 use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryInterface};
-use OpenFGA\Schema\{SchemaValidator, SchemaValidatorInterface};
-use OpenFGA\Transformer;
+use OpenFGA\Schemas\{SchemaValidator, SchemaValidatorInterface};
 
 describe('ServiceProvider', function (): void {
     beforeEach(function (): void {

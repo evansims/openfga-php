@@ -5,20 +5,13 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{Assertion, AssertionInterface, ModelInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
  * Collection implementation for OpenFGA assertion models.
  *
- * This class provides a concrete implementation for managing collections of
- * assertion objects used in testing authorization model correctness. Assertions
- * define expected authorization outcomes for specific tuple configurations and
- * are essential for validating model behavior.
- *
- * @extends IndexedCollection<AssertionInterface>
- *
- * @implements AssertionsInterface<AssertionInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\AssertionInterface>
  */
 final class Assertions extends IndexedCollection implements AssertionsInterface
 {

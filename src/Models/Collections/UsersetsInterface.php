@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UsersetInterface;
 use Override;
 
 /**
@@ -14,9 +13,7 @@ use Override;
  * complex authorization operations like unions, intersections, and differences.
  * Each userset in the collection can define different ways to compute authorized users.
  *
- * @template T of UsersetInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\UsersetInterface>
  */
 interface UsersetsInterface extends IndexedCollectionInterface
 {

@@ -75,7 +75,7 @@ if ($result->success()) {
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L132)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L135)
 
 #### Parameters
 
@@ -140,7 +140,7 @@ $result = $client->check(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L163)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L157)
 
 #### Parameters
 
@@ -173,7 +173,7 @@ public function expand(
 
 Expands a relationship tuple to show all users that have the relationship.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L313)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L288)
 
 #### Parameters
 
@@ -235,7 +235,7 @@ if ($result->success()) {
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L202)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L187)
 
 #### Parameters
 
@@ -259,7 +259,7 @@ public function createStore(string $name): OpenFGA\Results\FailureInterface|Open
 
 Creates a new store with the given name. Stores provide data isolation for different applications or environments. Each store maintains its own authorization models, relationship tuples, and provides complete separation from other stores.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L230)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L211)
 
 #### Parameters
 
@@ -282,7 +282,7 @@ public function deleteStore(
 
 Deletes a store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L254)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L229)
 
 #### Parameters
 
@@ -306,7 +306,7 @@ public function readAssertions(
 
 Retrieves assertions for an authorization model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L577)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L524)
 
 #### Parameters
 
@@ -334,7 +334,7 @@ public function readTuples(
 
 Reads relationship tuples from a store with optional filtering and pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L601)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L546)
 
 #### Parameters
 
@@ -363,7 +363,7 @@ public function writeAssertions(
 
 Creates or updates assertions for an authorization model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L669)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L604)
 
 #### Parameters
 
@@ -385,16 +385,22 @@ public function writeTuples(
     OpenFGA\Models\AuthorizationModelInterface|string $model,
     ?OpenFGA\Models\Collections\TupleKeysInterface $writes = NULL,
     ?OpenFGA\Models\Collections\TupleKeysInterface $deletes = NULL,
+    bool $transactional = true,
+    int $maxParallelRequests = 1,
+    int $maxTuplesPerChunk = 100,
+    int $maxRetries = 0,
+    float $retryDelaySeconds = 1.0,
+    bool $stopOnFirstError = false,
 ): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 
 ```
 
-Writes or deletes relationship tuples in a store.
+Writes or deletes relationship tuples in a store. This method supports both transactional (all-or-nothing) and non-transactional (independent operations) modes. In transactional mode, all operations must succeed or the entire request fails. In non-transactional mode, operations are processed independently with detailed success/failure tracking.
 
-**Writing and deleting relationship tuples:**
+**Transactional write (all-or-nothing):**
 
 ```php
-// Create relationships
+// Create relationships - all succeed or all fail together
 $writes = new TupleKeys([
     new TupleKey('user:anne', 'owner', 'document:budget'),
     new TupleKey('user:bob', 'viewer', 'document:budget'),
@@ -410,6 +416,37 @@ $result = $client->writeTuples(
 if ($result->success()) {
     echo "Successfully wrote " . count($writes) . " relationships";
 }
+
+```
+
+**Non-transactional batch processing:**
+
+```php
+// Process large datasets with parallel execution and partial success handling
+$writes = new TupleKeys([
+    // ... hundreds or thousands of tuples
+]);
+
+$result = $client->writeTuples(
+    store: 'store-id',
+    model: 'model-id',
+    writes: $writes,
+    transactional: false,
+    maxParallelRequests: 5,
+    maxTuplesPerChunk: 50,
+    maxRetries: 2
+);
+
+$result->success(function($response) {
+    if ($response->isCompleteSuccess()) {
+        echo "All operations succeeded\n";
+    } elseif ($response->isPartialSuccess()) {
+        echo "Partial success: {$response->getSuccessfulChunks()}/{$response->getTotalChunks()} chunks\n";
+        foreach ($response->getErrors() as $error) {
+            echo "Error: " . $error->getMessage() . "\n";
+        }
+    }
+});
 
 ```
 
@@ -434,16 +471,22 @@ $client->writeTuples(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L695)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L628)
 
 #### Parameters
 
-| Name       | Type                                                                                   | Description                        |
-| ---------- | -------------------------------------------------------------------------------------- | ---------------------------------- |
-| `$store`   | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to modify                |
-| `$model`   | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use     |
-| `$writes`  | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Tuples to write (create or update) |
-| `$deletes` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Tuples to delete                   |
+| Name                   | Type                                                                                   | Description                                                      |
+| ---------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `$store`               | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to modify                                              |
+| `$model`               | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use                                   |
+| `$writes`              | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Tuples to write (create or update)                               |
+| `$deletes`             | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Tuples to delete                                                 |
+| `$transactional`       | `bool`                                                                                 | Whether to use transactional mode (default: true)                |
+| `$maxParallelRequests` | `int`                                                                                  | Maximum concurrent requests (non-transactional only, default: 1) |
+| `$maxTuplesPerChunk`   | `int`                                                                                  | Maximum tuples per chunk (non-transactional only, default: 100)  |
+| `$maxRetries`          | `int`                                                                                  | Maximum retry attempts (non-transactional only, default: 0)      |
+| `$retryDelaySeconds`   | `float`                                                                                | Retry delay in seconds (non-transactional only, default: 1.0)    |
+| `$stopOnFirstError`    | `bool`                                                                                 | Stop on first error (non-transactional only, default: false)     |
 
 #### Returns
 
@@ -463,7 +506,7 @@ public function getAuthorizationModel(
 
 Retrieves an authorization model by ID.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L343)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L314)
 
 #### Parameters
 
@@ -485,7 +528,7 @@ public function getLanguage(): string
 
 Get the configured language for i18n translations.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L366)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L335)
 
 #### Returns
 
@@ -500,7 +543,7 @@ public function getLastRequest(): ?Psr\Http\Message\RequestInterface
 
 Retrieves the last HTTP request made by the client.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L375)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L346)
 
 #### Returns
 
@@ -515,7 +558,7 @@ public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
 
 Retrieves the last HTTP response received by the client.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L384)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L359)
 
 #### Returns
 
@@ -532,7 +575,7 @@ public function getStore(
 
 Retrieves store details by ID.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L395)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L372)
 
 #### Parameters
 
@@ -557,7 +600,7 @@ public function listAuthorizationModels(
 
 Lists authorization models in a store with pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L419)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L391)
 
 #### Parameters
 
@@ -630,7 +673,7 @@ $result = $client->listObjects(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L447)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L413)
 
 #### Parameters
 
@@ -661,7 +704,7 @@ public function listStores(
 
 Lists all stores with pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L483)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L445)
 
 #### Parameters
 
@@ -689,7 +732,7 @@ public function listTupleChanges(
 
 Lists changes to relationship tuples in a store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L509)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L466)
 
 #### Parameters
 
@@ -767,7 +810,7 @@ $result = $client->listUsers(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L541)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L492)
 
 #### Parameters
 
@@ -804,7 +847,7 @@ public function streamedListObjects(
 
 Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L633)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L572)
 
 #### Parameters
 
@@ -898,7 +941,7 @@ if ($result->success()) {
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L276)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L248)
 
 #### Parameters
 

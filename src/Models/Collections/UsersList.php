@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, UsersListUser, UsersListUserInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
- * @extends IndexedCollection<UsersListUserInterface>
- *
- * @implements UsersListInterface<UsersListUserInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\UsersListUserInterface>
  */
 final class UsersList extends IndexedCollection implements UsersListInterface
 {

@@ -13,6 +13,10 @@ dsl:
   unbalanced_parentheses_opening: 'Paréntesis desequilibrados: %count% %parentheses% de apertura sin cerrar'
   invalid_computed_userset: 'Conjunto de usuarios calculado inválido'
 
+assertions:
+  empty_collection: 'La colección de aserciones no puede estar vacía'
+  invalid_tuple_key: 'La aserción contiene una clave de tupla inválida: se requieren usuario, relación y objeto'
+
 auth:
   invalid_response_format: 'Formato de respuesta inválido'
   missing_required_fields: 'Faltan campos requeridos en la respuesta'
@@ -55,6 +59,15 @@ request:
 validation:
   batch_check_empty: 'La solicitud de verificación por lotes no puede estar vacía'
   invalid_correlation_id: 'ID de correlación "%correlationId%" es inválido. Debe coincidir con el patrón: %pattern%'
+  batch_tuple_chunk_size_positive: 'El tamaño del fragmento debe ser un entero positivo'
+  batch_tuple_chunk_size_exceeded: 'El tamaño del fragmento no puede exceder %max_size%'
+
+service:
+  http_not_available: 'Servicio HTTP no disponible'
+  schema_validator_not_available: 'Validador de esquema no disponible'
+  tuple_filter_not_available: 'Servicio de filtro de tuplas no disponible'
+  store_repository_not_available: 'Repositorio de almacén no disponible'
+  tuple_repository_not_available: 'Repositorio de tuplas no disponible'
 
 model:
   invalid_tuple_key: 'tuple_key inválido proporcionado a Assertion::fromArray'
@@ -62,6 +75,12 @@ model:
   typed_wildcard_type_empty: 'TypedWildcard::$type no puede estar vacío.'
   source_info_file_empty: 'SourceInfo::$file no puede estar vacío.'
   leaf_missing_content: 'Leaf debe contener al menos uno de: users, computed o tupleToUserset'
+  not_found: 'No se encontró el modelo de autorización %model_id%'
+  no_models_in_store: 'No se encontraron modelos de autorización en el almacén %store_id%'
+  validation_failed: 'La validación del modelo falló: %message%'
+  type_definitions_empty: 'Las definiciones de tipo no pueden estar vacías'
+  clone_source_not_found: 'No se encontró el modelo fuente para clonación'
+  duplicate_type: 'Se encontró una definición de tipo duplicada: %type%'
 
 collection:
   undefined_item_type: 'Tipo de elemento indefinido para %class%. Define la propiedad $itemType o sobrescribe el constructor.'
@@ -99,6 +118,9 @@ exception:
     http_request_factory_missing: 'La fábrica de solicitudes HTTP no está configurada'
     http_response_factory_missing: 'La fábrica de respuestas HTTP no está configurada'
     http_stream_factory_missing: 'La fábrica de streams HTTP no está configurada'
+    invalid_url: 'URL inválida proporcionada: %url%'
+    invalid_language: 'Código de idioma inválido proporcionado: %language%'
+    invalid_retry_count: 'Número de reintentos inválido proporcionado: %retries%'
   network:
     conflict: 'Conflicto (409): La solicitud entra en conflicto con el estado actual'
     forbidden: 'Prohibido (403): Acceso denegado al recurso solicitado'
@@ -122,3 +144,23 @@ tuple_operation:
     description: 'Agrega una nueva tupla de relación, otorgando permisos o estableciendo relaciones'
   delete:
     description: 'Elimina una tupla de relación existente, revocando permisos o eliminando relaciones'
+
+store:
+  name_required: 'El nombre del almacén es requerido y no puede estar vacío'
+  name_too_long: 'El nombre del almacén excede la longitud máxima de %d caracteres (proporcionado: %d)'
+  not_found: 'No se encontró el almacén %s'
+
+translation:
+  file_not_found: 'Archivo de traducción no encontrado: %resource%'
+  unsupported_format: 'Formato de archivo de traducción no compatible: %format%'
+
+yaml:
+  file_does_not_exist: 'El archivo no existe: %filename%'
+  cannot_read_file: 'No se puede leer el archivo: %filename%'
+  invalid_syntax_missing_colon: 'Sintaxis YAML inválida en la línea %line_number%: falta dos puntos'
+  invalid_syntax_missing_value: 'Sintaxis YAML inválida en la línea %line_number%: falta valor'
+  invalid_syntax_empty_key: 'Sintaxis YAML inválida en la línea %line_number%: clave vacía'
+  invalid_structure: 'Estructura YAML inválida en la línea %line_number%'
+
+response:
+  unexpected_type: 'Tipo de respuesta inesperado recibido'

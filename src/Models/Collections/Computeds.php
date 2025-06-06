@@ -7,9 +7,7 @@ namespace OpenFGA\Models\Collections;
 use OpenFGA\Models\{Computed, ComputedInterface, ModelInterface};
 
 /**
- * @extends IndexedCollection<ComputedInterface>
- *
- * @implements ComputedsInterface<ComputedInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\ComputedInterface>
  */
 final class Computeds extends IndexedCollection implements ComputedsInterface
 {

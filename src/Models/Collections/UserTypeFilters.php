@@ -7,9 +7,7 @@ namespace OpenFGA\Models\Collections;
 use OpenFGA\Models\{ModelInterface, UserTypeFilter, UserTypeFilterInterface};
 
 /**
- * @extends IndexedCollection<UserTypeFilterInterface>
- *
- * @implements UserTypeFiltersInterface<UserTypeFilterInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\UserTypeFilterInterface>
  */
 final class UserTypeFilters extends IndexedCollection implements UserTypeFiltersInterface
 {

@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UserTypeFilterInterface;
 use Override;
 
 /**
- * @template T of UserTypeFilterInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\UserTypeFilterInterface>
  */
 interface UserTypeFiltersInterface extends IndexedCollectionInterface
 {

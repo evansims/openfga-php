@@ -88,7 +88,7 @@ public function check(
     TupleKeyInterface $tupleKey,
     bool|null $trace = NULL,
     object|null $context = NULL,
-    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    TupleKeysInterface|null $contextualTuples = NULL,
     Consistency|null $consistency = NULL,
 ): FailureInterface|SuccessInterface
 
@@ -134,15 +134,15 @@ $result = $client->check(
 
 #### Parameters
 
-| Name                | Type                                                                                                                                     | Description                                 |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                             | The store to check against                  |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string`                                                   | The authorization model to use              |
-| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                                                       | The relationship to check                   |
-| `$trace`            | `bool` &#124; `null`                                                                                                                     | Whether to include a trace in the response  |
-| `$context`          | `object` &#124; `null`                                                                                                                   | Additional context for the check            |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                                               | Override the default consistency level      |
+| Name                | Type                                                                                   | Description                                 |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to check against                  |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
+| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                     | The relationship to check                   |
+| `$trace`            | `bool` &#124; `null`                                                                   | Whether to include a trace in the response  |
+| `$context`          | `object` &#124; `null`                                                                 | Additional context for the check            |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
 
@@ -155,7 +155,7 @@ public function expand(
     StoreInterface|string $store,
     TupleKeyInterface $tupleKey,
     AuthorizationModelInterface|string|null $model = NULL,
-    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    TupleKeysInterface|null $contextualTuples = NULL,
     Consistency|null $consistency = NULL,
 ): FailureInterface|SuccessInterface
 
@@ -167,13 +167,13 @@ Expands a relationship tuple to show all users that have the relationship.
 
 #### Parameters
 
-| Name                | Type                                                                                                                                     | Description                                 |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                             | The store containing the tuple              |
-| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                                                       | The tuple to expand                         |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null`                                     | The authorization model to use              |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                                               | Override the default consistency level      |
+| Name                | Type                                                                                                 | Description                                 |
+| ------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                         | The store containing the tuple              |
+| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                   | The tuple to expand                         |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null` | The authorization model to use              |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`                       | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                           | Override the default consistency level      |
 
 #### Returns
 
@@ -186,8 +186,8 @@ Expands a relationship tuple to show all users that have the relationship.
 ```php
 public function createAuthorizationModel(
     StoreInterface|string $store,
-    TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions,
-    ConditionsInterface<ConditionInterface>|null $conditions = NULL,
+    TypeDefinitionsInterface $typeDefinitions,
+    ConditionsInterface|null $conditions = NULL,
     SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1,
 ): FailureInterface|SuccessInterface
 
@@ -229,12 +229,12 @@ if ($result->success()) {
 
 #### Parameters
 
-| Name               | Type                                                                                                                                               | Description                              |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
-| `$store`           | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                                       | The store to create the model in         |
-| `$typeDefinitions` | [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md)&lt;[`TypeDefinitionInterface`](Models/TypeDefinitionInterface.md)&gt; | The type definitions for the model       |
-| `$conditions`      | [`ConditionsInterface`](Models/Collections/ConditionsInterface.md)&lt;[`ConditionInterface`](Models/ConditionInterface.md)&gt; &#124; `null`       | The conditions for the model             |
-| `$schemaVersion`   | [`SchemaVersion`](Models/Enums/SchemaVersion.md)                                                                                                   | The schema version to use (default: 1.1) |
+| Name               | Type                                                                             | Description                              |
+| ------------------ | -------------------------------------------------------------------------------- | ---------------------------------------- |
+| `$store`           | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                     | The store to create the model in         |
+| `$typeDefinitions` | [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md)     | The type definitions for the model       |
+| `$conditions`      | [`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` | The conditions for the model             |
+| `$schemaVersion`   | [`SchemaVersion`](Models/Enums/SchemaVersion.md)                                 | The schema version to use (default: 1.1) |
 
 #### Returns
 
@@ -344,7 +344,7 @@ Reads relationship tuples from a store with optional filtering and pagination.
 public function writeAssertions(
     StoreInterface|string $store,
     AuthorizationModelInterface|string $model,
-    AssertionsInterface<AssertionInterface> $assertions,
+    AssertionsInterface $assertions,
 ): FailureInterface|SuccessInterface
 
 ```
@@ -355,11 +355,11 @@ Creates or updates assertions for an authorization model.
 
 #### Parameters
 
-| Name          | Type                                                                                                                           | Description                        |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------- |
-| `$store`      | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                   | The store containing the model     |
-| `$model`      | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string`                                         | The model to update assertions for |
-| `$assertions` | [`AssertionsInterface`](Models/Collections/AssertionsInterface.md)&lt;[`AssertionInterface`](Models/AssertionInterface.md)&gt; | The assertions to upsert           |
+| Name          | Type                                                                                   | Description                        |
+| ------------- | -------------------------------------------------------------------------------------- | ---------------------------------- |
+| `$store`      | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store containing the model     |
+| `$model`      | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to update assertions for |
+| `$assertions` | [`AssertionsInterface`](Models/Collections/AssertionsInterface.md)                     | The assertions to upsert           |
 
 #### Returns
 
@@ -371,18 +371,24 @@ Creates or updates assertions for an authorization model.
 public function writeTuples(
     StoreInterface|string $store,
     AuthorizationModelInterface|string $model,
-    TupleKeysInterface<TupleKeyInterface>|null $writes = NULL,
-    TupleKeysInterface<TupleKeyInterface>|null $deletes = NULL,
+    TupleKeysInterface|null $writes = NULL,
+    TupleKeysInterface|null $deletes = NULL,
+    bool $transactional = true,
+    int $maxParallelRequests = 1,
+    int $maxTuplesPerChunk = 100,
+    int $maxRetries = 0,
+    float $retryDelaySeconds = 1.0,
+    bool $stopOnFirstError = false,
 ): FailureInterface|SuccessInterface
 
 ```
 
-Writes or deletes relationship tuples in a store.
+Writes or deletes relationship tuples in a store. This method supports both transactional (all-or-nothing) and non-transactional (independent operations) modes. In transactional mode, all operations must succeed or the entire request fails. In non-transactional mode, operations are processed independently with detailed success/failure tracking.
 
-**Writing and deleting relationship tuples:**
+**Transactional write (all-or-nothing):**
 
 ```php
-// Create relationships
+// Create relationships - all succeed or all fail together
 $writes = new TupleKeys([
     new TupleKey('user:anne', 'owner', 'document:budget'),
     new TupleKey('user:bob', 'viewer', 'document:budget'),
@@ -398,6 +404,37 @@ $result = $client->writeTuples(
 if ($result->success()) {
     echo "Successfully wrote " . count($writes) . " relationships";
 }
+
+```
+
+**Non-transactional batch processing:**
+
+```php
+// Process large datasets with parallel execution and partial success handling
+$writes = new TupleKeys([
+    // ... hundreds or thousands of tuples
+]);
+
+$result = $client->writeTuples(
+    store: 'store-id',
+    model: 'model-id',
+    writes: $writes,
+    transactional: false,
+    maxParallelRequests: 5,
+    maxTuplesPerChunk: 50,
+    maxRetries: 2
+);
+
+$result->success(function($response) {
+    if ($response->isCompleteSuccess()) {
+        echo "All operations succeeded\n";
+    } elseif ($response->isPartialSuccess()) {
+        echo "Partial success: {$response->getSuccessfulChunks()}/{$response->getTotalChunks()} chunks\n";
+        foreach ($response->getErrors() as $error) {
+            echo "Error: " . $error->getMessage() . "\n";
+        }
+    }
+});
 
 ```
 
@@ -422,16 +459,22 @@ $client->writeTuples(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L622)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/ClientInterface.php#L659)
 
 #### Parameters
 
-| Name       | Type                                                                                                                                     | Description                        |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| `$store`   | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                             | The store to modify                |
-| `$model`   | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string`                                                   | The authorization model to use     |
-| `$writes`  | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` | Tuples to write (create or update) |
-| `$deletes` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` | Tuples to delete                   |
+| Name                   | Type                                                                                   | Description                                                      |
+| ---------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `$store`               | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to modify                                              |
+| `$model`               | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use                                   |
+| `$writes`              | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Tuples to write (create or update)                               |
+| `$deletes`             | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Tuples to delete                                                 |
+| `$transactional`       | `bool`                                                                                 | Whether to use transactional mode (default: true)                |
+| `$maxParallelRequests` | `int`                                                                                  | Maximum concurrent requests (non-transactional only, default: 1) |
+| `$maxTuplesPerChunk`   | `int`                                                                                  | Maximum tuples per chunk (non-transactional only, default: 100)  |
+| `$maxRetries`          | `int`                                                                                  | Maximum retry attempts (non-transactional only, default: 0)      |
+| `$retryDelaySeconds`   | `float`                                                                                | Retry delay in seconds (non-transactional only, default: 1.0)    |
+| `$stopOnFirstError`    | `bool`                                                                                 | Stop on first error (non-transactional only, default: false)     |
 
 #### Returns
 
@@ -552,7 +595,7 @@ public function listObjects(
     string $relation,
     string $user,
     object|null $context = NULL,
-    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    TupleKeysInterface|null $contextualTuples = NULL,
     Consistency|null $consistency = NULL,
 ): FailureInterface|SuccessInterface
 
@@ -605,16 +648,16 @@ $result = $client->listObjects(
 
 #### Parameters
 
-| Name                | Type                                                                                                                                     | Description                                 |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                             | The store to query                          |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string`                                                   | The authorization model to use              |
-| `$type`             | `string`                                                                                                                                 | The type of objects to list                 |
-| `$relation`         | `string`                                                                                                                                 | The relationship to check                   |
-| `$user`             | `string`                                                                                                                                 | The user to check relationships for         |
-| `$context`          | `object` &#124; `null`                                                                                                                   | Additional context for evaluation           |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                                               | Override the default consistency level      |
+| Name                | Type                                                                                   | Description                                 |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
+| `$type`             | `string`                                                                               | The type of objects to list                 |
+| `$relation`         | `string`                                                                               | The relationship to check                   |
+| `$user`             | `string`                                                                               | The user to check relationships for         |
+| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
 
@@ -684,9 +727,9 @@ public function listUsers(
     AuthorizationModelInterface|string $model,
     string $object,
     string $relation,
-    UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters,
+    UserTypeFiltersInterface $userFilters,
     object|null $context = NULL,
-    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    TupleKeysInterface|null $contextualTuples = NULL,
     Consistency|null $consistency = NULL,
 ): FailureInterface|SuccessInterface
 
@@ -742,16 +785,16 @@ $result = $client->listUsers(
 
 #### Parameters
 
-| Name                | Type                                                                                                                                               | Description                                 |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                                       | The store to query                          |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string`                                                             | The authorization model to use              |
-| `$object`           | `string`                                                                                                                                           | The object to check relationships for       |
-| `$relation`         | `string`                                                                                                                                           | The relationship to check                   |
-| `$userFilters`      | [`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md)&lt;[`UserTypeFilterInterface`](Models/UserTypeFilterInterface.md)&gt; | Filters for user types to include           |
-| `$context`          | `object` &#124; `null`                                                                                                                             | Additional context for evaluation           |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null`           | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                                                         | Override the default consistency level      |
+| Name                | Type                                                                                   | Description                                 |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
+| `$object`           | `string`                                                                               | The object to check relationships for       |
+| `$relation`         | `string`                                                                               | The relationship to check                   |
+| `$userFilters`      | [`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md)           | Filters for user types to include           |
+| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
 
@@ -767,7 +810,7 @@ public function streamedListObjects(
     string $relation,
     string $user,
     object|null $context = NULL,
-    TupleKeysInterface<TupleKeyInterface>|null $contextualTuples = NULL,
+    TupleKeysInterface|null $contextualTuples = NULL,
     Consistency|null $consistency = NULL,
 ): FailureInterface|SuccessInterface
 
@@ -779,16 +822,16 @@ Streams objects that a user has a specific relationship with. Returns all object
 
 #### Parameters
 
-| Name                | Type                                                                                                                                     | Description                                 |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                                             | The store to query                          |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string`                                                   | The authorization model to use              |
-| `$type`             | `string`                                                                                                                                 | The object type to find                     |
-| `$relation`         | `string`                                                                                                                                 | The relationship to check                   |
-| `$user`             | `string`                                                                                                                                 | The user to check relationships for         |
-| `$context`          | `object` &#124; `null`                                                                                                                   | Additional context for evaluation           |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                                               | Override the default consistency level      |
+| Name                | Type                                                                                   | Description                                 |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
+| `$type`             | `string`                                                                               | The object type to find                     |
+| `$relation`         | `string`                                                                               | The relationship to check                   |
+| `$user`             | `string`                                                                               | The user to check relationships for         |
+| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
 
 #### Returns
 

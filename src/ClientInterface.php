@@ -7,7 +7,7 @@ namespace OpenFGA;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\ClientThrowable;
-use OpenFGA\Models\{AssertionInterface, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
+use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface, TupleKeyInterface};
 use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Collections\BatchCheckItemsInterface;
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
@@ -119,14 +119,14 @@ interface ClientInterface
      * relationship with an object based on the configured authorization model.
      * This is the core operation for making authorization decisions in OpenFGA.
      *
-     * @param  StoreInterface|string                      $store            The store to check against
-     * @param  AuthorizationModelInterface|string         $model            The authorization model to use
-     * @param  TupleKeyInterface                          $tupleKey         The relationship to check
-     * @param  bool|null                                  $trace            Whether to include a trace in the response
-     * @param  object|null                                $context          Additional context for the check
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $contextualTuples Additional tuples for contextual evaluation
-     * @param  Consistency|null                           $consistency      Override the default consistency level
-     * @return FailureInterface|SuccessInterface          Success contains CheckResponseInterface, Failure contains Throwable
+     * @param  StoreInterface|string              $store            The store to check against
+     * @param  AuthorizationModelInterface|string $model            The authorization model to use
+     * @param  TupleKeyInterface                  $tupleKey         The relationship to check
+     * @param  bool|null                          $trace            Whether to include a trace in the response
+     * @param  object|null                        $context          Additional context for the check
+     * @param  TupleKeysInterface|null            $contextualTuples Additional tuples for contextual evaluation
+     * @param  Consistency|null                   $consistency      Override the default consistency level
+     * @return FailureInterface|SuccessInterface  Success contains CheckResponseInterface, Failure contains Throwable
      *
      * @example Basic permission check
      * $result = $client->check(
@@ -172,11 +172,11 @@ interface ClientInterface
      * including object types, relationships, and how permissions are computed.
      * Models are immutable once created and identified by a unique ID.
      *
-     * @param  StoreInterface|string                             $store           The store to create the model in
-     * @param  TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions The type definitions for the model
-     * @param  ConditionsInterface<ConditionInterface>|null      $conditions      The conditions for the model
-     * @param  SchemaVersion                                     $schemaVersion   The schema version to use (default: 1.1)
-     * @return FailureInterface|SuccessInterface                 Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
+     * @param  StoreInterface|string             $store           The store to create the model in
+     * @param  TypeDefinitionsInterface          $typeDefinitions The type definitions for the model
+     * @param  ConditionsInterface|null          $conditions      The conditions for the model
+     * @param  SchemaVersion                     $schemaVersion   The schema version to use (default: 1.1)
+     * @return FailureInterface|SuccessInterface Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
      *
      * @example Creating a document authorization model with DSL (recommended)
      * // Using DSL is usually easier than manually building type definitions
@@ -285,12 +285,12 @@ interface ClientInterface
     /**
      * Expands a relationship tuple to show all users that have the relationship.
      *
-     * @param  StoreInterface|string                      $store            The store containing the tuple
-     * @param  TupleKeyInterface                          $tupleKey         The tuple to expand
-     * @param  AuthorizationModelInterface|string|null    $model            The authorization model to use
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $contextualTuples Additional tuples for contextual evaluation
-     * @param  Consistency|null                           $consistency      Override the default consistency level
-     * @return FailureInterface|SuccessInterface          Success contains ExpandResponseInterface, Failure contains Throwable
+     * @param  StoreInterface|string                   $store            The store containing the tuple
+     * @param  TupleKeyInterface                       $tupleKey         The tuple to expand
+     * @param  AuthorizationModelInterface|string|null $model            The authorization model to use
+     * @param  TupleKeysInterface|null                 $contextualTuples Additional tuples for contextual evaluation
+     * @param  Consistency|null                        $consistency      Override the default consistency level
+     * @return FailureInterface|SuccessInterface       Success contains ExpandResponseInterface, Failure contains Throwable
      */
     public function expand(
         StoreInterface | string $store,
@@ -356,15 +356,15 @@ interface ClientInterface
     /**
      * Lists objects that have a specific relationship with a user.
      *
-     * @param  StoreInterface|string                      $store            The store to query
-     * @param  AuthorizationModelInterface|string         $model            The authorization model to use
-     * @param  string                                     $type             The type of objects to list
-     * @param  string                                     $relation         The relationship to check
-     * @param  string                                     $user             The user to check relationships for
-     * @param  object|null                                $context          Additional context for evaluation
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $contextualTuples Additional tuples for contextual evaluation
-     * @param  Consistency|null                           $consistency      Override the default consistency level
-     * @return FailureInterface|SuccessInterface          Success contains ListObjectsResponseInterface, Failure contains Throwable
+     * @param  StoreInterface|string              $store            The store to query
+     * @param  AuthorizationModelInterface|string $model            The authorization model to use
+     * @param  string                             $type             The type of objects to list
+     * @param  string                             $relation         The relationship to check
+     * @param  string                             $user             The user to check relationships for
+     * @param  object|null                        $context          Additional context for evaluation
+     * @param  TupleKeysInterface|null            $contextualTuples Additional tuples for contextual evaluation
+     * @param  Consistency|null                   $consistency      Override the default consistency level
+     * @return FailureInterface|SuccessInterface  Success contains ListObjectsResponseInterface, Failure contains Throwable
      *
      * @example List all documents a user can view
      * $result = $client->listObjects(
@@ -447,15 +447,15 @@ interface ClientInterface
     /**
      * Lists users that have a specific relationship with an object.
      *
-     * @param  StoreInterface|string                             $store            The store to query
-     * @param  AuthorizationModelInterface|string                $model            The authorization model to use
-     * @param  string                                            $object           The object to check relationships for
-     * @param  string                                            $relation         The relationship to check
-     * @param  UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters      Filters for user types to include
-     * @param  object|null                                       $context          Additional context for evaluation
-     * @param  TupleKeysInterface<TupleKeyInterface>|null        $contextualTuples Additional tuples for contextual evaluation
-     * @param  Consistency|null                                  $consistency      Override the default consistency level
-     * @return FailureInterface|SuccessInterface                 Success contains ListUsersResponseInterface, Failure contains Throwable
+     * @param  StoreInterface|string              $store            The store to query
+     * @param  AuthorizationModelInterface|string $model            The authorization model to use
+     * @param  string                             $object           The object to check relationships for
+     * @param  string                             $relation         The relationship to check
+     * @param  UserTypeFiltersInterface           $userFilters      Filters for user types to include
+     * @param  object|null                        $context          Additional context for evaluation
+     * @param  TupleKeysInterface|null            $contextualTuples Additional tuples for contextual evaluation
+     * @param  Consistency|null                   $consistency      Override the default consistency level
+     * @return FailureInterface|SuccessInterface  Success contains ListUsersResponseInterface, Failure contains Throwable
      *
      * @example List all users who can view a document
      * $userFilters = new UserTypeFilters([
@@ -542,15 +542,15 @@ interface ClientInterface
      * with, using a streaming response for memory-efficient processing of large result sets.
      * This is ideal for handling thousands of objects without loading them all into memory.
      *
-     * @param  StoreInterface|string                      $store            The store to query
-     * @param  AuthorizationModelInterface|string         $model            The authorization model to use
-     * @param  string                                     $type             The object type to find
-     * @param  string                                     $relation         The relationship to check
-     * @param  string                                     $user             The user to check relationships for
-     * @param  object|null                                $context          Additional context for evaluation
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $contextualTuples Additional tuples for contextual evaluation
-     * @param  Consistency|null                           $consistency      Override the default consistency level
-     * @return FailureInterface|SuccessInterface          Success contains Generator<StreamedListObjectsResponseInterface>, Failure contains Throwable
+     * @param  StoreInterface|string              $store            The store to query
+     * @param  AuthorizationModelInterface|string $model            The authorization model to use
+     * @param  string                             $type             The object type to find
+     * @param  string                             $relation         The relationship to check
+     * @param  string                             $user             The user to check relationships for
+     * @param  object|null                        $context          Additional context for evaluation
+     * @param  TupleKeysInterface|null            $contextualTuples Additional tuples for contextual evaluation
+     * @param  Consistency|null                   $consistency      Override the default consistency level
+     * @return FailureInterface|SuccessInterface  Success contains Generator<StreamedListObjectsResponseInterface>, Failure contains Throwable
      */
     public function streamedListObjects(
         StoreInterface | string $store,
@@ -566,10 +566,10 @@ interface ClientInterface
     /**
      * Creates or updates assertions for an authorization model.
      *
-     * @param  StoreInterface|string                   $store      The store containing the model
-     * @param  AuthorizationModelInterface|string      $model      The model to update assertions for
-     * @param  AssertionsInterface<AssertionInterface> $assertions The assertions to upsert
-     * @return FailureInterface|SuccessInterface       Success contains WriteAssertionsResponseInterface, Failure contains Throwable
+     * @param  StoreInterface|string              $store      The store containing the model
+     * @param  AuthorizationModelInterface|string $model      The model to update assertions for
+     * @param  AssertionsInterface                $assertions The assertions to upsert
+     * @return FailureInterface|SuccessInterface  Success contains WriteAssertionsResponseInterface, Failure contains Throwable
      */
     public function writeAssertions(
         StoreInterface | string $store,
@@ -585,17 +585,17 @@ interface ClientInterface
      * succeed or the entire request fails. In non-transactional mode, operations
      * are processed independently with detailed success/failure tracking.
      *
-     * @param  StoreInterface|string                      $store               The store to modify
-     * @param  AuthorizationModelInterface|string         $model               The authorization model to use
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $writes              Tuples to write (create or update)
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $deletes             Tuples to delete
-     * @param  bool                                       $transactional       Whether to use transactional mode (default: true)
-     * @param  int                                        $maxParallelRequests Maximum concurrent requests (non-transactional only, default: 1)
-     * @param  int                                        $maxTuplesPerChunk   Maximum tuples per chunk (non-transactional only, default: 100)
-     * @param  int                                        $maxRetries          Maximum retry attempts (non-transactional only, default: 0)
-     * @param  float                                      $retryDelaySeconds   Retry delay in seconds (non-transactional only, default: 1.0)
-     * @param  bool                                       $stopOnFirstError    Stop on first error (non-transactional only, default: false)
-     * @return FailureInterface|SuccessInterface          Success contains WriteTuplesResponseInterface, Failure contains Throwable
+     * @param  StoreInterface|string              $store               The store to modify
+     * @param  AuthorizationModelInterface|string $model               The authorization model to use
+     * @param  TupleKeysInterface|null            $writes              Tuples to write (create or update)
+     * @param  TupleKeysInterface|null            $deletes             Tuples to delete
+     * @param  bool                               $transactional       Whether to use transactional mode (default: true)
+     * @param  int                                $maxParallelRequests Maximum concurrent requests (non-transactional only, default: 1)
+     * @param  int                                $maxTuplesPerChunk   Maximum tuples per chunk (non-transactional only, default: 100)
+     * @param  int                                $maxRetries          Maximum retry attempts (non-transactional only, default: 0)
+     * @param  float                              $retryDelaySeconds   Retry delay in seconds (non-transactional only, default: 1.0)
+     * @param  bool                               $stopOnFirstError    Stop on first error (non-transactional only, default: false)
+     * @return FailureInterface|SuccessInterface  Success contains WriteTuplesResponseInterface, Failure contains Throwable
      *
      * @example Transactional write (all-or-nothing)
      * // Create relationships - all succeed or all fail together

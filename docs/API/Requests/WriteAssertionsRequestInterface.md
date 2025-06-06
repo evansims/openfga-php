@@ -24,7 +24,7 @@ Interface for writing test assertions to an authorization model. This interface 
 #### getAssertions
 
 ```php
-public function getAssertions(): AssertionsInterface<AssertionInterface>
+public function getAssertions(): AssertionsInterface
 
 ```
 
@@ -34,7 +34,7 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 #### Returns
 
-[`AssertionsInterface`](Models/Collections/AssertionsInterface.md)&lt;[`AssertionInterface`](Models/AssertionInterface.md)&gt; — Collection of test assertions to validate authorization model behavior
+[`AssertionsInterface`](Models/Collections/AssertionsInterface.md) — Collection of test assertions to validate authorization model behavior
 
 #### getModel
 

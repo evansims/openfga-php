@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Responses;
 
 use OpenFGA\Responses\{ListObjectsResponse, ListObjectsResponseInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('ListObjectsResponse', function (): void {
     test('implements ListObjectsResponseInterface', function (): void {

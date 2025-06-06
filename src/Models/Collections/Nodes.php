@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, Node, NodeInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
- * @extends IndexedCollection<NodeInterface>
- *
- * @implements NodesInterface<NodeInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\NodeInterface>
  */
 final class Nodes extends IndexedCollection implements NodesInterface
 {

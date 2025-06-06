@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, Userset, UsersetInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
- * @extends IndexedCollection<UsersetInterface>
- *
- * @implements UsersetsInterface<UsersetInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\UsersetInterface>
  */
 final class Usersets extends IndexedCollection implements UsersetsInterface
 {

@@ -19,6 +19,11 @@ namespace OpenFGA;
  */
 enum Messages: string
 {
+    // Assertion validation messages
+    case ASSERTIONS_EMPTY_COLLECTION = 'assertions.empty_collection';
+
+    case ASSERTIONS_INVALID_TUPLE_KEY = 'assertions.invalid_tuple_key';
+
     case AUTH_ACCESS_TOKEN_MUST_BE_STRING = 'auth.access_token_must_be_string';
 
     // AuthenticationError defaults
@@ -37,6 +42,11 @@ enum Messages: string
     case AUTH_USER_MESSAGE_TOKEN_EXPIRED = 'auth.user_message.token_expired';
 
     case AUTH_USER_MESSAGE_TOKEN_INVALID = 'auth.user_message.token_invalid';
+
+    case BATCH_TUPLE_CHUNK_SIZE_EXCEEDED = 'validation.batch_tuple_chunk_size_exceeded';
+
+    // Batch tuple operation validation messages
+    case BATCH_TUPLE_CHUNK_SIZE_POSITIVE = 'validation.batch_tuple_chunk_size_positive';
 
     // Default Exception Messages for Error Enums
     // ClientError defaults
@@ -73,6 +83,12 @@ enum Messages: string
     case CONFIG_ERROR_HTTP_RESPONSE_FACTORY_MISSING = 'exception.config.http_response_factory_missing';
 
     case CONFIG_ERROR_HTTP_STREAM_FACTORY_MISSING = 'exception.config.http_stream_factory_missing';
+
+    case CONFIG_ERROR_INVALID_LANGUAGE = 'exception.config.invalid_language';
+
+    case CONFIG_ERROR_INVALID_RETRY_COUNT = 'exception.config.invalid_retry_count';
+
+    case CONFIG_ERROR_INVALID_URL = 'exception.config.invalid_url';
 
     // Consistency enum descriptions
     case CONSISTENCY_HIGHER_CONSISTENCY_DESCRIPTION = 'consistency.higher_consistency.description';
@@ -118,6 +134,8 @@ enum Messages: string
 
     case JWT_TOKEN_NOT_YET_VALID = 'auth.jwt.token_not_yet_valid';
 
+    case MODEL_DUPLICATE_TYPE = 'model.duplicate_type';
+
     case MODEL_INVALID_IDENTIFIER_FORMAT = 'model.invalid_identifier_format';
 
     // Model validation messages
@@ -125,7 +143,11 @@ enum Messages: string
 
     case MODEL_LEAF_MISSING_CONTENT = 'model.leaf_missing_content';
 
+    case MODEL_NO_MODELS_IN_STORE = 'model.no_models_in_store';
+
     case MODEL_SOURCE_INFO_FILE_EMPTY = 'model.source_info_file_empty';
+
+    case MODEL_TYPE_DEFINITIONS_EMPTY = 'model.type_definitions_empty';
 
     case MODEL_TYPED_WILDCARD_TYPE_EMPTY = 'model.typed_wildcard_type_empty';
 
@@ -179,6 +201,8 @@ enum Messages: string
 
     case REQUEST_USER_EMPTY = 'request.user_empty';
 
+    case RESPONSE_UNEXPECTED_TYPE = 'response.unexpected_type';
+
     case RESULT_FAILURE_NO_VALUE = 'result.failure_no_value';
 
     // Result pattern messages
@@ -202,17 +226,53 @@ enum Messages: string
 
     case SERIALIZATION_ERROR_UNDEFINED_ITEM_TYPE = 'exception.serialization.undefined_item_type';
 
+    // Service availability messages
+    case SERVICE_HTTP_NOT_AVAILABLE = 'service.http_not_available';
+
+    case SERVICE_SCHEMA_VALIDATOR_NOT_AVAILABLE = 'service.schema_validator_not_available';
+
+    case SERVICE_STORE_REPOSITORY_NOT_AVAILABLE = 'service.store_repository_not_available';
+
+    case SERVICE_TUPLE_FILTER_NOT_AVAILABLE = 'service.tuple_filter_not_available';
+
+    case SERVICE_TUPLE_REPOSITORY_NOT_AVAILABLE = 'service.tuple_repository_not_available';
+
+    // Store validation messages
+    case STORE_NAME_REQUIRED = 'store.name_required';
+
+    case STORE_NAME_TOO_LONG = 'store.name_too_long';
+
+    case STORE_NOT_FOUND = 'store.not_found';
+
+    // Translation system messages
+    case TRANSLATION_FILE_NOT_FOUND = 'translation.file_not_found';
+
+    case TRANSLATION_UNSUPPORTED_FORMAT = 'translation.unsupported_format';
+
     // TupleOperation enum descriptions
     case TUPLE_OPERATION_DELETE_DESCRIPTION = 'tuple_operation.delete.description';
 
     case TUPLE_OPERATION_WRITE_DESCRIPTION = 'tuple_operation.write.description';
+
+    case YAML_CANNOT_READ_FILE = 'yaml.cannot_read_file';
+
+    // YAML parsing messages
+    case YAML_FILE_DOES_NOT_EXIST = 'yaml.file_does_not_exist';
+
+    case YAML_INVALID_STRUCTURE = 'yaml.invalid_structure';
+
+    case YAML_INVALID_SYNTAX_EMPTY_KEY = 'yaml.invalid_syntax_empty_key';
+
+    case YAML_INVALID_SYNTAX_MISSING_COLON = 'yaml.invalid_syntax_missing_colon';
+
+    case YAML_INVALID_SYNTAX_MISSING_VALUE = 'yaml.invalid_syntax_missing_value';
 
     /**
      * Get all message keys grouped by category.
      *
      * @return string[][]
      *
-     * @psalm-return array{client: list{'client.no_last_request_found'}, dsl: list{'dsl.parse_failed', 'dsl.unrecognized_term', 'dsl.input_empty', 'dsl.pattern_empty', 'dsl.unbalanced_parentheses_closing', 'dsl.unbalanced_parentheses_opening', 'dsl.invalid_computed_userset'}, auth: list{'auth.invalid_response_format', 'auth.missing_required_fields', 'auth.access_token_must_be_string', 'auth.expires_in_must_be_integer', 'auth.jwt.invalid_format', 'auth.jwt.invalid_header', 'auth.jwt.invalid_payload', 'auth.jwt.missing_required_claims', 'auth.jwt.token_expired', 'auth.jwt.token_not_yet_valid', 'auth.jwt.invalid_audience', 'auth.jwt.invalid_issuer'}, network: list{'network.error', 'network.unexpected_status'}, result: list{'result.success_no_error', 'result.failure_no_value'}, request: list{'request.store_id_empty', 'request.model_id_empty', 'request.transactional_limit_exceeded'}, model: list{'model.invalid_tuple_key', 'model.invalid_identifier_format', 'model.typed_wildcard_type_empty', 'model.source_info_file_empty', 'model.leaf_missing_content'}, collection: list{'collection.undefined_item_type', 'collection.invalid_item_type_interface', 'collection.invalid_item_instance', 'collection.invalid_value_type', 'collection.key_must_be_string', 'collection.invalid_position', 'collection.invalid_key_type'}}
+     * @psalm-return array{client: list{'client.no_last_request_found'}, dsl: list{'dsl.parse_failed', 'dsl.unrecognized_term', 'dsl.input_empty', 'dsl.pattern_empty', 'dsl.unbalanced_parentheses_closing', 'dsl.unbalanced_parentheses_opening', 'dsl.invalid_computed_userset'}, auth: list{'auth.invalid_response_format', 'auth.missing_required_fields', 'auth.access_token_must_be_string', 'auth.expires_in_must_be_integer', 'auth.jwt.invalid_format', 'auth.jwt.invalid_header', 'auth.jwt.invalid_payload', 'auth.jwt.missing_required_claims', 'auth.jwt.token_expired', 'auth.jwt.token_not_yet_valid', 'auth.jwt.invalid_audience', 'auth.jwt.invalid_issuer'}, network: list{'network.error', 'network.unexpected_status'}, result: list{'result.success_no_error', 'result.failure_no_value'}, request: list{'request.store_id_empty', 'request.model_id_empty', 'request.transactional_limit_exceeded'}, model: list{'model.invalid_tuple_key', 'model.invalid_identifier_format', 'model.typed_wildcard_type_empty', 'model.source_info_file_empty', 'model.leaf_missing_content'}, collection: list{'collection.undefined_item_type', 'collection.invalid_item_type_interface', 'collection.invalid_item_instance', 'collection.invalid_value_type', 'collection.key_must_be_string', 'collection.invalid_position', 'collection.invalid_key_type'}, translation: list{'translation.file_not_found', 'translation.unsupported_format'}, yaml: list{'yaml.file_does_not_exist', 'yaml.cannot_read_file', 'yaml.invalid_syntax_missing_colon', 'yaml.invalid_syntax_missing_value', 'yaml.invalid_syntax_empty_key', 'yaml.invalid_structure'}, validation: list{'validation.batch_check_empty', 'validation.invalid_correlation_id', 'validation.batch_tuple_chunk_size_positive', 'validation.batch_tuple_chunk_size_exceeded'}, service: list{'service.http_not_available', 'service.schema_validator_not_available', 'service.tuple_filter_not_available', 'service.store_repository_not_available', 'service.tuple_repository_not_available'}}
      */
     public static function getGroupedKeys(): array
     {
@@ -271,6 +331,31 @@ enum Messages: string
                 self::COLLECTION_KEY_MUST_BE_STRING->value,
                 self::COLLECTION_INVALID_POSITION->value,
                 self::COLLECTION_INVALID_KEY_TYPE->value,
+            ],
+            'translation' => [
+                self::TRANSLATION_FILE_NOT_FOUND->value,
+                self::TRANSLATION_UNSUPPORTED_FORMAT->value,
+            ],
+            'yaml' => [
+                self::YAML_FILE_DOES_NOT_EXIST->value,
+                self::YAML_CANNOT_READ_FILE->value,
+                self::YAML_INVALID_SYNTAX_MISSING_COLON->value,
+                self::YAML_INVALID_SYNTAX_MISSING_VALUE->value,
+                self::YAML_INVALID_SYNTAX_EMPTY_KEY->value,
+                self::YAML_INVALID_STRUCTURE->value,
+            ],
+            'validation' => [
+                self::INVALID_BATCH_CHECK_EMPTY->value,
+                self::INVALID_CORRELATION_ID->value,
+                self::BATCH_TUPLE_CHUNK_SIZE_POSITIVE->value,
+                self::BATCH_TUPLE_CHUNK_SIZE_EXCEEDED->value,
+            ],
+            'service' => [
+                self::SERVICE_HTTP_NOT_AVAILABLE->value,
+                self::SERVICE_SCHEMA_VALIDATOR_NOT_AVAILABLE->value,
+                self::SERVICE_TUPLE_FILTER_NOT_AVAILABLE->value,
+                self::SERVICE_STORE_REPOSITORY_NOT_AVAILABLE->value,
+                self::SERVICE_TUPLE_REPOSITORY_NOT_AVAILABLE->value,
             ],
         ];
     }

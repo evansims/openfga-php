@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\{Assertion, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, AssertionsInterface, TupleKeys};
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schemas\CollectionSchemaInterface;
 use stdClass;
 
 describe('Assertions Collection', function (): void {

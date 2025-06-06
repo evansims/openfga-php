@@ -6,10 +6,10 @@ namespace OpenFGA\Responses;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
-use OpenFGA\Models\{Assertion, AssertionInterface, AssertionTupleKey, TupleKey};
+use OpenFGA\Models\{Assertion, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, AssertionsInterface, TupleKeys};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -30,8 +30,8 @@ final class ReadAssertionsResponse extends Response implements ReadAssertionsRes
     /**
      * Create a new read assertions response instance.
      *
-     * @param ?AssertionsInterface<AssertionInterface> $assertions The collection of assertions from the authorization model, or null if none defined
-     * @param string                                   $model      The authorization model identifier containing these assertions
+     * @param ?AssertionsInterface $assertions The collection of assertions from the authorization model, or null if none defined
+     * @param string               $model      The authorization model identifier containing these assertions
      */
     public function __construct(
         private readonly ?AssertionsInterface $assertions,

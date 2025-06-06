@@ -81,7 +81,7 @@ interface ConditionInterface extends ModelInterface
      * expression, enabling dynamic evaluation based on contextual data provided
      * during authorization checks.
      *
-     * @return ConditionParametersInterface<ConditionParameterInterface>|null The condition parameters, or null if the condition uses no parameters
+     * @return ConditionParametersInterface|null The condition parameters, or null if the condition uses no parameters
      */
     public function getParameters(): ?ConditionParametersInterface;
 

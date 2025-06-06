@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, ModelInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
@@ -16,9 +16,7 @@ use Override;
  * structure, permissions, and conditions within an OpenFGA store, serving
  * as the schema for authorization decisions.
  *
- * @extends IndexedCollection<AuthorizationModelInterface>
- *
- * @implements AuthorizationModelsInterface<AuthorizationModelInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\AuthorizationModelInterface>
  */
 final class AuthorizationModels extends IndexedCollection implements AuthorizationModelsInterface
 {

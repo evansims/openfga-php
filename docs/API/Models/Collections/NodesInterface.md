@@ -276,7 +276,7 @@ public function jsonSerialize(): array
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/NodesInterface.php#L28)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/NodesInterface.php#L25)
 
 #### Returns
 

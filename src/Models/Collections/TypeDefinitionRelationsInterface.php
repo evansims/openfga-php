@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UsersetInterface;
 use Override;
 
 /**
- * @template T of UsersetInterface
- *
- * @extends KeyedCollectionInterface<T>
+ * @extends KeyedCollectionInterface<\OpenFGA\Models\UsersetInterface>
  */
 interface TypeDefinitionRelationsInterface extends KeyedCollectionInterface
 {

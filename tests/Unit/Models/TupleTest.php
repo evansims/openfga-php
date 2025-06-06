@@ -9,7 +9,7 @@ use DateTimeZone;
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionParameter, Tuple, TupleInterface, TupleKey};
 use OpenFGA\Models\Enums\TypeName;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('Tuple Model', function (): void {
     test('implements TupleInterface', function (): void {

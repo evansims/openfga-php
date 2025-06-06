@@ -39,7 +39,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 #### getContextualTuples
 
 ```php
-public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>|null
+public function getContextualTuples(): TupleKeysInterface|null
 
 ```
 
@@ -49,7 +49,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 #### Returns
 
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
 #### getModel
 

@@ -278,7 +278,7 @@ public function jsonSerialize(): array
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/TuplesInterface.php#L34)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/TuplesInterface.php#L31)
 
 #### Returns
 

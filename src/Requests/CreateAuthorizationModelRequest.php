@@ -12,7 +12,6 @@ use OpenFGA\Exceptions\{ClientError};
 use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
-use OpenFGA\Models\{ConditionInterface, TypeDefinitionInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use OpenFGA\Translation\Translator;
@@ -33,10 +32,10 @@ use ReflectionException;
 final readonly class CreateAuthorizationModelRequest implements CreateAuthorizationModelRequestInterface
 {
     /**
-     * @param string                                            $store           The store ID
-     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions Type definitions
-     * @param SchemaVersion                                     $schemaVersion   Schema version
-     * @param ?ConditionsInterface<ConditionInterface>          $conditions      Conditions (optional)
+     * @param string                   $store           The store ID
+     * @param TypeDefinitionsInterface $typeDefinitions Type definitions
+     * @param SchemaVersion            $schemaVersion   Schema version
+     * @param ?ConditionsInterface     $conditions      Conditions (optional)
      *
      * @throws ClientThrowable          If the store ID is empty
      * @throws InvalidArgumentException If message translation parameters are invalid

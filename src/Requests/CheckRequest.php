@@ -36,13 +36,13 @@ use function is_array;
 final readonly class CheckRequest implements CheckRequestInterface
 {
     /**
-     * @param string                                 $store
-     * @param string                                 $model
-     * @param TupleKeyInterface                      $tupleKey
-     * @param ?bool                                  $trace
-     * @param ?object                                $context
-     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples
-     * @param ?Consistency                           $consistency
+     * @param string              $store
+     * @param string              $model
+     * @param TupleKeyInterface   $tupleKey
+     * @param ?bool               $trace
+     * @param ?object             $context
+     * @param ?TupleKeysInterface $contextualTuples
+     * @param ?Consistency        $consistency
      *
      * @throws ClientThrowable          If the store ID or model ID is empty
      * @throws InvalidArgumentException If message translation parameters are invalid

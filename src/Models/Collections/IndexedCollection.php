@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable, SerializationError};
 use OpenFGA\Messages;
 use OpenFGA\Models\ModelInterface;
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionClass;

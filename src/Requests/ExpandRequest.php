@@ -35,11 +35,11 @@ use function is_array;
 final readonly class ExpandRequest implements ExpandRequestInterface
 {
     /**
-     * @param string                                 $store            The store ID
-     * @param TupleKeyInterface                      $tupleKey         The tuple key to expand
-     * @param ?string                                $model            Authorization model ID (optional)
-     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples Contextual tuples (optional)
-     * @param ?Consistency                           $consistency      Consistency requirement (optional)
+     * @param string              $store            The store ID
+     * @param TupleKeyInterface   $tupleKey         The tuple key to expand
+     * @param ?string             $model            Authorization model ID (optional)
+     * @param ?TupleKeysInterface $contextualTuples Contextual tuples (optional)
+     * @param ?Consistency        $consistency      Consistency requirement (optional)
      *
      * @throws ClientThrowable          If the store ID is empty or model ID is empty (when provided)
      * @throws InvalidArgumentException If message translation parameters are invalid

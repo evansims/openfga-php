@@ -14,6 +14,7 @@ use OpenFGA\Exceptions\{ConfigurationError, NetworkError, NetworkException};
 use OpenFGA\Observability\TelemetryInterface;
 use OpenFGA\Requests\RequestInterface as ClientRequestInterface;
 use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
+use OpenFGA\Services\AuthenticationServiceInterface;
 use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Client\ClientInterface;
@@ -53,14 +54,19 @@ use function sprintf;
 final class RequestManager implements RequestManagerInterface
 {
     /**
-     * Circuit breaker for preventing cascade failures.
+     * Concurrent executor for parallel task execution.
      */
-    private readonly CircuitBreakerInterface $circuitBreaker;
+    private readonly ConcurrentExecutorInterface $concurrentExecutor;
 
     /**
-     * Retry handler for implementing retry logic.
+     * HTTP client wrapper for making requests.
      */
-    private readonly RetryHandlerInterface $retryHandler;
+    private readonly HttpClientInterface $httpClientWrapper;
+
+    /**
+     * Retry strategy for handling failures.
+     */
+    private readonly RetryStrategyInterface $retryStrategy;
 
     /**
      * Create a new RequestManager for OpenFGA API communication.
@@ -69,16 +75,18 @@ final class RequestManager implements RequestManagerInterface
      * with the OpenFGA API. PSR components can be explicitly provided for testing
      * or specific HTTP client requirements, or left null for automatic discovery.
      *
-     * @param string                        $url                 The base URL for the OpenFGA API endpoint
-     * @param int                           $maxRetries          Maximum number of retry attempts for failed requests
-     * @param string|null                   $authorizationHeader Optional Authorization header value for API authentication
-     * @param ClientInterface|null          $httpClient          Optional PSR-18 HTTP client, auto-discovered if not provided
-     * @param ResponseFactoryInterface|null $httpResponseFactory Optional PSR-17 response factory, auto-discovered if not provided
-     * @param StreamFactoryInterface|null   $httpStreamFactory   Optional PSR-17 stream factory, auto-discovered if not provided
-     * @param RequestFactoryInterface|null  $httpRequestFactory  Optional PSR-17 request factory, auto-discovered if not provided
-     * @param CircuitBreakerInterface|null  $circuitBreaker      Optional circuit breaker implementation, creates default if not provided
-     * @param RetryHandlerInterface|null    $retryHandler        Optional retry handler implementation, creates default if not provided
-     * @param ?TelemetryInterface           $telemetry
+     * @param string                              $url                   The base URL for the OpenFGA API endpoint
+     * @param int                                 $maxRetries            Maximum number of retry attempts for failed requests
+     * @param string|null                         $authorizationHeader   Optional Authorization header value for API authentication (deprecated - use authenticationService)
+     * @param ClientInterface|null                $httpClient            Optional PSR-18 HTTP client, auto-discovered if not provided
+     * @param ResponseFactoryInterface|null       $httpResponseFactory   Optional PSR-17 response factory, auto-discovered if not provided
+     * @param StreamFactoryInterface|null         $httpStreamFactory     Optional PSR-17 stream factory, auto-discovered if not provided
+     * @param RequestFactoryInterface|null        $httpRequestFactory    Optional PSR-17 request factory, auto-discovered if not provided
+     * @param ?TelemetryInterface                 $telemetry
+     * @param HttpClientInterface|null            $httpClientWrapper     Optional HTTP client wrapper
+     * @param RetryStrategyInterface|null         $retryStrategy         Optional retry strategy
+     * @param ConcurrentExecutorInterface|null    $concurrentExecutor    Optional concurrent executor
+     * @param AuthenticationServiceInterface|null $authenticationService Optional authentication service for dynamic header resolution
      */
     public function __construct(
         private readonly string $url,
@@ -88,12 +96,16 @@ final class RequestManager implements RequestManagerInterface
         private ?ResponseFactoryInterface $httpResponseFactory = null,
         private ?StreamFactoryInterface $httpStreamFactory = null,
         private ?RequestFactoryInterface $httpRequestFactory = null,
-        ?CircuitBreakerInterface $circuitBreaker = null,
-        ?RetryHandlerInterface $retryHandler = null,
         private readonly ?TelemetryInterface $telemetry = null,
+        ?HttpClientInterface $httpClientWrapper = null,
+        ?RetryStrategyInterface $retryStrategy = null,
+        ?ConcurrentExecutorInterface $concurrentExecutor = null,
+        private readonly ?AuthenticationServiceInterface $authenticationService = null,
     ) {
-        $this->circuitBreaker = $circuitBreaker ?? new CircuitBreaker;
-        $this->retryHandler = $retryHandler ?? new RetryHandler($this->circuitBreaker, $this->maxRetries);
+        // Initialize new interface implementations
+        $this->httpClientWrapper = $httpClientWrapper ?? new PsrHttpClient($this->httpClient);
+        $this->retryStrategy = $retryStrategy ?? new ExponentialBackoffRetryStrategy($this->maxRetries);
+        $this->concurrentExecutor = $concurrentExecutor ?? new FiberConcurrentExecutor;
     }
 
     /**
@@ -133,10 +145,13 @@ final class RequestManager implements RequestManagerInterface
      * provided tasks. It respects the maximum parallelism limit and efficiently
      * schedules fiber execution to maximize throughput.
      *
-     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks               Array of tasks to execute concurrently
-     * @param  int                                                    $maxParallelRequests Maximum concurrent requests
-     * @param  bool                                                   $stopOnFirstError    Whether to stop on first error
-     * @return array<FailureInterface|SuccessInterface>               Results from all tasks in the same order as input
+     * @param array<callable(): (FailureInterface|SuccessInterface)> $tasks               Array of tasks to execute concurrently
+     * @param int                                                    $maxParallelRequests Maximum concurrent requests
+     * @param bool                                                   $stopOnFirstError    Whether to stop on first error
+     *
+     * @throws Throwable If task execution fails
+     *
+     * @return array<FailureInterface|SuccessInterface> Results from all tasks in the same order as input
      */
     public function executeParallel(array $tasks, int $maxParallelRequests, bool $stopOnFirstError): array
     {
@@ -145,11 +160,27 @@ final class RequestManager implements RequestManagerInterface
         }
 
         // If no parallelism requested or only one task, execute sequentially
-        if (1 >= $maxParallelRequests || 1 === count($tasks)) {
+        if (1 >= $maxParallelRequests || 1 === count($tasks) || ! $this->concurrentExecutor->supportsConcurrency()) {
             return $this->executeSequential($tasks, $stopOnFirstError);
         }
 
-        return $this->executeConcurrent($tasks, $maxParallelRequests, $stopOnFirstError);
+        // Wrap tasks to handle Result types if stopOnFirstError is enabled
+        if ($stopOnFirstError) {
+            return $this->executeConcurrentWithEarlyStop($tasks, $maxParallelRequests);
+        }
+
+        // Use the concurrent executor for parallel execution
+        /** @var array<int, callable(): (FailureInterface|SuccessInterface)> $tasks */
+        $results = $this->concurrentExecutor->executeParallel($tasks, $maxParallelRequests);
+
+        // Convert any Throwables to Failure results
+        return array_map(static function ($result): FailureInterface | SuccessInterface {
+            if ($result instanceof Throwable) {
+                return new Failure($result);
+            }
+
+            return $result;
+        }, $results);
     }
 
     /**
@@ -244,6 +275,7 @@ final class RequestManager implements RequestManagerInterface
      * @inheritDoc
      *
      * @throws ReflectionException If exception location capture fails
+     * @throws Throwable           If authentication header retrieval fails
      */
     #[Override]
     public function request(ClientRequestInterface $request): RequestInterface
@@ -262,7 +294,16 @@ final class RequestManager implements RequestManagerInterface
         $headers['User-Agent'] = sprintf('openfga-sdk php/%s', Client::VERSION);
         $headers['Content-Type'] ??= 'application/json';
 
-        if (null !== $this->authorizationHeader) {
+        // Try to get authorization header from authentication service first, then fall back to static header
+        $authHeader = null;
+
+        if ($this->authenticationService instanceof AuthenticationServiceInterface) {
+            $authHeader = $this->authenticationService->getAuthorizationHeader($this->getHttpStreamFactory());
+        }
+
+        if (null !== $authHeader) {
+            $headers['Authorization'] = $authHeader;
+        } elseif (null !== $this->authorizationHeader) {
             $headers['Authorization'] = $this->authorizationHeader;
         }
 
@@ -443,6 +484,23 @@ final class RequestManager implements RequestManagerInterface
     }
 
     /**
+     * Execute tasks concurrently with early stopping on first error.
+     *
+     * This method is a specialized version of concurrent execution that
+     * stops all remaining tasks when the first error is encountered.
+     *
+     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks       Array of tasks to execute
+     * @param  int                                                    $maxParallel Maximum concurrent executions
+     * @return array<FailureInterface|SuccessInterface>
+     */
+    private function executeConcurrentWithEarlyStop(array $tasks, int $maxParallel): array
+    {
+        // For now, use the original executeConcurrent method since it already handles stopOnFirstError
+        // In the future, this could be optimized further with the ConcurrentExecutorInterface
+        return $this->executeConcurrent($tasks, $maxParallel, true);
+    }
+
+    /**
      * Execute a single HTTP request without retry logic.
      *
      * Performs the actual HTTP request using the configured PSR-18 client.
@@ -456,11 +514,10 @@ final class RequestManager implements RequestManagerInterface
      */
     private function executeRequest(RequestInterface $request): ResponseInterface
     {
-        /** @var mixed $span */
         $span = $this->telemetry?->startHttpRequest($request);
 
         try {
-            $response = $this->getHttpClient()->sendRequest($request);
+            $response = $this->httpClientWrapper->send($request);
             $this->telemetry?->endHttpRequest($span, $response);
 
             return $response;
@@ -523,11 +580,10 @@ final class RequestManager implements RequestManagerInterface
 
         // Direct execution without retry if maxRetries is 0
         if (0 === $this->maxRetries) {
-            /** @var mixed $span */
             $span = $this->telemetry?->startHttpRequest($request);
 
             try {
-                $response = $this->getHttpClient()->sendRequest($request);
+                $response = $this->httpClientWrapper->send($request);
                 $this->telemetry?->endHttpRequest($span, $response);
 
                 return $response;
@@ -538,12 +594,14 @@ final class RequestManager implements RequestManagerInterface
             }
         }
 
-        // Use retry handler for requests with retry enabled
+        // Use new retry strategy for requests with retry enabled
         try {
-            return $this->retryHandler->executeWithRetry(
+            return $this->retryStrategy->execute(
                 fn (): ResponseInterface => $this->executeRequest($request),
-                $request,
-                $endpoint,
+                [
+                    'request' => $request,
+                    'endpoint' => $endpoint,
+                ],
             );
         } catch (NetworkException $networkException) {
             // Preserve the response from the original NetworkException if available

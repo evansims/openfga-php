@@ -276,7 +276,7 @@ public function jsonSerialize(): array<int, array{type: string, relation?: strin
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/UserTypeFiltersInterface.php#L21)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/UserTypeFiltersInterface.php#L18)
 
 #### Returns
 

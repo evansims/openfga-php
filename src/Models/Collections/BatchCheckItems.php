@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{BatchCheckItem, BatchCheckItemInterface, ModelInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
@@ -14,7 +14,7 @@ use Override;
  * This collection maintains a list of BatchCheckItem objects, each representing
  * a single authorization check to be performed as part of a batch request.
  *
- * @extends IndexedCollection<BatchCheckItemInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\BatchCheckItemInterface>
  *
  * @see BatchCheckItemsInterface For the complete API specification
  * @see BatchCheckItemInterface

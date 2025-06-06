@@ -209,9 +209,13 @@ $result = $client->check(
 
 ### Error handling
 
-All query methods return Result objects. Handle errors gracefully:
+All query methods return Result objects. Handle errors gracefully using the Result pattern and helper functions:
 
 ```php
+use function OpenFGA\{tuple, result, success, failure, unwrap};
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+
+// Basic error handling
 $result = $client->check(
     tupleKey: tuple(
         user: 'user:alice',
@@ -221,9 +225,99 @@ $result = $client->check(
 );
 
 $result
-    ->success(fn($response) => echo "Check succeeded")
-    ->failure(fn($error) => logger()->error("Permission check failed", ['error' => $error]))
+    ->success(fn($response) => echo "Check succeeded: " . ($response->getAllowed() ? 'Allowed' : 'Denied'))
+    ->failure(fn($error) => logger()->error("Permission check failed", [
+        'error_type' => $error::class,
+        'error_detail' => $error instanceof ClientException ? $error->getError()->name : 'unknown'
+    ]))
     ->unwrap(); // Throws on failure
+```
+
+#### Advanced error handling with enum-based exceptions
+
+Use enum-based exceptions for more precise error handling with i18n support:
+
+```php
+// Define a robust permission checking service
+class PermissionService
+{
+    public function __construct(
+        private ClientInterface $client,
+        private string $storeId,
+        private string $modelId,
+        private CacheInterface $cache
+    ) {}
+    
+    public function canAccess(string $userId, string $action, string $resourceId): bool
+    {
+        // Use result helper for cleaner handling
+        return result(function() use ($userId, $action, $resourceId) {
+            return $this->client->check(
+                store: $this->storeId,
+                model: $this->modelId,
+                tupleKey: tuple("user:{$userId}", $action, $resourceId)
+            );
+        })
+        ->then(fn($response) => $response->getAllowed())
+        ->failure(function(Throwable $error) use ($userId, $action, $resourceId) {
+            // Handle different error types with match expression
+            if ($error instanceof ClientException) {
+                // Type-safe handling of specific error cases
+                return match($error->getError()) {
+                    // For network timeouts, use cached result with short TTL
+                    ClientError::Network => $this->getCachedPermission(
+                        $userId, 
+                        $action, 
+                        $resourceId,
+                        $defaultValue = false // Fail closed by default
+                    ),
+                    
+                    // For validation errors, log detailed context
+                    ClientError::Validation => $this->handleValidationError(
+                        $error->getContext(),
+                        $userId, 
+                        $action, 
+                        $resourceId
+                    ),
+                    
+                    // For other cases, gracefully fail closed
+                    default => false
+                };
+            }
+            
+            // For unexpected errors, log and fail closed
+            logger()->error('Unexpected error during permission check', [
+                'user' => $userId,
+                'action' => $action,
+                'resource' => $resourceId,
+                'error' => $error->getMessage()
+            ]);
+            
+            return false; // Secure default
+        })
+        ->unwrap();
+    }
+    
+    private function getCachedPermission(string $userId, string $action, string $resourceId, bool $default): bool
+    {
+        $cacheKey = "permission:{$userId}:{$action}:{$resourceId}";
+        return $this->cache->get($cacheKey, $default);
+    }
+    
+    private function handleValidationError(array $context, string $userId, string $action, string $resourceId): bool
+    {
+        logger()->warning('Validation error during permission check', [
+            'context' => $context,
+            'user' => $userId,
+            'action' => $action,
+            'resource' => $resourceId
+        ]);
+        
+        // Analyze context to determine appropriate fallback behavior
+        // For this example, we'll fail closed
+        return false;
+    }
+}
 ```
 
 ## What's next?

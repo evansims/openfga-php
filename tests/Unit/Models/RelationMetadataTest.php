@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\Collections\RelationReferences;
 use OpenFGA\Models\{RelationMetadata, RelationMetadataInterface, RelationReference, SourceInfo};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('RelationMetadata Model', function (): void {
     test('implements RelationMetadataInterface', function (): void {

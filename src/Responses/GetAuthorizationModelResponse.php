@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Collections\Conditions, Collections\Nodes, Collections\TypeDefinitionRelations, Collections\TypeDefinitions, Collections\Usersets, Metadata, Node, RelationMetadata, TypeDefinition, Userset};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
