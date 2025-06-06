@@ -28,7 +28,7 @@ interface ConditionParameterInterface extends ModelInterface
      * For example, a map parameter would have generic types defining the
      * key and value types, while a list parameter would define the element type.
      *
-     * @return ?ConditionParametersInterface<ConditionParameterInterface> The generic type parameters, or null for simple types
+     * @return ?ConditionParametersInterface The generic type parameters, or null for simple types
      */
     public function getGenericTypes(): ?ConditionParametersInterface;
 

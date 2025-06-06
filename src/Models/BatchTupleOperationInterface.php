@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\TupleKeysInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 use Override;
 
 /**
@@ -39,7 +39,7 @@ interface BatchTupleOperationInterface extends ModelInterface
     /**
      * Get the tuples to delete in this operation.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Collection of tuples to delete, or null if none
+     * @return TupleKeysInterface|null Collection of tuples to delete, or null if none
      */
     public function getDeletes(): ?TupleKeysInterface;
 
@@ -53,7 +53,7 @@ interface BatchTupleOperationInterface extends ModelInterface
     /**
      * Get the tuples to write in this operation.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Collection of tuples to write, or null if none
+     * @return TupleKeysInterface|null Collection of tuples to write, or null if none
      */
     public function getWrites(): ?TupleKeysInterface;
 

@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitionRelationsInterface, Usersets};
 use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset};
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 use stdClass;
 
 describe('TypeDefinitionRelations Collection', function (): void {

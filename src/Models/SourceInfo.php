@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;

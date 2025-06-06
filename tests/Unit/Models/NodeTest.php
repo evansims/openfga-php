@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{Computed, Leaf, Node, NodeInterface, NodeUnion, UsersetTreeDifference};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('Node Model', function (): void {
     test('implements NodeInterface', function (): void {

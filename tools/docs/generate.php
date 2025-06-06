@@ -44,6 +44,7 @@ class DocumentationGenerator
     {
         $this->buildClassMap();
         $this->generateDocumentation();
+        $this->generateTableOfContents();
     }
 
     private function buildClassMap(): void
@@ -1693,6 +1694,411 @@ class DocumentationGenerator
         }
         
         return $current;
+    }
+
+    /**
+     * Generate table-of-contents README.md files for each subdirectory.
+     */
+    private function generateTableOfContents(): void
+    {
+        echo "Generating table-of-contents README.md files...\n";
+        
+        // Build directory structure from class map
+        $directoryStructure = $this->buildDirectoryStructure();
+        
+        // Generate README.md for each directory
+        foreach ($directoryStructure as $directory => $classes) {
+            $this->generateDirectoryReadme($directory, $classes);
+        }
+        
+        echo "Table-of-contents generation complete.\n";
+    }
+
+    /**
+     * Build directory structure from class map.
+     */
+    private function buildDirectoryStructure(): array
+    {
+        $structure = [];
+        $subdirectories = [];
+        
+        foreach ($this->classMap as $className => $filePath) {
+            try {
+                $reflection = new ReflectionClass($className);
+                
+                // Skip abstract classes that are not interfaces or enums
+                if ($reflection->isAbstract() && !$reflection->isInterface() && !$reflection->isEnum()) {
+                    continue;
+                }
+                
+                // Get the namespace path relative to OpenFGA
+                $namespace = $reflection->getNamespaceName();
+                if ($namespace === 'OpenFGA') {
+                    $directory = '';
+                } else {
+                    $directory = str_replace('OpenFGA\\', '', $namespace);
+                    $directory = str_replace('\\', '/', $directory);
+                }
+                
+                // Track parent directories to identify subdirectories
+                $this->trackSubdirectories($directory, $subdirectories);
+                
+                // Categorize the class
+                $classInfo = [
+                    'name' => $reflection->getShortName(),
+                    'fullName' => $className,
+                    'type' => $this->getClassType($reflection),
+                    'description' => $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
+                    'file' => $reflection->getShortName() . '.md'
+                ];
+                
+                $structure[$directory][] = $classInfo;
+                
+            } catch (\Exception $e) {
+                echo "Error processing class $className for TOC: " . $e->getMessage() . "\n";
+            }
+        }
+        
+        // Add subdirectory information to each directory
+        foreach ($structure as $directory => &$directoryData) {
+            $directoryData['subdirectories'] = $subdirectories[$directory] ?? [];
+        }
+        
+        // Sort classes within each directory
+        foreach ($structure as $directory => &$directoryData) {
+            if (isset($directoryData['subdirectories'])) {
+                // If we've added subdirectories, we need to restructure
+                $classes = array_filter($directoryData, function($key) {
+                    return $key !== 'subdirectories';
+                }, ARRAY_FILTER_USE_KEY);
+                
+                usort($classes, function($a, $b) {
+                    // Sort by type first (interfaces, then classes, then enums), then by name
+                    $typeOrder = ['interface' => 1, 'class' => 2, 'enum' => 3];
+                    $aTypeOrder = $typeOrder[$a['type']] ?? 4;
+                    $bTypeOrder = $typeOrder[$b['type']] ?? 4;
+                    
+                    if ($aTypeOrder !== $bTypeOrder) {
+                        return $aTypeOrder <=> $bTypeOrder;
+                    }
+                    
+                    return strcmp($a['name'], $b['name']);
+                });
+                
+                $directoryData = [
+                    'classes' => $classes,
+                    'subdirectories' => $directoryData['subdirectories']
+                ];
+            } else {
+                usort($directoryData, function($a, $b) {
+                    // Sort by type first (interfaces, then classes, then enums), then by name
+                    $typeOrder = ['interface' => 1, 'class' => 2, 'enum' => 3];
+                    $aTypeOrder = $typeOrder[$a['type']] ?? 4;
+                    $bTypeOrder = $typeOrder[$b['type']] ?? 4;
+                    
+                    if ($aTypeOrder !== $bTypeOrder) {
+                        return $aTypeOrder <=> $bTypeOrder;
+                    }
+                    
+                    return strcmp($a['name'], $b['name']);
+                });
+            }
+        }
+        
+        return $structure;
+    }
+
+    /**
+     * Track subdirectories for each parent directory.
+     */
+    private function trackSubdirectories(string $directory, array &$subdirectories): void
+    {
+        if (empty($directory)) {
+            return;
+        }
+        
+        $parts = explode('/', $directory);
+        $currentPath = '';
+        
+        for ($i = 0; $i < count($parts); $i++) {
+            $parentPath = $currentPath;
+            $currentPath .= ($currentPath ? '/' : '') . $parts[$i];
+            
+            // Track this as a subdirectory of its parent
+            if ($i > 0) {
+                if (!isset($subdirectories[$parentPath])) {
+                    $subdirectories[$parentPath] = [];
+                }
+                if (!in_array($parts[$i], $subdirectories[$parentPath])) {
+                    $subdirectories[$parentPath][] = $parts[$i];
+                }
+            } else {
+                // This is a top-level directory under the root
+                if (!isset($subdirectories[''])) {
+                    $subdirectories[''] = [];
+                }
+                if (!in_array($parts[0], $subdirectories[''])) {
+                    $subdirectories[''][] = $parts[0];
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the type of a class (interface, class, or enum).
+     */
+    private function getClassType(ReflectionClass $reflection): string
+    {
+        if ($reflection->isInterface()) {
+            return 'interface';
+        }
+        if ($reflection->isEnum()) {
+            return 'enum';
+        }
+        return 'class';
+    }
+
+    /**
+     * Generate README.md file for a specific directory.
+     */
+    private function generateDirectoryReadme(string $directory, array $data): void
+    {
+        // Check if data has the new structure with subdirectories or old structure
+        $classes = [];
+        $subdirectories = [];
+        
+        if (isset($data['classes']) && isset($data['subdirectories'])) {
+            // New structure with subdirectories
+            $classes = $data['classes'];
+            $subdirectories = $data['subdirectories'];
+        } else {
+            // Old structure - just an array of classes
+            $classes = $data;
+        }
+        
+        if (empty($classes) && empty($subdirectories)) {
+            return;
+        }
+        
+        // Determine output directory
+        if ($directory === '') {
+            $outputPath = $this->outputDir;
+            $directoryName = 'OpenFGA SDK';
+            $breadcrumb = '';
+        } else {
+            $outputPath = $this->outputDir . '/' . $directory;
+            $directoryName = basename($directory);
+            $breadcrumb = $this->generateBreadcrumb($directory);
+        }
+        
+        // Ensure directory exists
+        if (!is_dir($outputPath)) {
+            mkdir($outputPath, 0755, true);
+        }
+        
+        // Group classes by type
+        $groupedClasses = [
+            'interface' => [],
+            'class' => [],
+            'enum' => []
+        ];
+        
+        foreach ($classes as $classInfo) {
+            if (isset($classInfo['type'])) {
+                $groupedClasses[$classInfo['type']][] = $classInfo;
+            }
+        }
+        
+        // If we have subdirectories, add them to the structure
+        if (!empty($subdirectories)) {
+            $groupedClasses = [
+                'classes' => $classes,
+                'subdirectories' => $subdirectories
+            ];
+        }
+        
+        // Generate content
+        $content = $this->generateReadmeContent($directoryName, $breadcrumb, $groupedClasses, $directory);
+        
+        // Write README.md file
+        $readmePath = $outputPath . '/README.md';
+        file_put_contents($readmePath, $content);
+        
+        echo "Generated README.md for: " . ($directory ?: 'root') . "\n";
+    }
+
+    /**
+     * Generate breadcrumb navigation for a directory.
+     */
+    private function generateBreadcrumb(string $directory): string
+    {
+        $parts = explode('/', $directory);
+        $breadcrumbs = ['[API Documentation](../README.md)'];
+        
+        $currentPath = '';
+        foreach ($parts as $part) {
+            $currentPath .= ($currentPath ? '/' : '') . $part;
+            $breadcrumbs[] = $part;
+        }
+        
+        return implode(' > ', $breadcrumbs);
+    }
+
+    /**
+     * Generate the content for a README.md file.
+     */
+    private function generateReadmeContent(string $directoryName, string $breadcrumb, array $groupedClasses, string $directory): string
+    {
+        $content = [];
+        
+        // Header
+        $content[] = "# $directoryName";
+        $content[] = '';
+        
+        // Breadcrumb (if not root)
+        if (!empty($breadcrumb)) {
+            $content[] = $breadcrumb;
+            $content[] = '';
+        }
+        
+        // Description based on directory name
+        $description = $this->getDirectoryDescription($directory);
+        if ($description) {
+            $content[] = $description;
+            $content[] = '';
+        }
+        
+        // Check if we have subdirectories (from the restructured data)
+        $subdirectories = [];
+        $classes = [];
+        
+        if (isset($groupedClasses['classes']) && isset($groupedClasses['subdirectories'])) {
+            // New structure with subdirectories
+            $subdirectories = $groupedClasses['subdirectories'];
+            $classes = $groupedClasses['classes'];
+            
+            // Regroup classes by type
+            $groupedClasses = [
+                'interface' => [],
+                'class' => [],
+                'enum' => []
+            ];
+            
+            foreach ($classes as $classInfo) {
+                $groupedClasses[$classInfo['type']][] = $classInfo;
+            }
+        }
+        
+        // Statistics
+        $totalClasses = array_sum(array_map('count', $groupedClasses));
+        $content[] = "**Total Components:** $totalClasses";
+        $content[] = '';
+        
+        // Subdirectories section (if any exist)
+        if (!empty($subdirectories)) {
+            $content[] = "## Subdirectories";
+            $content[] = '';
+            $content[] = '| Directory | Description |';
+            $content[] = '|-----------|-------------|';
+            
+            sort($subdirectories); // Sort alphabetically
+            foreach ($subdirectories as $subdir) {
+                $subdirPath = $directory ? "$directory/$subdir" : $subdir;
+                $subdirDescription = $this->getDirectoryDescription($subdirPath);
+                $content[] = "| [`$subdir`](./$subdir/README.md) | $subdirDescription |";
+            }
+            
+            $content[] = '';
+        }
+        
+        // Table of contents by type
+        foreach ($groupedClasses as $type => $classes) {
+            if (empty($classes)) {
+                continue;
+            }
+            
+            $typeTitle = ucfirst($type) . 's';
+            if ($type === 'class') {
+                $typeTitle = 'Classes';
+            } elseif ($type === 'interface') {
+                $typeTitle = 'Interfaces';
+            } elseif ($type === 'enum') {
+                $typeTitle = 'Enumerations';
+            }
+            
+            $content[] = "## $typeTitle";
+            $content[] = '';
+            
+            // Create table
+            $content[] = '| Name | Description |';
+            $content[] = '|------|-------------|';
+            
+            foreach ($classes as $classInfo) {
+                $name = "[`{$classInfo['name']}`](./{$classInfo['file']})";
+                $description = $this->truncateDescription($classInfo['description'], 100);
+                $content[] = "| $name | $description |";
+            }
+            
+            $content[] = '';
+        }
+        
+        // Footer with navigation
+        if (!empty($breadcrumb)) {
+            $content[] = '---';
+            $content[] = '';
+            $content[] = '[← Back to API Documentation](../README.md)';
+        }
+        
+        return implode("\n", $content) . "\n";
+    }
+
+    /**
+     * Get a description for a directory based on its purpose.
+     */
+    private function getDirectoryDescription(string $directory): string
+    {
+        $descriptions = [
+            'Authentication' => 'Authentication providers and token management for OpenFGA API access.',
+            'Models' => 'Domain models representing OpenFGA entities like stores, tuples, and authorization models.',
+            'Models/Collections' => 'Type-safe collections for managing groups of domain objects.',
+            'Models/Enums' => 'Enumeration types for consistent value constraints across the SDK.',
+            'Requests' => 'Request objects for all OpenFGA API operations.',
+            'Responses' => 'Response objects containing API results and metadata.',
+            'Services' => 'Business logic services that orchestrate between repositories and external systems.',
+            'Repositories' => 'Data access interfaces and implementations for managing OpenFGA resources.',
+            'Exceptions' => 'Exception hierarchy for type-safe error handling throughout the SDK.',
+            'Results' => 'Result pattern implementation for functional error handling without exceptions.',
+            'Network' => 'HTTP client abstractions, retry strategies, and low-level networking components.',
+            'Observability' => 'Telemetry providers and monitoring integrations for operational visibility.',
+            'Events' => 'Event system for cross-cutting concerns like logging and metrics collection.',
+            'Factories' => 'Factory classes for consistent object creation and configuration.',
+            'DI' => 'Dependency injection container and service provider for framework integration.',
+            'Integration' => 'Framework integration helpers and service providers.',
+            'Language' => 'DSL parser and transformer for human-readable authorization models.',
+            'Translation' => 'Internationalization support and message translation utilities.',
+            'Schemas' => 'JSON schema validation for ensuring data integrity and type safety.',
+        ];
+        
+        return $descriptions[$directory] ?? '';
+    }
+
+    /**
+     * Truncate description text to a reasonable length for table display.
+     */
+    private function truncateDescription(?string $description, int $maxLength): string
+    {
+        if (empty($description)) {
+            return '';
+        }
+        
+        // Remove newlines and excessive whitespace
+        $description = preg_replace('/\s+/', ' ', trim($description));
+        
+        if (strlen($description) <= $maxLength) {
+            return $description;
+        }
+        
+        return substr($description, 0, $maxLength - 3) . '...';
     }
 
     public static function deleteDir(string $dir): void

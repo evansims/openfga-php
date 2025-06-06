@@ -8,9 +8,7 @@ use OpenFGA\Models\NodeInterface;
 use Override;
 
 /**
- * @template T of NodeInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<NodeInterface>
  */
 interface NodesInterface extends IndexedCollectionInterface
 {

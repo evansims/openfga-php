@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\{Collections\Nodes, Collections\Users, Collections\UsersList, Collections\UsersetUnion, Collections\Usersets, Computed, DifferenceV1, Leaf, Node, NodeUnion, ObjectRelation, TupleToUsersetV1, UsersListUser, Userset, UsersetTree, UsersetTreeDifference, UsersetTreeInterface, UsersetTreeTupleToUserset, UsersetUser};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;

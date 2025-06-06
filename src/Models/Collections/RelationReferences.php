@@ -8,8 +8,6 @@ use OpenFGA\Models\{ModelInterface, RelationReference, RelationReferenceInterfac
 
 /**
  * @extends IndexedCollection<RelationReferenceInterface>
- *
- * @implements RelationReferencesInterface<RelationReferenceInterface>
  */
 final class RelationReferences extends IndexedCollection implements RelationReferencesInterface
 {

@@ -71,7 +71,7 @@ Get the name of the condition. This is a unique identifier for the condition wit
 #### getParameters
 
 ```php
-public function getParameters(): ConditionParametersInterface<ConditionParameterInterface>|null
+public function getParameters(): ConditionParametersInterface|null
 
 ```
 
@@ -81,7 +81,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 #### Returns
 
-[`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md)&lt;[`ConditionParameterInterface`](ConditionParameterInterface.md)&gt; &#124; `null` — The condition parameters, or null if the condition uses no parameters
+[`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null` — The condition parameters, or null if the condition uses no parameters
 
 ### Other
 

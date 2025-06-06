@@ -85,40 +85,19 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
     #[Override]
     public function getAuthenticationRequest(StreamFactoryInterface $streamFactory): ?RequestContext
     {
-        if ($this->token instanceof AccessTokenInterface && ! $this->token->isExpired()) {
+        if ($this->shouldSkipAuthentication()) {
             return null;
         }
 
-        if ($this->isAuthenticating) {
-            return null;
-        }
+        $credentials = $this->validateAndPrepareCredentials();
 
-        $clientId = '' !== ($trimmedClientId = trim($this->clientId)) ? $trimmedClientId : null;
-        $clientSecret = '' !== ($trimmedClientSecret = trim($this->clientSecret)) ? $trimmedClientSecret : null;
-        $issuer = '' !== ($trimmedIssuer = trim($this->issuer)) ? $trimmedIssuer : null;
-        $audience = '' !== ($trimmedAudience = trim($this->audience)) ? $trimmedAudience : null;
-
-        if (null === $clientId || null === $clientSecret || null === $issuer || null === $audience) {
+        if (null === $credentials) {
             return null;
         }
 
         $this->isAuthenticating = true;
 
-        return new RequestContext(
-            method: RequestMethod::POST,
-            url: rtrim($issuer, '/') . '/oauth/token',
-            body: $streamFactory->createStream(json_encode([
-                'grant_type' => 'client_credentials',
-                'client_id' => $clientId,
-                'client_secret' => $clientSecret,
-                'audience' => $audience,
-            ], JSON_THROW_ON_ERROR)),
-            headers: [
-                'Accept' => 'application/json',
-                'Content-Type' => 'application/x-www-form-urlencoded',
-            ],
-            useApiUrl: false,
-        );
+        return $this->buildAuthenticationRequest($streamFactory, $credentials);
     }
 
     /**
@@ -187,5 +166,78 @@ final class ClientCredentialAuthentication implements AuthenticationInterface
     public function requiresAuthentication(): bool
     {
         return true;
+    }
+
+    /**
+     * Build the OAuth authentication request.
+     *
+     * @param array{clientId: string, clientSecret: string, issuer: string, audience: string} $credentials
+     * @param StreamFactoryInterface                                                          $streamFactory
+     */
+    private function buildAuthenticationRequest(StreamFactoryInterface $streamFactory, array $credentials): RequestContext
+    {
+        return new RequestContext(
+            method: RequestMethod::POST,
+            url: rtrim($credentials['issuer'], '/') . '/oauth/token',
+            body: $streamFactory->createStream(json_encode([
+                'grant_type' => 'client_credentials',
+                'client_id' => $credentials['clientId'],
+                'client_secret' => $credentials['clientSecret'],
+                'audience' => $credentials['audience'],
+            ], JSON_THROW_ON_ERROR)),
+            headers: [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/x-www-form-urlencoded',
+            ],
+            useApiUrl: false,
+        );
+    }
+
+    /**
+     * Check if authentication should be skipped.
+     */
+    private function shouldSkipAuthentication(): bool
+    {
+        if ($this->token instanceof AccessTokenInterface && ! $this->token->isExpired()) {
+            return true;
+        }
+
+        return $this->isAuthenticating;
+    }
+
+    /**
+     * Trim string or return null if empty.
+     *
+     * @param string $value
+     */
+    private function trimOrNull(string $value): ?string
+    {
+        $trimmed = trim($value);
+
+        return '' !== $trimmed ? $trimmed : null;
+    }
+
+    /**
+     * Validate and prepare authentication credentials.
+     *
+     * @return array{clientId: string, clientSecret: string, issuer: string, audience: string}|null
+     */
+    private function validateAndPrepareCredentials(): ?array
+    {
+        $clientId = $this->trimOrNull($this->clientId);
+        $clientSecret = $this->trimOrNull($this->clientSecret);
+        $issuer = $this->trimOrNull($this->issuer);
+        $audience = $this->trimOrNull($this->audience);
+
+        if (null === $clientId || null === $clientSecret || null === $issuer || null === $audience) {
+            return null;
+        }
+
+        return [
+            'clientId' => $clientId,
+            'clientSecret' => $clientSecret,
+            'issuer' => $issuer,
+            'audience' => $audience,
+        ];
     }
 }

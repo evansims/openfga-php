@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models;
 
 use JsonSerializable;
 use OpenFGA\Models\{DifferenceV1, ObjectRelation, TypedWildcard, User, UserInterface, UserObject, Userset, UsersetUser};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 use stdClass;
 
 describe('User Model', function (): void {

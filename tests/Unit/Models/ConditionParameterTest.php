@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models;
 use OpenFGA\Models\Collections\{ConditionParameters};
 use OpenFGA\Models\{ConditionParameter, ConditionParameterInterface};
 use OpenFGA\Models\Enums\TypeName;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('ConditionParameter Model', function (): void {
     test('implements ConditionParameterInterface', function (): void {

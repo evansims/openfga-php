@@ -30,7 +30,7 @@ public function getContinuationToken(): string|null
 
 Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of stores exceeds the page size limit. If null, there are no more results to fetch.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponseInterface.php#L45)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponseInterface.php#L44)
 
 #### Returns
 
@@ -39,14 +39,14 @@ Get the continuation token for pagination. Returns a token that can be used to r
 #### getStores
 
 ```php
-public function getStores(): StoresInterface<StoreInterface>
+public function getStores(): StoresInterface
 
 ```
 
 Get the collection of stores. Returns a type-safe collection containing the store objects from the current page of results. Each store includes its metadata such as ID, name, and timestamps.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponseInterface.php#L55)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListStoresResponseInterface.php#L54)
 
 #### Returns
 
-[`StoresInterface`](Models/Collections/StoresInterface.md)&lt;[`StoreInterface`](Models/StoreInterface.md)&gt; — The collection of stores
+[`StoresInterface`](Models/Collections/StoresInterface.md) — The collection of stores

@@ -14,9 +14,7 @@ use Override;
  * complex authorization operations like unions, intersections, and differences.
  * Each userset in the collection can define different ways to compute authorized users.
  *
- * @template T of UsersetInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<UsersetInterface>
  */
 interface UsersetsInterface extends IndexedCollectionInterface
 {

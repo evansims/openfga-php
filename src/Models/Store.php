@@ -7,7 +7,7 @@ namespace OpenFGA\Models;
 use DateTimeImmutable;
 use DateTimeInterface;
 use DateTimeZone;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 /**

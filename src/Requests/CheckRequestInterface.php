@@ -55,7 +55,7 @@ interface CheckRequestInterface extends RequestInterface
      * These contextual tuples are temporarily added to the authorization data during evaluation,
      * allowing you to test permission scenarios with hypothetical or pending relationship changes.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Additional relationship tuples for evaluation, or null if none provided
+     * @return TupleKeysInterface|null Additional relationship tuples for evaluation, or null if none provided
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 

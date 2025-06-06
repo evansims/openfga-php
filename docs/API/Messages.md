@@ -19,6 +19,8 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 
 | Name                                         | Value                                                            | Description |
 | -------------------------------------------- | ---------------------------------------------------------------- | ----------- |
+| `ASSERTIONS_EMPTY_COLLECTION`                | `assertions.empty_collection`                                    |             |
+| `ASSERTIONS_INVALID_TUPLE_KEY`               | `assertions.invalid_tuple_key`                                   |             |
 | `AUTH_ACCESS_TOKEN_MUST_BE_STRING`           | `auth.access_token_must_be_string`                               |             |
 | `AUTH_ERROR_TOKEN_EXPIRED`                   | `exception.auth.token_expired`                                   |             |
 | `AUTH_ERROR_TOKEN_INVALID`                   | `exception.auth.token_invalid`                                   |             |
@@ -43,6 +45,9 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `CONFIG_ERROR_HTTP_REQUEST_FACTORY_MISSING`  | `exception.config.http_request_factory_missing`                  |             |
 | `CONFIG_ERROR_HTTP_RESPONSE_FACTORY_MISSING` | `exception.config.http_response_factory_missing`                 |             |
 | `CONFIG_ERROR_HTTP_STREAM_FACTORY_MISSING`   | `exception.config.http_stream_factory_missing`                   |             |
+| `CONFIG_ERROR_INVALID_LANGUAGE`              | `exception.config.invalid_language`                              |             |
+| `CONFIG_ERROR_INVALID_RETRY_COUNT`           | `exception.config.invalid_retry_count`                           |             |
+| `CONFIG_ERROR_INVALID_URL`                   | `exception.config.invalid_url`                                   |             |
 | `CONSISTENCY_HIGHER_CONSISTENCY_DESCRIPTION` | `consistency.higher_consistency.description`                     |             |
 | `CONSISTENCY_MINIMIZE_LATENCY_DESCRIPTION`   | `consistency.minimize_latency.description`                       |             |
 | `CONSISTENCY_UNSPECIFIED_DESCRIPTION`        | `consistency.unspecified.description`                            |             |
@@ -63,10 +68,17 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `JWT_MISSING_REQUIRED_CLAIMS`                | `auth.jwt.missing_required_claims`                               |             |
 | `JWT_TOKEN_EXPIRED`                          | `auth.jwt.token_expired`                                         |             |
 | `JWT_TOKEN_NOT_YET_VALID`                    | `auth.jwt.token_not_yet_valid`                                   |             |
+| `MODEL_CLONE_SOURCE_NOT_FOUND`               | `model.clone_source_not_found`                                   |             |
+| `MODEL_DUPLICATE_TYPE`                       | `model.duplicate_type`                                           |             |
+| `MODEL_INVALID_IDENTIFIER_FORMAT`            | `model.invalid_identifier_format`                                |             |
 | `MODEL_INVALID_TUPLE_KEY`                    | `model.invalid_tuple_key`                                        |             |
 | `MODEL_LEAF_MISSING_CONTENT`                 | `model.leaf_missing_content`                                     |             |
+| `MODEL_NO_MODELS_IN_STORE`                   | `model.no_models_in_store`                                       |             |
+| `MODEL_NOT_FOUND`                            | `model.not_found`                                                |             |
 | `MODEL_SOURCE_INFO_FILE_EMPTY`               | `model.source_info_file_empty`                                   |             |
+| `MODEL_TYPE_DEFINITIONS_EMPTY`               | `model.type_definitions_empty`                                   |             |
 | `MODEL_TYPED_WILDCARD_TYPE_EMPTY`            | `model.typed_wildcard_type_empty`                                |             |
+| `MODEL_VALIDATION_FAILED`                    | `model.validation_failed`                                        |             |
 | `NETWORK_ERROR`                              | `network.error`                                                  |             |
 | `NETWORK_ERROR_CONFLICT`                     | `exception.network.conflict`                                     |             |
 | `NETWORK_ERROR_FORBIDDEN`                    | `exception.network.forbidden`                                    |             |
@@ -87,6 +99,7 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `REQUEST_RELATION_EMPTY`                     | `request.relation_empty`                                         |             |
 | `REQUEST_STORE_ID_EMPTY`                     | `request.store_id_empty`                                         |             |
 | `REQUEST_STORE_NAME_EMPTY`                   | `request.store_name_empty`                                       |             |
+| `REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED`       | `request.transactional_limit_exceeded`                           |             |
 | `REQUEST_TYPE_EMPTY`                         | `request.type_empty`                                             |             |
 | `REQUEST_USER_EMPTY`                         | `request.user_empty`                                             |             |
 | `RESULT_FAILURE_NO_VALUE`                    | `result.failure_no_value`                                        |             |
@@ -99,13 +112,19 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `SERIALIZATION_ERROR_MISSING_REQUIRED_PARAM` | `exception.serialization.missing_required_constructor_parameter` |             |
 | `SERIALIZATION_ERROR_RESPONSE`               | `exception.serialization.response`                               |             |
 | `SERIALIZATION_ERROR_UNDEFINED_ITEM_TYPE`    | `exception.serialization.undefined_item_type`                    |             |
+| `STORE_NAME_REQUIRED`                        | `store.name_required`                                            |             |
+| `STORE_NAME_TOO_LONG`                        | `store.name_too_long`                                            |             |
+| `STORE_NOT_FOUND`                            | `store.not_found`                                                |             |
 | `TUPLE_OPERATION_DELETE_DESCRIPTION`         | `tuple_operation.delete.description`                             |             |
 | `TUPLE_OPERATION_WRITE_DESCRIPTION`          | `tuple_operation.write.description`                              |             |
+| `UNEXPECTED_RESPONSE_TYPE`                   | `response.unexpected_type`                                       |             |
 
 ## Cases
 
 | Name                                         | Value                                                            | Description |
 | -------------------------------------------- | ---------------------------------------------------------------- | ----------- |
+| `ASSERTIONS_EMPTY_COLLECTION`                | `assertions.empty_collection`                                    |             |
+| `ASSERTIONS_INVALID_TUPLE_KEY`               | `assertions.invalid_tuple_key`                                   |             |
 | `AUTH_ACCESS_TOKEN_MUST_BE_STRING`           | `auth.access_token_must_be_string`                               |             |
 | `AUTH_ERROR_TOKEN_EXPIRED`                   | `exception.auth.token_expired`                                   |             |
 | `AUTH_ERROR_TOKEN_INVALID`                   | `exception.auth.token_invalid`                                   |             |
@@ -130,6 +149,9 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `CONFIG_ERROR_HTTP_REQUEST_FACTORY_MISSING`  | `exception.config.http_request_factory_missing`                  |             |
 | `CONFIG_ERROR_HTTP_RESPONSE_FACTORY_MISSING` | `exception.config.http_response_factory_missing`                 |             |
 | `CONFIG_ERROR_HTTP_STREAM_FACTORY_MISSING`   | `exception.config.http_stream_factory_missing`                   |             |
+| `CONFIG_ERROR_INVALID_LANGUAGE`              | `exception.config.invalid_language`                              |             |
+| `CONFIG_ERROR_INVALID_RETRY_COUNT`           | `exception.config.invalid_retry_count`                           |             |
+| `CONFIG_ERROR_INVALID_URL`                   | `exception.config.invalid_url`                                   |             |
 | `CONSISTENCY_HIGHER_CONSISTENCY_DESCRIPTION` | `consistency.higher_consistency.description`                     |             |
 | `CONSISTENCY_MINIMIZE_LATENCY_DESCRIPTION`   | `consistency.minimize_latency.description`                       |             |
 | `CONSISTENCY_UNSPECIFIED_DESCRIPTION`        | `consistency.unspecified.description`                            |             |
@@ -150,10 +172,17 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `JWT_MISSING_REQUIRED_CLAIMS`                | `auth.jwt.missing_required_claims`                               |             |
 | `JWT_TOKEN_EXPIRED`                          | `auth.jwt.token_expired`                                         |             |
 | `JWT_TOKEN_NOT_YET_VALID`                    | `auth.jwt.token_not_yet_valid`                                   |             |
+| `MODEL_CLONE_SOURCE_NOT_FOUND`               | `model.clone_source_not_found`                                   |             |
+| `MODEL_DUPLICATE_TYPE`                       | `model.duplicate_type`                                           |             |
+| `MODEL_INVALID_IDENTIFIER_FORMAT`            | `model.invalid_identifier_format`                                |             |
 | `MODEL_INVALID_TUPLE_KEY`                    | `model.invalid_tuple_key`                                        |             |
 | `MODEL_LEAF_MISSING_CONTENT`                 | `model.leaf_missing_content`                                     |             |
+| `MODEL_NO_MODELS_IN_STORE`                   | `model.no_models_in_store`                                       |             |
+| `MODEL_NOT_FOUND`                            | `model.not_found`                                                |             |
 | `MODEL_SOURCE_INFO_FILE_EMPTY`               | `model.source_info_file_empty`                                   |             |
+| `MODEL_TYPE_DEFINITIONS_EMPTY`               | `model.type_definitions_empty`                                   |             |
 | `MODEL_TYPED_WILDCARD_TYPE_EMPTY`            | `model.typed_wildcard_type_empty`                                |             |
+| `MODEL_VALIDATION_FAILED`                    | `model.validation_failed`                                        |             |
 | `NETWORK_ERROR`                              | `network.error`                                                  |             |
 | `NETWORK_ERROR_CONFLICT`                     | `exception.network.conflict`                                     |             |
 | `NETWORK_ERROR_FORBIDDEN`                    | `exception.network.forbidden`                                    |             |
@@ -174,6 +203,7 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `REQUEST_RELATION_EMPTY`                     | `request.relation_empty`                                         |             |
 | `REQUEST_STORE_ID_EMPTY`                     | `request.store_id_empty`                                         |             |
 | `REQUEST_STORE_NAME_EMPTY`                   | `request.store_name_empty`                                       |             |
+| `REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED`       | `request.transactional_limit_exceeded`                           |             |
 | `REQUEST_TYPE_EMPTY`                         | `request.type_empty`                                             |             |
 | `REQUEST_USER_EMPTY`                         | `request.user_empty`                                             |             |
 | `RESULT_FAILURE_NO_VALUE`                    | `result.failure_no_value`                                        |             |
@@ -186,12 +216,30 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `SERIALIZATION_ERROR_MISSING_REQUIRED_PARAM` | `exception.serialization.missing_required_constructor_parameter` |             |
 | `SERIALIZATION_ERROR_RESPONSE`               | `exception.serialization.response`                               |             |
 | `SERIALIZATION_ERROR_UNDEFINED_ITEM_TYPE`    | `exception.serialization.undefined_item_type`                    |             |
+| `STORE_NAME_REQUIRED`                        | `store.name_required`                                            |             |
+| `STORE_NAME_TOO_LONG`                        | `store.name_too_long`                                            |             |
+| `STORE_NOT_FOUND`                            | `store.not_found`                                                |             |
 | `TUPLE_OPERATION_DELETE_DESCRIPTION`         | `tuple_operation.delete.description`                             |             |
 | `TUPLE_OPERATION_WRITE_DESCRIPTION`          | `tuple_operation.write.description`                              |             |
+| `UNEXPECTED_RESPONSE_TYPE`                   | `response.unexpected_type`                                       |             |
 
 ## Translation Tables
 
 The following tables show all available translations for each message key used throughout the OpenFGA PHP SDK.
+
+### `assertions.empty_collection`
+
+| Locale | Translation                                     |
+| ------ | ----------------------------------------------- |
+| `en`   | Assertions collection cannot be empty           |
+| `es`   | La colección de aserciones no puede estar vacía |
+
+### `assertions.invalid_tuple_key`
+
+| Locale | Translation                                                                               |
+| ------ | ----------------------------------------------------------------------------------------- |
+| `en`   | Assertion contains invalid tuple key: user, relation, and object are required             |
+| `es`   | La aserción contiene una clave de tupla inválida: se requieren usuario, relación y objeto |
 
 ### `auth.access_token_must_be_string`
 
@@ -361,6 +409,27 @@ The following tables show all available translations for each message key used t
 | `en`   | HTTP stream factory is not configured          |
 | `es`   | La fábrica de streams HTTP no está configurada |
 
+### `exception.config.invalid_language`
+
+| Locale | Translation                                         |
+| ------ | --------------------------------------------------- |
+| `en`   | Invalid language code provided: %language%          |
+| `es`   | Código de idioma inválido proporcionado: %language% |
+
+### `exception.config.invalid_retry_count`
+
+| Locale | Translation                                            |
+| ------ | ------------------------------------------------------ |
+| `en`   | Invalid retry count provided: %retries%                |
+| `es`   | Número de reintentos inválido proporcionado: %retries% |
+
+### `exception.config.invalid_url`
+
+| Locale | Translation                       |
+| ------ | --------------------------------- |
+| `en`   | Invalid URL provided: %url%       |
+| `es`   | URL inválida proporcionada: %url% |
+
 ### `consistency.higher_consistency.description`
 
 | Locale | Translation                                                                                                     |
@@ -501,6 +570,27 @@ The following tables show all available translations for each message key used t
 | `en`   | JWT token is not yet valid    |
 | `es`   | El token JWT aún no es válido |
 
+### `model.clone_source_not_found`
+
+| Locale | Translation                                    |
+| ------ | ---------------------------------------------- |
+| `en`   | Source model not found for cloning             |
+| `es`   | No se encontró el modelo fuente para clonación |
+
+### `model.duplicate_type`
+
+| Locale | Translation                                          |
+| ------ | ---------------------------------------------------- |
+| `en`   | Duplicate type definition found: %type%              |
+| `es`   | Se encontró una definición de tipo duplicada: %type% |
+
+### `model.invalid_identifier_format`
+
+| Locale | Translation                                                                                                              |
+| ------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `en`   | Invalid identifier format: identifiers cannot contain whitespace. Found in %identifier%                                  |
+| `es`   | Formato de identificador inválido: los identificadores no pueden contener espacios en blanco. Encontrado en %identifier% |
+
 ### `model.invalid_tuple_key`
 
 | Locale | Translation                                             |
@@ -515,6 +605,20 @@ The following tables show all available translations for each message key used t
 | `en`   | Leaf must contain at least one of users, computed or tupleToUserset  |
 | `es`   | Leaf debe contener al menos uno de: users, computed o tupleToUserset |
 
+### `model.no_models_in_store`
+
+| Locale | Translation                                                        |
+| ------ | ------------------------------------------------------------------ |
+| `en`   | No authorization models found in store %store_id%                  |
+| `es`   | No se encontraron modelos de autorización en el almacén %store_id% |
+
+### `model.not_found`
+
+| Locale | Translation                                         |
+| ------ | --------------------------------------------------- |
+| `en`   | Authorization model %model_id% was not found        |
+| `es`   | No se encontró el modelo de autorización %model_id% |
+
 ### `model.source_info_file_empty`
 
 | Locale | Translation                             |
@@ -522,12 +626,26 @@ The following tables show all available translations for each message key used t
 | `en`   | SourceInfo::$file cannot be empty.      |
 | `es`   | SourceInfo::$file no puede estar vacío. |
 
+### `model.type_definitions_empty`
+
+| Locale | Translation                                     |
+| ------ | ----------------------------------------------- |
+| `en`   | Type definitions cannot be empty                |
+| `es`   | Las definiciones de tipo no pueden estar vacías |
+
 ### `model.typed_wildcard_type_empty`
 
 | Locale | Translation                                |
 | ------ | ------------------------------------------ |
 | `en`   | TypedWildcard::$type cannot be empty.      |
 | `es`   | TypedWildcard::$type no puede estar vacío. |
+
+### `model.validation_failed`
+
+| Locale | Translation                               |
+| ------ | ----------------------------------------- |
+| `en`   | Model validation failed: %message%        |
+| `es`   | La validación del modelo falló: %message% |
 
 ### `network.error`
 
@@ -669,6 +787,13 @@ The following tables show all available translations for each message key used t
 | `en`   | Store name cannot be empty                 |
 | `es`   | El nombre del almacén no puede estar vacío |
 
+### `request.transactional_limit_exceeded`
+
+| Locale | Translation                                                                                                                               |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `en`   | Transactional writeTuples exceeded limit: %count% operations (max 100). Use non-transactional mode or split into multiple requests.       |
+| `es`   | WriteTuples transaccional excedió el límite: %count% operaciones (máx. 100). Use modo no transaccional o divida en múltiples solicitudes. |
+
 ### `request.type_empty`
 
 | Locale | Translation                  |
@@ -753,6 +878,27 @@ The following tables show all available translations for each message key used t
 | `en`   | Item type is not defined for %className%              |
 | `es`   | El tipo de elemento no está definido para %className% |
 
+### `store.name_required`
+
+| Locale | Translation                                               |
+| ------ | --------------------------------------------------------- |
+| `en`   | Store name is required and cannot be empty                |
+| `es`   | El nombre del almacén es requerido y no puede estar vacío |
+
+### `store.name_too_long`
+
+| Locale | Translation                                                                          |
+| ------ | ------------------------------------------------------------------------------------ |
+| `en`   | Store name exceeds maximum length of %d characters (provided: %d)                    |
+| `es`   | El nombre del almacén excede la longitud máxima de %d caracteres (proporcionado: %d) |
+
+### `store.not_found`
+
+| Locale | Translation                  |
+| ------ | ---------------------------- |
+| `en`   | Store %s was not found       |
+| `es`   | No se encontró el almacén %s |
+
 ### `tuple_operation.delete.description`
 
 | Locale | Translation                                                                            |
@@ -767,6 +913,13 @@ The following tables show all available translations for each message key used t
 | `en`   | Adds a new relationship tuple, granting permissions or establishing relationships |
 | `es`   | Agrega una nueva tupla de relación, otorgando permisos o estableciendo relaciones |
 
+### `response.unexpected_type`
+
+| Locale | Translation                           |
+| ------ | ------------------------------------- |
+| `en`   | Unexpected response type received     |
+| `es`   | Tipo de respuesta inesperado recibido |
+
 ## Methods
 
 #### key
@@ -778,7 +931,7 @@ public function key(): string
 
 Get the translation key for this message.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Messages.php#L275)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Messages.php#L314)
 
 #### Returns
 

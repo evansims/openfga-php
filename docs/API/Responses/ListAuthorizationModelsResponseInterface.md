@@ -30,7 +30,7 @@ public function getContinuationToken(): string|null
 
 Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of authorization models exceeds the page size limit. If null, there are no more results to fetch.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponseInterface.php#L45)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponseInterface.php#L44)
 
 #### Returns
 
@@ -39,14 +39,14 @@ Get the continuation token for pagination. Returns a token that can be used to r
 #### getModels
 
 ```php
-public function getModels(): AuthorizationModelsInterface<AuthorizationModelInterface>
+public function getModels(): AuthorizationModelsInterface
 
 ```
 
 Get the collection of authorization models. Returns a type-safe collection containing the authorization model objects from the current page of results. Each model includes its ID, type definitions, schema version, and any conditions.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponseInterface.php#L56)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListAuthorizationModelsResponseInterface.php#L55)
 
 #### Returns
 
-[`AuthorizationModelsInterface`](Models/Collections/AuthorizationModelsInterface.md)&lt;[`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md)&gt; — The collection of authorization models
+[`AuthorizationModelsInterface`](Models/Collections/AuthorizationModelsInterface.md) — The collection of authorization models

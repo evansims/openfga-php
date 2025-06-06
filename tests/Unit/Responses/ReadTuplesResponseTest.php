@@ -10,7 +10,7 @@ use OpenFGA\Models\Collections\Tuples;
 use OpenFGA\Models\ConditionInterface;
 use OpenFGA\Models\{Tuple, TupleKey};
 use OpenFGA\Responses\{ReadTuplesResponse, ReadTuplesResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 

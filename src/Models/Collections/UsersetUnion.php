@@ -9,8 +9,6 @@ use Override;
 
 /**
  * @extends IndexedCollection<UsersetInterface>
- *
- * @implements UsersetUnionInterface<UsersetInterface>
  */
 final class UsersetUnion extends IndexedCollection implements UsersetUnionInterface
 {

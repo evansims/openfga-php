@@ -74,7 +74,7 @@ interface ListUsersRequestInterface extends RequestInterface
      * scenarios with hypothetical or pending relationship changes without
      * permanently modifying the store.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Additional relationship tuples for evaluation, or null if none provided
+     * @return TupleKeysInterface|null Additional relationship tuples for evaluation, or null if none provided
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 
@@ -134,7 +134,7 @@ interface ListUsersRequestInterface extends RequestInterface
      * User filters help optimize performance and focus results by excluding
      * user types that are not relevant to the current operation.
      *
-     * @return UserTypeFiltersInterface<UserTypeFilterInterface> Collection of user type filters to apply to the results
+     * @return UserTypeFiltersInterface Collection of user type filters to apply to the results
      */
     public function getUserFilters(): UserTypeFiltersInterface;
 }

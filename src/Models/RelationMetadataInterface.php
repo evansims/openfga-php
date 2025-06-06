@@ -36,7 +36,7 @@ interface RelationMetadataInterface extends ModelInterface
      * providing type safety and helping with authorization model validation.
      * For example, a "member" relation might allow "user" and "group" types.
      *
-     * @return RelationReferencesInterface<RelationReferenceInterface>|null The directly related user types, or null if not specified
+     * @return RelationReferencesInterface|null The directly related user types, or null if not specified
      */
     public function getDirectlyRelatedUserTypes(): ?RelationReferencesInterface;
 

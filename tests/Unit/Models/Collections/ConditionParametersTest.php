@@ -8,7 +8,7 @@ use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
 use OpenFGA\Models\{ConditionParameter};
 use OpenFGA\Models\Enums\TypeName;
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schemas\CollectionSchemaInterface;
 use stdClass;
 
 use function count;

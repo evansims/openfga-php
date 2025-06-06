@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Responses\WriteTuplesResponseInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 use Override;
 use Throwable;
 
@@ -49,7 +48,7 @@ interface BatchTupleResultInterface extends ModelInterface
     /**
      * Get all successful responses from completed chunks.
      *
-     * @return array<WriteTuplesResponseInterface> Responses from successful API calls
+     * @return array<mixed> Responses from successful API calls
      */
     public function getResponses(): array;
 

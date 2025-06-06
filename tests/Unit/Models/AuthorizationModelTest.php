@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models;
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionParameter, ObjectRelation, TypeDefinition, Userset};
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, TypeDefinitionRelations, TypeDefinitions};
 use OpenFGA\Models\Enums\{SchemaVersion, TypeName};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('AuthorizationModel Model', function (): void {
     test('implements interface', function (): void {

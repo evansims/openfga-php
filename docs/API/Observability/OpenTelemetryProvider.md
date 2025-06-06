@@ -20,7 +20,7 @@ OpenTelemetry implementation for OpenFGA SDK observability. This class provides 
 
 ```php
 public function endHttpRequest(
-    mixed $span,
+    ?object $span,
     ?Psr\Http\Message\ResponseInterface $response = NULL,
     ?Throwable $exception = NULL,
 ): void
@@ -35,7 +35,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 
 | Name         | Type                                               | Description                                         |
 | ------------ | -------------------------------------------------- | --------------------------------------------------- |
-| `$span`      | `mixed`                                            | The span identifier returned by startHttpRequest()  |
+| `$span`      | `object` &#124; `null`                             | The span identifier returned by startHttpRequest()  |
 | `$response`  | `Psr\Http\Message\ResponseInterface` &#124; `null` | The HTTP response received, if any                  |
 | `$exception` | `Throwable` &#124; `null`                          | Optional exception that occurred during the request |
 
@@ -47,7 +47,7 @@ End tracing for an HTTP request. Completes the HTTP request span, recording the 
 
 ```php
 public function endOperation(
-    mixed $span,
+    ?object $span,
     bool $success,
     ?Throwable $exception = NULL,
     array $attributes = [],
@@ -57,13 +57,13 @@ public function endOperation(
 
 End tracing for an OpenFGA API operation. Completes the trace span started with startOperation(), recording the operation outcome and any relevant metrics. If an exception occurred during the operation, it should be recorded in the span.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L224)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L225)
 
 #### Parameters
 
 | Name          | Type                      | Description                                           |
 | ------------- | ------------------------- | ----------------------------------------------------- |
-| `$span`       | `mixed`                   | The span identifier returned by startOperation()      |
+| `$span`       | `object` &#124; `null`    | The span identifier returned by startOperation()      |
 | `$success`    | `bool`                    | Whether the operation completed successfully          |
 | `$exception`  | `Throwable` &#124; `null` | Optional exception that occurred during the operation |
 | `$attributes` | `array`                   |                                                       |
@@ -86,7 +86,7 @@ public function recordAuthenticationEvent(
 
 Record authentication events. Records metrics and traces related to authentication flows, including token acquisition, refresh operations, and authentication failures. This helps monitor authentication performance and troubleshoot auth issues.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L297)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L299)
 
 #### Parameters
 
@@ -115,7 +115,7 @@ public function recordCircuitBreakerState(
 
 Record circuit breaker state changes. Records metrics about circuit breaker state transitions and failure rates. This helps monitor the health of individual API endpoints and the SDK&#039;s resilience mechanisms.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L335)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L337)
 
 #### Parameters
 
@@ -145,7 +145,7 @@ public function recordOperationMetrics(
 
 Record performance metrics for OpenFGA operations. Records timing and throughput metrics for OpenFGA API operations, allowing monitoring of operation latency and identifying performance bottlenecks or degradations.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L376)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L378)
 
 #### Parameters
 
@@ -176,7 +176,7 @@ public function recordRetryAttempt(
 
 Record retry attempt metrics. Records metrics about retry attempts, including the retry count, delay, and eventual outcome. This helps track the reliability and performance of API requests under various network conditions.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L411)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L413)
 
 #### Parameters
 
@@ -192,6 +192,28 @@ Record retry attempt metrics. Records metrics about retry attempts, including th
 
 `void`
 
+#### recordSpan
+
+```php
+public function recordSpan(string $name, array $attributes = []): void
+
+```
+
+Record a telemetry span with attributes. Records a complete telemetry span for events that don&#039;t require start/end semantics. This is useful for event-driven telemetry where the event represents a point in time rather than a duration.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L462)
+
+#### Parameters
+
+| Name          | Type     | Description   |
+| ------------- | -------- | ------------- |
+| `$name`       | `string` | The span name |
+| `$attributes` | `array`  |               |
+
+#### Returns
+
+`void`
+
 #### startHttpRequest
 
 ```php
@@ -201,7 +223,7 @@ public function startHttpRequest(Psr\Http\Message\RequestInterface $request): ob
 
 Start tracing an HTTP request. Creates a new trace span for an outgoing HTTP request to the OpenFGA API. The span should follow OpenTelemetry semantic conventions for HTTP client operations, including standard HTTP attributes.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L459)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L484)
 
 #### Parameters
 
@@ -227,7 +249,7 @@ public function startOperation(
 
 Start tracing an OpenFGA API operation. Creates a new trace span for a high-level OpenFGA operation such as check, expand, or write operations. The span should include relevant attributes such as store ID, authorization model ID, and operation-specific metadata.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L496)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Observability/OpenTelemetryProvider.php#L522)
 
 #### Parameters
 

@@ -144,10 +144,17 @@ describe('ConfigurationError', function (): void {
     });
 
     describe('isHttpComponentMissing()', function (): void {
-        test('all configuration errors are HTTP component related', function (): void {
-            foreach (ConfigurationError::cases() as $error) {
-                expect($error->isHttpComponentMissing())->toBeTrue();
-            }
+        test('HTTP component errors are correctly identified', function (): void {
+            expect(ConfigurationError::HttpClientMissing->isHttpComponentMissing())->toBeTrue();
+            expect(ConfigurationError::HttpRequestFactoryMissing->isHttpComponentMissing())->toBeTrue();
+            expect(ConfigurationError::HttpResponseFactoryMissing->isHttpComponentMissing())->toBeTrue();
+            expect(ConfigurationError::HttpStreamFactoryMissing->isHttpComponentMissing())->toBeTrue();
+        });
+
+        test('non-HTTP component errors are correctly identified', function (): void {
+            expect(ConfigurationError::InvalidUrl->isHttpComponentMissing())->toBeFalse();
+            expect(ConfigurationError::InvalidLanguage->isHttpComponentMissing())->toBeFalse();
+            expect(ConfigurationError::InvalidRetryCount->isHttpComponentMissing())->toBeFalse();
         });
     });
 });

@@ -6,7 +6,7 @@ namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
 use OpenFGA\Models\Enums\TypeName;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 /**
@@ -27,8 +27,8 @@ final class ConditionParameter implements ConditionParameterInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param TypeName                                                  $typeName
-     * @param ConditionParametersInterface<ConditionParameterInterface> $genericTypes
+     * @param TypeName                     $typeName
+     * @param ConditionParametersInterface $genericTypes
      */
     public function __construct(
         private readonly TypeName $typeName,

@@ -6,7 +6,7 @@ namespace OpenFGA\Models;
 
 use InvalidArgumentException;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 /**
@@ -33,8 +33,8 @@ final class BatchTupleOperation implements BatchTupleOperationInterface
     /**
      * Create a new batch tuple operation.
      *
-     * @param TupleKeysInterface<TupleKeyInterface>|null $writes  Collection of tuples to write
-     * @param TupleKeysInterface<TupleKeyInterface>|null $deletes Collection of tuples to delete
+     * @param TupleKeysInterface|null $writes  Collection of tuples to write
+     * @param TupleKeysInterface|null $deletes Collection of tuples to delete
      */
     public function __construct(
         private readonly ?TupleKeysInterface $writes = null,
@@ -84,11 +84,18 @@ final class BatchTupleOperation implements BatchTupleOperationInterface
         }
 
         $chunks = [];
+
+        /** @var array<TupleKeyInterface> $writes */
         $writes = $this->writes instanceof TupleKeysInterface ? [...$this->writes] : [];
+
+        /** @var array<TupleKeyInterface> $deletes */
         $deletes = $this->deletes instanceof TupleKeysInterface ? [...$this->deletes] : [];
 
         while ([] !== $writes || [] !== $deletes) {
+            /** @var array<TupleKeyInterface> $chunkWrites */
             $chunkWrites = [];
+
+            /** @var array<TupleKeyInterface> $chunkDeletes */
             $chunkDeletes = [];
             $remaining = $chunkSize;
 

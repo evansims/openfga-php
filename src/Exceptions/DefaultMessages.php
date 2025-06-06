@@ -60,6 +60,9 @@ final class DefaultMessages implements DefaultMessagesInterface
         ConfigurationError::HttpRequestFactoryMissing->value => Messages::CONFIG_ERROR_HTTP_REQUEST_FACTORY_MISSING,
         ConfigurationError::HttpResponseFactoryMissing->value => Messages::CONFIG_ERROR_HTTP_RESPONSE_FACTORY_MISSING,
         ConfigurationError::HttpStreamFactoryMissing->value => Messages::CONFIG_ERROR_HTTP_STREAM_FACTORY_MISSING,
+        ConfigurationError::InvalidUrl->value => Messages::CONFIG_ERROR_INVALID_URL,
+        ConfigurationError::InvalidLanguage->value => Messages::CONFIG_ERROR_INVALID_LANGUAGE,
+        ConfigurationError::InvalidRetryCount->value => Messages::CONFIG_ERROR_INVALID_RETRY_COUNT,
     ];
 
     /**

@@ -19,9 +19,7 @@ use Override;
  * (recording when the relationship was established), making them essential
  * for both authorization checks and audit trails.
  *
- * @template T of TupleInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<TupleInterface>
  *
  * @see https://openfga.dev/docs/concepts#relationship-tuples OpenFGA Relationship Tuples
  */

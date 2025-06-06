@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\UsersetTreeInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for relationship expansion response objects.

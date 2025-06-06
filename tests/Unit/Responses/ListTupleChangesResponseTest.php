@@ -10,7 +10,7 @@ use OpenFGA\Models\Collections\TupleChanges;
 use OpenFGA\Models\Enums\TupleOperation;
 use OpenFGA\Models\{TupleChange, TupleKey};
 use OpenFGA\Responses\{ListTupleChangesResponse, ListTupleChangesResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 

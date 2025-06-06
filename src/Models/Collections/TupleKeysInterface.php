@@ -14,9 +14,7 @@ use Override;
  * between users, objects, and relations in the authorization model. Tuple keys are the
  * fundamental building blocks for expressing permissions and relationships.
  *
- * @template T of TupleKeyInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<TupleKeyInterface>
  *
  * @see https://openfga.dev/docs/concepts#relationship-tuples OpenFGA Relationship Tuples
  */

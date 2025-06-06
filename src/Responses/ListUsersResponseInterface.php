@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\Collections\UsersInterface;
-use OpenFGA\Models\UserInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for user listing response objects.
@@ -42,7 +41,7 @@ interface ListUsersResponseInterface extends ResponseInterface
      * queried relationship with the specified object. Each user represents an
      * entity that has been granted the specified permission or relationship.
      *
-     * @return UsersInterface<UserInterface> The collection of users with the relationship
+     * @return UsersInterface The collection of users with the relationship
      */
     public function getUsers(): UsersInterface;
 }

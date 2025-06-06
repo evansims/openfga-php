@@ -8,9 +8,9 @@ use InvalidArgumentException;
 use JsonException;
 use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\Collections\{Stores, StoresInterface};
-use OpenFGA\Models\{Store, StoreInterface};
+use OpenFGA\Models\{Store};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -31,8 +31,8 @@ final class ListStoresResponse extends Response implements ListStoresResponseInt
     /**
      * Create a new list stores response instance.
      *
-     * @param StoresInterface<StoreInterface> $stores            The collection of stores for the current page
-     * @param ?string                         $continuationToken Pagination token for fetching additional results, or null if no more pages exist
+     * @param StoresInterface $stores            The collection of stores for the current page
+     * @param ?string         $continuationToken Pagination token for fetching additional results, or null if no more pages exist
      */
     public function __construct(
         private readonly StoresInterface $stores,

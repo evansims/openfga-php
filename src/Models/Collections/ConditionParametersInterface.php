@@ -8,9 +8,7 @@ use OpenFGA\Models\ConditionParameterInterface;
 use Override;
 
 /**
- * @template T of ConditionParameterInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<ConditionParameterInterface>
  */
 interface ConditionParametersInterface extends IndexedCollectionInterface
 {

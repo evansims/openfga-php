@@ -54,7 +54,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 #### getContextualTuples
 
 ```php
-public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>|null
+public function getContextualTuples(): TupleKeysInterface|null
 
 ```
 
@@ -64,7 +64,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 #### Returns
 
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
 #### getModel
 
@@ -150,7 +150,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 #### getUserFilters
 
 ```php
-public function getUserFilters(): UserTypeFiltersInterface<UserTypeFilterInterface>
+public function getUserFilters(): UserTypeFiltersInterface
 
 ```
 
@@ -160,4 +160,4 @@ Get the user type filters to apply to results. Returns a collection of filters t
 
 #### Returns
 
-[`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md)&lt;[`UserTypeFilterInterface`](Models/UserTypeFilterInterface.md)&gt; — Collection of user type filters to apply to the results
+[`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md) — Collection of user type filters to apply to the results

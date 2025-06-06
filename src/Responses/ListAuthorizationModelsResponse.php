@@ -6,10 +6,10 @@ namespace OpenFGA\Responses;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, TypeDefinition};
-use OpenFGA\Models\Collections\{AuthorizationModels, AuthorizationModelsInterface, Conditions, TypeDefinitions};
+use OpenFGA\Models\{AuthorizationModel, Metadata, Node, RelationMetadata, TypeDefinition, Userset};
+use OpenFGA\Models\Collections\{AuthorizationModels, AuthorizationModelsInterface, Conditions, Nodes, TypeDefinitionRelations, TypeDefinitions, Usersets};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -30,8 +30,8 @@ final class ListAuthorizationModelsResponse extends Response implements ListAuth
     /**
      * Create a new list authorization models response instance.
      *
-     * @param AuthorizationModelsInterface<AuthorizationModelInterface> $models            The collection of authorization models for the current page
-     * @param ?string                                                   $continuationToken Pagination token for fetching additional results, or null if no more pages exist
+     * @param AuthorizationModelsInterface $models            The collection of authorization models for the current page
+     * @param ?string                      $continuationToken Pagination token for fetching additional results, or null if no more pages exist
      */
     public function __construct(
         private readonly AuthorizationModelsInterface $models,
@@ -57,6 +57,13 @@ final class ListAuthorizationModelsResponse extends Response implements ListAuth
             $data = self::parseResponse($response, $request);
 
             // Register all necessary schemas for AuthorizationModel
+            $validator->registerSchema(Node::schema());
+            $validator->registerSchema(Nodes::schema());
+            $validator->registerSchema(Userset::schema());
+            $validator->registerSchema(Usersets::schema());
+            $validator->registerSchema(RelationMetadata::schema());
+            $validator->registerSchema(Metadata::schema());
+            $validator->registerSchema(TypeDefinitionRelations::schema());
             $validator->registerSchema(TypeDefinition::schema());
             $validator->registerSchema(TypeDefinitions::schema());
             $validator->registerSchema(Conditions::schema());

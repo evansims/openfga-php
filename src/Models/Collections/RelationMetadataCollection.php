@@ -18,8 +18,6 @@ use OpenFGA\Models\{ModelInterface, RelationMetadata, RelationMetadataInterface}
  * metadata for specific relations within a type definition.
  *
  * @extends KeyedCollection<RelationMetadataInterface>
- *
- * @implements RelationMetadataCollectionInterface<RelationMetadataInterface>
  */
 final class RelationMetadataCollection extends KeyedCollection implements RelationMetadataCollectionInterface
 {

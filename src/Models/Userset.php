@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{Usersets, UsersetsInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 use stdClass;
 
@@ -27,12 +27,12 @@ final class Userset implements UsersetInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param object|null                              $direct
-     * @param ObjectRelationInterface|null             $computedUserset
-     * @param TupleToUsersetV1Interface|null           $tupleToUserset
-     * @param UsersetsInterface<UsersetInterface>|null $union
-     * @param UsersetsInterface<UsersetInterface>|null $intersection
-     * @param DifferenceV1Interface|null               $difference
+     * @param object|null                    $direct
+     * @param ObjectRelationInterface|null   $computedUserset
+     * @param TupleToUsersetV1Interface|null $tupleToUserset
+     * @param UsersetsInterface|null         $union
+     * @param UsersetsInterface|null         $intersection
+     * @param DifferenceV1Interface|null     $difference
      */
     public function __construct(
         private readonly ?object $direct = null,

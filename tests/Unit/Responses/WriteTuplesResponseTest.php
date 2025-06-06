@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 
 use Exception;
 use OpenFGA\Responses\{WriteTuplesResponse, WriteTuplesResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
 describe('WriteTuplesResponse', function (): void {

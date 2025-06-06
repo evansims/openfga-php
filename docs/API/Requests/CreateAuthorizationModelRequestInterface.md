@@ -24,7 +24,7 @@ Interface for creating new authorization models in OpenFGA. This interface defin
 #### getConditions
 
 ```php
-public function getConditions(): ConditionsInterface<ConditionInterface>|null
+public function getConditions(): ConditionsInterface|null
 
 ```
 
@@ -34,7 +34,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 #### Returns
 
-[`ConditionsInterface`](Models/Collections/ConditionsInterface.md)&lt;[`ConditionInterface`](Models/ConditionInterface.md)&gt; &#124; `null` — Collection of conditional rules for dynamic authorization, or null if no conditions are defined
+[`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` — Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
 #### getRequest
 
@@ -90,7 +90,7 @@ Get the store ID where the authorization model will be created. Identifies the O
 #### getTypeDefinitions
 
 ```php
-public function getTypeDefinitions(): TypeDefinitionsInterface<TypeDefinitionInterface>
+public function getTypeDefinitions(): TypeDefinitionsInterface
 
 ```
 
@@ -100,4 +100,4 @@ Get the type definitions for the authorization model. Returns a collection of ty
 
 #### Returns
 
-[`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md)&lt;[`TypeDefinitionInterface`](Models/TypeDefinitionInterface.md)&gt; — Collection of object type definitions that define the authorization schema
+[`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) — Collection of object type definitions that define the authorization schema

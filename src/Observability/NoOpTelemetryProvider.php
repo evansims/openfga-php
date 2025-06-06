@@ -29,7 +29,7 @@ final class NoOpTelemetryProvider implements TelemetryInterface
      */
     #[Override]
     public function endHttpRequest(
-        mixed $span,
+        object | null $span,
         ?ResponseInterface $response = null,
         ?Throwable $exception = null,
     ): void {
@@ -41,7 +41,7 @@ final class NoOpTelemetryProvider implements TelemetryInterface
      */
     #[Override]
     public function endOperation(
-        mixed $span,
+        object | null $span,
         bool $success,
         ?Throwable $exception = null,
         array $attributes = [],
@@ -107,7 +107,16 @@ final class NoOpTelemetryProvider implements TelemetryInterface
      * @inheritDoc
      */
     #[Override]
-    public function startHttpRequest(RequestInterface $request): null
+    public function recordSpan(string $name, array $attributes = []): void
+    {
+        // No-op
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function startHttpRequest(RequestInterface $request): object | null
     {
         return null;
     }
@@ -121,7 +130,7 @@ final class NoOpTelemetryProvider implements TelemetryInterface
         StoreInterface | string $store,
         AuthorizationModelInterface | string | null $model = null,
         array $attributes = [],
-    ): null {
+    ): object | null {
         return null;
     }
 }

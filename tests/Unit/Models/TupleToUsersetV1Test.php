@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{ObjectRelation, TupleToUsersetV1, TupleToUsersetV1Interface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('TupleToUsersetV1 Model', function (): void {
     test('implements TupleToUsersetV1Interface', function (): void {

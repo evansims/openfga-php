@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use DateTimeImmutable;
 use OpenFGA\Models\StoreInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for store retrieval response objects.

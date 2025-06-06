@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\AuthorizationModelInterface;
 use OpenFGA\Models\Collections\AuthorizationModelsInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for authorization models listing response objects.
@@ -51,7 +50,7 @@ interface ListAuthorizationModelsResponseInterface extends ResponseInterface
      * the current page of results. Each model includes its ID, type definitions,
      * schema version, and any conditions.
      *
-     * @return AuthorizationModelsInterface<AuthorizationModelInterface> The collection of authorization models
+     * @return AuthorizationModelsInterface The collection of authorization models
      */
     public function getModels(): AuthorizationModelsInterface;
 }

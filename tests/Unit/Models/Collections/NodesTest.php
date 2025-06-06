@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 
 use OpenFGA\Models\Collections\{Nodes, NodesInterface};
 use OpenFGA\Models\{Computed, Leaf, Node};
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Nodes Collection', function (): void {
     test('implements interface', function (): void {

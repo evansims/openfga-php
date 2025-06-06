@@ -6,7 +6,7 @@ namespace OpenFGA\Network;
 
 use const CASE_LOWER;
 
-use OpenFGA\{Exceptions\NetworkError, Exceptions\NetworkException};
+use OpenFGA\Exceptions\{NetworkError, NetworkException};
 use Override;
 use Psr\Http\Client\NetworkExceptionInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};

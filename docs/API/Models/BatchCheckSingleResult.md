@@ -39,7 +39,7 @@ public function getAllowed(): ?bool
 
 Get whether this check was allowed. Returns true if the user has the specified relationship with the object, false if they don&#039;t, or null if the check encountered an error.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L89)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L91)
 
 #### Returns
 
@@ -56,7 +56,7 @@ public function getError(): ?object
 
 Get any error that occurred during this check. Returns error information if the check failed to complete successfully, or null if the check completed without errors.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L98)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L100)
 
 #### Returns
 
@@ -90,7 +90,7 @@ public function jsonSerialize(): array<string, mixed>
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L109)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L111)
 
 #### Returns
 
@@ -103,7 +103,7 @@ public function toArray(): array<string, mixed>
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L122)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L124)
 
 #### Returns
 

@@ -13,6 +13,10 @@ dsl:
   unbalanced_parentheses_opening: 'Unbalanced parentheses: %count% unclosed opening %parentheses%'
   invalid_computed_userset: 'Invalid computed userset'
 
+assertions:
+  empty_collection: 'Assertions collection cannot be empty'
+  invalid_tuple_key: 'Assertion contains invalid tuple key: user, relation, and object are required'
+
 auth:
   invalid_response_format: 'Invalid response format'
   missing_required_fields: 'Missing required fields in response'
@@ -62,6 +66,12 @@ model:
   typed_wildcard_type_empty: 'TypedWildcard::$type cannot be empty.'
   source_info_file_empty: 'SourceInfo::$file cannot be empty.'
   leaf_missing_content: 'Leaf must contain at least one of users, computed or tupleToUserset'
+  not_found: 'Authorization model %model_id% was not found'
+  no_models_in_store: 'No authorization models found in store %store_id%'
+  validation_failed: 'Model validation failed: %message%'
+  type_definitions_empty: 'Type definitions cannot be empty'
+  clone_source_not_found: 'Source model not found for cloning'
+  duplicate_type: 'Duplicate type definition found: %type%'
 
 collection:
   undefined_item_type: 'Undefined item type for %class%. Define the $itemType property or override the constructor.'
@@ -99,6 +109,9 @@ exception:
     http_request_factory_missing: 'HTTP request factory is not configured'
     http_response_factory_missing: 'HTTP response factory is not configured'
     http_stream_factory_missing: 'HTTP stream factory is not configured'
+    invalid_url: 'Invalid URL provided: %url%'
+    invalid_language: 'Invalid language code provided: %language%'
+    invalid_retry_count: 'Invalid retry count provided: %retries%'
   network:
     conflict: 'Conflict (409): The request conflicts with the current state'
     forbidden: 'Forbidden (403): Access denied to the requested resource'
@@ -122,3 +135,11 @@ tuple_operation:
     description: 'Adds a new relationship tuple, granting permissions or establishing relationships'
   delete:
     description: 'Removes an existing relationship tuple, revoking permissions or removing relationships'
+
+store:
+  name_required: 'Store name is required and cannot be empty'
+  name_too_long: 'Store name exceeds maximum length of %d characters (provided: %d)'
+  not_found: 'Store %s was not found'
+
+response:
+  unexpected_type: 'Unexpected response type received'

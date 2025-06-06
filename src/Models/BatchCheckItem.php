@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;
@@ -37,10 +37,10 @@ final class BatchCheckItem implements BatchCheckItemInterface
     /**
      * Create a new batch check item.
      *
-     * @param TupleKeyInterface                      $tupleKey         The tuple key to check
-     * @param string                                 $correlationId    Unique identifier for this check (max 36 chars, alphanumeric + hyphens)
-     * @param ?TupleKeysInterface<TupleKeyInterface> $contextualTuples Optional contextual tuples for this check
-     * @param ?object                                $context          Optional context object for this check
+     * @param TupleKeyInterface   $tupleKey         The tuple key to check
+     * @param string              $correlationId    Unique identifier for this check (max 36 chars, alphanumeric + hyphens)
+     * @param ?TupleKeysInterface $contextualTuples Optional contextual tuples for this check
+     * @param ?object             $context          Optional context object for this check
      *
      * @throws ClientThrowable          If the correlation ID is invalid
      * @throws InvalidArgumentException If message translation parameters are invalid

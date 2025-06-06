@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{ConditionMetadata, ConditionMetadataInterface, SourceInfo};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('ConditionMetadata Model', function (): void {
     test('implements ConditionMetadataInterface', function (): void {

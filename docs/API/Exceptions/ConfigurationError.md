@@ -23,6 +23,9 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 | `HttpRequestFactoryMissing`  | `http_request_factory_missing`  |             |
 | `HttpResponseFactoryMissing` | `http_response_factory_missing` |             |
 | `HttpStreamFactoryMissing`   | `http_stream_factory_missing`   |             |
+| `InvalidLanguage`            | `invalid_language`              |             |
+| `InvalidRetryCount`          | `invalid_retry_count`           |             |
+| `InvalidUrl`                 | `invalid_url`                   |             |
 
 ## Cases
 
@@ -32,6 +35,9 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 | `HttpRequestFactoryMissing`  | `http_request_factory_missing`  |             |
 | `HttpResponseFactoryMissing` | `http_response_factory_missing` |             |
 | `HttpStreamFactoryMissing`   | `http_stream_factory_missing`   |             |
+| `InvalidLanguage`            | `invalid_language`              |             |
+| `InvalidRetryCount`          | `invalid_retry_count`           |             |
+| `InvalidUrl`                 | `invalid_url`                   |             |
 
 ## Methods
 
@@ -46,7 +52,7 @@ public function getRequiredPsrInterface(): string
 
 Get the recommended PSR interface for this configuration error. Provides the specific PSR interface name that should be implemented to resolve this configuration error, useful for error messages and documentation.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L82)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L88)
 
 #### Returns
 
@@ -57,17 +63,17 @@ Get the recommended PSR interface for this configuration error. Provides the spe
 #### isHttpComponentMissing
 
 ```php
-public function isHttpComponentMissing(): true
+public function isHttpComponentMissing(): bool
 
 ```
 
 Check if this configuration error is related to missing PSR HTTP components. Useful for providing specific error handling and setup guidance when PSR HTTP dependencies are not properly configured.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L100)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L109)
 
 #### Returns
 
-`true` — True if the error is related to missing HTTP components, false otherwise
+`bool` — True if the error is related to missing HTTP components, false otherwise
 
 ### Other
 
@@ -85,7 +91,7 @@ public function exception(
 
 Create a new ConfigurationException for this error type. Factory method that creates a ConfigurationException instance with the current error type and provided context information. This provides a convenient way to generate typed exceptions with proper error categorization and rich debugging context for OpenFGA configuration failures. The exception will automatically capture the correct file and line location where this method was called (typically where `throw` occurs), ensuring debuggers show the actual throw location rather than this factory method.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L62)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L68)
 
 #### Parameters
 

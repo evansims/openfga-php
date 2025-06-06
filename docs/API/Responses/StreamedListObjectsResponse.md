@@ -32,7 +32,7 @@ public function getObject(): string
 
 Get a single object identifier from a streamed response chunk.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponse.php#L125)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponse.php#L128)
 
 #### Returns
 

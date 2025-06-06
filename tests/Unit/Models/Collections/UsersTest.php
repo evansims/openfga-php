@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 
 use OpenFGA\Models\Collections\{Users, UsersInterface, UsersList};
 use OpenFGA\Models\{TypedWildcard, User, UsersetUser};
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 use stdClass;
 
 describe('Users Collection', function (): void {

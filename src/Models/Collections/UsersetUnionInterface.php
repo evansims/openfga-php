@@ -14,9 +14,7 @@ use Override;
  * where users are granted access if they satisfy ANY of the contained usersets.
  * The collection provides optimized serialization for union-specific data structures.
  *
- * @template T of UsersetInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<UsersetInterface>
  */
 interface UsersetUnionInterface extends IndexedCollectionInterface
 {

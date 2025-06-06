@@ -10,6 +10,7 @@ use Override;
 
 use function array_key_exists;
 use function array_merge;
+use function dirname;
 use function file_exists;
 use function is_array;
 use function is_object;
@@ -185,7 +186,7 @@ final class Translator implements TranslatorInterface
         }
 
         // Load available translations
-        $translationsDir = __DIR__ . '/../../translations';
+        $translationsDir = dirname(__DIR__, 2) . '/translations';
         $locales = ['en', 'es']; // Add more locales as they become available
 
         foreach ($locales as $locale) {

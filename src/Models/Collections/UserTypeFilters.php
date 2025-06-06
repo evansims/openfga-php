@@ -8,8 +8,6 @@ use OpenFGA\Models\{ModelInterface, UserTypeFilter, UserTypeFilterInterface};
 
 /**
  * @extends IndexedCollection<UserTypeFilterInterface>
- *
- * @implements UserTypeFiltersInterface<UserTypeFilterInterface>
  */
 final class UserTypeFilters extends IndexedCollection implements UserTypeFiltersInterface
 {

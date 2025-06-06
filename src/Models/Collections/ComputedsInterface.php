@@ -8,9 +8,7 @@ use OpenFGA\Models\ComputedInterface;
 use Override;
 
 /**
- * @template T of ComputedInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<ComputedInterface>
  */
 interface ComputedsInterface extends IndexedCollectionInterface
 {

@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{UsersList, UsersListInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;
@@ -30,9 +30,9 @@ final class Leaf implements LeafInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param UsersListInterface<UsersListUserInterface>|null $users
-     * @param ComputedInterface|null                          $computed
-     * @param UsersetTreeTupleToUsersetInterface|null         $tupleToUserset
+     * @param UsersListInterface|null                 $users
+     * @param ComputedInterface|null                  $computed
+     * @param UsersetTreeTupleToUsersetInterface|null $tupleToUserset
      *
      * @throws ClientThrowable          If none of the leaf content parameters are provided
      * @throws InvalidArgumentException If message translation parameters are invalid

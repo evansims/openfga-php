@@ -40,7 +40,7 @@ public function getContext(): ?object
 
 Get the context object for this check. This provides additional context data that can be used by conditions in the authorization model during evaluation.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L189)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L195)
 
 #### Returns
 
@@ -55,7 +55,7 @@ public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInte
 
 Get the contextual tuples for this check. These are additional tuples that are evaluated only for this specific check and are not persisted in the store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L198)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L204)
 
 #### Returns
 
@@ -70,7 +70,7 @@ public function getCorrelationId(): string
 
 Get the correlation ID for this batch check item. This unique identifier maps the result back to this specific check. Must be alphanumeric characters or hyphens, maximum 36 characters.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L207)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L213)
 
 #### Returns
 
@@ -85,7 +85,7 @@ public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
 
 Get the tuple key to be checked. This defines the user, relation, and object for the authorization check.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L216)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L222)
 
 #### Returns
 
@@ -119,7 +119,7 @@ public function jsonSerialize(): array<string, mixed>
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L227)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L233)
 
 #### Returns
 
@@ -132,7 +132,7 @@ public function toArray(): array<string, mixed>
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L242)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L248)
 
 #### Returns
 

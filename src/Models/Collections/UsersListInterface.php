@@ -8,9 +8,7 @@ use OpenFGA\Models\UsersListUserInterface;
 use Override;
 
 /**
- * @template T of UsersListUserInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<UsersListUserInterface>
  */
 interface UsersListInterface extends IndexedCollectionInterface
 {

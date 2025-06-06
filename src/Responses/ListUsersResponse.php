@@ -7,9 +7,9 @@ namespace OpenFGA\Responses;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\Collections\{Users, UsersInterface, Usersets};
-use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, TypedWildcard, User, UserInterface, UserObject, Userset, UsersetUser};
+use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, TypedWildcard, User, UserObject, Userset, UsersetUser};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -31,7 +31,7 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
     /**
      * Create a new list users response instance.
      *
-     * @param UsersInterface<UserInterface> $users The collection of users that have the specified relationship with the object
+     * @param UsersInterface $users The collection of users that have the specified relationship with the object
      */
     public function __construct(
         private readonly UsersInterface $users,

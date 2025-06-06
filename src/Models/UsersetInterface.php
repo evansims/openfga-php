@@ -60,7 +60,7 @@ interface UsersetInterface extends ModelInterface
      * specified usersets. This creates a logical AND operation where users
      * are granted access only if they're in every userset within the intersection.
      *
-     * @return UsersetsInterface<UsersetInterface>|null The collection of usersets to intersect, or null if not used
+     * @return UsersetsInterface|null The collection of usersets to intersect, or null if not used
      */
     public function getIntersection(): ?UsersetsInterface;
 
@@ -82,7 +82,7 @@ interface UsersetInterface extends ModelInterface
      * usersets. This creates a logical OR operation where users are granted
      * access if they're in at least one userset within the union.
      *
-     * @return UsersetsInterface<UsersetInterface>|null The collection of usersets to unite, or null if not used
+     * @return UsersetsInterface|null The collection of usersets to unite, or null if not used
      */
     public function getUnion(): ?UsersetsInterface;
 

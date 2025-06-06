@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 /**

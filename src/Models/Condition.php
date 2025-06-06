@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{ConditionParameters, ConditionParametersInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 /**
@@ -26,10 +26,10 @@ final class Condition implements ConditionInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                                                         $name       a unique name for the condition
-     * @param string                                                         $expression a Google CEL expression, expressed as a string
-     * @param ConditionParametersInterface<ConditionParameterInterface>|null $parameters a collection of parameter names to the parameter's defined type reference
-     * @param ConditionMetadataInterface|null                                $metadata   the collection of metadata that should be associated with the condition
+     * @param string                            $name       a unique name for the condition
+     * @param string                            $expression a Google CEL expression, expressed as a string
+     * @param ConditionParametersInterface|null $parameters a collection of parameter names to the parameter's defined type reference
+     * @param ConditionMetadataInterface|null   $metadata   the collection of metadata that should be associated with the condition
      */
     public function __construct(
         private readonly string $name,

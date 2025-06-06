@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Exceptions\ClientThrowable;
-use OpenFGA\Responses\WriteTuplesResponseInterface;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 use RuntimeException;
 use Throwable;
@@ -32,19 +31,19 @@ final class BatchTupleResult implements BatchTupleResultInterface
     /**
      * Create a new batch tuple result.
      *
-     * @param int                                 $totalOperations  Total number of tuple operations requested
-     * @param int                                 $totalChunks      Total number of chunks processed
-     * @param int                                 $successfulChunks Number of chunks that completed successfully
-     * @param int                                 $failedChunks     Number of chunks that failed
-     * @param array<WriteTuplesResponseInterface> $responses        Successful responses from completed chunks
-     * @param array<Throwable>                    $errors           Errors from failed chunks
+     * @param int              $totalOperations  Total number of tuple operations requested
+     * @param int              $totalChunks      Total number of chunks processed
+     * @param int              $successfulChunks Number of chunks that completed successfully
+     * @param int              $failedChunks     Number of chunks that failed
+     * @param array<mixed>     $responses        Successful responses from completed chunks
+     * @param array<Throwable> $errors           Errors from failed chunks
      */
     public function __construct(
         private readonly int $totalOperations,
         private readonly int $totalChunks,
         private readonly int $successfulChunks,
         private readonly int $failedChunks,
-        /** @var array<WriteTuplesResponseInterface> */
+        /** @var array<mixed> */
         private readonly array $responses = [],
         /** @var array<Throwable> */
         private readonly array $errors = [],

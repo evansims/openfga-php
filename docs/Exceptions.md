@@ -34,7 +34,7 @@ Our Result type makes errors explicit:
 // ✅ Result approach - errors are visible in the type signature
 $result = $client->check(
     user: 'user:anne',
-    relation: 'reader', 
+    relation: 'reader',
     object: 'document:budget'
 );
 
@@ -116,12 +116,7 @@ $response = $result->unwrap();
 // 2. Unwrap with default - never throws
 $response = $result->unwrap(fn() => new CheckResponse(['allowed' => false]));
 
-// 3. Unwrap or throw custom exception
-$response = $result->unwrapOr(fn($error) => 
-    throw new MyCustomException("Check failed: " . $error->getMessage())
-);
-
-// 4. Pattern matching (PHP 8.3+)
+// 3. Pattern matching
 $allowed = match(true) {
     $result->succeeded() => $result->unwrap()->getAllowed(),
     $result->failed() => false, // Default to denied on error
@@ -194,10 +189,11 @@ ClientThrowable (interface)
 ### When to Use Each Exception Type
 
 #### ClientException
+
 General client-side errors that don't fit other categories:
 
 ```php
-use OpenFGA\Exceptions\ClientError;
+use OpenFGA\Domain\Exceptions\ClientError;
 
 // Validation errors
 throw ClientError::Validation->exception(context: [
@@ -211,6 +207,7 @@ throw ClientError::Network->exception(context: [
 ```
 
 #### NetworkException
+
 HTTP and network-related errors:
 
 ```php
@@ -228,14 +225,14 @@ $error = match($statusCode) {
     default => NetworkError::Unexpected,
 };
 
-throw new NetworkException(
-    kind: $error,
+throw $error->exception(
     request: $request,
     response: $response
 );
 ```
 
 #### AuthenticationException
+
 OAuth/token-related errors:
 
 ```php
@@ -252,6 +249,7 @@ if (!$token->isValid()) {
 ```
 
 #### ConfigurationException
+
 Setup and configuration errors:
 
 ```php
@@ -264,6 +262,7 @@ if ($httpClient === null) {
 ```
 
 #### SerializationException
+
 JSON encoding/decoding and data transformation errors:
 
 ```php
@@ -386,7 +385,7 @@ try {
 // ✅ GOOD - Type-safe enum comparison
 $result = $client->check(/* ... */);
 $result->failure(function ($error) {
-    if ($error instanceof NetworkException && 
+    if ($error instanceof NetworkException &&
         $error->kind === NetworkError::UndefinedEndpoint) {
         // Handle store not found
     }
@@ -445,7 +444,7 @@ if (str_contains($error->getMessage(), 'expired')) {
 }
 
 // ✅ GOOD - Use enum-based detection
-if ($error instanceof AuthenticationException && 
+if ($error instanceof AuthenticationException &&
     $error->kind === AuthenticationError::TokenExpired) {
     // Works regardless of locale
 }
@@ -471,7 +470,7 @@ class AuthorizationService
 {
     private Client $client;
     private string $storeId;
-    
+
     public function checkAccess(string $userId, string $resource): AccessResult
     {
         return $this->client->check(
@@ -489,17 +488,17 @@ class AuthorizationService
             // Handle specific errors gracefully
             return match([$error::class, $error->kind ?? null]) {
                 // Network timeouts - fail open
-                [NetworkException::class, NetworkError::Timeout] => 
+                [NetworkException::class, NetworkError::Timeout] =>
                     new AccessResult(true, 'TIMEOUT_FAIL_OPEN'),
-                
+
                 // Authentication errors - deny access
-                [AuthenticationException::class, $_] => 
+                [AuthenticationException::class, $_] =>
                     new AccessResult(false, 'AUTH_ERROR'),
-                
+
                 // Server errors - check cache
-                [NetworkException::class, NetworkError::Server] => 
+                [NetworkException::class, NetworkError::Server] =>
                     $this->checkCachedAccess() ?? new AccessResult(false, 'SERVER_ERROR'),
-                
+
                 // Everything else - deny by default
                 default => new AccessResult(false, 'UNKNOWN_ERROR'),
             };
@@ -521,7 +520,7 @@ class AuthorizationService
         })
         ->unwrap();
     }
-    
+
     public function grantAccess(string $userId, string $resource): void
     {
         $this->client->writeTuples(
@@ -564,15 +563,15 @@ class AuthorizationServiceTest extends TestCase
                     request: $this->createMock(RequestInterface::class)
                 )
             ));
-        
+
         $service = new AuthorizationService($client, 'store123');
         $result = $service->checkAccess('user:anne', 'document:budget');
-        
+
         // Should fail open on timeout
         expect($result->allowed)->toBeTrue();
         expect($result->reason)->toBe('TIMEOUT_FAIL_OPEN');
     }
-    
+
     public function testHandlesValidationErrors(): void
     {
         $client = $this->createMock(Client::class);
@@ -582,10 +581,10 @@ class AuthorizationServiceTest extends TestCase
                     'message' => 'Invalid user format'
                 ])
             ));
-        
+
         $service = new AuthorizationService($client, 'store123');
         $result = $service->checkAccess('invalid-user', 'document:budget');
-        
+
         // Should deny on validation errors
         expect($result->allowed)->toBeFalse();
         expect($result->reason)->toBe('UNKNOWN_ERROR');
@@ -620,12 +619,12 @@ class Client implements ClientInterface
                 ])
             );
         }
-        
+
         try {
             // Build and send request
             $request = $this->buildCheckRequest($store, $tupleKey, $model);
             $response = $this->httpClient->sendRequest($request);
-            
+
             // Handle response
             return match($response->getStatusCode()) {
                 200 => new Success($this->parseCheckResponse($response)),
@@ -665,7 +664,7 @@ class Client implements ClientInterface
 ## Best Practices Summary
 
 1. **Always handle Result types** - Never call `unwrap()` without checking success first
-2. **Use enum comparisons** - Compare error types and kinds, not message strings  
+2. **Use enum comparisons** - Compare error types and kinds, not message strings
 3. **Leverage match expressions** - Use PHP 8.3+ match for clean error handling
 4. **Log with context** - Include error type, kind, and relevant data
 5. **Fail safely** - Define sensible defaults for error cases

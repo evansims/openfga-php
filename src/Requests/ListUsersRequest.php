@@ -12,7 +12,6 @@ use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{TupleKeysInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\Consistency;
-use OpenFGA\Models\{TupleKeyInterface, UserTypeFilterInterface};
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use OpenFGA\Translation\Translator;
 use Override;
@@ -35,14 +34,14 @@ use function is_array;
 final readonly class ListUsersRequest implements ListUsersRequestInterface
 {
     /**
-     * @param string                                            $store            The store ID
-     * @param string                                            $model            Authorization model ID
-     * @param string                                            $object           The object
-     * @param string                                            $relation         The relation
-     * @param UserTypeFiltersInterface<UserTypeFilterInterface> $userFilters      User type filters
-     * @param ?object                                           $context          Context object (optional)
-     * @param ?TupleKeysInterface<TupleKeyInterface>            $contextualTuples Contextual tuples (optional)
-     * @param ?Consistency                                      $consistency      Consistency requirement (optional)
+     * @param string                   $store            The store ID
+     * @param string                   $model            Authorization model ID
+     * @param string                   $object           The object
+     * @param string                   $relation         The relation
+     * @param UserTypeFiltersInterface $userFilters      User type filters
+     * @param ?object                  $context          Context object (optional)
+     * @param ?TupleKeysInterface      $contextualTuples Contextual tuples (optional)
+     * @param ?Consistency             $consistency      Consistency requirement (optional)
      *
      * @throws ClientThrowable          If the store ID, model ID, object, relation is empty or user filters are empty
      * @throws InvalidArgumentException If message translation parameters are invalid

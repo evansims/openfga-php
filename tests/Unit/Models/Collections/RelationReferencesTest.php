@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 
 use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface};
 use OpenFGA\Models\{RelationReference, TypedWildcard};
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 
 describe('RelationReferences Collection', function (): void {
     test('implements interface', function (): void {

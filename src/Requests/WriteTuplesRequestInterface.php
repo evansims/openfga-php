@@ -38,7 +38,7 @@ interface WriteTuplesRequestInterface extends RequestInterface
      * that will be revoked. The deletion is atomic with any write operations
      * specified in the same request.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Collection of relationship tuples to remove, or null if no deletions are requested
+     * @return TupleKeysInterface|null Collection of relationship tuples to remove, or null if no deletions are requested
      */
     public function getDeletes(): ?TupleKeysInterface;
 
@@ -108,7 +108,7 @@ interface WriteTuplesRequestInterface extends RequestInterface
      * relationship that will be granted. The write operation is atomic with
      * any delete operations specified in the same request.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Collection of relationship tuples to add, or null if no writes are requested
+     * @return TupleKeysInterface|null Collection of relationship tuples to add, or null if no writes are requested
      */
     public function getWrites(): ?TupleKeysInterface;
 

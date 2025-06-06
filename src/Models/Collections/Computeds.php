@@ -8,8 +8,6 @@ use OpenFGA\Models\{Computed, ComputedInterface, ModelInterface};
 
 /**
  * @extends IndexedCollection<ComputedInterface>
- *
- * @implements ComputedsInterface<ComputedInterface>
  */
 final class Computeds extends IndexedCollection implements ComputedsInterface
 {

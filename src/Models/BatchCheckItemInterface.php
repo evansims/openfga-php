@@ -36,7 +36,7 @@ interface BatchCheckItemInterface extends ModelInterface
      * These are additional tuples that are evaluated only for this specific
      * check and are not persisted in the store.
      *
-     * @return ?TupleKeysInterface<TupleKeyInterface> The contextual tuples or null
+     * @return ?TupleKeysInterface The contextual tuples or null
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 

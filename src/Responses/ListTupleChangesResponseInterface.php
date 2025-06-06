@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\Collections\TupleChangesInterface;
-use OpenFGA\Models\TupleChangeInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for tuple changes listing response objects.
@@ -41,7 +40,7 @@ interface ListTupleChangesResponseInterface extends ResponseInterface
      * current page of results. Each change represents a modification (insert or delete)
      * to the relationship data, including timestamps and operation details.
      *
-     * @return TupleChangesInterface<TupleChangeInterface> The collection of tuple changes
+     * @return TupleChangesInterface The collection of tuple changes
      */
     public function getChanges(): TupleChangesInterface;
 

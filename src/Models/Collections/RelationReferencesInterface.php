@@ -8,9 +8,7 @@ use OpenFGA\Models\RelationReferenceInterface;
 use Override;
 
 /**
- * @template T of RelationReferenceInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<RelationReferenceInterface>
  */
 interface RelationReferencesInterface extends IndexedCollectionInterface
 {

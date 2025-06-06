@@ -8,8 +8,6 @@ use OpenFGA\Models\{ConditionParameter, ConditionParameterInterface, ModelInterf
 
 /**
  * @extends IndexedCollection<ConditionParameterInterface>
- *
- * @implements ConditionParametersInterface<ConditionParameterInterface>
  */
 final class ConditionParameters extends IndexedCollection implements ConditionParametersInterface
 {

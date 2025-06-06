@@ -26,7 +26,7 @@ Represents an OpenFGA authorization model that defines permission structures. Au
 #### getConditions
 
 ```php
-public function getConditions(): ConditionsInterface<ConditionInterface>|null
+public function getConditions(): ConditionsInterface|null
 
 ```
 
@@ -36,7 +36,7 @@ Get the conditions defined in this authorization model. Conditions enable attrib
 
 #### Returns
 
-[`ConditionsInterface`](Models/Collections/ConditionsInterface.md)&lt;[`ConditionInterface`](ConditionInterface.md)&gt; &#124; `null` — The collection of reusable conditions defined in this model, or null if no conditions are defined
+[`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` — The collection of reusable conditions defined in this model, or null if no conditions are defined
 
 #### getId
 
@@ -71,7 +71,7 @@ Get the schema version of this authorization model. The schema version indicates
 #### getTypeDefinitions
 
 ```php
-public function getTypeDefinitions(): TypeDefinitionsInterface<TypeDefinitionInterface>
+public function getTypeDefinitions(): TypeDefinitionsInterface
 
 ```
 
@@ -81,7 +81,7 @@ Get the type definitions that define the structure of this authorization model. 
 
 #### Returns
 
-[`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md)&lt;[`TypeDefinitionInterface`](TypeDefinitionInterface.md)&gt; — The collection of type definitions that structure this authorization model
+[`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) — The collection of type definitions that structure this authorization model
 
 ### Other
 

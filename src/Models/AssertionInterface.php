@@ -39,7 +39,7 @@ interface AssertionInterface extends ModelInterface
      * relationships that exist only for the duration of the authorization check,
      * useful for testing "what-if" scenarios.
      *
-     * @return ?TupleKeysInterface<TupleKeyInterface> The contextual tuples, or null if not needed
+     * @return ?TupleKeysInterface The contextual tuples, or null if not needed
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 

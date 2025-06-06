@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, Tuple, TupleInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
@@ -20,8 +20,6 @@ use Override;
  * collection useful for both current state queries and historical analysis.
  *
  * @extends IndexedCollection<TupleInterface>
- *
- * @implements TuplesInterface<TupleInterface>
  */
 final class Tuples extends IndexedCollection implements TuplesInterface
 {

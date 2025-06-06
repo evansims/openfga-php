@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit;
 
+use OpenFGA\Language\Transformer;
 use OpenFGA\Models\{AuthorizationModel, Condition, ConditionMetadata, ConditionParameter, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, UserTypeFilter, Userset};
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, RelationMetadataCollection, RelationReferences, TypeDefinitionRelations, TypeDefinitions, UserTypeFilters, Usersets};
-use OpenFGA\Schema\SchemaValidator;
-use OpenFGA\Transformer;
+use OpenFGA\Schemas\SchemaValidator;
 
 describe('TransformerOrOperator', function (): void {
     beforeEach(function (): void {

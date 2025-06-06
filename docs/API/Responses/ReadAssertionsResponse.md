@@ -67,7 +67,7 @@ public function schema(): SchemaInterface
 
 Get the schema definition for this response. Returns the schema that defines the structure and validation rules for assertions reading response data, ensuring consistent parsing and validation of API responses.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponseInterface.php#L35)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadAssertionsResponseInterface.php#L34)
 
 #### Returns
 

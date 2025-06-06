@@ -10,7 +10,7 @@ use Iterator;
 use JsonSerializable;
 use OpenFGA\Exceptions\{ClientThrowable};
 use OpenFGA\Models\ModelInterface;
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schemas\CollectionSchemaInterface;
 use Override;
 use ReturnTypeWillChange;
 

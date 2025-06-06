@@ -9,7 +9,7 @@ use DateTimeInterface;
 use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
 use OpenFGA\Models\Enums\TupleOperation;
 use OpenFGA\Models\{TupleChange, TupleKey};
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 
 describe('TupleChanges Collection', function (): void {
     test('implements interface', function (): void {

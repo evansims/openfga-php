@@ -65,7 +65,7 @@ interface ListObjectsRequestInterface extends RequestInterface
      * scenarios with hypothetical or pending relationship changes without
      * permanently modifying the store.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Additional relationship tuples for evaluation, or null if none provided
+     * @return TupleKeysInterface|null Additional relationship tuples for evaluation, or null if none provided
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 

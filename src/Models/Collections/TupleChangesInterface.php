@@ -8,9 +8,7 @@ use OpenFGA\Models\TupleChangeInterface;
 use Override;
 
 /**
- * @template T of TupleChangeInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<TupleChangeInterface>
  */
 interface TupleChangesInterface extends IndexedCollectionInterface
 {

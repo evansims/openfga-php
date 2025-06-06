@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{Condition, ConditionInterface, ModelInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
@@ -21,8 +21,6 @@ use Override;
  * when specific contextual criteria are met.
  *
  * @extends IndexedCollection<ConditionInterface>
- *
- * @implements ConditionsInterface<ConditionInterface>
  */
 final class Conditions extends IndexedCollection implements ConditionsInterface
 {

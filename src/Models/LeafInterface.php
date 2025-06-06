@@ -58,7 +58,7 @@ interface LeafInterface extends ModelInterface
      * access through this leaf. This is used for direct user assignments
      * rather than computed or derived access patterns.
      *
-     * @return UsersListInterface<UsersListUserInterface>|null The list of users with direct access, or null if not used
+     * @return UsersListInterface|null The list of users with direct access, or null if not used
      */
     public function getUsers(): ?UsersListInterface;
 

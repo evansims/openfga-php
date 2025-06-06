@@ -8,9 +8,9 @@ use InvalidArgumentException;
 use JsonException;
 use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
-use OpenFGA\Models\{TupleChange, TupleChangeInterface, TupleKey};
+use OpenFGA\Models\{TupleChange, TupleKey};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -32,8 +32,8 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
     /**
      * Create a new list tuple changes response instance.
      *
-     * @param TupleChangesInterface<TupleChangeInterface> $changes           The collection of tuple changes for the current page
-     * @param ?string                                     $continuationToken Pagination token for fetching additional results, or null if no more pages exist
+     * @param TupleChangesInterface $changes           The collection of tuple changes for the current page
+     * @param ?string               $continuationToken Pagination token for fetching additional results, or null if no more pages exist
      */
     public function __construct(
         private readonly TupleChangesInterface $changes,

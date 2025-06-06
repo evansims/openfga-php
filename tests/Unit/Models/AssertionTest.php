@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{Assertion, AssertionInterface, AssertionTupleKey, TupleKey};
 use OpenFGA\Models\Collections\TupleKeys;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('Assertion Model', function (): void {
     test('implements AssertionInterface', function (): void {

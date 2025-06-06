@@ -18,6 +18,45 @@ Please review these guidelines before submitting any pull requests.
 - You may need to [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) to avoid merge conflicts.
 - Please remember that we follow [SemVer](http://semver.org/).
 
+## Error Handling Strategy
+
+The OpenFGA PHP SDK uses the Result pattern for all public API methods. This provides a consistent, predictable way to handle both success and failure cases without relying on exceptions.
+
+### Basic Usage
+
+```php
+$result = $client->check(...);
+
+// Handle success and failure
+$result->success(fn($response) => echo "Allowed: {$response->getAllowed()}")
+       ->failure(fn($error) => error_log("Check failed: {$error->getMessage()}"));
+
+// Get the value or throw exception
+try {
+    $response = $result->unwrap();
+} catch (Throwable $e) {
+    // Handle error
+}
+```
+
+### Result Methods
+
+- `success(callable $callback): self` - Execute callback on success
+- `failure(callable $callback): self` - Execute callback on failure
+- `then(callable $callback): self` - Transform success value
+- `recover(callable $callback): self` - Transform failure to success
+- `unwrap(?callable $callback = null): mixed` - Get value or throw/transform
+- `isSuccess(): bool` - Check if result is successful
+- `isFailure(): bool` - Check if result is failure
+
+### Why Result Pattern?
+
+1. **Explicit Error Handling**: Forces developers to consider both success and failure cases
+2. **Composability**: Chain operations without nested try-catch blocks
+3. **Type Safety**: Return types clearly indicate possibility of failure
+4. **Consistency**: All SDK methods behave the same way
+5. **Flexibility**: Choose between exception-based or value-based error handling
+
 ## Setup
 
 Clone your fork, then install the dev dependencies:

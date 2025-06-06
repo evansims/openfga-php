@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitionRelationsInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 use stdClass;
 
@@ -27,9 +27,9 @@ final class TypeDefinition implements TypeDefinitionInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                                                  $type      the type of the object that this definition is for
-     * @param TypeDefinitionRelationsInterface<UsersetInterface>|null $relations an array of relation names to Userset definitions
-     * @param MetadataInterface|null                                  $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
+     * @param string                                $type      the type of the object that this definition is for
+     * @param TypeDefinitionRelationsInterface|null $relations an array of relation names to Userset definitions
+     * @param MetadataInterface|null                $metadata  An array whose keys are the name of the relation and whose value is the Metadata for that relation. It also holds information around the module name and source file if this model was constructed from a modular model.
      */
     public function __construct(
         private readonly string $type,

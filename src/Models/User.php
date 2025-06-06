@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use JsonSerializable;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 use function is_array;

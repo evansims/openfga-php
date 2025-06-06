@@ -115,10 +115,10 @@
       "replace": true
     },
     "spi": {
-      "OpenFGA\\Observability\\TelemetryInterface": [
+      "OpenFGA\\Application\\Telemetry\\TelemetryInterface": [
         "OpenFGA\\Integration\\ServiceProvider"
       ],
-      "OpenFGA\\Schema\\SchemaValidatorInterface": [
+      "OpenFGA\\Domain\\Schema\\SchemaValidatorInterface": [
         "OpenFGA\\Integration\\ServiceProvider"
       ],
       "OpenFGA\\TransformerInterface": [
@@ -179,7 +179,8 @@
       "@test:unit",
       "@test:integration",
       "@test:contract",
-      "@test:tools"
+      "@test:tools",
+      "@test:architecture"
     ],
     "test:contract": [
       "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
@@ -207,6 +208,13 @@
     ],
     "test:unit": [
       "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:architecture": [
+      "! @php vendor/bin/phpunit tests/Architecture/CleanArchitectureTest.php --colors=always --strict-global-state --fail-on-risky 2>&1 | grep -q 'FAILURES!' && echo 'Architecture tests passed' || (echo 'Architecture tests failed' && exit 1)"
+    ],
+    "test:debug": [
+      "@putenv XDEBUG_MODE=coverage",
+      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning"
     ]
   }
 }

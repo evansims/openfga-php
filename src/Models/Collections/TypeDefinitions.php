@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, TypeDefinition, TypeDefinitionInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
@@ -17,8 +17,6 @@ use Override;
  * blocks that define the schema for authorization relationships.
  *
  * @extends IndexedCollection<TypeDefinitionInterface>
- *
- * @implements TypeDefinitionsInterface<TypeDefinitionInterface>
  */
 final class TypeDefinitions extends IndexedCollection implements TypeDefinitionsInterface
 {

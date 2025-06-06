@@ -34,14 +34,14 @@ final class TelemetryFactory
      * than try-catch blocks, providing better performance when OpenTelemetry
      * is not installed.
      *
-     * @param  string                                      $serviceName    The service name for telemetry identification
-     * @param  string                                      $serviceVersion The service version for telemetry identification
-     * @return NoOpTelemetryProvider|OpenTelemetryProvider A telemetry provider instance
+     * @param  string             $serviceName    The service name for telemetry identification
+     * @param  string             $serviceVersion The service version for telemetry identification
+     * @return TelemetryInterface A telemetry provider instance
      */
     public static function create(
         string $serviceName = 'openfga-php-sdk',
         string $serviceVersion = '1.0.0',
-    ): NoOpTelemetryProvider | OpenTelemetryProvider {
+    ): TelemetryInterface {
         // Check if OpenTelemetry API classes are available
         if (! class_exists('OpenTelemetry\API\Globals')) {
             return new NoOpTelemetryProvider;
@@ -69,9 +69,9 @@ final class TelemetryFactory
      * This is useful for testing, or when you explicitly want to disable
      * observability features.
      *
-     * @return NoOpTelemetryProvider A no-op telemetry provider
+     * @return TelemetryInterface A no-op telemetry provider
      */
-    public static function createNoOp(): NoOpTelemetryProvider
+    public static function createNoOp(): TelemetryInterface
     {
         return new NoOpTelemetryProvider;
     }
@@ -79,14 +79,14 @@ final class TelemetryFactory
     /**
      * Create a telemetry provider with custom OpenTelemetry instances.
      *
-     * @param  TracerInterface       $tracer The OpenTelemetry tracer instance
-     * @param  MeterInterface        $meter  The OpenTelemetry meter instance
-     * @return OpenTelemetryProvider A telemetry provider instance
+     * @param  TracerInterface    $tracer The OpenTelemetry tracer instance
+     * @param  MeterInterface     $meter  The OpenTelemetry meter instance
+     * @return TelemetryInterface A telemetry provider instance
      */
     public static function createWithCustomProviders(
         TracerInterface $tracer,
         MeterInterface $meter,
-    ): OpenTelemetryProvider {
+    ): TelemetryInterface {
         return new OpenTelemetryProvider($tracer, $meter);
     }
 }

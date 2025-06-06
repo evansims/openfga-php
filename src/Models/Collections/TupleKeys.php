@@ -20,8 +20,6 @@ use Override;
  *
  * @extends IndexedCollection<TupleKeyInterface>
  *
- * @implements TupleKeysInterface<TupleKeyInterface>
- *
  * @see https://openfga.dev/docs/concepts#relationship-tuples OpenFGA Relationship Tuples
  */
 final class TupleKeys extends IndexedCollection implements TupleKeysInterface

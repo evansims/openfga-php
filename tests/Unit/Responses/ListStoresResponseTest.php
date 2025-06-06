@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use OpenFGA\Models\Collections\Stores;
 use OpenFGA\Models\{Store};
 use OpenFGA\Responses\{ListStoresResponse, ListStoresResponseInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('ListStoresResponse', function (): void {
     test('implements ListStoresResponseInterface', function (): void {

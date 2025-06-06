@@ -14,9 +14,7 @@ use Override;
  * testing authorization model correctness. Assertions represent expected
  * authorization outcomes for specific tuple configurations.
  *
- * @template T of AssertionInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<AssertionInterface>
  *
  * @see https://openfga.dev/docs/modeling/testing OpenFGA Model Testing
  */

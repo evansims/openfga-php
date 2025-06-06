@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 use OpenFGA\Exceptions\{ClientException, SerializationException};
 use OpenFGA\Messages;
 use OpenFGA\Models\TupleKey;
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schemas\CollectionSchemaInterface;
 use OpenFGA\Tests\Support\Collections\{InvalidIndexedCollection, InvalidTypeIndexedCollection, TestIndexedCollection};
 use stdClass;
 

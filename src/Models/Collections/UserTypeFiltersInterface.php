@@ -8,9 +8,7 @@ use OpenFGA\Models\UserTypeFilterInterface;
 use Override;
 
 /**
- * @template T of UserTypeFilterInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<UserTypeFilterInterface>
  */
 interface UserTypeFiltersInterface extends IndexedCollectionInterface
 {

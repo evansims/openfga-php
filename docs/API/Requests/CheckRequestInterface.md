@@ -69,7 +69,7 @@ Get additional context data for conditional evaluation. This provides contextual
 #### getContextualTuples
 
 ```php
-public function getContextualTuples(): TupleKeysInterface<TupleKeyInterface>|null
+public function getContextualTuples(): TupleKeysInterface|null
 
 ```
 
@@ -79,7 +79,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 #### Returns
 
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md)&lt;[`TupleKeyInterface`](Models/TupleKeyInterface.md)&gt; &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
 #### getRequest
 

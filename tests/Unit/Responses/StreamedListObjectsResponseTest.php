@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 use Generator;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Responses\StreamedListObjectsResponse;
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use OpenFGA\Tests\Support\Responses\SimpleStream;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 

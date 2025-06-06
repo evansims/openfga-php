@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "test:tools": [
+      "@putenv XDEBUG_MODE=coverage",
+      "herd coverage vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:unit": [
+      "@putenv XDEBUG_MODE=coverage",
+      "herd coverage vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:contract": [
+      "@putenv XDEBUG_MODE=coverage",
+      "herd coverage vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:debug": [
+      "@putenv XDEBUG_MODE=coverage",
+      "herd coverage vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --debug --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ]
+  }
+}

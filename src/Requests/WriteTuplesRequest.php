@@ -41,16 +41,16 @@ final readonly class WriteTuplesRequest implements WriteTuplesRequestInterface
     private float $retryDelaySeconds;
 
     /**
-     * @param string                                     $store               The store ID
-     * @param string                                     $model               Authorization model ID
-     * @param TupleKeysInterface<TupleKeyInterface>|null $writes              Tuples to write (optional)
-     * @param TupleKeysInterface<TupleKeyInterface>|null $deletes             Tuples to delete (optional)
-     * @param bool                                       $transactional       Whether to use transactional mode (default: true)
-     * @param int                                        $maxParallelRequests Maximum parallel requests for non-transactional mode (default: 1)
-     * @param int                                        $maxTuplesPerChunk   Maximum tuples per chunk for non-transactional mode (default: 100)
-     * @param int                                        $maxRetries          Maximum retries for failed chunks (default: 0)
-     * @param float                                      $retryDelaySeconds   Retry delay in seconds (default: 1.0)
-     * @param bool                                       $stopOnFirstError    Stop processing on first error (default: false)
+     * @param string                  $store               The store ID
+     * @param string                  $model               Authorization model ID
+     * @param TupleKeysInterface|null $writes              Tuples to write (optional)
+     * @param TupleKeysInterface|null $deletes             Tuples to delete (optional)
+     * @param bool                    $transactional       Whether to use transactional mode (default: true)
+     * @param int                     $maxParallelRequests Maximum parallel requests for non-transactional mode (default: 1)
+     * @param int                     $maxTuplesPerChunk   Maximum tuples per chunk for non-transactional mode (default: 100)
+     * @param int                     $maxRetries          Maximum retries for failed chunks (default: 0)
+     * @param float                   $retryDelaySeconds   Retry delay in seconds (default: 1.0)
+     * @param bool                    $stopOnFirstError    Stop processing on first error (default: false)
      *
      * @throws ClientThrowable          If the store ID or model ID is empty
      * @throws InvalidArgumentException If message translation parameters are invalid
@@ -114,11 +114,18 @@ final readonly class WriteTuplesRequest implements WriteTuplesRequestInterface
         }
 
         $chunks = [];
+
+        /** @var array<TupleKeyInterface> $writes */
         $writes = $this->writes instanceof TupleKeysInterface ? [...$this->writes] : [];
+
+        /** @var array<TupleKeyInterface> $deletes */
         $deletes = $this->deletes instanceof TupleKeysInterface ? [...$this->deletes] : [];
 
         while ([] !== $writes || [] !== $deletes) {
+            /** @var array<TupleKeyInterface> $chunkWrites */
             $chunkWrites = [];
+
+            /** @var array<TupleKeyInterface> $chunkDeletes */
             $chunkDeletes = [];
             $remaining = $chunkSize;
 

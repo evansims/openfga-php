@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\Collections\{Nodes, UsersList};
 use OpenFGA\Models\{Leaf, Node, NodeUnion, NodeUnionInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 use function count;
 

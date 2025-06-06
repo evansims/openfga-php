@@ -38,7 +38,7 @@ indent_size = 2
 [*.md]
 indent_style = space
 indent_size = 2
-trim_trailing_whitespace = false
+max_line_length = 100
 
 # Configuration files
 [*.{ini,neon,dist}]

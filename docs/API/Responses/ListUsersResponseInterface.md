@@ -24,14 +24,14 @@ Interface for user listing response objects. This interface defines the contract
 #### getUsers
 
 ```php
-public function getUsers(): UsersInterface<UserInterface>
+public function getUsers(): UsersInterface
 
 ```
 
 Get the collection of users with the specified relationship. Returns a type-safe collection containing the user objects that have the queried relationship with the specified object. Each user represents an entity that has been granted the specified permission or relationship.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponseInterface.php#L47)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponseInterface.php#L46)
 
 #### Returns
 
-[`UsersInterface`](Models/Collections/UsersInterface.md)&lt;[`UserInterface`](Models/UserInterface.md)&gt; — The collection of users with the relationship
+[`UsersInterface`](Models/Collections/UsersInterface.md) — The collection of users with the relationship

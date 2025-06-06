@@ -17,9 +17,7 @@ use OpenFGA\Models\RelationMetadataInterface;
  * The collection is keyed by relation names, allowing efficient access to metadata
  * for specific relations within a type definition.
  *
- * @template T of RelationMetadataInterface
- *
- * @extends KeyedCollectionInterface<T>
+ * @extends KeyedCollectionInterface<RelationMetadataInterface>
  *
  * @see https://openfga.dev/docs/modeling/getting-started OpenFGA Authorization Models
  */

@@ -15,9 +15,7 @@ use Override;
  * authorization model. Type definitions form the core schema that defines
  * how different object types relate to each other in the system.
  *
- * @template T of TypeDefinitionInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<TypeDefinitionInterface>
  *
  * @see https://openfga.dev/docs/modeling/getting-started OpenFGA Authorization Models
  */
