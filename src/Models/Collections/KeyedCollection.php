@@ -67,6 +67,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
     {
         $reflection = new ReflectionClass(static::class);
         $property = $reflection->getProperty('itemType');
+
         if (! $property->isInitialized()) {
             throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_UNDEFINED_ITEM_TYPE, ['class' => static::class])]);
         }
@@ -106,6 +107,7 @@ abstract class KeyedCollection implements KeyedCollectionInterface
 
         $reflection = new ReflectionClass(static::class);
         $property = $reflection->getProperty('itemType');
+
         if (! $property->isInitialized()) {
             throw SerializationError::UndefinedItemType->exception();
         }

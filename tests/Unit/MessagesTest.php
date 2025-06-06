@@ -76,12 +76,14 @@ describe('Messages', function (): void {
         expect(Messages::REQUEST_RELATION_EMPTY->value)->toBe('request.relation_empty');
         expect(Messages::REQUEST_STORE_ID_EMPTY->value)->toBe('request.store_id_empty');
         expect(Messages::REQUEST_STORE_NAME_EMPTY->value)->toBe('request.store_name_empty');
+        expect(Messages::REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED->value)->toBe('request.transactional_limit_exceeded');
         expect(Messages::REQUEST_TYPE_EMPTY->value)->toBe('request.type_empty');
         expect(Messages::REQUEST_USER_EMPTY->value)->toBe('request.user_empty');
     });
 
     test('Messages enum has all required model validation message cases', function (): void {
         expect(Messages::MODEL_INVALID_TUPLE_KEY->value)->toBe('model.invalid_tuple_key');
+        expect(Messages::MODEL_INVALID_IDENTIFIER_FORMAT->value)->toBe('model.invalid_identifier_format');
         expect(Messages::MODEL_LEAF_MISSING_CONTENT->value)->toBe('model.leaf_missing_content');
         expect(Messages::MODEL_SOURCE_INFO_FILE_EMPTY->value)->toBe('model.source_info_file_empty');
         expect(Messages::MODEL_TYPED_WILDCARD_TYPE_EMPTY->value)->toBe('model.typed_wildcard_type_empty');
@@ -208,6 +210,7 @@ describe('Messages', function (): void {
         expect($grouped['request'])->toEqual([
             'request.store_id_empty',
             'request.model_id_empty',
+            'request.transactional_limit_exceeded',
         ]);
     });
 
@@ -216,6 +219,7 @@ describe('Messages', function (): void {
 
         expect($grouped['model'])->toEqual([
             'model.invalid_tuple_key',
+            'model.invalid_identifier_format',
             'model.typed_wildcard_type_empty',
             'model.source_info_file_empty',
             'model.leaf_missing_content',

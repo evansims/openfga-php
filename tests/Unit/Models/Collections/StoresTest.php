@@ -110,6 +110,7 @@ describe('Stores Collection', function (): void {
 
         $ids = [];
         $names = [];
+
         foreach ($collection as $store) {
             $ids[] = $store->getId();
             $names[] = $store->getName();
@@ -292,6 +293,7 @@ describe('Stores Collection', function (): void {
 
         // Find environments containing 'Environment'
         $environmentStores = [];
+
         foreach ($collection as $store) {
             if (str_contains($store->getName(), 'Environment')) {
                 $environmentStores[] = $store->getName();
@@ -325,6 +327,7 @@ describe('Stores Collection', function (): void {
 
         // Count active stores
         $activeCount = 0;
+
         foreach ($collection as $store) {
             if (null === $store->getDeletedAt()) {
                 ++$activeCount;
@@ -346,6 +349,7 @@ describe('Stores Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $item) {
             ++$count;
         }

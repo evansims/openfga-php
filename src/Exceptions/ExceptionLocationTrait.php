@@ -41,6 +41,7 @@ trait ExceptionLocationTrait
     private static function captureThrowLocation(Exception $exception, int $skipFrames = 2): void
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, $skipFrames + 1);
+
         if (isset($trace[$skipFrames - 1])) {
             $reflection = new ReflectionClass($exception);
             $traceFrame = $trace[$skipFrames - 1];

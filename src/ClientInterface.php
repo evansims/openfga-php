@@ -7,11 +7,11 @@ namespace OpenFGA;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\ClientThrowable;
-use OpenFGA\Models\{AssertionInterface, AuthorizationModel, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
+use OpenFGA\Models\{AssertionInterface, AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKeyInterface, TypeDefinitionInterface, UserTypeFilterInterface};
 use OpenFGA\Models\Collections\{AssertionsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Collections\BatchCheckItemsInterface;
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
-use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
+use OpenFGA\Results\{FailureInterface, SuccessInterface};
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 
 /**
@@ -580,14 +580,25 @@ interface ClientInterface
     /**
      * Writes or deletes relationship tuples in a store.
      *
-     * @param  StoreInterface|string                      $store   The store to modify
-     * @param  AuthorizationModelInterface|string         $model   The authorization model to use
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $writes  Tuples to write (create or update)
-     * @param  TupleKeysInterface<TupleKeyInterface>|null $deletes Tuples to delete
+     * This method supports both transactional (all-or-nothing) and non-transactional
+     * (independent operations) modes. In transactional mode, all operations must
+     * succeed or the entire request fails. In non-transactional mode, operations
+     * are processed independently with detailed success/failure tracking.
+     *
+     * @param  StoreInterface|string                      $store               The store to modify
+     * @param  AuthorizationModelInterface|string         $model               The authorization model to use
+     * @param  TupleKeysInterface<TupleKeyInterface>|null $writes              Tuples to write (create or update)
+     * @param  TupleKeysInterface<TupleKeyInterface>|null $deletes             Tuples to delete
+     * @param  bool                                       $transactional       Whether to use transactional mode (default: true)
+     * @param  int                                        $maxParallelRequests Maximum concurrent requests (non-transactional only, default: 1)
+     * @param  int                                        $maxTuplesPerChunk   Maximum tuples per chunk (non-transactional only, default: 100)
+     * @param  int                                        $maxRetries          Maximum retry attempts (non-transactional only, default: 0)
+     * @param  float                                      $retryDelaySeconds   Retry delay in seconds (non-transactional only, default: 1.0)
+     * @param  bool                                       $stopOnFirstError    Stop on first error (non-transactional only, default: false)
      * @return FailureInterface|SuccessInterface          Success contains WriteTuplesResponseInterface, Failure contains Throwable
      *
-     * @example Writing and deleting relationship tuples
-     * // Create relationships
+     * @example Transactional write (all-or-nothing)
+     * // Create relationships - all succeed or all fail together
      * $writes = new TupleKeys([
      *     new TupleKey('user:anne', 'owner', 'document:budget'),
      *     new TupleKey('user:bob', 'viewer', 'document:budget'),
@@ -603,6 +614,32 @@ interface ClientInterface
      * if ($result->success()) {
      *     echo "Successfully wrote " . count($writes) . " relationships";
      * }
+     * @example Non-transactional batch processing
+     * // Process large datasets with parallel execution and partial success handling
+     * $writes = new TupleKeys([
+     *     // ... hundreds or thousands of tuples
+     * ]);
+     *
+     * $result = $client->writeTuples(
+     *     store: 'store-id',
+     *     model: 'model-id',
+     *     writes: $writes,
+     *     transactional: false,
+     *     maxParallelRequests: 5,
+     *     maxTuplesPerChunk: 50,
+     *     maxRetries: 2
+     * );
+     *
+     * $result->success(function($response) {
+     *     if ($response->isCompleteSuccess()) {
+     *         echo "All operations succeeded\n";
+     *     } elseif ($response->isPartialSuccess()) {
+     *         echo "Partial success: {$response->getSuccessfulChunks()}/{$response->getTotalChunks()} chunks\n";
+     *         foreach ($response->getErrors() as $error) {
+     *             echo "Error: " . $error->getMessage() . "\n";
+     *         }
+     *     }
+     * });
      * @example Updating permissions by adding and removing tuples
      * $writes = new TupleKeys([
      *     new TupleKey('user:anne', 'editor', 'document:budget'), // Promote anne to editor
@@ -624,5 +661,11 @@ interface ClientInterface
         AuthorizationModelInterface | string $model,
         ?TupleKeysInterface $writes = null,
         ?TupleKeysInterface $deletes = null,
+        bool $transactional = true,
+        int $maxParallelRequests = 1,
+        int $maxTuplesPerChunk = 100,
+        int $maxRetries = 0,
+        float $retryDelaySeconds = 1.0,
+        bool $stopOnFirstError = false,
     ): FailureInterface | SuccessInterface;
 }

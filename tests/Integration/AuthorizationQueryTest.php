@@ -20,7 +20,7 @@ describe('Authorization Queries', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -220,6 +220,7 @@ describe('Authorization Queries', function (): void {
 
         $users = $usersResponse->getUsers();
         $userList = [];
+
         foreach ($users as $user) {
             $object = $user->getObject();
             $userList[] = is_string($object) ? $object : (string) $object;

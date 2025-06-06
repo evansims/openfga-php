@@ -86,6 +86,7 @@ final class User implements UserInterface
 
             /** @var mixed $id */
             $id = $this->object->id;
+
             if (is_string($type) && is_string($id)) {
                 return new UserObject(
                     type: $type,
@@ -101,6 +102,7 @@ final class User implements UserInterface
 
             /** @var mixed $id */
             $id = $this->object['id'];
+
             if (is_string($type) && is_string($id)) {
                 return new UserObject(
                     type: $type,

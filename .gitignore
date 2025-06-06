@@ -80,3 +80,5 @@ yarn-error.log*
 *.pem
 *.key
 *.crt
+.pcov.crypt
+TASK.md

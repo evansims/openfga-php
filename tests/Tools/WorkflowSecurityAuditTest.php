@@ -28,6 +28,7 @@ describe('WorkflowSecurityAudit', function (): void {
             $removeDirectory = function (string $dir) use (&$removeDirectory): void {
                 if (is_dir($dir)) {
                     $objects = scandir($dir);
+
                     foreach ($objects as $object) {
                         if ('.' !== $object && '..' !== $object) {
                             if (is_dir($dir . '/' . $object) && ! is_link($dir . '/' . $object)) {

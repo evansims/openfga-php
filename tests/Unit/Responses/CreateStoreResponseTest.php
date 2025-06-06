@@ -112,6 +112,7 @@ describe('CreateStoreResponse', function (): void {
 
         foreach ($properties as $key => $property) {
             expect($property->required)->toBeTrue();
+
             if (in_array($key, ['created_at', 'updated_at'], true)) {
                 expect($property->format)->toBe('datetime');
             }

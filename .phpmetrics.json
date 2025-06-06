@@ -1,0 +1,89 @@
+{
+  "includes": ["./src"],
+  "excludes": ["./tests", "./vendor", "./examples", "./tools", "./docs"],
+  "report": {
+    "html": "./build/metrics/",
+    "json": "./build/metrics.json",
+    "csv": "./build/metrics.csv"
+  },
+  "rules": {
+    "cyclomaticComplexity": {
+      "critical": 10,
+      "warning": 7
+    },
+    "maintainabilityIndex": {
+      "critical": 65,
+      "warning": 85
+    },
+    "halstead": {
+      "difficulty": {
+        "critical": 30,
+        "warning": 20
+      },
+      "volume": {
+        "critical": 8000,
+        "warning": 4000
+      },
+      "effort": {
+        "critical": 1000000,
+        "warning": 500000
+      }
+    },
+    "loc": {
+      "method": {
+        "critical": 50,
+        "warning": 30
+      },
+      "class": {
+        "critical": 500,
+        "warning": 300
+      }
+    },
+    "coupling": {
+      "afferent": {
+        "critical": 20,
+        "warning": 10
+      },
+      "efferent": {
+        "critical": 20,
+        "warning": 10
+      }
+    },
+    "lcom": {
+      "critical": 4,
+      "warning": 2
+    }
+  },
+  "charts": {
+    "bubbleChart": {
+      "enabled": true,
+      "title": "Complexity vs Size"
+    },
+    "violations": {
+      "enabled": true
+    }
+  },
+  "analysis": {
+    "git": {
+      "enabled": false
+    },
+    "groups": [
+      {
+        "name": "Authentication",
+        "match": "OpenFGA\\\\Authentication\\\\*"
+      },
+      {
+        "name": "Models",
+        "match": "OpenFGA\\\\Models\\\\*"
+      },
+      {
+        "name": "Network",
+        "match": "OpenFGA\\\\Network\\\\*"
+      },
+      {
+        "name": "Requests/Responses",
+        "match": "OpenFGA\\\\(Requests|Responses)\\\\*"
+      }
+    ]
+  }
+}

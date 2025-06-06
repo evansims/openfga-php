@@ -18,7 +18,7 @@ describe('Tuple Management', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -94,6 +94,7 @@ describe('Tuple Management', function (): void {
         expect($readResponse2->getTuples()->count())->toBe(1); // charlie as writer
 
         $tupleStrings1 = [];
+
         foreach ($readResponse1->getTuples() as $tuple) {
             $key = $tuple->getKey();
             $tupleStrings1[] = sprintf(
@@ -108,6 +109,7 @@ describe('Tuple Management', function (): void {
         expect($tupleStrings1)->toContain('document:readme#reader@user:bob');
 
         $tupleStrings2 = [];
+
         foreach ($readResponse2->getTuples() as $tuple) {
             $key = $tuple->getKey();
             $tupleStrings2[] = sprintf(
@@ -226,6 +228,7 @@ describe('Tuple Management', function (): void {
         expect($changes->count())->toBeGreaterThanOrEqual(2);
 
         $operations = [];
+
         foreach ($changes as $change) {
             $operations[] = $change->getOperation()->value;
         }

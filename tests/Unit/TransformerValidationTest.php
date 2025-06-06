@@ -120,6 +120,7 @@ describe('TransformerValidation', function (): void {
         // Verify the structure was parsed correctly
         $typeDefinitions = $model->getTypeDefinitions();
         $documentType = null;
+
         foreach ($typeDefinitions as $td) {
             if ('document' === $td->getType()) {
                 $documentType = $td;

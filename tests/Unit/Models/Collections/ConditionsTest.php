@@ -87,6 +87,7 @@ describe('Conditions Collection', function (): void {
 
         $names = [];
         $indices = [];
+
         foreach ($collection as $index => $condition) {
             $indices[] = $index;
             $names[] = $condition->getName();
@@ -181,6 +182,7 @@ describe('Conditions Collection', function (): void {
 
         // Check conditions by name
         $conditionNames = [];
+
         foreach ($conditions as $condition) {
             $conditionNames[] = $condition->getName();
         }
@@ -237,6 +239,7 @@ describe('Conditions Collection', function (): void {
 
         // Find conditions with string parameters
         $withStringParams = [];
+
         foreach ($collection as $index => $condition) {
             if (null !== $condition->getParameters()) {
                 foreach ($condition->getParameters() as $param) {
@@ -261,6 +264,7 @@ describe('Conditions Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $item) {
             ++$count;
         }

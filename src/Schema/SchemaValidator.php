@@ -92,6 +92,7 @@ final class SchemaValidator implements SchemaValidatorInterface
         if ($schema instanceof CollectionSchemaInterface) {
             // Check if the collection expects data wrapped in a specific key
             $wrapperKey = $schema->getWrapperKey();
+
             if (null !== $wrapperKey && array_key_exists($wrapperKey, $data)) {
                 if (! is_array($data[$wrapperKey])) {
                     throw SerializationError::InvalidItemType->exception(context: ['className' => $className, 'property' => $wrapperKey, 'expected' => 'array', 'actual' => gettype($data[$wrapperKey])]);
@@ -151,6 +152,7 @@ final class SchemaValidator implements SchemaValidatorInterface
             if (! ('object' === $type && null !== $propClassName) && ! $this->validateType($value, $type, $format, $enum)) {
                 // Add more context to help debug
                 $valueType = gettype($value);
+
                 if (is_object($value)) {
                     $valueType = $value::class;
                 }
@@ -187,6 +189,7 @@ final class SchemaValidator implements SchemaValidatorInterface
                         $transformedArray[] = $transformedItem;
                     } else {
                         $validationItemType = $itemType ?? 'mixed';
+
                         if (! $this->validateType($item, $validationItemType, null, null)) {
                             throw SerializationError::InvalidItemType->exception(context: ['property' => $name, 'type' => $validationItemType]);
                         }
@@ -203,6 +206,7 @@ final class SchemaValidator implements SchemaValidatorInterface
             } else {
                 // Ensure the type is one of the expected scalar values (object and array handled above)
                 $validTypes = ['string', 'integer', 'number', 'boolean', 'null'];
+
                 if (! in_array($type, $validTypes, true)) {
                     $type = 'string'; // Default to string for unknown types
                 }
@@ -281,6 +285,7 @@ final class SchemaValidator implements SchemaValidatorInterface
 
         if (null !== $constructor && 1 === $constructor->getNumberOfParameters()) {
             $parameters = $constructor->getParameters();
+
             if (! isset($parameters[0])) {
                 throw SerializationError::InvalidItemType->exception(context: ['className' => $className, 'message' => 'Constructor parameter not found']);
             }
@@ -361,6 +366,7 @@ final class SchemaValidator implements SchemaValidatorInterface
             // Get schema if available to check for parameter mappings
             $schema = $this->schemas[$className] ?? SchemaRegistry::get($className);
             $parameterMappings = [];
+
             if (null !== $schema) {
                 foreach ($schema->getProperties() as $schemaProperty) {
                     if (null !== $schemaProperty->parameterName) {
@@ -471,8 +477,10 @@ final class SchemaValidator implements SchemaValidatorInterface
             if ($value instanceof DateTimeImmutable) {
                 return $value;
             }
+
             if (is_string($value)) {
                 $date = DateTimeImmutable::createFromFormat('Y-m-d', $value);
+
                 if (false !== $date) {
                     return $date;
                 }
@@ -499,6 +507,7 @@ final class SchemaValidator implements SchemaValidatorInterface
         if (is_string($value)) {
             return $value;
         }
+
         if (is_scalar($value) || (is_object($value) && method_exists($value, '__toString'))) {
             return (string) $value;
         }
@@ -629,6 +638,7 @@ final class SchemaValidator implements SchemaValidatorInterface
                 if (is_object($value)) {
                     return true;
                 }
+
                 // Accept arrays as objects (PHP's json_decode converts JSON objects to arrays)
                 // Empty objects {} in JSON become empty arrays [] in PHP
                 if (is_array($value)) {
@@ -636,6 +646,7 @@ final class SchemaValidator implements SchemaValidatorInterface
                     if ([] === $value) {
                         return true;
                     }
+
                     // Check if it's an associative array (object-like)
                     foreach (array_keys($value) as $k) {
                         if (! is_int($k)) {

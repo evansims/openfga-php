@@ -68,11 +68,13 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     final public function __construct(...$items)
     {
         $reflection = new ReflectionClass(static::class);
+
         if (! $reflection->hasProperty('itemType')) {
             throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_UNDEFINED_ITEM_TYPE, ['class' => static::class])]);
         }
 
         $property = $reflection->getProperty('itemType');
+
         if (! $property->isInitialized()) {
             throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::COLLECTION_UNDEFINED_ITEM_TYPE, ['class' => static::class])]);
         }
@@ -101,11 +103,13 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         }
 
         $reflection = new ReflectionClass(static::class);
+
         if (! $reflection->hasProperty('itemType')) {
             throw SerializationError::UndefinedItemType->exception();
         }
 
         $property = $reflection->getProperty('itemType');
+
         if (! $property->isInitialized()) {
             throw SerializationError::UndefinedItemType->exception();
         }
@@ -354,6 +358,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
         if ((is_int($offset) || is_string($offset)) && isset($this->models[$offset])) {
             $isNumeric = is_int($offset);
             unset($this->models[$offset]);
+
             if ($isNumeric) {
                 $this->models = array_values($this->models);
                 $this->position = 0;
@@ -368,6 +373,7 @@ abstract class IndexedCollection implements IndexedCollectionInterface
     public function reduce(mixed $initial, callable $callback): mixed
     {
         $result = $initial;
+
         foreach ($this->models as $model) {
             $result = $callback($result, $model);
         }

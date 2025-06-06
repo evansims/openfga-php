@@ -7,9 +7,8 @@ namespace OpenFGA\Tests\Unit;
 use Exception;
 use OpenFGA\ClientInterface;
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError};
-use OpenFGA\Models\{AuthorizationModelInterface, BatchCheckItem, Condition, ConditionParameter, TupleKey};
+use OpenFGA\Models\{AuthorizationModelInterface, Condition, ConditionParameter, TupleKey};
 use OpenFGA\Models\Collections\{
-    BatchCheckItems,
     ConditionParameters,
     Conditions,
     TupleKeys,
@@ -28,8 +27,6 @@ use Throwable;
 
 use function OpenFGA\{
     allowed,
-    batchCheckItem,
-    batchCheckItems,
     delete,
     dsl,
     err,
@@ -200,6 +197,7 @@ describe('Helper Functions', function (): void {
 
         test('preserves tuple order', function (): void {
             $tupleKeys = [];
+
             for ($i = 0; 10 > $i; ++$i) {
                 $tupleKeys[] = tuple(
                     user: "user:user{$i}",
@@ -211,6 +209,7 @@ describe('Helper Functions', function (): void {
             $collection = tuples(...$tupleKeys);
 
             expect($collection->count())->toBe(10);
+
             for ($i = 0; 10 > $i; ++$i) {
                 expect($collection->get($i)->getUser())->toBe("user:user{$i}");
             }
@@ -1292,139 +1291,6 @@ condition condition1(region: string) {
             $isAllowed = allowed($client, $storeId, $modelId, $tuple);
 
             expect($isAllowed)->toBe(false);
-        });
-    });
-
-    // ==============================================================================
-    // Batch Check Helpers Tests
-    // ==============================================================================
-
-    describe('batchCheckItem() function', function (): void {
-        test('creates a batch check item with required parameters', function (): void {
-            $item = batchCheckItem('user:alice', 'reader', 'document:budget', 'test-id-1');
-
-            expect($item)->toBeInstanceOf(BatchCheckItem::class);
-            expect($item->getTupleKey()->getUser())->toBe('user:alice');
-            expect($item->getTupleKey()->getRelation())->toBe('reader');
-            expect($item->getTupleKey()->getObject())->toBe('document:budget');
-            expect($item->getCorrelationId())->toBe('test-id-1');
-            expect($item->getContextualTuples())->toBeNull();
-            expect($item->getContext())->toBeNull();
-        });
-
-        test('creates a batch check item with contextual tuples', function (): void {
-            $contextualTuples = tuples(
-                tuple('user:manager', 'approver', 'document:budget'),
-                tuple('user:finance', 'reviewer', 'document:budget'),
-            );
-
-            $item = batchCheckItem(
-                'user:alice',
-                'reader',
-                'document:budget',
-                'test-id-2',
-                $contextualTuples,
-            );
-
-            expect($item)->toBeInstanceOf(BatchCheckItem::class);
-            expect($item->getContextualTuples())->toBe($contextualTuples);
-            expect($item->getContextualTuples()->count())->toBe(2);
-            expect($item->getContext())->toBeNull();
-        });
-
-        test('creates a batch check item with context', function (): void {
-            $context = (object) ['department' => 'engineering', 'urgent' => true];
-
-            $item = batchCheckItem(
-                'user:alice',
-                'reader',
-                'document:budget',
-                'test-id-3',
-                null,
-                $context,
-            );
-
-            expect($item)->toBeInstanceOf(BatchCheckItem::class);
-            expect($item->getContext())->toBe($context);
-            expect($item->getContextualTuples())->toBeNull();
-        });
-
-        test('validates correlation ID through underlying class', function (): void {
-            expect(fn () => batchCheckItem(
-                'user:alice',
-                'reader',
-                'document:budget',
-                'invalid correlation id with spaces',
-            ))->toThrow(ClientException::class);
-        });
-    });
-
-    describe('batchCheckItems() function', function (): void {
-        test('creates an empty collection with no arguments', function (): void {
-            $collection = batchCheckItems();
-
-            expect($collection)->toBeInstanceOf(BatchCheckItems::class);
-            expect($collection->count())->toBe(0);
-            expect($collection->isEmpty())->toBeTrue();
-        });
-
-        test('creates a collection with single item', function (): void {
-            $item = batchCheckItem('user:alice', 'reader', 'document:budget', 'test-id-1');
-            $collection = batchCheckItems($item);
-
-            expect($collection)->toBeInstanceOf(BatchCheckItems::class);
-            expect($collection->count())->toBe(1);
-            expect($collection->get(0))->toBe($item);
-        });
-
-        test('creates a collection with multiple items', function (): void {
-            $item1 = batchCheckItem('user:alice', 'reader', 'document:budget', 'alice-reader');
-            $item2 = batchCheckItem('user:bob', 'writer', 'document:spec', 'bob-writer');
-            $item3 = batchCheckItem('user:charlie', 'admin', 'document:plan', 'charlie-admin');
-
-            $collection = batchCheckItems($item1, $item2, $item3);
-
-            expect($collection)->toBeInstanceOf(BatchCheckItems::class);
-            expect($collection->count())->toBe(3);
-            expect($collection->get(0))->toBe($item1);
-            expect($collection->get(1))->toBe($item2);
-            expect($collection->get(2))->toBe($item3);
-        });
-
-        test('works with complex scenarios', function (): void {
-            $contextualTuples1 = tuples(
-                tuple('user:manager1', 'approver', 'document:budget'),
-            );
-            $contextualTuples2 = tuples(
-                tuple('user:manager2', 'approver', 'document:spec'),
-                tuple('user:finance', 'reviewer', 'document:spec'),
-            );
-
-            $item1 = batchCheckItem(
-                'user:alice',
-                'reader',
-                'document:budget',
-                'alice-complex',
-                $contextualTuples1,
-                (object) ['department' => 'engineering'],
-            );
-
-            $item2 = batchCheckItem(
-                'user:bob',
-                'writer',
-                'document:spec',
-                'bob-complex',
-                $contextualTuples2,
-                (object) ['department' => 'marketing'],
-            );
-
-            $collection = batchCheckItems($item1, $item2);
-
-            expect($collection->count())->toBe(2);
-            expect($collection->get(0)->getContextualTuples()->count())->toBe(1);
-            expect($collection->get(1)->getContextualTuples()->count())->toBe(2);
-            expect($collection->get(0)->getContext()->department)->toBe('engineering');
-            expect($collection->get(1)->getContext()->department)->toBe('marketing');
         });
     });
 });

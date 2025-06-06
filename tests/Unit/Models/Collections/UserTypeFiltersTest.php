@@ -84,6 +84,7 @@ describe('UserTypeFilters Collection', function (): void {
         $collection = new UserTypeFilters([$filter1, $filter2, $filter3]);
 
         $types = [];
+
         foreach ($collection as $filter) {
             $types[] = $filter->getType();
         }
@@ -142,6 +143,7 @@ describe('UserTypeFilters Collection', function (): void {
 
         // Filter only 'group' types
         $groupFilters = [];
+
         foreach ($collection as $filter) {
             if ('group' === $filter->getType()) {
                 $groupFilters[] = $filter->getRelation();
@@ -200,6 +202,7 @@ describe('UserTypeFilters Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $_) {
             ++$count;
         }
@@ -232,6 +235,7 @@ describe('UserTypeFilters Collection', function (): void {
 
         // Verify the configuration
         $config = [];
+
         foreach ($collection as $filter) {
             $config[] = $filter->getType() . ($filter->getRelation() ? '#' . $filter->getRelation() : '');
         }

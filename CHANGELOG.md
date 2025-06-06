@@ -4,12 +4,63 @@
 
 ### Added
 
-- Enhanced API documentation generator with translation tables for Messages class
-- Added OPENAPI_MODEL constants to BatchCheckItem and BatchCheckSingleResult classes
+- **Support for multithreading**<br />
+  The SDK now supports multithreading using PHP's [threads](https://www.php.net/manual/en/language.threads.php) language feature,
+  providing support for concurrent HTTP requests and improved performance.
 
-### Fixed
+- **Support for concurrency using Fibers**<br />
+  The SDK now internally uses PHP's [Fibers](https://www.php.net/manual/en/language.fibers.php) language feature,
+  providing support for concurrent HTTP requests and improved performance.
 
-- Fixed constant value formatting in API documentation (removed unnecessary quotes)
+- **Support for non-transactional tuple writes**<br />
+  `writeTuples` now supports both transactional and non-transactional modes.
+
+  - In **transactional** mode, all changes must succeed or the entire operation fails (atomic).
+    Use when consistency matters - like granting a user multiple permissions at once.
+
+  - In **non-transactional** mode, each batch succeeds or fails independently.
+    If one batch fails, others may still succeed.
+    Use for bulk syncs where you can retry failed batches.
+
+  See [the docs](docs/Concurrency.md) for more information.
+
+- A new `batch` helper function has been added to simplify batch tuple operations.
+  This new helper supports the full range of parameters available in `writeTuples`
+  and provides a more concise API for common use cases.
+
+### Changed
+
+- **Tuple Operations**
+
+  - New parameters have been added to `writeTuples` to support configurable parallelism and chunking,
+    retries and retry delay, and stop-on-first-error behavior.
+
+  - The `writeTuples` method now filters out duplicate tuples before issuing requests.
+
+  - A new `transactional` parameter has been added to the `write` and `delete` helper functions to support
+    the `writeTuples` changes.
+
+  - The `WriteTuplesResponse` class returned by `writeTuples` now includes detailed results about the operations.
+
+- **Networking**
+
+  - The `RequestManager` has been refactored.
+    All requests now use the same Fiber-based concurrent infrastructure internally.
+
+  - The `RetryHandler` class has been refactored into an abstract base class `AbstractRetryHandler` that can be
+    extended for custom retry behavior (e.g., testing with reduced delays).
+
+- **Architecture**
+
+  - The chunk processing logic for non-transactional writes has been moved from `Client` to `WriteTuplesRequest`.
+    This improves separation of concerns and encapsulates all write-related logic within the request object.
+
+### Documentation
+
+- Added [a new example](examples/non-transactional-writes/example.php) of non-transactional tuple writes
+- Added [a new example](examples/duplicate-filtering/example.php) demonstrating duplicate tuple filtering
+- Added [a new guide](docs/Concurrency.md) on concurrency and parallelism
+- Added [a new guide](docs/Exceptions.md) on exception handling
 
 ## [1.2.0] - 2025-06-02
 

@@ -190,6 +190,7 @@ final class Translator implements TranslatorInterface
 
         foreach ($locales as $locale) {
             $translationPath = $translationsDir . '/messages.' . $locale . '.yaml';
+
             if (file_exists($translationPath)) {
                 self::addResource('yaml', $translationPath, $locale);
             }
@@ -279,6 +280,7 @@ final class Translator implements TranslatorInterface
 
             // Try with % wrapper first
             $wrappedKey = sprintf('%%%s%%', $paramName);
+
             if (array_key_exists($wrappedKey, $parameters)) {
                 /** @var mixed $value */
                 $value = $parameters[$wrappedKey];

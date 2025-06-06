@@ -121,6 +121,7 @@ describe('RequestManager', function (): void {
             ->willReturnCallback(function (string $name, string $value) use ($psrRequest): MockObject {
                 // Verify expected headers
                 expect($name)->toBeIn(['Content-Type', 'User-Agent', 'Authorization']);
+
                 if ('Content-Type' === $name) {
                     expect($value)->toBe('application/json');
                 } elseif ('User-Agent' === $name) {

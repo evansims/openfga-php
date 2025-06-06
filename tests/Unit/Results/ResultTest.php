@@ -101,6 +101,7 @@ describe('Result', function (): void {
 
         foreach ($results as $result) {
             expect($result)->toBeInstanceOf(Result::class);
+
             // unwrap should work on both
             if ($result instanceof Success) {
                 expect($result->unwrap())->toBe($value);

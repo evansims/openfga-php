@@ -67,6 +67,7 @@ describe('TypeDefinitionRelations Collection', function (): void {
         $collection = new TypeDefinitionRelations($relations);
 
         $keys = [];
+
         foreach ($collection as $key => $relation) {
             $keys[] = $key;
             expect($relation)->toBeInstanceOf(Userset::class);
@@ -213,6 +214,7 @@ describe('TypeDefinitionRelations Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $_) {
             ++$count;
         }

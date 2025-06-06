@@ -84,6 +84,7 @@ describe('RelationReferences Collection', function (): void {
         $collection = new RelationReferences([$ref1, $ref2, $ref3]);
 
         $types = [];
+
         foreach ($collection as $index => $ref) {
             $types[] = $ref->getType();
             expect($index)->toBeInt();
@@ -213,6 +214,7 @@ describe('RelationReferences Collection', function (): void {
 
         // Iteration on empty
         $count = 0;
+
         foreach ($collection as $_) {
             ++$count;
         }

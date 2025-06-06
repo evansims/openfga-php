@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientException};
+use OpenFGA\Messages;
 use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Translation\Translator;
 use Override;
+use ReflectionException;
 
 /**
  * Represents a relationship tuple key defining a connection between user, relation, and object.
@@ -29,6 +34,10 @@ final class TupleKey implements TupleKeyInterface
      * @param string                  $relation  The relation associated with the tuple key
      * @param string                  $object    The object associated with the tuple key
      * @param ConditionInterface|null $condition Optional condition for the tuple key
+     *
+     * @throws ClientException          If the user or object identifier format is invalid
+     * @throws InvalidArgumentException If translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     public function __construct(
         private readonly string $user,
@@ -36,6 +45,15 @@ final class TupleKey implements TupleKeyInterface
         private readonly string $object,
         private readonly ?ConditionInterface $condition = null,
     ) {
+        // Validate that identifiers don't contain internal whitespace
+        // We check for whitespace between non-whitespace characters, not leading/trailing
+        if (1 === preg_match('/\S\s+\S/', $this->user)) {
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::MODEL_INVALID_IDENTIFIER_FORMAT, ['identifier' => $this->user, ])]);
+        }
+
+        if (1 === preg_match('/\S\s+\S/', $this->object)) {
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::MODEL_INVALID_IDENTIFIER_FORMAT, ['identifier' => $this->object, ])]);
+        }
     }
 
     /**

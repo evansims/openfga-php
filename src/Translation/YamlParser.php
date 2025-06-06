@@ -39,6 +39,10 @@ final class YamlParser
      */
     public static function parseFile(string $filename): array
     {
+        if (! file_exists($filename)) {
+            throw new InvalidArgumentException('File does not exist: ' . $filename);
+        }
+
         $content = @file_get_contents($filename);
 
         if (false === $content) {
@@ -74,10 +78,12 @@ final class YamlParser
 
         foreach ($lines as $lineNumber => $line) {
             $trimmedLine = trim($line);
+
             // Skip empty lines and comments
             if ('' === $trimmedLine) {
                 continue;
             }
+
             if (str_starts_with($trimmedLine, '#')) {
                 continue;
             }
@@ -97,6 +103,7 @@ final class YamlParser
             }
 
             $parts = explode(':', $trimmedLine, 2);
+
             if (2 > count($parts)) {
                 throw new InvalidArgumentException('Invalid YAML syntax on line ' . ($lineNumber + 1) . ': missing value');
             }
@@ -151,6 +158,7 @@ final class YamlParser
         if ('true' === $value) {
             return true;
         }
+
         if ('false' === $value) {
             return false;
         }

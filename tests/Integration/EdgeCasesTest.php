@@ -7,6 +7,7 @@ namespace OpenFGA\Tests\Integration;
 use Buzz\Client\FileGetContents;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\UserTypeFilters;
 use OpenFGA\Models\UserTypeFilter;
 
@@ -18,7 +19,7 @@ describe('Edge Cases', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -135,6 +136,7 @@ describe('Edge Cases', function (): void {
         expect($successCount)->toBeGreaterThan(0);
 
         $readCount = 0;
+
         foreach ($writtenTuples as $tuple) {
             $readResult = $this->client->readTuples(
                 store: $this->storeId,
@@ -204,6 +206,7 @@ describe('Edge Cases', function (): void {
 
     test('page size limits', function (): void {
         $tuplesToWrite = [];
+
         for ($i = 0; 50 > $i; ++$i) {
             $tuplesToWrite[] = tuple("user:user{$i}", 'viewer', 'document:test');
         }
@@ -264,7 +267,8 @@ describe('Edge Cases', function (): void {
             ),
         );
 
-        expect($result->failed())->toBeTrue();
+        // Deleting non-existent tuples should succeed (idempotent operation)
+        expect($result->succeeded())->toBeTrue();
     });
 
     test('mixed writes and deletes', function (): void {
@@ -343,24 +347,12 @@ describe('Edge Cases', function (): void {
     });
 
     test('whitespace handling in identifiers', function (): void {
-        $result = $this->client->writeTuples(
-            store: $this->storeId,
-            model: $this->modelId,
-            writes: tuples(
-                tuple('user:alice smith', 'owner', 'document:my document'),
-            ),
-        );
+        // Test that client-side validation rejects identifiers with whitespace
+        expect(fn () => tuple('user:alice smith', 'owner', 'document:my document'))
+            ->toThrow(ClientException::class, 'identifiers cannot contain whitespace');
 
-        if ($result->succeeded()) {
-            $checkResult = $this->client->check(
-                store: $this->storeId,
-                model: $this->modelId,
-                tupleKey: tuple('user:alice smith', 'owner', 'document:my document'),
-            )->rethrow()->unwrap();
-
-            expect($checkResult->getAllowed())->toBeTrue();
-        } else {
-            expect($result->failed())->toBeTrue();
-        }
+        // Also test just the object having whitespace
+        expect(fn () => tuple('user:alice', 'owner', 'document:my document'))
+            ->toThrow(ClientException::class, 'identifiers cannot contain whitespace');
     });
 });

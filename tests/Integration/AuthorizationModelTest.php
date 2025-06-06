@@ -14,7 +14,7 @@ describe('Authorization Model', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -116,6 +116,7 @@ describe('Authorization Model', function (): void {
         expect($models->count())->toBeGreaterThanOrEqual(2);
 
         $modelIds = [];
+
         foreach ($models as $model) {
             $modelIds[] = $model->getId();
         }
@@ -159,6 +160,7 @@ describe('Authorization Model', function (): void {
         expect($retrievedModel->getTypeDefinitions())->toHaveCount(3);
 
         $documentType = null;
+
         foreach ($retrievedModel->getTypeDefinitions() as $typeDef) {
             if ('document' === $typeDef->getType()) {
                 $documentType = $typeDef;

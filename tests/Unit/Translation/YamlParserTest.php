@@ -254,7 +254,7 @@ describe('YamlParser', function (): void {
 
     test('parseFile throws exception for non-existent file', function (): void {
         expect(fn () => YamlParser::parseFile('/non/existent/file.yaml'))
-            ->toThrow(InvalidArgumentException::class, 'Cannot read file: /non/existent/file.yaml');
+            ->toThrow(InvalidArgumentException::class, 'File does not exist: /non/existent/file.yaml');
     });
 
     test('handles mixed indentation correctly', function (): void {

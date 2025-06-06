@@ -50,11 +50,13 @@ final class BatchCheckSingleResult implements BatchCheckSingleResultInterface
     public static function fromArray(array $data): static
     {
         $allowed = null;
+
         if (isset($data['allowed']) && is_bool($data['allowed'])) {
             $allowed = $data['allowed'];
         }
 
         $error = null;
+
         if (isset($data['error']) && is_object($data['error'])) {
             $error = $data['error'];
         }

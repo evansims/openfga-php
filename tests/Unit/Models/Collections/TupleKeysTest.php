@@ -109,6 +109,7 @@ describe('TupleKeys Collection', function (): void {
         $collection = new TupleKeys(...$tupleKeys);
 
         $iterated = [];
+
         foreach ($collection as $index => $tupleKey) {
             $iterated[$index] = $tupleKey;
         }
@@ -222,6 +223,7 @@ describe('TupleKeys Collection', function (): void {
 
     test('maintains insertion order', function (): void {
         $tupleKeys = [];
+
         for ($i = 0; 10 > $i; ++$i) {
             $tupleKeys[] = new TupleKey(
                 user: "user:user{$i}",

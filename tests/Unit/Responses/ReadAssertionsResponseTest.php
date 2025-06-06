@@ -156,6 +156,7 @@ describe('ReadAssertionsResponse', function (): void {
 
     test('handles large assertion collections', function (): void {
         $assertions = [];
+
         for ($i = 0; 50 > $i; ++$i) {
             $tupleKey = new AssertionTupleKey(
                 user: "user:user{$i}",

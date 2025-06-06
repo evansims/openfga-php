@@ -60,6 +60,7 @@ final class BatchCheckResponse extends Response implements BatchCheckResponseInt
             $validator->registerSchema(self::schema());
 
             $result = [];
+
             if (isset($body['result']) && is_array($body['result'])) {
                 /** @var mixed $resultData */
                 foreach ($body['result'] as $correlationId => $resultData) {

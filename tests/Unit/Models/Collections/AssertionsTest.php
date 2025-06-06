@@ -184,6 +184,7 @@ describe('Assertions Collection', function (): void {
         $collection = new Assertions(...$assertions);
 
         $iterated = [];
+
         foreach ($collection as $index => $assertion) {
             $iterated[$index] = $assertion;
         }
@@ -237,6 +238,7 @@ describe('Assertions Collection', function (): void {
 
     test('maintains insertion order', function (): void {
         $assertions = [];
+
         for ($i = 0; 5 > $i; ++$i) {
             $assertions[] = new Assertion(
                 tupleKey: new AssertionTupleKey(

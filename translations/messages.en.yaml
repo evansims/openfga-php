@@ -43,6 +43,7 @@ request:
   store_id_empty: 'Store ID cannot be empty'
   model_id_empty: 'Authorization Model ID cannot be empty'
   store_name_empty: 'Store name cannot be empty'
+  transactional_limit_exceeded: 'Transactional writeTuples exceeded limit: %count% operations (max 100). Use non-transactional mode or split into multiple requests.'
   continuation_token_empty: 'Continuation token cannot be empty'
   page_size_invalid: 'Invalid pageSize provided to %className%'
   object_type_empty: 'Object type cannot be empty'
@@ -57,6 +58,7 @@ validation:
 
 model:
   invalid_tuple_key: 'Invalid tuple_key provided to Assertion::fromArray'
+  invalid_identifier_format: 'Invalid identifier format: identifiers cannot contain whitespace. Found in %identifier%'
   typed_wildcard_type_empty: 'TypedWildcard::$type cannot be empty.'
   source_info_file_empty: 'SourceInfo::$file cannot be empty.'
   leaf_missing_content: 'Leaf must contain at least one of users, computed or tupleToUserset'

@@ -18,7 +18,7 @@ describe('Performance Benchmarks', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -117,6 +117,7 @@ describe('Performance Benchmarks', function (): void {
 
         foreach ($batchSizes as $size) {
             $tuplesBatch = [];
+
             for ($i = 0; $i < $size; ++$i) {
                 $tuplesBatch[] = tuple("user:batchuser{$i}", 'viewer', "document:batchdoc{$i}");
             }
@@ -141,6 +142,7 @@ describe('Performance Benchmarks', function (): void {
         }
 
         echo "\nBatch write performance:\n";
+
         if (empty($results)) {
             echo "  No successful batch writes\n";
         } else {
@@ -206,6 +208,7 @@ describe('Performance Benchmarks', function (): void {
             if (0 === $i % 3) {
                 $tuplesBatch[] = tuple('user:alice', 'viewer', "document:doc{$i}");
             }
+
             if (0 === $i % 5) {
                 $tuplesBatch[] = tuple('user:alice', 'editor', "document:doc{$i}");
             }
@@ -277,6 +280,7 @@ describe('Performance Benchmarks', function (): void {
         $totalElapsed = (microtime(true) - $totalStart) * 1000;
 
         echo "\nConcurrent operations performance:\n";
+
         foreach ($operations as $op => $time) {
             echo sprintf("  %s: %.2fms\n", $op, $time);
         }
@@ -287,6 +291,7 @@ describe('Performance Benchmarks', function (): void {
 
     test('benchmark pagination performance', function (): void {
         $tuplesBatch = [];
+
         for ($i = 0; 50 > $i; ++$i) {
             $tuplesBatch[] = tuple("user:user{$i}", 'viewer', 'document:shared');
         }

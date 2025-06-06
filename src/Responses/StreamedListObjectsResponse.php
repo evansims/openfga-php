@@ -73,6 +73,7 @@ final readonly class StreamedListObjectsResponse implements StreamedListObjectsR
 
         // Process the stream line by line
         $buffer = '';
+
         while (! $body->eof()) {
             $chunk = $body->read(1024); // Read in chunks for better performance
             $buffer .= $chunk;
@@ -83,6 +84,7 @@ final readonly class StreamedListObjectsResponse implements StreamedListObjectsR
                 $buffer = substr($buffer, $pos + 1);
 
                 $line = trim($line);
+
                 if ('' === $line) {
                     continue;
                 }
@@ -103,6 +105,7 @@ final readonly class StreamedListObjectsResponse implements StreamedListObjectsR
 
         // Process any remaining data in buffer
         $line = trim($buffer);
+
         if ('' !== $line) {
             try {
                 /** @var array<string, mixed>|null $data */

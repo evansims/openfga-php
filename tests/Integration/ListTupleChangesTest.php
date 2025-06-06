@@ -19,7 +19,7 @@ describe('List Tuple Changes', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -86,6 +86,7 @@ describe('List Tuple Changes', function (): void {
         expect($result->getChanges()->count())->toBeGreaterThanOrEqual(3);
 
         $changes = [];
+
         foreach ($result->getChanges() as $change) {
             $changes[] = $change;
 
@@ -123,6 +124,7 @@ describe('List Tuple Changes', function (): void {
         )->rethrow()->unwrap();
 
         $deleteFound = false;
+
         foreach ($result->getChanges() as $change) {
             if (TupleOperation::TUPLE_OPERATION_DELETE === $change->getOperation()) {
                 $deleteFound = true;
@@ -138,6 +140,7 @@ describe('List Tuple Changes', function (): void {
 
     test('list changes with pagination', function (): void {
         $tuplesToWrite = [];
+
         for ($i = 0; 20 > $i; ++$i) {
             $tuplesToWrite[] = tuple("user:user{$i}", 'viewer', "document:doc{$i}");
         }
@@ -156,6 +159,7 @@ describe('List Tuple Changes', function (): void {
         expect($firstPage->getChanges()->count())->toBeLessThanOrEqual(5);
 
         $continuationToken = $firstPage->getContinuationToken();
+
         if ($continuationToken) {
             $secondPage = $this->client->listTupleChanges(
                 store: $this->storeId,
@@ -167,10 +171,12 @@ describe('List Tuple Changes', function (): void {
 
             if (0 < $firstPage->getChanges()->count() && 0 < $secondPage->getChanges()->count()) {
                 $firstPageChanges = [];
+
                 foreach ($firstPage->getChanges() as $change) {
                     $firstPageChanges[] = $change;
                 }
                 $secondPageChanges = [];
+
                 foreach ($secondPage->getChanges() as $change) {
                     $secondPageChanges[] = $change;
                 }
@@ -230,6 +236,7 @@ describe('List Tuple Changes', function (): void {
         )->rethrow()->unwrap();
 
         $timestamps = [];
+
         foreach ($result->getChanges() as $change) {
             $timestamps[] = $change->getTimestamp()->getTimestamp();
         }
@@ -284,6 +291,7 @@ describe('List Tuple Changes', function (): void {
         )->rethrow()->unwrap();
 
         $operations = [];
+
         foreach ($result->getChanges() as $change) {
             $operations[] = $change->getOperation();
         }
@@ -306,8 +314,10 @@ describe('List Tuple Changes', function (): void {
         )->rethrow()->unwrap();
 
         $found = false;
+
         foreach ($result->getChanges() as $change) {
             $tupleKey = $change->getTupleKey();
+
             if ('user:alice' === $tupleKey->getUser()
                 && 'document:important' === $tupleKey->getObject()) {
                 $found = true;
@@ -325,6 +335,7 @@ describe('List Tuple Changes', function (): void {
 
     test('continuation token persistence', function (): void {
         $tuplesToWrite = [];
+
         for ($i = 0; 15 > $i; ++$i) {
             $tuplesToWrite[] = tuple("user:user{$i}", 'viewer', "document:doc{$i}");
         }

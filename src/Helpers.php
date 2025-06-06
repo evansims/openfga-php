@@ -6,12 +6,11 @@ namespace OpenFGA;
 
 use Closure;
 use InvalidArgumentException;
-use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Exceptions\{ClientException, ClientThrowable};
 use OpenFGA\Models\{AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKey, TupleKeyInterface};
-use OpenFGA\Models\BatchCheckItem;
-use OpenFGA\Models\Collections\BatchCheckItems;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Responses\WriteTuplesResponse;
 use OpenFGA\Results\{Failure, ResultInterface, Success};
 use ReflectionException;
 use Throwable;
@@ -27,11 +26,16 @@ use Throwable;
  * users and objects. This helper provides a convenient way to create these relationships
  * with optional conditional logic.
  *
- * @param  string                  $user      The user identifier (for example, 'user:alice', 'team:administrator')
- * @param  string                  $relation  The relationship type (for example, 'viewer', 'owner', 'member')
- * @param  string                  $object    The object identifier (for example, 'document:1', 'folder:shared')
- * @param  ConditionInterface|null $condition Optional condition for contextual permissions
- * @return TupleKey                The created tuple key
+ * @param string                  $user      The user identifier (for example, 'user:alice', 'team:administrator')
+ * @param string                  $relation  The relationship type (for example, 'viewer', 'owner', 'member')
+ * @param string                  $object    The object identifier (for example, 'document:1', 'folder:shared')
+ * @param ConditionInterface|null $condition Optional condition for contextual permissions
+ *
+ * @throws ClientException          If the user or object identifier format is invalid
+ * @throws InvalidArgumentException If translation parameters are invalid
+ * @throws ReflectionException      If exception location capture fails
+ *
+ * @return TupleKey The created tuple key
  *
  * @see https://openfga.dev/docs/getting-started/update-tuples Working with relationship tuples
  */
@@ -63,62 +67,69 @@ function tuples(TupleKey ...$tuples): TupleKeys
 }
 
 /**
- * Helper for creating a BatchCheckItem for batch authorization checks.
+ * Helper for performing batch tuple operations using a client.
  *
- * BatchCheckItems represent individual authorization checks within a batch request.
- * Each item contains a tuple key to check and a unique correlation ID to map the
- * result back to this specific check.
+ * This helper provides a convenient way to perform large-scale tuple operations
+ * that automatically handle chunking and provide detailed results about the
+ * success or failure of each chunk. It's designed to work with the non-transaction
+ * mode similar to the OpenFGA Go SDK.
  *
- * @param string                                     $user             The user identifier (for example, 'user:alice', 'team:administrator')
- * @param string                                     $relation         The relationship type (for example, 'viewer', 'owner', 'member')
- * @param string                                     $object           The object identifier (for example, 'document:1', 'folder:shared')
- * @param string                                     $correlationId    Unique identifier for this check (max 36 chars, alphanumeric + hyphens)
- * @param TupleKeysInterface<TupleKeyInterface>|null $contextualTuples Optional contextual tuples for this check
- * @param object|null                                $context          Optional context object for this check
+ * @param ClientInterface                            $client              The OpenFGA client to use
+ * @param StoreInterface|string                      $store               The store to operate on
+ * @param AuthorizationModelInterface|string         $model               The authorization model to use
+ * @param TupleKeysInterface<TupleKeyInterface>|null $writes              Collection of tuples to write
+ * @param TupleKeysInterface<TupleKeyInterface>|null $deletes             Collection of tuples to delete
+ * @param int                                        $maxParallelRequests Maximum concurrent requests (default: 1)
+ * @param int                                        $maxTuplesPerChunk   Maximum tuples per chunk (default: 100)
+ * @param int                                        $maxRetries          Maximum retry attempts for failed chunks (default: 0)
+ * @param float                                      $retryDelaySeconds   Delay between retries in seconds (default: 1.0)
+ * @param bool                                       $stopOnFirstError    Stop processing remaining chunks on first error (default: false)
  *
- * @throws InvalidArgumentException If message translation parameters are invalid
- * @throws ReflectionException      If exception location capture fails
- * @throws ClientThrowable          If the correlation ID is invalid
+ * @throws Throwable If the batch operation fails completely
  *
- * @return BatchCheckItem The created batch check item
+ * @return WriteTuplesResponse The result of the batch operation
  *
- * @see https://openfga.dev/docs/api#/Relationship%20Queries/BatchCheck Batch check API reference
+ * @example Processing a large batch of tuple operations
+ * $writes = tuples(
+ *     tuple('user:anne', 'viewer', 'document:1'),
+ *     tuple('user:bob', 'viewer', 'document:2'),
+ *     // ... hundreds more tuples
+ * );
+ *
+ * $result = batch(
+ *     client: $client,
+ *     store: 'store-id',
+ *     model: 'model-id',
+ *     writes: $writes
+ * );
+ *
+ * echo "Success rate: " . ($result->getSuccessRate() * 100) . "%\n";
  */
-function batchCheckItem(
-    string $user,
-    string $relation,
-    string $object,
-    string $correlationId,
-    ?TupleKeysInterface $contextualTuples = null,
-    ?object $context = null,
-): BatchCheckItem {
-    return new BatchCheckItem(
-        tupleKey: tuple($user, $relation, $object),
-        correlationId: $correlationId,
-        contextualTuples: $contextualTuples,
-        context: $context,
-    );
-}
-
-/**
- * Helper for creating a BatchCheckItems collection from multiple BatchCheckItem objects.
- *
- * This helper simplifies the creation of BatchCheckItems collections for batch authorization
- * operations, allowing you to check multiple user-object relationships in a single request.
- *
- * @param BatchCheckItem ...$items Variable number of BatchCheckItem objects to include in the collection
- *
- * @throws InvalidArgumentException If item validation fails
- * @throws ReflectionException      If exception location capture fails
- * @throws ClientThrowable          If collection creation fails
- *
- * @return BatchCheckItems Collection of batch check items
- *
- * @see https://openfga.dev/docs/api#/Relationship%20Queries/BatchCheck Batch check API reference
- */
-function batchCheckItems(BatchCheckItem ...$items): BatchCheckItems
-{
-    return new BatchCheckItems($items);
+function batch(
+    ClientInterface $client,
+    StoreInterface | string $store,
+    AuthorizationModelInterface | string $model,
+    ?TupleKeysInterface $writes = null,
+    ?TupleKeysInterface $deletes = null,
+    int $maxParallelRequests = 1,
+    int $maxTuplesPerChunk = 100,
+    int $maxRetries = 0,
+    float $retryDelaySeconds = 1.0,
+    bool $stopOnFirstError = false,
+): WriteTuplesResponse {
+    /** @var WriteTuplesResponse */
+    return $client->writeTuples(
+        store: $store,
+        model: $model,
+        writes: $writes,
+        deletes: $deletes,
+        transactional: false,
+        maxParallelRequests: $maxParallelRequests,
+        maxTuplesPerChunk: $maxTuplesPerChunk,
+        maxRetries: $maxRetries,
+        retryDelaySeconds: $retryDelaySeconds,
+        stopOnFirstError: $stopOnFirstError,
+    )->unwrap();
 }
 
 /**
@@ -280,41 +291,91 @@ function err(Throwable $error): Failure
 // ==============================================================================
 
 /**
- * Write relationship tuples.
+ * Write relationship tuples in the simplest way possible.
  *
- * @param ClientInterface                                         $client an OpenFGA client
- * @param StoreInterface|string                                   $store  the store to use
- * @param AuthorizationModelInterface|string                      $model  the authorization model to use
- * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples the tuples to write
+ * This helper provides the most straightforward way to write tuples to OpenFGA.
+ * By default, it uses transactional mode (all-or-nothing). For bulk operations
+ * with partial success handling, use the `batch()` helper instead.
  *
- * @throws Throwable if the write fails
+ * @param ClientInterface                                         $client        The OpenFGA client
+ * @param StoreInterface|string                                   $store         The store to write to
+ * @param AuthorizationModelInterface|string                      $model         The authorization model to use
+ * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples        The tuple(s) to write
+ * @param bool                                                    $transactional Whether to use transactional mode (default: true)
+ *
+ * @throws Throwable If the write operation fails
+ *
+ * @example Writing a single tuple
+ * write($client, $store, $model, tuple('user:anne', 'reader', 'document:budget'));
+ * @example Writing multiple tuples transactionally
+ * write($client, $store, $model, tuples(
+ *     tuple('user:anne', 'reader', 'document:budget'),
+ *     tuple('user:anne', 'reader', 'document:forecast')
+ * ));
+ * @example Simple non-transactional write for resilience
+ * write($client, $store, $model, $tuples, transactional: false);
  */
-function write(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface | string $model, TupleKeyInterface | TupleKeysInterface $tuples): void
-{
+function write(
+    ClientInterface $client,
+    StoreInterface | string $store,
+    AuthorizationModelInterface | string $model,
+    TupleKeyInterface | TupleKeysInterface $tuples,
+    bool $transactional = true,
+): void {
     if ($tuples instanceof TupleKeyInterface) {
         $tuples = new TupleKeys([$tuples]);
     }
 
-    $client->writeTuples(store: $store, model: $model, writes: $tuples);
+    $client->writeTuples(
+        store: $store,
+        model: $model,
+        writes: $tuples,
+        transactional: $transactional,
+    )->unwrap();
 }
 
 /**
- * Delete relationship tuples.
+ * Delete relationship tuples in the simplest way possible.
  *
- * @param ClientInterface                                         $client an OpenFGA client
- * @param StoreInterface|string                                   $store  the store to use
- * @param AuthorizationModelInterface|string                      $model  the authorization model to use
- * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples the tuples to delete
+ * This helper provides the most straightforward way to delete tuples from OpenFGA.
+ * By default, it uses transactional mode (all-or-nothing). For bulk operations
+ * with partial success handling, use the `batch()` helper instead.
  *
- * @throws Throwable if the delete fails
+ * @param ClientInterface                                         $client        The OpenFGA client
+ * @param StoreInterface|string                                   $store         The store to delete from
+ * @param AuthorizationModelInterface|string                      $model         The authorization model to use
+ * @param TupleKeyInterface|TupleKeysInterface<TupleKeyInterface> $tuples        The tuple(s) to delete
+ * @param bool                                                    $transactional Whether to use transactional mode (default: true)
+ *
+ * @throws Throwable If the delete operation fails
+ *
+ * @example Deleting a single tuple
+ * delete($client, $store, $model, tuple('user:anne', 'reader', 'document:budget'));
+ * @example Deleting multiple tuples transactionally
+ * delete($client, $store, $model, tuples(
+ *     tuple('user:anne', 'reader', 'document:budget'),
+ *     tuple('user:bob', 'editor', 'document:forecast')
+ * ));
+ * @example Simple non-transactional delete for resilience
+ * delete($client, $store, $model, $tuples, transactional: false);
  */
-function delete(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface | string $model, TupleKeyInterface | TupleKeysInterface $tuples): void
-{
+function delete(
+    ClientInterface $client,
+    StoreInterface | string $store,
+    AuthorizationModelInterface | string $model,
+    TupleKeyInterface | TupleKeysInterface $tuples,
+    bool $transactional = true,
+): void {
     if ($tuples instanceof TupleKeyInterface) {
         $tuples = new TupleKeys([$tuples]);
     }
 
-    $client->writeTuples(store: $store, model: $model, deletes: $tuples);
+    $client->writeTuples(
+        store: $store,
+        model: $model,
+        deletes: $tuples,
+        transactional: $transactional,
+    )->unwrap();
 }
 
 /**

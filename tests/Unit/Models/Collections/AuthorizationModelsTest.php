@@ -99,6 +99,7 @@ describe('AuthorizationModels Collection', function (): void {
         $collection = new AuthorizationModels([$model1, $model2]);
 
         $ids = [];
+
         foreach ($collection as $model) {
             $ids[] = $model->getId();
         }
@@ -200,6 +201,7 @@ describe('AuthorizationModels Collection', function (): void {
 
         // Filter models that have 'user' type definition
         $filtered = [];
+
         foreach ($collection as $model) {
             foreach ($model->getTypeDefinitions() as $typeDef) {
                 if ('user' === $typeDef->getType()) {
@@ -234,6 +236,7 @@ describe('AuthorizationModels Collection', function (): void {
 
         // Get the latest model (last in the collection)
         $latest = null;
+
         foreach ($collection as $model) {
             $latest = $model;
         }
@@ -263,6 +266,7 @@ describe('AuthorizationModels Collection', function (): void {
 
         // Check all models have the same version
         $versions = [];
+
         foreach ($collection as $model) {
             $versions[] = $model->getSchemaVersion()->value;
         }

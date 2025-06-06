@@ -143,6 +143,7 @@ describe('TransformerComprehensive', function (): void {
             $model = Transformer::fromDsl($dsl, $this->validator);
 
             $documentType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
@@ -194,6 +195,7 @@ describe('TransformerComprehensive', function (): void {
             $model = Transformer::fromDsl($dsl, $this->validator);
 
             $documentType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
@@ -241,6 +243,7 @@ describe('TransformerComprehensive', function (): void {
             $model = Transformer::fromDsl($dsl, $this->validator);
 
             $folderType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('folder' === $td->getType()) {
                     $folderType = $td;
@@ -260,8 +263,10 @@ describe('TransformerComprehensive', function (): void {
             expect($directTypes->count())->toBe(2);
 
             $typePatterns = [];
+
             foreach ($directTypes as $type) {
                 $pattern = $type->getType();
+
                 if ($type->getWildcard()) {
                     $pattern .= ':*';
                 }
@@ -294,6 +299,7 @@ describe('TransformerComprehensive', function (): void {
             $model = Transformer::fromDsl($dsl, $this->validator);
 
             $documentType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
@@ -341,6 +347,7 @@ describe('TransformerComprehensive', function (): void {
             $model = Transformer::fromDsl($dsl, $this->validator);
 
             $repoType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('repository' === $td->getType()) {
                     $repoType = $td;
@@ -394,6 +401,7 @@ describe('TransformerComprehensive', function (): void {
 
             // Verify organization type
             $orgType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('organization' === $td->getType()) {
                     $orgType = $td;
@@ -410,6 +418,7 @@ describe('TransformerComprehensive', function (): void {
 
             // Verify repository type with complex inheritance
             $repoType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('repository' === $td->getType()) {
                     $repoType = $td;
@@ -464,6 +473,7 @@ describe('TransformerComprehensive', function (): void {
 
             // Verify document type with complex sharing rules
             $docType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $docType = $td;
@@ -515,6 +525,7 @@ describe('TransformerComprehensive', function (): void {
 
             // Verify account type
             $accountType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('account' === $td->getType()) {
                     $accountType = $td;
@@ -532,6 +543,7 @@ describe('TransformerComprehensive', function (): void {
 
             // Verify transaction type with inheritance
             $transactionType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('transaction' === $td->getType()) {
                     $transactionType = $td;
@@ -573,6 +585,7 @@ describe('TransformerComprehensive', function (): void {
             $model = Transformer::fromDsl($dsl, $this->validator);
 
             $documentType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;
@@ -616,6 +629,7 @@ describe('TransformerComprehensive', function (): void {
             expect($model->getTypeDefinitions()->count())->toBe(2);
 
             $documentType = null;
+
             foreach ($model->getTypeDefinitions() as $td) {
                 if ('document' === $td->getType()) {
                     $documentType = $td;

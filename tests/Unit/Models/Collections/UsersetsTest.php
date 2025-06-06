@@ -78,6 +78,7 @@ describe('Usersets Collection', function (): void {
         ]);
 
         $keys = [];
+
         foreach ($collection as $key => $userset) {
             $keys[] = $key;
             expect($userset)->toBeInstanceOf(Userset::class);
@@ -214,6 +215,7 @@ describe('Usersets Collection', function (): void {
 
         // Test iteration on empty collection
         $count = 0;
+
         foreach ($collection as $_) {
             ++$count;
         }

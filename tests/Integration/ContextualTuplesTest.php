@@ -20,7 +20,7 @@ describe('Contextual Tuples', function (): void {
         $this->httpClient = new FileGetContents($this->responseFactory);
         $this->httpRequestFactory = $this->responseFactory;
         $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getenv('FGA_API_URL') ?: 'http://openfga:8080';
+        $this->url = getOpenFgaUrl();
 
         $this->client = new Client(
             url: $this->url,
@@ -154,6 +154,7 @@ describe('Contextual Tuples', function (): void {
         $withoutContext = $withoutContextResult->rethrow()->unwrap();
 
         $baseUsers = [];
+
         foreach ($withoutContext->getUsers() as $user) {
             $object = $user->getObject();
             $baseUsers[] = is_string($object) ? $object : (string) $object;
@@ -177,6 +178,7 @@ describe('Contextual Tuples', function (): void {
         )->rethrow()->unwrap();
 
         $contextUsers = [];
+
         foreach ($withContext->getUsers() as $user) {
             $object = $user->getObject();
             $contextUsers[] = is_string($object) ? $object : (string) $object;

@@ -29,12 +29,14 @@ describe('RequestMethod enum', function (): void {
         test('request body aligns with HTTP semantics', function (): void {
             // Methods that typically modify data should have request bodies
             $modifyingMethods = [RequestMethod::POST, RequestMethod::PUT];
+
             foreach ($modifyingMethods as $method) {
                 expect($method->hasRequestBody())->toBeTrue();
             }
 
             // Methods that retrieve or remove typically don't have request bodies
             $nonBodyMethods = [RequestMethod::GET, RequestMethod::DELETE];
+
             foreach ($nonBodyMethods as $method) {
                 expect($method->hasRequestBody())->toBeFalse();
             }

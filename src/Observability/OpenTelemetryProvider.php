@@ -182,6 +182,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
             if (method_exists($span, 'recordException')) {
                 $span->recordException($exception);
             }
+
             if (method_exists($span, 'setStatus')) {
                 $span->setStatus('ERROR', $exception->getMessage()); // STATUS_ERROR
             }
@@ -244,6 +245,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
             if (method_exists($span, 'recordException')) {
                 $span->recordException($exception);
             }
+
             if (method_exists($span, 'setStatus')) {
                 $span->setStatus('ERROR', $exception->getMessage()); // STATUS_ERROR
             }
@@ -439,6 +441,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
             if (method_exists($span, 'recordException')) {
                 $span->recordException($exception);
             }
+
             if (method_exists($span, 'setStatus')) {
                 $span->setStatus('ERROR', $exception->getMessage()); // STATUS_ERROR
             }
@@ -475,6 +478,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
         ]);
 
         $port = $uri->getPort();
+
         if (null !== $port) {
             /** @var mixed $spanAttributes */
             $spanAttributes = $this->addAttribute($spanAttributes, 'net.peer.port', $port);
@@ -596,6 +600,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
         if (method_exists($meter, 'createCounter')) {
             /** @var mixed $counter */
             $counter = $meter->createCounter($name, $unit, $description);
+
             if (is_object($counter)) {
                 return $counter;
             }
@@ -622,6 +627,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
         if (method_exists($meter, 'createHistogram')) {
             /** @var mixed $histogram */
             $histogram = $meter->createHistogram($name, $unit, $description);
+
             if (is_object($histogram)) {
                 return $histogram;
             }
@@ -656,6 +662,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
             if (is_object($spanBuilder) && method_exists($spanBuilder, 'startSpan')) {
                 /** @var mixed $span */
                 $span = $spanBuilder->startSpan();
+
                 if (is_object($span)) {
                     return $span;
                 }

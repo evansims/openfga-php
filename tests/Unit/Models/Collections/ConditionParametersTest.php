@@ -72,6 +72,7 @@ describe('ConditionParameters Collection', function (): void {
         $collection = new ConditionParameters([$param1, $param2]);
 
         $items = [];
+
         foreach ($collection as $index => $param) {
             $items[$index] = $param;
         }

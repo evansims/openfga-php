@@ -177,6 +177,7 @@ describe('Store Model', function (): void {
 
         // Check required properties
         $requiredProps = ['id', 'name', 'created_at', 'updated_at'];
+
         foreach ($properties as $property) {
             if (in_array($property->name, $requiredProps, true)) {
                 expect($property->required)->toBe(true);
@@ -187,6 +188,7 @@ describe('Store Model', function (): void {
 
         // Check date-time format
         $dateProps = ['created_at', 'updated_at', 'deleted_at'];
+
         foreach ($properties as $property) {
             if (in_array($property->name, $dateProps, true)) {
                 expect($property->format)->toBe('datetime');

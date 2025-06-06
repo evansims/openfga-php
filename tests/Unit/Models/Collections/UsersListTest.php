@@ -72,6 +72,7 @@ describe('UsersList Collection', function (): void {
         $collection = new UsersList([$user1, $user2, $user3]);
 
         $userIds = [];
+
         foreach ($collection as $user) {
             $userIds[] = $user->getUser();
         }
@@ -126,6 +127,7 @@ describe('UsersList Collection', function (): void {
         expect($collection->count())->toBe(6);
 
         $types = [];
+
         foreach ($collection as $user) {
             $identifier = $user->getUser();
             $type = explode(':', $identifier)[0];
@@ -145,6 +147,7 @@ describe('UsersList Collection', function (): void {
         ]);
 
         $directUsers = [];
+
         foreach ($collection as $user) {
             if (str_starts_with($user->getUser(), 'user:')) {
                 $directUsers[] = $user->getUser();
@@ -163,6 +166,7 @@ describe('UsersList Collection', function (): void {
         ]);
 
         $wildcardCount = 0;
+
         foreach ($collection as $user) {
             if (str_contains($user->getUser(), '*')) {
                 ++$wildcardCount;
@@ -203,6 +207,7 @@ describe('UsersList Collection', function (): void {
         expect($collection->jsonSerialize())->toBe([]);
 
         $count = 0;
+
         foreach ($collection as $_) {
             ++$count;
         }
@@ -224,6 +229,7 @@ describe('UsersList Collection', function (): void {
         expect($collection->count())->toBe(6);
 
         $hasPublicAccess = false;
+
         foreach ($collection as $user) {
             if ('user:*' === $user->getUser()) {
                 $hasPublicAccess = true;

@@ -19,10 +19,12 @@ describe('OpenAPI Contract Validation', function (): void {
     beforeEach(function (): void {
         $specPath = dirname(__DIR__) . '/Support/openfga.openapi.swagger.json';
         $specContent = file_get_contents($specPath);
+
         if (false === $specContent) {
             throw new RuntimeException("Could not read OpenAPI spec file at {$specPath}");
         }
         $this->openApiSpec = json_decode($specContent, true);
+
         if (null === $this->openApiSpec) {
             throw new RuntimeException('Could not parse OpenAPI spec JSON');
         }
@@ -88,12 +90,15 @@ describe('OpenAPI Contract Validation', function (): void {
         }
 
         $properties = $openApiSchema['properties'] ?? [];
+
         if (isset($properties['user']['maxLength'])) {
             expect(strlen($serialized['user']))->toBeLessThanOrEqual($properties['user']['maxLength']);
         }
+
         if (isset($properties['relation']['maxLength'])) {
             expect(strlen($serialized['relation']))->toBeLessThanOrEqual($properties['relation']['maxLength']);
         }
+
         if (isset($properties['object']['maxLength'])) {
             expect(strlen($serialized['object']))->toBeLessThanOrEqual($properties['object']['maxLength']);
         }
@@ -148,6 +153,7 @@ describe('OpenAPI Contract Validation', function (): void {
         }
 
         $schemaVersionEnum = $openApiSchema['properties']['schema_version']['enum'] ?? null;
+
         if (null !== $schemaVersionEnum) {
             expect($schemaVersionEnum)->toContain($serialized['schema_version']);
         }
@@ -253,6 +259,7 @@ describe('OpenAPI Contract Validation', function (): void {
         $checkPath = $this->openApiSpec['paths']['/stores/{store_id}/check']['post'] ?? null;
         expect($checkPath)->not->toBeNull();
         $checkBodyParam = null;
+
         foreach ($checkPath['parameters'] ?? [] as $param) {
             if ('body' === $param['name'] && 'body' === $param['in']) {
                 $checkBodyParam = $param;
@@ -334,6 +341,7 @@ describe('OpenAPI Contract Validation', function (): void {
 
     test('nullable fields OpenAPI spec', function (): void {
         $storeSchema = $this->openApiSpec['definitions']['Store'] ?? null;
+
         if (null !== $storeSchema) {
             $required = $storeSchema['required'] ?? [];
             expect($required)->not->toContain('deleted_at');
@@ -342,8 +350,10 @@ describe('OpenAPI Contract Validation', function (): void {
 
     test('datetime format fields OpenAPI spec', function (): void {
         $storeSchema = $this->openApiSpec['definitions']['Store'] ?? null;
+
         if (null !== $storeSchema) {
             $dateFields = ['created_at', 'updated_at', 'deleted_at'];
+
             foreach ($dateFields as $field) {
                 if (isset($storeSchema['properties'][$field])) {
                     $property = $storeSchema['properties'][$field];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models;
 
+use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey, TupleKeyInterface};
 use OpenFGA\Models\Enums\TypeName;
@@ -183,5 +184,21 @@ describe('TupleKey Model', function (): void {
         expect($tupleKey->getUser())->toBe('  user:anne  ');
         expect($tupleKey->getRelation())->toBe('  viewer  ');
         expect($tupleKey->getObject())->toBe('  document:roadmap  ');
+    });
+
+    test('rejects user identifiers with internal whitespace', function (): void {
+        expect(fn () => new TupleKey(
+            user: 'user:alice smith',
+            relation: 'viewer',
+            object: 'document:roadmap',
+        ))->toThrow(ClientException::class, 'identifiers cannot contain whitespace');
+    });
+
+    test('rejects object identifiers with internal whitespace', function (): void {
+        expect(fn () => new TupleKey(
+            user: 'user:alice',
+            relation: 'viewer',
+            object: 'document:my document',
+        ))->toThrow(ClientException::class, 'identifiers cannot contain whitespace');
     });
 });
