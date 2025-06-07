@@ -4,58 +4,25 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Network;
 
-use OpenFGA\{Exceptions\NetworkException, Network\AbstractRetryHandler, Network\CircuitBreakerInterface, Network\RetryHandler};
+use OpenFGA\{Exceptions\NetworkException, Network\AbstractRetryHandler, Network\CircuitBreakerInterface};
+use OpenFGA\Tests\Support\Network\RapidRetryHandler;
 use Psr\Http\Client\NetworkExceptionInterface;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use RuntimeException;
 use Throwable;
 
-/**
- * Custom RetryHandler for testing that uses shorter delays.
- */
-final readonly class RetryHandlerTest extends AbstractRetryHandler
-{
-    private const int TEST_BASE_DELAY_MS = 10;         // Reduced from 100ms
-
-    private const int TEST_FAST_RETRY_DELAY_MS = 5;     // Reduced from 50ms
-
-    private const int TEST_MAINTENANCE_DELAY_MS = 100; // Reduced from 5000ms
-
-    protected function getBaseDelayMs(): int
-    {
-        return self::TEST_BASE_DELAY_MS;
-    }
-
-    protected function getFastRetryDelayMs(): int
-    {
-        return self::TEST_FAST_RETRY_DELAY_MS;
-    }
-
-    protected function getMaintenanceDelayMs(): int
-    {
-        return self::TEST_MAINTENANCE_DELAY_MS;
-    }
-
-    protected function sleep(int $milliseconds): void
-    {
-        // Use reduced delays for testing to speed up test execution
-        $factor = 0.02; // 2% of original time
-        usleep((int) ($milliseconds * $factor * 1000));
-    }
-}
-
 describe('RetryHandler', function (): void {
     describe('constructor', function (): void {
         test('creates with default max retries', function (): void {
             $circuitBreaker = test()->createMock(CircuitBreakerInterface::class);
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             expect($handler)->toBeInstanceOf(AbstractRetryHandler::class);
         });
 
         test('creates with custom max retries', function (): void {
             $circuitBreaker = test()->createMock(CircuitBreakerInterface::class);
-            $handler = new TestRetryHandler($circuitBreaker, 5);
+            $handler = new RapidRetryHandler($circuitBreaker, 5);
 
             expect($handler)->toBeInstanceOf(AbstractRetryHandler::class);
         });
@@ -81,7 +48,7 @@ describe('RetryHandler', function (): void {
 
             $requestExecutor = fn () => $response;
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -99,7 +66,7 @@ describe('RetryHandler', function (): void {
 
             $requestExecutor = fn () => $response;
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             expect(fn () => $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com'))
                 ->toThrow(NetworkException::class);
@@ -126,7 +93,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -154,7 +121,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -182,7 +149,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $startTime = microtime(true);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
             $endTime = microtime(true);
@@ -216,7 +183,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -235,7 +202,7 @@ describe('RetryHandler', function (): void {
 
             $requestExecutor = fn () => $failureResponse;
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             expect(fn () => $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com'))
                 ->toThrow(NetworkException::class);
@@ -253,7 +220,7 @@ describe('RetryHandler', function (): void {
 
             $requestExecutor = fn () => $failureResponse;
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             expect(fn () => $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com'))
                 ->toThrow(NetworkException::class);
@@ -273,7 +240,7 @@ describe('RetryHandler', function (): void {
 
             $requestExecutor = fn () => $failureResponse;
 
-            $handler = new TestRetryHandler($circuitBreaker, 2);
+            $handler = new RapidRetryHandler($circuitBreaker, 2);
 
             expect(fn () => $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com'))
                 ->toThrow(NetworkException::class);
@@ -302,7 +269,7 @@ describe('RetryHandler', function (): void {
                 return $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -323,7 +290,7 @@ describe('RetryHandler', function (): void {
                 throw $networkException;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker, 1);
+            $handler = new RapidRetryHandler($circuitBreaker, 1);
 
             try {
                 $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
@@ -345,7 +312,7 @@ describe('RetryHandler', function (): void {
                 throw $exception;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             expect(fn () => $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com'))
                 ->toThrow(RuntimeException::class);
@@ -372,7 +339,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             $startTime = microtime(true);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
@@ -409,7 +376,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             $startTime = microtime(true);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
@@ -445,7 +412,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             $startTime = microtime(true);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
@@ -479,7 +446,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -507,7 +474,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             $startTime = microtime(true);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
@@ -543,7 +510,7 @@ describe('RetryHandler', function (): void {
                 return $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             $startTime = microtime(true);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
@@ -577,7 +544,7 @@ describe('RetryHandler', function (): void {
                 return $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -610,7 +577,7 @@ describe('RetryHandler', function (): void {
                 throw $networkException;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker, 3);
+            $handler = new RapidRetryHandler($circuitBreaker, 3);
 
             try {
                 $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
@@ -641,7 +608,7 @@ describe('RetryHandler', function (): void {
                 return 1 === $callCount ? $failureResponse : $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
 
             expect($result)->toBe($response);
@@ -660,7 +627,7 @@ describe('RetryHandler', function (): void {
 
             $requestExecutor = fn () => $failureResponse;
 
-            $handler = new TestRetryHandler($circuitBreaker);
+            $handler = new RapidRetryHandler($circuitBreaker);
 
             expect(fn () => $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com'))
                 ->toThrow(NetworkException::class);
@@ -700,7 +667,7 @@ describe('RetryHandler', function (): void {
                 return $response;
             };
 
-            $handler = new TestRetryHandler($circuitBreaker, 3);
+            $handler = new RapidRetryHandler($circuitBreaker, 3);
 
             $startTime = microtime(true);
             $result = $handler->executeWithRetry($requestExecutor, $request, 'https://api.example.com');
