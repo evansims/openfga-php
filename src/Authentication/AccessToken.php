@@ -142,7 +142,7 @@ final readonly class AccessToken implements AccessTokenInterface
     #[Override]
     public function isExpired(): bool
     {
-        return $this->expires < time();
+        return $this->expires <= time();
     }
 
     /**
