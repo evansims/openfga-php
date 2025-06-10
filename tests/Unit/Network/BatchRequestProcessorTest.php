@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Models\{TupleKey};
 use OpenFGA\Models\Collections\TupleKeys;
+use OpenFGA\Models\{TupleKey};
 use OpenFGA\Network\{BatchRequestProcessor, RequestManagerFactory};
 use OpenFGA\Requests\WriteTuplesRequest;
 use OpenFGA\Responses\WriteTuplesResponse;
@@ -18,14 +18,14 @@ beforeEach(function (): void {
             httpStreamFactory: null,
             httpRequestFactory: null,
             httpResponseFactory: null,
-            telemetry: null
-        )
+            telemetry: null,
+        ),
     );
-    
+
     $this->tupleKeys = new TupleKeys([
         new TupleKey('user:alice', 'reader', 'document:doc1'),
         new TupleKey('user:bob', 'writer', 'document:doc2'),
-        new TupleKey('user:charlie', 'admin', 'document:doc3')
+        new TupleKey('user:charlie', 'admin', 'document:doc3'),
     ]);
 });
 
@@ -41,13 +41,13 @@ it('returns null for last request and response initially', function (): void {
 it('processes empty request successfully', function (): void {
     $emptyRequest = new WriteTuplesRequest(
         store: 'test-store',
-        model: 'test-model'
+        model: 'test-model',
     );
-    
+
     $result = $this->processor->process($emptyRequest);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response)->toBeInstanceOf(WriteTuplesResponse::class);
     expect($response->getTotalOperations())->toBe(0);
@@ -60,13 +60,13 @@ it('processes empty transactional request successfully', function (): void {
     $emptyRequest = new WriteTuplesRequest(
         store: 'test-store',
         model: 'test-model',
-        transactional: true
+        transactional: true,
     );
-    
+
     $result = $this->processor->process($emptyRequest);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->isTransactional())->toBeTrue();
     expect($response->getTotalOperations())->toBe(0);
@@ -78,13 +78,13 @@ it('handles transactional request with writes gracefully', function (): void {
         store: 'test-store',
         model: 'test-model',
         writes: $this->tupleKeys,
-        transactional: true
+        transactional: true,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->isTransactional())->toBeTrue();
     expect($response->getTotalOperations())->toBe(3);
@@ -96,13 +96,13 @@ it('handles non-transactional request with writes gracefully', function (): void
         model: 'test-model',
         writes: $this->tupleKeys,
         transactional: false,
-        maxTuplesPerChunk: 2
+        maxTuplesPerChunk: 2,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->isTransactional())->toBeFalse();
     expect($response->getTotalOperations())->toBe(3);
@@ -114,13 +114,13 @@ it('handles non-transactional request with deletes gracefully', function (): voi
         model: 'test-model',
         deletes: $this->tupleKeys,
         transactional: false,
-        maxTuplesPerChunk: 1
+        maxTuplesPerChunk: 1,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->isTransactional())->toBeFalse();
     expect($response->getTotalOperations())->toBe(3);
@@ -128,26 +128,26 @@ it('handles non-transactional request with deletes gracefully', function (): voi
 
 it('handles non-transactional request with both writes and deletes', function (): void {
     $writeKeys = new TupleKeys([
-        new TupleKey('user:alice', 'reader', 'document:doc1')
+        new TupleKey('user:alice', 'reader', 'document:doc1'),
     ]);
-    
+
     $deleteKeys = new TupleKeys([
-        new TupleKey('user:bob', 'writer', 'document:doc2')
+        new TupleKey('user:bob', 'writer', 'document:doc2'),
     ]);
-    
+
     $request = new WriteTuplesRequest(
         store: 'test-store',
         model: 'test-model',
         writes: $writeKeys,
         deletes: $deleteKeys,
         transactional: false,
-        maxTuplesPerChunk: 1
+        maxTuplesPerChunk: 1,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->isTransactional())->toBeFalse();
     expect($response->getTotalOperations())->toBe(2);
@@ -159,21 +159,21 @@ it('handles requests with different chunk sizes', function (): void {
         new TupleKey('user:bob', 'writer', 'document:doc2'),
         new TupleKey('user:charlie', 'admin', 'document:doc3'),
         new TupleKey('user:dave', 'reader', 'document:doc4'),
-        new TupleKey('user:eve', 'writer', 'document:doc5')
+        new TupleKey('user:eve', 'writer', 'document:doc5'),
     ]);
-    
+
     $request = new WriteTuplesRequest(
         store: 'test-store',
         model: 'test-model',
         writes: $largeKeys,
         transactional: false,
-        maxTuplesPerChunk: 2  // This should create 3 chunks
+        maxTuplesPerChunk: 2,  // This should create 3 chunks
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->getTotalOperations())->toBe(5);
     expect($response->isTransactional())->toBeFalse();
@@ -187,13 +187,13 @@ it('handles requests with retry configuration', function (): void {
         transactional: false,
         maxTuplesPerChunk: 1,
         maxRetries: 3,
-        retryDelaySeconds: 0.1
+        retryDelaySeconds: 0.1,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->getTotalOperations())->toBe(3);
 });
@@ -205,13 +205,13 @@ it('handles requests with parallel processing configuration', function (): void 
         writes: $this->tupleKeys,
         transactional: false,
         maxParallelRequests: 2,
-        maxTuplesPerChunk: 1
+        maxTuplesPerChunk: 1,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->getTotalOperations())->toBe(3);
 });
@@ -223,13 +223,13 @@ it('handles requests with stop on first error configuration', function (): void 
         writes: $this->tupleKeys,
         transactional: false,
         maxTuplesPerChunk: 1,
-        stopOnFirstError: true
+        stopOnFirstError: true,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->getTotalOperations())->toBe(3);
 });
@@ -243,11 +243,11 @@ it('can be constructed with different factory configurations', function (): void
         httpRequestFactory: null,
         httpResponseFactory: null,
         telemetry: null,
-        defaultMaxRetries: 5
+        defaultMaxRetries: 5,
     );
-    
+
     $processor = new BatchRequestProcessor($factory);
-    
+
     expect($processor)->toBeInstanceOf(BatchRequestProcessor::class);
     expect($processor->getLastRequest())->toBeNull();
     expect($processor->getLastResponse())->toBeNull();
@@ -256,22 +256,23 @@ it('can be constructed with different factory configurations', function (): void
 it('processes large batches with appropriate chunking', function (): void {
     // Create a large batch that will exceed chunk limits
     $largeBatch = [];
-    for ($i = 0; $i < 250; $i++) {
+
+    for ($i = 0; 250 > $i; $i++) {
         $largeBatch[] = new TupleKey("user:user{$i}", 'reader', "document:doc{$i}");
     }
-    
+
     $request = new WriteTuplesRequest(
         store: 'test-store',
         model: 'test-model',
         writes: new TupleKeys($largeBatch),
         transactional: false,
-        maxTuplesPerChunk: 100  // Standard max chunk size
+        maxTuplesPerChunk: 100,  // Standard max chunk size
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->getTotalOperations())->toBe(250);
     expect($response->isTransactional())->toBeFalse();
@@ -279,21 +280,21 @@ it('processes large batches with appropriate chunking', function (): void {
 
 it('handles edge case with single tuple operation', function (): void {
     $singleKey = new TupleKeys([
-        new TupleKey('user:single', 'reader', 'document:single')
+        new TupleKey('user:single', 'reader', 'document:single'),
     ]);
-    
+
     $request = new WriteTuplesRequest(
         store: 'test-store',
         model: 'test-model',
         writes: $singleKey,
         transactional: false,
-        maxTuplesPerChunk: 100
+        maxTuplesPerChunk: 100,
     );
-    
+
     $result = $this->processor->process($request);
-    
+
     expect($result)->toBeInstanceOf(SuccessInterface::class);
-    
+
     $response = $result->unwrap();
     expect($response->getTotalOperations())->toBe(1);
 });

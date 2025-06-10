@@ -6,9 +6,11 @@ namespace OpenFGA\Tests\Unit\Services;
 
 use DateTimeImmutable;
 use OpenFGA\Models\{AuthorizationModel, Store, TupleKey};
+use OpenFGA\Models\Collections\{TupleChanges, Tuples};
 use OpenFGA\Models\Collections\{TupleKeys, TypeDefinitions};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Repositories\TupleRepositoryInterface;
+use OpenFGA\Responses\{ListTupleChangesResponse, ReadTuplesResponse};
 use OpenFGA\Results\{Failure, Success};
 use OpenFGA\Services\{TupleService, TupleServiceInterface};
 
@@ -260,8 +262,8 @@ describe('TupleService', function (): void {
             $this->mockTupleRepository
                 ->expects(test()->once())
                 ->method('read')
-                ->willReturn(new Success(new \OpenFGA\Responses\ReadTuplesResponse(
-                    tuples: new \OpenFGA\Models\Collections\Tuples([]),
+                ->willReturn(new Success(new ReadTuplesResponse(
+                    tuples: new Tuples([]),
                     continuationToken: null,
                 )));
 
@@ -273,8 +275,8 @@ describe('TupleService', function (): void {
             $this->mockTupleRepository
                 ->expects(test()->once())
                 ->method('listChanges')
-                ->willReturn(new Success(new \OpenFGA\Responses\ListTupleChangesResponse(
-                    changes: new \OpenFGA\Models\Collections\TupleChanges([]),
+                ->willReturn(new Success(new ListTupleChangesResponse(
+                    changes: new TupleChanges([]),
                     continuationToken: null,
                 )));
 

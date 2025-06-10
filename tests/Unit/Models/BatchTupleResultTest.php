@@ -27,7 +27,7 @@ it('returns correct basic properties', function (): void {
         successfulChunks: 3,
         failedChunks: 2,
         responses: $this->responses,
-        errors: $this->errors
+        errors: $this->errors,
     );
 
     expect($result->getTotalOperations())->toBe(100);
@@ -111,20 +111,20 @@ it('throws ClientThrowable when first error is ClientThrowable', function (): vo
     $clientError = ClientError::Validation->exception(context: ['message' => 'Client error']);
     $result = new BatchTupleResult(100, 2, 1, 1, [], [$clientError]);
 
-    expect(fn() => $result->throwOnFailure())->toThrow(get_class($clientError));
+    expect(fn () => $result->throwOnFailure())->toThrow($clientError::class);
 });
 
 it('throws generic Throwable when first error is not ClientThrowable', function (): void {
     $genericError = new RuntimeException('Generic error');
     $result = new BatchTupleResult(100, 2, 1, 1, [], [$genericError]);
 
-    expect(fn() => $result->throwOnFailure())->toThrow(RuntimeException::class, 'Generic error');
+    expect(fn () => $result->throwOnFailure())->toThrow(RuntimeException::class, 'Generic error');
 });
 
 it('throws RuntimeException when no first error but has failed chunks', function (): void {
     $result = new BatchTupleResult(100, 2, 1, 1, [], []);
 
-    expect(fn() => $result->throwOnFailure())
+    expect(fn () => $result->throwOnFailure())
         ->toThrow(RuntimeException::class, 'Batch operation failed: 1 of 2 chunks failed');
 });
 
@@ -164,7 +164,7 @@ it('provides correct schema', function (): void {
     $properties = $schema->getProperties();
     expect($properties)->toHaveCount(8);
 
-    $propertyNames = array_map(fn($prop) => $prop->getName(), $properties);
+    $propertyNames = array_map(fn ($prop) => $prop->getName(), $properties);
     expect($propertyNames)->toContain('totalOperations');
     expect($propertyNames)->toContain('totalChunks');
     expect($propertyNames)->toContain('successfulChunks');

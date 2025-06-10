@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use OpenFGA\Network\{
     ConcurrentExecutorInterface,
-    ExponentialBackoffRetryStrategy,
     HttpClientInterface,
     RequestManager,
     RequestManagerFactory,
@@ -37,7 +36,7 @@ beforeEach(function (): void {
         defaultMaxRetries: 5,
         httpClientWrapper: $this->httpClientWrapper,
         retryStrategy: $this->retryStrategy,
-        concurrentExecutor: $this->concurrentExecutor
+        concurrentExecutor: $this->concurrentExecutor,
     );
 });
 
@@ -53,7 +52,7 @@ it('constructs with minimal required parameters', function (): void {
         httpStreamFactory: null,
         httpRequestFactory: null,
         httpResponseFactory: null,
-        telemetry: null
+        telemetry: null,
     );
 
     expect($minimalFactory)->toBeInstanceOf(RequestManagerFactory::class);
@@ -90,7 +89,7 @@ it('creates RequestManager for batch with null retry strategy', function (): voi
         defaultMaxRetries: 3,
         httpClientWrapper: $this->httpClientWrapper,
         retryStrategy: null,
-        concurrentExecutor: $this->concurrentExecutor
+        concurrentExecutor: $this->concurrentExecutor,
     );
 
     $requestManager = $factoryWithoutStrategy->createForBatch();
@@ -110,7 +109,7 @@ it('creates RequestManager with custom retries and null retry strategy', functio
         defaultMaxRetries: 3,
         httpClientWrapper: $this->httpClientWrapper,
         retryStrategy: null,
-        concurrentExecutor: $this->concurrentExecutor
+        concurrentExecutor: $this->concurrentExecutor,
     );
 
     $requestManager = $factoryWithoutStrategy->createWithRetries(7);
@@ -192,7 +191,7 @@ it('works with empty URL', function (): void {
         httpStreamFactory: null,
         httpRequestFactory: null,
         httpResponseFactory: null,
-        telemetry: null
+        telemetry: null,
     );
 
     $requestManager = $factoryWithEmptyUrl->create();
@@ -208,7 +207,7 @@ it('works with null authorization header', function (): void {
         httpStreamFactory: $this->httpStreamFactory,
         httpRequestFactory: $this->httpRequestFactory,
         httpResponseFactory: $this->httpResponseFactory,
-        telemetry: $this->telemetry
+        telemetry: $this->telemetry,
     );
 
     $requestManager = $factoryWithNullAuth->create();
@@ -228,7 +227,7 @@ it('preserves all null dependencies', function (): void {
         defaultMaxRetries: 2,
         httpClientWrapper: null,
         retryStrategy: null,
-        concurrentExecutor: null
+        concurrentExecutor: null,
     );
 
     $requestManager = $factoryWithNullDependencies->create();

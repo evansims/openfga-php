@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Network\ParallelTaskExecutor;
+use OpenFGA\Network\{ParallelTaskExecutor, RequestManagerFactory};
 use OpenFGA\Observability\TelemetryInterface;
-use OpenFGA\Network\RequestManagerFactory;
 use Psr\Http\Client\ClientInterface as PsrHttpClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface};
 
@@ -17,7 +16,7 @@ beforeEach(function (): void {
         httpStreamFactory: $this->createMock(StreamFactoryInterface::class),
         httpRequestFactory: $this->createMock(RequestFactoryInterface::class),
         httpResponseFactory: $this->createMock(ResponseFactoryInterface::class),
-        telemetry: $this->createMock(TelemetryInterface::class)
+        telemetry: $this->createMock(TelemetryInterface::class),
     );
 
     $this->executor = new ParallelTaskExecutor($this->factory);
@@ -35,7 +34,7 @@ it('can be constructed with factory', function (): void {
         httpStreamFactory: null,
         httpRequestFactory: null,
         httpResponseFactory: null,
-        telemetry: null
+        telemetry: null,
     );
 
     $executor = new ParallelTaskExecutor($factory);
