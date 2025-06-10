@@ -123,6 +123,26 @@ Add comprehensive tracing and metrics to monitor your authorization system.
 
 **[Observability →](Observability.md)**
 
+##### Architecture
+
+###### Architecture → Overview
+
+Understand the SDK's clean architecture design with separation of concerns and dependency injection.
+
+**[Architecture Overview →](Architecture.md)**
+
+###### Architecture → Repository Pattern
+
+Learn how to extend and customize data access using the repository pattern.
+
+**[Repository Pattern →](RepositoryPattern.md)**
+
+###### Architecture → Service Pattern
+
+Discover how to add cross-cutting concerns like caching and logging through service decorators.
+
+**[Service Pattern →](ServicePattern.md)**
+
 ##### Key features
 
 **Modern PHP 8.3+** — Property promotion, named arguments, and strict typing
@@ -1127,6 +1147,101 @@ Now Anne can edit the technical specs because she's a member of the engineering 
 
 For checking permissions and querying relationships, see [Queries](Queries.md).
 
+##### Error Handling with Tuples
+
+When working with tuples, it's important to handle errors properly using the SDK's enum-based exception handling:
+
+```php
+use OpenFGA\Exceptions\{ClientError, ClientException};
+use function OpenFGA\{tuple, write, result};
+
+// Example: Writing tuples with robust error handling
+function addUserToDocument(string $userId, string $documentId, string $role = 'viewer'): bool 
+{
+    // Use result helper for cleaner error handling
+    return result(function() use ($userId, $documentId, $role) {
+        return write(
+            client: $this->client,
+            store: $this->storeId,
+            model: $this->modelId,
+            tuples: tuple("user:{$userId}", $role, "document:{$documentId}")
+        );
+    })
+    ->success(function() {
+        logger()->info('Access granted', [
+            'user' => $userId,
+            'document' => $documentId,
+            'role' => $role
+        ]);
+        return true;
+    })
+    ->failure(function(Throwable $error) use ($userId, $documentId, $role) {
+        // Enum-based error handling with match expression
+        if ($error instanceof ClientException) {
+            match($error->getError()) {
+                // Handle validation errors specifically
+                ClientError::Validation => logger()->warning(
+                    'Validation error granting access', 
+                    ['context' => $error->getContext()]
+                ),
+                
+                // Handle authorization model mismatches
+                ClientError::InvalidConfiguration => logger()->error(
+                    'Model configuration error', 
+                    ['message' => $error->getMessage()]
+                ),
+                
+                // Default case for other client errors
+                default => logger()->error(
+                    'Failed to grant access', 
+                    ['error_type' => $error->getError()->name]
+                )
+            };
+        } else {
+            // Handle unexpected errors
+            logger()->error('Unexpected error granting access', [
+                'error' => $error->getMessage(),
+                'user' => $userId,
+                'document' => $documentId
+            ]);
+        }
+        
+        return false;
+    })
+    ->unwrap();
+}
+```
+
+###### Supporting Multiple Languages
+
+The error messages from tuple operations will automatically use the language configured in your client:
+
+```php
+// Create a client with Spanish error messages
+$client = new Client(
+    url: 'https://api.openfga.example',
+    language: 'es' // Spanish
+);
+
+try {
+    // Attempt to write an invalid tuple
+    write(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
+        tuples: tuple('', 'viewer', 'document:report')
+    );
+} catch (ClientException $e) {
+    // The error message will be in Spanish
+    echo $e->getMessage(); // "El identificador del usuario no puede estar vacío"
+    
+    // But the error enum remains the same for consistent handling
+    if ($e->getError() === ClientError::Validation) {
+        // Handle validation error regardless of language
+    }
+}
+```
+
 
 ### Authorization Queries and Checks
 
@@ -1341,9 +1456,13 @@ $result = $client->check(
 
 ###### Error handling
 
-All query methods return Result objects. Handle errors gracefully:
+All query methods return Result objects. Handle errors gracefully using the Result pattern and helper functions:
 
 ```php
+use function OpenFGA\{tuple, result, success, failure, unwrap};
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+
+// Basic error handling
 $result = $client->check(
     tupleKey: tuple(
         user: 'user:alice',
@@ -1353,9 +1472,99 @@ $result = $client->check(
 );
 
 $result
-    ->success(fn($response) => echo "Check succeeded")
-    ->failure(fn($error) => logger()->error("Permission check failed", ['error' => $error]))
+    ->success(fn($response) => echo "Check succeeded: " . ($response->getAllowed() ? 'Allowed' : 'Denied'))
+    ->failure(fn($error) => logger()->error("Permission check failed", [
+        'error_type' => $error::class,
+        'error_detail' => $error instanceof ClientException ? $error->getError()->name : 'unknown'
+    ]))
     ->unwrap(); // Throws on failure
+```
+
+###### Advanced error handling with enum-based exceptions
+
+Use enum-based exceptions for more precise error handling with i18n support:
+
+```php
+// Define a robust permission checking service
+class PermissionService
+{
+    public function __construct(
+        private ClientInterface $client,
+        private string $storeId,
+        private string $modelId,
+        private CacheInterface $cache
+    ) {}
+    
+    public function canAccess(string $userId, string $action, string $resourceId): bool
+    {
+        // Use result helper for cleaner handling
+        return result(function() use ($userId, $action, $resourceId) {
+            return $this->client->check(
+                store: $this->storeId,
+                model: $this->modelId,
+                tupleKey: tuple("user:{$userId}", $action, $resourceId)
+            );
+        })
+        ->then(fn($response) => $response->getAllowed())
+        ->failure(function(Throwable $error) use ($userId, $action, $resourceId) {
+            // Handle different error types with match expression
+            if ($error instanceof ClientException) {
+                // Type-safe handling of specific error cases
+                return match($error->getError()) {
+                    // For network timeouts, use cached result with short TTL
+                    ClientError::Network => $this->getCachedPermission(
+                        $userId, 
+                        $action, 
+                        $resourceId,
+                        $defaultValue = false // Fail closed by default
+                    ),
+                    
+                    // For validation errors, log detailed context
+                    ClientError::Validation => $this->handleValidationError(
+                        $error->getContext(),
+                        $userId, 
+                        $action, 
+                        $resourceId
+                    ),
+                    
+                    // For other cases, gracefully fail closed
+                    default => false
+                };
+            }
+            
+            // For unexpected errors, log and fail closed
+            logger()->error('Unexpected error during permission check', [
+                'user' => $userId,
+                'action' => $action,
+                'resource' => $resourceId,
+                'error' => $error->getMessage()
+            ]);
+            
+            return false; // Secure default
+        })
+        ->unwrap();
+    }
+    
+    private function getCachedPermission(string $userId, string $action, string $resourceId, bool $default): bool
+    {
+        $cacheKey = "permission:{$userId}:{$action}:{$resourceId}";
+        return $this->cache->get($cacheKey, $default);
+    }
+    
+    private function handleValidationError(array $context, string $userId, string $action, string $resourceId): bool
+    {
+        logger()->warning('Validation error during permission check', [
+            'context' => $context,
+            'user' => $userId,
+            'action' => $action,
+            'resource' => $resourceId
+        ]);
+        
+        // Analyze context to determine appropriate fallback behavior
+        // For this example, we'll fail closed
+        return false;
+    }
+}
 ```
 
 ##### What's next?
@@ -1658,16 +1867,74 @@ $client->writeTuples($store, $model, $tuples)
 
 ##### Error handling patterns
 
-###### Fail gracefully
+###### Fail gracefully with helper functions
 
 ```php
+use function OpenFGA\{result, ok, err, unwrap, success, failure};
+
 // Return a sensible default when things go wrong
 function getUserPermissions(string $userId): array 
 {
-    return $client->listObjects(user: $userId, relation: 'can_access')
-        ->then(fn($response) => $response->getObjects())
-        ->recover(fn($error) => []) // Empty permissions on error
-        ->unwrap();
+    // Use the helper functions from Helpers.php
+    return result(function() use ($userId) {
+        return $this->client->listObjects(
+            user: $userId, 
+            relation: 'can_access'
+        );
+    })
+    ->then(fn($response) => $response->getObjects())
+    ->recover(function(Throwable $error) {
+        logger()->warning('Failed to get user permissions', [
+            'error_type' => $error::class,
+            'message' => $error->getMessage() 
+        ]);
+        return []; // Empty permissions on error
+    })
+    ->unwrap();
+}
+```
+
+###### Handling specific error types with enum-based exceptions
+
+```php
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+use function OpenFGA\{tuple, allowed};
+
+function canUserAccess(string $userId, string $documentId): bool 
+{
+    try {
+        return allowed(
+            client: $this->client,
+            store: $this->storeId,
+            model: $this->modelId,
+            tuple: tuple("user:{$userId}", 'viewer', "document:{$documentId}")
+        );
+    } catch (Throwable $e) {
+        // Handle specific enum-based errors with match expression
+        if ($e instanceof ClientException) {
+            return match($e->getError()) {
+                // Network errors can be retried
+                ClientError::Network => $this->retryAfterDelay(function() use ($userId, $documentId) {
+                    return $this->canUserAccess($userId, $documentId);
+                }, $maxRetries = 3),
+                
+                // Authentication errors should trigger re-auth
+                ClientError::Authentication => $this->handleAuthError($e),
+                
+                // Fall back to cached permissions for other errors
+                default => $this->getCachedPermission($userId, $documentId, false)
+            };
+        }
+        
+        // Unknown error types - fail closed for security
+        logger()->error('Unexpected error checking permissions', [
+            'error_type' => $e::class,
+            'user' => $userId,
+            'document' => $documentId
+        ]);
+        
+        return false;
+    }
 }
 ```
 
@@ -2350,8 +2617,8 @@ That's it! The OpenFGA services will be automatically available in your containe
 The service provider automatically registers these configuration-free interfaces:
 
 - **`OpenFGA\Observability\TelemetryInterface`** - No-op telemetry provider (can be overridden)
-- **`OpenFGA\TransformerInterface`** - DSL to model transformation
-- **`OpenFGA\Schema\SchemaValidatorInterface`** - JSON schema validation for models
+- **`OpenFGA\Language\TransformerInterface`** - DSL to model transformation
+- **`OpenFGA\Schemas\SchemaValidatorInterface`** - JSON schema validation for models
 
 **Note:** `ClientInterface` and `RequestManagerInterface` are NOT automatically registered because they require configuration (URL, authentication, etc.). You'll need to register these manually in your application.
 
