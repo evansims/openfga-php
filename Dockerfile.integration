@@ -110,16 +110,31 @@ RUN echo '#!/bin/sh' > /wait-and-test.sh && \
     echo '' >> /wait-and-test.sh && \
     echo '# Wait for OpenFGA to be ready' >> /wait-and-test.sh && \
     echo 'echo "Waiting for OpenFGA to be ready..."' >> /wait-and-test.sh && \
+    echo 'TIMEOUT=60' >> /wait-and-test.sh && \
+    echo 'COUNTER=0' >> /wait-and-test.sh && \
     echo 'until curl -f http://openfga:8080/healthz > /dev/null 2>&1; do' >> /wait-and-test.sh && \
-    echo '  echo "OpenFGA is unavailable - sleeping"' >> /wait-and-test.sh && \
+    echo '  if [ $COUNTER -ge $TIMEOUT ]; then' >> /wait-and-test.sh && \
+    echo '    echo "OpenFGA failed to start within $TIMEOUT seconds"' >> /wait-and-test.sh && \
+    echo '    exit 1' >> /wait-and-test.sh && \
+    echo '  fi' >> /wait-and-test.sh && \
+    echo '  echo "OpenFGA is unavailable - sleeping ($COUNTER/$TIMEOUT)"' >> /wait-and-test.sh && \
     echo '  sleep 2' >> /wait-and-test.sh && \
+    echo '  COUNTER=$((COUNTER + 2))' >> /wait-and-test.sh && \
     echo 'done' >> /wait-and-test.sh && \
     echo '' >> /wait-and-test.sh && \
     echo '# Wait for OTEL Collector to be ready' >> /wait-and-test.sh && \
     echo 'echo "Waiting for OTEL Collector to be ready..."' >> /wait-and-test.sh && \
-    echo 'until curl -f http://otel-collector:8889/metrics > /dev/null 2>&1; do' >> /wait-and-test.sh && \
-    echo '  echo "OTEL Collector is unavailable - sleeping"' >> /wait-and-test.sh && \
+    echo 'TIMEOUT=60' >> /wait-and-test.sh && \
+    echo 'COUNTER=0' >> /wait-and-test.sh && \
+    echo 'until curl -f http://otel-collector:13133/ > /dev/null 2>&1; do' >> /wait-and-test.sh && \
+    echo '  if [ $COUNTER -ge $TIMEOUT ]; then' >> /wait-and-test.sh && \
+    echo '    echo "OTEL Collector failed to start within $TIMEOUT seconds"' >> /wait-and-test.sh && \
+    echo '    echo "Proceeding with tests anyway..."' >> /wait-and-test.sh && \
+    echo '    break' >> /wait-and-test.sh && \
+    echo '  fi' >> /wait-and-test.sh && \
+    echo '  echo "OTEL Collector is unavailable - sleeping ($COUNTER/$TIMEOUT)"' >> /wait-and-test.sh && \
     echo '  sleep 2' >> /wait-and-test.sh && \
+    echo '  COUNTER=$((COUNTER + 2))' >> /wait-and-test.sh && \
     echo 'done' >> /wait-and-test.sh && \
     echo '' >> /wait-and-test.sh && \
     echo 'echo "All services are ready! Starting tests..."' >> /wait-and-test.sh && \

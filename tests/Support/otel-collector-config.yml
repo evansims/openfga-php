@@ -26,6 +26,10 @@ exporters:
   debug:
     verbosity: detailed
 
+extensions:
+  health_check:
+    endpoint: "0.0.0.0:13133"
+
 service:
   pipelines:
     traces:
@@ -43,7 +47,7 @@ service:
       processors: [memory_limiter, batch]
       exporters: [debug]
 
-  extensions: []
+  extensions: [health_check]
 
   telemetry:
     metrics:

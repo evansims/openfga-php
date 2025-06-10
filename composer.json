@@ -189,6 +189,7 @@
       "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite contract --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "test:integration": "./tools/run-integration-tests.sh",
+    "test:integration:ci": "./tools/run-integration-tests-ci.sh",
     "test:integration:clean": "./tools/integration-cleanup.sh",
     "test:integration:clean:force": [
       "./tools/integration-cleanup.sh",

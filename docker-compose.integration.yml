@@ -22,10 +22,11 @@ services:
       - "com.openfga.test=integration"
       - "com.openfga.cleanup=true"
     ports:
-      - "4317:4317" # OTLP gRPC receiver
-      - "4318:4318" # OTLP HTTP receiver
-      - "8888:8888" # Prometheus metrics
-      - "8889:8889" # Prometheus exporter metrics
+      - "4317:4317"   # OTLP gRPC receiver
+      - "4318:4318"   # OTLP HTTP receiver
+      - "8888:8888"   # Prometheus metrics
+      - "8889:8889"   # Prometheus exporter metrics
+      - "13133:13133" # Health check endpoint
     networks:
       - openfga-network
 
