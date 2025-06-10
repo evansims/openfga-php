@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit;
 
-use OpenFGA\Exceptions\{SerializationException};
 use OpenFGA\Language\Transformer;
-use OpenFGA\Messages;
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionMetadata, ConditionParameter, DifferenceV1, Metadata, ObjectRelation, ObjectRelationInterface, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, TypeDefinitionInterface, UserTypeFilter, Userset, UsersetInterface};
 // AuthorizationModelInterface is imported in the group above
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, RelationMetadataCollection, RelationReferences, TypeDefinitionRelations, TypeDefinitions, UserTypeFilters, Usersets};
 // ObjectRelationInterface is imported in the group above
 // TypeDefinitionInterface is imported in the group above
 // UsersetInterface is imported in the group above
-use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schemas\SchemaValidator;
+
 // The large group 'use OpenFGA\Models\{...}' was duplicated and is removed here. The first one (line 4 in original) is kept and extended.
-use OpenFGA\Translation\Translator;
-use PHPUnit\Framework\TestCase;
 
 describe('Transformer', function (): void {
     // Add a beforeEach to handle common schema registrations if needed, or ensure each test does it.

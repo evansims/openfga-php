@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Models;
 
+use InvalidArgumentException;
 use OpenFGA\Models\{ObjectRelation, ObjectRelationInterface};
 use OpenFGA\Schemas\SchemaInterface;
-
-use InvalidArgumentException;
 use TypeError;
 
 describe('ObjectRelation Model', function (): void {
@@ -18,7 +17,7 @@ describe('ObjectRelation Model', function (): void {
     });
 
     test('constructor throws for missing relation', function (): void {
-        expect(fn () => new ObjectRelation())->toThrow(InvalidArgumentException::class, 'Relation cannot be empty.');
+        expect(fn () => new ObjectRelation)->toThrow(InvalidArgumentException::class, 'Relation cannot be empty.');
     });
 
     test('constructor throws for missing relation when object is provided', function (): void {

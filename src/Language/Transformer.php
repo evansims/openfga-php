@@ -542,8 +542,8 @@ final class Transformer implements TransformerInterface
             $tupleset = $tupleToUserset->getTupleset();
             $computedUserset = $tupleToUserset->getComputedUserset();
 
-            $relation = $computedUserset->getRelation() ?? '';
-            $fromRelation = $tupleset->getRelation() ?? '';
+            $relation = $computedUserset->getRelation();
+            $fromRelation = $tupleset->getRelation();
 
             return $relation . ' from ' . $fromRelation;
         }

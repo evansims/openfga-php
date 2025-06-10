@@ -47,7 +47,7 @@ interface ObjectRelationInterface extends ModelInterface
      *
      * @return string The non-empty relation name
      */
-    public function getRelation(): ?string;
+    public function getRelation(): string;
 
     /**
      * @return array{object?: string, relation?: string}
