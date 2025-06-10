@@ -556,18 +556,18 @@ final class Transformer implements TransformerInterface
             $object = $computedUserset->getObject();
             $relation = $computedUserset->getRelation();
 
-            if (null === $object || '' === $object) {
-                if (! is_string($relation)) {
-                    throw SerializationError::InvalidItemType->exception(context: ['message' => Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET)]);
-                }
+            // New validation: Relation must be a non-empty string
+            if ($relation === null || $relation === '') {
+                throw SerializationError::InvalidItemType->exception(context: ['message' => Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION)]);
+            }
 
+            // Existing logic for constructing the string
+            if (null === $object || '' === $object) {
+                // $relation is guaranteed to be a non-empty string due to the validation above.
                 return $relation;
             }
 
-            if (null === $relation || '' === $relation) {
-                return $object;
-            }
-
+            // If object is not empty, relation is already validated to be non-empty string.
             return $object . '#' . $relation;
         }
 

@@ -164,6 +164,7 @@ describe('Messages', function (): void {
             'dsl.unbalanced_parentheses_closing',
             'dsl.unbalanced_parentheses_opening',
             'dsl.invalid_computed_userset',
+            'dsl.invalid_computed_userset_relation',
         ]);
     });
 

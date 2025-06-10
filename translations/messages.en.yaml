@@ -12,6 +12,7 @@ dsl:
   unbalanced_parentheses_closing: 'Unbalanced parentheses: too many closing parentheses at position %position%'
   unbalanced_parentheses_opening: 'Unbalanced parentheses: %count% unclosed opening %parentheses%'
   invalid_computed_userset: 'Invalid computed userset'
+  invalid_computed_userset_relation: "Computed userset relation cannot be empty."
 
 assertions:
   empty_collection: 'Assertions collection cannot be empty'

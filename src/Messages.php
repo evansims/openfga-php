@@ -101,6 +101,8 @@ enum Messages: string
 
     case DSL_INVALID_COMPUTED_USERSET = 'dsl.invalid_computed_userset';
 
+    case DSL_INVALID_COMPUTED_USERSET_RELATION = 'dsl.invalid_computed_userset_relation';
+
     // DSL Transformer messages
     case DSL_PARSE_FAILED = 'dsl.parse_failed';
 
@@ -272,7 +274,7 @@ enum Messages: string
      *
      * @return string[][]
      *
-     * @psalm-return array{client: list{'client.no_last_request_found'}, dsl: list{'dsl.parse_failed', 'dsl.unrecognized_term', 'dsl.input_empty', 'dsl.pattern_empty', 'dsl.unbalanced_parentheses_closing', 'dsl.unbalanced_parentheses_opening', 'dsl.invalid_computed_userset'}, auth: list{'auth.invalid_response_format', 'auth.missing_required_fields', 'auth.access_token_must_be_string', 'auth.expires_in_must_be_integer', 'auth.jwt.invalid_format', 'auth.jwt.invalid_header', 'auth.jwt.invalid_payload', 'auth.jwt.missing_required_claims', 'auth.jwt.token_expired', 'auth.jwt.token_not_yet_valid', 'auth.jwt.invalid_audience', 'auth.jwt.invalid_issuer'}, network: list{'network.error', 'network.unexpected_status'}, result: list{'result.success_no_error', 'result.failure_no_value'}, request: list{'request.store_id_empty', 'request.model_id_empty', 'request.transactional_limit_exceeded'}, model: list{'model.invalid_tuple_key', 'model.invalid_identifier_format', 'model.typed_wildcard_type_empty', 'model.source_info_file_empty', 'model.leaf_missing_content'}, collection: list{'collection.undefined_item_type', 'collection.invalid_item_type_interface', 'collection.invalid_item_instance', 'collection.invalid_value_type', 'collection.key_must_be_string', 'collection.invalid_position', 'collection.invalid_key_type'}, translation: list{'translation.file_not_found', 'translation.unsupported_format'}, yaml: list{'yaml.file_does_not_exist', 'yaml.cannot_read_file', 'yaml.invalid_syntax_missing_colon', 'yaml.invalid_syntax_missing_value', 'yaml.invalid_syntax_empty_key', 'yaml.invalid_structure'}, validation: list{'validation.batch_check_empty', 'validation.invalid_correlation_id', 'validation.batch_tuple_chunk_size_positive', 'validation.batch_tuple_chunk_size_exceeded'}, service: list{'service.http_not_available', 'service.schema_validator_not_available', 'service.tuple_filter_not_available', 'service.store_repository_not_available', 'service.tuple_repository_not_available'}}
+     * @psalm-return array{client: list{'client.no_last_request_found'}, dsl: list{'dsl.parse_failed', 'dsl.unrecognized_term', 'dsl.input_empty', 'dsl.pattern_empty', 'dsl.unbalanced_parentheses_closing', 'dsl.unbalanced_parentheses_opening', 'dsl.invalid_computed_userset', 'dsl.invalid_computed_userset_relation'}, auth: list{'auth.invalid_response_format', 'auth.missing_required_fields', 'auth.access_token_must_be_string', 'auth.expires_in_must_be_integer', 'auth.jwt.invalid_format', 'auth.jwt.invalid_header', 'auth.jwt.invalid_payload', 'auth.jwt.missing_required_claims', 'auth.jwt.token_expired', 'auth.jwt.token_not_yet_valid', 'auth.jwt.invalid_audience', 'auth.jwt.invalid_issuer'}, network: list{'network.error', 'network.unexpected_status'}, result: list{'result.success_no_error', 'result.failure_no_value'}, request: list{'request.store_id_empty', 'request.model_id_empty', 'request.transactional_limit_exceeded'}, model: list{'model.invalid_tuple_key', 'model.invalid_identifier_format', 'model.typed_wildcard_type_empty', 'model.source_info_file_empty', 'model.leaf_missing_content'}, collection: list{'collection.undefined_item_type', 'collection.invalid_item_type_interface', 'collection.invalid_item_instance', 'collection.invalid_value_type', 'collection.key_must_be_string', 'collection.invalid_position', 'collection.invalid_key_type'}, translation: list{'translation.file_not_found', 'translation.unsupported_format'}, yaml: list{'yaml.file_does_not_exist', 'yaml.cannot_read_file', 'yaml.invalid_syntax_missing_colon', 'yaml.invalid_syntax_missing_value', 'yaml.invalid_syntax_empty_key', 'yaml.invalid_structure'}, validation: list{'validation.batch_check_empty', 'validation.invalid_correlation_id', 'validation.batch_tuple_chunk_size_positive', 'validation.batch_tuple_chunk_size_exceeded'}, service: list{'service.http_not_available', 'service.schema_validator_not_available', 'service.tuple_filter_not_available', 'service.store_repository_not_available', 'service.tuple_repository_not_available'}}
      */
     public static function getGroupedKeys(): array
     {
@@ -288,6 +290,7 @@ enum Messages: string
                 self::DSL_UNBALANCED_PARENTHESES_CLOSING->value,
                 self::DSL_UNBALANCED_PARENTHESES_OPENING->value,
                 self::DSL_INVALID_COMPUTED_USERSET->value,
+                self::DSL_INVALID_COMPUTED_USERSET_RELATION->value,
             ],
             'auth' => [
                 self::AUTH_INVALID_RESPONSE_FORMAT->value,
