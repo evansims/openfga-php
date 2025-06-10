@@ -5,11 +5,24 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit;
 
 use OpenFGA\Language\Transformer;
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionMetadata, ConditionParameter, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, UserTypeFilter, Userset};
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionMetadata, ConditionParameter, DifferenceV1, Metadata, ObjectRelation, ObjectRelationInterface, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, TypeDefinitionInterface, UserTypeFilter, Userset, UsersetInterface};
+use OpenFGA\Exceptions\SerializationError;
+use OpenFGA\Messages;
+// AuthorizationModelInterface is imported in the group above
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, RelationMetadataCollection, RelationReferences, TypeDefinitionRelations, TypeDefinitions, UserTypeFilters, Usersets};
+// ObjectRelationInterface is imported in the group above
+// TypeDefinitionInterface is imported in the group above
+// UsersetInterface is imported in the group above
+use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schemas\SchemaValidator;
+// The large group 'use OpenFGA\Models\{...}' was duplicated and is removed here. The first one (line 4 in original) is kept and extended.
+use OpenFGA\Translation\Translator;
+use PHPUnit\Framework\TestCase;
 
 describe('Transformer', function (): void {
+    // Add a beforeEach to handle common schema registrations if needed, or ensure each test does it.
+    // For now, individual tests will handle their schema validator setup.
+
     test('transforms DSL to model and back', function (): void {
         $dsl = <<<'DSL'
             model
@@ -288,4 +301,86 @@ describe('Transformer', function (): void {
         expect($relationNames)->toContain('muted');
         expect($relationNames)->toContain('suspended');
     });
+
+    // New tests for computed userset relation validation
+    test('toDsl throws error for computed userset with null relation', function (): void {
+        /** @var TestCase $this */
+        $this->expectException(\OpenFGA\Exceptions\SerializationException::class);
+        $this->expectExceptionMessage(Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION));
+
+        $mockModel = $this->createMock(AuthorizationModelInterface::class);
+        $mockObjectRelation = $this->createMock(ObjectRelationInterface::class);
+
+        $mockObjectRelation->method('getRelation')->willReturn(null);
+        $mockObjectRelation->method('getObject')->willReturn('document');
+
+        // Create a real Userset object configured to return the mockObjectRelation
+        $realUserset = new Userset(
+            direct: null,
+            computedUserset: $mockObjectRelation,
+            tupleToUserset: null,
+            union: null,
+            intersection: null,
+            difference: null
+        );
+
+        $relationsArray = ['somerel' => $realUserset];
+        $realRelationsCollection = new TypeDefinitionRelations($relationsArray);
+
+        $realTypeDef = new TypeDefinition(
+            type: 'document',
+            relations: $realRelationsCollection,
+            metadata: null
+        );
+
+        $typeDefsArray = [$realTypeDef];
+        // Ensure TypeDefinitions can be instantiated with an array of TypeDefinitionInterface
+        $typeDefinitionsCollection = new TypeDefinitions($typeDefsArray);
+
+        $mockModel->method('getTypeDefinitions')->willReturn($typeDefinitionsCollection);
+        $mockModel->method('getSchemaVersion')->willReturn(SchemaVersion::V1_1);
+        $mockModel->method('getConditions')->willReturn(null);
+
+        Transformer::toDsl($mockModel);
+    })->uses(TestCase::class); // Indicates that Pest should use PHPUnit's TestCase context for this test
+
+    test('toDsl throws error for computed userset with empty relation', function (): void {
+        /** @var TestCase $this */
+        $this->expectException(\OpenFGA\Exceptions\SerializationException::class);
+        $this->expectExceptionMessage(Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION));
+
+        $mockModel = $this->createMock(AuthorizationModelInterface::class);
+        $mockObjectRelation = $this->createMock(ObjectRelationInterface::class);
+
+        $mockObjectRelation->method('getRelation')->willReturn(''); // Empty string
+        $mockObjectRelation->method('getObject')->willReturn('document');
+
+        // Create a real Userset object configured to return the mockObjectRelation
+        $realUserset = new Userset(
+            direct: null,
+            computedUserset: $mockObjectRelation,
+            tupleToUserset: null,
+            union: null,
+            intersection: null,
+            difference: null
+        );
+
+        $relationsArray = ['somerel' => $realUserset];
+        $realRelationsCollection = new TypeDefinitionRelations($relationsArray);
+
+        $realTypeDef = new TypeDefinition(
+            type: 'document',
+            relations: $realRelationsCollection,
+            metadata: null
+        );
+
+        $typeDefsArray = [$realTypeDef];
+        $typeDefinitionsCollection = new TypeDefinitions($typeDefsArray);
+
+        $mockModel->method('getTypeDefinitions')->willReturn($typeDefinitionsCollection);
+        $mockModel->method('getSchemaVersion')->willReturn(SchemaVersion::V1_1);
+        $mockModel->method('getConditions')->willReturn(null);
+
+        Transformer::toDsl($mockModel);
+    })->uses(TestCase::class); // Indicates that Pest should use PHPUnit's TestCase context for this test
 });
