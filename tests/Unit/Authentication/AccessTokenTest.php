@@ -93,12 +93,12 @@ describe('AccessToken', function (): void {
         $currentTime = time();
         $token = new AccessToken('token', $currentTime);
 
-        // At exact expiration time, token is expired (expires < time())
-        expect($token->isExpired())->toBeFalse();
+        // At exact expiration time the token should be considered expired
+        expect($token->isExpired())->toBeTrue();
 
-        // One second past expiration, token should be expired
-        $expiredToken = new AccessToken('token', $currentTime - 1);
-        expect($expiredToken->isExpired())->toBeTrue();
+        // One second before expiration the token is still valid
+        $validToken = new AccessToken('token', $currentTime + 1);
+        expect($validToken->isExpired())->toBeFalse();
     });
 
     test('fromResponse parses valid response', function (): void {
