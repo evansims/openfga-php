@@ -69,12 +69,10 @@ interface AssertionServiceInterface
      * This is useful when completely restructuring test cases or during
      * development iterations.
      *
-     * @param  StoreInterface|string             $store                The store containing the model
      * @param  string                            $authorizationModelId The authorization model to clear
      * @return FailureInterface|SuccessInterface Success if cleared, or Failure with error details
      */
     public function clearAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
     ): FailureInterface | SuccessInterface;
 
@@ -85,13 +83,11 @@ interface AssertionServiceInterface
      * expected outcomes with actual authorization check results. This
      * helps verify that your authorization model works correctly.
      *
-     * @param  StoreInterface|string             $store                The store to execute assertions against
      * @param  string                            $authorizationModelId The authorization model to test
      * @param  AssertionsInterface               $assertions           The assertions to execute
      * @return FailureInterface|SuccessInterface Success with test results, or Failure with execution errors
      */
     public function executeAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
         AssertionsInterface $assertions,
     ): FailureInterface | SuccessInterface;
@@ -118,12 +114,10 @@ interface AssertionServiceInterface
      * Retrieves all test assertions defined in the specified authorization model.
      * Assertions validate that the model behaves correctly for specific scenarios.
      *
-     * @param  StoreInterface|string             $store                The store containing the model
      * @param  string                            $authorizationModelId The authorization model ID containing assertions
      * @return FailureInterface|SuccessInterface Success with assertions collection, or Failure with error details
      */
     public function readAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
     ): FailureInterface | SuccessInterface;
 
@@ -150,13 +144,11 @@ interface AssertionServiceInterface
      * Assertions help validate that your authorization model works as expected
      * by defining specific test cases and their expected outcomes.
      *
-     * @param  StoreInterface|string             $store                The store containing the model
      * @param  string                            $authorizationModelId The authorization model ID to update
      * @param  AssertionsInterface               $assertions           The assertions to write
      * @return FailureInterface|SuccessInterface Success if written, or Failure with error details
      */
     public function writeAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
         AssertionsInterface $assertions,
     ): FailureInterface | SuccessInterface;

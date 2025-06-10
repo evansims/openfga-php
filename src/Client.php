@@ -194,7 +194,6 @@ final readonly class Client implements ClientInterface
             $modelService = $this->getModelServiceForStore($store);
 
             return $modelService->createModel(
-                store: $store,
                 typeDefinitions: $typeDefinitions,
                 conditions: $conditions,
                 schemaVersion: $schemaVersion,
@@ -317,11 +316,9 @@ final readonly class Client implements ClientInterface
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model) {
             $modelService = $this->getModelServiceForStore($store);
-            $storeId = self::getStoreId($store);
             $modelId = self::getModelId($model);
 
             return $modelService->findModel(
-                store: $storeId,
                 modelId: $modelId,
             );
         });
@@ -393,13 +390,16 @@ final readonly class Client implements ClientInterface
         ?string $continuationToken = null,
         ?int $pageSize = null,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(function () use ($store, $pageSize) {
+        return $this->withLanguageContext(function () use ($store, $continuationToken, $pageSize) {
+            if (null !== $pageSize && 0 >= $pageSize) {
+                throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_PAGE_SIZE_INVALID, ['className' => 'Client::listAuthorizationModels'])]);
+            }
+
             $modelService = $this->getModelServiceForStore($store);
-            $storeId = self::getStoreId($store);
 
             return $modelService->listAllModels(
-                store: $storeId,
-                maxItems: $pageSize,
+                continuationToken: $continuationToken,
+                pageSize: $pageSize,
             );
         });
     }
@@ -527,11 +527,9 @@ final readonly class Client implements ClientInterface
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model) {
             $assertionService = $this->getAssertionServiceForStore($store);
-            $storeId = self::getStoreId($store);
             $modelId = self::getModelId($model);
 
             return $assertionService->readAssertions(
-                store: $storeId,
                 authorizationModelId: $modelId,
             );
         });
@@ -608,11 +606,9 @@ final readonly class Client implements ClientInterface
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model, $assertions) {
             $assertionService = $this->getAssertionServiceForStore($store);
-            $storeId = self::getStoreId($store);
             $modelId = self::getModelId($model);
 
             return $assertionService->writeAssertions(
-                store: $storeId,
                 authorizationModelId: $modelId,
                 assertions: $assertions,
             );
@@ -808,8 +804,6 @@ final readonly class Client implements ClientInterface
         );
         $service = new ModelService(
             modelRepository: $modelRepository,
-            httpService: $httpService,
-            validator: $validator,
             language: $this->language,
         );
 

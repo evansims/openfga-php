@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit;
 
+use OpenFGA\Exceptions\{SerializationException};
 use OpenFGA\Language\Transformer;
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionMetadata, ConditionParameter, DifferenceV1, Metadata, ObjectRelation, ObjectRelationInterface, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, TypeDefinitionInterface, UserTypeFilter, Userset, UsersetInterface};
-use OpenFGA\Exceptions\SerializationError;
 use OpenFGA\Messages;
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Condition, ConditionMetadata, ConditionParameter, DifferenceV1, Metadata, ObjectRelation, ObjectRelationInterface, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, TypeDefinitionInterface, UserTypeFilter, Userset, UsersetInterface};
 // AuthorizationModelInterface is imported in the group above
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, RelationMetadataCollection, RelationReferences, TypeDefinitionRelations, TypeDefinitions, UserTypeFilters, Usersets};
 // ObjectRelationInterface is imported in the group above
@@ -305,7 +305,7 @@ describe('Transformer', function (): void {
     // New tests for computed userset relation validation
     test('toDsl throws error for computed userset with null relation', function (): void {
         /** @var TestCase $this */
-        $this->expectException(\OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(SerializationException::class);
         $this->expectExceptionMessage(Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION));
 
         $mockModel = $this->createMock(AuthorizationModelInterface::class);
@@ -321,7 +321,7 @@ describe('Transformer', function (): void {
             tupleToUserset: null,
             union: null,
             intersection: null,
-            difference: null
+            difference: null,
         );
 
         $relationsArray = ['somerel' => $realUserset];
@@ -330,7 +330,7 @@ describe('Transformer', function (): void {
         $realTypeDef = new TypeDefinition(
             type: 'document',
             relations: $realRelationsCollection,
-            metadata: null
+            metadata: null,
         );
 
         $typeDefsArray = [$realTypeDef];
@@ -346,7 +346,7 @@ describe('Transformer', function (): void {
 
     test('toDsl throws error for computed userset with empty relation', function (): void {
         /** @var TestCase $this */
-        $this->expectException(\OpenFGA\Exceptions\SerializationException::class);
+        $this->expectException(SerializationException::class);
         $this->expectExceptionMessage(Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION));
 
         $mockModel = $this->createMock(AuthorizationModelInterface::class);
@@ -362,7 +362,7 @@ describe('Transformer', function (): void {
             tupleToUserset: null,
             union: null,
             intersection: null,
-            difference: null
+            difference: null,
         );
 
         $relationsArray = ['somerel' => $realUserset];
@@ -371,7 +371,7 @@ describe('Transformer', function (): void {
         $realTypeDef = new TypeDefinition(
             type: 'document',
             relations: $realRelationsCollection,
-            metadata: null
+            metadata: null,
         );
 
         $typeDefsArray = [$realTypeDef];

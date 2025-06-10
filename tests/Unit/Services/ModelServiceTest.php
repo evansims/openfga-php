@@ -10,19 +10,13 @@ use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Models\{Store, TypeDefinition};
 use OpenFGA\Repositories\ModelRepositoryInterface;
 use OpenFGA\Results\{Failure, Success};
-use OpenFGA\Schemas\SchemaValidatorInterface;
-use OpenFGA\Services\HttpServiceInterface;
 use OpenFGA\Services\{ModelService, ModelServiceInterface};
 
 beforeEach(function (): void {
     $this->mockModelRepository = test()->createMock(ModelRepositoryInterface::class);
-    $this->mockHttpService = test()->createMock(HttpServiceInterface::class);
-    $this->mockValidator = test()->createMock(SchemaValidatorInterface::class);
 
     $this->service = new ModelService(
         $this->mockModelRepository,
-        $this->mockHttpService,
-        $this->mockValidator,
         'en',
     );
 
@@ -84,7 +78,6 @@ describe('ModelService', function (): void {
             $emptyTypeDefinitions = new TypeDefinitions([]);
 
             $result = $this->service->createModel(
-                $this->store,
                 $emptyTypeDefinitions,
             );
 
@@ -98,11 +91,30 @@ describe('ModelService', function (): void {
             ]);
 
             $result = $this->service->createModel(
-                $this->store,
                 $duplicateTypeDefinitions,
             );
 
             expect($result)->toBeInstanceOf(Failure::class);
+        });
+    });
+
+    describe('listAllModels', function (): void {
+        it('forwards pagination parameters to the repository', function (): void {
+            $continuationToken = 'token-abc';
+            $pageSize = 10;
+
+            $this->mockModelRepository
+                ->expects(test()->once())
+                ->method('list')
+                ->with($pageSize, $continuationToken)
+                ->willReturn(new Success(null));
+
+            $result = $this->service->listAllModels(
+                continuationToken: $continuationToken,
+                pageSize: $pageSize,
+            );
+
+            expect($result)->toBeInstanceOf(Success::class);
         });
     });
 });

@@ -19,7 +19,6 @@ use stdClass;
 
 use function count;
 use function is_array;
-use function is_string;
 use function strlen;
 
 /**
@@ -557,7 +556,7 @@ final class Transformer implements TransformerInterface
             $relation = $computedUserset->getRelation();
 
             // New validation: Relation must be a non-empty string
-            if ($relation === null || $relation === '') {
+            if (null === $relation || '' === $relation) {
                 throw SerializationError::InvalidItemType->exception(context: ['message' => Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION)]);
             }
 

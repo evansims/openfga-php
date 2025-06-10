@@ -64,18 +64,14 @@ interface ModelServiceInterface
      * where you want to replicate a permission structure. The cloned model gets
      * a new ID in the target store.
      *
-     * @param StoreInterface|string $fromStore The source store containing the model
-     * @param string                $modelId   The ID of the model to clone
-     * @param StoreInterface|string $toStore   The target store where the model will be created
+     * @param string $modelId The ID of the model to clone
      *
      * @throws Throwable If result unwrapping fails
      *
      * @return FailureInterface|SuccessInterface Success with the cloned model, or Failure with error details
      */
     public function cloneModel(
-        StoreInterface | string $fromStore,
         string $modelId,
-        StoreInterface | string $toStore,
     ): FailureInterface | SuccessInterface;
 
     /**
@@ -85,14 +81,12 @@ interface ModelServiceInterface
      * and optional conditions. The model is validated before creation to ensure
      * it conforms to OpenFGA's schema requirements.
      *
-     * @param  StoreInterface|string             $store           The store where the model will be created
      * @param  TypeDefinitionsInterface          $typeDefinitions The type definitions for the model
      * @param  ConditionsInterface|null          $conditions      Optional conditions for attribute-based access control
      * @param  SchemaVersion                     $schemaVersion   The OpenFGA schema version to use
      * @return FailureInterface|SuccessInterface Success with the created model, or Failure with validation/creation errors
      */
     public function createModel(
-        StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
         ?ConditionsInterface $conditions = null,
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
@@ -104,12 +98,10 @@ interface ModelServiceInterface
      * Retrieves a model with enhanced error handling, providing clear messages
      * when models are not found or other errors occur.
      *
-     * @param  StoreInterface|string             $store   The store containing the model
      * @param  string                            $modelId The unique identifier of the model
      * @return FailureInterface|SuccessInterface Success with the model, or Failure with detailed error information
      */
     public function findModel(
-        StoreInterface | string $store,
         string $modelId,
     ): FailureInterface | SuccessInterface;
 
@@ -133,13 +125,13 @@ interface ModelServiceInterface
      * Retrieves all models with automatic pagination handling. This method
      * aggregates results across multiple pages up to the specified limit.
      *
-     * @param  StoreInterface|string             $store    The store to list models from
-     * @param  int|null                          $maxItems Maximum number of models to retrieve (null for all)
+     * @param  string|null                       $continuationToken Pagination token from a previous response
+     * @param  int|null                          $pageSize          Maximum number of models to retrieve (null for server default)
      * @return FailureInterface|SuccessInterface Success with the models collection, or Failure with error details
      */
     public function listAllModels(
-        StoreInterface | string $store,
-        ?int $maxItems = null,
+        ?string $continuationToken = null,
+        ?int $pageSize = null,
     ): FailureInterface | SuccessInterface;
 
     /**
