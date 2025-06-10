@@ -47,7 +47,6 @@ final readonly class AssertionService implements AssertionServiceInterface
      */
     #[Override]
     public function clearAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
     ): FailureInterface | SuccessInterface {
         try {
@@ -63,7 +62,6 @@ final readonly class AssertionService implements AssertionServiceInterface
      */
     #[Override]
     public function executeAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
         AssertionsInterface $assertions,
     ): Failure | Success | SuccessInterface {
@@ -152,7 +150,6 @@ final readonly class AssertionService implements AssertionServiceInterface
      */
     #[Override]
     public function readAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
     ): FailureInterface | SuccessInterface {
         try {
@@ -203,7 +200,6 @@ final readonly class AssertionService implements AssertionServiceInterface
      */
     #[Override]
     public function writeAssertions(
-        StoreInterface | string $store,
         string $authorizationModelId,
         AssertionsInterface $assertions,
     ): FailureInterface | SuccessInterface {

@@ -13,7 +13,6 @@ use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Repositories\ModelRepositoryInterface;
 use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
-use OpenFGA\Schemas\SchemaValidatorInterface;
 use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;
@@ -38,16 +37,10 @@ final readonly class ModelService implements ModelServiceInterface
      * Create a new model service instance.
      *
      * @param ModelRepositoryInterface $modelRepository Repository for model data access
-     * @param HttpServiceInterface     $httpService     HTTP service for creating repositories (unused in simplified version)
-     * @param SchemaValidatorInterface $validator       Schema validator for responses (unused in simplified version)
      * @param string                   $language        Language for error messages
      */
     public function __construct(
         private ModelRepositoryInterface $modelRepository,
-        /** @phpstan-ignore-next-line */
-        private HttpServiceInterface $httpService,
-        /** @phpstan-ignore-next-line */
-        private SchemaValidatorInterface $validator,
         private string $language = 'en',
     ) {
     }
@@ -57,9 +50,7 @@ final readonly class ModelService implements ModelServiceInterface
      */
     #[Override]
     public function cloneModel(
-        StoreInterface | string $fromStore,
         string $modelId,
-        StoreInterface | string $toStore,
     ): FailureInterface | SuccessInterface {
         // Get the source model
         $modelResult = $this->modelRepository->get($modelId);
@@ -85,7 +76,6 @@ final readonly class ModelService implements ModelServiceInterface
      */
     #[Override]
     public function createModel(
-        StoreInterface | string $store,
         TypeDefinitionsInterface $typeDefinitions,
         ?ConditionsInterface $conditions = null,
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
@@ -106,7 +96,6 @@ final readonly class ModelService implements ModelServiceInterface
      */
     #[Override]
     public function findModel(
-        StoreInterface | string $store,
         string $modelId,
     ): FailureInterface | SuccessInterface {
         // Delegate to repository for actual retrieval
@@ -156,12 +145,12 @@ final readonly class ModelService implements ModelServiceInterface
      */
     #[Override]
     public function listAllModels(
-        StoreInterface | string $store,
-        ?int $maxItems = null,
+        ?string $continuationToken = null,
+        ?int $pageSize = null,
     ): FailureInterface | SuccessInterface {
         // For now, delegate to repository with basic pagination
         // TODO: Implement enhanced pagination handling
-        return $this->modelRepository->list($maxItems);
+        return $this->modelRepository->list(pageSize: $pageSize, continuationToken: $continuationToken);
     }
 
     /**

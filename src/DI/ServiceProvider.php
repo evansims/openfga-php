@@ -469,8 +469,6 @@ final class ServiceProvider implements ServiceProviderInterface
 
                 return new ModelService(
                     $modelRepository,
-                    $httpService,
-                    $validator,
                     $this->getConfigLanguage(),
                 );
             },

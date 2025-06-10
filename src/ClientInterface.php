@@ -341,7 +341,7 @@ interface ClientInterface
      *
      * @param StoreInterface|string $store             The store to list models from
      * @param string|null           $continuationToken Token for pagination
-     * @param positive-int|null     $pageSize          Maximum number of models to return
+     * @param int|null              $pageSize          Maximum number of models to return (must be positive)
      *
      * @throws InvalidArgumentException If pageSize is not a positive integer
      *

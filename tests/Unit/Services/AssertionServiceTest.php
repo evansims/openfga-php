@@ -82,7 +82,7 @@ describe('AssertionService', function (): void {
                 ->with('model-123')
                 ->willReturn(new Success($this->assertions));
 
-            $result = $this->service->readAssertions($this->store, 'model-123');
+            $result = $this->service->readAssertions('model-123');
 
             expect($result)->toBeInstanceOf(Success::class);
             expect($result->unwrap())->toBe($this->assertions);
@@ -95,7 +95,7 @@ describe('AssertionService', function (): void {
                 ->method('read')
                 ->willReturn($repositoryFailure);
 
-            $result = $this->service->readAssertions($this->store, 'model-123');
+            $result = $this->service->readAssertions('model-123');
 
             expect($result)->toBeInstanceOf(Failure::class);
         });
@@ -105,7 +105,7 @@ describe('AssertionService', function (): void {
         it('validates before writing assertions', function (): void {
             $emptyAssertions = new Assertions([]);
 
-            $result = $this->service->writeAssertions($this->store, 'model-123', $emptyAssertions);
+            $result = $this->service->writeAssertions('model-123', $emptyAssertions);
 
             expect($result)->toBeInstanceOf(Failure::class);
         });
@@ -117,7 +117,7 @@ describe('AssertionService', function (): void {
                 ->with('model-123', $this->assertions)
                 ->willReturn(new Success(true));
 
-            $result = $this->service->writeAssertions($this->store, 'model-123', $this->assertions);
+            $result = $this->service->writeAssertions('model-123', $this->assertions);
 
             expect($result)->toBeInstanceOf(Success::class);
         });
@@ -127,13 +127,13 @@ describe('AssertionService', function (): void {
         it('validates assertions before execution', function (): void {
             $emptyAssertions = new Assertions([]);
 
-            $result = $this->service->executeAssertions($this->store, 'model-123', $emptyAssertions);
+            $result = $this->service->executeAssertions('model-123', $emptyAssertions);
 
             expect($result)->toBeInstanceOf(Failure::class);
         });
 
         it('returns execution results for valid assertions', function (): void {
-            $result = $this->service->executeAssertions($this->store, 'model-123', $this->assertions);
+            $result = $this->service->executeAssertions('model-123', $this->assertions);
 
             expect($result)->toBeInstanceOf(Success::class);
 
@@ -154,7 +154,7 @@ describe('AssertionService', function (): void {
                 ->with('model-123', test()->callback(fn ($assertions) => $assertions instanceof Assertions && 0 === $assertions->count()))
                 ->willReturn(new Success(true));
 
-            $result = $this->service->clearAssertions($this->store, 'model-123');
+            $result = $this->service->clearAssertions('model-123');
 
             expect($result)->toBeInstanceOf(Success::class);
         });

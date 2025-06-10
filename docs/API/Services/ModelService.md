@@ -131,7 +131,8 @@ Get the most recent authorization model for a store. Retrieves the latest model 
 ```php
 public function listAllModels(
     OpenFGA\Models\StoreInterface|string $store,
-    ?int $maxItems = NULL,
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
 ): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 
 ```
@@ -145,7 +146,8 @@ List all authorization models for a store. Retrieves all models with automatic p
 | Name        | Type                                                         | Description                                         |
 | ----------- | ------------------------------------------------------------ | --------------------------------------------------- |
 | `$store`    | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from                       |
-| `$maxItems` | `int` &#124; `null`                                          | Maximum number of models to retrieve (null for all) |
+| `$continuationToken` | `string` &#124; `null` | Pagination token from a previous response |
+| `$pageSize` | `int` &#124; `null` | Maximum number of models to retrieve |
 
 #### Returns
 

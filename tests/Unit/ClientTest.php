@@ -260,14 +260,30 @@ describe('Client', function (): void {
         expect($result)->toBeInstanceOf(ResultInterface::class);
     });
 
-    test('Client listAuthorizationModels clamps page size', function (): void {
+    test('Client listAuthorizationModels validates page size', function (): void {
         $client = new Client('https://api.example.com');
 
+        // Large page size should work (will be clamped by repository)
         $result1 = $client->listAuthorizationModels('store-123', null, 5000);
         expect($result1)->toBeInstanceOf(ResultInterface::class);
 
-        $result2 = $client->listAuthorizationModels('store-123', null, 0);
-        expect($result2)->toBeInstanceOf(ResultInterface::class);
+        // Zero page size should throw validation exception
+        expect(function () use ($client): void {
+            $client->listAuthorizationModels('store-123', null, 0);
+        })->toThrow(ClientException::class);
+
+        // Negative page size should throw validation exception
+        expect(function () use ($client): void {
+            $client->listAuthorizationModels('store-123', null, -1);
+        })->toThrow(ClientException::class);
+    });
+
+    test('listAuthorizationModels accepts pagination parameters', function (): void {
+        $client = new Client('https://api.example.com');
+
+        $result = $client->listAuthorizationModels('store-123', 'next', 5);
+
+        expect($result)->toBeInstanceOf(ResultInterface::class);
     });
 
     test('Client listObjects returns Result interface', function (): void {
