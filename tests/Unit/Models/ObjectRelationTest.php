@@ -7,25 +7,28 @@ namespace OpenFGA\Tests\Unit\Models;
 use OpenFGA\Models\{ObjectRelation, ObjectRelationInterface};
 use OpenFGA\Schemas\SchemaInterface;
 
+use InvalidArgumentException;
+use TypeError;
+
 describe('ObjectRelation Model', function (): void {
     test('implements ObjectRelationInterface', function (): void {
-        $objectRelation = new ObjectRelation;
+        $objectRelation = new ObjectRelation(relation: 'viewer');
 
         expect($objectRelation)->toBeInstanceOf(ObjectRelationInterface::class);
     });
 
-    test('constructs with null parameters', function (): void {
-        $objectRelation = new ObjectRelation;
-
-        expect($objectRelation->getObject())->toBeNull();
-        expect($objectRelation->getRelation())->toBeNull();
+    test('constructor throws for missing relation', function (): void {
+        expect(fn () => new ObjectRelation())->toThrow(InvalidArgumentException::class, 'Relation cannot be empty.');
     });
 
-    test('constructs with object only', function (): void {
-        $objectRelation = new ObjectRelation(object: 'document:1');
+    test('constructor throws for missing relation when object is provided', function (): void {
+        expect(fn () => new ObjectRelation(object: 'document:1'))->toThrow(InvalidArgumentException::class, 'Relation cannot be empty.');
+    });
 
-        expect($objectRelation->getObject())->toBe('document:1');
-        expect($objectRelation->getRelation())->toBeNull();
+    test('constructor throws for null relation', function (): void {
+        // This will throw TypeError because the constructor expects string, not ?string for relation
+        expect(fn () => new ObjectRelation(relation: null))->toThrow(TypeError::class);
+        expect(fn () => new ObjectRelation(object: 'test', relation: null))->toThrow(TypeError::class);
     });
 
     test('constructs with relation only', function (): void {
@@ -57,8 +60,9 @@ describe('ObjectRelation Model', function (): void {
             'type:id/with/slashes',
         ];
 
+        // ObjectRelation constructor now requires 'relation'
         foreach ($objects as $object) {
-            $objectRelation = new ObjectRelation(object: $object);
+            $objectRelation = new ObjectRelation(object: $object, relation: 'any_relation');
             expect($objectRelation->getObject())->toBe($object);
         }
     });
@@ -82,15 +86,26 @@ describe('ObjectRelation Model', function (): void {
         }
     });
 
-    test('serializes to JSON with only non-null fields', function (): void {
-        $objectRelation = new ObjectRelation;
-        expect($objectRelation->jsonSerialize())->toBe([]);
+    test('serializes to JSON correctly', function (): void {
+        // Case 1: Only relation (mandatory)
+        $objectRelation1 = new ObjectRelation(relation: 'viewer');
+        expect($objectRelation1->jsonSerialize())->toBe(['relation' => 'viewer']);
 
-        $objectRelation = new ObjectRelation(object: 'document:1');
-        expect($objectRelation->jsonSerialize())->toBe(['object' => 'document:1']);
+        // Case 2: Object and relation
+        $objectRelation2 = new ObjectRelation(object: 'document:1', relation: 'editor');
+        expect($objectRelation2->jsonSerialize())->toBe([
+            'object' => 'document:1',
+            'relation' => 'editor',
+        ]);
 
-        $objectRelation = new ObjectRelation(relation: 'viewer');
-        expect($objectRelation->jsonSerialize())->toBe(['relation' => 'viewer']);
+        // Case 3: Object is null, relation is present
+        $objectRelation3 = new ObjectRelation(object: null, relation: 'owner');
+        expect($objectRelation3->jsonSerialize())->toBe(['relation' => 'owner']);
+
+        // Case 4: Object is an empty string (if allowed by your business logic for object, though not typical)
+        // Relation is mandatory and non-empty
+        $objectRelation4 = new ObjectRelation(object: '', relation: 'viewer');
+        expect($objectRelation4->jsonSerialize())->toBe(['object'=> '', 'relation' => 'viewer']);
     });
 
     test('serializes to JSON with all fields', function (): void {
@@ -134,7 +149,7 @@ describe('ObjectRelation Model', function (): void {
         $relationProp = $properties['relation'];
         expect($relationProp->name)->toBe('relation');
         expect($relationProp->type)->toBe('string');
-        expect($relationProp->required)->toBe(false);
+        expect($relationProp->required)->toBe(true);
     });
 
     test('schema is cached', function (): void {
@@ -144,16 +159,11 @@ describe('ObjectRelation Model', function (): void {
         expect($schema1)->toBe($schema2);
     });
 
-    test('preserves empty strings', function (): void {
-        $objectRelation = new ObjectRelation(
-            object: '',
-            relation: '',
-        );
-
-        expect($objectRelation->getObject())->toBe('');
-        expect($objectRelation->getRelation())->toBe('');
-        // Empty strings are omitted from JSON serialization
-        expect($objectRelation->jsonSerialize())->toBe([]);
+    test('constructor throws for empty relation string', function (): void {
+        expect(fn () => new ObjectRelation(relation: ''))->toThrow(InvalidArgumentException::class, 'Relation cannot be empty.');
+        expect(fn () => new ObjectRelation(object: 'any_object', relation: ''))->toThrow(InvalidArgumentException::class, 'Relation cannot be empty.');
+        // Test with empty object string as well to ensure it's specifically the relation causing the issue
+        expect(fn () => new ObjectRelation(object: '', relation: ''))->toThrow(InvalidArgumentException::class, 'Relation cannot be empty.');
     });
 
     test('preserves whitespace', function (): void {

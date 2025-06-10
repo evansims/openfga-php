@@ -302,85 +302,48 @@ describe('Transformer', function (): void {
         expect($relationNames)->toContain('suspended');
     });
 
-    // New tests for computed userset relation validation
-    test('toDsl throws error for computed userset with null relation', function (): void {
-        /** @var TestCase $this */
-        $this->expectException(\OpenFGA\Exceptions\SerializationException::class);
-        $this->expectExceptionMessage(Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION));
+    test('toDsl correctly renders computed userset with valid relation', function (): void {
+        $dsl = <<<'DSL'
+            model
+              schema 1.1
 
-        $mockModel = $this->createMock(AuthorizationModelInterface::class);
-        $mockObjectRelation = $this->createMock(ObjectRelationInterface::class);
+            type user
 
-        $mockObjectRelation->method('getRelation')->willReturn(null);
-        $mockObjectRelation->method('getObject')->willReturn('document');
+            type document
+              relations
+                define editor: user
+                define viewer: editor
+            DSL;
 
-        // Create a real Userset object configured to return the mockObjectRelation
-        $realUserset = new Userset(
-            direct: null,
-            computedUserset: $mockObjectRelation,
-            tupleToUserset: null,
-            union: null,
-            intersection: null,
-            difference: null
-        );
+        $validator = new SchemaValidator;
 
-        $relationsArray = ['somerel' => $realUserset];
-        $realRelationsCollection = new TypeDefinitionRelations($relationsArray);
+        // Register schemas used by AuthorizationModel
+        $validator
+            ->registerSchema(AuthorizationModel::schema())
+            ->registerSchema(TypeDefinitions::schema())
+            ->registerSchema(TypeDefinition::schema())
+            ->registerSchema(TypeDefinitionRelations::schema())
+            ->registerSchema(Userset::schema())
+            ->registerSchema(Usersets::schema())
+            ->registerSchema(ObjectRelation::schema())
+            ->registerSchema(Conditions::schema())
+            ->registerSchema(Condition::schema())
+            ->registerSchema(Metadata::schema())
+            ->registerSchema(RelationMetadataCollection::schema())
+            ->registerSchema(RelationMetadata::schema())
+            ->registerSchema(RelationReferences::schema())
+            ->registerSchema(RelationReference::schema())
+            ->registerSchema(SourceInfo::schema())
+            ->registerSchema(ConditionParameters::schema())
+            ->registerSchema(ConditionParameter::schema())
+            ->registerSchema(ConditionMetadata::schema())
+            ->registerSchema(TupleToUsersetV1::schema())
+            ->registerSchema(DifferenceV1::schema())
+            ->registerSchema(UserTypeFilter::schema())
+            ->registerSchema(UserTypeFilters::schema());
 
-        $realTypeDef = new TypeDefinition(
-            type: 'document',
-            relations: $realRelationsCollection,
-            metadata: null
-        );
-
-        $typeDefsArray = [$realTypeDef];
-        // Ensure TypeDefinitions can be instantiated with an array of TypeDefinitionInterface
-        $typeDefinitionsCollection = new TypeDefinitions($typeDefsArray);
-
-        $mockModel->method('getTypeDefinitions')->willReturn($typeDefinitionsCollection);
-        $mockModel->method('getSchemaVersion')->willReturn(SchemaVersion::V1_1);
-        $mockModel->method('getConditions')->willReturn(null);
-
-        Transformer::toDsl($mockModel);
-    })->uses(TestCase::class); // Indicates that Pest should use PHPUnit's TestCase context for this test
-
-    test('toDsl throws error for computed userset with empty relation', function (): void {
-        /** @var TestCase $this */
-        $this->expectException(\OpenFGA\Exceptions\SerializationException::class);
-        $this->expectExceptionMessage(Translator::trans(Messages::DSL_INVALID_COMPUTED_USERSET_RELATION));
-
-        $mockModel = $this->createMock(AuthorizationModelInterface::class);
-        $mockObjectRelation = $this->createMock(ObjectRelationInterface::class);
-
-        $mockObjectRelation->method('getRelation')->willReturn(''); // Empty string
-        $mockObjectRelation->method('getObject')->willReturn('document');
-
-        // Create a real Userset object configured to return the mockObjectRelation
-        $realUserset = new Userset(
-            direct: null,
-            computedUserset: $mockObjectRelation,
-            tupleToUserset: null,
-            union: null,
-            intersection: null,
-            difference: null
-        );
-
-        $relationsArray = ['somerel' => $realUserset];
-        $realRelationsCollection = new TypeDefinitionRelations($relationsArray);
-
-        $realTypeDef = new TypeDefinition(
-            type: 'document',
-            relations: $realRelationsCollection,
-            metadata: null
-        );
-
-        $typeDefsArray = [$realTypeDef];
-        $typeDefinitionsCollection = new TypeDefinitions($typeDefsArray);
-
-        $mockModel->method('getTypeDefinitions')->willReturn($typeDefinitionsCollection);
-        $mockModel->method('getSchemaVersion')->willReturn(SchemaVersion::V1_1);
-        $mockModel->method('getConditions')->willReturn(null);
-
-        Transformer::toDsl($mockModel);
-    })->uses(TestCase::class); // Indicates that Pest should use PHPUnit's TestCase context for this test
+        $model = Transformer::fromDsl($dsl, $validator);
+        $resultDsl = Transformer::toDsl($model);
+        expect(trim($resultDsl))->toBe(trim($dsl));
+    });
 });
