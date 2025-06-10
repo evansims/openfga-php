@@ -51,7 +51,7 @@ final readonly class Client implements ClientInterface
     /**
      * The version of the OpenFGA PHP SDK.
      */
-    public const string VERSION = '1.2.0';
+    public const string VERSION = '1.3.0';
 
     /**
      * Service provider for dependency injection.

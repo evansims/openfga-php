@@ -2,6 +2,20 @@
 
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.3.0] - 2025-06-10
+
 > _Threads and fibers dance,<br />
 > Concurrent requests take their chance,<br />
 > Speed finds new romance._

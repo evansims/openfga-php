@@ -37,7 +37,7 @@ public function delete(
 
 Delete a single relationship tuple. Removes the specified relationship, with optional existence checking to provide better error messages when the tuple doesn&#039;t exist.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L56)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L59)
 
 #### Parameters
 
@@ -67,7 +67,7 @@ public function deleteBatch(
 
 Delete multiple relationship tuples in a batch operation. Efficiently removes multiple tuples, with automatic chunking and optional existence checking for better error reporting.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L92)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L95)
 
 #### Parameters
 
@@ -97,7 +97,7 @@ public function read(
 
 Read relationship tuples with optional filtering. Retrieves tuples matching the specified criteria, with automatic pagination handling for large result sets.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L185)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L199)
 
 #### Parameters
 
@@ -127,7 +127,7 @@ public function write(
 
 Write a single relationship tuple. Creates a relationship between a user and an object with the specified relation. This is the most common operation for establishing permissions.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L208)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L237)
 
 #### Parameters
 
@@ -162,7 +162,7 @@ public function writeBatch(
 
 Write multiple relationship tuples in a batch operation. Efficiently writes multiple tuples, with automatic chunking to respect API limits and optional duplicate filtering for performance optimization.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L244)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L273)
 
 #### Parameters
 
@@ -194,7 +194,7 @@ public function getStatistics(OpenFGA\Models\StoreInterface|string $store): Open
 
 Get statistics about tuples in the store. Provides insights into the tuple distribution and counts by type and relation, useful for monitoring and capacity planning.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L142)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L145)
 
 #### Parameters
 
@@ -221,7 +221,7 @@ public function listChanges(
 
 List changes to tuples over time for auditing purposes. Retrieves a chronological log of tuple changes (writes and deletes) within the specified time range, useful for compliance and debugging.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L162)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L165)
 
 #### Parameters
 
@@ -253,7 +253,7 @@ public function exists(
 
 Check if a specific tuple exists in the store. Efficiently verifies tuple existence without retrieving all matching tuples. Useful for validation before operations or conditional logic.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L124)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleService.php#L127)
 
 #### Parameters
 
