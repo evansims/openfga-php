@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\{Messages, Translation\Translator};
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
+use ReflectionException;
 
 /**
  * Represents a batch tuple operation containing both writes and deletes.
@@ -33,8 +36,8 @@ final class BatchTupleOperation implements BatchTupleOperationInterface
     /**
      * Create a new batch tuple operation.
      *
-     * @param TupleKeysInterface<TupleKeyInterface>|null $writes  Collection of tuples to write
-     * @param TupleKeysInterface<TupleKeyInterface>|null $deletes Collection of tuples to delete
+     * @param TupleKeysInterface|null $writes  Collection of tuples to write
+     * @param TupleKeysInterface|null $deletes Collection of tuples to delete
      */
     public function __construct(
         private readonly ?TupleKeysInterface $writes = null,
@@ -60,18 +63,20 @@ final class BatchTupleOperation implements BatchTupleOperationInterface
     /**
      * @inheritDoc
      *
-     * @throws InvalidArgumentException If chunk size is invalid
+     * @throws ClientThrowable          If chunk size is invalid
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
     public function chunk(int $chunkSize = self::MAX_TUPLES_PER_REQUEST): array
     {
         // Validate chunk size
         if (0 >= $chunkSize) {
-            throw new InvalidArgumentException('Chunk size must be a positive integer');
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::BATCH_TUPLE_CHUNK_SIZE_POSITIVE)]);
         }
 
         if (self::MAX_TUPLES_PER_REQUEST < $chunkSize) {
-            throw new InvalidArgumentException('Chunk size cannot exceed ' . self::MAX_TUPLES_PER_REQUEST);
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::BATCH_TUPLE_CHUNK_SIZE_EXCEEDED, ['max_size' => self::MAX_TUPLES_PER_REQUEST])]);
         }
 
         // Empty operations should return empty array
@@ -84,11 +89,18 @@ final class BatchTupleOperation implements BatchTupleOperationInterface
         }
 
         $chunks = [];
+
+        /** @var array<TupleKeyInterface> $writes */
         $writes = $this->writes instanceof TupleKeysInterface ? [...$this->writes] : [];
+
+        /** @var array<TupleKeyInterface> $deletes */
         $deletes = $this->deletes instanceof TupleKeysInterface ? [...$this->deletes] : [];
 
         while ([] !== $writes || [] !== $deletes) {
+            /** @var array<TupleKeyInterface> $chunkWrites */
             $chunkWrites = [];
+
+            /** @var array<TupleKeyInterface> $chunkDeletes */
             $chunkDeletes = [];
             $remaining = $chunkSize;
 

@@ -67,7 +67,7 @@ public function schema(): SchemaInterface
 
 Get the schema definition for this response. Returns the schema that defines the structure and validation rules for tuple reading response data, ensuring consistent parsing and validation of API responses.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadTuplesResponseInterface.php#L34)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ReadTuplesResponseInterface.php#L33)
 
 #### Returns
 

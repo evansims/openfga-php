@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\TupleChangeInterface;
 use Override;
 
 /**
- * @template T of TupleChangeInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\TupleChangeInterface>
  */
 interface TupleChangesInterface extends IndexedCollectionInterface
 {

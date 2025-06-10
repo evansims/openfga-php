@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UsersetInterface;
 use Override;
 
 /**
@@ -14,9 +13,7 @@ use Override;
  * where users are granted access if they satisfy ANY of the contained usersets.
  * The collection provides optimized serialization for union-specific data structures.
  *
- * @template T of UsersetInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\UsersetInterface>
  */
 interface UsersetUnionInterface extends IndexedCollectionInterface
 {

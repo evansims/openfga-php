@@ -100,6 +100,26 @@ Add comprehensive tracing and metrics to monitor your authorization system.
 
 **[Observability →](Observability.md)**
 
+## Architecture
+
+### Architecture → Overview
+
+Understand the SDK's clean architecture design with separation of concerns and dependency injection.
+
+**[Architecture Overview →](Architecture.md)**
+
+### Architecture → Repository Pattern
+
+Learn how to extend and customize data access using the repository pattern.
+
+**[Repository Pattern →](RepositoryPattern.md)**
+
+### Architecture → Service Pattern
+
+Discover how to add cross-cutting concerns like caching and logging through service decorators.
+
+**[Service Pattern →](ServicePattern.md)**
+
 ## Key features
 
 **Modern PHP 8.3+** — Property promotion, named arguments, and strict typing

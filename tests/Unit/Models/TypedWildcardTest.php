@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Messages;
 use OpenFGA\Models\{TypedWildcard, TypedWildcardInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('TypedWildcard Model', function (): void {
     test('implements TypedWildcardInterface', function (): void {

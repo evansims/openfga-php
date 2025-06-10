@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\BatchCheckSingleResult;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 it('creates a single result with allowed true', function (): void {
     $result = new BatchCheckSingleResult(allowed: true);

@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 
 use Exception;
 use OpenFGA\Responses\{WriteAssertionsResponse, WriteAssertionsResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
 describe('WriteAssertionsResponse', function (): void {

@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use OpenFGA\Models\Collections\{Stores, StoresInterface};
 use OpenFGA\Models\Store;
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Stores Collection', function (): void {
     test('implements interface', function (): void {

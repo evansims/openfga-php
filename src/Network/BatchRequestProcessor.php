@@ -10,7 +10,7 @@ use OpenFGA\Exceptions\{ClientThrowable, NetworkException, SerializationExceptio
 use OpenFGA\Requests\WriteTuplesRequest;
 use OpenFGA\Responses\WriteTuplesResponse;
 use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
 use RuntimeException;
@@ -55,8 +55,11 @@ final class BatchRequestProcessor
     /**
      * Process a write tuples request.
      *
-     * @param  WriteTuplesRequest $request The request to process
-     * @return SuccessInterface   Always returns Success with WriteTuplesResponse
+     * @param WriteTuplesRequest $request The request to process
+     *
+     * @throws Throwable If request processing fails
+     *
+     * @return SuccessInterface Always returns Success with WriteTuplesResponse
      */
     public function process(WriteTuplesRequest $request): SuccessInterface
     {
@@ -159,7 +162,8 @@ final class BatchRequestProcessor
      *
      * @param WriteTuplesRequest $request
      *
-     * @throws InvalidArgumentException
+     * @throws InvalidArgumentException If request parameters are invalid
+     * @throws Throwable                If task execution fails
      */
     private function processNonTransactional(WriteTuplesRequest $request): SuccessInterface
     {

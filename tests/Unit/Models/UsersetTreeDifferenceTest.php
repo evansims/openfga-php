@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{Computed, Leaf, Node, UsersetTreeDifference, UsersetTreeDifferenceInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('UsersetTreeDifference Model', function (): void {
     test('implements UsersetTreeDifferenceInterface', function (): void {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, Store, StoreInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
@@ -16,9 +16,7 @@ use Override;
  * Each store provides an isolated authorization domain with its own models,
  * tuples, and configuration for multi-tenant authorization systems.
  *
- * @extends IndexedCollection<StoreInterface>
- *
- * @implements StoresInterface<StoreInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\StoreInterface>
  */
 final class Stores extends IndexedCollection implements StoresInterface
 {

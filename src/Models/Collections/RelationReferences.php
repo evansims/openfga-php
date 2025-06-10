@@ -7,9 +7,7 @@ namespace OpenFGA\Models\Collections;
 use OpenFGA\Models\{ModelInterface, RelationReference, RelationReferenceInterface};
 
 /**
- * @extends IndexedCollection<RelationReferenceInterface>
- *
- * @implements RelationReferencesInterface<RelationReferenceInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\RelationReferenceInterface>
  */
 final class RelationReferences extends IndexedCollection implements RelationReferencesInterface
 {

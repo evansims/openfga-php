@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\UsersList;
 use OpenFGA\Models\{Computed, Leaf, LeafInterface, UsersListUser, UsersetTreeTupleToUserset};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('Leaf Model', function (): void {
     test('implements LeafInterface', function (): void {

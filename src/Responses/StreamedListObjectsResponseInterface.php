@@ -7,7 +7,7 @@ namespace OpenFGA\Responses;
 use Generator;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
 

@@ -521,7 +521,7 @@ class BatchCircuitBreaker {
 
 ## Next Steps
 
-- Review the [Performance Benchmarks](../examples/fiber-parallel-batch/example.php) for detailed timing comparisons
+- Review the [Non-Transactional Writes Example](../examples/non-transactional-writes/example.php) for detailed parallel processing patterns
 - Explore [Integration Tests](../tests/Integration/BatchTuplesIntegrationTest.php) for advanced usage patterns
 - Check out [Observability Guide](Observability.md) for monitoring concurrent operations
 - Read about [Error Handling](Results.md) for comprehensive failure management

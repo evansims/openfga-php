@@ -56,7 +56,7 @@ interface CreateAuthorizationModelRequestInterface extends RequestInterface
      * requests. They enable attribute-based access control (ABAC) patterns
      * within the relationship-based authorization framework.
      *
-     * @return ConditionsInterface<ConditionInterface>|null Collection of conditional rules for dynamic authorization, or null if no conditions are defined
+     * @return ConditionsInterface|null Collection of conditional rules for dynamic authorization, or null if no conditions are defined
      */
     public function getConditions(): ?ConditionsInterface;
 
@@ -104,7 +104,7 @@ interface CreateAuthorizationModelRequestInterface extends RequestInterface
      * - Relationship inheritance and computation rules
      * - References to conditional logic for dynamic authorization
      *
-     * @return TypeDefinitionsInterface<TypeDefinitionInterface> Collection of object type definitions that define the authorization schema
+     * @return TypeDefinitionsInterface Collection of object type definitions that define the authorization schema
      */
     public function getTypeDefinitions(): TypeDefinitionsInterface;
 }

@@ -37,6 +37,10 @@ describe('Client writeTuples Non-Transactional Unit Tests', function (): void {
             ->method('createStream')
             ->willReturn($this->mockStream);
 
+        $this->mockStream
+            ->method('getSize')
+            ->willReturn(100);
+
         $this->mockRequest
             ->method('withHeader')
             ->willReturnSelf();
@@ -44,6 +48,10 @@ describe('Client writeTuples Non-Transactional Unit Tests', function (): void {
         $this->mockRequest
             ->method('withBody')
             ->willReturnSelf();
+
+        $this->mockRequest
+            ->method('getBody')
+            ->willReturn($this->mockStream);
 
         $this->mockRequest
             ->method('getUri')
@@ -56,6 +64,10 @@ describe('Client writeTuples Non-Transactional Unit Tests', function (): void {
         $this->mockResponse
             ->method('getStatusCode')
             ->willReturn(200);
+
+        $this->mockResponse
+            ->method('getBody')
+            ->willReturn($this->mockStream);
 
         $this->client = new Client(
             url: 'https://api.openfga.dev',
@@ -222,6 +234,7 @@ describe('Client writeTuples Non-Transactional Unit Tests', function (): void {
 
         $successResponse = test()->createMock(ResponseInterface::class);
         $successResponse->method('getStatusCode')->willReturn(200);
+        $successResponse->method('getBody')->willReturn($this->mockStream);
 
         $this->mockHttpClient
             ->expects(test()->exactly(2)) // 1 initial + 1 retry
@@ -296,6 +309,7 @@ describe('Client writeTuples Non-Transactional Unit Tests', function (): void {
 
         $successResponse = test()->createMock(ResponseInterface::class);
         $successResponse->method('getStatusCode')->willReturn(200);
+        $successResponse->method('getBody')->willReturn($this->mockStream);
 
         $this->mockHttpClient
             ->expects(test()->exactly(2)) // Should process both chunks
@@ -360,14 +374,11 @@ describe('Client writeTuples Non-Transactional Unit Tests', function (): void {
             ->method('sendRequest')
             ->willReturn($this->mockResponse);
 
+        // Note: writeTuples bypasses the service layer and goes directly to the repository,
+        // so it doesn't call startOperation directly. Telemetry happens at the HTTP level.
         $this->mockTelemetry
-            ->expects(test()->once())
-            ->method('startOperation')
-            ->with(
-                'writeTuples',
-                test()->callback(fn ($store) => 'store-id' === $store),
-                test()->callback(fn ($model) => 'model-id' === $model),
-            );
+            ->expects(test()->never())
+            ->method('startOperation');
 
         $result = $this->client->writeTuples('store-id', 'model-id', $writes, transactional: false);
 

@@ -1,0 +1,32 @@
+<?php
+
+final class Fiber
+{
+    public function __construct(callable $callback) {}
+    
+    public function start(mixed ...$args): mixed {}
+    
+    public function resume(mixed $value = null): mixed {}
+    
+    public function throw(Throwable $exception): mixed {}
+    
+    /**
+     * Returns the value returned by the fiber callback.
+     * 
+     * @return mixed
+     * @psalm-mutation-free
+     */
+    public function getReturn(): mixed {}
+    
+    public function isStarted(): bool {}
+    
+    public function isSuspended(): bool {}
+    
+    public function isRunning(): bool {}
+    
+    public function isTerminated(): bool {}
+    
+    public static function getCurrent(): ?self {}
+    
+    public static function suspend(mixed $value = null): mixed {}
+}

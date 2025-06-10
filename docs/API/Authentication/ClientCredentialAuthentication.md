@@ -50,7 +50,7 @@ public function getAuthorizationHeader(): ?string
 
 Get the authorization header value for API requests. Returns the authorization header value to be included in HTTP requests to the OpenFGA API. The format and content depend on the specific authentication strategy implementation. For strategies that need to perform authentication requests (like OAuth), this method may trigger an authentication flow using getAuthenticationRequest().
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L128)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L107)
 
 #### Returns
 
@@ -65,7 +65,7 @@ public function getToken(): AccessTokenInterface|null
 
 Get the current access token if available. Returns the stored access token, which may be null if no authentication has been performed yet or if the token has been explicitly cleared. The returned token may be expired; use the token&#039;s isExpired() method to check validity.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L147)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L126)
 
 #### Returns
 
@@ -97,7 +97,7 @@ public function handleAuthenticationResponse(ResponseInterface $response): void
 
 Handle the authentication response and update the stored token. Processes the OAuth token response and creates a new access token from the response data. This method is automatically called by the Client after a successful authentication request. For JWT tokens, this method validates the issuer and audience claims against the OAuth configuration to ensure the token was issued by the expected authorization server and is intended for the correct audience.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L174)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L153)
 
 #### Parameters
 
@@ -118,7 +118,7 @@ public function requiresAuthentication(): bool
 
 Check if authentication is required for this strategy.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L187)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L166)
 
 #### Returns
 

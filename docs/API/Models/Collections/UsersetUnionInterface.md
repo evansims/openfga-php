@@ -278,7 +278,7 @@ public function jsonSerialize(): array
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/UsersetUnionInterface.php#L29)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/UsersetUnionInterface.php#L26)
 
 #### Returns
 

@@ -57,7 +57,7 @@ interface WriteAssertionsRequestInterface extends RequestInterface
      * - Edge cases and special scenarios are properly handled
      * - Documentation of expected behavior is maintained
      *
-     * @return AssertionsInterface<AssertionInterface> Collection of test assertions to validate authorization model behavior
+     * @return AssertionsInterface Collection of test assertions to validate authorization model behavior
      */
     public function getAssertions(): AssertionsInterface;
 

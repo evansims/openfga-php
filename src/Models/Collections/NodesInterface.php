@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\NodeInterface;
 use Override;
 
 /**
- * @template T of NodeInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\NodeInterface>
  */
 interface NodesInterface extends IndexedCollectionInterface
 {

@@ -6,6 +6,7 @@ namespace OpenFGA\Tests\Unit;
 
 use OpenFGA\Client;
 use OpenFGA\Models\Condition;
+use OpenFGA\Observability\TelemetryInterface;
 use OpenFGA\Responses\WriteTuplesResponse;
 use OpenFGA\Results\Success;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
@@ -19,6 +20,7 @@ describe('Client writeTuples duplicate filtering', function (): void {
         $this->mockResponseFactory = test()->createMock(ResponseFactoryInterface::class);
         $this->mockStreamFactory = test()->createMock(StreamFactoryInterface::class);
         $this->mockRequestFactory = test()->createMock(RequestFactoryInterface::class);
+        $this->mockTelemetry = test()->createMock(TelemetryInterface::class);
         $this->mockResponse = test()->createMock(ResponseInterface::class);
         $this->mockRequest = test()->createMock(RequestInterface::class);
         $this->mockStream = test()->createMock(StreamInterface::class);
@@ -29,9 +31,11 @@ describe('Client writeTuples duplicate filtering', function (): void {
             ->method('createRequest')
             ->willReturn($this->mockRequest);
 
-        $this->mockStreamFactory
-            ->method('createStream')
-            ->willReturn($this->mockStream);
+        // This will be overridden in individual tests to capture the body
+
+        $this->mockStream
+            ->method('getSize')
+            ->willReturn(100);
 
         $this->mockRequest
             ->method('withHeader')
@@ -40,6 +44,10 @@ describe('Client writeTuples duplicate filtering', function (): void {
         $this->mockRequest
             ->method('withBody')
             ->willReturnSelf();
+
+        $this->mockRequest
+            ->method('getBody')
+            ->willReturn($this->mockStream);
 
         $this->mockRequest
             ->method('getUri')
@@ -59,7 +67,7 @@ describe('Client writeTuples duplicate filtering', function (): void {
 
         $this->mockStream
             ->method('getContents')
-            ->willReturn('{}');
+            ->willReturn('{"revision":"1","deletes":{"tuple_keys":[]},"writes":{"tuple_keys":[]}}');
 
         $this->client = new Client(
             url: 'https://api.openfga.dev',
@@ -67,6 +75,7 @@ describe('Client writeTuples duplicate filtering', function (): void {
             httpResponseFactory: $this->mockResponseFactory,
             httpStreamFactory: $this->mockStreamFactory,
             httpRequestFactory: $this->mockRequestFactory,
+            telemetry: $this->mockTelemetry,
         );
     });
 
@@ -80,7 +89,10 @@ describe('Client writeTuples duplicate filtering', function (): void {
         );
 
         $capturedBody = null;
-        $this->mockStreamFactory
+
+        // Create a fresh mock for this test to capture the body
+        $mockStreamFactory = test()->createMock(StreamFactoryInterface::class);
+        $mockStreamFactory
             ->expects(test()->once())
             ->method('createStream')
             ->willReturnCallback(function ($body) use (&$capturedBody) {
@@ -88,6 +100,16 @@ describe('Client writeTuples duplicate filtering', function (): void {
 
                 return $this->mockStream;
             });
+
+        // Create a new client with the fresh mock
+        $this->client = new Client(
+            url: 'https://api.openfga.dev',
+            httpClient: $this->mockHttpClient,
+            httpResponseFactory: $this->mockResponseFactory,
+            httpStreamFactory: $mockStreamFactory,
+            httpRequestFactory: $this->mockRequestFactory,
+            telemetry: $this->mockTelemetry,
+        );
 
         $this->mockHttpClient
             ->expects(test()->once())

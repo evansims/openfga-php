@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 
 use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Responses\{CreateAuthorizationModelResponse, CreateAuthorizationModelResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 

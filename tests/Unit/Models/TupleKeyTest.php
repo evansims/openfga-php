@@ -8,7 +8,7 @@ use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\ConditionParameters;
 use OpenFGA\Models\{Condition, ConditionParameter, TupleKey, TupleKeyInterface};
 use OpenFGA\Models\Enums\TypeName;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('TupleKey Model', function (): void {
     test('implements TupleKeyInterface', function (): void {

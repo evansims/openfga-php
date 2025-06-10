@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\Collections\StoresInterface;
-use OpenFGA\Models\StoreInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for stores listing response objects.
@@ -50,7 +49,7 @@ interface ListStoresResponseInterface extends ResponseInterface
      * Returns a type-safe collection containing the store objects from the current page
      * of results. Each store includes its metadata such as ID, name, and timestamps.
      *
-     * @return StoresInterface<StoreInterface> The collection of stores
+     * @return StoresInterface The collection of stores
      */
     public function getStores(): StoresInterface;
 }

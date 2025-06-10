@@ -8,7 +8,7 @@ use Exception;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\{BatchCheckItem};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 use function OpenFGA\{tuple, tuples};
 

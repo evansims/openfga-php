@@ -10,7 +10,6 @@ use InvalidArgumentException;
 use JsonException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
-use OpenFGA\Models\AssertionInterface;
 use OpenFGA\Models\Collections\AssertionsInterface;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use OpenFGA\Translation\Translator;
@@ -33,9 +32,9 @@ final readonly class WriteAssertionsRequest implements WriteAssertionsRequestInt
     /**
      * Create a new assertions writing request.
      *
-     * @param AssertionsInterface<AssertionInterface> $assertions The collection of assertions to write
-     * @param string                                  $store      The ID of the store to write assertions to
-     * @param string                                  $model      The ID of the authorization model to write assertions for
+     * @param AssertionsInterface $assertions The collection of assertions to write
+     * @param string              $store      The ID of the store to write assertions to
+     * @param string              $model      The ID of the authorization model to write assertions for
      *
      * @throws ClientThrowable          If the store ID or model ID is empty
      * @throws InvalidArgumentException If message translation parameters are invalid

@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Responses;
 
 use OpenFGA\Models\Collections\TuplesInterface;
-use OpenFGA\Models\TupleInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for tuple reading response objects.
@@ -51,7 +50,7 @@ interface ReadTuplesResponseInterface extends ResponseInterface
      * read query criteria. Each tuple represents a relationship between a user
      * and an object through a specific relation.
      *
-     * @return TuplesInterface<TupleInterface> The collection of relationship tuples
+     * @return TuplesInterface The collection of relationship tuples
      */
     public function getTuples(): TuplesInterface;
 }

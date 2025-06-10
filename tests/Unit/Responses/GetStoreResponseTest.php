@@ -9,7 +9,7 @@ use DateTimeZone;
 use OpenFGA\Exceptions\NetworkException;
 use OpenFGA\Models\Store;
 use OpenFGA\Responses\{GetStoreResponse, GetStoreResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 

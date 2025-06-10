@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use InvalidArgumentException;
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;

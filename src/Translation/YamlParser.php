@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace OpenFGA\Translation;
 
 use InvalidArgumentException;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\{Messages};
+use ReflectionException;
 
 use function count;
 use function explode;
@@ -33,20 +36,22 @@ final class YamlParser
      *
      * @param string $filename Path to the YAML file to parse
      *
-     * @throws InvalidArgumentException If the file cannot be read or parsed
+     * @throws ClientThrowable          If the file cannot be read or parsed
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      *
      * @return array<string, mixed> The parsed YAML data
      */
     public static function parseFile(string $filename): array
     {
         if (! file_exists($filename)) {
-            throw new InvalidArgumentException('File does not exist: ' . $filename);
+            throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_FILE_DOES_NOT_EXIST, ['filename' => $filename])]);
         }
 
         $content = @file_get_contents($filename);
 
         if (false === $content) {
-            throw new InvalidArgumentException('Cannot read file: ' . $filename);
+            throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_CANNOT_READ_FILE, ['filename' => $filename])]);
         }
 
         return self::parseString($content);
@@ -57,7 +62,9 @@ final class YamlParser
      *
      * @param string $yamlString The YAML content to parse
      *
-     * @throws InvalidArgumentException If the YAML cannot be parsed
+     * @throws ClientThrowable          If the YAML cannot be parsed
+     * @throws InvalidArgumentException If message translation parameters are invalid
+     * @throws ReflectionException      If exception location capture fails
      *
      * @return array<string, mixed> The parsed YAML data
      *
@@ -99,13 +106,13 @@ final class YamlParser
 
             // Parse the line
             if (! str_contains($trimmedLine, ':')) {
-                throw new InvalidArgumentException('Invalid YAML syntax on line ' . ($lineNumber + 1) . ': missing colon');
+                throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_INVALID_SYNTAX_MISSING_COLON, ['line_number' => $lineNumber + 1])]);
             }
 
             $parts = explode(':', $trimmedLine, 2);
 
             if (2 > count($parts)) {
-                throw new InvalidArgumentException('Invalid YAML syntax on line ' . ($lineNumber + 1) . ': missing value');
+                throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_INVALID_SYNTAX_MISSING_VALUE, ['line_number' => $lineNumber + 1])]);
             }
 
             [$key, $value] = $parts;
@@ -113,11 +120,11 @@ final class YamlParser
             $value = trim($value);
 
             if ('' === $key) {
-                throw new InvalidArgumentException('Invalid YAML syntax on line ' . ($lineNumber + 1) . ': empty key');
+                throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_INVALID_SYNTAX_EMPTY_KEY, ['line_number' => $lineNumber + 1])]);
             }
 
             if (0 === count($stack)) {
-                throw new InvalidArgumentException('Invalid YAML structure on line ' . ($lineNumber + 1));
+                throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_INVALID_STRUCTURE, ['line_number' => $lineNumber + 1])]);
             }
 
             $currentLevel = &$stack[count($stack) - 1];

@@ -278,7 +278,7 @@ public function jsonSerialize(): array<string, array{type: string, relation?: st
 
 Serialize the collection to an array.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/RelationReferencesInterface.php#L23)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/RelationReferencesInterface.php#L20)
 
 #### Returns
 

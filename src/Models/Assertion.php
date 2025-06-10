@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;
@@ -36,10 +36,10 @@ final class Assertion implements AssertionInterface
     /**
      * Create a new assertion to test authorization model correctness.
      *
-     * @param AssertionTupleKeyInterface                 $tupleKey         The tuple key defining what authorization question to test (user, relation, object)
-     * @param bool                                       $expectation      Whether the authorization check should return true (granted) or false (denied)
-     * @param TupleKeysInterface<TupleKeyInterface>|null $contextualTuples Optional temporary tuples that exist only for this assertion evaluation
-     * @param array<string, mixed>|null                  $context          Optional context data for evaluating ABAC conditions during the assertion
+     * @param AssertionTupleKeyInterface $tupleKey         The tuple key defining what authorization question to test (user, relation, object)
+     * @param bool                       $expectation      Whether the authorization check should return true (granted) or false (denied)
+     * @param TupleKeysInterface|null    $contextualTuples Optional temporary tuples that exist only for this assertion evaluation
+     * @param array<string, mixed>|null  $context          Optional context data for evaluating ABAC conditions during the assertion
      */
     public function __construct(
         private readonly AssertionTupleKeyInterface $tupleKey,

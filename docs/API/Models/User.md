@@ -69,7 +69,7 @@ public function getUserset(): ?OpenFGA\Models\UsersetUserInterface
 
 Get the userset reference for this user. Usersets define dynamic user groups through relationships to other objects, enabling permissions that automatically adapt as relationships change in your system. A userset specifies users indirectly by describing a relationship pattern, such as &quot;all editors of document:readme&quot; or &quot;all members of group:engineering&quot;. Usersets are powerful because they: - Automatically include/exclude users as relationships change - Reduce the need for explicit permission management - Enable permission inheritance and delegation patterns - Support complex organizational structures and role hierarchies When authorization checks encounter usersets, OpenFGA recursively evaluates the referenced relationships to determine the actual set of users that have access through this indirect relationship.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L130)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L132)
 
 #### Returns
 
@@ -84,7 +84,7 @@ public function getWildcard(): ?OpenFGA\Models\TypedWildcardInterface
 
 Get the wildcard definition for this user. Wildcards represent all users of a specific type, enabling broad, type-based permissions without enumerating individual users. This pattern is particularly useful for organization-wide permissions, public access scenarios, or when you want to grant access to all users matching certain criteria. Common wildcard use cases: - &quot;All employees can access the company directory&quot; - &quot;All authenticated users can read public documents&quot; - &quot;All service accounts can write to audit logs&quot; - &quot;All users in the organization can view the org chart&quot; Wildcards are efficient for authorization because they don&#039;t require maintaining explicit relationships for every user, while still providing type-safe access control based on user categorization.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L139)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L141)
 
 #### Returns
 
@@ -120,7 +120,7 @@ public function jsonSerialize(): array<string, mixed>
 
 Serialize the user for JSON encoding. This method prepares the user data for API communication with the OpenFGA service, converting the user representation into the format expected by the OpenFGA API. The serialization handles all user types (direct objects, usersets, wildcards, and difference operations) and ensures the resulting structure matches the OpenFGA API specification. Only the appropriate user type fields are included in the output: - Direct users include object field with type:id or structured object - Usersets include userset field with type, id, and relation - Wildcards include wildcard field with type specification - Difference operations include difference field with base and subtract sets
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L150)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L152)
 
 #### Returns
 

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, TupleChange, TupleChangeInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
- * @extends IndexedCollection<TupleChangeInterface>
- *
- * @implements TupleChangesInterface<TupleChangeInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\TupleChangeInterface>
  */
 final class TupleChanges extends IndexedCollection implements TupleChangesInterface
 {

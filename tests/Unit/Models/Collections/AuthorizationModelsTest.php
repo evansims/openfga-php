@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 use OpenFGA\Models\{AuthorizationModel, TypeDefinition};
 use OpenFGA\Models\Collections\{AuthorizationModels, AuthorizationModelsInterface, TypeDefinitions};
 use OpenFGA\Models\Enums\SchemaVersion;
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 
 describe('AuthorizationModels Collection', function (): void {
     test('implements interface', function (): void {

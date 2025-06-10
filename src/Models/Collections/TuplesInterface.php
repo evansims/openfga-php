@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\TupleInterface;
 use Override;
 
 /**
@@ -19,9 +18,7 @@ use Override;
  * (recording when the relationship was established), making them essential
  * for both authorization checks and audit trails.
  *
- * @template T of TupleInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\TupleInterface>
  *
  * @see https://openfga.dev/docs/concepts#relationship-tuples OpenFGA Relationship Tuples
  */

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{Computed, UsersetTreeTupleToUserset, UsersetTreeTupleToUsersetInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('UsersetTreeTupleToUserset Model', function (): void {
     test('implements UsersetTreeTupleToUsersetInterface', function (): void {

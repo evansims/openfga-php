@@ -115,10 +115,10 @@
       "replace": true
     },
     "spi": {
-      "OpenFGA\\Observability\\TelemetryInterface": [
+      "OpenFGA\\Application\\Telemetry\\TelemetryInterface": [
         "OpenFGA\\Integration\\ServiceProvider"
       ],
-      "OpenFGA\\Schema\\SchemaValidatorInterface": [
+      "OpenFGA\\Domain\\Schema\\SchemaValidatorInterface": [
         "OpenFGA\\Integration\\ServiceProvider"
       ],
       "OpenFGA\\TransformerInterface": [
@@ -179,10 +179,14 @@
       "@test:unit",
       "@test:integration",
       "@test:contract",
-      "@test:tools"
+      "@test:tools",
+      "@test:architecture"
     ],
     "test:contract": [
-      "@php vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:contract:ci": [
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite contract --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "test:integration": "./tools/run-integration-tests.sh",
     "test:integration:clean": "./tools/integration-cleanup.sh",
@@ -200,13 +204,29 @@
     "test:integration:debug": "./tools/debug-integration-tests.sh",
     "test:integration:shell": "docker compose -f docker-compose.integration.yml run --rm test sh",
     "test:integration:run": [
-      "@php -d memory_limit=512M vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:integration:run:ci": [
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite integration --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "test:tools": [
-      "@php vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "test:unit": [
-      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:unit:ci": [
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite unit --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+    ],
+    "test:unit:no-coverage": [
+      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite unit --fail-on-risky --fail-on-warning"
+    ],
+    "test:architecture": [
+      "! @php vendor/bin/phpunit tests/Architecture/CleanArchitectureTest.php --colors=always --strict-global-state --fail-on-risky 2>&1 | grep -q 'FAILURES!' && echo 'Architecture tests passed' || (echo 'Architecture tests failed' && exit 1)"
+    ],
+    "test:debug": [
+      "@putenv XDEBUG_MODE=coverage",
+      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning"
     ]
   }
 }

@@ -149,7 +149,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
      */
     #[Override]
     public function endHttpRequest(
-        mixed $span,
+        object | null $span,
         ?ResponseInterface $response = null,
         ?Throwable $exception = null,
     ): void {
@@ -223,7 +223,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
      */
     #[Override]
     public function endOperation(
-        mixed $span,
+        object | null $span,
         bool $success,
         ?Throwable $exception = null,
         array $attributes = [],
@@ -448,6 +448,28 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
         } elseif (method_exists($span, 'setStatus')) {
             $span->setStatus('success' === $outcome ? 'OK' : 'ERROR');
             // STATUS_OK : STATUS_ERROR
+        }
+
+        if (method_exists($span, 'end')) {
+            $span->end();
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function recordSpan(string $name, array $attributes = []): void
+    {
+        // Create a simple span for the event
+        $span = $this->createSpan($this->tracer, $name, 1); // KIND_INTERNAL
+
+        if (method_exists($span, 'setAttributes')) {
+            $span->setAttributes($this->createAttributes($attributes));
+        }
+
+        if (method_exists($span, 'setStatus')) {
+            $span->setStatus('OK'); // STATUS_OK
         }
 
         if (method_exists($span, 'end')) {

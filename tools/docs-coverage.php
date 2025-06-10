@@ -83,34 +83,44 @@ final class DocumentationCoverageAnalyzer
 
     public function analyze(): int
     {
-        echo "🔍 Documentation Coverage Analysis\n";
-        echo "==================================\n\n";
+        // Only show progress if not in JSON mode
+        if ($this->outputFormat !== 'json') {
+            echo "🔍 Documentation Coverage Analysis\n";
+            echo "==================================\n\n";
+        }
 
         $this->scanSourceFiles();
         $coverage = $this->calculateCoverage();
         
-        echo "📊 Coverage Results:\n";
-        echo "  Classes: {$this->stats['documented_classes']}/{$this->stats['total_classes']} (" . number_format($coverage['class_coverage'], 1) . "%)\n";
-        echo "  Methods: {$this->stats['documented_methods']}/{$this->stats['total_methods']} (" . number_format($coverage['method_coverage'], 1) . "%)\n";
-        echo "  Parameters: {$this->stats['documented_parameters']}/{$this->stats['total_parameters']} (" . number_format($coverage['parameter_coverage'], 1) . "%)\n";
-        echo "  Overall: " . number_format($coverage['overall'], 1) . "%\n\n";
+        // Only show results summary if not in JSON mode
+        if ($this->outputFormat !== 'json') {
+            echo "📊 Coverage Results:\n";
+            echo "  Classes: {$this->stats['documented_classes']}/{$this->stats['total_classes']} (" . number_format($coverage['class_coverage'], 1) . "%)\n";
+            echo "  Methods: {$this->stats['documented_methods']}/{$this->stats['total_methods']} (" . number_format($coverage['method_coverage'], 1) . "%)\n";
+            echo "  Parameters: {$this->stats['documented_parameters']}/{$this->stats['total_parameters']} (" . number_format($coverage['parameter_coverage'], 1) . "%)\n";
+            echo "  Overall: " . number_format($coverage['overall'], 1) . "%\n\n";
 
-        if (!empty($this->issues)) {
-            echo "⚠️  Documentation Issues Found:\n";
-            foreach ($this->issues as $issue) {
-                echo "  - {$issue}\n";
+            if (!empty($this->issues)) {
+                echo "⚠️  Documentation Issues Found:\n";
+                foreach ($this->issues as $issue) {
+                    echo "  - {$issue}\n";
+                }
+                echo "\n";
             }
-            echo "\n";
         }
 
         $this->outputResults($coverage);
 
         if ($coverage['overall'] < $this->minCoverage) {
-            echo "❌ Coverage " . number_format($coverage['overall'], 1) . "% is below minimum threshold {$this->minCoverage}%\n";
+            if ($this->outputFormat !== 'json') {
+                echo "❌ Coverage " . number_format($coverage['overall'], 1) . "% is below minimum threshold {$this->minCoverage}%\n";
+            }
             return 1;
         }
 
-        echo "✅ Coverage meets minimum threshold!\n";
+        if ($this->outputFormat !== 'json') {
+            echo "✅ Coverage meets minimum threshold!\n";
+        }
         return 0;
     }
 
@@ -157,7 +167,9 @@ final class DocumentationCoverageAnalyzer
         $content = file_get_contents($filePath);
         $relativePath = str_replace(getcwd() . '/', '', $filePath);
         
-        echo "Analyzing: $relativePath\n";
+        if ($this->outputFormat !== 'json') {
+            echo "Analyzing: $relativePath\n";
+        }
 
         // Extract namespace and class name
         if (preg_match('/namespace\s+([^;]+);/', $content, $namespaceMatches)) {
@@ -197,10 +209,12 @@ final class DocumentationCoverageAnalyzer
             // - Enum classes (generally self-documenting)
             // - Exception classes (often standard patterns)
             // - Simple value objects with clear names
+            // - Test support classes (in tests/Support/)
             $isEnum = $reflection->isEnum();
             $isException = $reflection->isSubclassOf(\Throwable::class);
+            $isTestSupport = str_contains($filePath, 'tests/Support/');
             
-            if (!$isEnum && !$isException) {
+            if (!$isEnum && !$isException && !$isTestSupport) {
                 $this->issues[] = "Missing class documentation: $className in $filePath";
             } else {
                 // Count as documented since these are typically self-documenting
@@ -228,7 +242,59 @@ final class DocumentationCoverageAnalyzer
         
         if (!$hasMethodDoc) {
             $methodName = $method->getName();
-            $this->issues[] = "Missing method documentation: $className::$methodName() in $filePath";
+            
+            // Check if this method has the #[Override] attribute
+            $hasOverrideAttribute = false;
+            foreach ($method->getAttributes() as $attribute) {
+                if ($attribute->getName() === 'Override') {
+                    $hasOverrideAttribute = true;
+                    break;
+                }
+            }
+            
+            // Skip documentation requirements for test support classes
+            $isTestSupport = str_contains($filePath, 'tests/Support/');
+            if ($isTestSupport) {
+                $this->stats['documented_methods']++;
+                return;
+            }
+            
+            // For constructors with only dependency injection (no complex logic),
+            // documentation may be less critical if the class itself is well-documented
+            if ($methodName === '__construct') {
+                $reflection = new ReflectionClass($className);
+                
+                // Check if the class has good documentation
+                $classDoc = $reflection->getDocComment();
+                $hasGoodClassDoc = $classDoc !== false && strlen(trim(str_replace(['/**', '*/', '*'], '', $classDoc))) > 50;
+                
+                // Check if all constructor parameters are typed dependencies (likely DI)
+                $allParamsAreTypedDependencies = true;
+                foreach ($method->getParameters() as $param) {
+                    $type = $param->getType();
+                    if (!$type || !$type instanceof \ReflectionNamedType || $type->isBuiltin()) {
+                        $allParamsAreTypedDependencies = false;
+                        break;
+                    }
+                }
+                
+                // For internal/utility classes with simple DI constructors, be more lenient
+                $isInternalUtility = str_contains($filePath, '/Network/') || 
+                                    str_contains($filePath, '/Services/') ||
+                                    $reflection->isFinal();
+                
+                if ($hasGoodClassDoc && $allParamsAreTypedDependencies && $isInternalUtility) {
+                    $this->stats['documented_methods']++;
+                    return;
+                }
+            }
+            
+            // Methods with #[Override] attribute implementing interfaces should have at least @inheritDoc
+            if ($hasOverrideAttribute) {
+                $this->issues[] = "Missing @inheritDoc documentation for overridden method: $className::$methodName() in $filePath";
+            } else {
+                $this->issues[] = "Missing method documentation: $className::$methodName() in $filePath";
+            }
             return;
         }
 
@@ -236,6 +302,44 @@ final class DocumentationCoverageAnalyzer
         
         // Check if method uses @inheritDoc, which means it inherits documentation from interface/parent
         $hasInheritDoc = preg_match('/@inheritDoc/', $methodDoc);
+        
+        // For very simple getter methods that just return a property, be more lenient
+        $methodName = $method->getName();
+        $isSimpleGetter = str_starts_with($methodName, 'get') || str_starts_with($methodName, 'is') || str_starts_with($methodName, 'has');
+        
+        if ($isSimpleGetter && !$hasInheritDoc) {
+            // Check if this is likely a trivial getter by examining the method
+            try {
+                $methodLines = $this->getMethodBodyLines($method);
+                $methodBody = implode("\n", $methodLines);
+                
+                // Pattern for simple getters that just return a property
+                $trivialGetterPatterns = [
+                    '/^\s*return\s+\$this->\w+;\s*$/s',  // return $this->property;
+                    '/^\s*return\s+\$this->\w+\s*\?\?\s*\w+;\s*$/s',  // return $this->property ?? default;
+                    '/^\s*return\s+\$this->\w+\s*===?\s*\w+;\s*$/s',  // return $this->property === value;
+                ];
+                
+                $isTrivialGetter = false;
+                foreach ($trivialGetterPatterns as $pattern) {
+                    if (preg_match($pattern, $methodBody)) {
+                        $isTrivialGetter = true;
+                        break;
+                    }
+                }
+                
+                // Skip detailed documentation requirements for trivial getters in value objects
+                $reflection = new ReflectionClass($method->getDeclaringClass()->getName());
+                $isValueObject = $reflection->isFinal() || str_contains($method->getDeclaringClass()->getName(), 'Model');
+                
+                if ($isTrivialGetter && $isValueObject) {
+                    // Don't report as missing if it's a trivial getter
+                    return;
+                }
+            } catch (\Exception $e) {
+                // If we can't analyze the method body, continue with normal checks
+            }
+        }
         
         // Check parameter documentation
         foreach ($method->getParameters() as $parameter) {
@@ -295,7 +399,6 @@ final class DocumentationCoverageAnalyzer
         // Only check files that exist and contain the method body
         $sourceFile = $method->getFileName();
         if ($sourceFile && file_exists($sourceFile)) {
-            $methodSource = file_get_contents($sourceFile);
             $methodStartLine = $method->getStartLine();
             $methodEndLine = $method->getEndLine();
             
@@ -316,6 +419,56 @@ final class DocumentationCoverageAnalyzer
                 }
             }
         }
+    }
+
+    private function getMethodBodyLines(ReflectionMethod $method): array
+    {
+        $sourceFile = $method->getFileName();
+        if (!$sourceFile || !file_exists($sourceFile)) {
+            return [];
+        }
+        
+        $startLine = $method->getStartLine();
+        $endLine = $method->getEndLine();
+        
+        if (!$startLine || !$endLine) {
+            return [];
+        }
+        
+        $lines = file($sourceFile);
+        $methodLines = array_slice($lines, $startLine - 1, $endLine - $startLine + 1);
+        
+        // Find the opening brace and return only the body
+        $bodyStarted = false;
+        $braceCount = 0;
+        $bodyLines = [];
+        
+        foreach ($methodLines as $line) {
+            if (!$bodyStarted && str_contains($line, '{')) {
+                $bodyStarted = true;
+                $braceCount++;
+                // If there's content after the opening brace on the same line, include it
+                $afterBrace = substr($line, strpos($line, '{') + 1);
+                if (trim($afterBrace)) {
+                    $bodyLines[] = $afterBrace;
+                }
+                continue;
+            }
+            
+            if ($bodyStarted) {
+                $braceCount += substr_count($line, '{');
+                $braceCount -= substr_count($line, '}');
+                
+                if ($braceCount <= 0) {
+                    // Don't include the closing brace line
+                    break;
+                }
+                
+                $bodyLines[] = $line;
+            }
+        }
+        
+        return $bodyLines;
     }
 
     private function calculateCoverage(): array

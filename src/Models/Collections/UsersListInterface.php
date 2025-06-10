@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UsersListUserInterface;
 use Override;
 
 /**
- * @template T of UsersListUserInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\UsersListUserInterface>
  */
 interface UsersListInterface extends IndexedCollectionInterface
 {

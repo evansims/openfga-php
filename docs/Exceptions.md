@@ -34,7 +34,7 @@ Our Result type makes errors explicit:
 // ✅ Result approach - errors are visible in the type signature
 $result = $client->check(
     user: 'user:anne',
-    relation: 'reader', 
+    relation: 'reader',
     object: 'document:budget'
 );
 
@@ -116,12 +116,7 @@ $response = $result->unwrap();
 // 2. Unwrap with default - never throws
 $response = $result->unwrap(fn() => new CheckResponse(['allowed' => false]));
 
-// 3. Unwrap or throw custom exception
-$response = $result->unwrapOr(fn($error) => 
-    throw new MyCustomException("Check failed: " . $error->getMessage())
-);
-
-// 4. Pattern matching (PHP 8.3+)
+// 3. Pattern matching
 $allowed = match(true) {
     $result->succeeded() => $result->unwrap()->getAllowed(),
     $result->failed() => false, // Default to denied on error
@@ -194,10 +189,11 @@ ClientThrowable (interface)
 ### When to Use Each Exception Type
 
 #### ClientException
+
 General client-side errors that don't fit other categories:
 
 ```php
-use OpenFGA\Exceptions\ClientError;
+use OpenFGA\Domain\Exceptions\ClientError;
 
 // Validation errors
 throw ClientError::Validation->exception(context: [
@@ -211,6 +207,7 @@ throw ClientError::Network->exception(context: [
 ```
 
 #### NetworkException
+
 HTTP and network-related errors:
 
 ```php
@@ -228,14 +225,14 @@ $error = match($statusCode) {
     default => NetworkError::Unexpected,
 };
 
-throw new NetworkException(
-    kind: $error,
+throw $error->exception(
     request: $request,
     response: $response
 );
 ```
 
 #### AuthenticationException
+
 OAuth/token-related errors:
 
 ```php
@@ -252,6 +249,7 @@ if (!$token->isValid()) {
 ```
 
 #### ConfigurationException
+
 Setup and configuration errors:
 
 ```php
@@ -264,6 +262,7 @@ if ($httpClient === null) {
 ```
 
 #### SerializationException
+
 JSON encoding/decoding and data transformation errors:
 
 ```php
@@ -386,7 +385,7 @@ try {
 // ✅ GOOD - Type-safe enum comparison
 $result = $client->check(/* ... */);
 $result->failure(function ($error) {
-    if ($error instanceof NetworkException && 
+    if ($error instanceof NetworkException &&
         $error->kind === NetworkError::UndefinedEndpoint) {
         // Handle store not found
     }
@@ -445,10 +444,87 @@ if (str_contains($error->getMessage(), 'expired')) {
 }
 
 // ✅ GOOD - Use enum-based detection
-if ($error instanceof AuthenticationException && 
+if ($error instanceof AuthenticationException &&
     $error->kind === AuthenticationError::TokenExpired) {
     // Works regardless of locale
 }
+```
+
+## Internationalization (i18n) Support
+
+The OpenFGA PHP SDK fully supports internationalization of error messages. This means your application can display error messages in multiple languages without changing your error handling logic.
+
+### How i18n Works
+
+1. Error messages are defined in YAML translation files (`translations/messages.{locale}.yaml`)
+2. Exceptions use translation keys instead of hardcoded messages
+3. The Client's language setting determines which translations are used
+4. Error enum cases remain the same regardless of language
+
+### Setting the Language
+
+```php
+// Create a client with Spanish error messages
+$client = new Client(
+    url: 'https://api.openfga.example',
+    language: 'es' // Spanish
+);
+
+// Or set the language later
+$client->setLanguage('fr'); // Switch to French
+```
+
+### Example: Same Error in Multiple Languages
+
+This shows how the same error appears differently based on language context:
+
+```php
+use OpenFGA\Client;
+use function OpenFGA\tuple;
+
+// Create clients with different languages
+$englishClient = new Client(url: 'https://api.openfga.example', language: 'en');
+$spanishClient = new Client(url: 'https://api.openfga.example', language: 'es');
+
+try {
+    // Try an invalid operation with English client
+    $englishClient->check(
+        tupleKey: tuple('', 'viewer', 'document:report')
+    )->unwrap();
+} catch (Throwable $e) {
+    echo $e->getMessage(); // "User identifier cannot be empty"
+}
+
+try {
+    // Same invalid operation with Spanish client
+    $spanishClient->check(
+        tupleKey: tuple('', 'viewer', 'document:report')
+    )->unwrap();
+} catch (Throwable $e) {
+    echo $e->getMessage(); // "El identificador del usuario no puede estar vacío"
+}
+```
+
+### Type-Safe Error Handling With i18n
+
+The enum-based approach ensures that error handling remains consistent regardless of language:
+
+```php
+use OpenFGA\Exceptions\ClientError;
+
+$result = $client->check(/* ... */);
+
+$result->failure(function ($error) {
+    if ($error instanceof ClientException) {
+        // Works the same way regardless of language setting
+        match($error->getError()) {
+            ClientError::InvalidConfiguration => notifyAdmin(),
+            ClientError::Authentication => redirectToLogin(),
+            ClientError::Network => retryOperation(),
+            default => logUnexpectedError($error)
+        };
+    }
+});
 ```
 
 ## Code Examples
@@ -471,7 +547,7 @@ class AuthorizationService
 {
     private Client $client;
     private string $storeId;
-    
+
     public function checkAccess(string $userId, string $resource): AccessResult
     {
         return $this->client->check(
@@ -489,17 +565,17 @@ class AuthorizationService
             // Handle specific errors gracefully
             return match([$error::class, $error->kind ?? null]) {
                 // Network timeouts - fail open
-                [NetworkException::class, NetworkError::Timeout] => 
+                [NetworkException::class, NetworkError::Timeout] =>
                     new AccessResult(true, 'TIMEOUT_FAIL_OPEN'),
-                
+
                 // Authentication errors - deny access
-                [AuthenticationException::class, $_] => 
+                [AuthenticationException::class, $_] =>
                     new AccessResult(false, 'AUTH_ERROR'),
-                
+
                 // Server errors - check cache
-                [NetworkException::class, NetworkError::Server] => 
+                [NetworkException::class, NetworkError::Server] =>
                     $this->checkCachedAccess() ?? new AccessResult(false, 'SERVER_ERROR'),
-                
+
                 // Everything else - deny by default
                 default => new AccessResult(false, 'UNKNOWN_ERROR'),
             };
@@ -521,7 +597,7 @@ class AuthorizationService
         })
         ->unwrap();
     }
-    
+
     public function grantAccess(string $userId, string $resource): void
     {
         $this->client->writeTuples(
@@ -564,15 +640,15 @@ class AuthorizationServiceTest extends TestCase
                     request: $this->createMock(RequestInterface::class)
                 )
             ));
-        
+
         $service = new AuthorizationService($client, 'store123');
         $result = $service->checkAccess('user:anne', 'document:budget');
-        
+
         // Should fail open on timeout
         expect($result->allowed)->toBeTrue();
         expect($result->reason)->toBe('TIMEOUT_FAIL_OPEN');
     }
-    
+
     public function testHandlesValidationErrors(): void
     {
         $client = $this->createMock(Client::class);
@@ -582,10 +658,10 @@ class AuthorizationServiceTest extends TestCase
                     'message' => 'Invalid user format'
                 ])
             ));
-        
+
         $service = new AuthorizationService($client, 'store123');
         $result = $service->checkAccess('invalid-user', 'document:budget');
-        
+
         // Should deny on validation errors
         expect($result->allowed)->toBeFalse();
         expect($result->reason)->toBe('UNKNOWN_ERROR');
@@ -620,12 +696,12 @@ class Client implements ClientInterface
                 ])
             );
         }
-        
+
         try {
             // Build and send request
             $request = $this->buildCheckRequest($store, $tupleKey, $model);
             $response = $this->httpClient->sendRequest($request);
-            
+
             // Handle response
             return match($response->getStatusCode()) {
                 200 => new Success($this->parseCheckResponse($response)),
@@ -665,7 +741,7 @@ class Client implements ClientInterface
 ## Best Practices Summary
 
 1. **Always handle Result types** - Never call `unwrap()` without checking success first
-2. **Use enum comparisons** - Compare error types and kinds, not message strings  
+2. **Use enum comparisons** - Compare error types and kinds, not message strings
 3. **Leverage match expressions** - Use PHP 8.3+ match for clean error handling
 4. **Log with context** - Include error type, kind, and relevant data
 5. **Fail safely** - Define sensible defaults for error cases

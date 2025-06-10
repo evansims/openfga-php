@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 
 use OpenFGA\Models\{BatchCheckSingleResult, BatchCheckSingleResultInterface};
 use OpenFGA\Responses\{BatchCheckResponse, BatchCheckResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\{RequestInterface};
 

@@ -7,9 +7,9 @@ namespace OpenFGA\Responses;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\Collections\{ConditionParameters, Tuples, TuplesInterface};
-use OpenFGA\Models\{Condition, ConditionMetadata, Tuple, TupleInterface, TupleKey};
+use OpenFGA\Models\{Condition, ConditionMetadata, Tuple, TupleKey};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -30,8 +30,8 @@ final class ReadTuplesResponse extends Response implements ReadTuplesResponseInt
     /**
      * Create a new read tuples response instance.
      *
-     * @param TuplesInterface<TupleInterface> $tuples            The collection of relationship tuples for the current page
-     * @param string|null                     $continuationToken Pagination token for fetching additional results, or null if no more pages exist
+     * @param TuplesInterface $tuples            The collection of relationship tuples for the current page
+     * @param string|null     $continuationToken Pagination token for fetching additional results, or null if no more pages exist
      */
     public function __construct(
         private readonly TuplesInterface $tuples,

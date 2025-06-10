@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 use Exception;
 use OpenFGA\Models\{BatchCheckItem, BatchCheckItemInterface};
 use OpenFGA\Models\Collections\BatchCheckItems;
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schemas\CollectionSchemaInterface;
 use TypeError;
 
 use function count;

@@ -8,9 +8,7 @@ use OpenFGA\Models\{ModelInterface, Userset, UsersetInterface};
 use Override;
 
 /**
- * @extends IndexedCollection<UsersetInterface>
- *
- * @implements UsersetUnionInterface<UsersetInterface>
+ * @extends IndexedCollection<\OpenFGA\Models\UsersetInterface>
  */
 final class UsersetUnion extends IndexedCollection implements UsersetUnionInterface
 {

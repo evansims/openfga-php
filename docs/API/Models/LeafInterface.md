@@ -56,7 +56,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 #### getUsers
 
 ```php
-public function getUsers(): UsersListInterface<UsersListUserInterface>|null
+public function getUsers(): UsersListInterface|null
 
 ```
 
@@ -66,7 +66,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 #### Returns
 
-[`UsersListInterface`](Models/Collections/UsersListInterface.md)&lt;[`UsersListUserInterface`](UsersListUserInterface.md)&gt; &#124; `null` — The list of users with direct access, or null if not used
+[`UsersListInterface`](Models/Collections/UsersListInterface.md) &#124; `null` — The list of users with direct access, or null if not used
 
 ### Other
 

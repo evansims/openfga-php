@@ -12,6 +12,7 @@ use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Observability\OpenTelemetryProvider;
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\{RequestInterface, UriInterface};
+use stdClass;
 use Throwable;
 
 use function is_array;
@@ -321,10 +322,11 @@ describe('OpenTelemetryProvider', function (): void {
         expect(true)->toBeTrue();
     });
 
-    test('handles invalid span objects gracefully', function (): void {
-        // Should not throw when passing non-object spans
-        $this->provider->endHttpRequest('not an object');
-        $this->provider->endOperation('not an object', false);
+    test('handles different span objects gracefully', function (): void {
+        // Should not throw when passing different object types or null
+        $mockObject = new stdClass;
+        $this->provider->endHttpRequest($mockObject);
+        $this->provider->endOperation($mockObject, false);
 
         expect(true)->toBeTrue();
     });

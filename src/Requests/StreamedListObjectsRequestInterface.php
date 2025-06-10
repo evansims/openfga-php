@@ -6,7 +6,6 @@ namespace OpenFGA\Requests;
 
 use OpenFGA\Models\Collections\TupleKeysInterface;
 use OpenFGA\Models\Enums\Consistency;
-use OpenFGA\Models\TupleKeyInterface;
 
 /**
  * Request interface for streaming objects that a user has a specific relationship with.
@@ -37,7 +36,7 @@ interface StreamedListObjectsRequestInterface extends RequestInterface
     /**
      * Get the contextual tuples for this request.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null The contextual tuples collection, or null if not specified
+     * @return TupleKeysInterface|null The contextual tuples collection, or null if not specified
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 

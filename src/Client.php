@@ -6,31 +6,30 @@ namespace OpenFGA;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use JsonException;
-use OpenFGA\Authentication\{AuthenticationInterface, ClientCredentialAuthentication};
-use OpenFGA\Exceptions\{ClientError, ConfigurationError, NetworkException};
-use OpenFGA\Exceptions\ClientThrowable;
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, StoreInterface, TupleKeyInterface, TupleToUsersetV1, TypeDefinition, Userset};
-use OpenFGA\Models\Collections\{AssertionsInterface, Conditions, ConditionsInterface, RelationMetadataCollection, RelationReferences, TupleKeys, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
-use OpenFGA\Models\Collections\BatchCheckItemsInterface;
-use OpenFGA\Models\ConditionInterface;
+use LogicException;
+use OpenFGA\Authentication\AuthenticationInterface;
+use OpenFGA\DI\{ServiceProvider, ServiceProviderInterface};
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
+use OpenFGA\Language\Transformer;
+use OpenFGA\Models\{AuthorizationModel, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, Userset};
+use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface, TupleKeyInterface};
+use OpenFGA\Models\Collections\{AssertionsInterface, BatchCheckItemsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
+use OpenFGA\Models\Collections\{Conditions, RelationMetadataCollection, RelationReferences, TypeDefinitionRelations, TypeDefinitions, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
-use OpenFGA\Network\{BatchRequestProcessor, RequestContext, RequestManager, RequestManagerFactory};
-use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryInterface};
-use OpenFGA\Requests\{BatchCheckRequest, CheckRequest, CreateAuthorizationModelRequest, CreateStoreRequest, DeleteStoreRequest, ExpandRequest, GetAuthorizationModelRequest, GetStoreRequest, ListAuthorizationModelsRequest, ListObjectsRequest, ListStoresRequest, ListTupleChangesRequest, ListUsersRequest, ReadAssertionsRequest, ReadTuplesRequest, RequestInterface, StreamedListObjectsRequest, WriteAssertionsRequest, WriteTuplesRequest};
-use OpenFGA\Responses\{BatchCheckResponse, CheckResponse, CreateAuthorizationModelResponse, CreateStoreResponse, DeleteStoreResponse, ExpandResponse, GetAuthorizationModelResponse, GetStoreResponse, ListAuthorizationModelsResponse, ListObjectsResponse, ListStoresResponse, ListTupleChangesResponse, ListUsersResponse, ReadAssertionsResponse, ReadTuplesResponse, StreamedListObjectsResponse, WriteAssertionsResponse};
-use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Network\RetryStrategyInterface;
+use OpenFGA\Observability\TelemetryInterface;
+use OpenFGA\Repositories\{HttpAssertionRepository, HttpModelRepository, HttpTupleRepository};
+use OpenFGA\Results\{Failure, Success};
+use OpenFGA\Results\{FailureInterface, SuccessInterface};
+use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Services\{AssertionService, ModelService, TupleService};
+use OpenFGA\Services\{AuthorizationService, HttpService, StoreService};
 use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as HttpRequestInterface, ResponseFactoryInterface, ResponseInterface as HttpResponseInterface, StreamFactoryInterface};
-use Psr\Http\Message\{ResponseInterface, StreamInterface};
-use PsrDiscovery\Discover;
 use ReflectionException;
 use Throwable;
-
-use function sprintf;
 
 /**
  * OpenFGA Client implementation for relationship-based access control operations.
@@ -47,7 +46,7 @@ use function sprintf;
  * @see ClientInterface For the complete API specification
  * @see https://openfga.dev/docs/getting-started/setup-sdk-client Setting up the client
  */
-final class Client implements ClientInterface
+final readonly class Client implements ClientInterface
 {
     /**
      * The version of the OpenFGA PHP SDK.
@@ -55,29 +54,9 @@ final class Client implements ClientInterface
     public const string VERSION = '1.2.0';
 
     /**
-     * Maximum page size for API responses.
+     * Service provider for dependency injection.
      */
-    private const int MAX_PAGE_SIZE = 1000;
-
-    /**
-     * The last HTTP request made by the client.
-     */
-    private ?HttpRequestInterface $lastRequest = null;
-
-    /**
-     * The last HTTP response received by the client.
-     */
-    private ?HttpResponseInterface $lastResponse = null;
-
-    /**
-     * The request manager used to send network requests.
-     */
-    private ?RequestManager $requestManager = null;
-
-    /**
-     * The JSON schema validator used to validate responses.
-     */
-    private ?SchemaValidator $validator = null;
+    private ServiceProviderInterface $serviceProvider;
 
     /**
      * Create a new OpenFGA client instance.
@@ -95,36 +74,56 @@ final class Client implements ClientInterface
      * @param StreamFactoryInterface|null   $httpStreamFactory   Optional PSR-17 HTTP stream factory to use for requests; will use autodiscovery and use the first available if not specified
      * @param RequestFactoryInterface|null  $httpRequestFactory  Optional PSR-17 HTTP request factory to use for requests; will use autodiscovery and use the first available if not specified
      * @param TelemetryInterface|null       $telemetry           Optional telemetry provider for observability; defaults to no-op implementation
+     * @param RetryStrategyInterface|null   $retryStrategy       Optional retry strategy for handling failed requests; defaults to exponential backoff
      *
      * @see https://openfga.dev/docs/getting-started/setup-sdk-client Client configuration guide
      */
     public function __construct(
-        private readonly string $url,
-        private readonly ?AuthenticationInterface $authentication = null,
-        private readonly string $language = 'en',
-        private readonly ?int $httpMaxRetries = 3,
-        private readonly ?HttpClientInterface $httpClient = null,
-        private readonly ?ResponseFactoryInterface $httpResponseFactory = null,
-        private readonly ?StreamFactoryInterface $httpStreamFactory = null,
-        private readonly ?RequestFactoryInterface $httpRequestFactory = null,
-        private readonly ?TelemetryInterface $telemetry = null,
+        private string $url,
+        private ?AuthenticationInterface $authentication = null,
+        private string $language = 'en',
+        private ?int $httpMaxRetries = 3,
+        private ?HttpClientInterface $httpClient = null,
+        private ?ResponseFactoryInterface $httpResponseFactory = null,
+        private ?StreamFactoryInterface $httpStreamFactory = null,
+        private ?RequestFactoryInterface $httpRequestFactory = null,
+        private ?TelemetryInterface $telemetry = null,
+        private ?RetryStrategyInterface $retryStrategy = null,
     ) {
+        $this->serviceProvider = new ServiceProvider(
+            url: $this->url,
+            storeId: null,
+            authentication: $this->authentication,
+            telemetry: $this->telemetry,
+            language: $this->language,
+            maxRetries: $this->httpMaxRetries ?? 3,
+            httpClient: $this->httpClient,
+            requestFactory: $this->httpRequestFactory,
+            responseFactory: $this->httpResponseFactory,
+            streamFactory: $this->httpStreamFactory,
+            retryStrategy: $this->retryStrategy,
+        );
     }
 
     /**
      * @inheritDoc
      *
+     * @throws ClientThrowable          If no last request is found
      * @throws InvalidArgumentException If request parameters are invalid
+     * @throws LogicException           If HTTP service is not available
      * @throws ReflectionException      If exception creation fails
      */
     #[Override]
     public function assertLastRequest(): HttpRequestInterface
     {
-        if (! $this->lastRequest instanceof HttpRequestInterface) {
-            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::NO_LAST_REQUEST_FOUND, [], $this->language)]);
+        $httpService = $this->getHttpService();
+        $lastRequest = $httpService->getLastRequest();
+
+        if (! $lastRequest instanceof HttpRequestInterface) {
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(message: Messages::NO_LAST_REQUEST_FOUND, parameters: [], locale: $this->language, )]);
         }
 
-        return $this->lastRequest;
+        return $lastRequest;
     }
 
     /**
@@ -138,24 +137,15 @@ final class Client implements ClientInterface
         AuthorizationModelInterface | string $model,
         BatchCheckItemsInterface $checks,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(
-            function () use ($store, $model, $checks) {
-                try {
-                    $request = new BatchCheckRequest(
-                        store: self::getStoreId($store),
-                        model: self::getModelId($model),
-                        checks: $checks,
-                    );
+        return $this->withLanguageContext(function () use ($store, $model, $checks) {
+            $authorizationService = $this->getAuthorizationService();
 
-                    return new Success(BatchCheckResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-                } catch (Throwable $throwable) {
-                    return new Failure($throwable);
-                }
-            },
-            'batchCheck',
-            $store,
-            $model,
-        );
+            return $authorizationService->batchCheck(
+                store: $store,
+                model: $model,
+                checks: $checks,
+            );
+        });
     }
 
     /**
@@ -173,28 +163,19 @@ final class Client implements ClientInterface
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(
-            function () use ($store, $model, $tupleKey, $trace, $context, $contextualTuples, $consistency) {
-                try {
-                    $request = new CheckRequest(
-                        store: self::getStoreId($store),
-                        model: self::getModelId($model),
-                        tupleKey: $tupleKey,
-                        trace: $trace,
-                        context: $context,
-                        contextualTuples: $contextualTuples,
-                        consistency: $consistency,
-                    );
+        return $this->withLanguageContext(function () use ($store, $model, $tupleKey, $trace, $context, $contextualTuples, $consistency) {
+            $authorizationService = $this->getAuthorizationService();
 
-                    return new Success(CheckResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-                } catch (Throwable $throwable) {
-                    return new Failure($throwable);
-                }
-            },
-            'check',
-            $store,
-            $model,
-        );
+            return $authorizationService->check(
+                store: $store,
+                model: $model,
+                tupleKey: $tupleKey,
+                trace: $trace,
+                context: $context,
+                contextualTuples: $contextualTuples,
+                consistency: $consistency,
+            );
+        });
     }
 
     /**
@@ -210,18 +191,14 @@ final class Client implements ClientInterface
         SchemaVersion $schemaVersion = SchemaVersion::V1_1,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $typeDefinitions, $conditions, $schemaVersion) {
-            try {
-                $request = new CreateAuthorizationModelRequest(
-                    typeDefinitions: $typeDefinitions,
-                    conditions: $conditions,
-                    schemaVersion: $schemaVersion,
-                    store: self::getStoreId($store),
-                );
+            $modelService = $this->getModelServiceForStore($store);
 
-                return new Success(CreateAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $modelService->createModel(
+                store: $store,
+                typeDefinitions: $typeDefinitions,
+                conditions: $conditions,
+                schemaVersion: $schemaVersion,
+            );
         });
     }
 
@@ -235,17 +212,11 @@ final class Client implements ClientInterface
         string $name,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($name) {
-            try {
-                $name = trim($name);
+            $storeService = $this->getStoreService();
 
-                $request = new CreateStoreRequest(
-                    name: $name,
-                );
-
-                return new Success(CreateStoreResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $storeService->createStore(
+                name: $name,
+            );
         });
     }
 
@@ -259,15 +230,12 @@ final class Client implements ClientInterface
         StoreInterface | string $store,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store) {
-            try {
-                $request = new DeleteStoreRequest(
-                    store: self::getStoreId($store),
-                );
+            $storeService = $this->getStoreService();
+            $storeId = self::getStoreId($store);
 
-                return new Success(DeleteStoreResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $storeService->deleteStore(
+                storeId: $storeId,
+            );
         });
     }
 
@@ -281,7 +249,7 @@ final class Client implements ClientInterface
     {
         return $this->withLanguageContext(function () use ($dsl) {
             try {
-                $validator = $this->getValidator();
+                $validator = $this->getSchemaValidator();
 
                 $validator
                     ->registerSchema(AuthorizationModel::schema())
@@ -301,9 +269,12 @@ final class Client implements ClientInterface
                     ->registerSchema(Conditions::schema())
                     ->registerSchema(RelationMetadataCollection::schema());
 
-                return new Success(Transformer::fromDsl($dsl, $validator));
+                return new Success(value: Transformer::fromDsl(
+                    dsl: $dsl,
+                    validator: $validator,
+                ));
             } catch (Throwable $throwable) {
-                return new Failure($throwable);
+                return new Failure(error: $throwable);
             }
         });
     }
@@ -322,19 +293,15 @@ final class Client implements ClientInterface
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $tupleKey, $model, $contextualTuples, $consistency) {
-            try {
-                $request = new ExpandRequest(
-                    tupleKey: $tupleKey,
-                    contextualTuples: $contextualTuples,
-                    store: self::getStoreId($store),
-                    model: (null !== $model) ? self::getModelId($model) : null,
-                    consistency: $consistency,
-                );
+            $authorizationService = $this->getAuthorizationService();
 
-                return new Success(ExpandResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $authorizationService->expand(
+                store: $store,
+                tupleKey: $tupleKey,
+                model: $model,
+                contextualTuples: $contextualTuples,
+                consistency: $consistency,
+            );
         });
     }
 
@@ -349,16 +316,14 @@ final class Client implements ClientInterface
         AuthorizationModelInterface | string $model,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model) {
-            try {
-                $request = new GetAuthorizationModelRequest(
-                    store: self::getStoreId($store),
-                    model: self::getModelId($model),
-                );
+            $modelService = $this->getModelServiceForStore($store);
+            $storeId = self::getStoreId($store);
+            $modelId = self::getModelId($model);
 
-                return new Success(GetAuthorizationModelResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $modelService->findModel(
+                store: $storeId,
+                modelId: $modelId,
+            );
         });
     }
 
@@ -374,20 +339,28 @@ final class Client implements ClientInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws LogicException If HTTP service is not available
      */
     #[Override]
     public function getLastRequest(): ?HttpRequestInterface
     {
-        return $this->lastRequest;
+        $httpService = $this->getHttpService();
+
+        return $httpService->getLastRequest();
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws LogicException If HTTP service is not available
      */
     #[Override]
     public function getLastResponse(): ?HttpResponseInterface
     {
-        return $this->lastResponse;
+        $httpService = $this->getHttpService();
+
+        return $httpService->getLastResponse();
     }
 
     /**
@@ -400,17 +373,12 @@ final class Client implements ClientInterface
         StoreInterface | string $store,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store) {
-            try {
-                $request = new GetStoreRequest(
-                    store: self::getStoreId($store),
-                );
+            $storeService = $this->getStoreService();
+            $storeId = self::getStoreId($store);
 
-                $response = $this->sendRequest($request);
-
-                return new Success(GetStoreResponse::fromResponse($response, $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $storeService->findStore(
+                storeId: $storeId,
+            );
         });
     }
 
@@ -425,20 +393,14 @@ final class Client implements ClientInterface
         ?string $continuationToken = null,
         ?int $pageSize = null,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(function () use ($store, $continuationToken, $pageSize) {
-            try {
-                $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
+        return $this->withLanguageContext(function () use ($store, $pageSize) {
+            $modelService = $this->getModelServiceForStore($store);
+            $storeId = self::getStoreId($store);
 
-                $request = new ListAuthorizationModelsRequest(
-                    store: self::getStoreId($store),
-                    continuationToken: $continuationToken,
-                    pageSize: $pageSize,
-                );
-
-                return new Success(ListAuthorizationModelsResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $modelService->listAllModels(
+                store: $storeId,
+                maxItems: $pageSize,
+            );
         });
     }
 
@@ -459,22 +421,18 @@ final class Client implements ClientInterface
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model, $type, $relation, $user, $context, $contextualTuples, $consistency) {
-            try {
-                $request = new ListObjectsRequest(
-                    type: $type,
-                    relation: $relation,
-                    user: $user,
-                    context: $context,
-                    contextualTuples: $contextualTuples,
-                    store: self::getStoreId($store),
-                    model: self::getModelId($model),
-                    consistency: $consistency,
-                );
+            $authorizationService = $this->getAuthorizationService();
 
-                return new Success(ListObjectsResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $authorizationService->listObjects(
+                store: $store,
+                model: $model,
+                type: $type,
+                relation: $relation,
+                user: $user,
+                context: $context,
+                contextualTuples: $contextualTuples,
+                consistency: $consistency,
+            );
         });
     }
 
@@ -489,18 +447,13 @@ final class Client implements ClientInterface
         ?int $pageSize = null,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($continuationToken, $pageSize) {
-            try {
-                $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
+            $storeService = $this->getStoreService();
 
-                $request = new ListStoresRequest(
-                    continuationToken: $continuationToken,
-                    pageSize: $pageSize,
-                );
-
-                return new Success(ListStoresResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            // Always use the pagination-aware method that returns ListStoresResponse
+            return $storeService->listStores(
+                continuationToken: $continuationToken,
+                pageSize: $pageSize,
+            );
         });
     }
 
@@ -518,21 +471,15 @@ final class Client implements ClientInterface
         ?DateTimeImmutable $startTime = null,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $continuationToken, $pageSize, $type, $startTime) {
-            try {
-                $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
+            $tupleService = $this->getTupleServiceForStore($store);
 
-                $request = new ListTupleChangesRequest(
-                    store: self::getStoreId($store),
-                    continuationToken: $continuationToken,
-                    pageSize: $pageSize,
-                    type: $type,
-                    startTime: $startTime,
-                );
-
-                return new Success(ListTupleChangesResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $tupleService->listChanges(
+                store: $store,
+                type: $type,
+                startTime: $startTime,
+                continuationToken: $continuationToken,
+                pageSize: $pageSize,
+            );
         });
     }
 
@@ -553,22 +500,18 @@ final class Client implements ClientInterface
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model, $object, $relation, $userFilters, $context, $contextualTuples, $consistency) {
-            try {
-                $request = new ListUsersRequest(
-                    object: $object,
-                    relation: $relation,
-                    userFilters: $userFilters,
-                    context: $context,
-                    contextualTuples: $contextualTuples,
-                    store: self::getStoreId($store),
-                    model: self::getModelId($model),
-                    consistency: $consistency,
-                );
+            $authorizationService = $this->getAuthorizationService();
 
-                return new Success(ListUsersResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $authorizationService->listUsers(
+                store: $store,
+                model: $model,
+                object: $object,
+                relation: $relation,
+                userFilters: $userFilters,
+                context: $context,
+                contextualTuples: $contextualTuples,
+                consistency: $consistency,
+            );
         });
     }
 
@@ -583,16 +526,14 @@ final class Client implements ClientInterface
         AuthorizationModelInterface | string $model,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model) {
-            try {
-                $request = new ReadAssertionsRequest(
-                    store: self::getStoreId($store),
-                    model: self::getModelId($model),
-                );
+            $assertionService = $this->getAssertionServiceForStore($store);
+            $storeId = self::getStoreId($store);
+            $modelId = self::getModelId($model);
 
-                return new Success(ReadAssertionsResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $assertionService->readAssertions(
+                store: $storeId,
+                authorizationModelId: $modelId,
+            );
         });
     }
 
@@ -610,21 +551,15 @@ final class Client implements ClientInterface
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $tupleKey, $continuationToken, $pageSize, $consistency) {
-            try {
-                $pageSize = null !== $pageSize ? max(1, min($pageSize, self::MAX_PAGE_SIZE)) : null;
+            $tupleService = $this->getTupleServiceForStore($store);
 
-                $request = new ReadTuplesRequest(
-                    tupleKey: $tupleKey,
-                    store: self::getStoreId($store),
-                    continuationToken: $continuationToken,
-                    pageSize: $pageSize,
-                    consistency: $consistency,
-                );
-
-                return new Success(ReadTuplesResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $tupleService->read(
+                store: $store,
+                tupleKey: $tupleKey,
+                continuationToken: $continuationToken,
+                pageSize: $pageSize,
+                consistency: $consistency,
+            );
         });
     }
 
@@ -645,22 +580,18 @@ final class Client implements ClientInterface
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model, $type, $relation, $user, $context, $contextualTuples, $consistency) {
-            try {
-                $request = new StreamedListObjectsRequest(
-                    type: $type,
-                    relation: $relation,
-                    user: $user,
-                    context: $context,
-                    contextualTuples: $contextualTuples,
-                    store: self::getStoreId($store),
-                    model: self::getModelId($model),
-                    consistency: $consistency,
-                );
+            $authorizationService = $this->getAuthorizationService();
 
-                return new Success(StreamedListObjectsResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $authorizationService->streamedListObjects(
+                store: $store,
+                model: $model,
+                type: $type,
+                relation: $relation,
+                user: $user,
+                context: $context,
+                contextualTuples: $contextualTuples,
+                consistency: $consistency,
+            );
         });
     }
 
@@ -676,17 +607,15 @@ final class Client implements ClientInterface
         AssertionsInterface $assertions,
     ): FailureInterface | SuccessInterface {
         return $this->withLanguageContext(function () use ($store, $model, $assertions) {
-            try {
-                $request = new WriteAssertionsRequest(
-                    assertions: $assertions,
-                    store: self::getStoreId($store),
-                    model: self::getModelId($model),
-                );
+            $assertionService = $this->getAssertionServiceForStore($store);
+            $storeId = self::getStoreId($store);
+            $modelId = self::getModelId($model);
 
-                return new Success(WriteAssertionsResponse::fromResponse($this->sendRequest($request), $this->assertLastRequest(), $this->getValidator()));
-            } catch (Throwable $throwable) {
-                return new Failure($throwable);
-            }
+            return $assertionService->writeAssertions(
+                store: $storeId,
+                authorizationModelId: $modelId,
+                assertions: $assertions,
+            );
         });
     }
 
@@ -708,69 +637,22 @@ final class Client implements ClientInterface
         float $retryDelaySeconds = 1.0,
         bool $stopOnFirstError = false,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(
-            function () use ($store, $model, $writes, $deletes, $transactional, $maxParallelRequests, $maxTuplesPerChunk, $maxRetries, $retryDelaySeconds, $stopOnFirstError) {
-                try {
-                    // Filter duplicates intelligently
-                    [$filteredWrites, $filteredDeletes] = $this->filterDuplicateTuples($writes, $deletes);
+        return $this->withLanguageContext(function () use ($store, $model, $writes, $deletes, $transactional, $maxParallelRequests, $maxTuplesPerChunk, $maxRetries, $retryDelaySeconds, $stopOnFirstError) {
+            $tupleService = $this->getTupleServiceForStore($store);
 
-                    // Validate transactional limit (100 operations max)
-                    if ($transactional) {
-                        $writeCount = $filteredWrites?->count() ?? 0;
-                        $deleteCount = $filteredDeletes?->count() ?? 0;
-                        $totalOperations = $writeCount + $deleteCount;
-
-                        if (100 < $totalOperations) {
-                            throw ClientError::Validation->exception(context: ['message' => Translator::trans(Messages::REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED, ['count' => $totalOperations, ], $this->language)]);
-                        }
-                    }
-
-                    $request = new WriteTuplesRequest(
-                        store: self::getStoreId($store),
-                        model: self::getModelId($model),
-                        writes: $filteredWrites,
-                        deletes: $filteredDeletes,
-                        transactional: $transactional,
-                        maxParallelRequests: $maxParallelRequests,
-                        maxTuplesPerChunk: $maxTuplesPerChunk,
-                        maxRetries: $maxRetries,
-                        retryDelaySeconds: $retryDelaySeconds,
-                        stopOnFirstError: $stopOnFirstError,
-                    );
-
-                    // Create the request manager factory
-                    $requestManagerFactory = new RequestManagerFactory(
-                        url: $this->url,
-                        authorizationHeader: $this->getAuthenticationHeader(),
-                        httpClient: $this->httpClient,
-                        httpStreamFactory: $this->httpStreamFactory,
-                        httpRequestFactory: $this->httpRequestFactory,
-                        httpResponseFactory: $this->httpResponseFactory,
-                        telemetry: $this->telemetry,
-                    );
-
-                    // Process the request using the BatchRequestProcessor
-                    $processor = new BatchRequestProcessor($requestManagerFactory);
-                    $result = $processor->process($request);
-
-                    // Update last request/response from the processor
-                    if ($processor->getLastRequest() instanceof HttpRequestInterface) {
-                        $this->lastRequest = $processor->getLastRequest();
-                    }
-
-                    if ($processor->getLastResponse() instanceof ResponseInterface) {
-                        $this->lastResponse = $processor->getLastResponse();
-                    }
-
-                    return $result;
-                } catch (Throwable $throwable) {
-                    return new Failure($throwable);
-                }
-            },
-            'writeTuples',
-            $store,
-            $model,
-        );
+            return $tupleService->writeBatch(
+                store: $store,
+                model: $model,
+                writes: $writes,
+                deletes: $deletes,
+                transactional: $transactional,
+                maxParallelRequests: $maxParallelRequests,
+                maxTuplesPerChunk: $maxTuplesPerChunk,
+                maxRetries: $maxRetries,
+                retryDelaySeconds: $retryDelaySeconds,
+                stopOnFirstError: $stopOnFirstError,
+            );
+        });
     }
 
     /**
@@ -812,297 +694,207 @@ final class Client implements ClientInterface
     }
 
     /**
-     * Filter duplicate tuples from writes and deletes collections.
+     * Get an assertion service for the specified store.
      *
-     * This method ensures that:
-     * 1. No duplicate tuples exist within the writes collection
-     * 2. No duplicate tuples exist within the deletes collection
-     * 3. If a tuple appears in both writes and deletes, it's removed from writes
-     *    (delete takes precedence to ensure the final state is deletion)
+     * @param StoreInterface|string $store The store to get the service for
      *
-     * @param  TupleKeysInterface<TupleKeyInterface>|null                                                          $writes  The writes to filter
-     * @param  TupleKeysInterface<TupleKeyInterface>|null                                                          $deletes The deletes to filter
-     * @return array{0: TupleKeysInterface<TupleKeyInterface>|null, 1: TupleKeysInterface<TupleKeyInterface>|null} Filtered writes and deletes
+     * @throws LogicException If the service is not available
      */
-    private function filterDuplicateTuples(
-        ?TupleKeysInterface $writes,
-        ?TupleKeysInterface $deletes,
-    ): array {
-        // If both are null or empty, return as-is
-        if ((! $writes instanceof TupleKeysInterface || 0 === $writes->count()) && (! $deletes instanceof TupleKeysInterface || 0 === $deletes->count())) {
-            return [$writes, $deletes];
-        }
+    private function getAssertionServiceForStore(StoreInterface | string $store): AssertionService
+    {
+        $storeId = self::getStoreId($store);
+        $serviceId = 'service.assertion.' . $storeId;
 
-        // Create unique key function for tuples
-        $getTupleKey = static function (TupleKeyInterface $tuple): string {
-            $condition = $tuple->getCondition();
+        // Check if store-specific service exists
+        if ($this->serviceProvider->has(serviceId: $serviceId)) {
+            /** @var AssertionService $service */
+            $service = $this->serviceProvider->get(serviceId: $serviceId);
 
-            return sprintf(
-                '%s#%s@%s%s',
-                $tuple->getUser() ?? '',
-                $tuple->getRelation() ?? '',
-                $tuple->getObject() ?? '',
-                $condition instanceof ConditionInterface ? '#' . spl_object_hash($condition) : '',
-            );
-        };
-
-        // Filter writes to remove duplicates
-        $uniqueWrites = [];
-        $writeKeys = [];
-
-        if ($writes instanceof TupleKeysInterface && 0 < $writes->count()) {
-            foreach ($writes as $write) {
-                $key = $getTupleKey($write);
-
-                if (! isset($writeKeys[$key])) {
-                    $writeKeys[$key] = true;
-                    $uniqueWrites[] = $write;
-                }
+            if (! $service instanceof AssertionService) {
+                throw new LogicException('Assertion service not available');
             }
+
+            return $service;
         }
 
-        // Filter deletes to remove duplicates
-        $uniqueDeletes = [];
-        $deleteKeys = [];
-
-        if ($deletes instanceof TupleKeysInterface && 0 < $deletes->count()) {
-            foreach ($deletes as $delete) {
-                $key = $getTupleKey($delete);
-
-                if (! isset($deleteKeys[$key])) {
-                    $deleteKeys[$key] = true;
-                    $uniqueDeletes[] = $delete;
-                }
-            }
-        }
-
-        // Remove from writes any tuples that also appear in deletes
-        // (delete takes precedence)
-        if ([] !== $uniqueWrites && [] !== $deleteKeys) {
-            $finalWrites = [];
-
-            foreach ($uniqueWrites as $uniqueWrite) {
-                $key = $getTupleKey($uniqueWrite);
-
-                if (! isset($deleteKeys[$key])) {
-                    $finalWrites[] = $uniqueWrite;
-                }
-            }
-            $uniqueWrites = $finalWrites;
-        }
-
-        // Return filtered collections
-        return [
-            [] !== $uniqueWrites ? new TupleKeys($uniqueWrites) : null,
-            [] !== $uniqueDeletes ? new TupleKeys($uniqueDeletes) : null,
-        ];
-    }
-
-    /**
-     * Return the authentication header string.
-     *
-     * Delegates to the configured authentication strategy to get the
-     * authorization header value. If the strategy needs to perform an
-     * authentication request, this method will handle that flow.
-     *
-     * @throws ClientThrowable          If stream factory configuration fails
-     * @throws InvalidArgumentException If request parameters are invalid
-     * @throws ReflectionException      If exception creation fails
-     */
-    private function getAuthenticationHeader(): ?string
-    {
-        if (! $this->authentication instanceof AuthenticationInterface) {
-            return null;
-        }
-
-        $authentication = $this->authentication;
-
-        // Try to get cached header first
-        $header = $authentication->getAuthorizationHeader();
-
-        if (null !== $header) {
-            return $header;
-        }
-
-        // Build authentication request
-        $authRequest = $authentication->getAuthenticationRequest($this->getStreamFactory());
-
-        if (! $authRequest instanceof RequestContext) {
-            return null;
-        }
-
-        try {
-            // Send authentication request and handle response
-            $response = $this->sendAuthenticationRequestContext($authRequest);
-
-            if ($authentication instanceof ClientCredentialAuthentication) {
-                $authentication->handleAuthenticationResponse($response);
-
-                return $authentication->getAuthorizationHeader();
-            }
-        } catch (Throwable) {
-            // Silently fail authentication attempts
-            return null;
-        }
-
-        return null;
-    }
-
-    /**
-     * Get or create a stream factory for HTTP requests.
-     *
-     * @throws ClientThrowable          If no stream factory is configured and auto-discovery fails
-     * @throws InvalidArgumentException If request parameters are invalid
-     * @throws ReflectionException      If exception creation fails
-     */
-    private function getStreamFactory(): StreamFactoryInterface
-    {
-        if ($this->httpStreamFactory instanceof StreamFactoryInterface) {
-            return $this->httpStreamFactory;
-        }
-
-        $httpStreamFactory = Discover::httpStreamFactory();
-
-        if (null === $httpStreamFactory) {
-            throw ConfigurationError::HttpStreamFactoryMissing->exception();
-        }
-
-        return $httpStreamFactory;
-    }
-
-    /**
-     * Get the telemetry provider for observability instrumentation.
-     *
-     * Returns the configured telemetry provider, or a no-op implementation
-     * if no telemetry was configured. This ensures telemetry calls are
-     * always safe to make without null checks.
-     *
-     * @return TelemetryInterface The telemetry provider
-     */
-    private function getTelemetry(): TelemetryInterface
-    {
-        return $this->telemetry ?? new NoOpTelemetryProvider;
-    }
-
-    /**
-     * Gets the SchemaValidator singleton used to validate response data.
-     */
-    private function getValidator(): SchemaValidator
-    {
-        if (! $this->validator instanceof SchemaValidator) {
-            $this->validator = new SchemaValidator;
-        }
-
-        return $this->validator;
-    }
-
-    /**
-     * Send an authentication request using a pre-built RequestContext.
-     *
-     * @param RequestContext $context The authentication request context
-     *
-     * @throws ClientThrowable          If client initialization fails
-     * @throws InvalidArgumentException If the request factory fails
-     * @throws NetworkException         If the request fails
-     * @throws ReflectionException      If reflection fails
-     * @throws Throwable                If an unexpected error occurs
-     *
-     * @return HttpResponseInterface The authentication response
-     */
-    private function sendAuthenticationRequestContext(RequestContext $context): HttpResponseInterface
-    {
-        $httpMaxRetries = max(1, min($this->httpMaxRetries ?? 3, 10));
-
-        $requestManager = new RequestManager(
-            url: $this->url,
-            maxRetries: $httpMaxRetries,
-            authorizationHeader: null,
-            httpClient: $this->httpClient,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-            httpResponseFactory: $this->httpResponseFactory,
-            telemetry: $this->telemetry,
+        // Create and register store-specific service
+        $httpService = $this->getHttpService();
+        $validator = $this->getSchemaValidator();
+        $assertionRepository = new HttpAssertionRepository(
+            httpService: $httpService,
+            validator: $validator,
+            storeId: $storeId,
+        );
+        $service = new AssertionService(
+            assertionRepository: $assertionRepository,
+            language: $this->language,
         );
 
-        // Build the HTTP request from the context
-        $httpRequest = $requestManager->getHttpRequestFactory()->createRequest(
-            $context->getMethod()->value,
-            $context->useApiUrl() ? $this->url . $context->getUrl() : $context->getUrl(),
+        $this->serviceProvider->set(
+            serviceId: $serviceId,
+            service: $service,
         );
 
-        // Add headers
-        foreach ($context->getHeaders() as $name => $value) {
-            $httpRequest = $httpRequest->withHeader($name, $value);
-        }
-
-        // Add body if present
-        if ($context->getBody() instanceof StreamInterface) {
-            $httpRequest = $httpRequest->withBody($context->getBody());
-        }
-
-        return $requestManager->send($httpRequest);
+        return $service;
     }
 
     /**
-     * Sends a request to the OpenFGA API using the configured HTTP client and authentication.
+     * Get the authorization service from the service provider.
      *
-     * @param RequestInterface $request the request to send
-     *
-     * @throws ClientThrowable          If request conversion or sending fails due to configuration, authentication, or network issues
-     * @throws InvalidArgumentException If request parameters are invalid
-     * @throws JsonException            If request data serialization fails
-     * @throws ReflectionException      If exception creation fails
-     * @throws Throwable                Any exception that might occur during the request
-     *
-     * @return HttpResponseInterface the response from the API
+     * @throws LogicException If the service is not available
      */
-    private function sendRequest(RequestInterface $request): HttpResponseInterface
+    private function getAuthorizationService(): AuthorizationService
     {
-        // Validate and normalize maxRetries parameter (0-15 range, default 3)
-        $httpMaxRetries = $this->httpMaxRetries ?? 3;
-        $httpMaxRetries = max(0, min($httpMaxRetries, 15));
+        /** @var AuthorizationService $service */
+        $service = $this->serviceProvider->get(serviceId: 'service.authorization');
 
-        $this->requestManager ??= new RequestManager(
-            url: $this->url,
-            maxRetries: $httpMaxRetries,
-            authorizationHeader: $this->getAuthenticationHeader(),
-            httpClient: $this->httpClient,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-            httpResponseFactory: $this->httpResponseFactory,
-            telemetry: $this->telemetry,
-        );
+        if (! $service instanceof AuthorizationService) {
+            throw new LogicException('Authorization service not available');
+        }
 
-        $requestManager = $this->requestManager;
-        $lastRequest = $requestManager->request($request);
-        $this->lastRequest = $lastRequest;
+        return $service;
+    }
 
-        $telemetry = $this->getTelemetry();
+    /**
+     * Get the HTTP service from the service provider.
+     *
+     * @throws LogicException If the service is not available
+     */
+    private function getHttpService(): HttpService
+    {
+        /** @var HttpService $service */
+        $service = $this->serviceProvider->get(serviceId: 'http');
 
-        /** @var mixed $httpSpan */
-        $httpSpan = $telemetry->startHttpRequest($lastRequest);
+        if (! $service instanceof HttpService) {
+            throw new LogicException('HTTP service not available');
+        }
 
-        try {
-            $lastResponse = $requestManager->send($lastRequest);
-            $this->lastResponse = $lastResponse;
-            $telemetry->endHttpRequest($httpSpan, $lastResponse);
+        return $service;
+    }
 
-            return $lastResponse;
-        } catch (NetworkException $networkException) {
-            // Capture the response from the NetworkException if available
-            if ($networkException->response() instanceof HttpResponseInterface) {
-                $this->lastResponse = $networkException->response();
+    /**
+     * Get a model service for the specified store.
+     *
+     * @param StoreInterface|string $store The store to get the service for
+     *
+     * @throws ClientThrowable     If repository creation fails
+     * @throws LogicException      If the service is not available
+     * @throws ReflectionException If repository creation fails
+     */
+    private function getModelServiceForStore(StoreInterface | string $store): ModelService
+    {
+        $storeId = self::getStoreId($store);
+        $serviceId = 'service.model.' . $storeId;
+
+        // Check if store-specific service exists
+        if ($this->serviceProvider->has(serviceId: $serviceId)) {
+            /** @var ModelService $service */
+            $service = $this->serviceProvider->get(serviceId: $serviceId);
+
+            if (! $service instanceof ModelService) {
+                throw new LogicException('Model service not available');
             }
 
-            $telemetry->endHttpRequest($httpSpan, $this->lastResponse, $networkException);
-
-            throw $networkException;
-        } catch (Throwable $throwable) {
-            // Other exceptions don't carry response information
-            $telemetry->endHttpRequest($httpSpan, null, $throwable);
-
-            throw $throwable;
+            return $service;
         }
+
+        // Create and register store-specific service
+        $httpService = $this->getHttpService();
+        $validator = $this->getSchemaValidator();
+        $modelRepository = new HttpModelRepository(
+            httpService: $httpService,
+            validator: $validator,
+            storeId: $storeId,
+        );
+        $service = new ModelService(
+            modelRepository: $modelRepository,
+            httpService: $httpService,
+            validator: $validator,
+            language: $this->language,
+        );
+
+        $this->serviceProvider->set(
+            serviceId: $serviceId,
+            service: $service,
+        );
+
+        return $service;
+    }
+
+    /**
+     * Get the schema validator from the service provider.
+     *
+     * @throws LogicException If the service is not available
+     */
+    private function getSchemaValidator(): SchemaValidator
+    {
+        /** @var SchemaValidator $validator */
+        $validator = $this->serviceProvider->get(serviceId: 'schema.validator');
+
+        if (! $validator instanceof SchemaValidator) {
+            throw new LogicException('Schema validator not available');
+        }
+
+        return $validator;
+    }
+
+    /**
+     * Get the store service from the service provider.
+     *
+     * @throws LogicException If the service is not available
+     */
+    private function getStoreService(): StoreService
+    {
+        /** @var StoreService $service */
+        $service = $this->serviceProvider->get(serviceId: 'service.store');
+
+        if (! $service instanceof StoreService) {
+            throw new LogicException('Store service not available');
+        }
+
+        return $service;
+    }
+
+    /**
+     * Get a tuple service for the specified store.
+     *
+     * @param StoreInterface|string $store The store to get the service for
+     *
+     * @throws LogicException If the service is not available
+     */
+    private function getTupleServiceForStore(StoreInterface | string $store): TupleService
+    {
+        $storeId = self::getStoreId($store);
+        $serviceId = 'service.tuple.' . $storeId;
+
+        // Check if store-specific service exists
+        if ($this->serviceProvider->has(serviceId: $serviceId)) {
+            /** @var TupleService $service */
+            $service = $this->serviceProvider->get(serviceId: $serviceId);
+
+            if (! $service instanceof TupleService) {
+                throw new LogicException('Tuple service not available');
+            }
+
+            return $service;
+        }
+
+        // Create and register store-specific service
+        $tupleRepository = $this->serviceProvider->get(serviceId: 'repository.tuple');
+
+        if (! $tupleRepository instanceof HttpTupleRepository) {
+            throw new LogicException('Tuple repository not available');
+        }
+
+        $service = new TupleService(
+            tupleRepository: $tupleRepository,
+        );
+        $this->serviceProvider->set(
+            serviceId: $serviceId,
+            service: $service,
+        );
+
+        return $service;
     }
 
     /**
@@ -1115,59 +907,22 @@ final class Client implements ClientInterface
      *
      * @template T
      *
-     * @param callable(): T                           $callback  The callback to execute with the language context
-     * @param string|null                             $operation Optional operation name for telemetry
-     * @param StoreInterface|string|null              $store     Optional store for telemetry
-     * @param AuthorizationModelInterface|string|null $model     Optional model for telemetry
+     * @param callable(): T $callback The callback to execute with the language context
      *
      * @throws Throwable Any exception thrown by the callback is re-thrown after cleanup
      *
      * @return T The result of the callback
      */
-    private function withLanguageContext(
-        callable $callback,
-        ?string $operation = null,
-        StoreInterface | string | null $store = null,
-        AuthorizationModelInterface | string | null $model = null,
-    ) {
+    private function withLanguageContext(callable $callback)
+    {
         $originalLocale = Translator::getDefaultLocale();
-        $telemetry = $this->getTelemetry();
-
-        /** @var mixed $span */
-        $span = null;
-
-        // Start telemetry span if operation details provided
-        if (null !== $operation && null !== $store) {
-            /** @var mixed $span */
-            $span = $telemetry->startOperation($operation, $store, $model);
-        }
-
-        $startTime = microtime(true);
 
         try {
-            Translator::setDefaultLocale($this->language);
+            Translator::setDefaultLocale(locale: $this->language);
 
-            $result = $callback();
-
-            // Record successful operation
-            if (null !== $span && null !== $operation && null !== $store) {
-                $duration = microtime(true) - $startTime;
-                $telemetry->endOperation($span, true);
-                $telemetry->recordOperationMetrics($operation, $duration, $store, $model);
-            }
-
-            return $result;
-        } catch (Throwable $throwable) {
-            // Record failed operation
-            if (null !== $span && null !== $operation && null !== $store) {
-                $duration = microtime(true) - $startTime;
-                $telemetry->endOperation($span, false, $throwable);
-                $telemetry->recordOperationMetrics($operation, $duration, $store, $model, ['error' => true]);
-            }
-
-            throw $throwable;
+            return $callback();
         } finally {
-            Translator::setDefaultLocale($originalLocale);
+            Translator::setDefaultLocale(locale: $originalLocale);
         }
     }
 }

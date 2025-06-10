@@ -8,7 +8,7 @@ use OpenFGA\Exceptions\{ClientException, SerializationException};
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\KeyedCollection;
 use OpenFGA\Models\{TupleKey, User};
-use OpenFGA\Schema\CollectionSchemaInterface;
+use OpenFGA\Schemas\CollectionSchemaInterface;
 use OpenFGA\Tests\Support\Collections\{InvalidKeyedCollection, InvalidTypeKeyedCollection, TestKeyedCollection};
 use ReflectionClass;
 use stdClass;

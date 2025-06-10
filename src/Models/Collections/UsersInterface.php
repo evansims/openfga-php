@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\UserInterface;
 use Override;
 
 /**
@@ -14,9 +13,7 @@ use Override;
  * authorization mechanisms. Users can be individual identities, usersets,
  * or wildcard patterns depending on the authorization model configuration.
  *
- * @template T of UserInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\UserInterface>
  */
 interface UsersInterface extends IndexedCollectionInterface
 {

@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, Userset, UsersetInterface};
-use OpenFGA\Schema\{CollectionSchema, CollectionSchemaInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
 use Override;
 
 /**
- * @extends KeyedCollection<UsersetInterface>
- *
- * @implements TypeDefinitionRelationsInterface<UsersetInterface>
+ * @extends KeyedCollection<\OpenFGA\Models\UsersetInterface>
  */
 final class TypeDefinitionRelations extends KeyedCollection implements TypeDefinitionRelationsInterface
 {

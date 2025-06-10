@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\Collections\Usersets;
 use OpenFGA\Models\{DifferenceV1, DifferenceV1Interface, ObjectRelation, Userset};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 use stdClass;
 
 describe('DifferenceV1 Model', function (): void {

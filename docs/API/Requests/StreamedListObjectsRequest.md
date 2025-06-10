@@ -31,7 +31,7 @@ public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
 
 Get the consistency requirement for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L84)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L86)
 
 #### Returns
 
@@ -46,7 +46,7 @@ public function getContext(): ?object
 
 Get the context object for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L93)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L95)
 
 #### Returns
 
@@ -61,7 +61,7 @@ public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInte
 
 Get the contextual tuples for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L102)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L104)
 
 #### Returns
 
@@ -76,7 +76,7 @@ public function getModel(): ?string
 
 Get the authorization model ID for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L111)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L113)
 
 #### Returns
 
@@ -91,7 +91,7 @@ public function getRelation(): string
 
 Get the relation name for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L120)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L122)
 
 #### Returns
 
@@ -106,7 +106,7 @@ public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactor
 
 Build a request context for HTTP execution. Transforms the request object into a standardized HTTP request context that can be executed by the OpenFGA HTTP client. This method handles all aspects of request preparation including parameter serialization, URL construction, header configuration, and body stream creation. The method validates that all required parameters are present and properly formatted, serializes complex objects to JSON, constructs the appropriate API endpoint URL, and creates the necessary HTTP message body streams.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L131)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L133)
 
 #### Parameters
 
@@ -127,7 +127,7 @@ public function getStore(): string
 
 Get the store ID for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L158)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L160)
 
 #### Returns
 
@@ -142,7 +142,7 @@ public function getType(): string
 
 Get the object type for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L167)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L169)
 
 #### Returns
 
@@ -157,7 +157,7 @@ public function getUser(): string
 
 Get the user identifier for this request.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L176)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/StreamedListObjectsRequest.php#L178)
 
 #### Returns
 

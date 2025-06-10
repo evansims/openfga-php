@@ -12,7 +12,7 @@ use OpenFGA\Models\BatchCheckItemInterface;
  * This collection maintains a list of BatchCheckItem objects, each representing
  * a single authorization check to be performed as part of a batch request.
  *
- * @extends IndexedCollectionInterface<BatchCheckItemInterface>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\BatchCheckItemInterface>
  *
  * @see BatchCheckItemInterface
  * @see https://openfga.dev/docs/api#/Relationship%20Queries/BatchCheck

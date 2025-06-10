@@ -5,6 +5,10 @@ parameters:
     level: max
     treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
+    
+    # Fiber generics support
+    stubFiles:
+        - .phpstan/fiber-stubs.php
 
     # Enhanced strict analysis
     checkMissingCallableSignature: true

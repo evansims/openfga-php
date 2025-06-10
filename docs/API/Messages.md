@@ -19,6 +19,8 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 
 | Name                                         | Value                                                            | Description |
 | -------------------------------------------- | ---------------------------------------------------------------- | ----------- |
+| `ASSERTIONS_EMPTY_COLLECTION`                | `assertions.empty_collection`                                    |             |
+| `ASSERTIONS_INVALID_TUPLE_KEY`               | `assertions.invalid_tuple_key`                                   |             |
 | `AUTH_ACCESS_TOKEN_MUST_BE_STRING`           | `auth.access_token_must_be_string`                               |             |
 | `AUTH_ERROR_TOKEN_EXPIRED`                   | `exception.auth.token_expired`                                   |             |
 | `AUTH_ERROR_TOKEN_INVALID`                   | `exception.auth.token_invalid`                                   |             |
@@ -27,6 +29,8 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `AUTH_MISSING_REQUIRED_FIELDS`               | `auth.missing_required_fields`                                   |             |
 | `AUTH_USER_MESSAGE_TOKEN_EXPIRED`            | `auth.user_message.token_expired`                                |             |
 | `AUTH_USER_MESSAGE_TOKEN_INVALID`            | `auth.user_message.token_invalid`                                |             |
+| `BATCH_TUPLE_CHUNK_SIZE_EXCEEDED`            | `validation.batch_tuple_chunk_size_exceeded`                     |             |
+| `BATCH_TUPLE_CHUNK_SIZE_POSITIVE`            | `validation.batch_tuple_chunk_size_positive`                     |             |
 | `CLIENT_ERROR_AUTHENTICATION`                | `exception.client.authentication`                                |             |
 | `CLIENT_ERROR_CONFIGURATION`                 | `exception.client.configuration`                                 |             |
 | `CLIENT_ERROR_NETWORK`                       | `exception.client.network`                                       |             |
@@ -43,6 +47,9 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `CONFIG_ERROR_HTTP_REQUEST_FACTORY_MISSING`  | `exception.config.http_request_factory_missing`                  |             |
 | `CONFIG_ERROR_HTTP_RESPONSE_FACTORY_MISSING` | `exception.config.http_response_factory_missing`                 |             |
 | `CONFIG_ERROR_HTTP_STREAM_FACTORY_MISSING`   | `exception.config.http_stream_factory_missing`                   |             |
+| `CONFIG_ERROR_INVALID_LANGUAGE`              | `exception.config.invalid_language`                              |             |
+| `CONFIG_ERROR_INVALID_RETRY_COUNT`           | `exception.config.invalid_retry_count`                           |             |
+| `CONFIG_ERROR_INVALID_URL`                   | `exception.config.invalid_url`                                   |             |
 | `CONSISTENCY_HIGHER_CONSISTENCY_DESCRIPTION` | `consistency.higher_consistency.description`                     |             |
 | `CONSISTENCY_MINIMIZE_LATENCY_DESCRIPTION`   | `consistency.minimize_latency.description`                       |             |
 | `CONSISTENCY_UNSPECIFIED_DESCRIPTION`        | `consistency.unspecified.description`                            |             |
@@ -63,9 +70,13 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `JWT_MISSING_REQUIRED_CLAIMS`                | `auth.jwt.missing_required_claims`                               |             |
 | `JWT_TOKEN_EXPIRED`                          | `auth.jwt.token_expired`                                         |             |
 | `JWT_TOKEN_NOT_YET_VALID`                    | `auth.jwt.token_not_yet_valid`                                   |             |
+| `MODEL_DUPLICATE_TYPE`                       | `model.duplicate_type`                                           |             |
+| `MODEL_INVALID_IDENTIFIER_FORMAT`            | `model.invalid_identifier_format`                                |             |
 | `MODEL_INVALID_TUPLE_KEY`                    | `model.invalid_tuple_key`                                        |             |
 | `MODEL_LEAF_MISSING_CONTENT`                 | `model.leaf_missing_content`                                     |             |
+| `MODEL_NO_MODELS_IN_STORE`                   | `model.no_models_in_store`                                       |             |
 | `MODEL_SOURCE_INFO_FILE_EMPTY`               | `model.source_info_file_empty`                                   |             |
+| `MODEL_TYPE_DEFINITIONS_EMPTY`               | `model.type_definitions_empty`                                   |             |
 | `MODEL_TYPED_WILDCARD_TYPE_EMPTY`            | `model.typed_wildcard_type_empty`                                |             |
 | `NETWORK_ERROR`                              | `network.error`                                                  |             |
 | `NETWORK_ERROR_CONFLICT`                     | `exception.network.conflict`                                     |             |
@@ -87,8 +98,10 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `REQUEST_RELATION_EMPTY`                     | `request.relation_empty`                                         |             |
 | `REQUEST_STORE_ID_EMPTY`                     | `request.store_id_empty`                                         |             |
 | `REQUEST_STORE_NAME_EMPTY`                   | `request.store_name_empty`                                       |             |
+| `REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED`       | `request.transactional_limit_exceeded`                           |             |
 | `REQUEST_TYPE_EMPTY`                         | `request.type_empty`                                             |             |
 | `REQUEST_USER_EMPTY`                         | `request.user_empty`                                             |             |
+| `RESPONSE_UNEXPECTED_TYPE`                   | `response.unexpected_type`                                       |             |
 | `RESULT_FAILURE_NO_VALUE`                    | `result.failure_no_value`                                        |             |
 | `RESULT_SUCCESS_NO_ERROR`                    | `result.success_no_error`                                        |             |
 | `SCHEMA_CLASS_NOT_FOUND`                     | `schema.class_not_found`                                         |             |
@@ -99,13 +112,31 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `SERIALIZATION_ERROR_MISSING_REQUIRED_PARAM` | `exception.serialization.missing_required_constructor_parameter` |             |
 | `SERIALIZATION_ERROR_RESPONSE`               | `exception.serialization.response`                               |             |
 | `SERIALIZATION_ERROR_UNDEFINED_ITEM_TYPE`    | `exception.serialization.undefined_item_type`                    |             |
+| `SERVICE_HTTP_NOT_AVAILABLE`                 | `service.http_not_available`                                     |             |
+| `SERVICE_SCHEMA_VALIDATOR_NOT_AVAILABLE`     | `service.schema_validator_not_available`                         |             |
+| `SERVICE_STORE_REPOSITORY_NOT_AVAILABLE`     | `service.store_repository_not_available`                         |             |
+| `SERVICE_TUPLE_FILTER_NOT_AVAILABLE`         | `service.tuple_filter_not_available`                             |             |
+| `SERVICE_TUPLE_REPOSITORY_NOT_AVAILABLE`     | `service.tuple_repository_not_available`                         |             |
+| `STORE_NAME_REQUIRED`                        | `store.name_required`                                            |             |
+| `STORE_NAME_TOO_LONG`                        | `store.name_too_long`                                            |             |
+| `STORE_NOT_FOUND`                            | `store.not_found`                                                |             |
+| `TRANSLATION_FILE_NOT_FOUND`                 | `translation.file_not_found`                                     |             |
+| `TRANSLATION_UNSUPPORTED_FORMAT`             | `translation.unsupported_format`                                 |             |
 | `TUPLE_OPERATION_DELETE_DESCRIPTION`         | `tuple_operation.delete.description`                             |             |
 | `TUPLE_OPERATION_WRITE_DESCRIPTION`          | `tuple_operation.write.description`                              |             |
+| `YAML_CANNOT_READ_FILE`                      | `yaml.cannot_read_file`                                          |             |
+| `YAML_FILE_DOES_NOT_EXIST`                   | `yaml.file_does_not_exist`                                       |             |
+| `YAML_INVALID_STRUCTURE`                     | `yaml.invalid_structure`                                         |             |
+| `YAML_INVALID_SYNTAX_EMPTY_KEY`              | `yaml.invalid_syntax_empty_key`                                  |             |
+| `YAML_INVALID_SYNTAX_MISSING_COLON`          | `yaml.invalid_syntax_missing_colon`                              |             |
+| `YAML_INVALID_SYNTAX_MISSING_VALUE`          | `yaml.invalid_syntax_missing_value`                              |             |
 
 ## Cases
 
 | Name                                         | Value                                                            | Description |
 | -------------------------------------------- | ---------------------------------------------------------------- | ----------- |
+| `ASSERTIONS_EMPTY_COLLECTION`                | `assertions.empty_collection`                                    |             |
+| `ASSERTIONS_INVALID_TUPLE_KEY`               | `assertions.invalid_tuple_key`                                   |             |
 | `AUTH_ACCESS_TOKEN_MUST_BE_STRING`           | `auth.access_token_must_be_string`                               |             |
 | `AUTH_ERROR_TOKEN_EXPIRED`                   | `exception.auth.token_expired`                                   |             |
 | `AUTH_ERROR_TOKEN_INVALID`                   | `exception.auth.token_invalid`                                   |             |
@@ -114,6 +145,8 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `AUTH_MISSING_REQUIRED_FIELDS`               | `auth.missing_required_fields`                                   |             |
 | `AUTH_USER_MESSAGE_TOKEN_EXPIRED`            | `auth.user_message.token_expired`                                |             |
 | `AUTH_USER_MESSAGE_TOKEN_INVALID`            | `auth.user_message.token_invalid`                                |             |
+| `BATCH_TUPLE_CHUNK_SIZE_EXCEEDED`            | `validation.batch_tuple_chunk_size_exceeded`                     |             |
+| `BATCH_TUPLE_CHUNK_SIZE_POSITIVE`            | `validation.batch_tuple_chunk_size_positive`                     |             |
 | `CLIENT_ERROR_AUTHENTICATION`                | `exception.client.authentication`                                |             |
 | `CLIENT_ERROR_CONFIGURATION`                 | `exception.client.configuration`                                 |             |
 | `CLIENT_ERROR_NETWORK`                       | `exception.client.network`                                       |             |
@@ -130,6 +163,9 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `CONFIG_ERROR_HTTP_REQUEST_FACTORY_MISSING`  | `exception.config.http_request_factory_missing`                  |             |
 | `CONFIG_ERROR_HTTP_RESPONSE_FACTORY_MISSING` | `exception.config.http_response_factory_missing`                 |             |
 | `CONFIG_ERROR_HTTP_STREAM_FACTORY_MISSING`   | `exception.config.http_stream_factory_missing`                   |             |
+| `CONFIG_ERROR_INVALID_LANGUAGE`              | `exception.config.invalid_language`                              |             |
+| `CONFIG_ERROR_INVALID_RETRY_COUNT`           | `exception.config.invalid_retry_count`                           |             |
+| `CONFIG_ERROR_INVALID_URL`                   | `exception.config.invalid_url`                                   |             |
 | `CONSISTENCY_HIGHER_CONSISTENCY_DESCRIPTION` | `consistency.higher_consistency.description`                     |             |
 | `CONSISTENCY_MINIMIZE_LATENCY_DESCRIPTION`   | `consistency.minimize_latency.description`                       |             |
 | `CONSISTENCY_UNSPECIFIED_DESCRIPTION`        | `consistency.unspecified.description`                            |             |
@@ -150,9 +186,13 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `JWT_MISSING_REQUIRED_CLAIMS`                | `auth.jwt.missing_required_claims`                               |             |
 | `JWT_TOKEN_EXPIRED`                          | `auth.jwt.token_expired`                                         |             |
 | `JWT_TOKEN_NOT_YET_VALID`                    | `auth.jwt.token_not_yet_valid`                                   |             |
+| `MODEL_DUPLICATE_TYPE`                       | `model.duplicate_type`                                           |             |
+| `MODEL_INVALID_IDENTIFIER_FORMAT`            | `model.invalid_identifier_format`                                |             |
 | `MODEL_INVALID_TUPLE_KEY`                    | `model.invalid_tuple_key`                                        |             |
 | `MODEL_LEAF_MISSING_CONTENT`                 | `model.leaf_missing_content`                                     |             |
+| `MODEL_NO_MODELS_IN_STORE`                   | `model.no_models_in_store`                                       |             |
 | `MODEL_SOURCE_INFO_FILE_EMPTY`               | `model.source_info_file_empty`                                   |             |
+| `MODEL_TYPE_DEFINITIONS_EMPTY`               | `model.type_definitions_empty`                                   |             |
 | `MODEL_TYPED_WILDCARD_TYPE_EMPTY`            | `model.typed_wildcard_type_empty`                                |             |
 | `NETWORK_ERROR`                              | `network.error`                                                  |             |
 | `NETWORK_ERROR_CONFLICT`                     | `exception.network.conflict`                                     |             |
@@ -174,8 +214,10 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `REQUEST_RELATION_EMPTY`                     | `request.relation_empty`                                         |             |
 | `REQUEST_STORE_ID_EMPTY`                     | `request.store_id_empty`                                         |             |
 | `REQUEST_STORE_NAME_EMPTY`                   | `request.store_name_empty`                                       |             |
+| `REQUEST_TRANSACTIONAL_LIMIT_EXCEEDED`       | `request.transactional_limit_exceeded`                           |             |
 | `REQUEST_TYPE_EMPTY`                         | `request.type_empty`                                             |             |
 | `REQUEST_USER_EMPTY`                         | `request.user_empty`                                             |             |
+| `RESPONSE_UNEXPECTED_TYPE`                   | `response.unexpected_type`                                       |             |
 | `RESULT_FAILURE_NO_VALUE`                    | `result.failure_no_value`                                        |             |
 | `RESULT_SUCCESS_NO_ERROR`                    | `result.success_no_error`                                        |             |
 | `SCHEMA_CLASS_NOT_FOUND`                     | `schema.class_not_found`                                         |             |
@@ -186,12 +228,42 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `SERIALIZATION_ERROR_MISSING_REQUIRED_PARAM` | `exception.serialization.missing_required_constructor_parameter` |             |
 | `SERIALIZATION_ERROR_RESPONSE`               | `exception.serialization.response`                               |             |
 | `SERIALIZATION_ERROR_UNDEFINED_ITEM_TYPE`    | `exception.serialization.undefined_item_type`                    |             |
+| `SERVICE_HTTP_NOT_AVAILABLE`                 | `service.http_not_available`                                     |             |
+| `SERVICE_SCHEMA_VALIDATOR_NOT_AVAILABLE`     | `service.schema_validator_not_available`                         |             |
+| `SERVICE_STORE_REPOSITORY_NOT_AVAILABLE`     | `service.store_repository_not_available`                         |             |
+| `SERVICE_TUPLE_FILTER_NOT_AVAILABLE`         | `service.tuple_filter_not_available`                             |             |
+| `SERVICE_TUPLE_REPOSITORY_NOT_AVAILABLE`     | `service.tuple_repository_not_available`                         |             |
+| `STORE_NAME_REQUIRED`                        | `store.name_required`                                            |             |
+| `STORE_NAME_TOO_LONG`                        | `store.name_too_long`                                            |             |
+| `STORE_NOT_FOUND`                            | `store.not_found`                                                |             |
+| `TRANSLATION_FILE_NOT_FOUND`                 | `translation.file_not_found`                                     |             |
+| `TRANSLATION_UNSUPPORTED_FORMAT`             | `translation.unsupported_format`                                 |             |
 | `TUPLE_OPERATION_DELETE_DESCRIPTION`         | `tuple_operation.delete.description`                             |             |
 | `TUPLE_OPERATION_WRITE_DESCRIPTION`          | `tuple_operation.write.description`                              |             |
+| `YAML_CANNOT_READ_FILE`                      | `yaml.cannot_read_file`                                          |             |
+| `YAML_FILE_DOES_NOT_EXIST`                   | `yaml.file_does_not_exist`                                       |             |
+| `YAML_INVALID_STRUCTURE`                     | `yaml.invalid_structure`                                         |             |
+| `YAML_INVALID_SYNTAX_EMPTY_KEY`              | `yaml.invalid_syntax_empty_key`                                  |             |
+| `YAML_INVALID_SYNTAX_MISSING_COLON`          | `yaml.invalid_syntax_missing_colon`                              |             |
+| `YAML_INVALID_SYNTAX_MISSING_VALUE`          | `yaml.invalid_syntax_missing_value`                              |             |
 
 ## Translation Tables
 
 The following tables show all available translations for each message key used throughout the OpenFGA PHP SDK.
+
+### `assertions.empty_collection`
+
+| Locale | Translation                                     |
+| ------ | ----------------------------------------------- |
+| `en`   | Assertions collection cannot be empty           |
+| `es`   | La colección de aserciones no puede estar vacía |
+
+### `assertions.invalid_tuple_key`
+
+| Locale | Translation                                                                               |
+| ------ | ----------------------------------------------------------------------------------------- |
+| `en`   | Assertion contains invalid tuple key: user, relation, and object are required             |
+| `es`   | La aserción contiene una clave de tupla inválida: se requieren usuario, relación y objeto |
 
 ### `auth.access_token_must_be_string`
 
@@ -248,6 +320,20 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------- |
 | `en`   | Invalid authentication credentials provided.            |
 | `es`   | Credenciales de autenticación inválidas proporcionadas. |
+
+### `validation.batch_tuple_chunk_size_exceeded`
+
+| Locale | Translation                                         |
+| ------ | --------------------------------------------------- |
+| `en`   | Chunk size cannot exceed %max_size%                 |
+| `es`   | El tamaño del fragmento no puede exceder %max_size% |
+
+### `validation.batch_tuple_chunk_size_positive`
+
+| Locale | Translation                                         |
+| ------ | --------------------------------------------------- |
+| `en`   | Chunk size must be a positive integer               |
+| `es`   | El tamaño del fragmento debe ser un entero positivo |
 
 ### `exception.client.authentication`
 
@@ -360,6 +446,27 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------- |
 | `en`   | HTTP stream factory is not configured          |
 | `es`   | La fábrica de streams HTTP no está configurada |
+
+### `exception.config.invalid_language`
+
+| Locale | Translation                                         |
+| ------ | --------------------------------------------------- |
+| `en`   | Invalid language code provided: %language%          |
+| `es`   | Código de idioma inválido proporcionado: %language% |
+
+### `exception.config.invalid_retry_count`
+
+| Locale | Translation                                            |
+| ------ | ------------------------------------------------------ |
+| `en`   | Invalid retry count provided: %retries%                |
+| `es`   | Número de reintentos inválido proporcionado: %retries% |
+
+### `exception.config.invalid_url`
+
+| Locale | Translation                       |
+| ------ | --------------------------------- |
+| `en`   | Invalid URL provided: %url%       |
+| `es`   | URL inválida proporcionada: %url% |
 
 ### `consistency.higher_consistency.description`
 
@@ -501,6 +608,20 @@ The following tables show all available translations for each message key used t
 | `en`   | JWT token is not yet valid    |
 | `es`   | El token JWT aún no es válido |
 
+### `model.duplicate_type`
+
+| Locale | Translation                                          |
+| ------ | ---------------------------------------------------- |
+| `en`   | Duplicate type definition found: %type%              |
+| `es`   | Se encontró una definición de tipo duplicada: %type% |
+
+### `model.invalid_identifier_format`
+
+| Locale | Translation                                                                                                              |
+| ------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `en`   | Invalid identifier format: identifiers cannot contain whitespace. Found in %identifier%                                  |
+| `es`   | Formato de identificador inválido: los identificadores no pueden contener espacios en blanco. Encontrado en %identifier% |
+
 ### `model.invalid_tuple_key`
 
 | Locale | Translation                                             |
@@ -515,12 +636,26 @@ The following tables show all available translations for each message key used t
 | `en`   | Leaf must contain at least one of users, computed or tupleToUserset  |
 | `es`   | Leaf debe contener al menos uno de: users, computed o tupleToUserset |
 
+### `model.no_models_in_store`
+
+| Locale | Translation                                                        |
+| ------ | ------------------------------------------------------------------ |
+| `en`   | No authorization models found in store %store_id%                  |
+| `es`   | No se encontraron modelos de autorización en el almacén %store_id% |
+
 ### `model.source_info_file_empty`
 
 | Locale | Translation                             |
 | ------ | --------------------------------------- |
 | `en`   | SourceInfo::$file cannot be empty.      |
 | `es`   | SourceInfo::$file no puede estar vacío. |
+
+### `model.type_definitions_empty`
+
+| Locale | Translation                                     |
+| ------ | ----------------------------------------------- |
+| `en`   | Type definitions cannot be empty                |
+| `es`   | Las definiciones de tipo no pueden estar vacías |
 
 ### `model.typed_wildcard_type_empty`
 
@@ -669,6 +804,13 @@ The following tables show all available translations for each message key used t
 | `en`   | Store name cannot be empty                 |
 | `es`   | El nombre del almacén no puede estar vacío |
 
+### `request.transactional_limit_exceeded`
+
+| Locale | Translation                                                                                                                               |
+| ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `en`   | Transactional writeTuples exceeded limit: %count% operations (max 100). Use non-transactional mode or split into multiple requests.       |
+| `es`   | WriteTuples transaccional excedió el límite: %count% operaciones (máx. 100). Use modo no transaccional o divida en múltiples solicitudes. |
+
 ### `request.type_empty`
 
 | Locale | Translation                  |
@@ -682,6 +824,13 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------- |
 | `en`   | User cannot be empty            |
 | `es`   | El usuario no puede estar vacío |
+
+### `response.unexpected_type`
+
+| Locale | Translation                           |
+| ------ | ------------------------------------- |
+| `en`   | Unexpected response type received     |
+| `es`   | Tipo de respuesta inesperado recibido |
 
 ### `result.failure_no_value`
 
@@ -753,6 +902,76 @@ The following tables show all available translations for each message key used t
 | `en`   | Item type is not defined for %className%              |
 | `es`   | El tipo de elemento no está definido para %className% |
 
+### `service.http_not_available`
+
+| Locale | Translation                 |
+| ------ | --------------------------- |
+| `en`   | HTTP service not available  |
+| `es`   | Servicio HTTP no disponible |
+
+### `service.schema_validator_not_available`
+
+| Locale | Translation                        |
+| ------ | ---------------------------------- |
+| `en`   | Schema validator not available     |
+| `es`   | Validador de esquema no disponible |
+
+### `service.store_repository_not_available`
+
+| Locale | Translation                          |
+| ------ | ------------------------------------ |
+| `en`   | Store repository not available       |
+| `es`   | Repositorio de almacén no disponible |
+
+### `service.tuple_filter_not_available`
+
+| Locale | Translation                                |
+| ------ | ------------------------------------------ |
+| `en`   | Tuple filter service not available         |
+| `es`   | Servicio de filtro de tuplas no disponible |
+
+### `service.tuple_repository_not_available`
+
+| Locale | Translation                         |
+| ------ | ----------------------------------- |
+| `en`   | Tuple repository not available      |
+| `es`   | Repositorio de tuplas no disponible |
+
+### `store.name_required`
+
+| Locale | Translation                                               |
+| ------ | --------------------------------------------------------- |
+| `en`   | Store name is required and cannot be empty                |
+| `es`   | El nombre del almacén es requerido y no puede estar vacío |
+
+### `store.name_too_long`
+
+| Locale | Translation                                                                          |
+| ------ | ------------------------------------------------------------------------------------ |
+| `en`   | Store name exceeds maximum length of %d characters (provided: %d)                    |
+| `es`   | El nombre del almacén excede la longitud máxima de %d caracteres (proporcionado: %d) |
+
+### `store.not_found`
+
+| Locale | Translation                  |
+| ------ | ---------------------------- |
+| `en`   | Store %s was not found       |
+| `es`   | No se encontró el almacén %s |
+
+### `translation.file_not_found`
+
+| Locale | Translation                                     |
+| ------ | ----------------------------------------------- |
+| `en`   | Translation file not found: %resource%          |
+| `es`   | Archivo de traducción no encontrado: %resource% |
+
+### `translation.unsupported_format`
+
+| Locale | Translation                                              |
+| ------ | -------------------------------------------------------- |
+| `en`   | Unsupported translation file format: %format%            |
+| `es`   | Formato de archivo de traducción no compatible: %format% |
+
 ### `tuple_operation.delete.description`
 
 | Locale | Translation                                                                            |
@@ -767,6 +986,48 @@ The following tables show all available translations for each message key used t
 | `en`   | Adds a new relationship tuple, granting permissions or establishing relationships |
 | `es`   | Agrega una nueva tupla de relación, otorgando permisos o estableciendo relaciones |
 
+### `yaml.cannot_read_file`
+
+| Locale | Translation                             |
+| ------ | --------------------------------------- |
+| `en`   | Cannot read file: %filename%            |
+| `es`   | No se puede leer el archivo: %filename% |
+
+### `yaml.file_does_not_exist`
+
+| Locale | Translation                      |
+| ------ | -------------------------------- |
+| `en`   | File does not exist: %filename%  |
+| `es`   | El archivo no existe: %filename% |
+
+### `yaml.invalid_structure`
+
+| Locale | Translation                                        |
+| ------ | -------------------------------------------------- |
+| `en`   | Invalid YAML structure on line %line_number%       |
+| `es`   | Estructura YAML inválida en la línea %line_number% |
+
+### `yaml.invalid_syntax_empty_key`
+
+| Locale | Translation                                                   |
+| ------ | ------------------------------------------------------------- |
+| `en`   | Invalid YAML syntax on line %line_number%: empty key          |
+| `es`   | Sintaxis YAML inválida en la línea %line_number%: clave vacía |
+
+### `yaml.invalid_syntax_missing_colon`
+
+| Locale | Translation                                                        |
+| ------ | ------------------------------------------------------------------ |
+| `en`   | Invalid YAML syntax on line %line_number%: missing colon           |
+| `es`   | Sintaxis YAML inválida en la línea %line_number%: falta dos puntos |
+
+### `yaml.invalid_syntax_missing_value`
+
+| Locale | Translation                                                   |
+| ------ | ------------------------------------------------------------- |
+| `en`   | Invalid YAML syntax on line %line_number%: missing value      |
+| `es`   | Sintaxis YAML inválida en la línea %line_number%: falta valor |
+
 ## Methods
 
 #### key
@@ -778,7 +1039,7 @@ public function key(): string
 
 Get the translation key for this message.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Messages.php#L275)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Messages.php#L366)
 
 #### Returns
 

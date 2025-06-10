@@ -71,7 +71,7 @@ Get the direct userset value for this userset. A direct userset represents an im
 #### getIntersection
 
 ```php
-public function getIntersection(): UsersetsInterface<UsersetInterface>|null
+public function getIntersection(): UsersetsInterface|null
 
 ```
 
@@ -81,7 +81,7 @@ Get the intersection operation specification for this userset. An intersection o
 
 #### Returns
 
-[`UsersetsInterface`](Models/Collections/UsersetsInterface.md)&lt;[`UsersetInterface`](UsersetInterface.md)&gt; &#124; `null` — The collection of usersets to intersect, or null if not used
+[`UsersetsInterface`](Models/Collections/UsersetsInterface.md) &#124; `null` — The collection of usersets to intersect, or null if not used
 
 #### getTupleToUserset
 
@@ -101,7 +101,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 #### getUnion
 
 ```php
-public function getUnion(): UsersetsInterface<UsersetInterface>|null
+public function getUnion(): UsersetsInterface|null
 
 ```
 
@@ -111,7 +111,7 @@ Get the union operation specification for this userset. A union operation repres
 
 #### Returns
 
-[`UsersetsInterface`](Models/Collections/UsersetsInterface.md)&lt;[`UsersetInterface`](UsersetInterface.md)&gt; &#124; `null` — The collection of usersets to unite, or null if not used
+[`UsersetsInterface`](Models/Collections/UsersetsInterface.md) &#124; `null` — The collection of usersets to unite, or null if not used
 
 ### Other
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\{AssertionTupleKey, AssertionTupleKeyInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 describe('AssertionTupleKey Model', function (): void {
     test('implements AssertionTupleKeyInterface', function (): void {

@@ -280,7 +280,7 @@ public function jsonSerialize(): array<int|string, mixed>
 
 Serialize the tuple keys collection for JSON encoding. This method prepares the collection of tuple keys for JSON serialization, ensuring that each tuple key is properly formatted for API requests or storage.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/TupleKeysInterface.php#L34)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/TupleKeysInterface.php#L31)
 
 #### Returns
 

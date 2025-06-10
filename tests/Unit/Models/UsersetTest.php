@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Models;
 
 use OpenFGA\Models\Collections\Usersets;
 use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, Userset, UsersetInterface};
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 use stdClass;
 
 describe('Userset Model', function (): void {

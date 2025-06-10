@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace OpenFGA\Responses;
 
-use OpenFGA\Models\AssertionInterface;
 use OpenFGA\Models\Collections\AssertionsInterface;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 
 /**
  * Interface for assertions reading response objects.
@@ -41,7 +40,7 @@ interface ReadAssertionsResponseInterface extends ResponseInterface
      * with the authorization model. Each assertion defines a test case with expected
      * permission check results for validating model behavior.
      *
-     * @return AssertionsInterface<AssertionInterface>|null The collection of assertions, or null if no assertions are defined
+     * @return AssertionsInterface|null The collection of assertions, or null if no assertions are defined
      */
     public function getAssertions(): ?AssertionsInterface;
 

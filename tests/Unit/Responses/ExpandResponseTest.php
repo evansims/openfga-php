@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\{Node, UsersetTree};
 use OpenFGA\Responses\{ExpandResponse, ExpandResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 

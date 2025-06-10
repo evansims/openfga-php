@@ -9,7 +9,7 @@ use OpenFGA\Models\{AuthorizationModel, TypeDefinition};
 use OpenFGA\Models\Collections\{AuthorizationModels, TypeDefinitions};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Responses\{ListAuthorizationModelsResponse, ListAuthorizationModelsResponseInterface};
-use OpenFGA\Schema\{SchemaInterface, SchemaValidator};
+use OpenFGA\Schemas\{SchemaInterface, SchemaValidator};
 use OpenFGA\Tests\Support\Responses\SimpleResponse;
 use Psr\Http\Message\RequestInterface;
 

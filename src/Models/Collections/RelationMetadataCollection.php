@@ -17,9 +17,7 @@ use OpenFGA\Models\{ModelInterface, RelationMetadata, RelationMetadataInterface}
  * The collection uses relation names as keys, enabling efficient retrieval of
  * metadata for specific relations within a type definition.
  *
- * @extends KeyedCollection<RelationMetadataInterface>
- *
- * @implements RelationMetadataCollectionInterface<RelationMetadataInterface>
+ * @extends KeyedCollection<\OpenFGA\Models\RelationMetadataInterface>
  */
 final class RelationMetadataCollection extends KeyedCollection implements RelationMetadataCollectionInterface
 {

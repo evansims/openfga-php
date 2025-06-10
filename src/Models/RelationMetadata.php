@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Models;
 
 use OpenFGA\Models\Collections\{RelationReferences, RelationReferencesInterface};
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
 /**
@@ -26,9 +26,9 @@ final class RelationMetadata implements RelationMetadataInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string|null                                                  $module
-     * @param RelationReferencesInterface<RelationReferenceInterface>|null $directlyRelatedUserTypes
-     * @param SourceInfoInterface|null                                     $sourceInfo
+     * @param string|null                      $module
+     * @param RelationReferencesInterface|null $directlyRelatedUserTypes
+     * @param SourceInfoInterface|null         $sourceInfo
      */
     public function __construct(
         private readonly ?string $module = null,

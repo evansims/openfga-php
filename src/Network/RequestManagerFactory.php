@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Network;
 
 use OpenFGA\Observability\TelemetryInterface;
-use Psr\Http\Client\ClientInterface as HttpClientInterface;
+use Psr\Http\Client\ClientInterface as PsrHttpClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamFactoryInterface};
 
 /**
@@ -20,12 +20,15 @@ final readonly class RequestManagerFactory
     public function __construct(
         private string $url,
         private ?string $authorizationHeader,
-        private ?HttpClientInterface $httpClient,
+        private ?PsrHttpClientInterface $httpClient,
         private ?StreamFactoryInterface $httpStreamFactory,
         private ?RequestFactoryInterface $httpRequestFactory,
         private ?ResponseFactoryInterface $httpResponseFactory,
         private ?TelemetryInterface $telemetry,
         private int $defaultMaxRetries = 3,
+        private ?HttpClientInterface $httpClientWrapper = null,
+        private ?RetryStrategyInterface $retryStrategy = null,
+        private ?ConcurrentExecutorInterface $concurrentExecutor = null,
     ) {
     }
 
@@ -43,6 +46,9 @@ final readonly class RequestManagerFactory
             httpRequestFactory: $this->httpRequestFactory,
             httpResponseFactory: $this->httpResponseFactory,
             telemetry: $this->telemetry,
+            httpClientWrapper: $this->httpClientWrapper,
+            retryStrategy: $this->retryStrategy,
+            concurrentExecutor: $this->concurrentExecutor,
         );
     }
 
@@ -60,6 +66,9 @@ final readonly class RequestManagerFactory
             httpRequestFactory: $this->httpRequestFactory,
             httpResponseFactory: $this->httpResponseFactory,
             telemetry: $this->telemetry,
+            httpClientWrapper: $this->httpClientWrapper,
+            retryStrategy: $this->retryStrategy ?? new ExponentialBackoffRetryStrategy(0),
+            concurrentExecutor: $this->concurrentExecutor,
         );
     }
 
@@ -79,6 +88,9 @@ final readonly class RequestManagerFactory
             httpRequestFactory: $this->httpRequestFactory,
             httpResponseFactory: $this->httpResponseFactory,
             telemetry: $this->telemetry,
+            httpClientWrapper: $this->httpClientWrapper,
+            retryStrategy: $this->retryStrategy ?? new ExponentialBackoffRetryStrategy($maxRetries),
+            concurrentExecutor: $this->concurrentExecutor,
         );
     }
 }

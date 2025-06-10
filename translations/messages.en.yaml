@@ -13,6 +13,10 @@ dsl:
   unbalanced_parentheses_opening: 'Unbalanced parentheses: %count% unclosed opening %parentheses%'
   invalid_computed_userset: 'Invalid computed userset'
 
+assertions:
+  empty_collection: 'Assertions collection cannot be empty'
+  invalid_tuple_key: 'Assertion contains invalid tuple key: user, relation, and object are required'
+
 auth:
   invalid_response_format: 'Invalid response format'
   missing_required_fields: 'Missing required fields in response'
@@ -35,6 +39,9 @@ network:
   error: 'Network error: %message%'
   unexpected_status: 'API responded with an unexpected status code: %status_code%'
 
+response:
+  unexpected_type: 'Unexpected response type received'
+
 result:
   success_no_error: 'Success has no error'
   failure_no_value: 'Failure has no value'
@@ -55,6 +62,15 @@ request:
 validation:
   batch_check_empty: 'Batch check request cannot be empty'
   invalid_correlation_id: 'Correlation ID "%correlationId%" is invalid. Must match pattern: %pattern%'
+  batch_tuple_chunk_size_positive: 'Chunk size must be a positive integer'
+  batch_tuple_chunk_size_exceeded: 'Chunk size cannot exceed %max_size%'
+
+service:
+  http_not_available: 'HTTP service not available'
+  schema_validator_not_available: 'Schema validator not available'
+  tuple_filter_not_available: 'Tuple filter service not available'
+  store_repository_not_available: 'Store repository not available'
+  tuple_repository_not_available: 'Tuple repository not available'
 
 model:
   invalid_tuple_key: 'Invalid tuple_key provided to Assertion::fromArray'
@@ -62,6 +78,12 @@ model:
   typed_wildcard_type_empty: 'TypedWildcard::$type cannot be empty.'
   source_info_file_empty: 'SourceInfo::$file cannot be empty.'
   leaf_missing_content: 'Leaf must contain at least one of users, computed or tupleToUserset'
+  not_found: 'Authorization model %model_id% was not found'
+  no_models_in_store: 'No authorization models found in store %store_id%'
+  validation_failed: 'Model validation failed: %message%'
+  type_definitions_empty: 'Type definitions cannot be empty'
+  clone_source_not_found: 'Source model not found for cloning'
+  duplicate_type: 'Duplicate type definition found: %type%'
 
 collection:
   undefined_item_type: 'Undefined item type for %class%. Define the $itemType property or override the constructor.'
@@ -99,6 +121,9 @@ exception:
     http_request_factory_missing: 'HTTP request factory is not configured'
     http_response_factory_missing: 'HTTP response factory is not configured'
     http_stream_factory_missing: 'HTTP stream factory is not configured'
+    invalid_url: 'Invalid URL provided: %url%'
+    invalid_language: 'Invalid language code provided: %language%'
+    invalid_retry_count: 'Invalid retry count provided: %retries%'
   network:
     conflict: 'Conflict (409): The request conflicts with the current state'
     forbidden: 'Forbidden (403): Access denied to the requested resource'
@@ -122,3 +147,23 @@ tuple_operation:
     description: 'Adds a new relationship tuple, granting permissions or establishing relationships'
   delete:
     description: 'Removes an existing relationship tuple, revoking permissions or removing relationships'
+
+store:
+  name_required: 'Store name is required and cannot be empty'
+  name_too_long: 'Store name exceeds maximum length of %d characters (provided: %d)'
+  not_found: 'Store %s was not found'
+
+translation:
+  file_not_found: 'Translation file not found: %resource%'
+  unsupported_format: 'Unsupported translation file format: %format%'
+
+yaml:
+  file_does_not_exist: 'File does not exist: %filename%'
+  cannot_read_file: 'Cannot read file: %filename%'
+  invalid_syntax_missing_colon: 'Invalid YAML syntax on line %line_number%: missing colon'
+  invalid_syntax_missing_value: 'Invalid YAML syntax on line %line_number%: missing value'
+  invalid_syntax_empty_key: 'Invalid YAML syntax on line %line_number%: empty key'
+  invalid_structure: 'Invalid YAML structure on line %line_number%'
+
+response:
+  unexpected_type: 'Unexpected response type received'

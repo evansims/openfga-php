@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models\Collections;
 use OpenFGA\Models\Collections\{ConditionParameters, Conditions, ConditionsInterface};
 use OpenFGA\Models\{Condition, ConditionMetadata, ConditionParameter, SourceInfo};
 use OpenFGA\Models\Enums\TypeName;
-use OpenFGA\Schema\{CollectionSchemaInterface, SchemaInterface};
+use OpenFGA\Schemas\{CollectionSchemaInterface, SchemaInterface};
 
 describe('Conditions Collection', function (): void {
     test('implements interface', function (): void {

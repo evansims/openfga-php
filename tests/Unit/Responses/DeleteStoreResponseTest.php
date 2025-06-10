@@ -6,7 +6,7 @@ namespace OpenFGA\Tests\Unit\Responses;
 
 use Exception;
 use OpenFGA\Responses\{DeleteStoreResponse, DeleteStoreResponseInterface};
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface};
 
 describe('DeleteStoreResponse', function (): void {

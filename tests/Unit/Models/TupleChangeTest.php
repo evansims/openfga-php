@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Unit\Models;
 use DateTimeImmutable;
 use OpenFGA\Models\{Condition, TupleChange, TupleChangeInterface, TupleKey};
 use OpenFGA\Models\Enums\TupleOperation;
-use OpenFGA\Schema\SchemaInterface;
+use OpenFGA\Schemas\SchemaInterface;
 use ValueError;
 
 describe('TupleChange Model', function (): void {

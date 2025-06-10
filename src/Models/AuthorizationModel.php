@@ -6,10 +6,10 @@ namespace OpenFGA\Models;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Language\Transformer;
 use OpenFGA\Models\Collections\{Conditions, ConditionsInterface, TypeDefinitions, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
-use OpenFGA\Schema\{Schema, SchemaInterface, SchemaProperty};
-use OpenFGA\Transformer;
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 use ReflectionException;
 
@@ -32,10 +32,10 @@ final class AuthorizationModel implements AuthorizationModelInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                                            $id              authorization model ID
-     * @param SchemaVersion                                     $schemaVersion   schema version of the authorization model
-     * @param TypeDefinitionsInterface<TypeDefinitionInterface> $typeDefinitions type definitions for the authorization model
-     * @param ConditionsInterface<ConditionInterface>|null      $conditions      conditions for the authorization model
+     * @param string                   $id              authorization model ID
+     * @param SchemaVersion            $schemaVersion   schema version of the authorization model
+     * @param TypeDefinitionsInterface $typeDefinitions type definitions for the authorization model
+     * @param ConditionsInterface|null $conditions      conditions for the authorization model
      */
     public function __construct(
         private readonly string $id,

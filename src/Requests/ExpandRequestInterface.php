@@ -53,7 +53,7 @@ interface ExpandRequestInterface extends RequestInterface
      * hypothetical or pending relationship changes would affect the authorization
      * graph without permanently modifying the store.
      *
-     * @return TupleKeysInterface<TupleKeyInterface>|null Additional relationship tuples for evaluation, or null if none provided
+     * @return TupleKeysInterface|null Additional relationship tuples for evaluation, or null if none provided
      */
     public function getContextualTuples(): ?TupleKeysInterface;
 

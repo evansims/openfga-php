@@ -7,7 +7,7 @@ namespace OpenFGA\Tests\Contract;
 use OpenFGA\Models\{Assertion, AssertionTupleKey, AuthorizationModel, Store, Tuple, TupleKey, TypeDefinition, User};
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitions};
 use OpenFGA\Models\Enums\SchemaVersion;
-use OpenFGA\Schema\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidator;
 use RuntimeException;
 
 use function array_key_exists;

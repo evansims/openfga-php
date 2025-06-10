@@ -24,17 +24,17 @@ Interface for tuple changes listing response objects. This interface defines the
 #### getChanges
 
 ```php
-public function getChanges(): TupleChangesInterface<TupleChangeInterface>
+public function getChanges(): TupleChangesInterface
 
 ```
 
 Get the collection of tuple changes. Returns a type-safe collection containing the tuple change objects from the current page of results. Each change represents a modification (insert or delete) to the relationship data, including timestamps and operation details.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L46)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L45)
 
 #### Returns
 
-[`TupleChangesInterface`](Models/Collections/TupleChangesInterface.md)&lt;[`TupleChangeInterface`](Models/TupleChangeInterface.md)&gt; — The collection of tuple changes
+[`TupleChangesInterface`](Models/Collections/TupleChangesInterface.md) — The collection of tuple changes
 
 #### getContinuationToken
 
@@ -45,7 +45,7 @@ public function getContinuationToken(): string|null
 
 Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of tuple changes exceeds the page size limit. If null, there are no more results to fetch.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L57)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L56)
 
 #### Returns
 

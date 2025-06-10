@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models\Collections;
 
-use OpenFGA\Models\ConditionParameterInterface;
 use Override;
 
 /**
- * @template T of ConditionParameterInterface
- *
- * @extends IndexedCollectionInterface<T>
+ * @extends IndexedCollectionInterface<\OpenFGA\Models\ConditionParameterInterface>
  */
 interface ConditionParametersInterface extends IndexedCollectionInterface
 {

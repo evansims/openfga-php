@@ -224,7 +224,7 @@ public function jsonSerialize(): array<string, mixed>
 
 Serialize the collection to an array.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/TypeDefinitionRelationsInterface.php#L23)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/TypeDefinitionRelationsInterface.php#L20)
 
 #### Returns
 
