@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
+use InvalidArgumentException;
 use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
 use Override;
 
@@ -26,12 +27,17 @@ final class ObjectRelation implements ObjectRelationInterface
 
     /**
      * @param ?string $object   The object identifier or null
-     * @param ?string $relation The relation name or null
+     * @param string  $relation The non-empty relation name
+     *
+     * @throws InvalidArgumentException If relation is empty
      */
     public function __construct(
         private readonly ?string $object = null,
-        private readonly ?string $relation = null,
+        private readonly string $relation = '',
     ) {
+        if ('' === $this->relation) {
+            throw new InvalidArgumentException('Relation cannot be empty.');
+        }
     }
 
     /**
@@ -44,7 +50,7 @@ final class ObjectRelation implements ObjectRelationInterface
             className: self::class,
             properties: [
                 new SchemaProperty(name: 'object', type: 'string', required: false),
-                new SchemaProperty(name: 'relation', type: 'string', required: false),
+                new SchemaProperty(name: 'relation', type: 'string', required: true),
             ],
         );
     }
@@ -62,7 +68,7 @@ final class ObjectRelation implements ObjectRelationInterface
      * @inheritDoc
      */
     #[Override]
-    public function getRelation(): ?string
+    public function getRelation(): string
     {
         return $this->relation;
     }

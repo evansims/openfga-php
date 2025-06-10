@@ -45,9 +45,9 @@ interface ObjectRelationInterface extends ModelInterface
      * The relation describes what kind of permission or relationship exists.
      * Common examples include "owner", "viewer", "editor", "member".
      *
-     * @return ?string The relation name, or null if not specified
+     * @return string The non-empty relation name
      */
-    public function getRelation(): ?string;
+    public function getRelation(): string;
 
     /**
      * @return array{object?: string, relation?: string}
