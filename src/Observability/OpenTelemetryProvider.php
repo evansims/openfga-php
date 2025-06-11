@@ -602,7 +602,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
      */
     private function createAttributes(array $attributes): mixed
     {
-        if (class_exists('OpenTelemetry\API\Common\Attribute\Attributes')) {
+        if (class_exists('OpenTelemetry\API\Common\Attributes\Attributes')) {
             return Attributes::create($attributes);
         }
 

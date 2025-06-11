@@ -105,9 +105,9 @@ final class TupleFilterService implements TupleFilterServiceInterface
     private function getTupleKey(TupleKeyInterface $tuple): string
     {
         $keyData = [
-            'u' => (string) ($tuple->getUser() ?? ''),
-            'r' => (string) ($tuple->getRelation() ?? ''),
-            'o' => (string) ($tuple->getObject() ?? ''),
+            'u' => $tuple->getUser() ?? '',
+            'r' => $tuple->getRelation() ?? '',
+            'o' => $tuple->getObject() ?? '',
         ];
 
         $condition = $tuple->getCondition();
@@ -116,7 +116,7 @@ final class TupleFilterService implements TupleFilterServiceInterface
             $keyData['cond_name'] = $condition->getName();
             $context = $condition->getContext();
 
-            if (! empty($context)) {
+            if (null !== $context && [] !== $context) {
                 ksort($context);
                 $keyData['cond_ctx'] = $context;
             }
