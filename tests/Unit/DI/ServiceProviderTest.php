@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\DI;
 
 use OpenFGA\Authentication\TokenAuthentication;
-use OpenFGA\DI\{ServiceNotFoundException, ServiceProvider, ServiceProviderInterface};
+use OpenFGA\{Configuration, ConfigurationInterface, ServiceNotFoundException};
 use OpenFGA\Events\{EventDispatcher};
 use OpenFGA\Network\{ExponentialBackoffRetryStrategy, PsrHttpClient};
 use OpenFGA\Network\RequestManager;
@@ -19,12 +19,12 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
- * Unit tests for ServiceProvider.
+ * Unit tests for Configuration.
  *
- * Tests the dependency injection service provider implementation,
+ * Tests the dependency injection configuration provider implementation,
  * verifying service registration, retrieval, and factory functionality.
  */
-#[CoversClass(ServiceProvider::class)]
+#[CoversClass(Configuration::class)]
 #[UsesClass(ServiceNotFoundException::class)]
 #[UsesClass(EventDispatcher::class)]
 #[UsesClass(TelemetryEventListener::class)]
@@ -48,11 +48,11 @@ use stdClass;
 #[UsesClass(PsrHttpClient::class)]
 final class ServiceProviderTest extends TestCase
 {
-    private ServiceProvider $provider;
+    private Configuration $provider;
 
     protected function setUp(): void
     {
-        $this->provider = new ServiceProvider('https://api.fga.example');
+        $this->provider = new Configuration('https://api.fga.example');
     }
 
     public function testAllCoreServicesAreRegistered(): void
@@ -104,7 +104,7 @@ final class ServiceProviderTest extends TestCase
     public function testConstructorWithAuthentication(): void
     {
         $auth = new TokenAuthentication('test-token');
-        $provider = new ServiceProvider('https://api.fga.example', null, $auth);
+        $provider = new Configuration('https://api.fga.example', null, $auth);
 
         $authService = $provider->get('authentication');
         $this->assertInstanceOf(AuthenticationService::class, $authService);
@@ -112,7 +112,7 @@ final class ServiceProviderTest extends TestCase
 
     public function testConstructorWithOptions(): void
     {
-        $provider = new ServiceProvider(
+        $provider = new Configuration(
             url: 'https://api.fga.example',
             storeId: null,
             authentication: null,
@@ -128,7 +128,7 @@ final class ServiceProviderTest extends TestCase
 
     public function testConstructorWithStoreId(): void
     {
-        $provider = new ServiceProvider('https://api.fga.example', '01ARZ3NDEKTSV4RRFFQ69G5FAV');
+        $provider = new Configuration('https://api.fga.example', '01ARZ3NDEKTSV4RRFFQ69G5FAV');
 
         $this->assertTrue($provider->has('repository.model'));
         $this->assertTrue($provider->has('repository.assertion'));
@@ -137,7 +137,7 @@ final class ServiceProviderTest extends TestCase
     public function testConstructorWithTelemetry(): void
     {
         $telemetry = new NoOpTelemetryProvider;
-        $provider = new ServiceProvider('https://api.fga.example', null, null, $telemetry);
+        $provider = new Configuration('https://api.fga.example', null, null, $telemetry);
 
         $telemetryService = $provider->get('telemetry');
         $this->assertInstanceOf(TelemetryServiceInterface::class, $telemetryService);
@@ -161,7 +161,7 @@ final class ServiceProviderTest extends TestCase
     public function testGetThrowsExceptionForUnregisteredService(): void
     {
         $this->expectException(ServiceNotFoundException::class);
-        $this->expectExceptionMessage("Service 'nonexistent' not found in service provider");
+        $this->expectExceptionMessage('Service "nonexistent" not found. Please ensure the service is registered with the configuration provider.');
 
         $this->provider->get('nonexistent');
     }
@@ -180,9 +180,9 @@ final class ServiceProviderTest extends TestCase
         $this->assertTrue($this->provider->has('service.authorization'));
     }
 
-    public function testImplementsServiceProviderInterface(): void
+    public function testImplementsConfigurationInterface(): void
     {
-        $this->assertInstanceOf(ServiceProviderInterface::class, $this->provider);
+        $this->assertInstanceOf(ConfigurationInterface::class, $this->provider);
     }
 
     public function testServiceDependenciesWork(): void

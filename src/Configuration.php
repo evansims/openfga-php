@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\DI;
+namespace OpenFGA;
 
 use LogicException;
 use OpenFGA\Authentication\AuthenticationInterface;
@@ -21,18 +21,18 @@ use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamF
 use function is_string;
 
 /**
- * Service provider for managing OpenFGA service registration and configuration.
+ * Configuration provider for managing OpenFGA service registration and configuration.
  *
- * This provider encapsulates the complex service dependency graph required
+ * This configuration provider encapsulates the complex service dependency graph required
  * for the OpenFGA client, providing a clean interface for service registration
  * and retrieval. It manages the lifecycle of all services and ensures proper
  * dependency injection while maintaining performance through lazy loading.
  *
- * The provider supports configuration through various sources and provides
- * both default implementations and the ability to override services with
- * custom implementations for testing or specialized use cases.
+ * The configuration supports various sources and provides both default implementations
+ * and the ability to override services with custom implementations for testing or
+ * specialized use cases.
  */
-final class ServiceProvider implements ServiceProviderInterface
+final class Configuration implements ConfigurationInterface
 {
     /**
      * @var array{
@@ -62,7 +62,7 @@ final class ServiceProvider implements ServiceProviderInterface
     private array $services = [];
 
     /**
-     * Create a new service provider with the specified configuration.
+     * Create a new configuration provider with the specified parameters.
      *
      * @param string                        $url             The OpenFGA API URL
      * @param string|null                   $storeId         The default store ID (optional)
@@ -137,6 +137,15 @@ final class ServiceProvider implements ServiceProviderInterface
         }
 
         return $service;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getLanguage(): string
+    {
+        return $this->getConfigLanguage();
     }
 
     /**
@@ -246,7 +255,7 @@ final class ServiceProvider implements ServiceProviderInterface
     }
 
     /**
-     * Register all service factories with the provider.
+     * Register all service factories with the configuration provider.
      */
     private function registerFactories(): void
     {
@@ -257,8 +266,7 @@ final class ServiceProvider implements ServiceProviderInterface
             $this->getTelemetryProvider(),
         ));
 
-        // Infrastructure services - removed ConfigurationService
-
+        // Infrastructure services
         $this->factory('telemetry', function (): TelemetryServiceInterface {
             $eventDispatcher = $this->get('event.dispatcher');
             $telemetryListener = $this->get('telemetry.listener');

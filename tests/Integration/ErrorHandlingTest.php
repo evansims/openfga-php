@@ -19,7 +19,7 @@ describe('Error Handling', function (): void {
         $this->httpStreamFactory = $this->responseFactory;
         $this->url = getOpenFgaUrl();
 
-        $this->client = new Client(
+        $this->client = Client::create(
             url: $this->url,
             httpClient: $this->httpClient,
             httpResponseFactory: $this->responseFactory,
@@ -171,7 +171,7 @@ describe('Error Handling', function (): void {
     });
 
     test('network errors', function (): void {
-        $invalidClient = new Client(
+        $invalidClient = Client::create(
             url: 'http://nonexistent-server:9999',
             httpClient: $this->httpClient,
             httpResponseFactory: $this->responseFactory,
@@ -318,7 +318,7 @@ describe('Error Handling', function (): void {
             $this->markTestSkipped('Authentication tests require FGA_CLIENT_ID to be set');
         }
 
-        $invalidClient = new Client(
+        $invalidClient = Client::create(
             url: $this->url,
             httpClient: $this->httpClient,
             httpResponseFactory: $this->responseFactory,

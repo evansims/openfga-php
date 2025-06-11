@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\DI;
+namespace OpenFGA;
 
 /**
- * Interface for dependency injection service providers.
+ * Interface for dependency injection configuration providers.
  *
- * This interface defines the contract for service providers that manage
+ * This interface defines the contract for configuration providers that manage
  * service registration, instantiation, and retrieval in the OpenFGA SDK.
  * It provides a clean abstraction for dependency injection while maintaining
  * simplicity and performance.
@@ -15,7 +15,7 @@ namespace OpenFGA\DI;
  * Implementations should provide lazy loading of services and support both
  * singleton and factory patterns for service creation.
  */
-interface ServiceProviderInterface
+interface ConfigurationInterface
 {
     /**
      * Register a service factory function.
@@ -43,6 +43,16 @@ interface ServiceProviderInterface
      * @return object|null The service instance, or null if the service is optional and not available
      */
     public function get(string $serviceId): ?object;
+
+    /**
+     * Get the configured language for i18n translations.
+     *
+     * Returns the language code that should be used for internationalization
+     * and localization throughout the SDK.
+     *
+     * @return string The configured language code
+     */
+    public function getLanguage(): string;
 
     /**
      * Check if a service is registered.

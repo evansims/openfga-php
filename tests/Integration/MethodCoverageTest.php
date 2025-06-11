@@ -14,7 +14,7 @@ describe('Method Coverage', function (): void {
         $httpClient = new FileGetContents($responseFactory);
         $url = getOpenFgaUrl();
 
-        $client = new Client(
+        $client = Client::create(
             url: $url,
             httpClient: $httpClient,
             httpResponseFactory: $responseFactory,
@@ -55,7 +55,7 @@ describe('Method Coverage', function (): void {
         $httpClient = new FileGetContents($responseFactory);
         $url = getOpenFgaUrl();
 
-        $client = new Client(
+        $client = Client::create(
             url: $url,
             httpClient: $httpClient,
             httpResponseFactory: $responseFactory,

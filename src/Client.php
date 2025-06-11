@@ -8,7 +8,6 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use LogicException;
 use OpenFGA\Authentication\AuthenticationInterface;
-use OpenFGA\DI\{ServiceProvider, ServiceProviderInterface};
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Language\Transformer;
 use OpenFGA\Models\{AuthorizationModel, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, Userset};
@@ -46,7 +45,7 @@ use Throwable;
  * @see ClientInterface For the complete API specification
  * @see https://openfga.dev/docs/getting-started/setup-sdk-client Setting up the client
  */
-final readonly class Client implements ClientInterface
+final class Client implements ClientInterface
 {
     /**
      * The version of the OpenFGA PHP SDK.
@@ -54,16 +53,25 @@ final readonly class Client implements ClientInterface
     public const string VERSION = '1.3.0';
 
     /**
-     * Service provider for dependency injection.
-     */
-    private ServiceProviderInterface $serviceProvider;
-
-    /**
      * Create a new OpenFGA client instance.
      *
-     * Configures the client with the specified OpenFGA API endpoint and authentication
-     * settings. The client supports multiple authentication methods and uses PSR HTTP
-     * factories for maximum compatibility with existing applications.
+     * Configures the client with a configuration provider that manages all dependencies
+     * including HTTP clients, authentication, telemetry, and other services. This
+     * approach provides maximum flexibility for dependency injection and testing.
+     *
+     * @param ConfigurationInterface|null $configuration The configuration provider containing all necessary dependencies
+     *
+     * @see https://openfga.dev/docs/getting-started/setup-sdk-client Client configuration guide
+     */
+    public function __construct(private ?ConfigurationInterface $configuration = null)
+    {
+    }
+
+    /**
+     * Create a new OpenFGA client instance with individual dependency parameters.
+     *
+     * This factory method provides a convenient way to create clients using individual
+     * parameters while internally using the Configuration-based architecture.
      *
      * @param string                        $url                 The OpenFGA API URL to connect to
      * @param AuthenticationInterface|null  $authentication      The authentication strategy to use for API requests
@@ -78,31 +86,33 @@ final readonly class Client implements ClientInterface
      *
      * @see https://openfga.dev/docs/getting-started/setup-sdk-client Client configuration guide
      */
-    public function __construct(
-        private string $url,
-        private ?AuthenticationInterface $authentication = null,
-        private string $language = 'en',
-        private ?int $httpMaxRetries = 3,
-        private ?HttpClientInterface $httpClient = null,
-        private ?ResponseFactoryInterface $httpResponseFactory = null,
-        private ?StreamFactoryInterface $httpStreamFactory = null,
-        private ?RequestFactoryInterface $httpRequestFactory = null,
-        private ?TelemetryInterface $telemetry = null,
-        private ?RetryStrategyInterface $retryStrategy = null,
-    ) {
-        $this->serviceProvider = new ServiceProvider(
-            url: $this->url,
+    public static function create(
+        string $url,
+        ?AuthenticationInterface $authentication = null,
+        string $language = 'en',
+        ?int $httpMaxRetries = 3,
+        ?HttpClientInterface $httpClient = null,
+        ?ResponseFactoryInterface $httpResponseFactory = null,
+        ?StreamFactoryInterface $httpStreamFactory = null,
+        ?RequestFactoryInterface $httpRequestFactory = null,
+        ?TelemetryInterface $telemetry = null,
+        ?RetryStrategyInterface $retryStrategy = null,
+    ): self {
+        $configuration = new Configuration(
+            url: $url,
             storeId: null,
-            authentication: $this->authentication,
-            telemetry: $this->telemetry,
-            language: $this->language,
-            maxRetries: $this->httpMaxRetries ?? 3,
-            httpClient: $this->httpClient,
-            requestFactory: $this->httpRequestFactory,
-            responseFactory: $this->httpResponseFactory,
-            streamFactory: $this->httpStreamFactory,
-            retryStrategy: $this->retryStrategy,
+            authentication: $authentication,
+            telemetry: $telemetry,
+            language: $language,
+            maxRetries: $httpMaxRetries ?? 3,
+            httpClient: $httpClient,
+            requestFactory: $httpRequestFactory,
+            responseFactory: $httpResponseFactory,
+            streamFactory: $httpStreamFactory,
+            retryStrategy: $retryStrategy,
         );
+
+        return new self($configuration);
     }
 
     /**
@@ -120,7 +130,7 @@ final readonly class Client implements ClientInterface
         $lastRequest = $httpService->getLastRequest();
 
         if (! $lastRequest instanceof HttpRequestInterface) {
-            throw ClientError::Validation->exception(context: ['message' => Translator::trans(message: Messages::NO_LAST_REQUEST_FOUND, parameters: [], locale: $this->language, )]);
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(message: Messages::NO_LAST_REQUEST_FOUND, parameters: [], locale: $this->getConfiguration()->getLanguage(), )]);
         }
 
         return $lastRequest;
@@ -325,13 +335,38 @@ final readonly class Client implements ClientInterface
     }
 
     /**
+     * Get the configuration provider for this client.
+     *
+     * If no configuration was provided during construction, this method will create
+     * a default configuration. This enables backward compatibility while supporting
+     * the new Configuration-based architecture.
+     *
+     * @return ConfigurationInterface The configuration provider
+     */
+    public function getConfiguration(): ConfigurationInterface
+    {
+        if (! $this->configuration instanceof ConfigurationInterface) {
+            $this->configuration = new Configuration(
+                url: 'https://api.fga.example',
+                storeId: null,
+                authentication: null,
+                telemetry: null,
+                language: 'en',
+                maxRetries: 3,
+            );
+        }
+
+        return $this->configuration;
+    }
+
+    /**
      * Get the configured language for i18n translations.
      *
      * @return string The configured language code
      */
     public function getLanguage(): string
     {
-        return $this->language;
+        return $this->getConfiguration()->getLanguage();
     }
 
     /**
@@ -702,9 +737,9 @@ final readonly class Client implements ClientInterface
         $serviceId = 'service.assertion.' . $storeId;
 
         // Check if store-specific service exists
-        if ($this->serviceProvider->has(serviceId: $serviceId)) {
+        if ($this->getConfiguration()->has(serviceId: $serviceId)) {
             /** @var AssertionService $service */
-            $service = $this->serviceProvider->get(serviceId: $serviceId);
+            $service = $this->getConfiguration()->get(serviceId: $serviceId);
 
             if (! $service instanceof AssertionService) {
                 throw new LogicException('Assertion service not available');
@@ -723,10 +758,10 @@ final readonly class Client implements ClientInterface
         );
         $service = new AssertionService(
             assertionRepository: $assertionRepository,
-            language: $this->language,
+            language: $this->getConfiguration()->getLanguage(),
         );
 
-        $this->serviceProvider->set(
+        $this->getConfiguration()->set(
             serviceId: $serviceId,
             service: $service,
         );
@@ -742,7 +777,7 @@ final readonly class Client implements ClientInterface
     private function getAuthorizationService(): AuthorizationService
     {
         /** @var AuthorizationService $service */
-        $service = $this->serviceProvider->get(serviceId: 'service.authorization');
+        $service = $this->getConfiguration()->get(serviceId: 'service.authorization');
 
         if (! $service instanceof AuthorizationService) {
             throw new LogicException('Authorization service not available');
@@ -759,7 +794,7 @@ final readonly class Client implements ClientInterface
     private function getHttpService(): HttpService
     {
         /** @var HttpService $service */
-        $service = $this->serviceProvider->get(serviceId: 'http');
+        $service = $this->getConfiguration()->get(serviceId: 'http');
 
         if (! $service instanceof HttpService) {
             throw new LogicException('HTTP service not available');
@@ -783,9 +818,9 @@ final readonly class Client implements ClientInterface
         $serviceId = 'service.model.' . $storeId;
 
         // Check if store-specific service exists
-        if ($this->serviceProvider->has(serviceId: $serviceId)) {
+        if ($this->getConfiguration()->has(serviceId: $serviceId)) {
             /** @var ModelService $service */
-            $service = $this->serviceProvider->get(serviceId: $serviceId);
+            $service = $this->getConfiguration()->get(serviceId: $serviceId);
 
             if (! $service instanceof ModelService) {
                 throw new LogicException('Model service not available');
@@ -804,10 +839,10 @@ final readonly class Client implements ClientInterface
         );
         $service = new ModelService(
             modelRepository: $modelRepository,
-            language: $this->language,
+            language: $this->getConfiguration()->getLanguage(),
         );
 
-        $this->serviceProvider->set(
+        $this->getConfiguration()->set(
             serviceId: $serviceId,
             service: $service,
         );
@@ -823,7 +858,7 @@ final readonly class Client implements ClientInterface
     private function getSchemaValidator(): SchemaValidator
     {
         /** @var SchemaValidator $validator */
-        $validator = $this->serviceProvider->get(serviceId: 'schema.validator');
+        $validator = $this->getConfiguration()->get(serviceId: 'schema.validator');
 
         if (! $validator instanceof SchemaValidator) {
             throw new LogicException('Schema validator not available');
@@ -840,7 +875,7 @@ final readonly class Client implements ClientInterface
     private function getStoreService(): StoreService
     {
         /** @var StoreService $service */
-        $service = $this->serviceProvider->get(serviceId: 'service.store');
+        $service = $this->getConfiguration()->get(serviceId: 'service.store');
 
         if (! $service instanceof StoreService) {
             throw new LogicException('Store service not available');
@@ -862,9 +897,9 @@ final readonly class Client implements ClientInterface
         $serviceId = 'service.tuple.' . $storeId;
 
         // Check if store-specific service exists
-        if ($this->serviceProvider->has(serviceId: $serviceId)) {
+        if ($this->getConfiguration()->has(serviceId: $serviceId)) {
             /** @var TupleService $service */
-            $service = $this->serviceProvider->get(serviceId: $serviceId);
+            $service = $this->getConfiguration()->get(serviceId: $serviceId);
 
             if (! $service instanceof TupleService) {
                 throw new LogicException('Tuple service not available');
@@ -874,7 +909,7 @@ final readonly class Client implements ClientInterface
         }
 
         // Create and register store-specific service
-        $tupleRepository = $this->serviceProvider->get(serviceId: 'repository.tuple');
+        $tupleRepository = $this->getConfiguration()->get(serviceId: 'repository.tuple');
 
         if (! $tupleRepository instanceof HttpTupleRepository) {
             throw new LogicException('Tuple repository not available');
@@ -883,7 +918,7 @@ final readonly class Client implements ClientInterface
         $service = new TupleService(
             tupleRepository: $tupleRepository,
         );
-        $this->serviceProvider->set(
+        $this->getConfiguration()->set(
             serviceId: $serviceId,
             service: $service,
         );
@@ -912,7 +947,7 @@ final readonly class Client implements ClientInterface
         $originalLocale = Translator::getDefaultLocale();
 
         try {
-            Translator::setDefaultLocale(locale: $this->language);
+            Translator::setDefaultLocale(locale: $this->getConfiguration()->getLanguage());
 
             return $callback();
         } finally {

@@ -17,14 +17,14 @@ use OpenFGA\Results\{Failure, ResultInterface};
 
 describe('Client', function (): void {
     test('Client implements ClientInterface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         expect($client)->toBeInstanceOf(ClientInterface::class);
     });
 
     test('Client constructs with minimal configuration', function (): void {
         $url = 'https://api.example.com';
-        $client = new Client($url);
+        $client = Client::create($url);
 
         expect($client)->toBeInstanceOf(Client::class);
         expect($client->getLastRequest())->toBeNull();
@@ -32,7 +32,7 @@ describe('Client', function (): void {
     });
 
     test('Client constructs with full configuration', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: new ClientCredentialAuthentication(
                 clientId: 'client_id',
@@ -47,7 +47,7 @@ describe('Client', function (): void {
     });
 
     test('Client constructs with no authentication', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: null,
         );
@@ -56,7 +56,7 @@ describe('Client', function (): void {
     });
 
     test('Client constructs with token authentication', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: new TokenAuthentication('bearer_token_123'),
         );
@@ -67,7 +67,7 @@ describe('Client', function (): void {
     test('Client constructs with AccessToken object', function (): void {
         $accessToken = new AccessToken('token_value', time() + 3600);
 
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: new TokenAuthentication($accessToken),
         );
@@ -76,7 +76,7 @@ describe('Client', function (): void {
     });
 
     test('Client constructs with language parameter', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: null,
             language: 'es',
@@ -87,13 +87,13 @@ describe('Client', function (): void {
     });
 
     test('Client getLanguage returns default language when not specified', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         expect($client->getLanguage())->toBe('en');
     });
 
     test('Client getLanguage returns configured language', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: null,
             language: 'es',
@@ -103,7 +103,7 @@ describe('Client', function (): void {
     });
 
     test('Client assertLastRequest throws with configured language', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: null,
             language: 'es',
@@ -113,13 +113,13 @@ describe('Client', function (): void {
     })->throws(ClientException::class, trans(Messages::NO_LAST_REQUEST_FOUND, [], 'es'));
 
     test('Client assertLastRequest throws when no request exists', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $client->assertLastRequest();
     })->throws(ClientException::class, trans(Messages::NO_LAST_REQUEST_FOUND));
 
     test('Client check returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $model = 'model-456';
@@ -132,7 +132,7 @@ describe('Client', function (): void {
     });
 
     test('Client check accepts Store object', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = new Store(
             id: 'store-123',
@@ -149,7 +149,7 @@ describe('Client', function (): void {
     });
 
     test('Client check accepts optional parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $model = 'model-456';
@@ -172,7 +172,7 @@ describe('Client', function (): void {
     });
 
     test('Client createStore returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->createStore('My Test Store');
 
@@ -181,7 +181,7 @@ describe('Client', function (): void {
     });
 
     test('Client createStore trims name', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->createStore('  My Test Store  ');
 
@@ -189,7 +189,7 @@ describe('Client', function (): void {
     });
 
     test('Client deleteStore returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->deleteStore('store-123');
 
@@ -197,7 +197,7 @@ describe('Client', function (): void {
     });
 
     test('Client dsl returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $dsl = 'model
       schema 1.1
@@ -214,7 +214,7 @@ describe('Client', function (): void {
     });
 
     test('Client expand returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
@@ -225,7 +225,7 @@ describe('Client', function (): void {
     });
 
     test('Client getAuthorizationModel returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->getAuthorizationModel('store-123', 'model-456');
 
@@ -233,7 +233,7 @@ describe('Client', function (): void {
     });
 
     test('Client getStore returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->getStore('store-123');
 
@@ -241,7 +241,7 @@ describe('Client', function (): void {
     });
 
     test('Client listAuthorizationModels returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listAuthorizationModels('store-123');
 
@@ -249,7 +249,7 @@ describe('Client', function (): void {
     });
 
     test('listAuthorizationModels pagination', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listAuthorizationModels(
             store: 'store-123',
@@ -261,7 +261,7 @@ describe('Client', function (): void {
     });
 
     test('Client listAuthorizationModels validates page size', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         // Large page size should work (will be clamped by repository)
         $result1 = $client->listAuthorizationModels('store-123', null, 5000);
@@ -279,7 +279,7 @@ describe('Client', function (): void {
     });
 
     test('listAuthorizationModels accepts pagination parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listAuthorizationModels('store-123', 'next', 5);
 
@@ -287,7 +287,7 @@ describe('Client', function (): void {
     });
 
     test('Client listObjects returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listObjects(
             store: 'store-123',
@@ -301,7 +301,7 @@ describe('Client', function (): void {
     });
 
     test('Client listStores returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listStores();
 
@@ -309,7 +309,7 @@ describe('Client', function (): void {
     });
 
     test('listStores pagination', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listStores(
             continuationToken: 'token-xyz',
@@ -320,7 +320,7 @@ describe('Client', function (): void {
     });
 
     test('Client listTupleChanges returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listTupleChanges('store-123');
 
@@ -328,7 +328,7 @@ describe('Client', function (): void {
     });
 
     test('Client listTupleChanges with all parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->listTupleChanges(
             store: 'store-123',
@@ -342,7 +342,7 @@ describe('Client', function (): void {
     });
 
     test('Client listUsers returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $userFilters = new UserTypeFilters([]);
 
@@ -358,7 +358,7 @@ describe('Client', function (): void {
     });
 
     test('Client readAssertions returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->readAssertions('store-123', 'model-456');
 
@@ -366,7 +366,7 @@ describe('Client', function (): void {
     });
 
     test('Client readTuples returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $tupleKey = new TupleKey('', '', '');
 
@@ -376,7 +376,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeAssertions returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $assertions = new Assertions([]);
 
@@ -386,7 +386,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $writes = new TupleKeys([
             new TupleKey('user:alice', 'viewer', 'document:readme'),
@@ -398,7 +398,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples with deletes', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $writes = new TupleKeys([
             new TupleKey('user:alice', 'viewer', 'document:readme'),
@@ -413,7 +413,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples throws exception when transactional limit exceeded', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         // Create 101 tuples to exceed the limit
         $tuples = [];
@@ -432,7 +432,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples allows 100 operations in transactional mode', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         // Create exactly 100 tuples (at the limit)
         $tuples = [];
@@ -449,7 +449,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples allows unlimited operations in non-transactional mode', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         // Create 200 tuples to test non-transactional mode
         $tuples = [];
@@ -466,7 +466,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples counts writes and deletes for transactional limit', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         // Create 60 writes and 41 deletes (101 total operations)
         $writetuples = [];
@@ -491,7 +491,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples validates limit after deduplication', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         // Create 120 duplicates that will deduplicate to exactly 100 unique operations
         $writetuples = [];
@@ -515,7 +515,7 @@ describe('Client', function (): void {
     });
 
     test('Client writeTuples validates limit with duplicate writes and deletes', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         // Create duplicates and overlapping writes/deletes
         $writetuples = [];
@@ -541,7 +541,7 @@ describe('Client', function (): void {
     });
 
     test('Client createAuthorizationModel returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $typeDefinitions = new TypeDefinitions([]);
         $conditions = new Conditions([]);
@@ -561,7 +561,7 @@ describe('Client', function (): void {
     });
 
     test('Client handles authentication with real HTTP requests', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             authentication: new ClientCredentialAuthentication(
                 clientId: 'client_id',
@@ -576,7 +576,7 @@ describe('Client', function (): void {
     });
 
     test('Client dsl method handles complex authorization models', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $dsl = 'model
   schema 1.1
@@ -599,7 +599,7 @@ type document
     });
 
     test('Client dsl method handles malformed DSL', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $invalidDsl = 'invalid dsl format that should fail parsing';
 
@@ -610,7 +610,7 @@ type document
     });
 
     test('Client expand accepts all optional parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
@@ -631,7 +631,7 @@ type document
     });
 
     test('Client readTuples accepts all optional parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $tupleKey = new TupleKey('user:alice', 'viewer', 'document:readme');
@@ -648,7 +648,7 @@ type document
     });
 
     test('Client listUsers accepts all optional parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $userFilters = new UserTypeFilters([]);
         $contextualTuples = new TupleKeys([
@@ -670,7 +670,7 @@ type document
     });
 
     test('Client listObjects accepts all optional parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $contextualTuples = new TupleKeys([
             new TupleKey('user:alice', 'member', 'team:engineering'),
@@ -691,7 +691,7 @@ type document
     });
 
     test('Client streamedListObjects returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result = $client->streamedListObjects(
             store: 'store-123',
@@ -705,7 +705,7 @@ type document
     });
 
     test('Client streamedListObjects accepts all optional parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $contextualTuples = new TupleKeys([
             new TupleKey('user:alice', 'member', 'team:engineering'),
@@ -726,7 +726,7 @@ type document
     });
 
     test('Client createAuthorizationModel with all parameters', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $typeDefinitions = new TypeDefinitions([]);
         $conditions = new Conditions([]);
@@ -742,7 +742,7 @@ type document
     });
 
     test('Client handles page size clamping for listTupleChanges', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $result1 = $client->listTupleChanges('store-123', null, 5000);
         expect($result1)->toBeInstanceOf(ResultInterface::class);
@@ -752,7 +752,7 @@ type document
     });
 
     test('Client handles page size clamping for readTuples', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $tupleKey = new TupleKey('', '', '');
 
@@ -764,7 +764,7 @@ type document
     });
 
     test('Client getModelId helper handles interface objects', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $model = new AuthorizationModel(
             id: 'model-123',
@@ -778,7 +778,7 @@ type document
     });
 
     test('Client getStoreId helper handles interface objects', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = new Store(
             id: 'store-123',
@@ -793,7 +793,7 @@ type document
     });
 
     test('Client constructor with null httpMaxRetries', function (): void {
-        $client = new Client(
+        $client = Client::create(
             url: 'https://api.example.com',
             httpMaxRetries: null,
         );
@@ -802,9 +802,9 @@ type document
     });
 
     test('Client constructor with various httpMaxRetries values', function (): void {
-        $client1 = new Client('https://api.example.com', httpMaxRetries: 1);
-        $client2 = new Client('https://api.example.com', httpMaxRetries: 10);
-        $client3 = new Client('https://api.example.com', httpMaxRetries: 100);
+        $client1 = Client::create('https://api.example.com', httpMaxRetries: 1);
+        $client2 = Client::create('https://api.example.com', httpMaxRetries: 10);
+        $client3 = Client::create('https://api.example.com', httpMaxRetries: 100);
 
         expect($client1)->toBeInstanceOf(Client::class);
         expect($client2)->toBeInstanceOf(Client::class);
@@ -812,7 +812,7 @@ type document
     });
 
     test('Client batchCheck returns Result interface', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = new Store(
             id: 'store-123',
@@ -834,7 +834,7 @@ type document
     });
 
     test('Client batchCheck accepts string store and model IDs', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $model = 'model-456';
@@ -851,7 +851,7 @@ type document
     });
 
     test('Client batchCheck accepts AuthorizationModel object', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $model = new AuthorizationModel(
@@ -872,7 +872,7 @@ type document
     });
 
     test('Client batchCheck handles multiple check items', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $model = 'model-456';
@@ -897,7 +897,7 @@ type document
     });
 
     test('Client batchCheck handles empty check items', function (): void {
-        $client = new Client('https://api.example.com');
+        $client = Client::create('https://api.example.com');
 
         $store = 'store-123';
         $model = 'model-456';
