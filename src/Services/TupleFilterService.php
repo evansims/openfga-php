@@ -116,10 +116,13 @@ final class TupleFilterService implements TupleFilterServiceInterface
 
         return sprintf(
             '%s#%s@%s%s',
-            $tuple->getUser(),
-            $tuple->getRelation(),
-            $tuple->getObject(),
-            $conditionKey,
+return sprintf(
+    '%s#%s@%s%s',
+    (string) ($tuple->getUser()     ?? ''),
+    (string) ($tuple->getRelation() ?? ''),
+    (string) ($tuple->getObject()   ?? ''),
+    $conditionKey,
+);
         );
     }
 }
