@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Observability;
 
-use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryFactory, TelemetryInterface};
+use OpenFGA\Observability\{TelemetryFactory, TelemetryInterface};
 
 beforeEach(function (): void {
     // Ensure clean state for each test
@@ -12,25 +12,16 @@ beforeEach(function (): void {
 
 describe('TelemetryFactory', function (): void {
     describe('create()', function (): void {
-        it('returns a TelemetryInterface implementation', function (): void {
+        it('returns a TelemetryInterface implementation or null', function (): void {
             $telemetry = TelemetryFactory::create();
 
-            expect($telemetry)->toBeInstanceOf(TelemetryInterface::class);
+            expect(null === $telemetry || $telemetry instanceof TelemetryInterface)->toBeTrue();
         });
 
         it('accepts custom service name and version', function (): void {
             $telemetry = TelemetryFactory::create('custom-service', '2.0.0');
 
-            expect($telemetry)->toBeInstanceOf(TelemetryInterface::class);
-        });
-    });
-
-    describe('createNoOp()', function (): void {
-        it('returns NoOpTelemetryProvider', function (): void {
-            $telemetry = TelemetryFactory::createNoOp();
-
-            expect($telemetry)->toBeInstanceOf(NoOpTelemetryProvider::class);
-            expect($telemetry)->toBeInstanceOf(TelemetryInterface::class);
+            expect(null === $telemetry || $telemetry instanceof TelemetryInterface)->toBeTrue();
         });
     });
 

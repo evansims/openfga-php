@@ -1,35 +1,49 @@
-<p align="center">
-  <a href="https://tempestphp.com">
-    <img src=".github/openfga.png" width="100" />
-  </a>
-</p>
+<div align="center">
+  <p><a href="https://tempestphp.com"><img src=".github/openfga.png" width="100" /></a></p>
 
-<h1 align="center">OpenFGA PHP SDK</h1>
+  <h1>OpenFGA PHP SDK</h1>
 
-<p align="center">
-  <a href="https://codecov.io/gh/evansims/openfga-php" target="_blank"><img src="https://codecov.io/gh/evansims/openfga-php/graph/badge.svg" alt="codecov" /></a>
-  <a href="https://shepherd.dev/github/evansims/openfga-php" target="_blank"><img src="https://shepherd.dev/github/evansims/openfga-php/coverage.svg" alt="Psalm Type Coverage" /></a>
-  <a href="https://www.bestpractices.dev/projects/10666"><img src="https://www.bestpractices.dev/projects/10666/badge"></a>
-</p>
+  <p>
+    <a href="https://codecov.io/gh/evansims/openfga-php" target="_blank"><img src="https://codecov.io/gh/evansims/openfga-php/graph/badge.svg" alt="codecov" /></a>
+    <a href="https://shepherd.dev/github/evansims/openfga-php" target="_blank"><img src="https://shepherd.dev/github/evansims/openfga-php/coverage.svg" alt="Psalm Type Coverage" /></a>
+    <a href="https://www.bestpractices.dev/projects/10666"><img src="https://www.bestpractices.dev/projects/10666/badge"></a>
+  </p>
 
-<p align="center">
-  Stop writing authorization logic. Start asking questions.<br />
-  <a href="docs/README.md">Read the documentation</a> to get started.
-</p>
+  <p>Stop writing authorization logic. Start asking questions.</p>
 
-<br />
+  <p><code>composer require evansims/openfga-php</code></p>
+</div>
 
-## Why OpenFGA?
+<p><br /></p>
 
-Every app needs permissions. Most developers end up with authorization logic scattered across controllers, middleware, and business logic. Changes break things. New features require touching dozens of files.
+**Every app needs permissions.** Most developers end up with authorization logic scattered across controllers, middleware, and business logic. Changes break things. New features require touching dozens of files.
 
 **[OpenFGA](https://openfga.dev/) solves this.** Define your authorization rules once, query them anywhere. This SDK provides a modern PHP interface to [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https://auth0.com/fine-grained-authorization).
 
-## Quick start
+<br />
+
+<details>
+<summary><strong>Table of Contents</strong></summary>
+
+- [Installation](#installation)
+- [Quickstart](#quickstart)
+- [Highlights](#highlights)
+- [Learn more](#learn-more)
+- [Contributing](#contributing)
+
+</details>
+
+<p><br /></p>
+
+## Installation
 
 ```bash
 composer require evansims/openfga-php
 ```
+
+<p><br /></p>
+
+## Quickstart
 
 ```php
 use OpenFGA\Client;
@@ -53,6 +67,10 @@ $canEdit = allowed(
 // Zero business logic coupling. Pure authorization.
 ```
 
+See [the documentation](docs/README.md) to get started.
+
+<p><br /></p>
+
 ## Highlights
 
 - **Zero business logic coupling** — Authorization stays separate from your domain code
@@ -62,22 +80,51 @@ $canEdit = allowed(
 - **Production ready** — OpenTelemetry observability, retry logic, and circuit breakers included
 - **Developer experience first** — Stewarded by 30+ years of PHP expertise with intuitive APIs and comprehensive documentation
 
+<p><br /></p>
+
 ## Learn more
 
 Ready to build bulletproof authorization? See [the documentation](docs/README.md) for:
 
-- **[Getting started](docs/Introduction.md)** — Build your first authorization system in 10 minutes
-- **[Authorization models](docs/Models.md)** — Define permission rules with intuitive DSL
-- **[Queries](docs/Queries.md)** — Check permissions and list accessible resources
-- **[Authentication](docs/Authentication.md)** — Secure your production setup
+**Getting Started**<br />
+Build your authorization integration
 
-## Installation
+- [Introduction](docs/Introduction.md)<br />
+  Start here to get your first authorization check working.
+- [Installation](docs/Introduction.md#installation)<br />
+  Install the SDK and set up your first authorization store.
+- [Authentication](docs/Introduction.md#authentication)<br />
+  Set up authentication for production environments and managed services.
 
-```bash
-composer require evansims/openfga-php
-```
+**Essentials**<br />
+Learn the core concepts and patterns
 
-See [the documentation](docs/README.md) for configuration and setup.
+- [Stores](docs/Stores.md)<br />
+  Manage authorization stores for multi-tenant applications and environment separation.
+- [Authorization Models](docs/Models.md)<br />
+  Learn how to define your permission rules using OpenFGA's intuitive DSL.
+- [Relationship Tuples](docs/Tuples.md)<br />
+  Understand how to grant and revoke specific permissions between users and resources.
+- [Permission Queries](docs/Queries.md)<br />
+  Master the four types of queries: check permissions, list objects, find users, and expand relationships.
+- [Assertions](docs/Assertions.md)<br />
+  Define test cases to verify your authorization model.
+
+**Features**<br />
+Explore advanced features and patterns
+
+- [Concurrency](docs/Concurrency.md)<br />
+  Leveraging the SDK's powerful concurrency features to improve performance when working with large-scale authorization operations.
+- [Exceptions](docs/Exceptions.md)<br />
+  Handling errors and exceptions in your authorization system.
+- [Integration](docs/Integration.md)<br />
+  Integrating OpenFGA with your existing systems and frameworks.
+- [Observability](docs/Observability.md)<br />
+  Comprehensive tracing and metrics to monitor your authorization system.
+- [Results](docs/Results.md)<br />
+  Building robust applications with proper response handling using the SDK's Result pattern.
+
+<p><br /></p>
 
 ## Contributing
 

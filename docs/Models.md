@@ -313,12 +313,32 @@ $newModelId = $client->createAuthorizationModel(/*...*/)
 // Switch applications to use $newModelId
 ```
 
+## Troubleshooting Common Issues
+
+### "My permissions aren't working as expected"
+
+- Use the [expand query](Queries.md#expand-relationships-debugging) to see the permission tree
+- Check if you're using the correct model ID in your checks
+- Verify your authorization model DSL syntax
+
+### "Users have too many permissions"
+
+- Check for unintended `or` relationships in your model
+- Review inheritance patterns - owners might inherit editor/viewer permissions
+- Use [assertions](Assertions.md) to test expected vs actual permissions
+
+### "Users don't have enough permissions"
+
+- Verify relationships are written correctly as tuples
+- Check if you're querying with the right object/relation names
+- Use [read tuples](Tuples.md#reading-existing-permissions) to see what permissions exist
+
 ## What's next
 
 Now that you have a model:
 
-1. **[Write relationship tuples](Tuples.md)** - Connect users to objects
-2. **[Perform queries](Queries.md)** - Check permissions and list objects  
-3. **[Test with assertions](Assertions.md)** - Verify your model works correctly
+1. **[Write relationship tuples](Tuples.md)** - Connect users to objects with actual permissions
+2. **[Perform queries](Queries.md)** - Check permissions and list accessible objects
+3. **[Test with assertions](Assertions.md)** - Verify your model works as designed
 
-Your authorization model is the foundation everything else builds on. Take time to design it well.
+Your authorization model is the foundation everything else builds on. Take time to design it well - changing it later requires migrating all your tuples.

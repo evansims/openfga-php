@@ -24,11 +24,11 @@ final readonly class EventAwareTelemetryService implements TelemetryServiceInter
     /**
      * Create a new event-aware telemetry service instance.
      *
-     * @param TelemetryInterface            $telemetry       The underlying telemetry provider
+     * @param TelemetryInterface|null       $telemetry       The underlying telemetry provider
      * @param EventDispatcherInterface|null $eventDispatcher Optional event dispatcher for domain events
      */
     public function __construct(
-        private TelemetryInterface $telemetry,
+        private ?TelemetryInterface $telemetry,
         private ?EventDispatcherInterface $eventDispatcher = null,
     ) {
     }
@@ -43,7 +43,7 @@ final readonly class EventAwareTelemetryService implements TelemetryServiceInter
         float $duration,
         array $attributes = [],
     ): void {
-        $this->telemetry->recordAuthenticationEvent($event, $success, $duration, $attributes);
+        $this->telemetry?->recordAuthenticationEvent($event, $success, $duration, $attributes);
     }
 
     /**
@@ -58,7 +58,7 @@ final readonly class EventAwareTelemetryService implements TelemetryServiceInter
         $duration = $context->getDuration();
 
         // End the operation span with failure details
-        $this->telemetry->endOperation(
+        $this->telemetry?->endOperation(
             $context->span,
             false,
             $exception,
@@ -106,10 +106,10 @@ final readonly class EventAwareTelemetryService implements TelemetryServiceInter
         ?float $duration = null,
     ): void {
         // For standalone HTTP request tracking, create a minimal span
-        $span = $this->telemetry->startHttpRequest($request);
+        $span = $this->telemetry?->startHttpRequest($request);
 
         // End the span immediately with the provided data
-        $this->telemetry->endHttpRequest($span, $response, $exception);
+        $this->telemetry?->endHttpRequest($span, $response, $exception);
     }
 
     /**
@@ -123,7 +123,7 @@ final readonly class EventAwareTelemetryService implements TelemetryServiceInter
         AuthorizationModelInterface | string | null $model = null,
         array $attributes = [],
     ): void {
-        $this->telemetry->recordOperationMetrics($operation, $duration, $store, $model, $attributes);
+        $this->telemetry?->recordOperationMetrics($operation, $duration, $store, $model, $attributes);
     }
 
     /**
@@ -137,7 +137,7 @@ final readonly class EventAwareTelemetryService implements TelemetryServiceInter
         $duration = $context->getDuration();
 
         // End the operation span with success details
-        $this->telemetry->endOperation(
+        $this->telemetry?->endOperation(
             $context->span,
             true,
             null,
@@ -179,7 +179,7 @@ final readonly class EventAwareTelemetryService implements TelemetryServiceInter
         array $attributes = [],
     ): TelemetryContext {
         $startTime = microtime(true);
-        $span = $this->telemetry->startOperation($operation, $store, $model, $attributes);
+        $span = $this->telemetry?->startOperation($operation, $store, $model, $attributes);
 
         // Emit operation started event
         if ($this->eventDispatcher instanceof EventDispatcherInterface) {

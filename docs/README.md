@@ -1,137 +1,52 @@
-# OpenFGA PHP SDK
+<div align="center">
+  <p><a href="https://tempestphp.com"><img src="../.github/openfga.png" width="100" /></a></p>
 
-Modern fine-grained authorization for PHP applications. Build permission systems that scale from simple role checks to complex multi-tenant authorization patterns.
+  <h1>OpenFGA PHP SDK</h1>
 
-## What is this?
+  <p>Stop writing authorization logic. Start asking questions.</p>
 
-OpenFGA lets you answer questions like "Can Alice edit this document?" or "Which projects can Bob view?" without scattering permission logic throughout your codebase. Define your authorization rules once, then query them anywhere.
+  <p><code>composer require evansims/openfga-php</code></p>
+</div>
 
-This SDK provides a modern PHP interface to [OpenFGA](https://openfga.dev) - Google's Zanzibar-inspired authorization engine that powers services like YouTube, Google Drive, and GitHub.
+<p><br /></p>
 
-## Quick start
+## Getting Started
 
-```bash
-composer require evansims/openfga-php
-```
+Build your authorization integration
 
-```php
-use OpenFGA\Client;
-use function OpenFGA\{allowed, tuple};
+- [Introduction](Introduction.md)<br />
+  Start here to get your first authorization check working.
+- [Installation](Introduction.md#installation)<br />
+  Install the SDK and set up your first authorization store.
+- [Authentication](Introduction.md#authentication)<br />
+  Set up authentication for production environments and managed services.
 
-$client = new Client(url: 'https://api.fga.example');
+## Essential
 
-// Check permissions - simple and clean
-$canEdit = allowed(
-    client: $client,
-    store: 'store_123',
-    model: 'model_456', 
-    tuple: tuple('user:alice', 'editor', 'document:readme')
-);
+Learn the core concepts and patterns
 
-// Find accessible resources
-$documents = $client->listObjects(
-    store: 'store_123',
-    model: 'model_456',
-    user: 'user:alice',
-    relation: 'viewer',
-    type: 'document'
-)->unwrap()->getObjects();
-```
+- [Stores](Stores.md)<br />
+  Manage authorization stores for multi-tenant applications and environment separation.
+- [Authorization Models](Models.md)<br />
+  Learn how to define your permission rules using OpenFGA's intuitive DSL.
+- [Relationship Tuples](Tuples.md)<br />
+  Understand how to grant and revoke specific permissions between users and resources.
+- [Permission Queries](Queries.md)<br />
+  Master the four types of queries: check permissions, list objects, find users, and expand relationships.
+- [Assertions](Assertions.md)<br />
+  Define test cases to verify your authorization model.
 
-## Why choose this SDK?
+## Features
 
-**Type-safe by design.** Every method has complete type hints. Your IDE knows exactly what you're working with.
+Explore advanced features and patterns
 
-**Error handling that makes sense.** No more try-catch blocks everywhere. The Result pattern lets you handle success and failure elegantly.
-
-**Modern PHP patterns.** Built for PHP 8.3+ with property promotion, named arguments, and strict typing throughout.
-
-**Production ready.** Comprehensive OpenTelemetry support, retry logic, circuit breakers, and graceful error handling.
-
-## Core concepts
-
-### Getting started → Introduction
-
-New to OpenFGA? Start here to understand the basics and get your first authorization check working.
-
-**[Getting Started Guide →](Introduction.md)**
-
-### Core concepts → Authorization models
-
-Learn how to define your permission rules using OpenFGA's intuitive DSL.
-
-**[Authorization Models →](Models.md)**
-
-### Core concepts → Relationship tuples
-
-Understand how to grant and revoke specific permissions between users and resources.
-
-**[Relationship Tuples →](Tuples.md)**
-
-### Querying → Permission checks
-
-Master the four types of queries: check permissions, list objects, find users, and expand relationships.
-
-**[Queries →](Queries.md)**
-
-## Configuration
-
-### Authentication → API credentials
-
-Set up authentication for production environments and managed services.
-
-**[Authentication →](Authentication.md)**
-
-### Configuration → Stores
-
-Manage authorization stores for multi-tenant applications and environment separation.
-
-**[Stores →](Stores.md)**
-
-### Configuration → Error handling
-
-Build robust applications with proper error handling and the Result pattern.
-
-**[Results →](Results.md)**
-
-### Observability → OpenTelemetry
-
-Add comprehensive tracing and metrics to monitor your authorization system.
-
-**[Observability →](Observability.md)**
-
-## Architecture
-
-### Architecture → Overview
-
-Understand the SDK's clean architecture design with separation of concerns and dependency injection.
-
-**[Architecture Overview →](Architecture.md)**
-
-### Architecture → Repository Pattern
-
-Learn how to extend and customize data access using the repository pattern.
-
-**[Repository Pattern →](RepositoryPattern.md)**
-
-### Architecture → Service Pattern
-
-Discover how to add cross-cutting concerns like caching and logging through service decorators.
-
-**[Service Pattern →](ServicePattern.md)**
-
-## Key features
-
-**Modern PHP 8.3+** — Property promotion, named arguments, and strict typing
-**Result pattern** — Elegant error handling without exceptions  
-**PSR compliant** — Works with any PSR-7/17/18 HTTP implementation
-**Type safe** — Complete type hints and IDE support
-**DSL support** — Human-readable authorization model syntax
-**Observability** — Built-in OpenTelemetry tracing and metrics
-**Production ready** — Retry logic, circuit breakers, and graceful degradation
-
-## Need help?
-
-**[OpenFGA Documentation](https://openfga.dev/docs)** — Learn authorization concepts and patterns
-**[Report Issues](https://github.com/evansims/openfga-php/issues)** — Found a bug or need a feature?
-**[API Reference](API/)** — Complete method documentation and examples
+- [Concurrency](Concurrency.md)<br />
+  Leveraging the SDK's powerful concurrency features to improve performance when working with large-scale authorization operations.
+- [Exceptions](Exceptions.md)<br />
+  Handling errors and exceptions in your authorization system.
+- [Integration](Integration.md)<br />
+  Integrating OpenFGA with your existing systems and frameworks.
+- [Observability](Observability.md)<br />
+  Comprehensive tracing and metrics to monitor your authorization system.
+- [Results](Results.md)<br />
+  Building robust applications with proper response handling using the SDK's Result pattern.

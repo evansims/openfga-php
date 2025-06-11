@@ -54,7 +54,7 @@ $client = new Client(
 // Your authorization operations are now automatically instrumented!
 $result = $client->check(
     store: 'your-store-id',
-    model: 'your-model-id', 
+    model: 'your-model-id',
     tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
 );
 ?>
@@ -122,15 +122,18 @@ $result = $client->listObjects(
 Every HTTP request to the OpenFGA API is automatically instrumented:
 
 **Traces (Spans):**
+
 - Span name: `HTTP {METHOD}` (e.g., `HTTP POST`)
 - Duration of the entire HTTP request/response cycle
 - HTTP method, URL, status code, response size
 - Error details if the request fails
 
 **Metrics:**
+
 - `openfga.http.requests.total` - Counter of HTTP requests by method, status code, and success/failure
 
 **Example span attributes:**
+
 ```
 http.method: POST
 http.url: https://api.fga.example/stores/123/check
@@ -147,15 +150,18 @@ openfga.sdk.version: 1.0.0
 Business-level operations provide higher-level observability:
 
 **Traces (Spans):**
+
 - Span name: `openfga.{operation}` (e.g., `openfga.check`, `openfga.write_tuples`)
 - Duration of the business operation (may include multiple HTTP calls)
 - Store ID, model ID, and operation-specific metadata
 
 **Metrics:**
+
 - `openfga.operations.total` - Counter of operations by type, store, success/failure
 - `openfga.operations.duration` - Histogram of operation durations
 
 **Example operation span:**
+
 ```
 openfga.operation: check
 openfga.store_id: store_01H1234567890ABCDEF
@@ -169,13 +175,16 @@ openfga.sdk.version: 1.0.0
 The SDK automatically tracks retry attempts and circuit breaker behavior:
 
 **Retry Metrics:**
+
 - `openfga.retries.total` - Counter of retry attempts by endpoint and outcome
 - `openfga.retries.delay` - Histogram of retry delays in milliseconds
 
 **Circuit Breaker Metrics:**
+
 - `openfga.circuit_breaker.state_changes.total` - Counter of state changes (open/closed)
 
 **Authentication Telemetry:**
+
 - `openfga.auth.events.total` - Counter of authentication events
 - `openfga.auth.duration` - Histogram of authentication operation durations
 
@@ -221,11 +230,17 @@ For testing or when you want to disable telemetry:
 use OpenFGA\Observability\TelemetryFactory;
 
 // Explicitly disable telemetry
-$telemetry = TelemetryFactory::createNoOp();
+$telemetry = TelemetryFactory::createNoOp(); // Returns null
 
 $client = new Client(
     url: $_ENV['FGA_API_URL'],
     telemetry: $telemetry
+);
+
+// Or simply pass null directly
+$client = new Client(
+    url: $_ENV['FGA_API_URL'],
+    telemetry: null  // No telemetry
 );
 ```
 
@@ -324,17 +339,17 @@ $client = new Client(
 
 try {
     // Each operation creates its own span with timing and metadata
-    
+
     // 1. Create store - traced as "openfga.create_store"
     $store = $client->createStore(name: 'document-service-store')
         ->unwrap();
-    
-    // 2. Create model - traced as "openfga.create_authorization_model"  
+
+    // 2. Create model - traced as "openfga.create_authorization_model"
     $model = $client->createAuthorizationModel(
         store: $store->getId(),
         typeDefinitions: $authModel->getTypeDefinitions()
     )->unwrap();
-    
+
     // 3. Write relationships - traced as "openfga.write_tuples"
     $client->writeTuples(
         store: $store->getId(),
@@ -344,14 +359,14 @@ try {
             tuple(user: 'user:bob', relation: 'editor', object: 'document:readme')
         )
     )->unwrap();
-    
+
     // 4. Check authorization - traced as "openfga.check"
     $allowed = $client->check(
         store: $store->getId(),
         model: $model->getId(),
         tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
     )->unwrap();
-    
+
     // 5. List accessible objects - traced as "openfga.list_objects"
     $documents = $client->listObjects(
         store: $store->getId(),
@@ -360,11 +375,11 @@ try {
         relation: 'viewer',
         type: 'document'
     )->unwrap();
-    
-    echo "Authorization check complete. Anne can view document: " . 
+
+    echo "Authorization check complete. Anne can view document: " .
          ($allowed->getAllowed() ? 'Yes' : 'No') . "\n";
     echo "Documents Anne can view: " . count($documents->getObjects()) . "\n";
-    
+
 } catch (Throwable $e) {
     // Errors are automatically recorded in spans
     echo "Authorization failed: " . $e->getMessage() . "\n";
@@ -384,16 +399,19 @@ try {
 ### Key Things to Look For
 
 **Performance Analysis:**
+
 - Which operations take the longest?
 - Are there patterns in slow requests?
 - How do retry attempts affect overall timing?
 
 **Error Investigation:**
+
 - What HTTP status codes are you getting?
 - Which OpenFGA operations are failing?
 - Are authentication issues causing problems?
 
 **Usage Patterns:**
+
 - Which stores and models are accessed most frequently?
 - What types of authorization checks are most common?
 - How often do retries occur?
@@ -403,18 +421,20 @@ try {
 ### No Telemetry Data
 
 1. **Check if OpenTelemetry is properly installed:**
+
    ```bash
    composer show | grep open-telemetry
    ```
 
 2. **Verify your exporter configuration:**
+
    ```php
    // Add debug output
    $telemetry = TelemetryFactory::create('test-service');
    if ($telemetry instanceof \OpenFGA\Observability\OpenTelemetryProvider) {
        echo "Using OpenTelemetry provider\n";
-   } else {
-       echo "Using no-op provider\n";
+   } elseif ($telemetry === null) {
+       echo "No telemetry configured\n";
    }
    ```
 
@@ -440,13 +460,273 @@ Common OpenTelemetry environment variables that work with the SDK:
 export OTEL_SERVICE_NAME="my-authorization-service"
 export OTEL_SERVICE_VERSION="1.0.0"
 
-# Exporter configuration  
+# Exporter configuration
 export OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4317"
 export OTEL_EXPORTER_OTLP_HEADERS="api-key=your-api-key"
 
 # Sampling (to reduce overhead in high-traffic scenarios)
 export OTEL_TRACES_SAMPLER="traceidratio"
 export OTEL_TRACES_SAMPLER_ARG="0.1"  # Sample 10% of traces
+```
+
+## Event-Driven Telemetry
+
+The SDK provides a powerful event-driven telemetry system that allows you to create custom observability solutions without tight coupling to the main client functionality. This approach lets you build specialized listeners for different concerns like logging, metrics collection, alerting, or custom analytics.
+
+### Available Events
+
+The SDK emits events at key points during operation execution:
+
+- **`OperationStartedEvent`** - When an OpenFGA operation begins (check, write, etc.)
+- **`OperationCompletedEvent`** - When an operation finishes (success or failure)
+- **`HttpRequestSentEvent`** - When HTTP requests are sent to the OpenFGA API
+- **`HttpResponseReceivedEvent`** - When HTTP responses are received
+
+### Creating Custom Event Listeners
+
+Here's how to create and register custom event listeners:
+
+```php
+<?php
+
+use OpenFGA\Events\{EventDispatcher, HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
+
+// Create a logging listener
+final class LoggingEventListener
+{
+    public function onHttpRequestSent(HttpRequestSentEvent $event): void
+    {
+        echo "[{$event->getOperation()}] HTTP Request: {$event->getRequest()->getMethod()} {$event->getRequest()->getUri()}\n";
+    }
+
+    public function onHttpResponseReceived(HttpResponseReceivedEvent $event): void
+    {
+        $status = $event->getResponse() ? $event->getResponse()->getStatusCode() : 'N/A';
+        $success = $event->isSuccessful() ? '✅' : '❌';
+        echo "[{$event->getOperation()}] HTTP Response: {$success} {$status}\n";
+    }
+
+    public function onOperationStarted(OperationStartedEvent $event): void
+    {
+        echo "[{$event->getOperation()}] Started - Store: {$event->getStoreId()}\n";
+    }
+
+    public function onOperationCompleted(OperationCompletedEvent $event): void
+    {
+        $success = $event->isSuccessful() ? '✅' : '❌';
+        echo "[{$event->getOperation()}] Completed: {$success}\n";
+    }
+}
+
+// Create a metrics listener
+final class MetricsEventListener
+{
+    private array $operationTimes = [];
+    private array $requestCounts = [];
+
+    public function onOperationStarted(OperationStartedEvent $event): void
+    {
+        $this->operationTimes[$event->getEventId()] = microtime(true);
+    }
+
+    public function onOperationCompleted(OperationCompletedEvent $event): void
+    {
+        $operation = $event->getOperation();
+
+        // Count operations
+        $this->requestCounts[$operation] = ($this->requestCounts[$operation] ?? 0) + 1;
+
+        // Track timing
+        if (isset($this->operationTimes[$event->getEventId()])) {
+            $duration = microtime(true) - $this->operationTimes[$event->getEventId()];
+            echo "[{$operation}] completed in " . round($duration * 1000, 2) . "ms\n";
+            unset($this->operationTimes[$event->getEventId()]);
+        }
+    }
+
+    public function getMetrics(): array
+    {
+        return [
+            'request_counts' => $this->requestCounts,
+            'active_operations' => count($this->operationTimes),
+        ];
+    }
+}
+```
+
+### Registering Event Listeners
+
+Register your listeners with the event dispatcher:
+
+```php
+// Create event dispatcher and listeners
+$eventDispatcher = new EventDispatcher();
+$loggingListener = new LoggingEventListener();
+$metricsListener = new MetricsEventListener();
+
+// Register listeners for different events
+$eventDispatcher->addListener(HttpRequestSentEvent::class, [$loggingListener, 'onHttpRequestSent']);
+$eventDispatcher->addListener(HttpResponseReceivedEvent::class, [$loggingListener, 'onHttpResponseReceived']);
+$eventDispatcher->addListener(OperationStartedEvent::class, [$loggingListener, 'onOperationStarted']);
+$eventDispatcher->addListener(OperationCompletedEvent::class, [$loggingListener, 'onOperationCompleted']);
+
+// Register metrics listener
+$eventDispatcher->addListener(OperationStartedEvent::class, [$metricsListener, 'onOperationStarted']);
+$eventDispatcher->addListener(OperationCompletedEvent::class, [$metricsListener, 'onOperationCompleted']);
+
+// Note: In production, you would configure the event dispatcher through dependency injection
+// The above example shows the concept for educational purposes
+```
+
+### Complete Event-Driven Example
+
+Here's a complete example showing event-driven telemetry in action:
+
+```php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use OpenFGA\Client;
+use OpenFGA\Events\EventDispatcher;
+
+use function OpenFGA\{allowed, dsl, model, store, tuple, write};
+
+// Your custom listeners (defined above)
+$eventDispatcher = new EventDispatcher();
+$loggingListener = new LoggingEventListener();
+$metricsListener = new MetricsEventListener();
+
+// Register all listeners
+$eventDispatcher->addListener(HttpRequestSentEvent::class, [$loggingListener, 'onHttpRequestSent']);
+$eventDispatcher->addListener(HttpResponseReceivedEvent::class, [$loggingListener, 'onHttpResponseReceived']);
+$eventDispatcher->addListener(OperationStartedEvent::class, [$loggingListener, 'onOperationStarted']);
+$eventDispatcher->addListener(OperationCompletedEvent::class, [$loggingListener, 'onOperationCompleted']);
+$eventDispatcher->addListener(OperationStartedEvent::class, [$metricsListener, 'onOperationStarted']);
+$eventDispatcher->addListener(OperationCompletedEvent::class, [$metricsListener, 'onOperationCompleted']);
+
+$client = new Client(
+    url: 'http://localhost:8080',
+    eventDispatcher: $eventDispatcher,
+);
+
+// Perform operations - events will be triggered automatically
+$storeId = store($client, 'telemetry-demo');
+
+$authModel = dsl($client, '
+    model
+      schema 1.1
+    type user
+    type document
+      relations
+        define viewer: [user]
+');
+$modelId = model($client, $storeId, $authModel);
+
+write($client, $storeId, $modelId, tuple('user:alice', 'viewer', 'document:report'));
+$canView = allowed($client, $storeId, $modelId, tuple('user:alice', 'viewer', 'document:report'));
+
+// View collected metrics
+echo "Collected Metrics:\n";
+print_r($metricsListener->getMetrics());
+```
+
+### Production Use Cases
+
+**Custom Alerting:**
+
+```php
+final class AlertingEventListener
+{
+    public function onOperationCompleted(OperationCompletedEvent $event): void
+    {
+        if (!$event->isSuccessful()) {
+            // Send alert to your monitoring system
+            $this->sendAlert([
+                'operation' => $event->getOperation(),
+                'store_id' => $event->getStoreId(),
+                'error' => $event->getException()?->getMessage(),
+            ]);
+        }
+    }
+}
+```
+
+**Security Monitoring:**
+
+```php
+final class SecurityEventListener
+{
+    public function onOperationStarted(OperationStartedEvent $event): void
+    {
+        if ($event->getOperation() === 'check') {
+            // Log authorization attempts for security analysis
+            $this->logSecurityEvent([
+                'timestamp' => time(),
+                'operation' => $event->getOperation(),
+                'store_id' => $event->getStoreId(),
+                'user_ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+            ]);
+        }
+    }
+}
+```
+
+**Performance Analytics:**
+
+```php
+final class PerformanceEventListener
+{
+    private array $operationTimings = [];
+
+    public function onOperationCompleted(OperationCompletedEvent $event): void
+    {
+        $timing = $this->calculateTiming($event);
+
+        // Export to your analytics platform
+        $this->exportToAnalytics([
+            'operation' => $event->getOperation(),
+            'duration_ms' => $timing,
+            'store_id' => $event->getStoreId(),
+            'success' => $event->isSuccessful(),
+        ]);
+    }
+}
+```
+
+### Benefits of Event-Driven Telemetry
+
+- **Decoupling:** Observability logic is separate from business logic
+- **Flexibility:** Add multiple listeners for the same events
+- **Specialization:** Create focused listeners for different concerns
+- **Testability:** Easy to unit test telemetry functionality in isolation
+- **Extensibility:** Add new observability features without changing core code
+- **Custom Integration:** Perfect for integrating with proprietary monitoring systems
+
+### Integration with Dependency Injection
+
+In production applications, register listeners through your DI container:
+
+```php
+// In your service provider or DI configuration
+$container->singleton(EventDispatcher::class, function () {
+    $dispatcher = new EventDispatcher();
+
+    // Register all your listeners
+    $dispatcher->addListener(OperationStartedEvent::class, [LoggingEventListener::class, 'onOperationStarted']);
+    $dispatcher->addListener(OperationCompletedEvent::class, [MetricsEventListener::class, 'onOperationCompleted']);
+    // ... more listeners
+
+    return $dispatcher;
+});
+
+// Configure the client to use the dispatcher
+$container->singleton(Client::class, function ($container) {
+    return new Client(
+        url: $_ENV['FGA_API_URL'],
+        eventDispatcher: $container->get(EventDispatcher::class),
+    );
+});
 ```
 
 ## Advanced Usage
@@ -499,18 +779,29 @@ $telemetry = TelemetryFactory::create('my-service');
 ## Next Steps
 
 **Getting Started:**
+
 - Try the basic setup with your existing OpenFGA instance
 - Add Jaeger for local development to see traces immediately
 - Review the [Introduction.md](Introduction.md) guide for basic OpenFGA usage
+- Run the [event-driven telemetry example](../examples/event-driven-telemetry/example.php) to see custom listeners in action
 
 **Production Setup:**
+
 - Configure proper sampling rates for high-traffic applications
 - Set up dashboards in your observability platform
 - Implement alerting on key metrics like error rates and latency
+- Consider event-driven telemetry for custom monitoring integrations
 
 **Integration:**
+
 - Explore the [Authentication.md](Authentication.md) guide for secure telemetry
 - Read about [Results.md](Results.md) for error handling patterns that work well with observability
 - Check [Queries.md](Queries.md) for the operations you'll be monitoring
+
+**Examples:**
+
+- [OpenTelemetry observability example](../examples/observability/example.php) - Complete OpenTelemetry setup
+- [Event-driven telemetry example](../examples/event-driven-telemetry/example.php) - Custom event listeners
+- [All observability examples](../examples/README.md) - Complete collection
 
 For more details on the OpenTelemetry ecosystem, visit the [official OpenTelemetry documentation](https://opentelemetry.io/docs/).

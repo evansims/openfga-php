@@ -65,7 +65,6 @@ final class CleanArchitectureTest extends TestCase
                 'OpenFGA\Network\RetryStrategyInterface',
                 'OpenFGA\Network\ParallelTaskExecutor',
                 // Allow Infrastructure services for dependency injection
-                'OpenFGA\Infrastructure\Observability\NoOpTelemetryProvider',
                 'OpenFGA\Infrastructure\Repositories\HttpAssertionRepository',
                 'OpenFGA\Infrastructure\Repositories\HttpModelRepository',
                 'OpenFGA\Infrastructure\Repositories\HttpStoreRepository',

@@ -1,6 +1,24 @@
 # Authentication
 
-Most OpenFGA servers require authentication, especially in production. Here's how to authenticate your PHP SDK client.
+Most OpenFGA servers require authentication, especially in production. This guide shows you how to configure authentication for different environments and use cases.
+
+## TL;DR for busy developers
+
+```php
+// Production with client credentials (most common)
+$client = new Client(
+    url: $_ENV['FGA_API_URL'],
+    authentication: new ClientCredentialAuthentication(
+        clientId: $_ENV['FGA_CLIENT_ID'],
+        clientSecret: $_ENV['FGA_CLIENT_SECRET'],
+        issuer: $_ENV['FGA_ISSUER'],
+        audience: $_ENV['FGA_AUDIENCE'],
+    ),
+);
+
+// Local development (no auth)
+$client = new Client(url: 'http://localhost:8080');
+```
 
 ## When do you need authentication?
 
@@ -30,6 +48,7 @@ $client = new Client(
 ```
 
 **Environment variables:**
+
 ```bash
 FGA_API_URL=https://api.us1.fga.dev
 FGA_CLIENT_ID=your_client_id
@@ -53,6 +72,7 @@ $client = new Client(
 ```
 
 **Environment variables:**
+
 ```bash
 FGA_API_URL=https://your-openfga-server.com
 FGA_API_TOKEN=your_api_token
@@ -64,11 +84,9 @@ For local development against a Docker container or development server:
 
 ```php
 use OpenFGA\Client;
-use OpenFGA\Authentication\NoAuthentication;
 
 $client = new Client(
     url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
-    authentication: new NoAuthentication(),
 );
 ```
 
@@ -84,7 +102,6 @@ final readonly class FgaClientFactory
         return match ($_ENV['APP_ENV'] ?? 'production') {
             'development', 'testing' => new Client(
                 url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
-                authentication: new NoAuthentication(),
             ),
             default => new Client(
                 url: $_ENV['FGA_API_URL'],

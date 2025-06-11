@@ -18,7 +18,7 @@ use Throwable;
 final readonly class TelemetryEventListener implements TelemetryEventListenerInterface
 {
     public function __construct(
-        private TelemetryInterface $telemetry,
+        private ?TelemetryInterface $telemetry,
     ) {
     }
 
@@ -29,7 +29,7 @@ final readonly class TelemetryEventListener implements TelemetryEventListenerInt
     public function onHttpRequestSent(HttpRequestSentEvent $event): void
     {
         $request = $event->getRequest();
-        $this->telemetry->recordSpan('http.request.sent', [
+        $this->telemetry?->recordSpan('http.request.sent', [
             'http.method' => $request->getMethod(),
             'http.url' => (string) $request->getUri(),
             'http.request.body.size' => $request->getBody()->getSize(),
@@ -62,7 +62,7 @@ final readonly class TelemetryEventListener implements TelemetryEventListenerInt
             $attributes['exception.message'] = $event->getException()->getMessage();
         }
 
-        $this->telemetry->recordSpan('http.response.received', $attributes);
+        $this->telemetry?->recordSpan('http.response.received', $attributes);
     }
 
     /**
@@ -84,7 +84,7 @@ final readonly class TelemetryEventListener implements TelemetryEventListenerInt
             $attributes['exception.message'] = $event->getException()->getMessage();
         }
 
-        $this->telemetry->recordSpan('openfga.operation.completed', $attributes);
+        $this->telemetry?->recordSpan('openfga.operation.completed', $attributes);
     }
 
     /**
@@ -93,7 +93,7 @@ final readonly class TelemetryEventListener implements TelemetryEventListenerInt
     #[Override]
     public function onOperationStarted(OperationStartedEvent $event): void
     {
-        $this->telemetry->recordSpan('openfga.operation.started', [
+        $this->telemetry?->recordSpan('openfga.operation.started', [
             'openfga.operation' => $event->getOperation(),
             'openfga.store_id' => $event->getStoreId(),
             'openfga.model_id' => $event->getModelId(),

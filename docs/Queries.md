@@ -42,7 +42,7 @@ if ($result->unwrap()->getAllowed()) {
 ```php
 use function OpenFGA\{allowed, tuple};
 
-function canUserEdit(ClientInterface $client, string $storeId, string $modelId, string $userId, string $documentId): bool 
+function canUserEdit(ClientInterface $client, string $storeId, string $modelId, string $userId, string $documentId): bool
 {
     return allowed(
         client: $client,
@@ -52,9 +52,19 @@ function canUserEdit(ClientInterface $client, string $storeId, string $modelId, 
     );
 }
 
-// In your controller
+// In your controller or middleware
 if (!canUserEdit($client, $storeId, $modelId, $currentUserId, $documentId)) {
     throw new ForbiddenException('You cannot edit this document');
+}
+
+// For multiple checks, use the Result pattern for better error handling
+$editResult = $client->check(
+    tupleKey: tuple("user:{$userId}", 'editor', "document:{$documentId}")
+);
+
+if ($editResult->failed()) {
+    logger()->warning('Permission check failed', ['error' => $editResult->err()->getMessage()]);
+    // Handle error - maybe return false or show a generic error
 }
 ```
 
@@ -77,16 +87,16 @@ $documentIds = $result->unwrap()->getObjects();
 ### Building a document list
 
 ```php
-function getEditableDocuments(string $userId): array 
+function getEditableDocuments(string $userId): array
 {
     $result = $client->listObjects(
         user: "user:{$userId}",
         relation: 'editor',
         type: 'document'
     );
-    
+
     $documentIds = $result->unwrap()->getObjects();
-    
+
     // Fetch full document details from your database
     return Document::whereIn('id', $documentIds)->get();
 }
@@ -117,13 +127,13 @@ foreach ($users as $user) {
 ### Building a sharing interface
 
 ```php
-function getDocumentEditors(string $documentId): array 
+function getDocumentEditors(string $documentId): array
 {
     $result = $client->listUsers(
         object: "document:{$documentId}",
         relation: 'editor'
     );
-    
+
     $editors = [];
     foreach ($result->unwrap()->getUsers() as $user) {
         if ($user->isUser()) {
@@ -134,7 +144,7 @@ function getDocumentEditors(string $documentId): array
             ];
         }
     }
-    
+
     return $editors;
 }
 ```
@@ -173,7 +183,7 @@ use function OpenFGA\{tuple, tuples};
 // What if alice joins the engineering team?
 $contextualTuple = tuple(
     user: 'user:alice',
-    relation: 'member', 
+    relation: 'member',
     object: 'team:engineering'
 );
 
@@ -219,7 +229,7 @@ use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkExcep
 $result = $client->check(
     tupleKey: tuple(
         user: 'user:alice',
-        relation: 'viewer', 
+        relation: 'viewer',
         object: 'document:roadmap'
     )
 );
@@ -247,7 +257,7 @@ class PermissionService
         private string $modelId,
         private CacheInterface $cache
     ) {}
-    
+
     public function canAccess(string $userId, string $action, string $resourceId): bool
     {
         // Use result helper for cleaner handling
@@ -266,25 +276,25 @@ class PermissionService
                 return match($error->getError()) {
                     // For network timeouts, use cached result with short TTL
                     ClientError::Network => $this->getCachedPermission(
-                        $userId, 
-                        $action, 
+                        $userId,
+                        $action,
                         $resourceId,
                         $defaultValue = false // Fail closed by default
                     ),
-                    
+
                     // For validation errors, log detailed context
                     ClientError::Validation => $this->handleValidationError(
                         $error->getContext(),
-                        $userId, 
-                        $action, 
+                        $userId,
+                        $action,
                         $resourceId
                     ),
-                    
+
                     // For other cases, gracefully fail closed
                     default => false
                 };
             }
-            
+
             // For unexpected errors, log and fail closed
             logger()->error('Unexpected error during permission check', [
                 'user' => $userId,
@@ -292,18 +302,18 @@ class PermissionService
                 'resource' => $resourceId,
                 'error' => $error->getMessage()
             ]);
-            
+
             return false; // Secure default
         })
         ->unwrap();
     }
-    
+
     private function getCachedPermission(string $userId, string $action, string $resourceId, bool $default): bool
     {
         $cacheKey = "permission:{$userId}:{$action}:{$resourceId}";
         return $this->cache->get($cacheKey, $default);
     }
-    
+
     private function handleValidationError(array $context, string $userId, string $action, string $resourceId): bool
     {
         logger()->warning('Validation error during permission check', [
@@ -312,7 +322,7 @@ class PermissionService
             'action' => $action,
             'resource' => $resourceId
         ]);
-        
+
         // Analyze context to determine appropriate fallback behavior
         // For this example, we'll fail closed
         return false;
@@ -320,10 +330,109 @@ class PermissionService
 }
 ```
 
+## Common Query Patterns
+
+### Permission gates for routes
+
+```php
+use Closure;
+use Illuminate\Http\Request;
+use OpenFGA\ClientInterface;
+use Symfony\Component\HttpFoundation\Response;
+use function OpenFGA\{allowed, tuple};
+
+// Middleware for route protection
+class FgaAuthMiddleware
+{
+    public function __construct(
+        private readonly ClientInterface $client,
+        private readonly string $store,
+        private readonly string $model
+    ) {
+    }
+
+    public function handle(Request $request, Closure $next, string $relation): Response
+    {
+        $user = $request->user();
+        $resource = $request->route('document'); // or extract from URL
+
+        if (!allowed($this->client, $this->store, $this->model,
+                     tuple("user:{$user->id}", $relation, "document:{$resource}"))) {
+            abort(403, "You don't have {$relation} access to this resource");
+        }
+
+        return $next($request);
+    }
+}
+```
+
+### Efficient data filtering
+
+```php
+// Instead of checking each item individually
+function getEditableDocuments(string $userId): Collection
+{
+    // ❌ Don't do this - N+1 problem
+    // return Document::all()->filter(fn($doc) =>
+    //     allowed($client, $store, $model, tuple($userId, 'editor', $doc->id))
+    // );
+
+    // ✅ Do this - single API call
+    $editableIds = $client->listObjects(
+        user: "user:{$userId}",
+        relation: 'editor',
+        type: 'document'
+    )->unwrap()->getObjects();
+
+    return Document::whereIn('id', $editableIds)->get();
+}
+```
+
+### Debugging permission issues
+
+```php
+// When "why doesn't this user have access?" questions arise
+function debugUserAccess(string $userId, string $documentId): void
+{
+    // Check direct permission
+    $canEdit = $client->check(
+        tupleKey: tuple($userId, 'editor', $documentId)
+    )->unwrap();
+
+    echo "Can edit: " . ($canEdit->getAllowed() ? 'Yes' : 'No') . "\n";
+
+    // Show the permission tree
+    $tree = $client->expand(
+        tupleKey: new TupleKey(relation: 'editor', object: $documentId)
+    )->unwrap();
+
+    echo "Permission structure:\n";
+    print_r($tree->toArray());
+
+    // List all relationships for this document
+    $allTuples = $client->readTuples(
+        tupleKey: new TupleKey(object: $documentId)
+    )->unwrap();
+
+    echo "All permissions:\n";
+    foreach ($allTuples->getTuples() as $tuple) {
+        echo "- {$tuple->getUser()} {$tuple->getRelation()}\n";
+    }
+}
+```
+
 ## What's next?
 
-Now that you can query permissions, you might want to:
+Now that you can query permissions effectively:
 
-- [Write assertions](Assertions.md) to test your permission logic
-- Learn about [error handling](Results.md) for production apps
-- Explore [authorization models](Models.md) for complex scenarios
+**Essential next steps:**
+
+- **[Results →](Results.md)** - Handle errors gracefully in production
+- **[Tuples →](Tuples.md)** - Learn to grant and revoke permissions
+- **[Models →](Models.md)** - Build more sophisticated permission rules
+
+**Advanced topics:**
+
+- **[Assertions →](Assertions.md)** - Test your permission logic automatically
+- **[Concurrency →](Concurrency.md)** - Optimize batch operations
+- **[Observability →](Observability.md)** - Monitor query performance

@@ -106,12 +106,12 @@ $client->writeTuples($store, $model, $tuples)
 use function OpenFGA\{result, ok, err, unwrap, success, failure};
 
 // Return a sensible default when things go wrong
-function getUserPermissions(string $userId): array 
+function getUserPermissions(string $userId): array
 {
     // Use the helper functions from Helpers.php
     return result(function() use ($userId) {
         return $this->client->listObjects(
-            user: $userId, 
+            user: $userId,
             relation: 'can_access'
         );
     })
@@ -119,7 +119,7 @@ function getUserPermissions(string $userId): array
     ->recover(function(Throwable $error) {
         logger()->warning('Failed to get user permissions', [
             'error_type' => $error::class,
-            'message' => $error->getMessage() 
+            'message' => $error->getMessage()
         ]);
         return []; // Empty permissions on error
     })
@@ -133,7 +133,7 @@ function getUserPermissions(string $userId): array
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
 use function OpenFGA\{tuple, allowed};
 
-function canUserAccess(string $userId, string $documentId): bool 
+function canUserAccess(string $userId, string $documentId): bool
 {
     try {
         return allowed(
@@ -150,22 +150,22 @@ function canUserAccess(string $userId, string $documentId): bool
                 ClientError::Network => $this->retryAfterDelay(function() use ($userId, $documentId) {
                     return $this->canUserAccess($userId, $documentId);
                 }, $maxRetries = 3),
-                
+
                 // Authentication errors should trigger re-auth
                 ClientError::Authentication => $this->handleAuthError($e),
-                
+
                 // Fall back to cached permissions for other errors
                 default => $this->getCachedPermission($userId, $documentId, false)
             };
         }
-        
+
         // Unknown error types - fail closed for security
         logger()->error('Unexpected error checking permissions', [
             'error_type' => $e::class,
             'user' => $userId,
             'document' => $documentId
         ]);
-        
+
         return false;
     }
 }
@@ -206,12 +206,12 @@ $model = $client->getAuthorizationModel($storeId, $modelId)
 ### Retry with exponential backoff
 
 ```php
-function checkWithRetry(string $user, string $relation, string $object): bool 
+function checkWithRetry(string $user, string $relation, string $object): bool
 {
     return retry(3, function() use ($user, $relation, $object) {
         return $this->client->check(
-            user: $user, 
-            relation: $relation, 
+            user: $user,
+            relation: $relation,
             object: $object
         )->unwrap()->getIsAllowed();
     }, sleepMilliseconds: fn($attempt) => $attempt * 1000);
@@ -221,7 +221,7 @@ function checkWithRetry(string $user, string $relation, string $object): bool
 ### Batch operations with partial failures
 
 ```php
-function batchCheck(array $checks): array 
+function batchCheck(array $checks): array
 {
     return collect($checks)
         ->map(fn($check) => $this->client->check(...$check))
@@ -251,15 +251,15 @@ class PermissionService
     {
         return $this->client
             ->check(
-                store: $this->storeId, 
-                model: $this->modelId, 
+                store: $this->storeId,
+                model: $this->modelId,
                 tupleKey: tuple($user, $action, $resource)
             )
             ->then(fn($response) => $response->getIsAllowed())
             ->recover(function(Throwable $e) {
                 Log::warning('Permission check failed', [
                     'user' => $user,
-                    'action' => $action, 
+                    'action' => $action,
                     'resource' => $resource,
                     'error' => $e->getMessage()
                 ]);
@@ -279,8 +279,8 @@ class FgaVoter extends Voter
     {
         return $this->client
             ->check(
-                store: $this->store, 
-                model: $this->model, 
+                store: $this->store,
+                model: $this->model,
                 tupleKey: tuple($token->getUserIdentifier(), $attribute, $subject->getId())
             )
             ->then(fn($response) => $response->getIsAllowed())
@@ -293,7 +293,7 @@ class FgaVoter extends Voter
 ## When to use what
 
 - **`unwrap()`** - When you want simple exception-based error handling
-- **`success()` / `failure()`** - For side effects like logging without changing the result  
+- **`success()` / `failure()`** - For side effects like logging without changing the result
 - **`then()`** - To transform success values or chain operations
 - **`recover()`** - To provide fallbacks or convert failures to successes
 

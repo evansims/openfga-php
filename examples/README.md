@@ -2,9 +2,17 @@
 
 This directory contains example code for the OpenFGA PHP SDK.
 
-- [Quick Start](quick-start/example.php) - A simple example demonstrating the essential steps to get started with OpenFGA.
-- [Observability](observability/example.php) - An example demonstrating how to use OpenTelemetry observability with the OpenFGA PHP SDK.
-- [Explorer](explorer/) - A full-featured web application for managing OpenFGA authorization models, relationship tuples, and performing authorization checks.
+## Getting Started Examples
+
+- [Hello World](hello-world/example.php) - The simplest possible introduction to OpenFGA in just a few lines of code.
+- [Quick Start](quick-start/example.php) - A comprehensive example demonstrating the essential steps to get started with OpenFGA.
+
+## Advanced Examples
+
+- [Duplicate Filtering](duplicate-filtering/example.php) - Demonstrates automatic duplicate tuple filtering and delete precedence.
+- [Non-Transactional Writes](non-transactional-writes/example.php) - Shows Fiber-based parallel batch processing for high-performance operations.
+- [Event-Driven Telemetry](event-driven-telemetry/example.php) - Custom event listeners for observability without tight coupling.
+- [Observability](observability/example.php) - OpenTelemetry integration for production monitoring and tracing.
 
 ## Running Examples
 
@@ -19,15 +27,10 @@ composer install
 Run the examples using the following commands:
 
 ```bash
+php hello-world/example.php
 php quick-start/example.php
+php duplicate-filtering/example.php
+php non-transactional-writes/example.php
+php event-driven-telemetry/example.php
 php observability/example.php
 ```
-
-For the Explorer web application:
-
-```bash
-cd explorer
-php -S localhost:8080 -t public
-```
-
-Then open http://localhost:8080 in your web browser.

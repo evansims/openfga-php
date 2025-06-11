@@ -14,8 +14,8 @@ use Throwable;
  *
  * This factory provides convenient methods for setting up observability
  * with the OpenFGA SDK. It handles the conditional creation of OpenTelemetry
- * providers when the dependencies are available, and falls back to no-op
- * implementations when they are not.
+ * providers when the dependencies are available, and falls back to null
+ * when they are not.
  *
  * The factory follows the principle of graceful degradation, ensuring that
  * the SDK remains functional even when OpenTelemetry is not installed or
@@ -28,23 +28,23 @@ final class TelemetryFactory
      *
      * Attempts to create an OpenTelemetry-based telemetry provider using
      * the global tracer and meter providers. If OpenTelemetry classes are
-     * not available or not configured, returns a no-op implementation.
+     * not available or not configured, returns null.
      *
      * This method uses class_exists checks to determine availability rather
      * than try-catch blocks, providing better performance when OpenTelemetry
      * is not installed.
      *
-     * @param  string             $serviceName    The service name for telemetry identification
-     * @param  string             $serviceVersion The service version for telemetry identification
-     * @return TelemetryInterface A telemetry provider instance
+     * @param  string                  $serviceName    The service name for telemetry identification
+     * @param  string                  $serviceVersion The service version for telemetry identification
+     * @return TelemetryInterface|null A telemetry provider instance
      */
     public static function create(
         string $serviceName = 'openfga-php-sdk',
         string $serviceVersion = '1.0.0',
-    ): TelemetryInterface {
+    ): ?TelemetryInterface {
         // Check if OpenTelemetry API classes are available
         if (! class_exists('OpenTelemetry\API\Globals')) {
-            return new NoOpTelemetryProvider;
+            return null;
         }
 
         try {
@@ -57,23 +57,9 @@ final class TelemetryFactory
 
             return new OpenTelemetryProvider($tracer, $meter);
         } catch (Throwable) {
-            // Fall back to no-op if OpenTelemetry is not properly configured
-            return new NoOpTelemetryProvider;
+            // Fall back to null if OpenTelemetry is not properly configured
+            return null;
         }
-    }
-
-    /**
-     * Create a no-operation telemetry provider.
-     *
-     * Returns a no-op implementation that performs no telemetry operations.
-     * This is useful for testing, or when you explicitly want to disable
-     * observability features.
-     *
-     * @return TelemetryInterface A no-op telemetry provider
-     */
-    public static function createNoOp(): TelemetryInterface
-    {
-        return new NoOpTelemetryProvider;
     }
 
     /**
