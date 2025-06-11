@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Observability;
 
 use OpenFGA\Events\{HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
+use Override;
 use Psr\Http\Message\ResponseInterface;
 use Throwable;
 
@@ -14,7 +15,7 @@ use Throwable;
  * This decouples business logic from telemetry by using events to communicate
  * what happened without the business logic needing to know about telemetry.
  */
-final readonly class TelemetryEventListener
+final readonly class TelemetryEventListener implements TelemetryEventListenerInterface
 {
     public function __construct(
         private TelemetryInterface $telemetry,
@@ -22,10 +23,9 @@ final readonly class TelemetryEventListener
     }
 
     /**
-     * Handle HTTP request sent events.
-     *
-     * @param HttpRequestSentEvent $event
+     * @inheritDoc
      */
+    #[Override]
     public function onHttpRequestSent(HttpRequestSentEvent $event): void
     {
         $request = $event->getRequest();
@@ -40,10 +40,9 @@ final readonly class TelemetryEventListener
     }
 
     /**
-     * Handle HTTP response received events.
-     *
-     * @param HttpResponseReceivedEvent $event
+     * @inheritDoc
      */
+    #[Override]
     public function onHttpResponseReceived(HttpResponseReceivedEvent $event): void
     {
         $response = $event->getResponse();
@@ -67,10 +66,9 @@ final readonly class TelemetryEventListener
     }
 
     /**
-     * Handle operation completed events.
-     *
-     * @param OperationCompletedEvent $event
+     * @inheritDoc
      */
+    #[Override]
     public function onOperationCompleted(OperationCompletedEvent $event): void
     {
         $attributes = [
@@ -90,10 +88,9 @@ final readonly class TelemetryEventListener
     }
 
     /**
-     * Handle operation started events.
-     *
-     * @param OperationStartedEvent $event
+     * @inheritDoc
      */
+    #[Override]
     public function onOperationStarted(OperationStartedEvent $event): void
     {
         $this->telemetry->recordSpan('openfga.operation.started', [

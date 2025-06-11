@@ -8,8 +8,7 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use LogicException;
 use OpenFGA\Authentication\AuthenticationInterface;
-use OpenFGA\Events\{EventDispatcher, EventDispatcherInterface};
-use OpenFGA\Events\{HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
+use OpenFGA\Events\{EventDispatcher, EventDispatcherInterface, HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Language\Transformer;
 use OpenFGA\Models\{AuthorizationModel, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, Userset};
@@ -18,12 +17,12 @@ use OpenFGA\Models\Collections\{AssertionsInterface, BatchCheckItemsInterface, C
 use OpenFGA\Models\Collections\{Conditions, RelationMetadataCollection, RelationReferences, TypeDefinitionRelations, TypeDefinitions, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\{RequestManager, RetryStrategyInterface};
-use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryEventListener, TelemetryInterface};
-use OpenFGA\Repositories\{HttpAssertionRepository, HttpModelRepository, HttpStoreRepository, HttpTupleRepository};
+use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryEventListener, TelemetryEventListenerInterface, TelemetryInterface};
+use OpenFGA\Repositories\{HttpAssertionRepository, HttpModelRepository, HttpStoreRepository, HttpTupleRepository, StoreRepositoryInterface, TupleRepositoryInterface};
 use OpenFGA\Results\{Failure, Success};
 use OpenFGA\Results\{FailureInterface, SuccessInterface};
-use OpenFGA\Schemas\SchemaValidator;
-use OpenFGA\Services\{AssertionService, ModelService, TupleService};
+use OpenFGA\Schemas\{SchemaValidator, SchemaValidatorInterface};
+use OpenFGA\Services\{AssertionService, AuthenticationServiceInterface, AuthorizationServiceInterface, HttpServiceInterface, ModelService, StoreServiceInterface, TupleFilterServiceInterface, TupleService};
 use OpenFGA\Services\{AuthenticationService, AuthorizationService, EventAwareTelemetryService, HttpService, StoreService, TelemetryServiceInterface, TupleFilterService};
 use OpenFGA\Translation\Translator;
 use Override;
@@ -31,8 +30,6 @@ use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as HttpRequestInterface, ResponseFactoryInterface, ResponseInterface as HttpResponseInterface, StreamFactoryInterface};
 use ReflectionException;
 use Throwable;
-
-use function sprintf;
 
 /**
  * OpenFGA Client implementation for relationship-based access control operations.
@@ -56,10 +53,32 @@ final class Client implements ClientInterface
      */
     public const string VERSION = '1.3.0';
 
+    private ?AuthenticationServiceInterface $authenticationService = null;
+
+    private ?AuthorizationServiceInterface $authorizationService = null;
+
+    private ?EventDispatcherInterface $eventDispatcher = null;
+
+    private ?HttpServiceInterface $httpService = null;
+
+    private ?SchemaValidatorInterface $schemaValidator = null;
+
+    private ?StoreRepositoryInterface $storeRepository = null;
+
+    private ?StoreServiceInterface $storeService = null;
+
     /**
-     * @var array<string, object> Service instances cache
+     * @var array<string, object> Store-specific service instances cache
      */
-    private array $services = [];
+    private array $storeSpecificServices = [];
+
+    private ?TelemetryEventListenerInterface $telemetryListener = null;
+
+    private ?TelemetryServiceInterface $telemetryService = null;
+
+    private ?TupleFilterServiceInterface $tupleFilterService = null;
+
+    private ?TupleRepositoryInterface $tupleRepository = null;
 
     /**
      * Create a new OpenFGA client instance.
@@ -691,11 +710,11 @@ final class Client implements ClientInterface
      */
     private function createAuthenticationService(): AuthenticationService
     {
-        $telemetryService = $this->getService('telemetry');
+        $telemetryService = $this->getTelemetryService();
 
         return new AuthenticationService(
             $this->authentication,
-            $telemetryService instanceof TelemetryServiceInterface ? $telemetryService : null,
+            $telemetryService,
         );
     }
 
@@ -706,11 +725,7 @@ final class Client implements ClientInterface
      */
     private function createAuthorizationService(): AuthorizationService
     {
-        $httpService = $this->getService('http');
-
-        if (! $httpService instanceof HttpService) {
-            throw new LogicException('HTTP service not available');
-        }
+        $httpService = $this->getHttpService();
 
         return new AuthorizationService($httpService);
     }
@@ -722,8 +737,8 @@ final class Client implements ClientInterface
      */
     private function createHttpService(): HttpService
     {
-        $eventDispatcher = $this->getService('event.dispatcher');
-        $authenticationService = $this->getService('authentication');
+        $eventDispatcher = $this->getEventDispatcher();
+        $authenticationService = $this->getAuthenticationService();
 
         $requestManager = new RequestManager(
             url: $this->url,
@@ -735,12 +750,12 @@ final class Client implements ClientInterface
             httpRequestFactory: $this->httpRequestFactory,
             telemetry: $this->telemetry ?? new NoOpTelemetryProvider,
             retryStrategy: $this->retryStrategy,
-            authenticationService: $authenticationService instanceof AuthenticationService ? $authenticationService : null,
+            authenticationService: $authenticationService,
         );
 
         return new HttpService(
             $requestManager,
-            $eventDispatcher instanceof EventDispatcherInterface ? $eventDispatcher : null,
+            $eventDispatcher,
         );
     }
 
@@ -751,16 +766,8 @@ final class Client implements ClientInterface
      */
     private function createStoreRepository(): HttpStoreRepository
     {
-        $httpService = $this->getService('http');
-        $validator = $this->getService('schema.validator');
-
-        if (! $httpService instanceof HttpService) {
-            throw new LogicException('HTTP service not available');
-        }
-
-        if (! $validator instanceof SchemaValidator) {
-            throw new LogicException('Schema validator not available');
-        }
+        $httpService = $this->getHttpService();
+        $validator = $this->getSchemaValidator();
 
         return new HttpStoreRepository($httpService, $validator);
     }
@@ -772,11 +779,7 @@ final class Client implements ClientInterface
      */
     private function createStoreService(): StoreService
     {
-        $storeRepository = $this->getService('repository.store');
-
-        if (! $storeRepository instanceof HttpStoreRepository) {
-            throw new LogicException('Store repository not available');
-        }
+        $storeRepository = $this->getStoreRepository();
 
         return new StoreService($storeRepository);
     }
@@ -788,48 +791,46 @@ final class Client implements ClientInterface
      */
     private function createTelemetryService(): TelemetryServiceInterface
     {
-        $eventDispatcher = $this->getService('event.dispatcher');
-        $telemetryListener = $this->getService('telemetry.listener');
+        $eventDispatcher = $this->getEventDispatcher();
+        $telemetryListener = $this->getTelemetryListener();
 
         // Register telemetry event listeners
-        if ($eventDispatcher instanceof EventDispatcherInterface && $telemetryListener instanceof TelemetryEventListener) {
-            $eventDispatcher->addListener(
-                'OpenFGA\\Events\\HttpRequestSentEvent',
-                static function (object $event) use ($telemetryListener): void {
-                    if ($event instanceof HttpRequestSentEvent) {
-                        $telemetryListener->onHttpRequestSent($event);
-                    }
-                },
-            );
-            $eventDispatcher->addListener(
-                'OpenFGA\\Events\\HttpResponseReceivedEvent',
-                static function (object $event) use ($telemetryListener): void {
-                    if ($event instanceof HttpResponseReceivedEvent) {
-                        $telemetryListener->onHttpResponseReceived($event);
-                    }
-                },
-            );
-            $eventDispatcher->addListener(
-                'OpenFGA\\Events\\OperationStartedEvent',
-                static function (object $event) use ($telemetryListener): void {
-                    if ($event instanceof OperationStartedEvent) {
-                        $telemetryListener->onOperationStarted($event);
-                    }
-                },
-            );
-            $eventDispatcher->addListener(
-                'OpenFGA\\Events\\OperationCompletedEvent',
-                static function (object $event) use ($telemetryListener): void {
-                    if ($event instanceof OperationCompletedEvent) {
-                        $telemetryListener->onOperationCompleted($event);
-                    }
-                },
-            );
-        }
+        $eventDispatcher->addListener(
+            'OpenFGA\\Events\\HttpRequestSentEvent',
+            static function (object $event) use ($telemetryListener): void {
+                if ($event instanceof HttpRequestSentEvent) {
+                    $telemetryListener->onHttpRequestSent($event);
+                }
+            },
+        );
+        $eventDispatcher->addListener(
+            'OpenFGA\\Events\\HttpResponseReceivedEvent',
+            static function (object $event) use ($telemetryListener): void {
+                if ($event instanceof HttpResponseReceivedEvent) {
+                    $telemetryListener->onHttpResponseReceived($event);
+                }
+            },
+        );
+        $eventDispatcher->addListener(
+            'OpenFGA\\Events\\OperationStartedEvent',
+            static function (object $event) use ($telemetryListener): void {
+                if ($event instanceof OperationStartedEvent) {
+                    $telemetryListener->onOperationStarted($event);
+                }
+            },
+        );
+        $eventDispatcher->addListener(
+            'OpenFGA\\Events\\OperationCompletedEvent',
+            static function (object $event) use ($telemetryListener): void {
+                if ($event instanceof OperationCompletedEvent) {
+                    $telemetryListener->onOperationCompleted($event);
+                }
+            },
+        );
 
         return new EventAwareTelemetryService(
             $this->telemetry ?? new NoOpTelemetryProvider,
-            $eventDispatcher instanceof EventDispatcherInterface ? $eventDispatcher : null,
+            $eventDispatcher,
         );
     }
 
@@ -840,39 +841,11 @@ final class Client implements ClientInterface
      */
     private function createTupleRepository(): HttpTupleRepository
     {
-        $httpService = $this->getService('http');
-        $tupleFilterService = $this->getService('tuple.filter');
-        $validator = $this->getService('schema.validator');
-
-        if (! $httpService instanceof HttpService) {
-            throw new LogicException('HTTP service not available');
-        }
-
-        if (! $tupleFilterService instanceof TupleFilterService) {
-            throw new LogicException('Tuple filter service not available');
-        }
-
-        if (! $validator instanceof SchemaValidator) {
-            throw new LogicException('Schema validator not available');
-        }
+        $httpService = $this->getHttpService();
+        $tupleFilterService = $this->getTupleFilterService();
+        $validator = $this->getSchemaValidator();
 
         return new HttpTupleRepository($httpService, $tupleFilterService, $validator);
-    }
-
-    /**
-     * Create tuple service.
-     *
-     * @throws LogicException If required services are not available
-     */
-    private function createTupleService(): TupleService
-    {
-        $tupleRepository = $this->getService('repository.tuple');
-
-        if (! $tupleRepository instanceof HttpTupleRepository) {
-            throw new LogicException('Tuple repository not available');
-        }
-
-        return new TupleService($tupleRepository);
     }
 
     /**
@@ -888,9 +861,9 @@ final class Client implements ClientInterface
         $serviceId = 'service.assertion.' . $storeId;
 
         // Check if store-specific service exists
-        if (isset($this->services[$serviceId])) {
+        if (isset($this->storeSpecificServices[$serviceId])) {
             /** @var AssertionService $service */
-            $service = $this->services[$serviceId];
+            $service = $this->storeSpecificServices[$serviceId];
 
             if (! $service instanceof AssertionService) {
                 throw new LogicException('Assertion service not available');
@@ -912,43 +885,47 @@ final class Client implements ClientInterface
             language: $this->language,
         );
 
-        $this->setService($serviceId, $service);
+        $this->setStoreSpecificService($serviceId, $service);
 
         return $service;
     }
 
     /**
-     * Get the authorization service from the service provider.
+     * Get the authentication service instance.
      *
-     * @throws LogicException If the service is not available
+     * @throws LogicException If required services are not available
      */
-    private function getAuthorizationService(): AuthorizationService
+    private function getAuthenticationService(): AuthenticationServiceInterface
     {
-        /** @var AuthorizationService $service */
-        $service = $this->getService('service.authorization');
-
-        if (! $service instanceof AuthorizationService) {
-            throw new LogicException('Authorization service not available');
-        }
-
-        return $service;
+        return $this->authenticationService ??= $this->createAuthenticationService();
     }
 
     /**
-     * Get the HTTP service from the service provider.
+     * Get the authorization service instance.
      *
      * @throws LogicException If the service is not available
      */
-    private function getHttpService(): HttpService
+    private function getAuthorizationService(): AuthorizationServiceInterface
     {
-        /** @var HttpService $service */
-        $service = $this->getService('http');
+        return $this->authorizationService ??= $this->createAuthorizationService();
+    }
 
-        if (! $service instanceof HttpService) {
-            throw new LogicException('HTTP service not available');
-        }
+    /**
+     * Get the event dispatcher instance.
+     */
+    private function getEventDispatcher(): EventDispatcherInterface
+    {
+        return $this->eventDispatcher ??= new EventDispatcher;
+    }
 
-        return $service;
+    /**
+     * Get the HTTP service instance.
+     *
+     * @throws LogicException If the service is not available
+     */
+    private function getHttpService(): HttpServiceInterface
+    {
+        return $this->httpService ??= $this->createHttpService();
     }
 
     /**
@@ -966,9 +943,9 @@ final class Client implements ClientInterface
         $serviceId = 'service.model.' . $storeId;
 
         // Check if store-specific service exists
-        if (isset($this->services[$serviceId])) {
+        if (isset($this->storeSpecificServices[$serviceId])) {
             /** @var ModelService $service */
-            $service = $this->services[$serviceId];
+            $service = $this->storeSpecificServices[$serviceId];
 
             if (! $service instanceof ModelService) {
                 throw new LogicException('Model service not available');
@@ -990,85 +967,73 @@ final class Client implements ClientInterface
             language: $this->language,
         );
 
-        $this->setService($serviceId, $service);
+        $this->setStoreSpecificService($serviceId, $service);
 
         return $service;
     }
 
     /**
-     * Get the schema validator from the service provider.
-     *
-     * @throws LogicException If the service is not available
+     * Get the schema validator instance.
      */
-    private function getSchemaValidator(): SchemaValidator
+    private function getSchemaValidator(): SchemaValidatorInterface
     {
-        /** @var SchemaValidator $validator */
-        $validator = $this->getService('schema.validator');
-
-        if (! $validator instanceof SchemaValidator) {
-            throw new LogicException('Schema validator not available');
-        }
-
-        return $validator;
+        return $this->schemaValidator ??= new SchemaValidator;
     }
 
     /**
-     * Get a service instance by identifier.
+     * Get the store repository instance.
      *
-     * Creates services lazily and caches them for subsequent calls.
-     *
-     * @param string $serviceId The service identifier
-     *
-     * @throws LogicException If the service is not available
-     *
-     * @return object The service instance
+     * @throws LogicException If required services are not available
      */
-    private function getService(string $serviceId): object
+    private function getStoreRepository(): StoreRepositoryInterface
     {
-        if (isset($this->services[$serviceId])) {
-            return $this->services[$serviceId];
-        }
-
-        $service = match ($serviceId) {
-            'event.dispatcher' => new EventDispatcher,
-            'telemetry.listener' => new TelemetryEventListener($this->telemetry ?? new NoOpTelemetryProvider),
-            'telemetry' => $this->createTelemetryService(),
-            'authentication' => $this->createAuthenticationService(),
-            'http' => $this->createHttpService(),
-            'schema.validator' => new SchemaValidator,
-            'tuple.filter' => new TupleFilterService,
-            'repository.store' => $this->createStoreRepository(),
-            'repository.tuple' => $this->createTupleRepository(),
-            'service.authorization' => $this->createAuthorizationService(),
-            'service.store' => $this->createStoreService(),
-            'service.tuple' => $this->createTupleService(),
-            default => null,
-        };
-
-        if (null === $service) {
-            throw new LogicException(sprintf("Service '%s' not available", $serviceId));
-        }
-
-        $this->services[$serviceId] = $service;
-
-        return $service;
+        return $this->storeRepository ??= $this->createStoreRepository();
     }
 
     /**
-     * Get the store service from the service provider.
+     * Get the store service instance.
      *
      * @throws LogicException If the service is not available
      */
-    private function getStoreService(): StoreService
+    private function getStoreService(): StoreServiceInterface
     {
-        /** @var StoreService $service */
-        $service = $this->getService('service.store');
+        return $this->storeService ??= $this->createStoreService();
+    }
 
-        if (! $service instanceof StoreService) {
-            throw new LogicException('Store service not available');
-        }
+    /**
+     * Get the telemetry listener instance.
+     */
+    private function getTelemetryListener(): TelemetryEventListenerInterface
+    {
+        return $this->telemetryListener ??= new TelemetryEventListener($this->telemetry ?? new NoOpTelemetryProvider);
+    }
 
-        return $service;
+    /**
+     * Get the telemetry service instance.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function getTelemetryService(): TelemetryServiceInterface
+    {
+        return $this->telemetryService ??= $this->createTelemetryService();
+    }
+
+    /**
+     * Get the tuple filter service instance.
+     */
+    private function getTupleFilterService(): TupleFilterServiceInterface
+    {
+        return $this->tupleFilterService ??= new TupleFilterService;
+    }
+
+    /**
+     * Get the tuple repository instance.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function getTupleRepository(): TupleRepositoryInterface
+    {
+        return $this->tupleRepository ??= $this->createTupleRepository();
     }
 
     /**
@@ -1084,9 +1049,9 @@ final class Client implements ClientInterface
         $serviceId = 'service.tuple.' . $storeId;
 
         // Check if store-specific service exists
-        if ($this->hasService($serviceId)) {
+        if (isset($this->storeSpecificServices[$serviceId])) {
             /** @var TupleService $service */
-            $service = $this->getService($serviceId);
+            $service = $this->storeSpecificServices[$serviceId];
 
             if (! $service instanceof TupleService) {
                 throw new LogicException('Tuple service not available');
@@ -1096,57 +1061,25 @@ final class Client implements ClientInterface
         }
 
         // Create and register store-specific service
-        $tupleRepository = $this->getService('repository.tuple');
-
-        if (! $tupleRepository instanceof HttpTupleRepository) {
-            throw new LogicException('Tuple repository not available');
-        }
+        $tupleRepository = $this->getTupleRepository();
 
         $service = new TupleService(
             tupleRepository: $tupleRepository,
         );
-        $this->setService($serviceId, $service);
+        $this->setStoreSpecificService($serviceId, $service);
 
         return $service;
     }
 
     /**
-     * Check if a service is available.
-     *
-     * @param string $serviceId
-     */
-    private function hasService(string $serviceId): bool
-    {
-        if (isset($this->services[$serviceId])) {
-            return true;
-        }
-
-        return match ($serviceId) {
-            'event.dispatcher',
-            'telemetry.listener',
-            'telemetry',
-            'authentication',
-            'http',
-            'schema.validator',
-            'tuple.filter',
-            'repository.store',
-            'repository.tuple',
-            'service.authorization',
-            'service.store',
-            'service.tuple' => true,
-            default => false,
-        };
-    }
-
-    /**
-     * Set a service instance.
+     * Set a store-specific service instance.
      *
      * @param string $serviceId
      * @param object $service
      */
-    private function setService(string $serviceId, object $service): void
+    private function setStoreSpecificService(string $serviceId, object $service): void
     {
-        $this->services[$serviceId] = $service;
+        $this->storeSpecificServices[$serviceId] = $service;
     }
 
     /**
