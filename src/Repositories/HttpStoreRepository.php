@@ -11,7 +11,7 @@ use OpenFGA\Models\{Store};
 use OpenFGA\Requests\{CreateStoreRequest, DeleteStoreRequest, GetStoreRequest, ListStoresRequest};
 use OpenFGA\Responses\{CreateStoreResponse, DeleteStoreResponse, GetStoreResponse, ListStoresResponse};
 use OpenFGA\Results\{Failure, ResultInterface, Success};
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use OpenFGA\Services\HttpServiceInterface;
 use OpenFGA\Translation\Translator;
 use Override;
@@ -50,12 +50,12 @@ final readonly class HttpStoreRepository implements StoreRepositoryInterface
     private const int MAX_PAGE_SIZE = 100;
 
     /**
-     * @param HttpServiceInterface $httpService Service for making HTTP requests
-     * @param SchemaValidator      $validator   Validator for API responses
+     * @param HttpServiceInterface     $httpService Service for making HTTP requests
+     * @param SchemaValidatorInterface $validator   Validator for API responses
      */
     public function __construct(
         private HttpServiceInterface $httpService,
-        private SchemaValidator $validator,
+        private SchemaValidatorInterface $validator,
     ) {
     }
 

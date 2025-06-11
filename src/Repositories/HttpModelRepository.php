@@ -12,7 +12,7 @@ use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Requests\{CreateAuthorizationModelRequest, GetAuthorizationModelRequest, ListAuthorizationModelsRequest};
 use OpenFGA\Responses\{CreateAuthorizationModelResponse, GetAuthorizationModelResponse, ListAuthorizationModelsResponse};
 use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use OpenFGA\Services\HttpServiceInterface;
 use OpenFGA\Translation\Translator;
 use Override;
@@ -43,9 +43,9 @@ final readonly class HttpModelRepository implements ModelRepositoryInterface
     private const int MAX_PAGE_SIZE = 100;
 
     /**
-     * @param HttpServiceInterface $httpService Service for making HTTP requests
-     * @param SchemaValidator      $validator   Validator for API responses
-     * @param string               $storeId     The store ID for model operations
+     * @param HttpServiceInterface     $httpService Service for making HTTP requests
+     * @param SchemaValidatorInterface $validator   Validator for API responses
+     * @param string                   $storeId     The store ID for model operations
      *
      * @throws ClientThrowable          If the store ID is empty
      * @throws InvalidArgumentException If message translation parameters are invalid
@@ -53,7 +53,7 @@ final readonly class HttpModelRepository implements ModelRepositoryInterface
      */
     public function __construct(
         private HttpServiceInterface $httpService,
-        private SchemaValidator $validator,
+        private SchemaValidatorInterface $validator,
         private string $storeId,
     ) {
         if ('' === $this->storeId) {

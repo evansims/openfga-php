@@ -10,7 +10,7 @@ use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\Collections\{TupleChanges, TupleChangesInterface};
 use OpenFGA\Models\{TupleChange, TupleKey};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -53,7 +53,7 @@ final class ListTupleChangesResponse extends Response implements ListTupleChange
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): ListTupleChangesResponseInterface {
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);

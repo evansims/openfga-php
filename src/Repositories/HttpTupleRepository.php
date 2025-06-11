@@ -14,7 +14,7 @@ use OpenFGA\Models\TupleKeyInterface;
 use OpenFGA\Requests\{ListTupleChangesRequest, ReadTuplesRequest, WriteTuplesRequest};
 use OpenFGA\Responses\{ListTupleChangesResponse, ReadTuplesResponse, WriteTuplesResponse};
 use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use OpenFGA\Services\{HttpServiceInterface, TupleFilterServiceInterface};
 use OpenFGA\Translation\Translator;
 use Override;
@@ -47,12 +47,12 @@ final readonly class HttpTupleRepository implements TupleRepositoryInterface
     /**
      * @param HttpServiceInterface        $httpService        Service for making HTTP requests
      * @param TupleFilterServiceInterface $tupleFilterService Service for filtering duplicate tuples
-     * @param SchemaValidator             $validator          Validator for API responses
+     * @param SchemaValidatorInterface    $validator          Validator for API responses
      */
     public function __construct(
         private HttpServiceInterface $httpService,
         private TupleFilterServiceInterface $tupleFilterService,
-        private SchemaValidator $validator,
+        private SchemaValidatorInterface $validator,
     ) {
     }
 
