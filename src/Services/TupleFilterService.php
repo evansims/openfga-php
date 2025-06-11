@@ -9,8 +9,6 @@ use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\{ConditionInterface, TupleKeyInterface};
 use Override;
 
-use function sprintf;
-
 /**
  * Default implementation of TupleFilterServiceInterface.
  *
@@ -113,10 +111,12 @@ final class TupleFilterService implements TupleFilterServiceInterface
         ];
 
         $condition = $tuple->getCondition();
+
         if ($condition instanceof ConditionInterface) {
             $keyData['cond_name'] = $condition->getName();
             $context = $condition->getContext();
-            if (!empty($context)) {
+
+            if (! empty($context)) {
                 ksort($context);
                 $keyData['cond_ctx'] = $context;
             }

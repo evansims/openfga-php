@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Models;
 
-use OpenFGA\Models\Collections\{ConditionParametersInterface};
+use OpenFGA\Models\Collections\ConditionParametersInterface;
 use OpenFGA\Models\Enums\TypeName;
 use Override;
 

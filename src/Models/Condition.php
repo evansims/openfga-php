@@ -63,6 +63,15 @@ final class Condition implements ConditionInterface
      * @inheritDoc
      */
     #[Override]
+    public function getContext(): ?array
+    {
+        return $this->context;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
     public function getExpression(): string
     {
         return $this->expression;
@@ -84,15 +93,6 @@ final class Condition implements ConditionInterface
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    #[Override]
-    public function getContext(): ?array
-    {
-        return $this->context;
     }
 
     /**

@@ -28,9 +28,9 @@ interface StreamedListObjectsResponseInterface
      * Processes the streaming HTTP response and returns a Generator that yields
      * individual object identifiers as they are received from the server.
      *
-     * @param HttpResponseInterface $response  The HTTP response from the API
-     * @param HttpRequestInterface  $request   The original HTTP request
-     * @param SchemaValidator       $validator Schema validator for response validation
+     * @param HttpResponseInterface    $response  The HTTP response from the API
+     * @param HttpRequestInterface     $request   The original HTTP request
+     * @param SchemaValidatorInterface $validator Schema validator for response validation
      *
      * @throws InvalidArgumentException If message translation parameters are invalid
      * @throws NetworkException         If the API returns an error response

@@ -8,8 +8,7 @@ use const JSON_THROW_ON_ERROR;
 
 use InvalidArgumentException;
 use JsonException;
-use OpenFGA\Exceptions\{ClientError};
-use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;

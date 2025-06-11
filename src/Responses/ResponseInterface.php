@@ -30,9 +30,9 @@ interface ResponseInterface
      * validating and parsing the response data according to the expected schema. It handles both successful
      * responses by parsing and validating the data, and error responses by throwing appropriate exceptions.
      *
-     * @param HttpResponseInterface $response  The raw HTTP response from the OpenFGA API
-     * @param HttpRequestInterface  $request   The original HTTP request that generated this response
-     * @param SchemaValidator       $validator Schema validator for parsing and validating response data
+     * @param HttpResponseInterface    $response  The raw HTTP response from the OpenFGA API
+     * @param HttpRequestInterface     $request   The original HTTP request that generated this response
+     * @param SchemaValidatorInterface $validator Schema validator for parsing and validating response data
      *
      * @throws ClientThrowable When network-related errors, client-side errors, or response parsing failures occur
      *

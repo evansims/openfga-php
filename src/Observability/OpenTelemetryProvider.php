@@ -6,7 +6,7 @@ namespace OpenFGA\Observability;
 
 use OpenFGA\Client;
 use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface};
-use OpenTelemetry\API\Common\Attribute\Attributes;
+use OpenTelemetry\API\Common\Attributes\Attributes;
 use Override;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Throwable;
