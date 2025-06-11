@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Contract;
 
-use OpenFGA\Models\{Assertion, AssertionTupleKey, AuthorizationModel, Store, Tuple, TupleKey, TypeDefinition, User};
+use OpenFGA\Models\{Assertion, AssertionTupleKey, AuthorizationModel, BatchCheckItem, BatchCheckSingleResult, Computed, Condition, ConditionMetadata, ConditionParameter, DifferenceV1, Leaf, Metadata, Node, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, Store, Tuple, TupleChange, TupleKey, TupleToUsersetV1, TypeDefinition, TypedWildcard, User, UserTypeFilter, Userset, UsersetTree, UsersetTreeDifference, UsersetTreeTupleToUserset, UsersetUser};
 use OpenFGA\Models\Collections\{TypeDefinitionRelations, TypeDefinitions};
-use OpenFGA\Models\Enums\SchemaVersion;
+use OpenFGA\Models\Enums\{SchemaVersion};
 use OpenFGA\Schemas\SchemaValidator;
 use RuntimeException;
 
 use function array_key_exists;
 use function count;
 use function dirname;
+use function in_array;
 use function strlen;
 
 describe('OpenAPI Contract Validation', function (): void {
@@ -361,6 +362,328 @@ describe('OpenAPI Contract Validation', function (): void {
                     expect($property['format'])->toBe('date-time');
                 }
             }
+        }
+    });
+
+    test('BatchCheckItem model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['BatchCheckItem'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('tuple_key');
+        expect($openApiRequired)->toContain('correlation_id');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('tuple_key');
+        expect($properties)->toHaveKey('contextual_tuples');
+        expect($properties)->toHaveKey('context');
+        expect($properties)->toHaveKey('correlation_id');
+    });
+
+    test('BatchCheckSingleResult model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['BatchCheckSingleResult'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('allowed');
+        expect($properties)->toHaveKey('error');
+    });
+
+    test('Computed model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['Computed'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('userset');
+    });
+
+    test('Condition model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['Condition'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('name');
+        expect($openApiRequired)->toContain('expression');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('name');
+        expect($properties)->toHaveKey('expression');
+        expect($properties)->toHaveKey('parameters');
+        expect($properties)->toHaveKey('metadata');
+    });
+
+    test('ConditionMetadata model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['ConditionMetadata'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('module');
+        expect($properties)->toHaveKey('source_info');
+    });
+
+    test('ConditionParameter model maps to ConditionParamTypeRef', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['ConditionParamTypeRef'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('type_name');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('type_name');
+        expect($properties)->toHaveKey('generic_types');
+    });
+
+    test('DifferenceV1 model maps to v1.Difference', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['v1.Difference'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('base');
+        expect($openApiRequired)->toContain('subtract');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('base');
+        expect($properties)->toHaveKey('subtract');
+    });
+
+    test('Leaf model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['Leaf'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('computed');
+        expect($properties)->toHaveKey('tupleToUserset');
+        expect($properties)->toHaveKey('users');
+    });
+
+    test('Metadata model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['Metadata'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('relations');
+        expect($properties)->toHaveKey('module');
+        expect($properties)->toHaveKey('source_info');
+    });
+
+    test('Node model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['Node'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('name');
+        expect($properties)->toHaveKey('leaf');
+        expect($properties)->toHaveKey('difference');
+        expect($properties)->toHaveKey('union');
+        expect($properties)->toHaveKey('intersection');
+    });
+
+    test('ObjectRelation model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['ObjectRelation'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('object');
+        expect($properties)->toHaveKey('relation');
+    });
+
+    test('RelationMetadata model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['RelationMetadata'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('directly_related_user_types');
+        expect($properties)->toHaveKey('module');
+        expect($properties)->toHaveKey('source_info');
+    });
+
+    test('RelationReference model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['RelationReference'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('type');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('type');
+        expect($properties)->toHaveKey('relation');
+        expect($properties)->toHaveKey('wildcard');
+        expect($properties)->toHaveKey('condition');
+    });
+
+    test('SourceInfo model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['SourceInfo'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('file');
+    });
+
+    test('TupleChange model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['TupleChange'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('tuple_key');
+        expect($openApiRequired)->toContain('operation');
+        expect($openApiRequired)->toContain('timestamp');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('tuple_key');
+        expect($properties)->toHaveKey('operation');
+        expect($properties)->toHaveKey('timestamp');
+    });
+
+    test('TupleToUsersetV1 model maps to v1.TupleToUserset', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['v1.TupleToUserset'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('tupleset');
+        expect($openApiRequired)->toContain('computedUserset');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('tupleset');
+        expect($properties)->toHaveKey('computedUserset');
+    });
+
+    test('TypedWildcard model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['TypedWildcard'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('type');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('type');
+    });
+
+    test('UserTypeFilter model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['UserTypeFilter'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('type');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('type');
+        expect($properties)->toHaveKey('relation');
+    });
+
+    test('Userset model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['Userset'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('this');
+        expect($properties)->toHaveKey('computedUserset');
+        expect($properties)->toHaveKey('tupleToUserset');
+        expect($properties)->toHaveKey('union');
+        expect($properties)->toHaveKey('intersection');
+        expect($properties)->toHaveKey('difference');
+    });
+
+    test('UsersetTree model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['UsersetTree'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('root');
+    });
+
+    test('UsersetTreeDifference model maps to UsersetTree.Difference', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['UsersetTree.Difference'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('base');
+        expect($openApiRequired)->toContain('subtract');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('base');
+        expect($properties)->toHaveKey('subtract');
+    });
+
+    test('UsersetTreeTupleToUserset model maps to UsersetTree.TupleToUserset', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['UsersetTree.TupleToUserset'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $openApiRequired = $openApiSchema['required'] ?? [];
+        expect($openApiRequired)->toContain('tupleset');
+        expect($openApiRequired)->toContain('computed');
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('tupleset');
+        expect($properties)->toHaveKey('computed');
+    });
+
+    test('UsersetUser model OpenAPI schema', function (): void {
+        $openApiSchema = $this->openApiSpec['definitions']['UsersetUser'] ?? null;
+        expect($openApiSchema)->not->toBeNull();
+
+        $properties = $openApiSchema['properties'] ?? [];
+        expect($properties)->toHaveKey('type');
+        expect($properties)->toHaveKey('id');
+        expect($properties)->toHaveKey('relation');
+    });
+
+    test('models without OpenAPI definitions are SDK-specific', function (): void {
+        $sdkSpecificModels = [
+            'BatchTupleOperation',
+            'BatchTupleResult',
+            'NodeUnion',
+            'UserObject',
+            'UsersListUser',
+        ];
+
+        foreach ($sdkSpecificModels as $model) {
+            $openApiSchema = $this->openApiSpec['definitions'][$model] ?? null;
+            expect($openApiSchema)->toBeNull("Model {$model} should not exist in OpenAPI spec as it's SDK-specific");
+        }
+    });
+
+    test('all models with OPENAPI_MODEL have corresponding tests', function (): void {
+        $modelsWithOpenApiModel = [
+            Assertion::class => Assertion::OPENAPI_MODEL,
+            AssertionTupleKey::class => AssertionTupleKey::OPENAPI_MODEL,
+            AuthorizationModel::class => AuthorizationModel::OPENAPI_MODEL,
+            BatchCheckItem::class => BatchCheckItem::OPENAPI_MODEL,
+            BatchCheckSingleResult::class => BatchCheckSingleResult::OPENAPI_MODEL,
+            Computed::class => Computed::OPENAPI_MODEL,
+            Condition::class => Condition::OPENAPI_MODEL,
+            ConditionMetadata::class => ConditionMetadata::OPENAPI_MODEL,
+            ConditionParameter::class => ConditionParameter::OPENAPI_MODEL,
+            DifferenceV1::class => DifferenceV1::OPENAPI_MODEL,
+            Leaf::class => Leaf::OPENAPI_MODEL,
+            Metadata::class => Metadata::OPENAPI_MODEL,
+            Node::class => Node::OPENAPI_MODEL,
+            ObjectRelation::class => ObjectRelation::OPENAPI_MODEL,
+            RelationMetadata::class => RelationMetadata::OPENAPI_MODEL,
+            RelationReference::class => RelationReference::OPENAPI_MODEL,
+            SourceInfo::class => SourceInfo::OPENAPI_MODEL,
+            Store::class => Store::OPENAPI_MODEL,
+            Tuple::class => Tuple::OPENAPI_MODEL,
+            TupleChange::class => TupleChange::OPENAPI_MODEL,
+            TupleKey::class => TupleKey::OPENAPI_MODEL,
+            TupleToUsersetV1::class => TupleToUsersetV1::OPENAPI_MODEL,
+            TypeDefinition::class => TypeDefinition::OPENAPI_MODEL,
+            TypedWildcard::class => TypedWildcard::OPENAPI_MODEL,
+            User::class => User::OPENAPI_MODEL,
+            UserTypeFilter::class => UserTypeFilter::OPENAPI_MODEL,
+            Userset::class => Userset::OPENAPI_MODEL,
+            UsersetTree::class => UsersetTree::OPENAPI_MODEL,
+            UsersetTreeDifference::class => UsersetTreeDifference::OPENAPI_MODEL,
+            UsersetTreeTupleToUserset::class => UsersetTreeTupleToUserset::OPENAPI_MODEL,
+            UsersetUser::class => UsersetUser::OPENAPI_MODEL,
+        ];
+
+        foreach ($modelsWithOpenApiModel as $openApiModel) {
+            if (in_array($openApiModel, ['BatchTupleOperation', 'BatchTupleResult', 'NodeUnion', 'UserObject', 'UsersListUser'], true)) {
+                continue;
+            }
+
+            $openApiSchema = $this->openApiSpec['definitions'][$openApiModel] ?? null;
+            expect($openApiSchema)->not->toBeNull("OpenAPI definition for {$openApiModel} should exist");
         }
     });
 });

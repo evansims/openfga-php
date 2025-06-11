@@ -11,7 +11,7 @@ use InvalidArgumentException;
 use JsonException;
 use OpenFGA\Exceptions\{ClientThrowable, NetworkException, SerializationError, SerializationException};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -58,7 +58,7 @@ final readonly class StreamedListObjectsResponse implements StreamedListObjectsR
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): Generator {
         // Handle network errors first
         if (200 !== $response->getStatusCode()) {

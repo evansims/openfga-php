@@ -11,7 +11,7 @@ use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV
 use OpenFGA\Models\Collections\{RelationMetadataCollection, TypeDefinitionRelationsInterface};
 use OpenFGA\Models\Collections\{RelationReferencesInterface, UsersetsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use OpenFGA\Translation\Translator;
 use Override;
 use ReflectionException;
@@ -49,7 +49,7 @@ final class Transformer implements TransformerInterface
      * @throws ReflectionException      If exception location capture fails
      */
     #[Override]
-    public static function fromDsl(string $dsl, SchemaValidator $validator): AuthorizationModelInterface
+    public static function fromDsl(string $dsl, SchemaValidatorInterface $validator): AuthorizationModelInterface
     {
         $lines = preg_split('/\r?\n/', $dsl);
         $schemaVersion = SchemaVersion::V1_1;

@@ -9,7 +9,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\{Store, StoreInterface};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -58,7 +58,7 @@ final class GetStoreResponse extends Response implements GetStoreResponseInterfa
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): GetStoreResponseInterface {
         // Handle successful responses
         if (200 === $response->getStatusCode()) {

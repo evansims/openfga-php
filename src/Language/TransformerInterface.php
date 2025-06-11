@@ -7,7 +7,7 @@ namespace OpenFGA\Language;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientThrowable, SerializationException};
 use OpenFGA\Models\AuthorizationModelInterface;
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 
 /**
  * OpenFGA DSL Transformer Interface for authorization model conversions.
@@ -33,15 +33,15 @@ interface TransformerInterface
      * authorization model object that can be used with the OpenFGA API. The DSL provides an intuitive
      * way to define authorization relationships and permissions using familiar syntax.
      *
-     * @param string          $dsl       The DSL string containing the authorization model definition
-     * @param SchemaValidator $validator Schema validator for validating the parsed model structure
+     * @param string                   $dsl       The DSL string containing the authorization model definition
+     * @param SchemaValidatorInterface $validator Schema validator for validating the parsed model structure
      *
      * @throws InvalidArgumentException If the DSL input is invalid
      * @throws ClientThrowable          If the DSL syntax is invalid or cannot be parsed
      *
      * @return AuthorizationModelInterface The parsed authorization model ready for API operations
      */
-    public static function fromDsl(string $dsl, SchemaValidator $validator): AuthorizationModelInterface;
+    public static function fromDsl(string $dsl, SchemaValidatorInterface $validator): AuthorizationModelInterface;
 
     /**
      * Convert an authorization model to its DSL string representation.

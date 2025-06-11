@@ -10,7 +10,7 @@ use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\Collections\{Stores, StoresInterface};
 use OpenFGA\Models\{Store};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -52,7 +52,7 @@ final class ListStoresResponse extends Response implements ListStoresResponseInt
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): ListStoresResponseInterface {
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);

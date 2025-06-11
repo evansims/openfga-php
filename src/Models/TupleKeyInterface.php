@@ -58,9 +58,9 @@ interface TupleKeyInterface extends ModelInterface
      * For example, in "user:alice can view document:readme", the object would be "document:readme".
      * Objects are typically formatted as "type:id" where type describes the kind of resource.
      *
-     * @return string|null The object identifier, or null if not specified
+     * @return string The object identifier
      */
-    public function getObject(): ?string;
+    public function getObject(): string;
 
     /**
      * Get the relation that defines the type of relationship.
@@ -69,9 +69,9 @@ interface TupleKeyInterface extends ModelInterface
      * For example, common relations include "owner", "viewer", "editor", "can_read", "can_write".
      * Relations are defined in your authorization model and determine what actions are permitted.
      *
-     * @return string|null The relation name defining the type of relationship, or null if not specified
+     * @return string The relation name defining the type of relationship
      */
-    public function getRelation(): ?string;
+    public function getRelation(): string;
 
     /**
      * Get the user (subject) in this relationship tuple.
@@ -80,9 +80,9 @@ interface TupleKeyInterface extends ModelInterface
      * an individual user, a group, a role, or any other subject defined in your authorization model.
      * For example, in "user:alice can view document:readme", the user would be "user:alice".
      *
-     * @return string|null The user identifier, or null if not specified
+     * @return string The user identifier
      */
-    public function getUser(): ?string;
+    public function getUser(): string;
 
     /**
      * Serialize the tuple key for JSON encoding.

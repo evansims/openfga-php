@@ -44,6 +44,16 @@ use Override;
 interface ConditionInterface extends ModelInterface
 {
     /**
+     * Get the context for the condition.
+     *
+     * This provides additional runtime data that can be used by the condition's
+     * expression for dynamic evaluation.
+     *
+     * @return array<string, mixed>|null the context data, or null if not provided
+     */
+    public function getContext(): ?array;
+
+    /**
      * Get the condition expression.
      *
      * This returns the logical expression that defines when this condition evaluates to true.

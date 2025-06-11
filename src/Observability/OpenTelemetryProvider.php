@@ -6,7 +6,7 @@ namespace OpenFGA\Observability;
 
 use OpenFGA\Client;
 use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface};
-use OpenTelemetry\API\Common\Attribute\Attributes;
+use OpenTelemetry\API\Common\Attributes\Attributes;
 use Override;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use Throwable;
@@ -602,7 +602,7 @@ final readonly class OpenTelemetryProvider implements TelemetryInterface
      */
     private function createAttributes(array $attributes): mixed
     {
-        if (class_exists('OpenTelemetry\API\Common\Attribute\Attributes')) {
+        if (class_exists('OpenTelemetry\API\Common\Attributes\Attributes')) {
             return Attributes::create($attributes);
         }
 

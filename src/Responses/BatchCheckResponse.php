@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\{BatchCheckSingleResult, BatchCheckSingleResultInterface};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -52,7 +52,7 @@ final class BatchCheckResponse extends Response implements BatchCheckResponseInt
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): static {
         if (200 === $response->getStatusCode()) {
             $body = self::parseResponse($response, $request);

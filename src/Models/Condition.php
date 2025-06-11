@@ -26,16 +26,18 @@ final class Condition implements ConditionInterface
     private static ?SchemaInterface $schema = null;
 
     /**
-     * @param string                            $name       a unique name for the condition
-     * @param string                            $expression a Google CEL expression, expressed as a string
-     * @param ConditionParametersInterface|null $parameters a collection of parameter names to the parameter's defined type reference
-     * @param ConditionMetadataInterface|null   $metadata   the collection of metadata that should be associated with the condition
+     * @param string                            $name       A unique name for the condition
+     * @param string                            $expression A Google CEL expression, expressed as a string
+     * @param ConditionParametersInterface|null $parameters A collection of parameter names to the parameter's defined type reference
+     * @param ConditionMetadataInterface|null   $metadata   The collection of metadata that should be associated with the condition
+     * @param array<string, mixed>|null         $context    The context for the condition
      */
     public function __construct(
         private readonly string $name,
         private readonly string $expression,
         private readonly ?ConditionParametersInterface $parameters = null,
         private readonly ?ConditionMetadataInterface $metadata = null,
+        private readonly ?array $context = null,
     ) {
     }
 
@@ -52,8 +54,18 @@ final class Condition implements ConditionInterface
                 new SchemaProperty(name: 'expression', type: 'string', required: true),
                 new SchemaProperty(name: 'parameters', type: 'object', className: ConditionParameters::class, required: false),
                 new SchemaProperty(name: 'metadata', type: 'object', className: ConditionMetadata::class, required: false),
+                new SchemaProperty(name: 'context', type: 'object', required: false),
             ],
         );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public function getContext(): ?array
+    {
+        return $this->context;
     }
 
     /**
@@ -105,6 +117,7 @@ final class Condition implements ConditionInterface
             'expression' => $this->expression,
             'parameters' => $this->parameters?->jsonSerialize(),
             'metadata' => $this->metadata?->jsonSerialize(),
+            'context' => $this->context,
         ], static fn ($value): bool => null !== $value);
     }
 }

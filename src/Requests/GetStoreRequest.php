@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Requests;
 
 use InvalidArgumentException;
-use OpenFGA\Exceptions\{ClientError};
-use OpenFGA\Exceptions\ClientThrowable;
+use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Messages;
 use OpenFGA\Network\{RequestContext, RequestMethod};
 use OpenFGA\Translation\Translator;

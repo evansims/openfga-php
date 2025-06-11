@@ -7,7 +7,7 @@ namespace OpenFGA\Responses;
 use Generator;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
 
@@ -28,9 +28,9 @@ interface StreamedListObjectsResponseInterface
      * Processes the streaming HTTP response and returns a Generator that yields
      * individual object identifiers as they are received from the server.
      *
-     * @param HttpResponseInterface $response  The HTTP response from the API
-     * @param HttpRequestInterface  $request   The original HTTP request
-     * @param SchemaValidator       $validator Schema validator for response validation
+     * @param HttpResponseInterface    $response  The HTTP response from the API
+     * @param HttpRequestInterface     $request   The original HTTP request
+     * @param SchemaValidatorInterface $validator Schema validator for response validation
      *
      * @throws InvalidArgumentException If message translation parameters are invalid
      * @throws NetworkException         If the API returns an error response
@@ -42,7 +42,7 @@ interface StreamedListObjectsResponseInterface
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): Generator;
 
     /**

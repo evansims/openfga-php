@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use InvalidArgumentException;
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -32,7 +32,7 @@ final class WriteAssertionsResponse extends Response implements WriteAssertionsR
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): WriteAssertionsResponseInterface {
         if (204 === $response->getStatusCode()) {
             return new self;

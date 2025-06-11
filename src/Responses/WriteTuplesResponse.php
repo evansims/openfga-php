@@ -7,7 +7,7 @@ namespace OpenFGA\Responses;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientThrowable, NetworkException, SerializationException};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -60,7 +60,7 @@ final class WriteTuplesResponse extends Response implements WriteTuplesResponseI
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): WriteTuplesResponseInterface {
         if (200 === $response->getStatusCode() || 204 === $response->getStatusCode()) {
             // Simple transactional success

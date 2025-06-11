@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -55,7 +55,7 @@ final class CreateStoreResponse extends Response implements CreateStoreResponseI
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): CreateStoreResponseInterface {
         // Handle successful responses
         if (201 === $response->getStatusCode()) {

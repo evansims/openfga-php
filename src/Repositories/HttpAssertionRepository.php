@@ -8,7 +8,7 @@ use OpenFGA\Models\Collections\AssertionsInterface;
 use OpenFGA\Requests\{ReadAssertionsRequest, WriteAssertionsRequest};
 use OpenFGA\Responses\{ReadAssertionsResponse, WriteAssertionsResponse};
 use OpenFGA\Results\{Failure, Success, SuccessInterface};
-use OpenFGA\Schemas\SchemaValidator;
+use OpenFGA\Schemas\SchemaValidatorInterface;
 use OpenFGA\Services\HttpServiceInterface;
 use Override;
 use Psr\Http\Message\RequestInterface;
@@ -30,13 +30,13 @@ final readonly class HttpAssertionRepository implements AssertionRepositoryInter
     /**
      * Create a new HTTP assertion repository instance.
      *
-     * @param HttpServiceInterface $httpService HTTP service for API communication
-     * @param SchemaValidator      $validator   Schema validator for response validation
-     * @param string               $storeId     Store ID for scoped operations
+     * @param HttpServiceInterface     $httpService HTTP service for API communication
+     * @param SchemaValidatorInterface $validator   Schema validator for response validation
+     * @param string                   $storeId     Store ID for scoped operations
      */
     public function __construct(
         private HttpServiceInterface $httpService,
-        private SchemaValidator $validator,
+        private SchemaValidatorInterface $validator,
         private string $storeId,
     ) {
     }

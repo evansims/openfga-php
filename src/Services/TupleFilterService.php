@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace OpenFGA\Services;
 
+use JsonException;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\{ConditionInterface, TupleKeyInterface};
 use Override;
 
-use function spl_object_hash;
-use function sprintf;
+use function is_array;
 
 /**
  * Default implementation of TupleFilterServiceInterface.
@@ -106,14 +106,85 @@ final class TupleFilterService implements TupleFilterServiceInterface
      */
     private function getTupleKey(TupleKeyInterface $tuple): string
     {
+        $keyData = [
+            'u' => $tuple->getUser(),
+            'r' => $tuple->getRelation(),
+            'o' => $tuple->getObject(),
+        ];
+
         $condition = $tuple->getCondition();
 
-        return sprintf(
-            '%s#%s@%s%s',
-            $tuple->getUser() ?? '',
-            $tuple->getRelation() ?? '',
-            $tuple->getObject() ?? '',
-            $condition instanceof ConditionInterface ? '#' . spl_object_hash($condition) : '',
-        );
+        if ($condition instanceof ConditionInterface) {
+            $keyData['cond_name'] = $condition->getName();
+            $context = $condition->getContext();
+
+            if (null !== $context && [] !== $context) {
+                $keyData['cond_ctx'] = $this->normalizeContext($context);
+            }
+        }
+
+        try {
+            return json_encode($keyData, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+        } catch (JsonException) {
+            return serialize($keyData);
+        }
+    }
+
+    /**
+     * Normalize context data by fully serializing and recursively sorting.
+     *
+     * This method ensures that contexts containing JsonSerializable objects
+     * or other complex structures are normalized to a consistent representation
+     * regardless of internal object ordering or structure.
+     *
+     * @param  array<mixed, mixed> $context The context array to normalize
+     * @return array<mixed, mixed> The normalized and sorted context
+     *
+     * @psalm-suppress MixedAssignment
+     */
+    private function normalizeContext(array $context): array
+    {
+        // First, fully serialize the context to expand any JsonSerializable objects
+        // and ensure all nested structures are converted to primitive arrays
+        try {
+            $serialized = json_encode($context, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+            $fullyExpanded = json_decode($serialized, true, 512, JSON_THROW_ON_ERROR);
+
+            // Ensure json_decode returned an array
+            if (! is_array($fullyExpanded)) {
+                $fullyExpanded = $context;
+            }
+        } catch (JsonException) {
+            // If JSON encoding/decoding fails, fall back to the original context
+            $fullyExpanded = $context;
+        }
+
+        // Then apply recursive sorting to the fully expanded structure
+        return $this->recursiveSort($fullyExpanded);
+    }
+
+    /**
+     * Recursively sort arrays by keys to ensure consistent ordering.
+     *
+     * This method ensures that nested arrays at any depth are sorted
+     * by their keys, creating a stable representation for hashing
+     * regardless of the original key order.
+     *
+     * @param  array<mixed, mixed> $array The array to sort recursively
+     * @return array<mixed, mixed> The sorted array
+     *
+     * @psalm-suppress MixedAssignment
+     */
+    private function recursiveSort(array $array): array
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $array[$key] = $this->recursiveSort($value);
+            }
+        }
+
+        ksort($array);
+
+        return $array;
     }
 }

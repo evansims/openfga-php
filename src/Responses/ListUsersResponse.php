@@ -9,7 +9,7 @@ use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\Collections\{Users, UsersInterface, Usersets};
 use OpenFGA\Models\{DifferenceV1, ObjectRelation, TupleToUsersetV1, TypedWildcard, User, UserObject, Userset, UsersetUser};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -50,7 +50,7 @@ final class ListUsersResponse extends Response implements ListUsersResponseInter
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): ListUsersResponseInterface {
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);

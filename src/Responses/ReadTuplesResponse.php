@@ -9,7 +9,7 @@ use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\Collections\{ConditionParameters, Tuples, TuplesInterface};
 use OpenFGA\Models\{Condition, ConditionMetadata, Tuple, TupleKey};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidator};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;
@@ -51,7 +51,7 @@ final class ReadTuplesResponse extends Response implements ReadTuplesResponseInt
     public static function fromResponse(
         HttpResponseInterface $response,
         HttpRequestInterface $request,
-        SchemaValidator $validator,
+        SchemaValidatorInterface $validator,
     ): ReadTuplesResponseInterface {
         if (200 === $response->getStatusCode()) {
             $data = self::parseResponse($response, $request);
