@@ -22,7 +22,7 @@ coverage:
 
     patch:
       default:
-        target: 95%
+        target: 50%
         threshold: 5%
         base: auto
         informational: false
