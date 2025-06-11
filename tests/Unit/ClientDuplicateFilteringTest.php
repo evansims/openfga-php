@@ -69,7 +69,7 @@ describe('Client writeTuples duplicate filtering', function (): void {
             ->method('getContents')
             ->willReturn('{"revision":"1","deletes":{"tuple_keys":[]},"writes":{"tuple_keys":[]}}');
 
-        $this->client = Client::create(
+        $this->client = new Client(
             url: 'https://api.openfga.dev',
             httpClient: $this->mockHttpClient,
             httpResponseFactory: $this->mockResponseFactory,
@@ -102,7 +102,7 @@ describe('Client writeTuples duplicate filtering', function (): void {
             });
 
         // Create a new client with the fresh mock
-        $this->client = Client::create(
+        $this->client = new Client(
             url: 'https://api.openfga.dev',
             httpClient: $this->mockHttpClient,
             httpResponseFactory: $this->mockResponseFactory,

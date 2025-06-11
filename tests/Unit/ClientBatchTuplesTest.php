@@ -69,7 +69,7 @@ describe('Client writeTuples Non-Transactional Unit Tests', function (): void {
             ->method('getBody')
             ->willReturn($this->mockStream);
 
-        $this->client = Client::create(
+        $this->client = new Client(
             url: 'https://api.openfga.dev',
             httpClient: $this->mockHttpClient,
             httpResponseFactory: $this->mockResponseFactory,

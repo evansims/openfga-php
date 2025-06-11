@@ -22,7 +22,7 @@ describe('Contextual Tuples', function (): void {
         $this->httpStreamFactory = $this->responseFactory;
         $this->url = getOpenFgaUrl();
 
-        $this->client = Client::create(
+        $this->client = new Client(
             url: $this->url,
             httpClient: $this->httpClient,
             httpResponseFactory: $this->responseFactory,

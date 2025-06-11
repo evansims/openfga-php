@@ -23,7 +23,7 @@ use function OpenFGA\{tuple, tuples};
  */
 it('performs batch authorization checks successfully', function (): void {
     // Create OpenFGA client
-    $client = Client::create(
+    $client = new Client(
         url: getOpenFgaUrl(),
         httpClient: new FileGetContents(new Psr17Factory),
         httpResponseFactory: new Psr17Factory,
@@ -140,7 +140,7 @@ it('performs batch authorization checks successfully', function (): void {
 
 it('handles batch check with contextual tuples', function (): void {
     // Create OpenFGA client
-    $client = Client::create(
+    $client = new Client(
         url: getOpenFgaUrl(),
         httpClient: new FileGetContents(new Psr17Factory),
         httpResponseFactory: new Psr17Factory,

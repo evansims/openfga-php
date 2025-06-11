@@ -8,6 +8,8 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use LogicException;
 use OpenFGA\Authentication\AuthenticationInterface;
+use OpenFGA\Events\{EventDispatcher, EventDispatcherInterface};
+use OpenFGA\Events\{HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
 use OpenFGA\Language\Transformer;
 use OpenFGA\Models\{AuthorizationModel, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, TupleToUsersetV1, TypeDefinition, Userset};
@@ -15,20 +17,22 @@ use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface, TupleKeyInterfa
 use OpenFGA\Models\Collections\{AssertionsInterface, BatchCheckItemsInterface, ConditionsInterface, TupleKeysInterface, TypeDefinitionsInterface, UserTypeFiltersInterface};
 use OpenFGA\Models\Collections\{Conditions, RelationMetadataCollection, RelationReferences, TypeDefinitionRelations, TypeDefinitions, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
-use OpenFGA\Network\RetryStrategyInterface;
-use OpenFGA\Observability\TelemetryInterface;
-use OpenFGA\Repositories\{HttpAssertionRepository, HttpModelRepository, HttpTupleRepository};
+use OpenFGA\Network\{RequestManager, RetryStrategyInterface};
+use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryEventListener, TelemetryInterface};
+use OpenFGA\Repositories\{HttpAssertionRepository, HttpModelRepository, HttpStoreRepository, HttpTupleRepository};
 use OpenFGA\Results\{Failure, Success};
 use OpenFGA\Results\{FailureInterface, SuccessInterface};
 use OpenFGA\Schemas\SchemaValidator;
 use OpenFGA\Services\{AssertionService, ModelService, TupleService};
-use OpenFGA\Services\{AuthorizationService, HttpService, StoreService};
+use OpenFGA\Services\{AuthenticationService, AuthorizationService, EventAwareTelemetryService, HttpService, StoreService, TelemetryServiceInterface, TupleFilterService};
 use OpenFGA\Translation\Translator;
 use Override;
 use Psr\Http\Client\ClientInterface as HttpClientInterface;
 use Psr\Http\Message\{RequestFactoryInterface, RequestInterface as HttpRequestInterface, ResponseFactoryInterface, ResponseInterface as HttpResponseInterface, StreamFactoryInterface};
 use ReflectionException;
 use Throwable;
+
+use function sprintf;
 
 /**
  * OpenFGA Client implementation for relationship-based access control operations.
@@ -53,25 +57,12 @@ final class Client implements ClientInterface
     public const string VERSION = '1.3.0';
 
     /**
-     * Create a new OpenFGA client instance.
-     *
-     * Configures the client with a configuration provider that manages all dependencies
-     * including HTTP clients, authentication, telemetry, and other services. This
-     * approach provides maximum flexibility for dependency injection and testing.
-     *
-     * @param ConfigurationInterface|null $configuration The configuration provider containing all necessary dependencies
-     *
-     * @see https://openfga.dev/docs/getting-started/setup-sdk-client Client configuration guide
+     * @var array<string, object> Service instances cache
      */
-    public function __construct(private ?ConfigurationInterface $configuration = null)
-    {
-    }
+    private array $services = [];
 
     /**
-     * Create a new OpenFGA client instance with individual dependency parameters.
-     *
-     * This factory method provides a convenient way to create clients using individual
-     * parameters while internally using the Configuration-based architecture.
+     * Create a new OpenFGA client instance.
      *
      * @param string                        $url                 The OpenFGA API URL to connect to
      * @param AuthenticationInterface|null  $authentication      The authentication strategy to use for API requests
@@ -84,35 +75,29 @@ final class Client implements ClientInterface
      * @param TelemetryInterface|null       $telemetry           Optional telemetry provider for observability; defaults to no-op implementation
      * @param RetryStrategyInterface|null   $retryStrategy       Optional retry strategy for handling failed requests; defaults to exponential backoff
      *
+     * @throws InvalidArgumentException If the URL or language parameter is empty
+     *
      * @see https://openfga.dev/docs/getting-started/setup-sdk-client Client configuration guide
      */
-    public static function create(
-        string $url,
-        ?AuthenticationInterface $authentication = null,
-        string $language = 'en',
-        ?int $httpMaxRetries = 3,
-        ?HttpClientInterface $httpClient = null,
-        ?ResponseFactoryInterface $httpResponseFactory = null,
-        ?StreamFactoryInterface $httpStreamFactory = null,
-        ?RequestFactoryInterface $httpRequestFactory = null,
-        ?TelemetryInterface $telemetry = null,
-        ?RetryStrategyInterface $retryStrategy = null,
-    ): self {
-        $configuration = new Configuration(
-            url: $url,
-            storeId: null,
-            authentication: $authentication,
-            telemetry: $telemetry,
-            language: $language,
-            maxRetries: $httpMaxRetries ?? 3,
-            httpClient: $httpClient,
-            requestFactory: $httpRequestFactory,
-            responseFactory: $httpResponseFactory,
-            streamFactory: $httpStreamFactory,
-            retryStrategy: $retryStrategy,
-        );
+    public function __construct(
+        private readonly string $url,
+        private readonly ?AuthenticationInterface $authentication = null,
+        private readonly string $language = 'en',
+        private readonly ?int $httpMaxRetries = 3,
+        private readonly ?HttpClientInterface $httpClient = null,
+        private readonly ?ResponseFactoryInterface $httpResponseFactory = null,
+        private readonly ?StreamFactoryInterface $httpStreamFactory = null,
+        private readonly ?RequestFactoryInterface $httpRequestFactory = null,
+        private readonly ?TelemetryInterface $telemetry = null,
+        private readonly ?RetryStrategyInterface $retryStrategy = null,
+    ) {
+        if ('' === $url) {
+            throw new InvalidArgumentException('URL is required and cannot be empty');
+        }
 
-        return new self($configuration);
+        if ('' === $language) {
+            throw new InvalidArgumentException('Language is required and cannot be empty');
+        }
     }
 
     /**
@@ -130,7 +115,7 @@ final class Client implements ClientInterface
         $lastRequest = $httpService->getLastRequest();
 
         if (! $lastRequest instanceof HttpRequestInterface) {
-            throw ClientError::Validation->exception(context: ['message' => Translator::trans(message: Messages::NO_LAST_REQUEST_FOUND, parameters: [], locale: $this->getConfiguration()->getLanguage(), )]);
+            throw ClientError::Validation->exception(context: ['message' => Translator::trans(message: Messages::NO_LAST_REQUEST_FOUND, parameters: [], locale: $this->language, )]);
         }
 
         return $lastRequest;
@@ -335,38 +320,13 @@ final class Client implements ClientInterface
     }
 
     /**
-     * Get the configuration provider for this client.
-     *
-     * If no configuration was provided during construction, this method will create
-     * a default configuration. This enables backward compatibility while supporting
-     * the new Configuration-based architecture.
-     *
-     * @return ConfigurationInterface The configuration provider
-     */
-    public function getConfiguration(): ConfigurationInterface
-    {
-        if (! $this->configuration instanceof ConfigurationInterface) {
-            $this->configuration = new Configuration(
-                url: 'https://api.fga.example',
-                storeId: null,
-                authentication: null,
-                telemetry: null,
-                language: 'en',
-                maxRetries: 3,
-            );
-        }
-
-        return $this->configuration;
-    }
-
-    /**
      * Get the configured language for i18n translations.
      *
      * @return string The configured language code
      */
     public function getLanguage(): string
     {
-        return $this->getConfiguration()->getLanguage();
+        return $this->language;
     }
 
     /**
@@ -725,6 +685,197 @@ final class Client implements ClientInterface
     }
 
     /**
+     * Create authentication service.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createAuthenticationService(): AuthenticationService
+    {
+        $telemetryService = $this->getService('telemetry');
+
+        return new AuthenticationService(
+            $this->authentication,
+            $telemetryService instanceof TelemetryServiceInterface ? $telemetryService : null,
+        );
+    }
+
+    /**
+     * Create authorization service.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createAuthorizationService(): AuthorizationService
+    {
+        $httpService = $this->getService('http');
+
+        if (! $httpService instanceof HttpService) {
+            throw new LogicException('HTTP service not available');
+        }
+
+        return new AuthorizationService($httpService);
+    }
+
+    /**
+     * Create HTTP service.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createHttpService(): HttpService
+    {
+        $eventDispatcher = $this->getService('event.dispatcher');
+        $authenticationService = $this->getService('authentication');
+
+        $requestManager = new RequestManager(
+            url: $this->url,
+            maxRetries: max(0, min($this->httpMaxRetries ?? 3, 15)),
+            authorizationHeader: null, // Authorization header will be resolved dynamically via authenticationService
+            httpClient: $this->httpClient,
+            httpResponseFactory: $this->httpResponseFactory,
+            httpStreamFactory: $this->httpStreamFactory,
+            httpRequestFactory: $this->httpRequestFactory,
+            telemetry: $this->telemetry ?? new NoOpTelemetryProvider,
+            retryStrategy: $this->retryStrategy,
+            authenticationService: $authenticationService instanceof AuthenticationService ? $authenticationService : null,
+        );
+
+        return new HttpService(
+            $requestManager,
+            $eventDispatcher instanceof EventDispatcherInterface ? $eventDispatcher : null,
+        );
+    }
+
+    /**
+     * Create store repository.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createStoreRepository(): HttpStoreRepository
+    {
+        $httpService = $this->getService('http');
+        $validator = $this->getService('schema.validator');
+
+        if (! $httpService instanceof HttpService) {
+            throw new LogicException('HTTP service not available');
+        }
+
+        if (! $validator instanceof SchemaValidator) {
+            throw new LogicException('Schema validator not available');
+        }
+
+        return new HttpStoreRepository($httpService, $validator);
+    }
+
+    /**
+     * Create store service.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createStoreService(): StoreService
+    {
+        $storeRepository = $this->getService('repository.store');
+
+        if (! $storeRepository instanceof HttpStoreRepository) {
+            throw new LogicException('Store repository not available');
+        }
+
+        return new StoreService($storeRepository);
+    }
+
+    /**
+     * Create telemetry service with event listeners.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createTelemetryService(): TelemetryServiceInterface
+    {
+        $eventDispatcher = $this->getService('event.dispatcher');
+        $telemetryListener = $this->getService('telemetry.listener');
+
+        // Register telemetry event listeners
+        if ($eventDispatcher instanceof EventDispatcherInterface && $telemetryListener instanceof TelemetryEventListener) {
+            $eventDispatcher->addListener(
+                'OpenFGA\\Events\\HttpRequestSentEvent',
+                static function (object $event) use ($telemetryListener): void {
+                    if ($event instanceof HttpRequestSentEvent) {
+                        $telemetryListener->onHttpRequestSent($event);
+                    }
+                },
+            );
+            $eventDispatcher->addListener(
+                'OpenFGA\\Events\\HttpResponseReceivedEvent',
+                static function (object $event) use ($telemetryListener): void {
+                    if ($event instanceof HttpResponseReceivedEvent) {
+                        $telemetryListener->onHttpResponseReceived($event);
+                    }
+                },
+            );
+            $eventDispatcher->addListener(
+                'OpenFGA\\Events\\OperationStartedEvent',
+                static function (object $event) use ($telemetryListener): void {
+                    if ($event instanceof OperationStartedEvent) {
+                        $telemetryListener->onOperationStarted($event);
+                    }
+                },
+            );
+            $eventDispatcher->addListener(
+                'OpenFGA\\Events\\OperationCompletedEvent',
+                static function (object $event) use ($telemetryListener): void {
+                    if ($event instanceof OperationCompletedEvent) {
+                        $telemetryListener->onOperationCompleted($event);
+                    }
+                },
+            );
+        }
+
+        return new EventAwareTelemetryService(
+            $this->telemetry ?? new NoOpTelemetryProvider,
+            $eventDispatcher instanceof EventDispatcherInterface ? $eventDispatcher : null,
+        );
+    }
+
+    /**
+     * Create tuple repository.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createTupleRepository(): HttpTupleRepository
+    {
+        $httpService = $this->getService('http');
+        $tupleFilterService = $this->getService('tuple.filter');
+        $validator = $this->getService('schema.validator');
+
+        if (! $httpService instanceof HttpService) {
+            throw new LogicException('HTTP service not available');
+        }
+
+        if (! $tupleFilterService instanceof TupleFilterService) {
+            throw new LogicException('Tuple filter service not available');
+        }
+
+        if (! $validator instanceof SchemaValidator) {
+            throw new LogicException('Schema validator not available');
+        }
+
+        return new HttpTupleRepository($httpService, $tupleFilterService, $validator);
+    }
+
+    /**
+     * Create tuple service.
+     *
+     * @throws LogicException If required services are not available
+     */
+    private function createTupleService(): TupleService
+    {
+        $tupleRepository = $this->getService('repository.tuple');
+
+        if (! $tupleRepository instanceof HttpTupleRepository) {
+            throw new LogicException('Tuple repository not available');
+        }
+
+        return new TupleService($tupleRepository);
+    }
+
+    /**
      * Get an assertion service for the specified store.
      *
      * @param StoreInterface|string $store The store to get the service for
@@ -737,9 +888,9 @@ final class Client implements ClientInterface
         $serviceId = 'service.assertion.' . $storeId;
 
         // Check if store-specific service exists
-        if ($this->getConfiguration()->has(serviceId: $serviceId)) {
+        if (isset($this->services[$serviceId])) {
             /** @var AssertionService $service */
-            $service = $this->getConfiguration()->get(serviceId: $serviceId);
+            $service = $this->services[$serviceId];
 
             if (! $service instanceof AssertionService) {
                 throw new LogicException('Assertion service not available');
@@ -758,13 +909,10 @@ final class Client implements ClientInterface
         );
         $service = new AssertionService(
             assertionRepository: $assertionRepository,
-            language: $this->getConfiguration()->getLanguage(),
+            language: $this->language,
         );
 
-        $this->getConfiguration()->set(
-            serviceId: $serviceId,
-            service: $service,
-        );
+        $this->setService($serviceId, $service);
 
         return $service;
     }
@@ -777,7 +925,7 @@ final class Client implements ClientInterface
     private function getAuthorizationService(): AuthorizationService
     {
         /** @var AuthorizationService $service */
-        $service = $this->getConfiguration()->get(serviceId: 'service.authorization');
+        $service = $this->getService('service.authorization');
 
         if (! $service instanceof AuthorizationService) {
             throw new LogicException('Authorization service not available');
@@ -794,7 +942,7 @@ final class Client implements ClientInterface
     private function getHttpService(): HttpService
     {
         /** @var HttpService $service */
-        $service = $this->getConfiguration()->get(serviceId: 'http');
+        $service = $this->getService('http');
 
         if (! $service instanceof HttpService) {
             throw new LogicException('HTTP service not available');
@@ -818,9 +966,9 @@ final class Client implements ClientInterface
         $serviceId = 'service.model.' . $storeId;
 
         // Check if store-specific service exists
-        if ($this->getConfiguration()->has(serviceId: $serviceId)) {
+        if (isset($this->services[$serviceId])) {
             /** @var ModelService $service */
-            $service = $this->getConfiguration()->get(serviceId: $serviceId);
+            $service = $this->services[$serviceId];
 
             if (! $service instanceof ModelService) {
                 throw new LogicException('Model service not available');
@@ -839,13 +987,10 @@ final class Client implements ClientInterface
         );
         $service = new ModelService(
             modelRepository: $modelRepository,
-            language: $this->getConfiguration()->getLanguage(),
+            language: $this->language,
         );
 
-        $this->getConfiguration()->set(
-            serviceId: $serviceId,
-            service: $service,
-        );
+        $this->setService($serviceId, $service);
 
         return $service;
     }
@@ -858,13 +1003,55 @@ final class Client implements ClientInterface
     private function getSchemaValidator(): SchemaValidator
     {
         /** @var SchemaValidator $validator */
-        $validator = $this->getConfiguration()->get(serviceId: 'schema.validator');
+        $validator = $this->getService('schema.validator');
 
         if (! $validator instanceof SchemaValidator) {
             throw new LogicException('Schema validator not available');
         }
 
         return $validator;
+    }
+
+    /**
+     * Get a service instance by identifier.
+     *
+     * Creates services lazily and caches them for subsequent calls.
+     *
+     * @param string $serviceId The service identifier
+     *
+     * @throws LogicException If the service is not available
+     *
+     * @return object The service instance
+     */
+    private function getService(string $serviceId): object
+    {
+        if (isset($this->services[$serviceId])) {
+            return $this->services[$serviceId];
+        }
+
+        $service = match ($serviceId) {
+            'event.dispatcher' => new EventDispatcher,
+            'telemetry.listener' => new TelemetryEventListener($this->telemetry ?? new NoOpTelemetryProvider),
+            'telemetry' => $this->createTelemetryService(),
+            'authentication' => $this->createAuthenticationService(),
+            'http' => $this->createHttpService(),
+            'schema.validator' => new SchemaValidator,
+            'tuple.filter' => new TupleFilterService,
+            'repository.store' => $this->createStoreRepository(),
+            'repository.tuple' => $this->createTupleRepository(),
+            'service.authorization' => $this->createAuthorizationService(),
+            'service.store' => $this->createStoreService(),
+            'service.tuple' => $this->createTupleService(),
+            default => null,
+        };
+
+        if (null === $service) {
+            throw new LogicException(sprintf("Service '%s' not available", $serviceId));
+        }
+
+        $this->services[$serviceId] = $service;
+
+        return $service;
     }
 
     /**
@@ -875,7 +1062,7 @@ final class Client implements ClientInterface
     private function getStoreService(): StoreService
     {
         /** @var StoreService $service */
-        $service = $this->getConfiguration()->get(serviceId: 'service.store');
+        $service = $this->getService('service.store');
 
         if (! $service instanceof StoreService) {
             throw new LogicException('Store service not available');
@@ -897,9 +1084,9 @@ final class Client implements ClientInterface
         $serviceId = 'service.tuple.' . $storeId;
 
         // Check if store-specific service exists
-        if ($this->getConfiguration()->has(serviceId: $serviceId)) {
+        if ($this->hasService($serviceId)) {
             /** @var TupleService $service */
-            $service = $this->getConfiguration()->get(serviceId: $serviceId);
+            $service = $this->getService($serviceId);
 
             if (! $service instanceof TupleService) {
                 throw new LogicException('Tuple service not available');
@@ -909,7 +1096,7 @@ final class Client implements ClientInterface
         }
 
         // Create and register store-specific service
-        $tupleRepository = $this->getConfiguration()->get(serviceId: 'repository.tuple');
+        $tupleRepository = $this->getService('repository.tuple');
 
         if (! $tupleRepository instanceof HttpTupleRepository) {
             throw new LogicException('Tuple repository not available');
@@ -918,12 +1105,48 @@ final class Client implements ClientInterface
         $service = new TupleService(
             tupleRepository: $tupleRepository,
         );
-        $this->getConfiguration()->set(
-            serviceId: $serviceId,
-            service: $service,
-        );
+        $this->setService($serviceId, $service);
 
         return $service;
+    }
+
+    /**
+     * Check if a service is available.
+     *
+     * @param string $serviceId
+     */
+    private function hasService(string $serviceId): bool
+    {
+        if (isset($this->services[$serviceId])) {
+            return true;
+        }
+
+        return match ($serviceId) {
+            'event.dispatcher',
+            'telemetry.listener',
+            'telemetry',
+            'authentication',
+            'http',
+            'schema.validator',
+            'tuple.filter',
+            'repository.store',
+            'repository.tuple',
+            'service.authorization',
+            'service.store',
+            'service.tuple' => true,
+            default => false,
+        };
+    }
+
+    /**
+     * Set a service instance.
+     *
+     * @param string $serviceId
+     * @param object $service
+     */
+    private function setService(string $serviceId, object $service): void
+    {
+        $this->services[$serviceId] = $service;
     }
 
     /**
@@ -947,7 +1170,7 @@ final class Client implements ClientInterface
         $originalLocale = Translator::getDefaultLocale();
 
         try {
-            Translator::setDefaultLocale(locale: $this->getConfiguration()->getLanguage());
+            Translator::setDefaultLocale(locale: $this->language);
 
             return $callback();
         } finally {

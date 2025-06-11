@@ -21,7 +21,7 @@ describe('Utility Methods', function (): void {
         $this->httpStreamFactory = $this->responseFactory;
         $this->url = getOpenFgaUrl();
 
-        $this->client = Client::create(
+        $this->client = new Client(
             url: $this->url,
             httpClient: $this->httpClient,
             httpResponseFactory: $this->responseFactory,
@@ -101,7 +101,7 @@ describe('Utility Methods', function (): void {
     test('request contains authorization headers when configured', function (): void {
         $token = 'Bearer test-token-' . uniqid();
 
-        $authClient = Client::create(
+        $authClient = new Client(
             url: $this->url,
             authentication: new Authentication\TokenAuthentication($token),
             httpClient: $this->httpClient,
@@ -194,7 +194,7 @@ describe('Utility Methods', function (): void {
     });
 
     test('null returned when no requests made', function (): void {
-        $freshClient = Client::create(
+        $freshClient = new Client(
             url: $this->url,
             httpClient: $this->httpClient,
             httpResponseFactory: $this->responseFactory,

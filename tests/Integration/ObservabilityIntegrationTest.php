@@ -28,7 +28,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
     // Full OpenTelemetry integration testing requires additional OTLP exporter packages
 
     // Create OpenFGA client with OpenTelemetry instrumentation
-    $client = Client::create(
+    $client = new Client(
         url: getOpenFgaUrl(),
         telemetry: TelemetryFactory::create(
             serviceName: 'openfga-php-sdk-integration-test',
@@ -157,7 +157,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
 
 it('handles telemetry gracefully when OpenTelemetry is not configured', function (): void {
     // Test that the SDK works without OpenTelemetry configuration
-    $client = Client::create(
+    $client = new Client(
         url: getOpenFgaUrl(),
         httpClient: new FileGetContents(new Psr17Factory),
         httpResponseFactory: new Psr17Factory,
@@ -179,7 +179,7 @@ it('handles telemetry gracefully when OpenTelemetry is not configured', function
 
 it('records authentication telemetry events', function (): void {
     // This test verifies that authentication events don't crash with telemetry enabled
-    $client = Client::create(
+    $client = new Client(
         url: getOpenFgaUrl(),
         telemetry: TelemetryFactory::create(
             serviceName: 'openfga-php-sdk-auth-test',
@@ -230,7 +230,7 @@ it('records authentication telemetry events', function (): void {
 
 it('exports detailed span attributes for OpenFGA operations', function (): void {
     // This test verifies that operations complete successfully with telemetry enabled
-    $client = Client::create(
+    $client = new Client(
         url: getOpenFgaUrl(),
         telemetry: TelemetryFactory::create(
             serviceName: 'openfga-php-sdk-spans-test',
