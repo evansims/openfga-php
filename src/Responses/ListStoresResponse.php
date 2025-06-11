@@ -10,7 +10,7 @@ use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Models\Collections\{Stores, StoresInterface};
 use OpenFGA\Models\{Store};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{SchemaInterface, SchemaProperty, SchemaValidatorInterface};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;

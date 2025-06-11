@@ -125,7 +125,12 @@ describe('TupleFilterService', function (): void {
 
         test('handles tuples with conditions correctly', function (): void {
             $condition1 = test()->createMock(ConditionInterface::class);
+            $condition1->method('getName')->willReturn('cond1');
+            $condition1->method('getContext')->willReturn(null);
+
             $condition2 = test()->createMock(ConditionInterface::class);
+            $condition2->method('getName')->willReturn('cond2');
+            $condition2->method('getContext')->willReturn(null);
 
             $tuple1 = new TupleKey('user:anne', 'reader', 'document:1', $condition1);
             $tuple2 = new TupleKey('user:anne', 'reader', 'document:1', $condition2); // same but different condition

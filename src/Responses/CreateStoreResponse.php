@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Network\RequestManager;
-use OpenFGA\Schemas\{SchemaInterface, SchemaProperty, SchemaValidatorInterface};
+use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
 use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterface as HttpResponseInterface};
 use ReflectionException;

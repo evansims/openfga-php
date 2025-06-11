@@ -106,30 +106,26 @@ final class TupleFilterService implements TupleFilterServiceInterface
      */
     private function getTupleKey(TupleKeyInterface $tuple): string
     {
+        $keyData = [
+            'u' => (string) ($tuple->getUser() ?? ''),
+            'r' => (string) ($tuple->getRelation() ?? ''),
+            'o' => (string) ($tuple->getObject() ?? ''),
+        ];
+
         $condition = $tuple->getCondition();
-
-        $conditionKey = '';
-
         if ($condition instanceof ConditionInterface) {
-            try {
-                $encoded = json_encode(
-                    $condition->jsonSerialize(),
-                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE,
-                );
-            } catch (JsonException) {
-                // Fallback – extremely unlikely but keeps the service functional
-                $encoded = serialize($condition->jsonSerialize());
+            $keyData['cond_name'] = $condition->getName();
+            $context = $condition->getContext();
+            if (!empty($context)) {
+                ksort($context);
+                $keyData['cond_ctx'] = $context;
             }
-
-            $conditionKey = '#' . md5($encoded);
         }
 
-        return sprintf(
-            '%s#%s@%s%s',
-            (string) ($tuple->getUser() ?? ''),
-            (string) ($tuple->getRelation() ?? ''),
-            (string) ($tuple->getObject() ?? ''),
-            $conditionKey,
-        );
+        try {
+            return json_encode($keyData, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+        } catch (JsonException) {
+            return serialize($keyData);
+        }
     }
 }

@@ -165,10 +165,10 @@ describe('Condition Model', function (): void {
         expect($schema->getClassName())->toBe(Condition::class);
 
         $properties = $schema->getProperties();
-        expect($properties)->toHaveCount(4);
+        expect($properties)->toHaveCount(5);
 
         $propertyNames = array_keys($properties);
-        expect($propertyNames)->toBe(['name', 'expression', 'parameters', 'metadata']);
+        expect($propertyNames)->toBe(['name', 'expression', 'parameters', 'metadata', 'context']);
     });
 
     test('schema properties have correct configuration', function (): void {

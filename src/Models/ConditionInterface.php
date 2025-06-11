@@ -86,6 +86,16 @@ interface ConditionInterface extends ModelInterface
     public function getParameters(): ?ConditionParametersInterface;
 
     /**
+     * Get the context for the condition.
+     *
+     * This provides additional runtime data that can be used by the condition's
+     * expression for dynamic evaluation.
+     *
+     * @return array<string, mixed>|null The context data, or null if not provided.
+     */
+    public function getContext(): ?array;
+
+    /**
      * Serialize the condition for JSON encoding.
      *
      * This method prepares the condition data for API requests or storage, ensuring
