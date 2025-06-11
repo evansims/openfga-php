@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace OpenFGA\Services;
 
+use JsonException;
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\{ConditionInterface, TupleKeyInterface};
 use Override;
 
-use function spl_object_hash;
 use function sprintf;
 
 /**
@@ -114,9 +114,9 @@ final class TupleFilterService implements TupleFilterServiceInterface
             try {
                 $encoded = json_encode(
                     $condition->jsonSerialize(),
-                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE,
                 );
-            } catch (\JsonException) {
+            } catch (JsonException) {
                 // Fallback – extremely unlikely but keeps the service functional
                 $encoded = serialize($condition->jsonSerialize());
             }
@@ -126,13 +126,10 @@ final class TupleFilterService implements TupleFilterServiceInterface
 
         return sprintf(
             '%s#%s@%s%s',
-return sprintf(
-    '%s#%s@%s%s',
-    (string) ($tuple->getUser()     ?? ''),
-    (string) ($tuple->getRelation() ?? ''),
-    (string) ($tuple->getObject()   ?? ''),
-    $conditionKey,
-);
+            (string) ($tuple->getUser() ?? ''),
+            (string) ($tuple->getRelation() ?? ''),
+            (string) ($tuple->getObject() ?? ''),
+            $conditionKey,
         );
     }
 }

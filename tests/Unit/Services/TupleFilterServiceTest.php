@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Services;
 
 use OpenFGA\Models\Collections\TupleKeys;
+use OpenFGA\Models\Condition;
 use OpenFGA\Models\{ConditionInterface, TupleKey};
 use OpenFGA\Services\TupleFilterService;
 
@@ -138,11 +139,11 @@ describe('TupleFilterService', function (): void {
         });
 
         test('deduplicates tuples with equivalent conditions', function (): void {
-            $condition1 = new \OpenFGA\Models\Condition(
+            $condition1 = new Condition(
                 name: 'inRegion',
                 expression: 'params.region == "us"',
             );
-            $condition2 = new \OpenFGA\Models\Condition(
+            $condition2 = new Condition(
                 name: 'inRegion',
                 expression: 'params.region == "us"',
             );
