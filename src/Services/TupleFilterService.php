@@ -108,12 +108,18 @@ final class TupleFilterService implements TupleFilterServiceInterface
     {
         $condition = $tuple->getCondition();
 
+        $conditionKey = '';
+
+        if ($condition instanceof ConditionInterface) {
+            $conditionKey = '#' . md5(json_encode($condition->jsonSerialize()));
+        }
+
         return sprintf(
             '%s#%s@%s%s',
-            $tuple->getUser() ?? '',
-            $tuple->getRelation() ?? '',
-            $tuple->getObject() ?? '',
-            $condition instanceof ConditionInterface ? '#' . spl_object_hash($condition) : '',
+            $tuple->getUser(),
+            $tuple->getRelation(),
+            $tuple->getObject(),
+            $conditionKey,
         );
     }
 }

@@ -137,6 +137,26 @@ describe('TupleFilterService', function (): void {
             expect($filteredWrites->count())->toBe(2); // two unique tuples (different conditions)
         });
 
+        test('deduplicates tuples with equivalent conditions', function (): void {
+            $condition1 = new \OpenFGA\Models\Condition(
+                name: 'inRegion',
+                expression: 'params.region == "us"',
+            );
+            $condition2 = new \OpenFGA\Models\Condition(
+                name: 'inRegion',
+                expression: 'params.region == "us"',
+            );
+
+            $tuple1 = new TupleKey('user:anne', 'reader', 'document:1', $condition1);
+            $tuple2 = new TupleKey('user:anne', 'reader', 'document:1', $condition2); // same contents
+
+            $writes = new TupleKeys([$tuple1, $tuple2]);
+
+            [$filteredWrites, ] = $this->service->filterDuplicates($writes, null);
+
+            expect($filteredWrites->count())->toBe(1); // duplicates merged
+        });
+
         test('handles null values in tuple properties', function (): void {
             // TupleKey constructor requires non-null values, but the service should handle edge cases gracefully
             $tuple1 = new TupleKey('user:anne', 'reader', 'document:1');
