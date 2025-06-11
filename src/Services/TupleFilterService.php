@@ -111,7 +111,17 @@ final class TupleFilterService implements TupleFilterServiceInterface
         $conditionKey = '';
 
         if ($condition instanceof ConditionInterface) {
-            $conditionKey = '#' . md5(json_encode($condition->jsonSerialize()));
+            try {
+                $encoded = json_encode(
+                    $condition->jsonSerialize(),
+                    JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE
+                );
+            } catch (\JsonException) {
+                // Fallback – extremely unlikely but keeps the service functional
+                $encoded = serialize($condition->jsonSerialize());
+            }
+
+            $conditionKey = '#' . md5($encoded);
         }
 
         return sprintf(
