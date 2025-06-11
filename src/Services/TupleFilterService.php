@@ -9,6 +9,8 @@ use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\{ConditionInterface, TupleKeyInterface};
 use Override;
 
+use function is_array;
+
 /**
  * Default implementation of TupleFilterServiceInterface.
  *
@@ -117,8 +119,7 @@ final class TupleFilterService implements TupleFilterServiceInterface
             $context = $condition->getContext();
 
             if (null !== $context && [] !== $context) {
-                ksort($context);
-                $keyData['cond_ctx'] = $context;
+                $keyData['cond_ctx'] = $this->recursiveSort($context);
             }
         }
 
@@ -127,5 +128,30 @@ final class TupleFilterService implements TupleFilterServiceInterface
         } catch (JsonException) {
             return serialize($keyData);
         }
+    }
+
+    /**
+     * Recursively sort arrays by keys to ensure consistent ordering.
+     *
+     * This method ensures that nested arrays at any depth are sorted
+     * by their keys, creating a stable representation for hashing
+     * regardless of the original key order.
+     *
+     * @param  array<mixed, mixed> $array The array to sort recursively
+     * @return array<mixed, mixed> The sorted array
+     *
+     * @psalm-suppress MixedAssignment
+     */
+    private function recursiveSort(array $array): array
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $array[$key] = $this->recursiveSort($value);
+            }
+        }
+
+        ksort($array);
+
+        return $array;
     }
 }
