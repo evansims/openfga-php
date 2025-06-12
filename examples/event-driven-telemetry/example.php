@@ -104,13 +104,13 @@ final class MetricsEventListener
 
         if (isset($this->operationTimes[$operationKey])) {
             $duration = microtime(true) - $this->operationTimes[$operationKey];
-            
+
             if ($event->isSuccessful()) {
                 echo "📊 [{$operation}] completed in " . round($duration * 1000, 2) . "ms\n\n";
             } else {
                 echo "📊 [{$operation}] failed after " . round($duration * 1000, 2) . "ms\n\n";
             }
-            
+
             // Always clean up the timing entry to prevent memory leaks
             unset($this->operationTimes[$operationKey]);
         }

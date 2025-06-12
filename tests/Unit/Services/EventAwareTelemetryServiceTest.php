@@ -81,7 +81,8 @@ it('records failure with event dispatcher', function (): void {
             $this->context->span,
             false,
             $this->exception,
-            $this->callback(fn ($attributes) => isset($attributes['test'])
+            $this->callback(
+                fn ($attributes) => isset($attributes['test'])
                     && 'value' === $attributes['test']
                     && isset($attributes['result_type'], $attributes['error_class'], $attributes['error_message']),
             ),

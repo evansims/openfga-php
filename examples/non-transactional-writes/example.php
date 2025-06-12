@@ -173,13 +173,13 @@ try {
     exit(1);
 } finally {
     // Clean up the store regardless of success or failure
-    if ($storeId !== null && $client !== null) {
+    if (null !== $storeId && null !== $client) {
         try {
             echo "\n🧹 Cleaning up...\n";
             $client->deleteStore(store: $storeId);
             echo "✅ Store deleted successfully\n";
         } catch (Throwable $cleanupError) {
-            echo "⚠️  Failed to delete store: " . $cleanupError->getMessage() . "\n";
+            echo '⚠️  Failed to delete store: ' . $cleanupError->getMessage() . "\n";
         }
     }
 }
