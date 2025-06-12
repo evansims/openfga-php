@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Network;
 
 use Fiber;
+use OpenFGA\Results\FailureInterface;
 use Override;
 use Throwable;
 
@@ -29,10 +30,10 @@ final class FiberConcurrentExecutor implements ConcurrentExecutorInterface
      * @inheritDoc
      */
     #[Override]
-    public function executeParallel(array $tasks, int $maxConcurrent = self::DEFAULT_MAX_CONCURRENT): array
+    public function executeParallel(array $tasks, int $maxConcurrent = self::DEFAULT_MAX_CONCURRENT, bool $stopOnFirstError = false): array
     {
         if (! $this->supportsConcurrency() || [] === $tasks) {
-            return $this->executeSequential($tasks);
+            return $this->executeSequential($tasks, $stopOnFirstError);
         }
 
         $maxConcurrent = max(1, min($maxConcurrent, $this->getMaxRecommendedConcurrency()));
@@ -58,6 +59,10 @@ final class FiberConcurrentExecutor implements ConcurrentExecutorInterface
                     $fiber->start();
                 } catch (Throwable $e) {
                     $results[$index] = $e;
+
+                    if ($stopOnFirstError) {
+                        return $results;
+                    }
                 }
             }
 
@@ -68,6 +73,11 @@ final class FiberConcurrentExecutor implements ConcurrentExecutorInterface
                 }
 
                 $results = $this->addFiberResult($results, $index, $fiber);
+
+                // Stop early on exception *or* Failure result
+                if ($stopOnFirstError && ($results[$index] instanceof Throwable || $results[$index] instanceof FailureInterface)) {
+                    return $results;
+                }
             }
         }
 
@@ -166,10 +176,11 @@ final class FiberConcurrentExecutor implements ConcurrentExecutorInterface
      *
      * @template T
      *
-     * @param  array<int, callable(): T> $tasks The tasks to execute
+     * @param  array<int, callable(): T> $tasks            The tasks to execute
+     * @param  bool                      $stopOnFirstError Stop execution on first error
      * @return array<int, T|Throwable>   Array of results or exceptions
      */
-    private function executeSequential(array $tasks): array
+    private function executeSequential(array $tasks, bool $stopOnFirstError = false): array
     {
         $results = [];
 
@@ -178,6 +189,10 @@ final class FiberConcurrentExecutor implements ConcurrentExecutorInterface
                 $results[$index] = $task();
             } catch (Throwable $e) {
                 $results[$index] = $e;
+
+                if ($stopOnFirstError) {
+                    break;
+                }
             }
         }
 
