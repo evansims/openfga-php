@@ -121,8 +121,10 @@ final class BatchRequestProcessor
                     $this->lastRequest = $httpRequest;
                     $this->lastResponse = $httpResponse;
 
-                    // Success case: 200 or 204 status codes
-                    if (200 === $httpResponse->getStatusCode() || 204 === $httpResponse->getStatusCode()) {
+                    // Success case: any 2xx status code
+                    $statusCode = $httpResponse->getStatusCode();
+
+                    if (200 <= $statusCode && 300 > $statusCode) {
                         return new Success(new WriteTuplesResponse);
                     }
 

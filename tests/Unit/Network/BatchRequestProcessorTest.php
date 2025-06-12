@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+use Nyholm\Psr7\Factory\Psr17Factory;
+use Nyholm\Psr7\Response;
 use OpenFGA\Models\Collections\TupleKeys;
 use OpenFGA\Models\{TupleKey};
 use OpenFGA\Network\{BatchRequestProcessor, RequestManagerFactory};
 use OpenFGA\Requests\WriteTuplesRequest;
 use OpenFGA\Responses\WriteTuplesResponse;
 use OpenFGA\Results\SuccessInterface;
+use PsrMock\Psr18\Client;
 
 beforeEach(function (): void {
     $this->processor = new BatchRequestProcessor(
@@ -297,4 +300,41 @@ it('handles edge case with single tuple operation', function (): void {
 
     $response = $result->unwrap();
     expect($response->getTotalOperations())->toBe(1);
+});
+
+it('treats 207 response as success', function (): void {
+    $psr17 = new Psr17Factory;
+
+    $mockClient = new Client([
+        'POST https://test.example.com/stores/test-store/write' => new Response(207),
+    ]);
+
+    $factory = new RequestManagerFactory(
+        url: 'https://test.example.com',
+        authorizationHeader: null,
+        httpClient: $mockClient,
+        httpStreamFactory: $psr17,
+        httpRequestFactory: $psr17,
+        httpResponseFactory: $psr17,
+        telemetry: null,
+    );
+
+    $processor = new BatchRequestProcessor($factory);
+
+    $request = new WriteTuplesRequest(
+        store: 'test-store',
+        model: 'test-model',
+        writes: new TupleKeys([
+            new TupleKey('user:anne', 'reader', 'document:one'),
+        ]),
+        transactional: false,
+        maxTuplesPerChunk: 1,
+    );
+
+    $result = $processor->process($request);
+
+    $response = $result->unwrap();
+
+    expect($response->getSuccessfulChunks())->toBe(1);
+    expect($response->getFailedChunks())->toBe(0);
 });
