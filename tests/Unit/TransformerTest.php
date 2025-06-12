@@ -12,6 +12,7 @@ use OpenFGA\Models\Collections\{ConditionParameters, Conditions, RelationMetadat
 // TypeDefinitionInterface is imported in the group above
 // UsersetInterface is imported in the group above
 use OpenFGA\Schemas\SchemaValidator;
+use ReflectionMethod;
 
 // The large group 'use OpenFGA\Models\{...}' was duplicated and is removed here. The first one (line 4 in original) is kept and extended.
 
@@ -341,5 +342,18 @@ describe('Transformer', function (): void {
         $model = Transformer::fromDsl($dsl, $validator);
         $resultDsl = Transformer::toDsl($model);
         expect(trim($resultDsl))->toBe(trim($dsl));
+    });
+
+    test('testSplitRespectingParenthesesWithRegexHandlesZeroLengthMatch', function (): void {
+        $transformer = new Transformer;
+        $method = new ReflectionMethod(Transformer::class, 'splitRespectingParenthesesWithRegex');
+        $method->setAccessible(true);
+
+        $input = 'a or (b or c)';
+        $pattern = '/\s*or\s*/';
+        $expectedOutput = ['a', '(b or c)'];
+
+        $result = $method->invoke($transformer, $input, $pattern);
+        expect($result)->toBe($expectedOutput);
     });
 });
