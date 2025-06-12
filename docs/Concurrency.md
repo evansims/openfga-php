@@ -486,7 +486,7 @@ class BatchMetrics {
     }
 }
 
-// Use metrics to compare strategies  
+// Use metrics to compare strategies
 $metrics = BatchMetrics::track($client, $storeId, $modelId, $tuplesToWrite, ['parallelism' => 10]);
 echo "Throughput: {$metrics['throughput']} tuples/sec\n";
 echo "Memory usage: {$metrics['memory_mb']} MB\n";
@@ -628,12 +628,3 @@ class BatchCircuitBreaker {
     }
 }
 ```
-
-## Next Steps
-
-- Review the [Non-Transactional Writes Example](../examples/non-transactional-writes/example.php) for detailed parallel processing patterns
-- Explore [Integration Tests](../tests/Integration/BatchTuplesIntegrationTest.php) for advanced usage patterns
-- Check out [Observability Guide](Observability.md) for monitoring concurrent operations
-- Read about [Error Handling](Results.md) for comprehensive failure management
-
-With these concurrency features, you can scale your authorization system to handle millions of relationships efficiently while maintaining reliability and performance.

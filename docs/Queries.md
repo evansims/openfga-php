@@ -424,19 +424,3 @@ function debugUserAccess(string $userId, string $documentId): void
     }
 }
 ```
-
-## What's next
-
-Now that you can query permissions effectively:
-
-**Essential next steps:**
-
-- **[Results →](Results.md)** - Handle errors gracefully in production
-- **[Tuples →](Tuples.md)** - Learn to grant and revoke permissions
-- **[Models →](Models.md)** - Build more sophisticated permission rules
-
-**Advanced topics:**
-
-- **[Assertions →](Assertions.md)** - Test your permission logic automatically
-- **[Concurrency →](Concurrency.md)** - Optimize batch operations
-- **[Observability →](Observability.md)** - Monitor query performance

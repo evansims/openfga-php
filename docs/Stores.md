@@ -165,7 +165,3 @@ do {
 - Save store IDs in your configuration
 - Test your app works with store switching
 - Document which team owns each store
-
-## Next steps
-
-With your store ready, create an [Authorization Model](Models.md) to define your permission rules.

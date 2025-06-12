@@ -2,10 +2,6 @@
 
 Build your first authorization system in under 10 minutes. You'll install the SDK, connect to OpenFGA, and check your first permission.
 
-## What you'll learn
-
-By the end of this guide, you'll have a working authorization system that can answer questions like "Can Alice view this document?" and understand the core concepts that power modern permission systems.
-
 ## Prerequisites
 
 **Required:**
@@ -14,7 +10,9 @@ By the end of this guide, you'll have a working authorization system that can an
 - An OpenFGA server (local or remote)
 
 **HTTP Libraries (auto-detected):**
-The SDK will automatically discover and use existing PSR-7/17/18 libraries in your project. If you don't have any yet:
+The SDK will automatically discover and use existing PSR-7/17/18 libraries in your project.
+
+If you don't have any compatible libraries installed yet, you can use Guzzle:
 
 ```bash
 composer require guzzlehttp/guzzle guzzlehttp/psr7
@@ -32,6 +30,8 @@ use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
 
 ## Start an OpenFGA server
 
+> [!NOTE] > **Using a managed service?** Skip this step and use your Auth0 FGA or hosted OpenFGA URL instead.
+
 The easiest way is Docker - one command gets you running:
 
 ```bash
@@ -39,8 +39,6 @@ docker run -d -p 8080:8080 --name openfga openfga/openfga run
 ```
 
 Your server is now accessible at `http://localhost:8080`.
-
-**Using a managed service?** Skip this step and use your Auth0 FGA or hosted OpenFGA URL instead.
 
 ## Install the SDK
 
@@ -125,33 +123,3 @@ echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
 3. Run `php example.php`
 
 You should see confirmation messages and a final "Alice can view readme" success message.
-
-## What's next
-
-Now that you have a working authorization system, here's your path forward:
-
-### Next Steps for New Developers
-
-**If you're just getting started:**
-
-1. **[Authorization Models →](Models.md)** - Build more complex permission rules
-2. **[Relationship Tuples →](Tuples.md)** - Learn to manage permissions at scale
-3. **[Queries →](Queries.md)** - Master all four types of permission checks
-
-**If you're ready for production:**
-
-1. **[Authentication →](Authentication.md)** - Secure your OpenFGA connection
-2. **[Results →](Results.md)** - Handle errors gracefully with the Result pattern
-3. **[Stores →](Stores.md)** - Manage multiple environments and tenants
-
-### Advanced Topics
-
-**Performance & Scale:**
-
-- **[Concurrency →](Concurrency.md)** - Optimize batch operations with PHP fibers
-- **[Observability →](Observability.md)** - Monitor and debug with OpenTelemetry
-
-**Quality Assurance:**
-
-- **[Assertions →](Assertions.md)** - Test your authorization models
-- **[Exceptions →](Exceptions.md)** - Master error handling patterns

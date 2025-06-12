@@ -36,6 +36,7 @@ The SDK automatically instruments and provides telemetry for:
 All examples in this guide assume the following setup:
 
 **Requirements:**
+
 - **PHP 8.3+** with the OpenFGA PHP SDK installed
 - **OpenTelemetry PHP packages** (optional, but recommended for full functionality):
   ```bash
@@ -783,33 +784,3 @@ $meterProvider = new MeterProvider(/* your exporters */);
 
 $telemetry = TelemetryFactory::create('my-service');
 ```
-
-## Next Steps
-
-**Getting Started:**
-
-- Try the basic setup with your existing OpenFGA instance
-- Add Jaeger for local development to see traces immediately
-- Review the [Introduction.md](Introduction.md) guide for basic OpenFGA usage
-- Run the [event-driven telemetry example](../examples/event-driven-telemetry/example.php) to see custom listeners in action
-
-**Production Setup:**
-
-- Configure proper sampling rates for high-traffic applications
-- Set up dashboards in your observability platform
-- Implement alerting on key metrics like error rates and latency
-- Consider event-driven telemetry for custom monitoring integrations
-
-**Integration:**
-
-- Explore the [Authentication.md](Authentication.md) guide for secure telemetry
-- Read about [Results.md](Results.md) for error handling patterns that work well with observability
-- Check [Queries.md](Queries.md) for the operations you'll be monitoring
-
-**Examples:**
-
-- [OpenTelemetry observability example](../examples/observability/example.php) - Complete OpenTelemetry setup
-- [Event-driven telemetry example](../examples/event-driven-telemetry/example.php) - Custom event listeners
-- [All observability examples](../examples/README.md) - Complete collection
-
-For more details on the OpenTelemetry ecosystem, visit the [official OpenTelemetry documentation](https://opentelemetry.io/docs/).

@@ -35,8 +35,9 @@ $modelId = $config['model_id'];
 
 **Environment Variables:**
 All examples assume these environment variables are configured:
+
 - `OPENFGA_URL` - Your OpenFGA server URL
-- `OPENFGA_STORE_ID` - Your store identifier  
+- `OPENFGA_STORE_ID` - Your store identifier
 - `OPENFGA_MODEL_ID` - Your authorization model ID
 - `OPENFGA_CLIENT_ID` - Client credentials ID
 - `OPENFGA_CLIENT_SECRET` - Client credentials secret
@@ -698,23 +699,3 @@ class DocumentControllerTest extends TestCase
     }
 }
 ```
-
-## What's Next
-
-Now that you have OpenFGA integrated:
-
-**Optimize Performance:**
-
-- **[Concurrency →](Concurrency.md)** - Batch operations efficiently
-- Add caching layers for frequently checked permissions
-- Use `listObjects` instead of individual checks where possible
-
-**Monitor & Debug:**
-
-- **[Observability →](Observability.md)** - Add telemetry to track authorization performance
-- **[Results →](Results.md)** - Handle errors gracefully in production
-
-**Advanced Features:**
-
-- **[Assertions →](Assertions.md)** - Test your authorization logic
-- **[Models →](Models.md)** - Build complex permission hierarchies
