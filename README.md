@@ -91,9 +91,9 @@ Build your authorization integration
 
 - [Introduction](docs/Introduction.md)<br />
   Start here to get your first authorization check working.
-- [Installation](docs/Introduction.md#installation)<br />
+- [Installation](docs/Introduction.md#install-the-sdk)<br />
   Install the SDK and set up your first authorization store.
-- [Authentication](docs/Introduction.md#authentication)<br />
+- [Authentication](docs/Authentication.md)<br />
   Set up authentication for production environments and managed services.
 
 **Essentials**<br />
