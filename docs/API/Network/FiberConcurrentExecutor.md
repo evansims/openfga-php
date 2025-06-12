@@ -64,7 +64,7 @@ public function supportsConcurrency(): bool
 
 ```
 
-Check if the executor supports concurrent execution. Some environments may not support true concurrency (e.g., missing Fiber support in PHP &lt; 8.1). This method allows checking if the executor can actually run tasks concurrently or will fall back to sequential execution.
+Check if the executor supports concurrent execution. Some environments may not support true concurrency (for example missing Fiber support in PHP &lt; 8.1). This method allows checking if the executor can actually run tasks concurrently or will fall back to sequential execution.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Network/FiberConcurrentExecutor.php#L92)
 

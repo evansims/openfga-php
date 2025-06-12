@@ -16,19 +16,19 @@ use Override;
  * authorization scenarios:
  *
  * **Direct User Objects**: Simple user identifiers in "type:id" format, such as
- * "user:alice" or "service:backup-agent". These represent concrete entities with
+ * "user:alice" or "service:backup-agent." These represent concrete entities with
  * specific identities that can be directly assigned permissions.
  *
  * **Usersets**: Dynamic user groups defined through relationships, such as "all
- * editors of document:readme" or "all members of group:engineering". Usersets
+ * editors of document:readme" or "all members of group:engineering." Usersets
  * enable permissions that automatically adapt as relationships change.
  *
  * **Wildcards**: Type-based user groups that match all users of a specific type,
- * such as "all users of type employee". Wildcards enable broad, organization-wide
+ * such as "all users of type employee." Wildcards enable broad, organization-wide
  * permissions without enumerating individual users.
  *
  * **Difference Operations**: Complex user definitions that include some users
- * while excluding others, such as "all editors except contractors". This enables
+ * while excluding others, such as "all editors except contractors." This enables
  * fine-grained access control with exception handling.
  *
  * This flexible user model enables OpenFGA to handle sophisticated authorization
@@ -45,7 +45,7 @@ interface UserInterface extends ModelInterface
      * Difference operations enable sophisticated access control by subtracting one
      * set of users from another, creating complex user definitions that include some
      * users while explicitly excluding others. For example, "all editors except
-     * contractors" or "all organization members except suspended users".
+     * contractors" or "all organization members except suspended users."
      *
      * This pattern is particularly useful for:
      * - Implementing exception-based access policies
@@ -71,7 +71,7 @@ interface UserInterface extends ModelInterface
      *
      * Examples of user object representations:
      * - Structured: UserObject with type="user" and id="alice"
-     * - String format: "user:alice", "service:backup-agent", "bot:notification-service"
+     * - String format: "user:alice," "service:backup-agent," "bot:notification-service"
      *
      * Direct user objects are the most straightforward way to assign permissions
      * to specific, known entities in your system. They provide clear, unambiguous
@@ -87,7 +87,7 @@ interface UserInterface extends ModelInterface
      * Usersets define dynamic user groups through relationships to other objects,
      * enabling permissions that automatically adapt as relationships change in your
      * system. A userset specifies users indirectly by describing a relationship
-     * pattern, such as "all editors of document:readme" or "all members of group:engineering".
+     * pattern, such as "all editors of document:readme" or "all members of group:engineering."
      *
      * Usersets are powerful because they:
      * - Automatically include/exclude users as relationships change

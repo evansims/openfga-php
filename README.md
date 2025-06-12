@@ -60,4 +60,4 @@ See [the documentation](https://github.com/evansims/openfga-php/wiki) to get sta
 
 ## Contributing
 
-Contributions are welcome — have a look at our [contributing guidelines](.github/CONTRIBUTING.md).
+Contributions are welcome—have a look at our [contributing guidelines](.github/CONTRIBUTING.md).

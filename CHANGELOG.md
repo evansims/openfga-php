@@ -14,7 +14,7 @@
 
 ### Security
 
-## [1.3.0] - 2025-06-10
+## [1.3.0] - June 10, 2025
 
 > _Threads and fibers dance,<br />
 > Concurrent requests take their chance,<br />
@@ -66,7 +66,7 @@
 - Added [a new guide](docs/Concurrency.md) on concurrency and parallelism
 - Added [a new guide](docs/Exceptions.md) on exception handling
 
-## [1.2.0] - 2025-06-02
+## [1.2.0] - June 2, 2025
 
 > _Streaming objects flow,<br />
 > Batched checks in one swift go,<br />
@@ -124,7 +124,7 @@
   All exception messages now come from a single source, making them more consistent and easier to
   maintain. This sets the foundation for better error messages in future releases.
 
-## [1.1.0] - 2025-05-30
+## [1.1.0] - May 30, 2025
 
 > _Tokens and configs bright,<br />
 > Type safety brings such delight,<br />
@@ -240,7 +240,7 @@ making your authorization code cleaner and less error-prone.
   We've strengthened the DSL validator to handle edge cases that previously slipped through.
   Your models will now be validated more thoroughly before deployment, catching potential issues early.
 
-## [1.0.0] - 2025-05-29
+## [1.0.0] - May 29, 2025
 
 > _First release takes flight,<br />
 > OpenFGA PHP shines bright,<br />
@@ -251,7 +251,7 @@ making your authorization code cleaner and less error-prone.
 We're excited to release the first stable version of the OpenFGA PHP SDK - a modern, type-safe way
 to add fine-grained authorization to your PHP applications.
 
-### Core Features
+### Core features
 
 - **Complete OpenFGA API coverage**<br />
   Every OpenFGA endpoint is supported, fully typed, and ready to use.

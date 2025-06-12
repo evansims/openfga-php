@@ -487,7 +487,7 @@ MD;
      * Adjust markdown header levels to maintain proper hierarchy in unified document.
      * 
      * @param string $content The markdown content to adjust
-     * @param int $baseLevel The base level to start headers at (e.g., 3 means H1 becomes H4)
+     * @param int $baseLevel The base level to start headers at (for example 3 means H1 becomes H4)
      * @return string Content with adjusted header levels
      */
     private function adjustHeaderLevels(string $content, int $baseLevel): string

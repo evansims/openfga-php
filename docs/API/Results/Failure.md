@@ -205,4 +205,4 @@ Retrieves the value from a successful result. This method should only be called 
 
 #### Returns
 
-`never` — The response interface (e.g., CheckResponseInterface, StoreInterface)
+`never` — The response interface (for example CheckResponseInterface, StoreInterface)

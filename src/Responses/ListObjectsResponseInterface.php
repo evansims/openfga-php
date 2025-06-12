@@ -11,8 +11,8 @@ use OpenFGA\Schemas\SchemaInterface;
  *
  * This interface defines the contract for responses returned when listing objects
  * that a user has access to in OpenFGA. This is the inverse of permission checking -
- * instead of asking "can this user access this object?", it asks "what objects can
- * this user access?".
+ * instead of asking "can this user access this object?," it asks "what objects can
+ * this user access?"
  *
  * Object listing is particularly useful for building user interfaces that need to
  * display only the resources a user can access, such as file listings, document

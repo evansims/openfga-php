@@ -204,4 +204,4 @@ Retrieves the value from a successful result. This method should only be called 
 
 #### Returns
 
-`mixed` — The response interface (e.g., CheckResponseInterface, StoreInterface)
+`mixed` — The response interface (for example CheckResponseInterface, StoreInterface)

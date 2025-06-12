@@ -120,7 +120,7 @@ interface SchemaBuilderInterface
      *
      * @param  string             $name     The property name
      * @param  bool               $required Whether the property is required
-     * @param  string|null        $format   String format constraint (e.g., 'date', 'datetime')
+     * @param  string|null        $format   String format constraint (for example 'date', 'datetime')
      * @param  array<string>|null $enum     Array of allowed string values
      * @param  mixed              $default  Default value for optional properties
      * @return self               Returns the builder instance for method chaining

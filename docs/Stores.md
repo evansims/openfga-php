@@ -4,7 +4,19 @@ Think of a store as your authorization workspace. It contains your permission ru
 
 Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
 
-## What are stores?
+## Prerequisites
+
+The examples in this guide assume you have the following setup:
+
+```php
+use OpenFGA\Client;
+use function OpenFGA\store;
+
+// Initialize your client
+$client = new Client(url: $_ENV['FGA_API_URL']);
+```
+
+## What are stores
 
 A store holds three things:
 
@@ -19,11 +31,6 @@ Most apps start with one store and add more as they grow.
 For a typical application, create one store per environment:
 
 ```php
-use OpenFGA\Client;
-use function OpenFGA\store;
-
-$client = new Client(url: $_ENV['FGA_API_URL']);
-
 // Create your production store
 $storeId = store($client, 'myapp-production'); // Save this!
 
@@ -75,17 +82,15 @@ enum Environment: string
     case Production = 'prod';
 }
 
-function createEnvironmentStore(Environment $env, string $appName): string
+function createEnvironmentStore(Client $client, Environment $env, string $appName): string
 {
-    $client = new Client(url: $_ENV['FGA_API_URL']);
     $store = $client->createStore(name: "{$appName}-{$env->value}")->unwrap();
-
     return $store->getId();
 }
 
 // Create stores for each environment
-$devStoreId = createEnvironmentStore(Environment::Development, 'myapp');
-$prodStoreId = createEnvironmentStore(Environment::Production, 'myapp');
+$devStoreId = createEnvironmentStore($client, Environment::Development, 'myapp');
+$prodStoreId = createEnvironmentStore($client, Environment::Production, 'myapp');
 ```
 
 ## Store management
@@ -99,12 +104,12 @@ foreach ($stores->getStores() as $store) {
     echo "{$store->getName()}: {$store->getId()}\n";
 }
 
-// Get specific store details
+// Get specific store details (using store ID from previous examples)
 $store = $client->getStore(store: $storeId)->unwrap();
 echo "Created: {$store->getCreatedAt()->format('Y-m-d H:i:s')}\n";
 
 // Delete a store (careful - this is permanent!)
-$client->deleteStore(store: $oldStoreId)->unwrap();
+$client->deleteStore(store: $storeId)->unwrap();
 ```
 
 For pagination with many stores:

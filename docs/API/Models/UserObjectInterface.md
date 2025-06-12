@@ -1,6 +1,6 @@
 # UserObjectInterface
 
-Represents a user object in OpenFGA authorization model. User objects are typed entities that can be subjects in authorization relationships. They consist of a type (e.g., &#039;user&#039;, &#039;group&#039;) and a unique identifier within that type.
+Represents a user object in OpenFGA authorization model. User objects are typed entities that can be subjects in authorization relationships. They consist of a type (for example &#039;user&#039;, &#039;group&#039;) and a unique identifier within that type.
 
 ## Namespace
 
@@ -46,7 +46,7 @@ public function getType(): string
 
 ```
 
-Get the type of the user object. The type defines the category or class of the object (e.g., &#039;user&#039;, &#039;group&#039;, &#039;organization&#039;) and must be defined in the authorization model.
+Get the type of the user object. The type defines the category or class of the object (for example &#039;user&#039;, &#039;group&#039;, &#039;organization&#039;) and must be defined in the authorization model.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObjectInterface.php#L46)
 

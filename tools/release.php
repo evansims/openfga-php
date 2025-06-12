@@ -106,8 +106,8 @@ class ReleaseManager
         
         // This regex follows the SemVer 2.0 spec exactly:
         // - Major.Minor.Patch are required
-        // - Optional pre-release identifier (e.g., -alpha.1)
-        // - Optional build metadata (e.g., +build.456)
+        // - Optional pre-release identifier (for example -alpha.1)
+        // - Optional build metadata (for example +build.456)
         // - No 'v' prefix allowed
         if (!preg_match('/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/', $this->version)) {
             throw new InvalidArgumentException(

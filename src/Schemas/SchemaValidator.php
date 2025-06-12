@@ -37,7 +37,7 @@ use function sprintf;
  * Validates and transforms data according to registered JSON schemas.
  *
  * This validator ensures that API response data conforms to expected schemas
- * and transforms raw arrays into strongly-typed model objects. It handles
+ * and transforms raw arrays into strongly typed model objects. It handles
  * nested objects, collections, and complex validation rules while providing
  * detailed error reporting for schema violations.
  *
@@ -148,7 +148,7 @@ final class SchemaValidator implements SchemaValidatorInterface
             // Check if required property exists
             if (! isset($data[$name])) {
                 if ($required) {
-                    $errors[] = sprintf("Required property '%s' is missing", $name);
+                    $errors[] = sprintf("Required property '%s' is missing.", $name);
 
                     continue;
                 }
@@ -536,7 +536,7 @@ final class SchemaValidator implements SchemaValidatorInterface
      *
      * @param  mixed                                          $value  The raw value to transform
      * @param  string                                         $type   The target type to transform to
-     * @param  string|null                                    $format Optional format constraint for string types (e.g., 'date', 'datetime')
+     * @param  string|null                                    $format Optional format constraint for string types (for example 'date', 'datetime')
      * @return array<mixed>|bool|float|int|object|string|null The transformed value in the correct type
      */
     private function transformValue(mixed $value, string $type, ?string $format = null): mixed

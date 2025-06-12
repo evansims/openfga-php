@@ -53,7 +53,7 @@ public function getType(): string
 
 ```
 
-Get the type of the user object. The type defines the category or class of the object (e.g., &#039;user&#039;, &#039;group&#039;, &#039;organization&#039;) and must be defined in the authorization model.
+Get the type of the user object. The type defines the category or class of the object (for example &#039;user&#039;, &#039;group&#039;, &#039;organization&#039;) and must be defined in the authorization model.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L78)
 

@@ -45,7 +45,7 @@ interface SchemaPropertyInterface
     /**
      * Get the additional format constraint for this property.
      *
-     * @return string|null Format constraint (e.g., 'date', 'datetime') or null if none
+     * @return string|null Format constraint (for example 'date', 'datetime') or null if none
      */
     public function getFormat(): ?string;
 

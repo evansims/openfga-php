@@ -12,10 +12,10 @@ use stdClass;
 /**
  * Represents a type definition in your authorization model.
  *
- * A TypeDefinition defines an object type (like "document", "folder", "user")
+ * A TypeDefinition defines an object type (like "document," "folder," "user")
  * and specifies the relations that can exist for objects of this type.
- * Each relation defines how users can be related to objects, such as "owner",
- * "editor", or "viewer" relationships.
+ * Each relation defines how users can be related to objects, such as "owner,"
+ * "editor," or "viewer" relationships.
  *
  * Use this when defining the schema of object types and their allowed
  * relationships in your authorization model.
