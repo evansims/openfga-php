@@ -628,7 +628,7 @@ final class Transformer implements TransformerInterface
                     if (0 === $matchStart) {
                         $parts[] = $current;
                         $current = '';
-                        $i += $matchLength - 1; // Skip the matched delimiter
+                        $i += max(0, $matchLength - 1); // Advance by matchLength - 1 since for loop will increment
 
                         continue;
                     }
