@@ -54,7 +54,7 @@ $client = new Client(url: 'http://localhost:8080');
 
 That's it. The client automatically discovers your HTTP libraries and handles all the low-level communication.
 
-**For production:** You'll want authentication and better error handling. We'll cover that in [Authentication →](Authentication.md) and [Results →](Results.md).
+**For production:** you'll want authentication and better error handling. We'll cover that in [Authentication →](Authentication.md) and [Results →](Results.md).
 
 ## How authorization works
 
