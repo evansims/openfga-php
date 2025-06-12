@@ -105,7 +105,7 @@ cat > "_Footer.md" << 'EOF'
 ## Developer Resources
 
 - **[📖 Complete API Reference](API-Client)** - Full class and method documentation
-- **[🚀 Quick Start Examples](Introduction#quick-start)** - Get up and running in minutes  
+- **[🚀 Quick Start Examples](Introduction#quick-start)** - Get up and running in minutes
 - **[🔧 Helper Functions](Introduction#helper-functions)** - Convenient shortcuts for common operations
 - **[🧪 Testing Guide](Integration#testing)** - Unit testing with the SDK
 - **[📊 Performance Guide](Concurrency)** - Optimize for high-scale applications
@@ -126,7 +126,7 @@ cat > "_Footer.md" << 'EOF'
 
 ---
 
-*OpenFGA PHP SDK • [MIT License](https://github.com/evansims/openfga-php/blob/main/LICENSE) • Version: `composer show evansims/openfga-php | grep 'versions'`*
+*OpenFGA PHP SDK • [Apache 2.0 License](https://github.com/evansims/openfga-php/blob/main/LICENSE) • Version: `composer show evansims/openfga-php | grep 'versions'`*
 EOF
 
 # Convert directory structure to wiki-friendly format
@@ -146,7 +146,7 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
     # Convert internal markdown links to wiki format
     # Handle links with anchors: file.md#anchor -> file#anchor
     sed -i.bak 's/\.md#/#/g' "$file"
-    
+
     # Handle simple links: file.md -> file
     sed -i.bak 's/\.md)/)/g' "$file"
 
