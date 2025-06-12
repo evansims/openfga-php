@@ -1,5 +1,5 @@
 <div align="center">
-  <p><a href="https://tempestphp.com"><img src="../.github/openfga.png" width="100" /></a></p>
+  <p><a href="https://tempestphp.com"><img src="https://raw.githubusercontent.com/evansims/openfga-php/main/.github/openfga.png" width="100" /></a></p>
 
   <h1>OpenFGA PHP SDK</h1>
 
@@ -21,7 +21,7 @@ Build your authorization integration
 - [Authentication](Authentication.md)<br />
   Set up authentication for production environments and managed services.
 
-## Essential
+## Essentials
 
 Learn the core concepts and patterns
 

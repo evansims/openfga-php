@@ -28,21 +28,26 @@ fi
 # Create custom sidebar
 echo "📋 Creating custom sidebar..."
 cat > "_Sidebar.md" << 'EOF'
-## 📚 Guides
-
-- **[Home](Home)**
-- **[Getting Started](GettingStarted)**
+## Getting Started
+- **[Introduction](Introduction)**
+- **[Installation](Introduction#install-the-sdk)**
 - **[Authentication](Authentication)**
+
+## Essentials
 - **[Stores](Stores)**
 - **[Authorization Models](AuthorizationModels)**
-- **[Queries](Queries)**
 - **[Relationship Tuples](RelationshipTuples)**
+- **[Permissions Queries](Queries)**
 - **[Assertions](Assertions)**
+
+## Features
+- **[Concurrency](Concurrency)**
+- **[Exceptions](Exceptions)**
+- **[Integration](Integration)**
+- **[Observability](Observability)**
 - **[Results](Results)**
 
----
-
-## 🔧 API Reference
+## API Reference
 
 ### Core
 - **[Client](API-Client)**
