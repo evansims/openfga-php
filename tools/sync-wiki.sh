@@ -35,8 +35,8 @@ cat > "_Sidebar.md" << 'EOF'
 
 ## Essentials
 - **[Stores](Stores)**
-- **[Authorization Models](AuthorizationModels)**
-- **[Relationship Tuples](RelationshipTuples)**
+- **[Authorization Models](Models)**
+- **[Relationship Tuples](Tuples)**
 - **[Permissions Queries](Queries)**
 - **[Assertions](Assertions)**
 

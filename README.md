@@ -89,39 +89,39 @@ Ready to build bulletproof authorization? See [the documentation](docs/README.md
 **Getting Started**<br />
 Build your authorization integration
 
-- [Introduction](docs/Introduction.md)<br />
+- [Introduction](https://github.com/evansims/openfga-php/wiki/Introduction)<br />
   Start here to get your first authorization check working.
-- [Installation](docs/Introduction.md#install-the-sdk)<br />
+- [Installation](https://github.com/evansims/openfga-php/wiki/Introduction#install-the-sdk)<br />
   Install the SDK and set up your first authorization store.
-- [Authentication](docs/Authentication.md)<br />
+- [Authentication](https://github.com/evansims/openfga-php/wiki/Authentication)<br />
   Set up authentication for production environments and managed services.
 
 **Essentials**<br />
 Learn the core concepts and patterns
 
-- [Stores](docs/Stores.md)<br />
+- [Stores](https://github.com/evansims/openfga-php/wiki/Stores)<br />
   Manage authorization stores for multi-tenant applications and environment separation.
-- [Authorization Models](docs/Models.md)<br />
+- [Authorization Models](https://github.com/evansims/openfga-php/wiki/Models)<br />
   Learn how to define your permission rules using OpenFGA's intuitive DSL.
-- [Relationship Tuples](docs/Tuples.md)<br />
+- [Relationship Tuples](https://github.com/evansims/openfga-php/wiki/Tuples)<br />
   Understand how to grant and revoke specific permissions between users and resources.
-- [Permission Queries](docs/Queries.md)<br />
+- [Permission Queries](https://github.com/evansims/openfga-php/wiki/Queries)<br />
   Master the four types of queries: check permissions, list objects, find users, and expand relationships.
-- [Assertions](docs/Assertions.md)<br />
+- [Assertions](https://github.com/evansims/openfga-php/wiki/Assertions)<br />
   Define test cases to verify your authorization model.
 
 **Features**<br />
 Explore advanced features and patterns
 
-- [Concurrency](docs/Concurrency.md)<br />
+- [Concurrency](https://github.com/evansims/openfga-php/wiki/Concurrency)<br />
   Leveraging the SDK's powerful concurrency features to improve performance when working with large-scale authorization operations.
-- [Exceptions](docs/Exceptions.md)<br />
+- [Exceptions](https://github.com/evansims/openfga-php/wiki/Exceptions)<br />
   Handling errors and exceptions in your authorization system.
-- [Integration](docs/Integration.md)<br />
+- [Integration](https://github.com/evansims/openfga-php/wiki/Integration)<br />
   Integrating OpenFGA with your existing systems and frameworks.
-- [Observability](docs/Observability.md)<br />
+- [Observability](https://github.com/evansims/openfga-php/wiki/Observability)<br />
   Comprehensive tracing and metrics to monitor your authorization system.
-- [Results](docs/Results.md)<br />
+- [Results](https://github.com/evansims/openfga-php/wiki/Results)<br />
   Building robust applications with proper response handling using the SDK's Result pattern.
 
 <p><br /></p>
