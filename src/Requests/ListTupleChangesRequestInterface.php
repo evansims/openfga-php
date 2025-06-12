@@ -87,8 +87,8 @@ interface ListTupleChangesRequestInterface extends RequestInterface
      *
      * Specifies an optional filter to only include changes affecting tuples
      * of a specific object type. This helps narrow the results to changes
-     * relevant to particular resource types, such as "document", "folder",
-     * or "organization".
+     * relevant to particular resource types, such as "document," "folder,"
+     * or "organization."
      *
      * @return string|null The object type to filter changes by, or null to include changes for all object types
      */

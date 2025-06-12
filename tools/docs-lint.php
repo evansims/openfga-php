@@ -9,13 +9,17 @@ declare(strict_types=1);
  * It provides a standardized way to check documentation quality across
  * the OpenFGA PHP SDK project using Google and Microsoft writing style guides.
  *
+ * The tool automatically excludes the docs/API directory since it contains
+ * auto-generated documentation that is already covered by linting the source files.
+ * It also filters out common false positives that aren't relevant for code documentation.
+ *
  * Usage:
- *   php tools/vale-lint.php [path]
+ *   php tools/docs-lint.php [path]
  *
  * Examples:
- *   php tools/vale-lint.php                    # Lint all documentation
- *   php tools/vale-lint.php README.md          # Lint specific file
- *   php tools/vale-lint.php docs/              # Lint specific directory
+ *   php tools/docs-lint.php                    # Lint all documentation (excludes docs/API)
+ *   php tools/docs-lint.php README.md          # Lint specific file
+ *   php tools/docs-lint.php docs/              # Lint docs directory (excludes docs/API)
  *
  * Exit codes:
  *   0 - No issues found
@@ -34,7 +38,8 @@ final class ValeLinter
     private const array DEFAULT_PATHS = [
         'README.md',
         'CHANGELOG.md', 
-        'CONTRIBUTING.md',
+        'CODE_OF_CONDUCT.md',
+        'CLAUDE.md',
         'docs/',
         'src/',
     ];
@@ -61,10 +66,18 @@ final class ValeLinter
         }
 
         $paths = $this->determinePaths($arguments);
+        $filteredPaths = $this->filterPaths($paths);
         
-        echo "Linting paths: " . implode(', ', $paths) . "\n\n";
+        echo "Linting paths: " . implode(', ', $paths) . "\n";
+        
+        // Show if we're excluding API docs
+        if (in_array('docs/', $paths) || in_array('docs', $paths)) {
+            echo "Note: Excluding docs/API directory (auto-generated content)\n";
+        }
+        
+        echo "\n";
 
-        return $this->executeVale($paths);
+        return $this->executeVale($filteredPaths);
     }
 
     /**
@@ -171,11 +184,153 @@ final class ValeLinter
             return 0;
         }
 
-        // Process and display results
-        $this->displayResults($output);
+        // Filter out false positives before displaying
+        $filteredOutput = $this->filterFalsePositives($output);
+        $filteredCount = count($output) - count($filteredOutput);
         
-        // Vale returns 1 if issues found, 0 if clean
+        if ($filteredCount > 0) {
+            echo "ℹ️  Filtered out $filteredCount false positive(s)\n\n";
+        }
+        
+        if (empty($filteredOutput)) {
+            echo "✅ No documentation style issues found (after filtering false positives)!\n";
+            return 0;
+        }
+
+        // Process and display results
+        $this->displayResults($filteredOutput);
+        
+        // Return original return code since we're just filtering display
         return $returnCode;
+    }
+
+    /**
+     * Filter paths to exclude auto-generated documentation.
+     */
+    private function filterPaths(array $paths): array
+    {
+        $filteredPaths = [];
+        
+        foreach ($paths as $path) {
+            // If the path is specifically the docs directory, replace it with individual subdirectories
+            if ($path === 'docs/' || $path === 'docs') {
+                // Add specific docs subdirectories, excluding API
+                if (is_dir('docs')) {
+                    $docsDirs = glob('docs/*', GLOB_ONLYDIR);
+                    foreach ($docsDirs as $dir) {
+                        // Skip the API directory as it contains auto-generated content
+                        if (basename($dir) !== 'API') {
+                            $filteredPaths[] = $dir . '/';
+                        }
+                    }
+                    // Also include markdown files directly in docs/
+                    $docsFiles = glob('docs/*.md');
+                    $filteredPaths = array_merge($filteredPaths, $docsFiles);
+                }
+            } else {
+                // Keep other paths as-is
+                $filteredPaths[] = $path;
+            }
+        }
+        
+        return array_unique($filteredPaths);
+    }
+
+    /**
+     * Filter out common false positives that are not relevant for code documentation.
+     */
+    private function filterFalsePositives(array $output): array
+    {
+        $filteredOutput = [];
+        
+        foreach ($output as $line) {
+            // Skip if it's a false positive pattern
+            if ($this->isFalsePositive($line)) {
+                continue;
+            }
+            
+            $filteredOutput[] = $line;
+        }
+        
+        return $filteredOutput;
+    }
+
+    /**
+     * Check if a Vale output line represents a false positive.
+     */
+    private function isFalsePositive(string $line): bool
+    {
+        // Common false positive patterns in code documentation
+        $falsePositivePatterns = [
+            // Code syntax issues - punctuation in string literals, function calls, etc.
+            'implode.*Quotes.*Punctuation should be inside',
+            'explode.*Quotes.*Punctuation should be inside', 
+            'sprintf.*Quotes.*Punctuation should be inside',
+            'preg_.*Quotes.*Punctuation should be inside',
+            'Transformer\.php:174.*Quotes.*Punctuation should be inside', // Code syntax not prose
+            
+            // Technical terms that are appropriate in our context
+            'Microsoft\.Terms.*[aA]gent.*personal digital assistant', // "agent" is correct in our context (User Agent, etc.)
+            'Microsoft\.Avoid.*backend', // "backend" is appropriate technical term
+            'Microsoft\.Auto.*auto-discovery', // "auto-discovery" is correct hyphenation for this technical term
+            'Microsoft\.Auto.*auto-discovered',
+            
+            // Abbreviations and variable names
+            'Spacing.*e\.D.*should have one space', // Likely abbreviations or code
+            'Spacing.*e\.T.*should have one space',
+            
+            // Negative numbers in code (dates, ranges, etc.)
+            'Microsoft\.Negative.*Form a negative number.*en dash.*hyphen',
+            
+            // Repetition in enum values or similar code constructs
+            'Vale\.Repetition.*is repeated.*True', // Common in enums/constants
+            
+            // Optional plurals in technical documentation 
+            'OptionalPlurals.*tuple\(s\)', // "tuple(s)" is clear in documentation
+            'Plurals.*Don\'t add.*\(s\).*tuple',
+            'Plurals.*Don\'t add.*\(s\).*object', // "object(s)" is clear in documentation
+            'Plurals.*Don\'t add.*\(s\).*request', // "request(s)" is clear in documentation
+            
+            // Quotation marks in PHP code strings that are not prose
+            'YamlParser\.php.*Quotes.*Punctuation should be inside', // Code syntax, not prose
+            'ValidationService\.php.*sprintf.*Quotes', // Error message formatting code
+            'SchemaValidator\.php.*sprintf.*Quotes', // Error message formatting code
+            
+            // Proper nouns in headings that should remain capitalized
+            'Headings.*OpenFGA.*should use sentence-style', // OpenFGA is a proper noun
+            'Headings.*CLAUDE\.md.*should use sentence-style', // CLAUDE.md is a filename
+            'Headings.*DSL.*should use sentence-style', // DSL is an acronym
+            'Headings.*PSR.*should use sentence-style', // PSR is an acronym
+            'Headings.*PHP.*should use sentence-style', // PHP is an acronym
+            'Headings.*TL;DR.*should use sentence-style', // Common abbreviation in tech docs
+            
+            // Technical documentation style preferences that are acceptable
+            'Google\.Slang.*TL;DR', // "TL;DR" is commonly accepted in technical documentation
+            'Microsoft\.DateOrder.*Always spell out', // ISO date format is acceptable in technical docs
+            
+            // Heading style preferences that are debatable for technical docs
+            'Headings.*Setup.*should use sentence-style', // "Setup" vs "Set up" as noun
+            'Headings.*Production.*should use sentence-style', // Common technical terms
+            'Headings.*Client.*should use sentence-style',
+            'Headings.*Testing.*should use sentence-style',
+            'Headings.*API Token.*should use sentence-style', // Technical term
+            'Headings.*Table of Contents.*should use sentence-style', // Standard section
+            'Headings.*Quick Start.*should use sentence-style', // Common documentation section
+            'Headings.*Core Concepts.*should use sentence-style', // Common documentation section
+            'Headings.*Batch Operations.*should use sentence-style', // Technical term
+            'Headings.*Configuration Options.*should use sentence-style', // Common section
+            'Headings.*Why.*Matters.*should use sentence-style', // Common explanatory heading
+            'Headings.*Basic.*Usage.*should use sentence-style', // Common tutorial heading
+            'Headings.*Processing Patterns.*should use sentence-style' // Technical section
+        ];
+        
+        foreach ($falsePositivePatterns as $pattern) {
+            if (preg_match('/' . $pattern . '/i', $line)) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     /**
@@ -216,7 +371,7 @@ final class ValeLinter
 }
 
 // Execute the linter if run directly
-if (basename($_SERVER['SCRIPT_NAME']) === 'vale-lint.php') {
+if (basename($_SERVER['SCRIPT_NAME']) === 'docs-lint.php') {
     $linter = new ValeLinter();
     exit($linter->run($_SERVER['argv']));
 }

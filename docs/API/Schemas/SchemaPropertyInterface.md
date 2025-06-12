@@ -76,7 +76,7 @@ Get the additional format constraint for this property.
 
 #### Returns
 
-`string` &#124; `null` — Format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) or null if none
+`string` &#124; `null` — Format constraint (for example &#039;date&#039;, &#039;datetime&#039;) or null if none
 
 #### getItems
 

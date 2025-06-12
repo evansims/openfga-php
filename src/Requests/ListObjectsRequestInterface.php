@@ -14,7 +14,7 @@ use OpenFGA\Models\TupleKeyInterface;
  * This interface defines the contract for requests that query which objects
  * a specific user can access for a given relation. This is the inverse of
  * a permission check - instead of asking "can this user access this object?",
- * it asks "what objects can this user access?".
+ * it asks "what objects can this user access?"
  *
  * List objects operations support:
  * - Filtering by object type and relation
@@ -85,7 +85,7 @@ interface ListObjectsRequestInterface extends RequestInterface
      * Get the relation to check for object access.
      *
      * Specifies the relationship type to evaluate when determining object access.
-     * For example, "can_view", "can_edit", or "owner". This defines what type
+     * For example, "can_view," "can_edit," or "owner." This defines what type
      * of permission or relationship is being queried.
      *
      * @return string The relation name to check for object access
@@ -108,7 +108,7 @@ interface ListObjectsRequestInterface extends RequestInterface
      *
      * Specifies the type of objects to include in the results. Only objects
      * of this type will be considered when determining what the user can access.
-     * For example, "document", "folder", or "repository".
+     * For example, "document," "folder," or "repository."
      *
      * @return string The object type to filter results by
      */

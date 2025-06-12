@@ -17,11 +17,17 @@ By the end of this guide, you'll have a working authorization system that can an
 The SDK will automatically discover and use existing PSR-7/17/18 libraries in your project. If you don't have any yet:
 
 ```bash
-# Popular choice - Guzzle
 composer require guzzlehttp/guzzle guzzlehttp/psr7
+```
 
-# Or use any other PSR-compatible library
-composer require symfony/http-client nyholm/psr7
+**Common imports for examples:**
+Most examples in this guide use these imports:
+
+```php
+<?php
+
+use OpenFGA\Client;
+use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
 ```
 
 ## Start an OpenFGA server
@@ -45,8 +51,6 @@ composer require evansims/openfga-php
 ## Create your first client
 
 ```php
-use OpenFGA\Client;
-
 $client = new Client(url: 'http://localhost:8080');
 ```
 
@@ -58,11 +62,11 @@ That's it. The client automatically discovers your HTTP libraries and handles al
 
 Every authorization system needs three things:
 
-**1. A store** — Think of this as a database for your permissions. Each application or tenant gets its own store.
+**1. A store**—Think of this as a database for your permissions. Each application or tenant gets its own store.
 
-**2. A model** — The rules that define what permissions exist. Like "documents can have viewers and editors."
+**2. A model**—The rules that define what permissions exist. Like "documents can have viewers and editors."
 
-**3. Relationships** — Specific permissions between users and resources. Like "Alice can view document:readme."
+**3. Relationships**—Specific permissions between users and resources. Like "Alice can view document:readme."
 
 Once you have these, you can ask questions like "Can Alice edit this document?" and get instant answers.
 
@@ -71,9 +75,6 @@ Once you have these, you can ask questions like "Can Alice edit this document?" 
 Here's a complete working example that sets up authorization for a document system:
 
 ```php
-use OpenFGA\Client;
-use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
-
 $client = new Client(url: 'http://localhost:8080');
 
 // 1. Create a store for your app
@@ -125,7 +126,7 @@ echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
 
 You should see confirmation messages and a final "Alice can view readme" success message.
 
-## What's next?
+## What's next
 
 Now that you have a working authorization system, here's your path forward:
 

@@ -143,7 +143,7 @@ final class WorkflowSecurityAudit
                     
                     // Only include GitHub actions (must contain slash and not be local)
                     if (str_contains($action, '/') && !str_starts_with($action, './')) {
-                        // Handle actions with subpaths (e.g., github/codeql-action/upload-sarif)
+                        // Handle actions with subpaths (for example github/codeql-action/upload-sarif)
                         // The API is for the main repository, so extract just owner/repo
                         $parts = explode('/', $action);
                         if (count($parts) >= 2) {
@@ -356,7 +356,7 @@ final class WorkflowSecurityAudit
     
     private function getMainActionName(string $action): string
     {
-        // Handle actions with subpaths (e.g., github/codeql-action/upload-sarif)
+        // Handle actions with subpaths (for example github/codeql-action/upload-sarif)
         // The API is for the main repository, so extract just owner/repo
         $parts = explode('/', $action);
         if (count($parts) >= 2) {

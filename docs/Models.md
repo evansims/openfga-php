@@ -2,6 +2,20 @@
 
 Authorization models are your permission blueprint. They define what types of things exist in your system and how they relate to each other. Think database schema, but for permissions.
 
+## Prerequisites
+
+The examples in this guide assume you have the following setup:
+
+```php
+use OpenFGA\Client;
+use OpenFGA\Models\{Condition, ConditionMetadata, ConditionParameter};
+use OpenFGA\Models\Collections\{Conditions, ConditionParameters};
+
+$client = new Client(url: 'http://localhost:8080');
+$storeId = 'your-store-id'; // From creating a store or your configuration
+$modelId = 'your-model-id'; // From creating an authorization model
+```
+
 ## Building your first model
 
 Let's jump right into building a document sharing system. Here's what we want:
@@ -31,10 +45,6 @@ That's it. The `or` keyword creates inheritance - owners automatically become ed
 Transform your DSL into a model object and create it on the server:
 
 ```php
-use OpenFGA\Client;
-
-$client = new Client(url: 'http://localhost:8080');
-
 $dsl = <<<DSL
 model
   schema 1.1
@@ -153,9 +163,6 @@ type document
 Define conditions when creating your model:
 
 ```php
-use OpenFGA\Models\{Condition, ConditionMetadata, ConditionParameter};
-use OpenFGA\Models\Collections\{Conditions, ConditionParameters};
-
 $conditions = new Conditions([
     new Condition(
         name: 'valid_ip',

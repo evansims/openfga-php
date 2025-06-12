@@ -99,8 +99,8 @@ interface CreateAuthorizationModelRequestInterface extends RequestInterface
      * your system and how they can be related to users and other objects.
      *
      * Each type definition includes:
-     * - Object type name (e.g., "document", "folder", "organization")
-     * - Allowed relationships (e.g., "owner", "editor", "viewer")
+     * - Object type name (for example "document," "folder," "organization")
+     * - Allowed relationships (for example "owner," "editor," "viewer")
      * - Relationship inheritance and computation rules
      * - References to conditional logic for dynamic authorization
      *

@@ -174,7 +174,7 @@ interface TelemetryInterface
      * expand, or write operations. The span should include relevant attributes
      * such as store ID, authorization model ID, and operation-specific metadata.
      *
-     * @param  string                                  $operation  The OpenFGA operation name (e.g., 'check', 'expand', 'write_tuples')
+     * @param  string                                  $operation  The OpenFGA operation name (for example 'check', 'expand', 'write_tuples')
      * @param  StoreInterface|string                   $store      The store being operated on
      * @param  AuthorizationModelInterface|string|null $model      The authorization model being used
      * @param  array<string, mixed>                    $attributes Additional span attributes

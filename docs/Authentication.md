@@ -2,6 +2,16 @@
 
 Most OpenFGA servers require authentication, especially in production. This guide shows you how to configure authentication for different environments and use cases.
 
+## Prerequisites
+
+The examples in this guide assume you have the following imports available:
+
+```php
+use OpenFGA\Client;
+use OpenFGA\ClientInterface;
+use OpenFGA\Authentication\{ClientCredentialAuthentication, TokenAuthentication};
+```
+
 ## TL;DR for busy developers
 
 ```php
@@ -20,7 +30,7 @@ $client = new Client(
 $client = new Client(url: 'http://localhost:8080');
 ```
 
-## When do you need authentication?
+## When do you need authentication
 
 - **Production environments** - Always required
 - **Auth0 FGA** - Always required
@@ -33,9 +43,6 @@ $client = new Client(url: 'http://localhost:8080');
 This is the most common authentication method for production applications. The SDK handles OAuth token management automatically.
 
 ```php
-use OpenFGA\Client;
-use OpenFGA\Authentication\ClientCredentialAuthentication;
-
 $client = new Client(
     url: $_ENV['FGA_API_URL'],
     authentication: new ClientCredentialAuthentication(
@@ -62,9 +69,6 @@ FGA_AUDIENCE=https://api.us1.fga.dev/
 For simpler setups or self-hosted OpenFGA instances that support API tokens:
 
 ```php
-use OpenFGA\Client;
-use OpenFGA\Authentication\TokenAuthentication;
-
 $client = new Client(
     url: $_ENV['FGA_API_URL'],
     authentication: new TokenAuthentication($_ENV['FGA_API_TOKEN']),
@@ -83,8 +87,6 @@ FGA_API_TOKEN=your_api_token
 For local development against a Docker container or development server:
 
 ```php
-use OpenFGA\Client;
-
 $client = new Client(
     url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
 );
@@ -140,7 +142,7 @@ $container->singleton(ClientInterface::class, function () {
 
 - Verify your environment variables are set correctly
 - Check that your client ID and secret are valid
-- Ensure the issuer URL includes the full path (e.g., `/oauth/token`)
+- Ensure the issuer URL includes the full path (for example `/oauth/token`)
 
 ### Token expired errors
 
@@ -154,7 +156,6 @@ The SDK automatically refreshes tokens for Client Credentials authentication. If
 If authentication isn't working locally:
 
 - Confirm your OpenFGA server allows unauthenticated requests
-- Try using `NoAuthentication()` explicitly
 - Check the server logs for authentication requirements
 
 ### Environment variable loading

@@ -2,6 +2,47 @@
 
 Ready to integrate OpenFGA into your existing application? This guide shows you how to add authorization to popular PHP frameworks and patterns.
 
+## Prerequisites
+
+Before integrating with your framework, you'll need these common OpenFGA imports and setup patterns used throughout the examples:
+
+```php
+<?php
+
+// Core OpenFGA imports used across all framework integrations
+use OpenFGA\Client;
+use OpenFGA\ClientInterface;
+use OpenFGA\Authentication\ClientCredentialAuthentication;
+
+// Helper functions for cleaner syntax
+use function OpenFGA\{tuple, tuples, allowed, write, delete};
+
+// Basic client configuration pattern
+$client = new Client(
+    url: $config['url'],
+    authentication: new ClientCredentialAuthentication(
+        clientId: $config['client_id'],
+        clientSecret: $config['client_secret'],
+        issuer: $config['issuer'],
+        audience: $config['audience'],
+    ),
+);
+
+// Configuration values referenced in examples
+$storeId = $config['store_id'];
+$modelId = $config['model_id'];
+```
+
+**Environment Variables:**
+All examples assume these environment variables are configured:
+- `OPENFGA_URL` - Your OpenFGA server URL
+- `OPENFGA_STORE_ID` - Your store identifier  
+- `OPENFGA_MODEL_ID` - Your authorization model ID
+- `OPENFGA_CLIENT_ID` - Client credentials ID
+- `OPENFGA_CLIENT_SECRET` - Client credentials secret
+- `OPENFGA_ISSUER` - Token issuer URL
+- `OPENFGA_AUDIENCE` - Token audience
+
 ## Laravel Integration
 
 ### Service Provider Setup
@@ -14,9 +55,6 @@ Create a service provider to configure OpenFGA:
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use OpenFGA\Client;
-use OpenFGA\ClientInterface;
-use OpenFGA\Authentication\ClientCredentialAuthentication;
 
 class OpenFgaServiceProvider extends ServiceProvider
 {
@@ -63,11 +101,7 @@ Create middleware for route-level authorization:
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use OpenFGA\ClientInterface;
-use function OpenFGA\{tuple, allowed};
+use Illuminate\Http\{JsonResponse, Request, Response};
 
 class CheckPermission
 {
@@ -166,8 +200,6 @@ Add authorization helpers to your models:
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OpenFGA\ClientInterface;
-use function OpenFGA\{tuple, allowed};
 
 class Document extends Model
 {
@@ -269,11 +301,9 @@ Create a custom voter for authorization decisions:
 
 namespace App\Security\Voter;
 
-use OpenFGA\ClientInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
-use function OpenFGA\{tuple, allowed};
 
 class OpenFgaVoter extends Voter
 {
@@ -296,7 +326,7 @@ class OpenFgaVoter extends Voter
             return false;
         }
 
-        // Extract relation from attribute (e.g., "openfga.edit" -> "edit")
+        // Extract relation from attribute (for example "openfga.edit" -> "edit")
         $relation = substr($attribute, 7);
 
         // Build resource identifier from subject
@@ -373,11 +403,6 @@ For frameworks without built-in DI, create a simple service:
 <?php
 
 namespace App\Services;
-
-use OpenFGA\Client;
-use OpenFGA\ClientInterface;
-use OpenFGA\Authentication\ClientCredentialAuthentication;
-use function OpenFGA\{tuple, tuples, allowed, write, delete};
 
 class AuthorizationService
 {
@@ -523,14 +548,13 @@ class CachedAuthorizationService
 
     private function invalidateUserCache(string $userId): void
     {
-        // PSR-16 compliant approach: maintain an index of user cache keys
         $userIndexKey = "auth:index:{$userId}";
         $userCacheKeys = $this->cache->get($userIndexKey, []);
 
         if (!empty($userCacheKeys)) {
             // Delete all cached permissions for this user
             $this->cache->deleteMultiple($userCacheKeys);
-            
+
             // Clear the index
             $this->cache->delete($userIndexKey);
         }
@@ -540,7 +564,7 @@ class CachedAuthorizationService
     {
         $userIndexKey = "auth:index:{$userId}";
         $userCacheKeys = $this->cache->get($userIndexKey, []);
-        
+
         if (!in_array($cacheKey, $userCacheKeys)) {
             $userCacheKeys[] = $cacheKey;
             $this->cache->set($userIndexKey, $userCacheKeys, 86400); // 24 hours
@@ -668,8 +692,6 @@ class DocumentControllerTest extends TestCase
         $user = User::factory()->create();
         $document = Document::factory()->create();
 
-        // No permissions granted
-
         $response = $this->actingAs($user)->put("/documents/{$document->id}");
 
         $response->assertForbidden();
@@ -677,7 +699,7 @@ class DocumentControllerTest extends TestCase
 }
 ```
 
-## What's Next?
+## What's Next
 
 Now that you have OpenFGA integrated:
 

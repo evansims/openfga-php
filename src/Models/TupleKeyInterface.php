@@ -55,7 +55,7 @@ interface TupleKeyInterface extends ModelInterface
      * Get the object in this relationship tuple.
      *
      * The object represents the resource or entity that the permission or relationship applies to.
-     * For example, in "user:alice can view document:readme", the object would be "document:readme".
+     * For example, in "user:alice can view document:readme," the object would be "document:readme."
      * Objects are typically formatted as "type:id" where type describes the kind of resource.
      *
      * @return string The object identifier
@@ -66,7 +66,7 @@ interface TupleKeyInterface extends ModelInterface
      * Get the relation that defines the type of relationship.
      *
      * The relation describes what kind of permission or relationship exists between the user and object.
-     * For example, common relations include "owner", "viewer", "editor", "can_read", "can_write".
+     * For example, common relations include "owner," "viewer," "editor," "can_read," "can_write."
      * Relations are defined in your authorization model and determine what actions are permitted.
      *
      * @return string The relation name defining the type of relationship
@@ -78,7 +78,7 @@ interface TupleKeyInterface extends ModelInterface
      *
      * The user represents the entity that has the relationship to the object. This can be
      * an individual user, a group, a role, or any other subject defined in your authorization model.
-     * For example, in "user:alice can view document:readme", the user would be "user:alice".
+     * For example, in "user:alice can view document:readme," the user would be "user:alice."
      *
      * @return string The user identifier
      */

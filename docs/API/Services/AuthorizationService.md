@@ -133,7 +133,7 @@ public function listObjects(
 
 ```
 
-Lists objects that have a specific relationship with a user. This method finds all objects of a given type that the specified user has a particular relationship with. It&#039;s useful for building filtered lists based on user permissions (e.g., &quot;show me all documents I can read&quot;).
+Lists objects that have a specific relationship with a user. This method finds all objects of a given type that the specified user has a particular relationship with. It&#039;s useful for building filtered lists based on user permissions (for example &quot;show me all documents I can read&quot;).
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AuthorizationService.php#L164)
 

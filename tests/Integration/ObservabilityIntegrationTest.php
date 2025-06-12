@@ -120,7 +120,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
         $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
         $response = $httpClient->sendRequest($request);
     } catch (Exception $e) {
-        // Skip test if collector is not available (e.g., running locally)
+        // Skip test if collector is not available (for example running locally)
         test()->markTestSkipped('OpenTelemetry Collector not available: ' . $e->getMessage());
 
         return;
@@ -210,7 +210,7 @@ it('records authentication telemetry events', function (): void {
         $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
         $response = $httpClient->sendRequest($request);
     } catch (Exception $e) {
-        // Skip test if collector is not available (e.g., running locally)
+        // Skip test if collector is not available (for example running locally)
         test()->markTestSkipped('OpenTelemetry Collector not available: ' . $e->getMessage());
 
         return;
@@ -299,7 +299,7 @@ it('exports detailed span attributes for OpenFGA operations', function (): void 
         $request = $httpFactory->createRequest('GET', $collectorMetricsUrl);
         $response = $httpClient->sendRequest($request);
     } catch (Exception $e) {
-        // Skip test if collector is not available (e.g., running locally)
+        // Skip test if collector is not available (for example running locally)
         test()->markTestSkipped('OpenTelemetry Collector not available: ' . $e->getMessage());
 
         return;

@@ -16,7 +16,7 @@ use ReflectionException;
  * Represents a relationship tuple key defining a connection between user, relation, and object.
  *
  * A TupleKey is the fundamental unit of authorization in OpenFGA, representing
- * a specific relationship like "user:anne is reader of document:budget".
+ * a specific relationship like "user:anne is reader of document:budget."
  * It consists of three parts: user (who), relation (what type of access),
  * and object (what resource), optionally with conditions for attribute-based access.
  *

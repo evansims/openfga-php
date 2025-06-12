@@ -2,24 +2,68 @@
 
 Learn how to leverage the OpenFGA PHP SDK's powerful concurrency features to dramatically improve performance when working with large-scale authorization operations. This guide covers async patterns, fiber-based parallelism, and batch operations that can speed up your authorization workflows by orders of magnitude.
 
+## Prerequisites
+
+All examples in this guide assume you have the following setup:
+
+```php
+<?php
+
+use OpenFGA\Client;
+use function OpenFGA\{batch, tuples, tuple, store, model};
+
+// Basic client setup
+$client = new Client(url: 'http://localhost:8080');
+
+// Store and model (replace with your actual IDs, or use the helper functions)
+$storeId = 'your-store-id';  // or: $storeId = store($client, 'My Store');
+$modelId = 'your-model-id';  // or: $modelId = model($client, $storeId, $authorizationModel);
+```
+
+With this setup established, the examples below focus on the concurrency features without repetitive boilerplate.
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Core Concepts](#core-concepts)
+- [Batch Operations](#batch-operations)
+- [Parallel Processing Patterns](#parallel-processing-patterns)
+- [Error Handling and Resilience](#error-handling-and-resilience)
+- [Integration with Async Frameworks](#integration-with-async-frameworks)
+- [Performance Optimization](#performance-optimization)
+- [Monitoring and Debugging](#monitoring-and-debugging)
+- [Best Practices](#best-practices)
+- [Next Steps](#next-steps)
+
 ## Quick Start
 
 Transform slow sequential operations into blazing-fast parallel executions with just a few configuration changes:
 
 ```php
-use function OpenFGA\batch;
+// Create some sample tuples
+$tuplesToWrite = tuples(
+    tuple('user:anne', 'reader', 'document:budget'),
+    tuple('user:beth', 'writer', 'document:budget'),
+    // ... more tuples
+);
 
 // Sequential: ~10 seconds for 1000 tuples
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(1)
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 1
+);
 
 // Parallel: ~2 seconds for 1000 tuples (5x faster!)
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(10)
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 10
+);
 ```
 
 ## Core Concepts
@@ -41,29 +85,23 @@ The SDK uses PHP 8.1+ Fibers to provide true concurrency without the complexity 
 
 ### Basic Batch Usage
 
-The `batchTuples` method processes large sets of tuple operations efficiently:
+The batch helper function and `batchTuples` method process large sets of tuple operations efficiently:
 
 ```php
-use OpenFGA\Client;
-
-$client = new Client(
-    url: 'http://localhost:8080',
-);
-
-// Prepare your tuple operations
+// Prepare your tuple operations using helper functions
 $writes = [];
-$deletes = [];
-
 for ($i = 0; $i < 1000; $i++) {
-    $writes[] = [
-        'user' => "user:user_{$i}",
-        'relation' => 'reader',
-        'object' => "document:doc_{$i}",
-    ];
+    $writes[] = tuple("user:user_{$i}", 'reader', "document:doc_{$i}");
 }
+$writeTuples = tuples(...$writes);
 
-// Execute batch operation
-$result = $client->batchTuples($writes, $deletes)->unwrap();
+// Execute batch operation using the helper function
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $writeTuples
+);
 
 echo "Successful: {$result->getSuccessfulChunks()}\n";
 echo "Failed: {$result->getFailedChunks()}\n";
@@ -75,42 +113,50 @@ echo "Total operations: {$result->getTotalOperations()}\n";
 Fine-tune batch behavior for your specific needs:
 
 ```php
-$result = $client->batchTuples(
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
     writes: $writes,
     deletes: $deletes,
-    options: [
-        'maxParallelRequests' => 10,      // Concurrent requests (default: 1)
-        'maxTuplesPerChunk' => 50,        // Tuples per request (max: 100)
-        'maxRetries' => 3,                // Retry attempts per chunk
-        'retryDelaySeconds' => 1,         // Initial retry delay
-        'stopOnFirstError' => false,      // Continue on failures
-    ]
-)->unwrap();
+    maxParallelRequests: 10,      // Concurrent requests (default: 1)
+    maxTuplesPerChunk: 50,        // Tuples per request (max: 100)
+    maxRetries: 3,                // Retry attempts per chunk
+    retryDelaySeconds: 1.0,       // Initial retry delay
+    stopOnFirstError: false       // Continue on failures
+);
 ```
 
-### Using the Fluent Helper Interface
+### Using the Batch Helper Function
 
-The SDK provides a more expressive fluent interface through helpers:
+The SDK provides a convenient batch helper function for non-transactional writes with full configuration:
 
 ```php
-use function OpenFGA\batch;
+// Prepare tuples for writing and deleting
+$writes = tuples(
+    tuple('user:anne', 'reader', 'document:budget'),
+    tuple('user:beth', 'writer', 'document:budget'),
+    // ... hundreds more
+);
 
-$result = batch($client, $storeId)
-    ->write([
-        ['user' => 'user:anne', 'relation' => 'reader', 'object' => 'document:budget'],
-        ['user' => 'user:beth', 'relation' => 'writer', 'object' => 'document:budget'],
-        // ... hundreds more
-    ])
-    ->delete([
-        ['user' => 'user:carl', 'relation' => 'reader', 'object' => 'document:old-doc'],
-        // ... hundreds more
-    ])
-    ->withMaxParallelRequests(10)
-    ->withMaxTuplesPerChunk(50)
-    ->withMaxRetries(3)
-    ->withRetryDelay(1)
-    ->continueOnError()  // Don't stop on first failure
-    ->execute();
+$deletes = tuples(
+    tuple('user:carl', 'reader', 'document:old-doc'),
+    // ... hundreds more
+);
+
+// Execute batch operation with full configuration
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $writes,
+    deletes: $deletes,
+    maxParallelRequests: 10,
+    maxTuplesPerChunk: 50,
+    maxRetries: 3,
+    retryDelaySeconds: 1.0,
+    stopOnFirstError: false  // Don't stop on first failure
+);
 
 // Detailed results
 echo "Chunks processed: {$result->getSuccessfulChunks()}/{$result->getTotalChunks()}\n";
@@ -129,25 +175,32 @@ foreach ($result->getErrors() as $error) {
 Choose parallelism based on your infrastructure and requirements:
 
 ```php
-use function OpenFGA\batch;
-
 // Conservative: Good for shared environments
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(3)
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 3
+);
 
 // Moderate: Balanced performance
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(5)
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 5
+);
 
 // Aggressive: Maximum throughput
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(10)
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 10
+);
 ```
 
 ### Performance Comparison Example
@@ -155,32 +208,33 @@ $result = batch($client, $storeId)
 Here's a real-world example showing the performance benefits:
 
 ```php
-use function OpenFGA\batch;
-
 // Generate test data
-$tuples = [];
+$testTuples = [];
 for ($i = 0; $i < 1000; $i++) {
-    $tuples[] = [
-        'user' => "user:employee_{$i}",
-        'relation' => 'member',
-        'object' => "team:engineering",
-    ];
+    $testTuples[] = tuple("user:employee_{$i}", 'member', 'team:engineering');
 }
+$tuplesToWrite = tuples(...$testTuples);
 
 // Sequential processing
 $start = microtime(true);
-$sequentialResult = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(1)
-    ->execute();
+$sequentialResult = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 1
+);
 $sequentialTime = microtime(true) - $start;
 
 // Parallel processing
 $start = microtime(true);
-$parallelResult = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(10)
-    ->execute();
+$parallelResult = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 10
+);
 $parallelTime = microtime(true) - $start;
 
 echo "Sequential: {$sequentialTime}s\n";
@@ -195,13 +249,14 @@ echo "Speedup: " . round($sequentialTime / $parallelTime, 2) . "x faster\n";
 The SDK continues processing even when some operations fail:
 
 ```php
-use function OpenFGA\batch;
-
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->continueOnError()  // Don't stop on first failure
-    ->withMaxRetries(3)  // Retry failed chunks
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxRetries: 3,           // Retry failed chunks
+    stopOnFirstError: false  // Don't stop on first failure
+);
 
 if ($result->hasErrors()) {
     echo "Completed with {$result->getFailedChunks()} failed chunks\n";
@@ -222,14 +277,15 @@ if ($result->hasErrors()) {
 Configure retry behavior for transient failures:
 
 ```php
-use function OpenFGA\batch;
-
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxRetries(3)         // Retry up to 3 times
-    ->withRetryDelay(1)         // Start with 1 second delay
-    ->withMaxParallelRequests(5)
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxRetries: 3,               // Retry up to 3 times
+    retryDelaySeconds: 1.0,      // Start with 1 second delay
+    maxParallelRequests: 5
+);
 
 // The SDK uses exponential backoff:
 // - First retry: 1 second delay
@@ -248,11 +304,18 @@ use React\EventLoop\Loop;
 use React\Promise\Promise;
 
 // Wrap SDK calls in promises
-function batchTuplesAsync($client, $writes, $deletes, $options = []) {
-    return new Promise(function ($resolve, $reject) use ($client, $writes, $deletes, $options) {
-        Loop::futureTick(function () use ($resolve, $reject, $client, $writes, $deletes, $options) {
+function batchTuplesAsync($client, $storeId, $modelId, $writes, $deletes, $options = []) {
+    return new Promise(function ($resolve, $reject) use ($client, $storeId, $modelId, $writes, $deletes, $options) {
+        Loop::futureTick(function () use ($resolve, $reject, $client, $storeId, $modelId, $writes, $deletes, $options) {
             try {
-                $result = $client->batchTuples($writes, $deletes, $options)->unwrap();
+                $result = batch(
+                    client: $client,
+                    store: $storeId,
+                    model: $modelId,
+                    writes: $writes,
+                    deletes: $deletes,
+                    maxParallelRequests: $options['maxParallelRequests'] ?? 1
+                );
                 $resolve($result);
             } catch (\Exception $e) {
                 $reject($e);
@@ -262,7 +325,7 @@ function batchTuplesAsync($client, $writes, $deletes, $options = []) {
 }
 
 // Use in async context
-batchTuplesAsync($client, $writes, $deletes, ['maxParallelRequests' => 10])
+batchTuplesAsync($client, $storeId, $modelId, $writes, $deletes, ['maxParallelRequests' => 10])
     ->then(function ($result) {
         echo "Batch completed: {$result->getSuccessfulOperations()} operations\n";
     })
@@ -277,12 +340,17 @@ Integrate with Swoole coroutines:
 
 ```php
 use Swoole\Coroutine;
+use function OpenFGA\batch;
 
-Coroutine\run(function () use ($client, $tuples) {
-    $result = Coroutine::create(function () use ($client, $tuples) {
-        return $client->batchTuples($tuples, [], [
-            'maxParallelRequests' => 10
-        ])->unwrap();
+Coroutine\run(function () use ($client, $storeId, $modelId, $tuplesToWrite) {
+    $result = Coroutine::create(function () use ($client, $storeId, $modelId, $tuplesToWrite) {
+        return batch(
+            client: $client,
+            store: $storeId,
+            model: $modelId,
+            writes: $tuplesToWrite,
+            maxParallelRequests: 10
+        );
     });
 
     echo "Processed in coroutine: {$result->getTotalOperations()} tuples\n";
@@ -296,7 +364,12 @@ Coroutine\run(function () use ($client, $tuples) {
 Find the optimal chunk size for your use case:
 
 ```php
-use function OpenFGA\batch;
+// Generate test tuples
+$testTuples = [];
+for ($i = 0; $i < 1000; $i++) {
+    $testTuples[] = tuple("user:test_{$i}", 'member', 'org:acme');
+}
+$tuplesToWrite = tuples(...$testTuples);
 
 // Test different chunk sizes
 $chunkSizes = [10, 25, 50, 75, 100];
@@ -305,14 +378,17 @@ $results = [];
 foreach ($chunkSizes as $chunkSize) {
     $start = microtime(true);
 
-    $result = batch($client, $storeId)
-        ->write($tuples)
-        ->withMaxTuplesPerChunk($chunkSize)
-        ->withMaxParallelRequests(5)
-        ->execute();
+    $result = batch(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
+        writes: $tuplesToWrite,
+        maxTuplesPerChunk: $chunkSize,
+        maxParallelRequests: 5
+    );
 
     $duration = microtime(true) - $start;
-    $throughput = count($tuples) / $duration;
+    $throughput = count($testTuples) / $duration;
 
     $results[$chunkSize] = [
         'duration' => $duration,
@@ -334,38 +410,42 @@ echo "Optimal chunk size: {$optimal} (throughput: {$results[$optimal]['throughpu
 Handle large datasets efficiently:
 
 ```php
-use function OpenFGA\batch;
 
 // Process large datasets in batches to manage memory
-function processLargeTupleSet($client, $storeId, $totalTuples) {
+function processLargeTupleSet($client, $storeId, $modelId, $totalTuples) {
     $batchSize = 10000;  // Process 10k at a time
     $processed = 0;
 
     while ($processed < $totalTuples) {
         // Generate batch (in real app, fetch from database)
-        $batch = [];
+        $batchTuples = [];
         $remaining = min($batchSize, $totalTuples - $processed);
 
         for ($i = 0; $i < $remaining; $i++) {
-            $batch[] = [
-                'user' => "user:" . ($processed + $i),
-                'relation' => 'member',
-                'object' => 'org:acme',
-            ];
+            $batchTuples[] = tuple(
+                "user:" . ($processed + $i),
+                'member',
+                'org:acme'
+            );
         }
 
+        $tuplesToWrite = tuples(...$batchTuples);
+
         // Process batch with high parallelism
-        $result = batch($client, $storeId)
-            ->write($batch)
-            ->withMaxParallelRequests(10)
-            ->withMaxTuplesPerChunk(100)
-            ->execute();
+        $result = batch(
+            client: $client,
+            store: $storeId,
+            model: $modelId,
+            writes: $tuplesToWrite,
+            maxParallelRequests: 10,
+            maxTuplesPerChunk: 100
+        );
 
         $processed += $remaining;
         echo "Processed: {$processed}/{$totalTuples}\n";
 
         // Allow garbage collection between batches
-        unset($batch, $result);
+        unset($batchTuples, $tuplesToWrite, $result);
     }
 }
 ```
@@ -377,34 +457,37 @@ function processLargeTupleSet($client, $storeId, $totalTuples) {
 Track performance metrics for optimization:
 
 ```php
-use function OpenFGA\batch;
 
+// Note: This is an example helper class and not part of the SDK.
 class BatchMetrics {
-    public static function track($client, $storeId, $tuples, $options) {
+    public static function track($client, $storeId, $modelId, $tuplesToWrite, $options) {
         $start = microtime(true);
         $startMemory = memory_get_usage(true);
 
-        $result = batch($client, $storeId)
-            ->write($tuples)
-            ->withMaxParallelRequests($options['parallelism'] ?? 1)
-            ->execute();
+        $result = batch(
+            client: $client,
+            store: $storeId,
+            model: $modelId,
+            writes: $tuplesToWrite,
+            maxParallelRequests: $options['parallelism'] ?? 1
+        );
 
         $duration = microtime(true) - $start;
         $memoryUsed = memory_get_usage(true) - $startMemory;
 
         return [
             'duration' => $duration,
-            'throughput' => count($tuples) / $duration,
+            'throughput' => count($tuplesToWrite) / $duration,
             'memory_mb' => $memoryUsed / 1024 / 1024,
             'chunks' => $result->getTotalChunks(),
             'failures' => $result->getFailedChunks(),
-            'efficiency' => $result->getSuccessfulOperations() / count($tuples),
+            'efficiency' => $result->getSuccessfulOperations() / count($tuplesToWrite),
         ];
     }
 }
 
-// Use metrics to compare strategies
-$metrics = BatchMetrics::track($client, $storeId, $tuples, ['parallelism' => 10]);
+// Use metrics to compare strategies  
+$metrics = BatchMetrics::track($client, $storeId, $modelId, $tuplesToWrite, ['parallelism' => 10]);
 echo "Throughput: {$metrics['throughput']} tuples/sec\n";
 echo "Memory usage: {$metrics['memory_mb']} MB\n";
 echo "Efficiency: " . ($metrics['efficiency'] * 100) . "%\n";
@@ -417,6 +500,7 @@ Enable detailed logging for troubleshooting:
 ```php
 use Psr\Log\LoggerInterface;
 
+// Note: This is an example helper class and not part of the SDK.
 class BatchLogger {
     private LoggerInterface $logger;
 
@@ -462,15 +546,16 @@ $parallelism = 10;
 Implement backoff when hitting rate limits:
 
 ```php
-use function OpenFGA\batch;
-
-$result = batch($client, $storeId)
-    ->write($tuples)
-    ->withMaxParallelRequests(5)
-    ->withMaxRetries(5)        // More retries for rate limits
-    ->withRetryDelay(2)        // Longer initial delay
-    ->continueOnError()
-    ->execute();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $tuplesToWrite,
+    maxParallelRequests: 5,
+    maxRetries: 5,              // More retries for rate limits
+    retryDelaySeconds: 2.0,     // Longer initial delay
+    stopOnFirstError: false     // Continue on error
+);
 ```
 
 ### 3. Monitor Resource Usage
@@ -478,13 +563,19 @@ $result = batch($client, $storeId)
 Keep an eye on system resources:
 
 ```php
+
 // Monitor CPU and memory during batch operations
 $cpuBefore = sys_getloadavg()[0];
 $memBefore = memory_get_usage(true);
 
-$result = $client->batchTuples($writes, $deletes, [
-    'maxParallelRequests' => 10
-])->unwrap();
+$result = batch(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    writes: $writes,
+    deletes: $deletes,
+    maxParallelRequests: 10
+);
 
 $cpuAfter = sys_getloadavg()[0];
 $memAfter = memory_get_usage(true);
@@ -506,18 +597,25 @@ Balance between API limits and efficiency:
 Protect against cascading failures:
 
 ```php
+
+// Note: This is an example helper class and not part of the SDK.
 class BatchCircuitBreaker {
     private int $failures = 0;
     private int $threshold = 5;
     private bool $open = false;
 
-    public function executeBatch($client, $tuples) {
+    public function executeBatch($client, $storeId, $modelId, $tuplesToWrite) {
         if ($this->open) {
             throw new \RuntimeException('Circuit breaker is open');
         }
 
         try {
-            $result = $client->batchTuples($tuples)->unwrap();
+            $result = batch(
+                client: $client,
+                store: $storeId,
+                model: $modelId,
+                writes: $tuplesToWrite
+            );
             $this->failures = 0;  // Reset on success
             return $result;
         } catch (\Exception $e) {

@@ -13,7 +13,7 @@ use Override;
  * Tuples are the fundamental building blocks of OpenFGA that define actual
  * relationships between users, objects, and relations. They represent concrete facts
  * about your system, such as "user:alice has editor relation to document:doc1" or
- * "group:engineering has member relation to user:bob". These relationships form
+ * "group:engineering has member relation to user:bob." These relationships form
  * the data foundation that OpenFGA uses during authorization checks to determine
  * access permissions and evaluate complex authorization policies.
  *
