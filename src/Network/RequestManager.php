@@ -7,7 +7,6 @@ namespace OpenFGA\Network;
 use const JSON_THROW_ON_ERROR;
 
 use Exception;
-use Fiber;
 use InvalidArgumentException;
 use OpenFGA\{Client, Messages};
 use OpenFGA\Exceptions\{ConfigurationError, NetworkError, NetworkException};
@@ -164,14 +163,9 @@ final class RequestManager implements RequestManagerInterface
             return $this->executeSequential($tasks, $stopOnFirstError);
         }
 
-        // Wrap tasks to handle Result types if stopOnFirstError is enabled
-        if ($stopOnFirstError) {
-            return $this->executeConcurrentWithEarlyStop($tasks, $maxParallelRequests);
-        }
-
         // Use the concurrent executor for parallel execution
         /** @var array<int, callable(): (FailureInterface|SuccessInterface)> $tasks */
-        $results = $this->concurrentExecutor->executeParallel($tasks, $maxParallelRequests);
+        $results = $this->concurrentExecutor->executeParallel($tasks, $maxParallelRequests, $stopOnFirstError);
 
         // Convert any Throwables to Failure results
         return array_map(static function ($result): FailureInterface | SuccessInterface {
@@ -400,104 +394,6 @@ final class RequestManager implements RequestManagerInterface
         }
 
         return 'Unknown error';
-    }
-
-    /**
-     * Execute tasks concurrently using Fibers.
-     *
-     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks            Array of tasks to execute
-     * @param  int                                                    $maxParallel      Maximum concurrent executions
-     * @param  bool                                                   $stopOnFirstError Whether to stop on first error
-     * @return array<FailureInterface|SuccessInterface>
-     */
-    private function executeConcurrent(array $tasks, int $maxParallel, bool $stopOnFirstError): array
-    {
-        $results = [];
-        $activeFibers = [];
-        $taskIndex = 0;
-        $totalTasks = count($tasks);
-        $shouldStop = false;
-
-        // Initialize results array with placeholders
-        for ($i = 0; $i < $totalTasks; ++$i) {
-            $results[$i] = null;
-        }
-
-        while ($taskIndex < $totalTasks || [] !== $activeFibers) {
-            // Start new fibers up to the maximum parallel limit
-            while (count($activeFibers) < $maxParallel && $taskIndex < $totalTasks && ! $shouldStop) {
-                $currentIndex = $taskIndex;
-                $task = $tasks[$taskIndex];
-
-                $fiber = new Fiber(static function () use ($task): FailureInterface | SuccessInterface {
-                    try {
-                        return $task();
-                    } catch (Throwable $throwable) {
-                        return new Failure($throwable);
-                    }
-                });
-
-                $activeFibers[$currentIndex] = $fiber;
-                $fiber->start();
-                ++$taskIndex;
-            }
-
-            // Check for completed fibers
-            foreach ($activeFibers as $index => $fiber) {
-                if ($fiber->isTerminated()) {
-                    /** @var FailureInterface|SuccessInterface $result */
-                    $result = $fiber->getReturn();
-                    $results[$index] = $result;
-                    unset($activeFibers[$index]);
-
-                    // Check if we should stop on first error
-                    if ($stopOnFirstError && $result instanceof FailureInterface) {
-                        $shouldStop = true;
-
-                        // Terminate remaining active fibers
-                        foreach ($activeFibers as $activeFiber) {
-                            if ($activeFiber->isSuspended()) {
-                                $activeFiber->resume();
-                            }
-                        }
-                        $activeFibers = [];
-
-                        break;
-                    }
-                } elseif ($fiber->isSuspended()) {
-                    // Resume suspended fibers
-                    $fiber->resume();
-                }
-            }
-
-            // Yield control to allow other operations
-            if ([] !== $activeFibers) {
-                Fiber::suspend();
-            }
-        }
-
-        // Filter out null results (from stopped executions)
-        /** @var array<FailureInterface|SuccessInterface> $filteredResults */
-        $filteredResults = array_filter($results, static fn ($result): bool => null !== $result);
-
-        return array_values($filteredResults);
-    }
-
-    /**
-     * Execute tasks concurrently with early stopping on first error.
-     *
-     * This method is a specialized version of concurrent execution that
-     * stops all remaining tasks when the first error is encountered.
-     *
-     * @param  array<callable(): (FailureInterface|SuccessInterface)> $tasks       Array of tasks to execute
-     * @param  int                                                    $maxParallel Maximum concurrent executions
-     * @return array<FailureInterface|SuccessInterface>
-     */
-    private function executeConcurrentWithEarlyStop(array $tasks, int $maxParallel): array
-    {
-        // For now, use the original executeConcurrent method since it already handles stopOnFirstError
-        // In the future, this could be optimized further with the ConcurrentExecutorInterface
-        return $this->executeConcurrent($tasks, $maxParallel, true);
     }
 
     /**
