@@ -373,8 +373,32 @@ describe('Transformer', function (): void {
                 define test_relation: (a_rel or b_rel) and c_rel
             DSL;
 
-        // Use the shared SchemaValidator initialized in beforeEach
-        global $validator;
+        $validator = new SchemaValidator;
+
+        // Register schemas used by AuthorizationModel
+        $validator
+            ->registerSchema(AuthorizationModel::schema())
+            ->registerSchema(TypeDefinitions::schema())
+            ->registerSchema(TypeDefinition::schema())
+            ->registerSchema(TypeDefinitionRelations::schema())
+            ->registerSchema(Userset::schema())
+            ->registerSchema(Usersets::schema())
+            ->registerSchema(ObjectRelation::schema())
+            ->registerSchema(Conditions::schema())
+            ->registerSchema(Condition::schema())
+            ->registerSchema(Metadata::schema())
+            ->registerSchema(RelationMetadataCollection::schema())
+            ->registerSchema(RelationMetadata::schema())
+            ->registerSchema(RelationReferences::schema())
+            ->registerSchema(RelationReference::schema())
+            ->registerSchema(SourceInfo::schema())
+            ->registerSchema(ConditionParameters::schema())
+            ->registerSchema(ConditionParameter::schema())
+            ->registerSchema(ConditionMetadata::schema())
+            ->registerSchema(TupleToUsersetV1::schema())
+            ->registerSchema(DifferenceV1::schema())
+            ->registerSchema(UserTypeFilter::schema())
+            ->registerSchema(UserTypeFilters::schema());
 
         $model = Transformer::fromDsl($dsl, $validator);
         $resultDsl = Transformer::toDsl($model);

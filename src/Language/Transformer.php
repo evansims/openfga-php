@@ -204,6 +204,28 @@ final class Transformer implements TransformerInterface
     }
 
     /**
+     * Determine if parentheses are needed around an expression in a given context.
+     *
+     * @param  UsersetInterface $userset The userset expression to check
+     * @param  string           $context The context ('union', 'intersection', etc.)
+     * @return bool             True if parentheses are needed
+     */
+    private static function needsParentheses(UsersetInterface $userset, string $context): bool
+    {
+        // For union context, wrap intersections in parentheses
+        if ('union' === $context) {
+            return $userset->getIntersection() instanceof UsersetsInterface;
+        }
+
+        // For intersection context, wrap unions in parentheses
+        if ('intersection' === $context) {
+            return $userset->getUnion() instanceof UsersetsInterface;
+        }
+
+        return false;
+    }
+
+    /**
      * Parse exclusion expressions (highest precedence).
      *
      * @param string $expr
