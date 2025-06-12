@@ -104,7 +104,11 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" | while read file; do
     # Remove the first H1 title (# Title) since Wiki generates its own title
     sed -i.bak '/^# /d' "$file"
 
-    # Remove .md extension from internal links
+    # Convert internal markdown links to wiki format
+    # Handle links with anchors: file.md#anchor -> file#anchor
+    sed -i.bak 's/\.md#/#/g' "$file"
+    
+    # Handle simple links: file.md -> file
     sed -i.bak 's/\.md)/)/g' "$file"
 
     # Convert relative paths to wiki links - flatten API paths
@@ -134,7 +138,9 @@ WIKI_URL="https://github.com/evansims/openfga-php.wiki.git"
 if [ -d "wiki-repo" ]; then
     echo "📁 Using existing wiki repository..."
     cd wiki-repo
-    git pull origin master 2>/dev/null || git pull origin main 2>/dev/null || true
+    # Reset to clean state and fetch latest (but don't merge to avoid conflicts)
+    git reset --hard HEAD 2>/dev/null || true
+    git fetch origin 2>/dev/null || true
 else
     echo "📥 Cloning wiki repository..."
     if git clone "$WIKI_URL" wiki-repo; then
@@ -173,9 +179,11 @@ else
 📖 Updated documentation
 🤖 Generated automatically"
 
-    # Push changes
+    # Push changes (force push to overwrite any upstream conflicts)
+    # The generated documentation is the authoritative source, so we force push
+    # to ensure our generated content takes precedence over any manual wiki edits
     echo "🚀 Pushing to Wiki..."
-    git push origin master 2>/dev/null || git push origin main 2>/dev/null || git push -u origin master
+    git push --force origin master 2>/dev/null || git push --force origin main 2>/dev/null || git push --force -u origin master
     echo "✅ Wiki updated successfully!"
     echo "🌐 View at: https://github.com/evansims/openfga-php/wiki"
 fi
