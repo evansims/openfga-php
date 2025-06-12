@@ -123,3 +123,33 @@ echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
 3. Run `php example.php`
 
 You should see confirmation messages and a final "Alice can view readme" success message.
+
+## Helper functions
+
+The example above uses helper functions like `store()`, `dsl()`, `write()`, and `allowed()`. These helpers dramatically simplify common operations:
+
+```php
+// With helpers - clean and readable
+$storeId = store($client, 'my-app');
+write($client, $storeId, $modelId, tuple('user:anne', 'viewer', 'doc:readme'));
+$canView = allowed($client, $storeId, $modelId, tuple('user:anne', 'viewer', 'doc:readme'));
+
+// Without helpers - more verbose
+$response = $client->createStore(name: 'my-app')->unwrap();
+$storeId = $response->getId();
+
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    writes: new TupleKeys([new TupleKey('user:anne', 'viewer', 'doc:readme')])
+)->unwrap();
+
+$response = $client->check(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: new TupleKey('user:anne', 'viewer', 'doc:readme')
+)->unwrap();
+$canView = $response->getAllowed();
+```
+
+Learn more about all available helpers in the [Helper Functions Guide](Helpers.md).

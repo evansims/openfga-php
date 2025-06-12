@@ -40,6 +40,8 @@ Learn the core concepts and patterns
 
 Explore advanced features and patterns
 
+- [Helper Functions](Helpers.md)<br />
+  Simplify your code with convenient helper functions for common authorization operations.
 - [Concurrency](Concurrency.md)<br />
   Leveraging the SDK's powerful concurrency features to improve performance when working with large-scale authorization operations.
 - [Exceptions](Exceptions.md)<br />

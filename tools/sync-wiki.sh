@@ -41,6 +41,7 @@ cat > "_Sidebar.md" << 'EOF'
 - **[Assertions](Assertions)**
 
 ## Features
+- **[Helper Functions](Helpers)**
 - **[Concurrency](Concurrency)**
 - **[Exceptions](Exceptions)**
 - **[Integration](Integration)**
@@ -90,11 +91,49 @@ cat > "_Sidebar.md" << 'EOF'
 *[View on GitHub Pages](https://evansims.github.io/openfga-php/) • [Source Code](https://github.com/evansims/openfga-php)*
 EOF
 
+# Create custom footer
+echo "📋 Creating custom footer..."
+cat > "_Footer.md" << 'EOF'
+---
+
+## Quick Navigation
+
+**Essential Guides:** [Introduction](Introduction) • [Installation](Introduction#install-the-sdk) • [Authentication](Authentication) • [Stores](Stores) • [Models](Models) • [Tuples](Tuples) • [Queries](Queries)
+
+**Advanced Features:** [Helper Functions](Helpers) • [Concurrency](Concurrency) • [Results](Results) • [Exceptions](Exceptions) • [Observability](Observability) • [Integration](Integration)
+
+## Developer Resources
+
+- **[📖 Complete API Reference](API-Client)** - Full class and method documentation
+- **[🚀 Quick Start Examples](Introduction#quick-start)** - Get up and running in minutes  
+- **[🔧 Helper Functions](Introduction#helper-functions)** - Convenient shortcuts for common operations
+- **[🧪 Testing Guide](Integration#testing)** - Unit testing with the SDK
+- **[📊 Performance Guide](Concurrency)** - Optimize for high-scale applications
+
+## Support & Community
+
+- **[🐛 Report Issues](https://github.com/evansims/openfga-php/issues)** - Bug reports and feature requests
+- **[💬 Discussions](https://github.com/evansims/openfga-php/discussions)** - Community support and questions
+- **[📝 Contributing](https://github.com/evansims/openfga-php/blob/main/CONTRIBUTING.md)** - Help improve the SDK
+- **[🔄 Changelog](https://github.com/evansims/openfga-php/blob/main/CHANGELOG.md)** - Latest updates and releases
+
+## OpenFGA Ecosystem
+
+- **[🌐 OpenFGA Documentation](https://openfga.dev/docs)** - Official OpenFGA documentation
+- **[🎮 OpenFGA Playground](https://play.fga.dev)** - Interactive modeling environment
+- **[📚 Authorization Concepts](https://openfga.dev/docs/concepts)** - Learn relationship-based access control
+- **[🔗 Other SDKs](https://openfga.dev/docs/getting-started/setup-sdk)** - JavaScript, Go, Python, .NET, and more
+
+---
+
+*OpenFGA PHP SDK • [MIT License](https://github.com/evansims/openfga-php/blob/main/LICENSE) • Version: `composer show evansims/openfga-php | grep 'versions'`*
+EOF
+
 # Convert directory structure to wiki-friendly format
 echo "🔗 Converting content for Wiki format..."
-find . -name "*.md" -type f -not -name "_Sidebar.md" | while read file; do
-    # Skip the sidebar file
-    if [[ "$file" == "./_Sidebar.md" ]]; then
+find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | while read file; do
+    # Skip the sidebar and footer files
+    if [[ "$file" == "./_Sidebar.md" ]] || [[ "$file" == "./_Footer.md" ]]; then
         continue
     fi
 
