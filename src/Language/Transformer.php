@@ -204,6 +204,28 @@ final class Transformer implements TransformerInterface
     }
 
     /**
+     * Determine if parentheses are needed around an expression in a given context.
+     *
+     * @param  UsersetInterface $userset The userset expression to check
+     * @param  string           $context The context ('union', 'intersection', etc.)
+     * @return bool             True if parentheses are needed
+     */
+    private static function needsParentheses(UsersetInterface $userset, string $context): bool
+    {
+        // For union context, wrap intersections in parentheses
+        if ('union' === $context) {
+            return $userset->getIntersection() instanceof UsersetsInterface;
+        }
+
+        // For intersection context, wrap unions in parentheses
+        if ('intersection' === $context) {
+            return $userset->getUnion() instanceof UsersetsInterface;
+        }
+
+        return false;
+    }
+
+    /**
      * Parse exclusion expressions (highest precedence).
      *
      * @param string $expr
@@ -499,7 +521,9 @@ final class Transformer implements TransformerInterface
             $parts = [];
 
             foreach ($union as $child) {
-                $parts[] = self::renderExpression($child, $metadata);
+                $childRendered = self::renderExpression($child, $metadata);
+                // Use helper to determine if parentheses are needed
+                $parts[] = self::needsParentheses($child, 'union') ? '(' . $childRendered . ')' : $childRendered;
             }
 
             return implode(' or ', $parts);
@@ -512,7 +536,14 @@ final class Transformer implements TransformerInterface
             $parts = [];
 
             foreach ($intersection as $child) {
-                $parts[] = self::renderExpression($child, $metadata);
+                $childRendered = self::renderExpression($child, $metadata);
+
+                // If child is a union, wrap in parentheses
+                if ($child->getUnion() instanceof UsersetsInterface) {
+                    $parts[] = '(' . $childRendered . ')';
+                } else {
+                    $parts[] = $childRendered;
+                }
             }
 
             return implode(' and ', $parts);
@@ -522,12 +553,18 @@ final class Transformer implements TransformerInterface
         $difference = $userset->getDifference();
 
         if ($difference instanceof DifferenceV1Interface) {
-            $base = self::renderExpression($difference->getBase(), $metadata);
-            $subtract = self::renderExpression($difference->getSubtract(), $metadata);
+            $baseUserset = $difference->getBase();
+            $base = self::renderExpression($baseUserset, $metadata);
+
+            // Wrap base in parentheses if it's a union or intersection
+            if ($baseUserset->getUnion() instanceof UsersetsInterface || $baseUserset->getIntersection() instanceof UsersetsInterface) {
+                $base = '(' . $base . ')';
+            }
+
+            $subtractUserset = $difference->getSubtract();
+            $subtract = self::renderExpression($subtractUserset, $metadata);
 
             // Wrap subtract in parentheses if it's a union or intersection
-            $subtractUserset = $difference->getSubtract();
-
             if ($subtractUserset->getUnion() instanceof UsersetsInterface || $subtractUserset->getIntersection() instanceof UsersetsInterface) {
                 $subtract = '(' . $subtract . ')';
             }
