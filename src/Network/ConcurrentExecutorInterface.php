@@ -25,14 +25,15 @@ interface ConcurrentExecutorInterface
      *
      * @template T
      *
-     * @param array<int, callable(): T> $tasks         Array of callables to execute
-     * @param int                       $maxConcurrent Maximum number of concurrent executions
+     * @param array<int, callable(): T> $tasks            Array of callables to execute
+     * @param int                       $maxConcurrent    Maximum number of concurrent executions
+     * @param bool                      $stopOnFirstError Stop all tasks when first error is encountered
      *
      * @throws Throwable If any task fails and error handling is not configured
      *
      * @return array<int, T|Throwable> Array of results or exceptions in the same order as tasks
      */
-    public function executeParallel(array $tasks, int $maxConcurrent = 10): array;
+    public function executeParallel(array $tasks, int $maxConcurrent = 10, bool $stopOnFirstError = false): array;
 
     /**
      * Get the maximum recommended concurrency for the current environment.
