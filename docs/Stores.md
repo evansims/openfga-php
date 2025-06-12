@@ -7,8 +7,9 @@ Every OpenFGA operation happens within a store, making them the foundation of yo
 ## What are stores?
 
 A store holds three things:
+
 - **Authorization models** - your permission rules
-- **Relationship tuples** - who can do what 
+- **Relationship tuples** - who can do what
 - **Assertions** - tests to verify everything works
 
 Most apps start with one store and add more as they grow.
@@ -40,16 +41,16 @@ For SaaS applications, create a store per customer to ensure complete data isola
 final readonly class TenantStoreManager
 {
     public function __construct(private Client $client) {}
-    
+
     public function createTenantStore(string $customerId): string
     {
         $store = $this->client
             ->createStore(name: "customer-{$customerId}")
             ->unwrap();
-            
+
         return $store->getId();
     }
-    
+
     public function getClientForTenant(string $customerId): Client
     {
         $storeId = $this->lookupStoreId($customerId);
@@ -70,7 +71,7 @@ Keep your environments completely isolated:
 enum Environment: string
 {
     case Development = 'dev';
-    case Staging = 'staging'; 
+    case Staging = 'staging';
     case Production = 'prod';
 }
 
@@ -78,7 +79,7 @@ function createEnvironmentStore(Environment $env, string $appName): string
 {
     $client = new Client(url: $_ENV['FGA_API_URL']);
     $store = $client->createStore(name: "{$appName}-{$env->value}")->unwrap();
-    
+
     return $store->getId();
 }
 
@@ -115,11 +116,11 @@ do {
         pageSize: 10,
         continuationToken: $continuationToken
     )->unwrap();
-    
+
     foreach ($response->getStores() as $store) {
         // Process each store
     }
-    
+
     $continuationToken = $response->getContinuationToken();
 } while ($continuationToken !== null);
 ```
@@ -127,21 +128,24 @@ do {
 ## Best practices
 
 **When to use multiple stores:**
+
 - Different environments (dev/staging/production)
 - Different customers in SaaS apps
 - Different applications with no shared permissions
 - Compliance requirements for data isolation
 
 **When to use a single store:**
+
 - Different user roles (use authorization models instead)
 - Different features in the same app (use object types)
 - A/B testing (use different object IDs)
 
 **Naming conventions:**
+
 ```php
 // Good names
 'myapp-production'
-'customer-acme-corp'  
+'customer-acme-corp'
 'billing-service-staging'
 
 // Avoid
@@ -151,6 +155,7 @@ do {
 ```
 
 **Pro tips:**
+
 - Start with one store per environment
 - Save store IDs in your configuration
 - Test your app works with store switching

@@ -8,11 +8,20 @@ By the end of this guide, you'll have a working authorization system that can an
 
 ## Prerequisites
 
-You'll need PHP 8.3+ and Composer. The SDK handles HTTP communication through PSR interfaces, so you'll also need HTTP libraries:
+**Required:**
+
+- PHP 8.3+ and Composer
+- An OpenFGA server (local or remote)
+
+**HTTP Libraries (auto-detected):**
+The SDK will automatically discover and use existing PSR-7/17/18 libraries in your project. If you don't have any yet:
 
 ```bash
-# If you don't have HTTP libraries yet
+# Popular choice - Guzzle
 composer require guzzlehttp/guzzle guzzlehttp/psr7
+
+# Or use any other PSR-compatible library
+composer require symfony/http-client nyholm/psr7
 ```
 
 ## Start an OpenFGA server
@@ -81,7 +90,7 @@ type user
 type document
   relations
     define viewer: [user]
-    define editor: [user] 
+    define editor: [user]
 DSL;
 
 $model = dsl($client, $dsl);
@@ -111,29 +120,37 @@ echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
 **Run this example:**
 
 1. Make sure your OpenFGA server is running
-2. Save the code as `example.php` 
+2. Save the code as `example.php`
 3. Run `php example.php`
 
 You should see confirmation messages and a final "Alice can view readme" success message.
 
 ## What's next?
 
-Now that you have a working authorization system, here's how to level up:
+Now that you have a working authorization system, here's your path forward:
 
-### Core concepts → Authorization models
-Learn to build complex permission systems with inheritance, conditions, and multi-tenant patterns.
-**[Authorization Models →](Models.md)**
+### Next Steps for New Developers
 
-### Querying → Permission checks  
-Master the four query types: check permissions, list accessible objects, find users, and expand relationships.
-**[Queries →](Queries.md)**
+**If you're just getting started:**
 
-### Configuration → Error handling
-Build production-ready apps with proper error handling using the Result pattern.
-**[Results →](Results.md)**
+1. **[Authorization Models →](Models.md)** - Build more complex permission rules
+2. **[Relationship Tuples →](Tuples.md)** - Learn to manage permissions at scale
+3. **[Queries →](Queries.md)** - Master all four types of permission checks
 
-### Authentication → Production setup
-Secure your OpenFGA connection with API keys and client credentials.
-**[Authentication →](Authentication.md)**
+**If you're ready for production:**
 
-**Building something complex?** Check out [Relationship Tuples →](Tuples.md) for managing permissions at scale, or [Observability →](Observability.md) for observability.
+1. **[Authentication →](Authentication.md)** - Secure your OpenFGA connection
+2. **[Results →](Results.md)** - Handle errors gracefully with the Result pattern
+3. **[Stores →](Stores.md)** - Manage multiple environments and tenants
+
+### Advanced Topics
+
+**Performance & Scale:**
+
+- **[Concurrency →](Concurrency.md)** - Optimize batch operations with PHP fibers
+- **[Observability →](Observability.md)** - Monitor and debug with OpenTelemetry
+
+**Quality Assurance:**
+
+- **[Assertions →](Assertions.md)** - Test your authorization models
+- **[Exceptions →](Exceptions.md)** - Master error handling patterns

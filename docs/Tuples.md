@@ -30,7 +30,7 @@ write(
 );
 ```
 
-## Removing Permissions  
+## Removing Permissions
 
 Take away access by deleting a tuple:
 
@@ -63,6 +63,7 @@ $client->writeTuples(
     )
 )->unwrap();
 ```
+
 ## Reading Existing Permissions
 
 Check what permissions exist by reading tuples:
@@ -106,11 +107,11 @@ do {
         pageSize: 100,
         continuationToken: $continuationToken
     )->unwrap();
-    
+
     foreach ($response->getTuples() as $tuple) {
         // Process each tuple...
     }
-    
+
     $continuationToken = $response->getContinuationToken();
 } while ($continuationToken !== null);
 ```
@@ -200,7 +201,7 @@ use OpenFGA\Exceptions\{ClientError, ClientException};
 use function OpenFGA\{tuple, write, result};
 
 // Example: Writing tuples with robust error handling
-function addUserToDocument(string $userId, string $documentId, string $role = 'viewer'): bool 
+function addUserToDocument(string $userId, string $documentId, string $role = 'viewer'): bool
 {
     // Use result helper for cleaner error handling
     return result(function() use ($userId, $documentId, $role) {
@@ -225,19 +226,19 @@ function addUserToDocument(string $userId, string $documentId, string $role = 'v
             match($error->getError()) {
                 // Handle validation errors specifically
                 ClientError::Validation => logger()->warning(
-                    'Validation error granting access', 
+                    'Validation error granting access',
                     ['context' => $error->getContext()]
                 ),
-                
+
                 // Handle authorization model mismatches
                 ClientError::InvalidConfiguration => logger()->error(
-                    'Model configuration error', 
+                    'Model configuration error',
                     ['message' => $error->getMessage()]
                 ),
-                
+
                 // Default case for other client errors
                 default => logger()->error(
-                    'Failed to grant access', 
+                    'Failed to grant access',
                     ['error_type' => $error->getError()->name]
                 )
             };
@@ -249,7 +250,7 @@ function addUserToDocument(string $userId, string $documentId, string $role = 'v
                 'document' => $documentId
             ]);
         }
-        
+
         return false;
     })
     ->unwrap();
@@ -278,7 +279,7 @@ try {
 } catch (ClientException $e) {
     // The error message will be in Spanish
     echo $e->getMessage(); // "El identificador del usuario no puede estar vacío"
-    
+
     // But the error enum remains the same for consistent handling
     if ($e->getError() === ClientError::Validation) {
         // Handle validation error regardless of language

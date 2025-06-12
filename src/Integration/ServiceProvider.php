@@ -8,7 +8,7 @@ use ArrayAccess;
 use OpenFGA\{ClientInterface};
 use OpenFGA\Language\{Transformer, TransformerInterface};
 use OpenFGA\Network\{RequestManagerInterface};
-use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryInterface};
+use OpenFGA\Observability\{TelemetryInterface};
 use OpenFGA\Schemas\{SchemaValidator, SchemaValidatorInterface};
 
 /**
@@ -33,7 +33,7 @@ final readonly class ServiceProvider
      * registrations with properly configured instances.
      *
      * Services registered:
-     * - TelemetryInterface: No-op telemetry provider (can be overridden)
+     * - TelemetryInterface: null telemetry provider (can be overridden)
      * - TransformerInterface: DSL to model transformation
      * - SchemaValidatorInterface: JSON schema validation for models
      *
@@ -45,8 +45,8 @@ final readonly class ServiceProvider
      */
     public function register(object $container): void
     {
-        // Register telemetry (defaults to no-op, can be overridden)
-        $this->registerService($container, TelemetryInterface::class, static fn (): NoOpTelemetryProvider => new NoOpTelemetryProvider);
+        // Register telemetry (defaults to null, can be overridden)
+        $this->registerService($container, TelemetryInterface::class, static fn (): ?TelemetryInterface => null);
 
         // Register DSL transformer
         $this->registerService($container, TransformerInterface::class, static fn (): Transformer => new Transformer);
@@ -62,9 +62,9 @@ final readonly class ServiceProvider
      * container interfaces and methods. It gracefully handles containers that
      * may not implement all methods.
      *
-     * @param object             $container The dependency injection container
-     * @param string             $interface The service interface or class name
-     * @param callable(): object $factory   Factory function to create the service instance
+     * @param object              $container The dependency injection container
+     * @param string              $interface The service interface or class name
+     * @param callable(): ?object $factory   Factory function to create the service instance
      */
     private function registerService(object $container, string $interface, callable $factory): void
     {

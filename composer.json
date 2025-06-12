@@ -1,6 +1,6 @@
 {
   "name": "evansims/openfga-php",
-  "description": "PHP SDK for OpenFGA.",
+  "description": "Stop writing authorization logic. Start asking questions. OpenFGA high performance relationship-based access control for PHP.",
   "license": "Apache-2.0",
   "type": "library",
   "keywords": [

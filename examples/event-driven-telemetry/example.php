@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+use Buzz\Client\FileGetContents;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 use OpenFGA\Events\{EventDispatcher, HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
-use OpenFGA\Observability\NoOpTelemetryProvider;
-use Psr\Http\Message\{RequestInterface, ResponseInterface, StreamInterface, UriInterface};
 
-/**
- * Example: Event-Driven Telemetry with Custom Listeners.
+use function OpenFGA\{allowed, dsl, model, store, tuple, write};
+
+/*
+ * Event-Driven Telemetry Example
  *
  * This example demonstrates how to use the event-driven telemetry system
- * to create custom observability solutions without tight coupling.
+ * to create custom observability solutions without tight coupling to the
+ * main OpenFGA client functionality.
  */
 
 // Create a custom event listener for logging
@@ -21,23 +24,19 @@ final class LoggingEventListener
 {
     public function onHttpRequestSent(HttpRequestSentEvent $event): void
     {
-        echo '[' . date('Y-m-d H:i:s') . "] HTTP Request Sent:\n";
-        echo "  Operation: {$event->getOperation()}\n";
+        echo '[' . date('H:i:s') . "] 📤 HTTP Request: {$event->getOperation()}\n";
         echo "  Method: {$event->getRequest()->getMethod()}\n";
         echo "  URL: {$event->getRequest()->getUri()}\n";
-        echo "  Store ID: {$event->getStoreId()}\n";
-        echo "\n";
+        echo "  Store: {$event->getStoreId()}\n\n";
     }
 
     public function onHttpResponseReceived(HttpResponseReceivedEvent $event): void
     {
-        echo '[' . date('Y-m-d H:i:s') . "] HTTP Response Received:\n";
-        echo "  Operation: {$event->getOperation()}\n";
-        echo '  Success: ' . ($event->isSuccessful() ? 'Yes' : 'No') . "\n";
+        $status = $event->getResponse() ? $event->getResponse()->getStatusCode() : 'N/A';
+        $success = $event->isSuccessful() ? '✅' : '❌';
 
-        if ($event->getResponse()) {
-            echo "  Status Code: {$event->getResponse()->getStatusCode()}\n";
-        }
+        echo '[' . date('H:i:s') . "] 📥 HTTP Response: {$event->getOperation()}\n";
+        echo "  Status: {$success} {$status}\n";
 
         if ($event->getException()) {
             echo "  Error: {$event->getException()->getMessage()}\n";
@@ -47,9 +46,9 @@ final class LoggingEventListener
 
     public function onOperationCompleted(OperationCompletedEvent $event): void
     {
-        echo '[' . date('Y-m-d H:i:s') . "] Operation Completed:\n";
-        echo "  Operation: {$event->getOperation()}\n";
-        echo '  Success: ' . ($event->isSuccessful() ? 'Yes' : 'No') . "\n";
+        $success = $event->isSuccessful() ? '✅' : '❌';
+        echo '[' . date('H:i:s') . "] 🏁 Operation Completed: {$event->getOperation()}\n";
+        echo "  Result: {$success}\n";
 
         if ($event->getException()) {
             echo "  Error: {$event->getException()->getMessage()}\n";
@@ -59,11 +58,9 @@ final class LoggingEventListener
 
     public function onOperationStarted(OperationStartedEvent $event): void
     {
-        echo '[' . date('Y-m-d H:i:s') . "] Operation Started:\n";
-        echo "  Operation: {$event->getOperation()}\n";
-        echo "  Store ID: {$event->getStoreId()}\n";
-        echo "  Model ID: {$event->getModelId()}\n";
-        echo "\n";
+        echo '[' . date('H:i:s') . "] 🚀 Operation Started: {$event->getOperation()}\n";
+        echo "  Store: {$event->getStoreId()}\n";
+        echo "  Model: {$event->getModelId()}\n\n";
     }
 }
 
@@ -82,6 +79,16 @@ final class MetricsEventListener
         ];
     }
 
+    public function onHttpResponseReceived(HttpResponseReceivedEvent $event): void
+    {
+        // Track HTTP response details but let onOperationCompleted handle timing cleanup
+        $response = $event->getResponse();
+
+        if (null !== $response && 400 <= $response->getStatusCode()) {
+            echo "⚠️  HTTP Error {$response->getStatusCode()} for [{$event->getOperation()}]\n";
+        }
+    }
+
     public function onOperationCompleted(OperationCompletedEvent $event): void
     {
         $operation = $event->getOperation();
@@ -92,33 +99,48 @@ final class MetricsEventListener
         }
         $this->requestCounts[$operation]++;
 
-        // Track timing if we have start time
-        if (isset($this->operationTimes[$event->getEventId()])) {
-            $duration = microtime(true) - $this->operationTimes[$event->getEventId()];
-            echo "[METRICS] {$operation} completed in " . round($duration * 1000, 2) . "ms\n";
-            unset($this->operationTimes[$event->getEventId()]);
+        // Track timing - always clean up regardless of success/failure
+        $operationKey = $this->createOperationKey($event);
+
+        if (isset($this->operationTimes[$operationKey])) {
+            $duration = microtime(true) - $this->operationTimes[$operationKey];
+            
+            if ($event->isSuccessful()) {
+                echo "📊 [{$operation}] completed in " . round($duration * 1000, 2) . "ms\n\n";
+            } else {
+                echo "📊 [{$operation}] failed after " . round($duration * 1000, 2) . "ms\n\n";
+            }
+            
+            // Always clean up the timing entry to prevent memory leaks
+            unset($this->operationTimes[$operationKey]);
         }
     }
 
     public function onOperationStarted(OperationStartedEvent $event): void
     {
-        $this->operationTimes[$event->getEventId()] = microtime(true);
+        $operationKey = $this->createOperationKey($event);
+        $this->operationTimes[$operationKey] = microtime(true);
+    }
+
+    private function createOperationKey($event): string
+    {
+        // Create a composite key using operation, store, and model for consistent identification
+        return sprintf(
+            '%s:%s:%s',
+            $event->getOperation(),
+            $event->getStoreId() ?? 'unknown',
+            $event->getModelId() ?? 'unknown',
+        );
     }
 }
 
-function demonstrateEventDrivenTelemetry(): void
-{
-    echo "OpenFGA Event-Driven Telemetry Example\n";
-    echo "======================================\n\n";
+$storeId = null;
+$client = null;
+$exitCode = 0;
 
-    // Create the client using the fromOptions factory method
-    $client = Client::fromOptions(
-        url: 'https://api.fga.example',
-        telemetry: new NoOpTelemetryProvider,
-    );
-
-    // Note: In a real implementation, you would need to configure the event dispatcher
-    // through the ServiceProvider. This example shows the concept.
+try {
+    echo "📡 Event-Driven Telemetry Example\n";
+    echo "=================================\n\n";
 
     echo "Setting up custom event listeners...\n\n";
 
@@ -136,448 +158,84 @@ function demonstrateEventDrivenTelemetry(): void
     // Register metrics listener
     $eventDispatcher->addListener(OperationStartedEvent::class, [$metricsListener, 'onOperationStarted']);
     $eventDispatcher->addListener(OperationCompletedEvent::class, [$metricsListener, 'onOperationCompleted']);
-
-    echo "Demonstrating event emission (these would normally be triggered by actual API calls)...\n\n";
-
-    // Simulate some events (in real usage, these would be emitted by the HttpService)
-    // Note: In a real implementation, these would be proper PSR-7 objects
-    $mockRequest = new class implements RequestInterface {
-        public function getBody(): StreamInterface
-        {
-            return new class implements StreamInterface {
-                public function getSize(): ?int
-                {
-                    return 256;
-                }
-
-                public function __toString(): string
-                {
-                    return '';
-                }
-
-                public function close(): void
-                {
-                }
-
-                public function detach()
-                {
-                    return null;
-                }
-
-                public function tell(): int
-                {
-                    return 0;
-                }
-
-                public function eof(): bool
-                {
-                    return true;
-                }
-
-                public function isSeekable(): bool
-                {
-                    return false;
-                }
-
-                public function seek(int $offset, int $whence = SEEK_SET): void
-                {
-                }
-
-                public function rewind(): void
-                {
-                }
-
-                public function isWritable(): bool
-                {
-                    return false;
-                }
-
-                public function write(string $string): int
-                {
-                    return 0;
-                }
-
-                public function isReadable(): bool
-                {
-                    return false;
-                }
-
-                public function read(int $length): string
-                {
-                    return '';
-                }
-
-                public function getContents(): string
-                {
-                    return '';
-                }
-
-                public function getMetadata(?string $key = null)
-                {
-                    return null;
-                }
-            };
-        }
-
-        public function getHeader(string $name): array
-        {
-            return [];
-        }
-
-        public function getHeaderLine(string $name): string
-        {
-            return '';
-        }
-
-        public function getHeaders(): array
-        {
-            return [];
-        }
-
-        public function getMethod(): string
-        {
-            return 'POST';
-        }
-
-        public function getProtocolVersion(): string
-        {
-            return '1.1';
-        }
-
-        public function getRequestTarget(): string
-        {
-            return '/';
-        }
-
-        public function getUri(): UriInterface
-        {
-            return new class implements UriInterface {
-                public function __toString(): string
-                {
-                    return 'https://api.fga.example/stores/store-123/check';
-                }
-
-                public function getScheme(): string
-                {
-                    return 'https';
-                }
-
-                public function getAuthority(): string
-                {
-                    return 'api.fga.example';
-                }
-
-                public function getUserInfo(): string
-                {
-                    return '';
-                }
-
-                public function getHost(): string
-                {
-                    return 'api.fga.example';
-                }
-
-                public function getPort(): ?int
-                {
-                    return null;
-                }
-
-                public function getPath(): string
-                {
-                    return '/stores/store-123/check';
-                }
-
-                public function getQuery(): string
-                {
-                    return '';
-                }
-
-                public function getFragment(): string
-                {
-                    return '';
-                }
-
-                public function withScheme(string $scheme): UriInterface
-                {
-                    return $this;
-                }
-
-                public function withUserInfo(string $user, ?string $password = null): UriInterface
-                {
-                    return $this;
-                }
-
-                public function withHost(string $host): UriInterface
-                {
-                    return $this;
-                }
-
-                public function withPort(?int $port): UriInterface
-                {
-                    return $this;
-                }
-
-                public function withPath(string $path): UriInterface
-                {
-                    return $this;
-                }
-
-                public function withQuery(string $query): UriInterface
-                {
-                    return $this;
-                }
-
-                public function withFragment(string $fragment): UriInterface
-                {
-                    return $this;
-                }
-            };
-        }
-
-        public function hasHeader(string $name): bool
-        {
-            return false;
-        }
-
-        public function withAddedHeader(string $name, $value): static
-        {
-            return $this;
-        }
-
-        public function withBody(StreamInterface $body): static
-        {
-            return $this;
-        }
-
-        public function withHeader(string $name, $value): static
-        {
-            return $this;
-        }
-
-        public function withMethod(string $method): static
-        {
-            return $this;
-        }
-
-        public function withoutHeader(string $name): static
-        {
-            return $this;
-        }
-
-        public function withProtocolVersion(string $version): static
-        {
-            return $this;
-        }
-
-        public function withRequestTarget(string $requestTarget): static
-        {
-            return $this;
-        }
-
-        public function withUri(UriInterface $uri, bool $preserveHost = false): static
-        {
-            return $this;
-        }
-    };
-
-    $mockResponse = new class implements ResponseInterface {
-        public function getBody(): StreamInterface
-        {
-            return new class implements StreamInterface {
-                public function getSize(): ?int
-                {
-                    return 128;
-                }
-
-                public function __toString(): string
-                {
-                    return '';
-                }
-
-                public function close(): void
-                {
-                }
-
-                public function detach()
-                {
-                    return null;
-                }
-
-                public function tell(): int
-                {
-                    return 0;
-                }
-
-                public function eof(): bool
-                {
-                    return true;
-                }
-
-                public function isSeekable(): bool
-                {
-                    return false;
-                }
-
-                public function seek(int $offset, int $whence = SEEK_SET): void
-                {
-                }
-
-                public function rewind(): void
-                {
-                }
-
-                public function isWritable(): bool
-                {
-                    return false;
-                }
-
-                public function write(string $string): int
-                {
-                    return 0;
-                }
-
-                public function isReadable(): bool
-                {
-                    return false;
-                }
-
-                public function read(int $length): string
-                {
-                    return '';
-                }
-
-                public function getContents(): string
-                {
-                    return '';
-                }
-
-                public function getMetadata(?string $key = null)
-                {
-                    return null;
-                }
-            };
-        }
-
-        public function getHeader(string $name): array
-        {
-            return [];
-        }
-
-        public function getHeaderLine(string $name): string
-        {
-            return '';
-        }
-
-        public function getHeaders(): array
-        {
-            return [];
-        }
-
-        public function getProtocolVersion(): string
-        {
-            return '1.1';
-        }
-
-        public function getReasonPhrase(): string
-        {
-            return '';
-        }
-
-        public function getStatusCode(): int
-        {
-            return 200;
-        }
-
-        public function hasHeader(string $name): bool
-        {
-            return false;
-        }
-
-        public function withAddedHeader(string $name, $value): static
-        {
-            return $this;
-        }
-
-        public function withBody(StreamInterface $body): static
-        {
-            return $this;
-        }
-
-        public function withHeader(string $name, $value): static
-        {
-            return $this;
-        }
-
-        public function withoutHeader(string $name): static
-        {
-            return $this;
-        }
-
-        public function withProtocolVersion(string $version): static
-        {
-            return $this;
-        }
-
-        public function withStatus(int $code, string $reasonPhrase = ''): static
-        {
-            return $this;
-        }
-    };
-
-    // Simulate operation lifecycle
-    $startEvent = new OperationStartedEvent(
-        operation: 'check',
-        storeId: 'store-123',
-        modelId: 'model-456',
-        context: ['trace' => true],
+    $eventDispatcher->addListener(HttpResponseReceivedEvent::class, [$metricsListener, 'onHttpResponseReceived']);
+
+    // Initialize client with event dispatcher
+    $client = new Client(
+        url: 'http://localhost:8080',
+        httpClient: new FileGetContents(new Psr17Factory),
+        httpResponseFactory: new Psr17Factory,
+        httpStreamFactory: new Psr17Factory,
+        httpRequestFactory: new Psr17Factory,
+        eventDispatcher: $eventDispatcher,
     );
-    $eventDispatcher->dispatch($startEvent);
 
-    $requestEvent = new HttpRequestSentEvent(
-        request: $mockRequest,
-        operation: 'check',
-        storeId: 'store-123',
-        modelId: 'model-456',
-    );
-    $eventDispatcher->dispatch($requestEvent);
+    echo "🎬 Performing operations that will trigger events...\n\n";
 
-    // Simulate brief delay
-    usleep(50000); // 50ms
+    // Create workspace - this will trigger events
+    $storeId = store($client, 'telemetry-demo');
 
-    $responseEvent = new HttpResponseReceivedEvent(
-        request: $mockRequest,
-        response: $mockResponse,
-        operation: 'check',
-        storeId: 'store-123',
-        modelId: 'model-456',
-    );
-    $eventDispatcher->dispatch($responseEvent);
+    // Define authorization model - more events
+    $authModel = dsl($client, '
+        model
+          schema 1.1
+        type user
+        type document
+          relations
+            define viewer: [user]
+    ');
+    $modelId = model($client, $storeId, $authModel);
 
-    $completedEvent = new OperationCompletedEvent(
-        operation: 'check',
-        success: true,
-        storeId: 'store-123',
-        modelId: 'model-456',
-        context: ['trace' => true],
-        result: new stdClass,
-    );
-    $eventDispatcher->dispatch($completedEvent);
+    // Write relationship - more events
+    write($client, $storeId, $modelId, tuple('user:alice', 'viewer', 'document:report'));
+
+    // Check authorization - final events
+    $canView = allowed($client, $storeId, $modelId, tuple('user:alice', 'viewer', 'document:report'));
+    echo '🎯 Authorization Result: Alice ' . ($canView ? 'CAN' : 'CANNOT') . " view the report\n\n";
 
     // Show collected metrics
-    echo "Collected Metrics:\n";
-    echo "==================\n";
+    echo "📊 Collected Metrics:\n";
+    echo "====================\n";
     $metrics = $metricsListener->getMetrics();
     echo json_encode($metrics, JSON_PRETTY_PRINT) . "\n\n";
 
-    echo "Event-driven telemetry allows you to:\n";
-    echo "- Decouple observability from business logic\n";
-    echo "- Add multiple listeners for the same events\n";
-    echo "- Create specialized listeners for different concerns\n";
-    echo "- Easily test telemetry functionality in isolation\n";
-    echo "- Replace or enhance telemetry without changing core code\n";
-}
+    echo "✨ Event-driven telemetry demonstration complete!\n\n";
 
-// Run the demonstration
-if (basename(__FILE__) === basename($_SERVER['SCRIPT_NAME'])) {
-    demonstrateEventDrivenTelemetry();
+    echo "🎯 Key Benefits:\n";
+    echo "   • Decouple observability from business logic\n";
+    echo "   • Add multiple listeners for the same events\n";
+    echo "   • Create specialized listeners for different concerns\n";
+    echo "   • Easy to test telemetry functionality in isolation\n";
+    echo "   • Replace or enhance telemetry without changing core code\n\n";
+
+    echo "🔧 Available Events:\n";
+    echo "   • OperationStartedEvent - When an operation begins\n";
+    echo "   • OperationCompletedEvent - When an operation finishes\n";
+    echo "   • HttpRequestSentEvent - When HTTP requests are sent\n";
+    echo "   • HttpResponseReceivedEvent - When HTTP responses arrive\n\n";
+
+    echo "💡 Production Setup:\n";
+    echo "   • Register listeners through dependency injection\n";
+    echo "   • Use PSR-3 logger for structured logging\n";
+    echo "   • Export metrics to monitoring systems\n";
+    echo "   • Set up alerting based on error rates\n";
+} catch (Throwable $e) {
+    echo '❌ Error: ' . $e->getMessage() . "\n";
+    echo '💡 Make sure OpenFGA is running on http://localhost:8080' . "\n";
+    echo '   You can start it with: docker run -p 8080:8080 openfga/openfga run' . "\n";
+
+    $exitCode = 1;
+} finally {
+    // Clean up the store regardless of success or failure
+    if (null !== $storeId && null !== $client) {
+        try {
+            echo "\n🧹 Cleaning up...\n";
+            $client->deleteStore(store: $storeId);
+            echo "✅ Store deleted successfully\n";
+        } catch (Throwable $cleanupError) {
+            echo '⚠️  Failed to delete store: ' . $cleanupError->getMessage() . "\n";
+        }
+    }
+
+    exit($exitCode);
 }

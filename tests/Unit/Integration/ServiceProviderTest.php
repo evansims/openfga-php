@@ -10,7 +10,7 @@ use OpenFGA\{ClientInterface, Language\TransformerInterface};
 use OpenFGA\Integration\ServiceProvider;
 use OpenFGA\Language\Transformer;
 use OpenFGA\Network\RequestManagerInterface;
-use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryInterface};
+use OpenFGA\Observability\{TelemetryInterface};
 use OpenFGA\Schemas\{SchemaValidator, SchemaValidatorInterface};
 
 describe('ServiceProvider', function (): void {
@@ -61,7 +61,7 @@ describe('ServiceProvider', function (): void {
         $transformer = $this->container->get(TransformerInterface::class);
         $schemaValidator = $this->container->get(SchemaValidatorInterface::class);
 
-        expect($telemetry)->toBeInstanceOf(TelemetryInterface::class);
+        expect(null === $telemetry || $telemetry instanceof TelemetryInterface)->toBeTrue();
         expect($transformer)->toBeInstanceOf(TransformerInterface::class);
         expect($schemaValidator)->toBeInstanceOf(SchemaValidatorInterface::class);
     });
@@ -176,17 +176,13 @@ describe('ServiceProvider', function (): void {
             ->not->toThrow(Exception::class);
     });
 
-    it('creates no-op telemetry by default', function (): void {
+    it('creates null telemetry by default', function (): void {
         $this->serviceProvider->register($this->container);
 
         $telemetry = $this->container->get(TelemetryInterface::class);
 
-        // Should be the no-op implementation
-        expect($telemetry::class)->toBe(NoOpTelemetryProvider::class);
-
-        // Test that it doesn't throw errors when called
-        expect(fn () => $telemetry->startOperation('test', 'store', 'model'))
-            ->not->toThrow(Exception::class);
+        // Should be null (no telemetry)
+        expect($telemetry)->toBeNull();
     });
 
     it('creates working transformer', function (): void {

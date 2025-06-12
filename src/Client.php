@@ -15,7 +15,7 @@ use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV
 use OpenFGA\Models\Collections\{AssertionsInterface, BatchCheckItemsInterface, Conditions, ConditionsInterface, RelationMetadataCollection, RelationReferences, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Network\{RequestManager, RetryStrategyInterface};
-use OpenFGA\Observability\{NoOpTelemetryProvider, TelemetryEventListener, TelemetryEventListenerInterface, TelemetryInterface};
+use OpenFGA\Observability\{TelemetryEventListener, TelemetryEventListenerInterface, TelemetryInterface};
 use OpenFGA\Repositories\{HttpAssertionRepository, HttpModelRepository, HttpStoreRepository, HttpTupleRepository, StoreRepositoryInterface, TupleRepositoryInterface};
 use OpenFGA\Results\{Failure, FailureInterface, Success, SuccessInterface};
 use OpenFGA\Schemas\{SchemaValidator, SchemaValidatorInterface};
@@ -49,46 +49,39 @@ final class Client implements ClientInterface
      */
     public const string VERSION = '1.3.0';
 
-    private ?AuthenticationServiceInterface $authenticationService = null;
-
-    private ?AuthorizationServiceInterface $authorizationService = null;
-
-    private ?EventDispatcherInterface $eventDispatcher = null;
-
-    private ?HttpServiceInterface $httpService = null;
-
-    private ?SchemaValidatorInterface $schemaValidator = null;
-
-    private ?StoreRepositoryInterface $storeRepository = null;
-
-    private ?StoreServiceInterface $storeService = null;
-
     /**
      * @var array<string, object> Store-specific service instances cache
      */
     private array $storeSpecificServices = [];
 
-    private ?TelemetryEventListenerInterface $telemetryListener = null;
-
-    private ?TelemetryServiceInterface $telemetryService = null;
-
-    private ?TupleFilterServiceInterface $tupleFilterService = null;
-
-    private ?TupleRepositoryInterface $tupleRepository = null;
-
     /**
      * Create a new OpenFGA client instance.
      *
-     * @param string                        $url                 The OpenFGA API URL to connect to
-     * @param AuthenticationInterface|null  $authentication      The authentication strategy to use for API requests
-     * @param string                        $language            The language code for i18n translations; defaults to 'en' (English)
-     * @param positive-int|null             $httpMaxRetries      Number of times to retry a request before giving up; defaults to 3, disabled if null
-     * @param HttpClientInterface|null      $httpClient          Optional PSR-18 HTTP client to use for requests; will use autodiscovery and use the first available if not specified
-     * @param ResponseFactoryInterface|null $httpResponseFactory Optional PSR-17 HTTP response factory to use for requests; will use autodiscovery and use the first available if not specified
-     * @param StreamFactoryInterface|null   $httpStreamFactory   Optional PSR-17 HTTP stream factory to use for requests; will use autodiscovery and use the first available if not specified
-     * @param RequestFactoryInterface|null  $httpRequestFactory  Optional PSR-17 HTTP request factory to use for requests; will use autodiscovery and use the first available if not specified
-     * @param TelemetryInterface|null       $telemetry           Optional telemetry provider for observability; defaults to no-op implementation
-     * @param RetryStrategyInterface|null   $retryStrategy       Optional retry strategy for handling failed requests; defaults to exponential backoff
+     * This constructor supports comprehensive dependency injection for advanced use cases
+     * while maintaining simple configuration for typical usage. All service dependencies
+     * are optional and will be automatically created with sensible defaults if not provided.
+     *
+     * @param string                               $url                   The OpenFGA API URL to connect to
+     * @param AuthenticationInterface|null         $authentication        The authentication strategy to use for API requests
+     * @param string                               $language              The language code for i18n translations; defaults to 'en' (English)
+     * @param positive-int|null                    $httpMaxRetries        Number of times to retry a request before giving up; defaults to 3 (even when null is passed)
+     * @param HttpClientInterface|null             $httpClient            Optional PSR-18 HTTP client to use for requests; will use autodiscovery and use the first available if not specified
+     * @param ResponseFactoryInterface|null        $httpResponseFactory   Optional PSR-17 HTTP response factory to use for requests; will use autodiscovery and use the first available if not specified
+     * @param StreamFactoryInterface|null          $httpStreamFactory     Optional PSR-17 HTTP stream factory to use for requests; will use autodiscovery and use the first available if not specified
+     * @param RequestFactoryInterface|null         $httpRequestFactory    Optional PSR-17 HTTP request factory to use for requests; will use autodiscovery and use the first available if not specified
+     * @param TelemetryInterface|null              $telemetry             Optional telemetry provider for observability; pass null to disable telemetry
+     * @param RetryStrategyInterface|null          $retryStrategy         Optional retry strategy for handling failed requests; defaults to exponential backoff
+     * @param EventDispatcherInterface|null        $eventDispatcher       Optional event dispatcher for handling client events; defaults to a new EventDispatcher instance
+     * @param AuthenticationServiceInterface|null  $authenticationService Optional authentication service instance; will be created automatically if not provided
+     * @param AuthorizationServiceInterface|null   $authorizationService  Optional authorization service instance; will be created automatically if not provided
+     * @param HttpServiceInterface|null            $httpService           Optional HTTP service instance; will be created automatically if not provided
+     * @param SchemaValidatorInterface|null        $schemaValidator       Optional schema validator instance; will be created automatically if not provided
+     * @param StoreRepositoryInterface|null        $storeRepository       Optional store repository instance; will be created automatically if not provided
+     * @param StoreServiceInterface|null           $storeService          Optional store service instance; will be created automatically if not provided
+     * @param TelemetryEventListenerInterface|null $telemetryListener     Optional telemetry event listener instance; will be created automatically if not provided
+     * @param TelemetryServiceInterface|null       $telemetryService      Optional telemetry service instance; will be created automatically if not provided
+     * @param TupleFilterServiceInterface|null     $tupleFilterService    Optional tuple filter service instance; will be created automatically if not provided
+     * @param TupleRepositoryInterface|null        $tupleRepository       Optional tuple repository instance; will be created automatically if not provided
      *
      * @throws InvalidArgumentException If the URL or language parameter is empty
      *
@@ -105,6 +98,17 @@ final class Client implements ClientInterface
         private readonly ?RequestFactoryInterface $httpRequestFactory = null,
         private readonly ?TelemetryInterface $telemetry = null,
         private readonly ?RetryStrategyInterface $retryStrategy = null,
+        private ?EventDispatcherInterface $eventDispatcher = null,
+        private ?AuthenticationServiceInterface $authenticationService = null,
+        private ?AuthorizationServiceInterface $authorizationService = null,
+        private ?HttpServiceInterface $httpService = null,
+        private ?SchemaValidatorInterface $schemaValidator = null,
+        private ?StoreRepositoryInterface $storeRepository = null,
+        private ?StoreServiceInterface $storeService = null,
+        private ?TelemetryEventListenerInterface $telemetryListener = null,
+        private ?TelemetryServiceInterface $telemetryService = null,
+        private ?TupleFilterServiceInterface $tupleFilterService = null,
+        private ?TupleRepositoryInterface $tupleRepository = null,
     ) {
         if ('' === $url) {
             throw new InvalidArgumentException('URL is required and cannot be empty');
@@ -744,7 +748,7 @@ final class Client implements ClientInterface
             httpResponseFactory: $this->httpResponseFactory,
             httpStreamFactory: $this->httpStreamFactory,
             httpRequestFactory: $this->httpRequestFactory,
-            telemetry: $this->telemetry ?? new NoOpTelemetryProvider,
+            telemetry: $this->telemetry,
             retryStrategy: $this->retryStrategy,
             authenticationService: $authenticationService,
         );
@@ -825,7 +829,7 @@ final class Client implements ClientInterface
         );
 
         return new EventAwareTelemetryService(
-            $this->telemetry ?? new NoOpTelemetryProvider,
+            $this->telemetry,
             $eventDispatcher,
         );
     }
@@ -1001,7 +1005,7 @@ final class Client implements ClientInterface
      */
     private function getTelemetryListener(): TelemetryEventListenerInterface
     {
-        return $this->telemetryListener ??= new TelemetryEventListener($this->telemetry ?? new NoOpTelemetryProvider);
+        return $this->telemetryListener ??= new TelemetryEventListener($this->telemetry);
     }
 
     /**

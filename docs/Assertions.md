@@ -8,9 +8,9 @@ Assertions are test cases that specify expected outcomes for permission checks. 
 
 ```php
 use OpenFGA\Client;
-use function OpenFGA\{tuple, tuples};
 use OpenFGA\Models\Assertion;
 use OpenFGA\Collections\Assertions;
+use function OpenFGA\{tuple, tuples};
 
 $client = new Client(url: $_ENV['FGA_API_URL']);
 ```
@@ -34,7 +34,7 @@ $ownerCanEdit = new Assertion(
 $viewerCannotEdit = new Assertion(
     tupleKey: tuple(
         user: 'user:bob',
-        relation: 'can_edit', 
+        relation: 'can_edit',
         object: 'document:quarterly-report'
     ),
     expectation: false
@@ -61,13 +61,13 @@ $teamFolderAccess = [
         tupleKey: tuple('user:sarah', 'can_read', 'folder:team-docs'),
         expectation: true
     ),
-    
+
     // Inherited document access through folder membership
     new Assertion(
         tupleKey: tuple('user:sarah', 'can_read', 'document:team-meeting-notes'),
         expectation: true
     ),
-    
+
     // Non-team members should be denied
     new Assertion(
         tupleKey: tuple('user:outsider', 'can_read', 'folder:team-docs'),
@@ -87,19 +87,19 @@ $edgeCases = [
         tupleKey: tuple('user:*', 'can_read', 'document:company-handbook'),
         expectation: true
     ),
-    
+
     // Deleted users should lose all access
     new Assertion(
         tupleKey: tuple('user:former-employee', 'can_read', 'document:confidential'),
         expectation: false
     ),
-    
+
     // Admin override permissions
     new Assertion(
         tupleKey: tuple('user:admin', 'can_delete', 'document:any-document'),
         expectation: true
     ),
-    
+
     // Cross-organization access should be blocked
     new Assertion(
         tupleKey: tuple('user:competitor', 'can_read', 'document:internal-strategy'),
@@ -122,19 +122,19 @@ class DocumentPermissionTests
             new Assertion(tuple('user:owner', 'can_read', 'document:doc1'), true),
             new Assertion(tuple('user:owner', 'can_edit', 'document:doc1'), true),
             new Assertion(tuple('user:owner', 'can_delete', 'document:doc1'), true),
-            
-            // Editor permissions  
+
+            // Editor permissions
             new Assertion(tuple('user:editor', 'can_read', 'document:doc1'), true),
             new Assertion(tuple('user:editor', 'can_edit', 'document:doc1'), true),
             new Assertion(tuple('user:editor', 'can_delete', 'document:doc1'), false),
-            
+
             // Viewer permissions
             new Assertion(tuple('user:viewer', 'can_read', 'document:doc1'), true),
             new Assertion(tuple('user:viewer', 'can_edit', 'document:doc1'), false),
             new Assertion(tuple('user:viewer', 'can_delete', 'document:doc1'), false),
         ];
     }
-    
+
     public static function getInheritanceTests(): array
     {
         return [
@@ -175,7 +175,7 @@ $response = $client->readAssertions(store: $storeId, model: $modelId)->unwrap();
 foreach ($response->getAssertions() as $assertion) {
     $key = $assertion->getTupleKey();
     $expected = $assertion->getExpectation() ? 'CAN' : 'CANNOT';
-    
+
     echo "{$key->getUser()} {$expected} {$key->getRelation()} {$key->getObject()}\n";
 }
 ```

@@ -7,16 +7,16 @@ Learn how to leverage the OpenFGA PHP SDK's powerful concurrency features to dra
 Transform slow sequential operations into blazing-fast parallel executions with just a few configuration changes:
 
 ```php
-use OpenFga\Sdk\Helpers;
+use function OpenFGA\batch;
 
 // Sequential: ~10 seconds for 1000 tuples
-$result = Helpers::batch($client, $storeId)
+$result = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(1)
     ->execute();
 
 // Parallel: ~2 seconds for 1000 tuples (5x faster!)
-$result = Helpers::batch($client, $storeId)
+$result = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(10)
     ->execute();
@@ -44,13 +44,11 @@ The SDK uses PHP 8.1+ Fibers to provide true concurrency without the complexity 
 The `batchTuples` method processes large sets of tuple operations efficiently:
 
 ```php
-use OpenFga\Sdk\Client;
-use OpenFga\Sdk\Configuration;
+use OpenFGA\Client;
 
-$client = new Client(new Configuration([
-    'apiUrl' => 'http://localhost:8080',
-    'storeId' => $storeId,
-]));
+$client = new Client(
+    url: 'http://localhost:8080',
+);
 
 // Prepare your tuple operations
 $writes = [];
@@ -95,9 +93,9 @@ $result = $client->batchTuples(
 The SDK provides a more expressive fluent interface through helpers:
 
 ```php
-use OpenFga\Sdk\Helpers;
+use function OpenFGA\batch;
 
-$result = Helpers::batch($client, $storeId)
+$result = batch($client, $storeId)
     ->write([
         ['user' => 'user:anne', 'relation' => 'reader', 'object' => 'document:budget'],
         ['user' => 'user:beth', 'relation' => 'writer', 'object' => 'document:budget'],
@@ -131,20 +129,22 @@ foreach ($result->getErrors() as $error) {
 Choose parallelism based on your infrastructure and requirements:
 
 ```php
+use function OpenFGA\batch;
+
 // Conservative: Good for shared environments
-$result = Helpers::batch($client, $storeId)
+$result = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(3)
     ->execute();
 
 // Moderate: Balanced performance
-$result = Helpers::batch($client, $storeId)
+$result = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(5)
     ->execute();
 
 // Aggressive: Maximum throughput
-$result = Helpers::batch($client, $storeId)
+$result = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(10)
     ->execute();
@@ -155,7 +155,7 @@ $result = Helpers::batch($client, $storeId)
 Here's a real-world example showing the performance benefits:
 
 ```php
-use OpenFga\Sdk\Helpers;
+use function OpenFGA\batch;
 
 // Generate test data
 $tuples = [];
@@ -169,7 +169,7 @@ for ($i = 0; $i < 1000; $i++) {
 
 // Sequential processing
 $start = microtime(true);
-$sequentialResult = Helpers::batch($client, $storeId)
+$sequentialResult = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(1)
     ->execute();
@@ -177,7 +177,7 @@ $sequentialTime = microtime(true) - $start;
 
 // Parallel processing
 $start = microtime(true);
-$parallelResult = Helpers::batch($client, $storeId)
+$parallelResult = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(10)
     ->execute();
@@ -195,7 +195,9 @@ echo "Speedup: " . round($sequentialTime / $parallelTime, 2) . "x faster\n";
 The SDK continues processing even when some operations fail:
 
 ```php
-$result = Helpers::batch($client, $storeId)
+use function OpenFGA\batch;
+
+$result = batch($client, $storeId)
     ->write($tuples)
     ->continueOnError()  // Don't stop on first failure
     ->withMaxRetries(3)  // Retry failed chunks
@@ -203,10 +205,10 @@ $result = Helpers::batch($client, $storeId)
 
 if ($result->hasErrors()) {
     echo "Completed with {$result->getFailedChunks()} failed chunks\n";
-    
+
     // Process successful operations
     echo "Successfully processed: {$result->getSuccessfulOperations()} tuples\n";
-    
+
     // Handle failures
     foreach ($result->getErrors() as $error) {
         // Log or retry failed chunks
@@ -220,7 +222,9 @@ if ($result->hasErrors()) {
 Configure retry behavior for transient failures:
 
 ```php
-$result = Helpers::batch($client, $storeId)
+use function OpenFGA\batch;
+
+$result = batch($client, $storeId)
     ->write($tuples)
     ->withMaxRetries(3)         // Retry up to 3 times
     ->withRetryDelay(1)         // Start with 1 second delay
@@ -229,7 +233,7 @@ $result = Helpers::batch($client, $storeId)
 
 // The SDK uses exponential backoff:
 // - First retry: 1 second delay
-// - Second retry: 2 second delay  
+// - Second retry: 2 second delay
 // - Third retry: 4 second delay
 ```
 
@@ -280,7 +284,7 @@ Coroutine\run(function () use ($client, $tuples) {
             'maxParallelRequests' => 10
         ])->unwrap();
     });
-    
+
     echo "Processed in coroutine: {$result->getTotalOperations()} tuples\n";
 });
 ```
@@ -292,22 +296,24 @@ Coroutine\run(function () use ($client, $tuples) {
 Find the optimal chunk size for your use case:
 
 ```php
+use function OpenFGA\batch;
+
 // Test different chunk sizes
 $chunkSizes = [10, 25, 50, 75, 100];
 $results = [];
 
 foreach ($chunkSizes as $chunkSize) {
     $start = microtime(true);
-    
-    $result = Helpers::batch($client, $storeId)
+
+    $result = batch($client, $storeId)
         ->write($tuples)
         ->withMaxTuplesPerChunk($chunkSize)
         ->withMaxParallelRequests(5)
         ->execute();
-    
+
     $duration = microtime(true) - $start;
     $throughput = count($tuples) / $duration;
-    
+
     $results[$chunkSize] = [
         'duration' => $duration,
         'throughput' => $throughput,
@@ -328,16 +334,18 @@ echo "Optimal chunk size: {$optimal} (throughput: {$results[$optimal]['throughpu
 Handle large datasets efficiently:
 
 ```php
+use function OpenFGA\batch;
+
 // Process large datasets in batches to manage memory
 function processLargeTupleSet($client, $storeId, $totalTuples) {
     $batchSize = 10000;  // Process 10k at a time
     $processed = 0;
-    
+
     while ($processed < $totalTuples) {
         // Generate batch (in real app, fetch from database)
         $batch = [];
         $remaining = min($batchSize, $totalTuples - $processed);
-        
+
         for ($i = 0; $i < $remaining; $i++) {
             $batch[] = [
                 'user' => "user:" . ($processed + $i),
@@ -345,17 +353,17 @@ function processLargeTupleSet($client, $storeId, $totalTuples) {
                 'object' => 'org:acme',
             ];
         }
-        
+
         // Process batch with high parallelism
-        $result = Helpers::batch($client, $storeId)
+        $result = batch($client, $storeId)
             ->write($batch)
             ->withMaxParallelRequests(10)
             ->withMaxTuplesPerChunk(100)
             ->execute();
-        
+
         $processed += $remaining;
         echo "Processed: {$processed}/{$totalTuples}\n";
-        
+
         // Allow garbage collection between batches
         unset($batch, $result);
     }
@@ -369,19 +377,21 @@ function processLargeTupleSet($client, $storeId, $totalTuples) {
 Track performance metrics for optimization:
 
 ```php
+use function OpenFGA\batch;
+
 class BatchMetrics {
     public static function track($client, $storeId, $tuples, $options) {
         $start = microtime(true);
         $startMemory = memory_get_usage(true);
-        
-        $result = Helpers::batch($client, $storeId)
+
+        $result = batch($client, $storeId)
             ->write($tuples)
             ->withMaxParallelRequests($options['parallelism'] ?? 1)
             ->execute();
-        
+
         $duration = microtime(true) - $start;
         $memoryUsed = memory_get_usage(true) - $startMemory;
-        
+
         return [
             'duration' => $duration,
             'throughput' => count($tuples) / $duration,
@@ -409,7 +419,7 @@ use Psr\Log\LoggerInterface;
 
 class BatchLogger {
     private LoggerInterface $logger;
-    
+
     public function logBatchOperation($result) {
         $this->logger->info('Batch operation completed', [
             'total_operations' => $result->getTotalOperations(),
@@ -417,7 +427,7 @@ class BatchLogger {
             'failed_chunks' => $result->getFailedChunks(),
             'duration' => $result->getDuration(),
         ]);
-        
+
         if ($result->hasErrors()) {
             foreach ($result->getErrors() as $error) {
                 $this->logger->error('Chunk failed', [
@@ -440,7 +450,7 @@ Begin with lower parallelism and increase based on monitoring:
 // Development environment
 $parallelism = 2;
 
-// Staging environment  
+// Staging environment
 $parallelism = 5;
 
 // Production (after load testing)
@@ -452,7 +462,9 @@ $parallelism = 10;
 Implement backoff when hitting rate limits:
 
 ```php
-$result = Helpers::batch($client, $storeId)
+use function OpenFGA\batch;
+
+$result = batch($client, $storeId)
     ->write($tuples)
     ->withMaxParallelRequests(5)
     ->withMaxRetries(5)        // More retries for rate limits
@@ -498,12 +510,12 @@ class BatchCircuitBreaker {
     private int $failures = 0;
     private int $threshold = 5;
     private bool $open = false;
-    
+
     public function executeBatch($client, $tuples) {
         if ($this->open) {
             throw new \RuntimeException('Circuit breaker is open');
         }
-        
+
         try {
             $result = $client->batchTuples($tuples)->unwrap();
             $this->failures = 0;  // Reset on success
