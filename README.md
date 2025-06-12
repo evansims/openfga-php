@@ -20,19 +20,6 @@
 
 **[OpenFGA](https://openfga.dev/) solves this.** Define your authorization rules once, query them anywhere. This SDK provides a modern PHP interface to [OpenFGA](https://openfga.dev/) and [Auth0 FGA](https://auth0.com/fine-grained-authorization).
 
-<br />
-
-<details>
-<summary><strong>Table of Contents</strong></summary>
-
-- [Installation](#installation)
-- [Quickstart](#quickstart)
-- [Highlights](#highlights)
-- [Learn more](#learn-more)
-- [Contributing](#contributing)
-
-</details>
-
 <p><br /></p>
 
 ## Installation
@@ -67,62 +54,7 @@ $canEdit = allowed(
 // Zero business logic coupling. Pure authorization.
 ```
 
-See [the documentation](docs/README.md) to get started.
-
-<p><br /></p>
-
-## Highlights
-
-- **Zero business logic coupling** — Authorization stays separate from your domain code
-- **Scalable architecture** — Battle-tested relationship-based access control patterns inspired by Google Zanzibar
-- **Type-safe by design** — Complete type hints, strict typing, and full IDE support
-- **Human-readable DSL** — Define authorization models with intuitive syntax
-- **Production ready** — OpenTelemetry observability, retry logic, and circuit breakers included
-- **Developer experience first** — Stewarded by 30+ years of PHP expertise with intuitive APIs and comprehensive documentation
-
-<p><br /></p>
-
-## Learn more
-
-Ready to build bulletproof authorization? See [the documentation](docs/README.md) for:
-
-**Getting Started**<br />
-Build your authorization integration
-
-- [Introduction](https://github.com/evansims/openfga-php/wiki/Introduction)<br />
-  Start here to get your first authorization check working.
-- [Installation](https://github.com/evansims/openfga-php/wiki/Introduction#install-the-sdk)<br />
-  Install the SDK and set up your first authorization store.
-- [Authentication](https://github.com/evansims/openfga-php/wiki/Authentication)<br />
-  Set up authentication for production environments and managed services.
-
-**Essentials**<br />
-Learn the core concepts and patterns
-
-- [Stores](https://github.com/evansims/openfga-php/wiki/Stores)<br />
-  Manage authorization stores for multi-tenant applications and environment separation.
-- [Authorization Models](https://github.com/evansims/openfga-php/wiki/Models)<br />
-  Learn how to define your permission rules using OpenFGA's intuitive DSL.
-- [Relationship Tuples](https://github.com/evansims/openfga-php/wiki/Tuples)<br />
-  Understand how to grant and revoke specific permissions between users and resources.
-- [Permission Queries](https://github.com/evansims/openfga-php/wiki/Queries)<br />
-  Master the four types of queries: check permissions, list objects, find users, and expand relationships.
-- [Assertions](https://github.com/evansims/openfga-php/wiki/Assertions)<br />
-  Define test cases to verify your authorization model.
-
-**Features**<br />
-Explore advanced features and patterns
-
-- [Concurrency](https://github.com/evansims/openfga-php/wiki/Concurrency)<br />
-  Leveraging the SDK's powerful concurrency features to improve performance when working with large-scale authorization operations.
-- [Exceptions](https://github.com/evansims/openfga-php/wiki/Exceptions)<br />
-  Handling errors and exceptions in your authorization system.
-- [Integration](https://github.com/evansims/openfga-php/wiki/Integration)<br />
-  Integrating OpenFGA with your existing systems and frameworks.
-- [Observability](https://github.com/evansims/openfga-php/wiki/Observability)<br />
-  Comprehensive tracing and metrics to monitor your authorization system.
-- [Results](https://github.com/evansims/openfga-php/wiki/Results)<br />
-  Building robust applications with proper response handling using the SDK's Result pattern.
+See [the documentation](https://github.com/evansims/openfga-php/wiki) to get started.
 
 <p><br /></p>
 
