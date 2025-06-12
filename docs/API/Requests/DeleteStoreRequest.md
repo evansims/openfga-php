@@ -31,7 +31,7 @@ public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactor
 
 Build a request context for HTTP execution. Transforms the request object into a standardized HTTP request context that can be executed by the OpenFGA HTTP client. This method handles all aspects of request preparation including parameter serialization, URL construction, header configuration, and body stream creation. The method validates that all required parameters are present and properly formatted, serializes complex objects to JSON, constructs the appropriate API endpoint URL, and creates the necessary HTTP message body streams.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/DeleteStoreRequest.php#L50)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/DeleteStoreRequest.php#L49)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ public function getStore(): string
 
 Get the ID of the store to delete. Returns the unique identifier of the store that will be permanently removed from OpenFGA. This operation will delete all data associated with the store, including relationship tuples, authorization models, and configuration settings. Important:** This is a destructive operation that cannot be reversed. Ensure you have the correct store ID and proper authorization before proceeding with the deletion.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/DeleteStoreRequest.php#L62)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/DeleteStoreRequest.php#L61)
 
 #### Returns
 

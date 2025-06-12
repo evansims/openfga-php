@@ -31,7 +31,7 @@ public function getContinuationToken(): ?string
 
 Get the continuation token for paginated results. Returns the pagination token from a previous list models operation to continue retrieving results from where the last request left off. This enables efficient pagination through stores with many model versions without missing or duplicating entries.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L54)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L53)
 
 #### Returns
 
@@ -46,7 +46,7 @@ public function getPageSize(): ?int
 
 Get the maximum number of models to return per page. Specifies the page size for paginated results. This controls how many authorization models are returned in a single response. Smaller page sizes reduce memory usage and latency, while larger page sizes reduce the number of API calls needed to retrieve all model versions.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L63)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L62)
 
 #### Returns
 
@@ -61,7 +61,7 @@ public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactor
 
 Build a request context for HTTP execution. Transforms the request object into a standardized HTTP request context that can be executed by the OpenFGA HTTP client. This method handles all aspects of request preparation including parameter serialization, URL construction, header configuration, and body stream creation. The method validates that all required parameters are present and properly formatted, serializes complex objects to JSON, constructs the appropriate API endpoint URL, and creates the necessary HTTP message body streams.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L72)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L71)
 
 #### Parameters
 
@@ -82,7 +82,7 @@ public function getStore(): string
 
 Get the store ID containing the authorization models to list. Identifies which OpenFGA store contains the authorization models to enumerate. Each store maintains its own independent collection of model versions, representing the evolution of that store&#039;s authorization schema over time.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L91)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListAuthorizationModelsRequest.php#L90)
 
 #### Returns
 

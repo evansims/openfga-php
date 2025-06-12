@@ -30,7 +30,7 @@ public function validateAssertions(
 
 Validate assertion syntax and logic. Checks that assertions are properly formatted and reference valid types and relations from the authorization model. This helps catch errors before deploying assertions to production.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L141)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L135)
 
 #### Parameters
 
@@ -48,23 +48,19 @@ Validate assertion syntax and logic. Checks that assertions are properly formatt
 #### readAssertions
 
 ```php
-public function readAssertions(
-    StoreInterface|string $store,
-    string $authorizationModelId,
-): FailureInterface|SuccessInterface
+public function readAssertions(string $authorizationModelId): FailureInterface|SuccessInterface
 
 ```
 
 Read assertions from an authorization model. Retrieves all test assertions defined in the specified authorization model. Assertions validate that the model behaves correctly for specific scenarios.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L125)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L120)
 
 #### Parameters
 
-| Name                    | Type                                                         | Description                                      |
-| ----------------------- | ------------------------------------------------------------ | ------------------------------------------------ |
-| `$store`                | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store containing the model                   |
-| `$authorizationModelId` | `string`                                                     | The authorization model ID containing assertions |
+| Name                    | Type     | Description                                      |
+| ----------------------- | -------- | ------------------------------------------------ |
+| `$authorizationModelId` | `string` | The authorization model ID containing assertions |
 
 #### Returns
 
@@ -74,7 +70,6 @@ Read assertions from an authorization model. Retrieves all test assertions defin
 
 ```php
 public function writeAssertions(
-    StoreInterface|string $store,
     string $authorizationModelId,
     AssertionsInterface $assertions,
 ): FailureInterface|SuccessInterface
@@ -83,13 +78,12 @@ public function writeAssertions(
 
 Write assertions to an authorization model. Updates the test assertions for the specified authorization model. Assertions help validate that your authorization model works as expected by defining specific test cases and their expected outcomes.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L158)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L151)
 
 #### Parameters
 
 | Name                    | Type                                                               | Description                          |
 | ----------------------- | ------------------------------------------------------------------ | ------------------------------------ |
-| `$store`                | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`       | The store containing the model       |
 | `$authorizationModelId` | `string`                                                           | The authorization model ID to update |
 | `$assertions`           | [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) | The assertions to write              |
 
@@ -111,7 +105,7 @@ public function getAssertionStatistics(
 
 Get assertion execution statistics. Provides insights into assertion test results, including pass/fail counts, execution times, and common failure patterns. Useful for monitoring authorization model health and test coverage.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L110)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L106)
 
 #### Parameters
 
@@ -129,23 +123,19 @@ Get assertion execution statistics. Provides insights into assertion test result
 #### clearAssertions
 
 ```php
-public function clearAssertions(
-    StoreInterface|string $store,
-    string $authorizationModelId,
-): FailureInterface|SuccessInterface
+public function clearAssertions(string $authorizationModelId): FailureInterface|SuccessInterface
 
 ```
 
 Clear all assertions from an authorization model. Removes all test assertions from the specified authorization model. This is useful when completely restructuring test cases or during development iterations.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L76)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L75)
 
 #### Parameters
 
-| Name                    | Type                                                         | Description                      |
-| ----------------------- | ------------------------------------------------------------ | -------------------------------- |
-| `$store`                | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store containing the model   |
-| `$authorizationModelId` | `string`                                                     | The authorization model to clear |
+| Name                    | Type     | Description                      |
+| ----------------------- | -------- | -------------------------------- |
+| `$authorizationModelId` | `string` | The authorization model to clear |
 
 #### Returns
 
@@ -155,7 +145,6 @@ Clear all assertions from an authorization model. Removes all test assertions fr
 
 ```php
 public function executeAssertions(
-    StoreInterface|string $store,
     string $authorizationModelId,
     AssertionsInterface $assertions,
 ): FailureInterface|SuccessInterface
@@ -164,15 +153,14 @@ public function executeAssertions(
 
 Execute assertions against the authorization model. Runs the specified assertions and returns the results, comparing expected outcomes with actual authorization check results. This helps verify that your authorization model works correctly.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L93)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/AssertionServiceInterface.php#L90)
 
 #### Parameters
 
-| Name                    | Type                                                               | Description                             |
-| ----------------------- | ------------------------------------------------------------------ | --------------------------------------- |
-| `$store`                | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`       | The store to execute assertions against |
-| `$authorizationModelId` | `string`                                                           | The authorization model to test         |
-| `$assertions`           | [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) | The assertions to execute               |
+| Name                    | Type                                                               | Description                     |
+| ----------------------- | ------------------------------------------------------------------ | ------------------------------- |
+| `$authorizationModelId` | `string`                                                           | The authorization model to test |
+| `$assertions`           | [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) | The assertions to execute       |
 
 #### Returns
 

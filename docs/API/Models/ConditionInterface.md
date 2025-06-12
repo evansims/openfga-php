@@ -23,6 +23,21 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 
 ### List Operations
 
+#### getContext
+
+```php
+public function getContext(): array<string, mixed>|null
+
+```
+
+Get the context for the condition. This provides additional runtime data that can be used by the condition&#039;s expression for dynamic evaluation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L54)
+
+#### Returns
+
+`array&lt;`string`, `mixed`&gt;` &#124; `null` — the context data, or null if not provided
+
 #### getExpression
 
 ```php
@@ -32,7 +47,7 @@ public function getExpression(): string
 
 Get the condition expression. This returns the logical expression that defines when this condition evaluates to true. The expression can reference parameters and context data to enable dynamic authorization decisions based on runtime information.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L55)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L65)
 
 #### Returns
 
@@ -47,7 +62,7 @@ public function getMetadata(): ConditionMetadataInterface|null
 
 Get metadata about the condition definition. This provides additional information about where the condition was defined and how it should be processed, which is useful for tooling and debugging.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L65)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L75)
 
 #### Returns
 
@@ -62,7 +77,7 @@ public function getName(): string
 
 Get the name of the condition. This is a unique identifier for the condition within the authorization model, allowing it to be referenced from type definitions and other parts of the model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L75)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L85)
 
 #### Returns
 
@@ -77,7 +92,7 @@ public function getParameters(): ConditionParametersInterface|null
 
 Get the parameters available to the condition expression. These parameters define the typed inputs that can be used within the condition expression, enabling dynamic evaluation based on contextual data provided during authorization checks.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L86)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L96)
 
 #### Returns
 
@@ -94,7 +109,7 @@ public function jsonSerialize(): array<string, mixed>
 
 Serialize the condition for JSON encoding. This method prepares the condition data for API requests or storage, ensuring all components are properly formatted according to the OpenFGA API specification.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L97)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionInterface.php#L107)
 
 #### Returns
 

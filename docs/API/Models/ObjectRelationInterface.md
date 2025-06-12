@@ -41,7 +41,7 @@ Get the object identifier in an object-relation pair. The object represents the 
 #### getRelation
 
 ```php
-public function getRelation(): ?string
+public function getRelation(): string
 
 ```
 
@@ -51,7 +51,7 @@ Get the relation name that defines the type of relationship to the object. The r
 
 #### Returns
 
-`string` &#124; `null`
+`string` — The non-empty relation name
 
 ### Other
 

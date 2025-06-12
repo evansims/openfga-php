@@ -59,7 +59,7 @@ Get the object in this relationship tuple. The object represents the resource or
 
 #### Returns
 
-`string` — The object identifier, or null if not specified
+`string` — The object identifier
 
 #### getRelation
 
@@ -74,7 +74,7 @@ Get the relation that defines the type of relationship. The relation describes w
 
 #### Returns
 
-`string` — The relation name defining the type of relationship, or null if not specified
+`string` — The relation name defining the type of relationship
 
 #### getUser
 
@@ -89,7 +89,7 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 #### Returns
 
-`string` — The user identifier, or null if not specified
+`string` — The user identifier
 
 ### Model Management
 

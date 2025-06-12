@@ -55,6 +55,7 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `CONSISTENCY_UNSPECIFIED_DESCRIPTION`        | `consistency.unspecified.description`                            |             |
 | `DSL_INPUT_EMPTY`                            | `dsl.input_empty`                                                |             |
 | `DSL_INVALID_COMPUTED_USERSET`               | `dsl.invalid_computed_userset`                                   |             |
+| `DSL_INVALID_COMPUTED_USERSET_RELATION`      | `dsl.invalid_computed_userset_relation`                          |             |
 | `DSL_PARSE_FAILED`                           | `dsl.parse_failed`                                               |             |
 | `DSL_PATTERN_EMPTY`                          | `dsl.pattern_empty`                                              |             |
 | `DSL_UNBALANCED_PARENTHESES_CLOSING`         | `dsl.unbalanced_parentheses_closing`                             |             |
@@ -171,6 +172,7 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 | `CONSISTENCY_UNSPECIFIED_DESCRIPTION`        | `consistency.unspecified.description`                            |             |
 | `DSL_INPUT_EMPTY`                            | `dsl.input_empty`                                                |             |
 | `DSL_INVALID_COMPUTED_USERSET`               | `dsl.invalid_computed_userset`                                   |             |
+| `DSL_INVALID_COMPUTED_USERSET_RELATION`      | `dsl.invalid_computed_userset_relation`                          |             |
 | `DSL_PARSE_FAILED`                           | `dsl.parse_failed`                                               |             |
 | `DSL_PATTERN_EMPTY`                          | `dsl.pattern_empty`                                              |             |
 | `DSL_UNBALANCED_PARENTHESES_CLOSING`         | `dsl.unbalanced_parentheses_closing`                             |             |
@@ -502,6 +504,13 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------- |
 | `en`   | Invalid computed userset                |
 | `es`   | Conjunto de usuarios calculado inválido |
+
+### `dsl.invalid_computed_userset_relation`
+
+| Locale | Translation                                             |
+| ------ | ------------------------------------------------------- |
+| `en`   | Computed userset relation cannot be empty.              |
+| `es`   | La relación del userset computado no puede estar vacía. |
 
 ### `dsl.parse_failed`
 
@@ -1039,7 +1048,7 @@ public function key(): string
 
 Get the translation key for this message.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Messages.php#L366)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Messages.php#L369)
 
 #### Returns
 

@@ -7,7 +7,6 @@
 | Directory | Description |
 |-----------|-------------|
 | [`Authentication`](./Authentication/README.md) | Authentication providers and token management for OpenFGA API access. |
-| [`DI`](./DI/README.md) | Dependency injection container and service provider for framework integration. |
 | [`Events`](./Events/README.md) | Event system for cross-cutting concerns like logging and metrics collection. |
 | [`Exceptions`](./Exceptions/README.md) | Exception hierarchy for type-safe error handling throughout the SDK. |
 | [`Integration`](./Integration/README.md) | Framework integration helpers and service providers. |

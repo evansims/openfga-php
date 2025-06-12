@@ -34,7 +34,7 @@ public function validateModel(
 
 Validate type definitions before creating a model. Performs validation on type definitions to catch errors before attempting to create a model. This is useful for providing immediate feedback in user interfaces or validation pipelines.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L171)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L160)
 
 #### Parameters
 
@@ -53,7 +53,6 @@ Validate type definitions before creating a model. Performs validation on type d
 
 ```php
 public function createModel(
-    OpenFGA\Models\StoreInterface|string $store,
     OpenFGA\Models\Collections\TypeDefinitionsInterface $typeDefinitions,
     ?OpenFGA\Models\Collections\ConditionsInterface $conditions = NULL,
     OpenFGA\Models\Enums\SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1,
@@ -63,13 +62,12 @@ public function createModel(
 
 Create a new authorization model with validation. Creates an immutable authorization model from the provided type definitions and optional conditions. The model is validated before creation to ensure it conforms to OpenFGA&#039;s schema requirements.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L87)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L78)
 
 #### Parameters
 
 | Name               | Type                                                                             | Description                                            |
 | ------------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `$store`           | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                     | The store where the model will be created              |
 | `$typeDefinitions` | [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md)     | The type definitions for the model                     |
 | `$conditions`      | [`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` | Optional conditions for attribute-based access control |
 | `$schemaVersion`   | [`SchemaVersion`](Models/Enums/SchemaVersion.md)                                 | The OpenFGA schema version to use                      |
@@ -83,23 +81,19 @@ Create a new authorization model with validation. Creates an immutable authoriza
 #### findModel
 
 ```php
-public function findModel(
-    OpenFGA\Models\StoreInterface|string $store,
-    string $modelId,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function findModel(string $modelId): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 
 ```
 
 Find a specific authorization model by ID. Retrieves a model with enhanced error handling, providing clear messages when models are not found or other errors occur.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L108)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L98)
 
 #### Parameters
 
-| Name       | Type                                                         | Description                        |
-| ---------- | ------------------------------------------------------------ | ---------------------------------- |
-| `$store`   | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store containing the model     |
-| `$modelId` | `string`                                                     | The unique identifier of the model |
+| Name       | Type     | Description                        |
+| ---------- | -------- | ---------------------------------- |
+| `$modelId` | `string` | The unique identifier of the model |
 
 #### Returns
 
@@ -114,7 +108,7 @@ public function getLatestModel(OpenFGA\Models\StoreInterface|string $store): Fai
 
 Get the most recent authorization model for a store. Retrieves the latest model version, which is typically the active model being used for authorization decisions. This is a convenience method that avoids needing to list all models and manually find the newest one.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L127)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L116)
 
 #### Parameters
 
@@ -130,7 +124,6 @@ Get the most recent authorization model for a store. Retrieves the latest model 
 
 ```php
 public function listAllModels(
-    OpenFGA\Models\StoreInterface|string $store,
     ?string $continuationToken = NULL,
     ?int $pageSize = NULL,
 ): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
@@ -139,15 +132,14 @@ public function listAllModels(
 
 List all authorization models for a store. Retrieves all models with automatic pagination handling. This method aggregates results across multiple pages up to the specified limit.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L158)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L147)
 
 #### Parameters
 
-| Name        | Type                                                         | Description                                         |
-| ----------- | ------------------------------------------------------------ | --------------------------------------------------- |
-| `$store`    | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from                       |
-| `$continuationToken` | `string` &#124; `null` | Pagination token from a previous response |
-| `$pageSize` | `int` &#124; `null` | Maximum number of models to retrieve |
+| Name                 | Type                   | Description                                                    |
+| -------------------- | ---------------------- | -------------------------------------------------------------- |
+| `$continuationToken` | `string` &#124; `null` | Pagination token from a previous response                      |
+| `$pageSize`          | `int` &#124; `null`    | Maximum number of models to retrieve (null for server default) |
 
 #### Returns
 
@@ -158,25 +150,19 @@ List all authorization models for a store. Retrieves all models with automatic p
 #### cloneModel
 
 ```php
-public function cloneModel(
-    OpenFGA\Models\StoreInterface|string $fromStore,
-    string $modelId,
-    OpenFGA\Models\StoreInterface|string $toStore,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function cloneModel(string $modelId): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 
 ```
 
 Clone an authorization model to another store. Copies a model from one store to another, useful for multi-tenant scenarios where you want to replicate a permission structure. The cloned model gets a new ID in the target store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L59)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L52)
 
 #### Parameters
 
-| Name         | Type                                                         | Description                                      |
-| ------------ | ------------------------------------------------------------ | ------------------------------------------------ |
-| `$fromStore` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The source store containing the model            |
-| `$modelId`   | `string`                                                     | The ID of the model to clone                     |
-| `$toStore`   | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The target store where the model will be created |
+| Name       | Type     | Description                  |
+| ---------- | -------- | ---------------------------- |
+| `$modelId` | `string` | The ID of the model to clone |
 
 #### Returns
 

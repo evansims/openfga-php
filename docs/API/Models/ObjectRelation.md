@@ -39,7 +39,7 @@ public function getObject(): ?string
 
 Get the object identifier in an object-relation pair. The object represents the resource or entity being referenced, typically formatted as &quot;type:id&quot; where type describes the kind of resource.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L56)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L62)
 
 #### Returns
 
@@ -48,17 +48,17 @@ Get the object identifier in an object-relation pair. The object represents the 
 #### getRelation
 
 ```php
-public function getRelation(): ?string
+public function getRelation(): string
 
 ```
 
 Get the relation name that defines the type of relationship to the object. The relation describes what kind of permission or relationship exists. Common examples include &quot;owner&quot;, &quot;viewer&quot;, &quot;editor&quot;, &quot;member&quot;.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L65)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L71)
 
 #### Returns
 
-`string` &#124; `null`
+`string` — The non-empty relation name
 
 ### Model Management
 
@@ -88,7 +88,7 @@ public function jsonSerialize(): array
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L74)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L80)
 
 #### Returns
 

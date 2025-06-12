@@ -564,7 +564,7 @@ Retrieves store details by ID.
 public function listAuthorizationModels(
     StoreInterface|string $store,
     string|null $continuationToken = NULL,
-    ?int $pageSize = NULL,
+    int|null $pageSize = NULL,
 ): FailureInterface|SuccessInterface
 
 ```
@@ -575,11 +575,11 @@ Lists authorization models in a store with pagination.
 
 #### Parameters
 
-| Name                 | Type                                                         | Description                        |
-| -------------------- | ------------------------------------------------------------ | ---------------------------------- |
-| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from      |
-| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination               |
-| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of models to return |
+| Name                 | Type                                                         | Description                                           |
+| -------------------- | ------------------------------------------------------------ | ----------------------------------------------------- |
+| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from                         |
+| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination                                  |
+| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of models to return (must be positive) |
 
 #### Returns
 

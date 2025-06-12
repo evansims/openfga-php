@@ -48,7 +48,7 @@ Get a single object identifier from a streamed response chunk.
 public function fromResponse(
     HttpResponseInterface $response,
     HttpRequestInterface $request,
-    SchemaValidator $validator,
+    SchemaValidatorInterface $validator,
 ): Generator<int, StreamedListObjectsResponseInterface>
 
 ```
@@ -59,11 +59,11 @@ Create a streaming response from an HTTP response. Processes the streaming HTTP 
 
 #### Parameters
 
-| Name         | Type                    | Description                              |
-| ------------ | ----------------------- | ---------------------------------------- |
-| `$response`  | `HttpResponseInterface` | The HTTP response from the API           |
-| `$request`   | `HttpRequestInterface`  | The original HTTP request                |
-| `$validator` | `SchemaValidator`       | Schema validator for response validation |
+| Name         | Type                       | Description                              |
+| ------------ | -------------------------- | ---------------------------------------- |
+| `$response`  | `HttpResponseInterface`    | The HTTP response from the API           |
+| `$request`   | `HttpRequestInterface`     | The original HTTP request                |
+| `$validator` | `SchemaValidatorInterface` | Schema validator for response validation |
 
 #### Returns
 

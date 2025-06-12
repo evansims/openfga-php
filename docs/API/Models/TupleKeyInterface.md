@@ -41,7 +41,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 #### getObject
 
 ```php
-public function getObject(): string|null
+public function getObject(): string
 
 ```
 
@@ -51,12 +51,12 @@ Get the object in this relationship tuple. The object represents the resource or
 
 #### Returns
 
-`string` &#124; `null` — The object identifier, or null if not specified
+`string` — The object identifier
 
 #### getRelation
 
 ```php
-public function getRelation(): string|null
+public function getRelation(): string
 
 ```
 
@@ -66,12 +66,12 @@ Get the relation that defines the type of relationship. The relation describes w
 
 #### Returns
 
-`string` &#124; `null` — The relation name defining the type of relationship, or null if not specified
+`string` — The relation name defining the type of relationship
 
 #### getUser
 
 ```php
-public function getUser(): string|null
+public function getUser(): string
 
 ```
 
@@ -81,7 +81,7 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 #### Returns
 
-`string` &#124; `null` — The user identifier, or null if not specified
+`string` — The user identifier
 
 ### Other
 
