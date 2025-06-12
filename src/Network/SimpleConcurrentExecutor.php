@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Network;
 
+use OpenFGA\Results\FailureInterface;
 use Override;
 use Throwable;
 
@@ -20,15 +21,24 @@ final class SimpleConcurrentExecutor implements ConcurrentExecutorInterface
      * @inheritDoc
      */
     #[Override]
-    public function executeParallel(array $tasks, int $maxConcurrent = 10): array
+    public function executeParallel(array $tasks, int $maxConcurrent = 10, bool $stopOnFirstError = false): array
     {
         $results = [];
 
         foreach ($tasks as $index => $task) {
             try {
                 $results[$index] = $task();
+
+                // Stop on returned Failure as well
+                if ($stopOnFirstError && $results[$index] instanceof FailureInterface) {
+                    break;
+                }
             } catch (Throwable $e) {
                 $results[$index] = $e;
+
+                if ($stopOnFirstError) {
+                    break;
+                }
             }
         }
 
