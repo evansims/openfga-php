@@ -500,8 +500,8 @@ final class Transformer implements TransformerInterface
 
             foreach ($union as $child) {
                 $childRendered = self::renderExpression($child, $metadata);
-                // If child is an intersection or difference, wrap in parentheses
-                if ($child->getIntersection() instanceof UsersetsInterface || $child->getDifference() instanceof DifferenceV1Interface) {
+                // Use helper to determine if parentheses are needed
+                if (self::needsParentheses($child, 'union')) {
                     $parts[] = '(' . $childRendered . ')';
                 } else {
                     $parts[] = $childRendered;
