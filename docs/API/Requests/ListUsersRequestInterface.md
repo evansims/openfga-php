@@ -1,6 +1,6 @@
 # ListUsersRequestInterface
 
-Interface for listing users who have a specific relation to an object. This interface defines the contract for requests that query which users have a specific relationship to a given object. This is similar to the expand operation but focuses specifically on returning the users rather than the complete relationship graph structure. List users operations are particularly useful for: - Building user interfaces that show who has access to a resource - Implementing sharing and collaboration features - Auditing and compliance reporting for access control - Sending notifications to users with specific permissions - Managing team membership and role assignments The operation supports: - Filtering by user types to control result scope - Contextual evaluation with additional runtime data - Temporary relationship tuples for scenario testing - Configurable read consistency levels for performance optimization - Authorization model versioning for consistent results This provides the inverse perspective to list objects - instead of asking &quot;what can this user access?&quot;, it asks &quot;who can access this object?&quot;.
+Interface for listing users who have a specific relation to an object. This interface defines the contract for requests that query which users have a specific relationship to a given object. This is similar to the expand operation but focuses specifically on returning the users rather than the complete relationship graph structure. List users operations are particularly useful for: - Building user interfaces that show who has access to a resource - Implementing sharing and collaboration features - Auditing and compliance reporting for access control - Sending notifications to users with specific permissions - Managing team membership and role assignments The operation supports: - Filtering by user types to control result scope - Contextual evaluation with additional runtime data - Temporary relationship tuples for scenario testing - Configurable read consistency levels for performance optimization - Authorization model versioning for consistent results This provides the inverse perspective to list objects - instead of asking &quot;what can this user access?,&quot; it asks &quot;who can access this object?&quot;
 
 ## Namespace
 
@@ -103,7 +103,7 @@ public function getRelation(): string
 
 ```
 
-Get the relation to check for user access. Specifies the relationship type to evaluate when determining which users have access to the object. For example, &quot;owner&quot;, &quot;editor&quot;, &quot;viewer&quot;, or &quot;member&quot;. This defines what type of permission or relationship is being queried.
+Get the relation to check for user access. Specifies the relationship type to evaluate when determining which users have access to the object. For example, &quot;owner,&quot; &quot;editor,&quot; &quot;viewer,&quot; or &quot;member.&quot; This defines what type of permission or relationship is being queried.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequestInterface.php#L113)
 

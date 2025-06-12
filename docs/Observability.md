@@ -8,7 +8,7 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 
 ## Table of Contents
 
-- [What You'll Get](#what-youll-get)
+- [What You'll Get](#what-you-ll-get)
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
 - [Telemetry Data Collected](#telemetry-data-collected)

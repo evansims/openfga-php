@@ -1,6 +1,6 @@
 # TupleKey
 
-Represents a relationship tuple key defining a connection between user, relation, and object. A TupleKey is the fundamental unit of authorization in OpenFGA, representing a specific relationship like &quot;user:anne is reader of document:budget&quot;. It consists of three parts: user (who), relation (what type of access), and object (what resource), optionally with conditions for attribute-based access. Use this when creating, querying, or managing specific relationships in your authorization system.
+Represents a relationship tuple key defining a connection between user, relation, and object. A TupleKey is the fundamental unit of authorization in OpenFGA, representing a specific relationship like &quot;user:anne is reader of document:budget.&quot; It consists of three parts: user (who), relation (what type of access), and object (what resource), optionally with conditions for attribute-based access. Use this when creating, querying, or managing specific relationships in your authorization system.
 
 ## Namespace
 
@@ -53,7 +53,7 @@ public function getObject(): string
 
 ```
 
-Get the object in this relationship tuple. The object represents the resource or entity that the permission or relationship applies to. For example, in &quot;user:alice can view document:readme&quot;, the object would be &quot;document:readme&quot;. Objects are typically formatted as &quot;type:id&quot; where type describes the kind of resource.
+Get the object in this relationship tuple. The object represents the resource or entity that the permission or relationship applies to. For example, in &quot;user:alice can view document:readme,&quot; the object would be &quot;document:readme.&quot; Objects are typically formatted as &quot;type:id&quot; where type describes the kind of resource.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L89)
 
@@ -68,7 +68,7 @@ public function getRelation(): string
 
 ```
 
-Get the relation that defines the type of relationship. The relation describes what kind of permission or relationship exists between the user and object. For example, common relations include &quot;owner&quot;, &quot;viewer&quot;, &quot;editor&quot;, &quot;can_read&quot;, &quot;can_write&quot;. Relations are defined in your authorization model and determine what actions are permitted.
+Get the relation that defines the type of relationship. The relation describes what kind of permission or relationship exists between the user and object. For example, common relations include &quot;owner,&quot; &quot;viewer,&quot; &quot;editor,&quot; &quot;can_read,&quot; &quot;can_write.&quot; Relations are defined in your authorization model and determine what actions are permitted.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L98)
 
@@ -83,7 +83,7 @@ public function getUser(): string
 
 ```
 
-Get the user (subject) in this relationship tuple. The user represents the entity that has the relationship to the object. This can be an individual user, a group, a role, or any other subject defined in your authorization model. For example, in &quot;user:alice can view document:readme&quot;, the user would be &quot;user:alice&quot;.
+Get the user (subject) in this relationship tuple. The user represents the entity that has the relationship to the object. This can be an individual user, a group, a role, or any other subject defined in your authorization model. For example, in &quot;user:alice can view document:readme,&quot; the user would be &quot;user:alice.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L107)
 

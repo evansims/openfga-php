@@ -1,6 +1,6 @@
 # UsersetTreeDifferenceInterface
 
-Defines a difference operation node in authorization evaluation trees. UsersetTreeDifference represents a node in the userset evaluation tree that computes the difference between two child nodes, effectively calculating &quot;users in base except those in subtract&quot;. This enables authorization patterns where access is granted to one group while explicitly excluding another. Use this interface when working with authorization evaluation trees that contain difference operations, typically returned from expand operations.
+Defines a difference operation node in authorization evaluation trees. UsersetTreeDifference represents a node in the userset evaluation tree that computes the difference between two child nodes, effectively calculating &quot;users in base except those in subtract.&quot; This enables authorization patterns where access is granted to one group while explicitly excluding another. Use this interface when working with authorization evaluation trees that contain difference operations, typically returned from expand operations.
 
 ## Namespace
 

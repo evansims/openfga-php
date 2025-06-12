@@ -253,12 +253,12 @@ Start tracing an OpenFGA API operation. Creates a new trace span for a high-leve
 
 #### Parameters
 
-| Name          | Type                                                                                                               | Description                                                                                        |
-| ------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| Name          | Type                                                                                                               | Description                                                                                              |
+| ------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
 | `$operation`  | `string`                                                                                                           | The OpenFGA operation name (for example &#039;check&#039;, &#039;expand&#039;, &#039;write_tuples&#039;) |
-| `$store`      | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                       | The store being operated on                                                                        |
-| `$model`      | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` &#124; `string` &#124; `null` | The authorization model being used                                                                 |
-| `$attributes` | `array`                                                                                                            |                                                                                                    |
+| `$store`      | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                       | The store being operated on                                                                              |
+| `$model`      | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` &#124; `string` &#124; `null` | The authorization model being used                                                                       |
+| `$attributes` | `array`                                                                                                            |                                                                                                          |
 
 #### Returns
 

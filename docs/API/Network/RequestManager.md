@@ -31,7 +31,7 @@ public function getHttpClient(): Psr\Http\Client\ClientInterface
 
 Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for executing requests to the OpenFGA API. The client handles the actual network communication and can be any PSR-18 compatible implementation such as Guzzle, cURL, or others. If no client was explicitly provided during construction, the RequestManager will attempt to discover one automatically using PSR Discovery. The HTTP client is responsible for network-level concerns including connection management, SSL/TLS handling, timeout enforcement, and low-level HTTP protocol implementation.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L193)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L187)
 
 #### Returns
 
@@ -46,7 +46,7 @@ public function getHttpRequestFactory(): Psr\Http\Message\RequestFactoryInterfac
 
 Get the configured PSR-17 HTTP request factory. Returns the factory used for creating PSR-7 HTTP request objects. This factory is used to construct HTTP requests from OpenFGA request contexts, including setting the appropriate method, URI, headers, and body content. If no factory was explicitly provided during construction, the RequestManager will attempt to discover one automatically using PSR Discovery.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L215)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L209)
 
 #### Returns
 
@@ -61,7 +61,7 @@ public function getHttpResponseFactory(): Psr\Http\Message\ResponseFactoryInterf
 
 Get the configured PSR-17 HTTP response factory. Returns the factory used for creating PSR-7 HTTP response objects. This is primarily used for testing and mocking scenarios where custom responses need to be constructed programmatically. If no factory was explicitly provided during construction, the RequestManager will attempt to discover one automatically using PSR Discovery.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L237)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L231)
 
 #### Returns
 
@@ -76,7 +76,7 @@ public function getHttpStreamFactory(): Psr\Http\Message\StreamFactoryInterface
 
 Get the configured PSR-17 HTTP stream factory. Returns the factory used for creating PSR-7 stream objects for HTTP message bodies. This factory is used to convert request data (such as JSON payloads) into stream objects that can be attached to HTTP requests. If no factory was explicitly provided during construction, the RequestManager will attempt to discover one automatically using PSR Discovery.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L259)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L253)
 
 #### Returns
 
@@ -97,7 +97,7 @@ public function executeParallel(
 
 Execute multiple tasks concurrently using Fibers. This method creates and manages Fibers for concurrent execution of the provided tasks. It respects the maximum parallelism limit and efficiently schedules fiber execution to maximize throughput.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L156)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L155)
 
 #### Parameters
 
@@ -144,7 +144,7 @@ public function request(OpenFGA\Requests\RequestInterface $request): Psr\Http\Me
 
 Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level OpenFGA API requests into standardized PSR-7 HTTP requests that can be executed by any PSR-18 compliant HTTP client. This process includes: - Building the complete request URL from the base API URL and endpoint path - Setting appropriate HTTP method based on the operation type - Adding authentication headers using configured credentials - Serializing request data to JSON and creating appropriate body streams - Setting required headers (Content-Type, User-Agent, etc.) The conversion process ensures that all OpenFGA API requirements are met, including proper content negotiation, authentication, and request formatting according to the OpenFGA API specification.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L281)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L275)
 
 #### Parameters
 
@@ -165,7 +165,7 @@ public function send(Psr\Http\Message\RequestInterface $request): Psr\Http\Messa
 
 Send an HTTP request and return the response. Executes the provided PSR-7 HTTP request using the configured HTTP client with comprehensive error handling and retry logic. This method handles: - Network-level errors (connection failures, timeouts, DNS issues) - HTTP-level errors (4xx and 5xx status codes) - Automatic retry logic for transient failures - Response validation and error context extraction The method provides detailed error information for debugging, including request/response details, error codes, and suggested remediation steps when requests fail. Successful responses are returned as-is for further processing by the calling code.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L334)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManager.php#L328)
 
 #### Parameters
 

@@ -139,7 +139,7 @@ public function getTupleKey(): TupleKeyInterface
 
 ```
 
-Get the relationship tuple to check for permission. This defines the specific relationship (user, object, relation) to evaluate for authorization. For example, checking if &quot;user:alice&quot; has &quot;can_view&quot; permission on &quot;document:readme&quot;.
+Get the relationship tuple to check for permission. This defines the specific relationship (user, object, relation) to evaluate for authorization. For example, checking if &quot;user:alice&quot; has &quot;can_view&quot; permission on &quot;document:readme.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CheckRequestInterface.php#L90)
 

@@ -104,7 +104,7 @@ public function getRelation(): string
 
 ```
 
-Get the relation to check for user access. Specifies the relationship type to evaluate when determining which users have access to the object. For example, &quot;owner&quot;, &quot;editor&quot;, &quot;viewer&quot;, or &quot;member&quot;. This defines what type of permission or relationship is being queried.
+Get the relation to check for user access. Specifies the relationship type to evaluate when determining which users have access to the object. For example, &quot;owner,&quot; &quot;editor,&quot; &quot;viewer,&quot; or &quot;member.&quot; This defines what type of permission or relationship is being queried.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListUsersRequest.php#L126)
 

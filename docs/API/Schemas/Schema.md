@@ -1,6 +1,6 @@
 # Schema
 
-JSON schema definition for validating and transforming data structures. This schema defines validation rules and transformation logic for converting raw API response data into strongly-typed model objects. It specifies property types, validation constraints, and mapping rules for accurate data processing.
+JSON schema definition for validating and transforming data structures. This schema defines validation rules and transformation logic for converting raw API response data into strongly typed model objects. It specifies property types, validation constraints, and mapping rules for accurate data processing.
 
 ## Namespace
 

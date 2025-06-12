@@ -1,6 +1,6 @@
 # ListUsersResponseInterface
 
-Interface for user listing response objects. This interface defines the contract for responses returned when listing users that have a specific relationship with an object in OpenFGA. This is the inverse of permission checking - instead of asking &quot;can this user access this object?&quot;, it asks &quot;which users can access this object?&quot;. User listing is particularly useful for building administrative interfaces, access reports, and user management features that need to display who has access to specific resources.
+Interface for user listing response objects. This interface defines the contract for responses returned when listing users that have a specific relationship with an object in OpenFGA. This is the inverse of permission checking - instead of asking &quot;can this user access this object?,&quot; it asks &quot;which users can access this object?&quot; User listing is particularly useful for building administrative interfaces, access reports, and user management features that need to display who has access to specific resources.
 
 ## Namespace
 

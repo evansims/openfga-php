@@ -1,6 +1,6 @@
 # TypeDefinition
 
-Represents a type definition in your authorization model. A TypeDefinition defines an object type (like &quot;document&quot;, &quot;folder&quot;, &quot;user&quot;) and specifies the relations that can exist for objects of this type. Each relation defines how users can be related to objects, such as &quot;owner&quot;, &quot;editor&quot;, or &quot;viewer&quot; relationships. Use this when defining the schema of object types and their allowed relationships in your authorization model.
+Represents a type definition in your authorization model. A TypeDefinition defines an object type (like &quot;document,&quot; &quot;folder,&quot; &quot;user&quot;) and specifies the relations that can exist for objects of this type. Each relation defines how users can be related to objects, such as &quot;owner,&quot; &quot;editor,&quot; or &quot;viewer&quot; relationships. Use this when defining the schema of object types and their allowed relationships in your authorization model.
 
 ## Namespace
 
@@ -68,7 +68,7 @@ public function getType(): string
 
 ```
 
-Get the name of this type. The type name uniquely identifies this type definition within the authorization model. Common examples include &quot;user&quot;, &quot;document&quot;, &quot;folder&quot;, &quot;organization&quot;, etc.
+Get the name of this type. The type name uniquely identifies this type definition within the authorization model. Common examples include &quot;user,&quot; &quot;document,&quot; &quot;folder,&quot; &quot;organization,&quot; etc.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinition.php#L79)
 

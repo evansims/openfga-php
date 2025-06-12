@@ -1,6 +1,6 @@
 # TypeDefinitionInterface
 
-Represents a type definition in an OpenFGA authorization model. Type definitions are the building blocks of authorization models that define the types of objects in your system and the relationships that can exist between them. Each type definition specifies: - The type name (for example &quot;document&quot;, &quot;user&quot;, &quot;organization&quot;) - The relations that objects of this type can have (for example &quot;viewer&quot;, &quot;editor&quot;, &quot;owner&quot;) - Optional metadata for additional context and configuration Type definitions form the schema that OpenFGA uses to understand your permission model and validate authorization queries.
+Represents a type definition in an OpenFGA authorization model. Type definitions are the building blocks of authorization models that define the types of objects in your system and the relationships that can exist between them. Each type definition specifies: - The type name (for example &quot;document,&quot; &quot;user,&quot; &quot;organization&quot;) - The relations that objects of this type can have (for example &quot;viewer,&quot; &quot;editor,&quot; &quot;owner&quot;) - Optional metadata for additional context and configuration Type definitions form the schema that OpenFGA uses to understand your permission model and validate authorization queries.
 
 ## Namespace
 
@@ -60,7 +60,7 @@ public function getType(): string
 
 ```
 
-Get the name of this type. The type name uniquely identifies this type definition within the authorization model. Common examples include &quot;user&quot;, &quot;document&quot;, &quot;folder&quot;, &quot;organization&quot;, etc.
+Get the name of this type. The type name uniquely identifies this type definition within the authorization model. Common examples include &quot;user,&quot; &quot;document,&quot; &quot;folder,&quot; &quot;organization,&quot; etc.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L58)
 

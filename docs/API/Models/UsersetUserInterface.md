@@ -30,7 +30,7 @@ public function getId(): string
 
 ```
 
-Get the object identifier in the userset reference. This represents the specific object instance that the userset refers to. For example, in &quot;group:eng#member&quot;, this would return &quot;eng&quot;.
+Get the object identifier in the userset reference. This represents the specific object instance that the userset refers to. For example, in &quot;group:eng#member,&quot; this would return &quot;eng.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php#L30)
 
@@ -45,7 +45,7 @@ public function getRelation(): string
 
 ```
 
-Get the relation name in the userset reference. This represents the specific relation on the referenced object that defines the userset. For example, in &quot;group:eng#member&quot;, this would return &quot;member&quot;.
+Get the relation name in the userset reference. This represents the specific relation on the referenced object that defines the userset. For example, in &quot;group:eng#member,&quot; this would return &quot;member.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php#L40)
 
@@ -60,7 +60,7 @@ public function getType(): string
 
 ```
 
-Get the object type in the userset reference. This represents the type of object that the userset refers to. For example, in &quot;group:eng#member&quot;, this would return &quot;group&quot;.
+Get the object type in the userset reference. This represents the type of object that the userset refers to. For example, in &quot;group:eng#member,&quot; this would return &quot;group.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUserInterface.php#L50)
 

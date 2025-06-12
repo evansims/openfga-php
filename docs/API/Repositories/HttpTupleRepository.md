@@ -163,13 +163,13 @@ List changes to relationship tuples over time. Retrieves a chronological log of 
 
 #### Parameters
 
-| Name                 | Type                                         | Description                                        |
-| -------------------- | -------------------------------------------- | -------------------------------------------------- |
-| `$store`             | [`StoreInterface`](Models/StoreInterface.md) | The store to query                                 |
+| Name                 | Type                                         | Description                                              |
+| -------------------- | -------------------------------------------- | -------------------------------------------------------- |
+| `$store`             | [`StoreInterface`](Models/StoreInterface.md) | The store to query                                       |
 | `$type`              | `string` &#124; `null`                       | Filter by object type (for example &quot;document&quot;) |
-| `$startTime`         | `DateTimeImmutable` &#124; `null`            | Filter changes after this time                     |
-| `$continuationToken` | `string` &#124; `null`                       | Token from previous response for pagination        |
-| `$pageSize`          | `int` &#124; `null`                          | Maximum number of changes to return                |
+| `$startTime`         | `DateTimeImmutable` &#124; `null`            | Filter changes after this time                           |
+| `$continuationToken` | `string` &#124; `null`                       | Token from previous response for pagination              |
+| `$pageSize`          | `int` &#124; `null`                          | Maximum number of changes to return                      |
 
 #### Returns
 

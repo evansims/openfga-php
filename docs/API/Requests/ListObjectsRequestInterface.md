@@ -1,6 +1,6 @@
 # ListObjectsRequestInterface
 
-Interface for listing objects that a user has access to. This interface defines the contract for requests that query which objects a specific user can access for a given relation. This is the inverse of a permission check - instead of asking &quot;can this user access this object?&quot;, it asks &quot;what objects can this user access?&quot;. List objects operations support: - Filtering by object type and relation - Contextual evaluation with additional data - Temporary relationship tuples for scenario testing - Configurable read consistency levels - Authorization model versioning for consistent results This is particularly useful for building user interfaces that need to display only the resources a user can access, such as file listings, document repositories, or administrative dashboards.
+Interface for listing objects that a user has access to. This interface defines the contract for requests that query which objects a specific user can access for a given relation. This is the inverse of a permission check - instead of asking &quot;can this user access this object?&quot;, it asks &quot;what objects can this user access?&quot; List objects operations support: - Filtering by object type and relation - Contextual evaluation with additional data - Temporary relationship tuples for scenario testing - Configurable read consistency levels - Authorization model versioning for consistent results This is particularly useful for building user interfaces that need to display only the resources a user can access, such as file listings, document repositories, or administrative dashboards.
 
 ## Namespace
 
@@ -88,7 +88,7 @@ public function getRelation(): string
 
 ```
 
-Get the relation to check for object access. Specifies the relationship type to evaluate when determining object access. For example, &quot;can_view&quot;, &quot;can_edit&quot;, or &quot;owner&quot;. This defines what type of permission or relationship is being queried.
+Get the relation to check for object access. Specifies the relationship type to evaluate when determining object access. For example, &quot;can_view,&quot; &quot;can_edit,&quot; or &quot;owner.&quot; This defines what type of permission or relationship is being queried.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L93)
 
@@ -139,7 +139,7 @@ public function getType(): string
 
 ```
 
-Get the object type to filter results by. Specifies the type of objects to include in the results. Only objects of this type will be considered when determining what the user can access. For example, &quot;document&quot;, &quot;folder&quot;, or &quot;repository&quot;.
+Get the object type to filter results by. Specifies the type of objects to include in the results. Only objects of this type will be considered when determining what the user can access. For example, &quot;document,&quot; &quot;folder,&quot; or &quot;repository.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequestInterface.php#L115)
 

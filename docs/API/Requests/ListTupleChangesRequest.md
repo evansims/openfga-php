@@ -110,7 +110,7 @@ public function getType(): ?string
 
 ```
 
-Get the object type filter for changes. Specifies an optional filter to only include changes affecting tuples of a specific object type. This helps narrow the results to changes relevant to particular resource types, such as &quot;document&quot;, &quot;folder&quot;, or &quot;organization&quot;.
+Get the object type filter for changes. Specifies an optional filter to only include changes affecting tuples of a specific object type. This helps narrow the results to changes relevant to particular resource types, such as &quot;document,&quot; &quot;folder,&quot; or &quot;organization.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListTupleChangesRequest.php#L121)
 

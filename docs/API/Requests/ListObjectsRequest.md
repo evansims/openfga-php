@@ -89,7 +89,7 @@ public function getRelation(): string
 
 ```
 
-Get the relation to check for object access. Specifies the relationship type to evaluate when determining object access. For example, &quot;can_view&quot;, &quot;can_edit&quot;, or &quot;owner&quot;. This defines what type of permission or relationship is being queried.
+Get the relation to check for object access. Specifies the relationship type to evaluate when determining object access. For example, &quot;can_view,&quot; &quot;can_edit,&quot; or &quot;owner.&quot; This defines what type of permission or relationship is being queried.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequest.php#L120)
 
@@ -140,7 +140,7 @@ public function getType(): string
 
 ```
 
-Get the object type to filter results by. Specifies the type of objects to include in the results. Only objects of this type will be considered when determining what the user can access. For example, &quot;document&quot;, &quot;folder&quot;, or &quot;repository&quot;.
+Get the object type to filter results by. Specifies the type of objects to include in the results. Only objects of this type will be considered when determining what the user can access. For example, &quot;document,&quot; &quot;folder,&quot; or &quot;repository.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ListObjectsRequest.php#L167)
 

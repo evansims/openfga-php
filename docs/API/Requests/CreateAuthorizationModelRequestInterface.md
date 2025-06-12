@@ -94,7 +94,7 @@ public function getTypeDefinitions(): TypeDefinitionsInterface
 
 ```
 
-Get the type definitions for the authorization model. Returns a collection of type definitions that specify the object types and their allowed relationships within the authorization model. Type definitions form the core schema that defines what objects exist in your system and how they can be related to users and other objects. Each type definition includes: - Object type name (for example &quot;document&quot;, &quot;folder&quot;, &quot;organization&quot;) - Allowed relationships (for example &quot;owner&quot;, &quot;editor&quot;, &quot;viewer&quot;) - Relationship inheritance and computation rules - References to conditional logic for dynamic authorization
+Get the type definitions for the authorization model. Returns a collection of type definitions that specify the object types and their allowed relationships within the authorization model. Type definitions form the core schema that defines what objects exist in your system and how they can be related to users and other objects. Each type definition includes: - Object type name (for example &quot;document,&quot; &quot;folder,&quot; &quot;organization&quot;) - Allowed relationships (for example &quot;owner,&quot; &quot;editor,&quot; &quot;viewer&quot;) - Relationship inheritance and computation rules - References to conditional logic for dynamic authorization
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/CreateAuthorizationModelRequestInterface.php#L109)
 

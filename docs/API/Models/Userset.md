@@ -52,7 +52,7 @@ public function getDifference(): ?OpenFGA\Models\DifferenceV1Interface
 
 ```
 
-Get the difference operation specification for this userset. A difference operation represents a set subtraction where users are granted access based on one userset but explicitly excluded if they&#039;re in another. This enables sophisticated access control patterns like &quot;all managers except those on leave&quot;.
+Get the difference operation specification for this userset. A difference operation represents a set subtraction where users are granted access based on one userset but explicitly excluded if they&#039;re in another. This enables sophisticated access control patterns like &quot;all managers except those on leave.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Userset.php#L79)
 

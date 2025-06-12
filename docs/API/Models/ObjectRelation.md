@@ -1,6 +1,6 @@
 # ObjectRelation
 
-Represents a reference to a specific relation on an object. In authorization models, you often need to reference relationships between objects. An ObjectRelation identifies both the target object and the specific relation you&#039;re interested in, like &quot;the owner of document:budget&quot; or &quot;editors of folder:reports&quot;. This is commonly used in authorization rules where permissions depend on relationships with other objects in your system.
+Represents a reference to a specific relation on an object. In authorization models, you often need to reference relationships between objects. An ObjectRelation identifies both the target object and the specific relation you&#039;re interested in, like &quot;the owner of document:budget&quot; or &quot;editors of folder:reports.&quot; This is commonly used in authorization rules where permissions depend on relationships with other objects in your system.
 
 ## Namespace
 
@@ -52,7 +52,7 @@ public function getRelation(): string
 
 ```
 
-Get the relation name that defines the type of relationship to the object. The relation describes what kind of permission or relationship exists. Common examples include &quot;owner&quot;, &quot;viewer&quot;, &quot;editor&quot;, &quot;member&quot;.
+Get the relation name that defines the type of relationship to the object. The relation describes what kind of permission or relationship exists. Common examples include &quot;owner,&quot; &quot;viewer,&quot; &quot;editor,&quot; &quot;member.&quot;
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L71)
 
