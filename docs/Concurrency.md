@@ -33,7 +33,6 @@ With this setup established, the examples below focus on the concurrency feature
 - [Performance Optimization](#performance-optimization)
 - [Monitoring and Debugging](#monitoring-and-debugging)
 - [Best Practices](#best-practices)
-- [Next Steps](#next-steps)
 
 ## Quick Start
 
