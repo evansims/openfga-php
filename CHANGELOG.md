@@ -2,18 +2,6 @@
 
 ## [Unreleased]
 
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
-
 ## [1.3.0] - June 10, 2025
 
 > _Threads and fibers dance,<br />

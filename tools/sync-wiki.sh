@@ -100,33 +100,33 @@ cat > "_Footer.md" << 'EOF'
 
 **Essential Guides:** [Introduction](Introduction) • [Installation](Introduction#install-the-sdk) • [Authentication](Authentication) • [Stores](Stores) • [Models](Models) • [Tuples](Tuples) • [Queries](Queries)
 
-**Advanced Features:** [Helper Functions](Helpers) • [Concurrency](Concurrency) • [Results](Results) • [Exceptions](Exceptions) • [Observability](Observability) • [Integration](Integration)
+**Advanced Features:** [Helper](Helpers) • [Concurrency](Concurrency) • [Results](Results) • [Exceptions](Exceptions) • [Observability](Observability) • [Integration](Integration)
 
 ## Developer Resources
 
-- **[📖 Complete API Reference](API-Client)** - Full class and method documentation
-- **[🚀 Quick Start Examples](Introduction#quick-start)** - Get up and running in minutes
-- **[🔧 Helper Functions](Introduction#helper-functions)** - Convenient shortcuts for common operations
-- **[🧪 Testing Guide](Integration#testing)** - Unit testing with the SDK
-- **[📊 Performance Guide](Concurrency)** - Optimize for high-scale applications
+- **[API Reference](API-Client)** - Full class and method documentation
+- **[Quickstart Examples](Introduction#build-your-first-authorization-system)** - Get up and running in minutes
+- **[Helpers](Introduction#helper-functions)** - Convenient shortcuts for common operations
+- **[Testing Guide](Integration#testing)** - Unit testing with the SDK
+- **[Performance Guide](Concurrency)** - Optimize for high-scale applications
 
 ## Support & Community
 
-- **[🐛 Report Issues](https://github.com/evansims/openfga-php/issues)** - Bug reports and feature requests
-- **[💬 Discussions](https://github.com/evansims/openfga-php/discussions)** - Community support and questions
-- **[📝 Contributing](https://github.com/evansims/openfga-php/blob/main/CONTRIBUTING.md)** - Help improve the SDK
-- **[🔄 Changelog](https://github.com/evansims/openfga-php/blob/main/CHANGELOG.md)** - Latest updates and releases
+- **[Report Issues](https://github.com/evansims/openfga-php/issues)** - Bug reports and feature requests
+- **[Discussions](https://github.com/evansims/openfga-php/discussions)** - Community support and questions
+- **[Contributing](https://github.com/evansims/openfga-php/blob/main/.github/CONTRIBUTING.md)** - Help improve the SDK
+- **[Changelog](https://github.com/evansims/openfga-php/blob/main/CHANGELOG.md)** - Latest updates and releases
 
 ## OpenFGA Ecosystem
 
-- **[🌐 OpenFGA Documentation](https://openfga.dev/docs)** - Official OpenFGA documentation
-- **[🎮 OpenFGA Playground](https://play.fga.dev)** - Interactive modeling environment
-- **[📚 Authorization Concepts](https://openfga.dev/docs/concepts)** - Learn relationship-based access control
-- **[🔗 Other SDKs](https://openfga.dev/docs/getting-started/setup-sdk)** - JavaScript, Go, Python, .NET, and more
+- **[OpenFGA Documentation](https://openfga.dev/docs)** - Official OpenFGA documentation
+- **[OpenFGA Playground](https://play.fga.dev)** - Interactive modeling environment
+- **[Authorization Concepts](https://openfga.dev/docs/concepts)** - Learn relationship-based access control
+- **[Other SDKs](https://openfga.dev/docs/getting-started/install-sdk)** - JavaScript, Go, Python, .NET, and more
 
 ---
 
-*OpenFGA PHP SDK • [Apache 2.0 License](https://github.com/evansims/openfga-php/blob/main/LICENSE) • Version: `composer show evansims/openfga-php | grep 'versions'`*
+*OpenFGA PHP SDK • [Apache 2.0 License](https://github.com/evansims/openfga-php/blob/main/LICENSE)*
 EOF
 
 # Convert directory structure to wiki-friendly format
