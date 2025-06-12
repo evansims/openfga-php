@@ -9,7 +9,7 @@ echo "🔄 Syncing documentation to GitHub Wiki..."
 
 # Generate fresh documentation
 echo "📖 Generating documentation..."
-composer docs
+composer docs:api
 
 # Prepare wiki content
 echo "🔧 Preparing wiki content..."
