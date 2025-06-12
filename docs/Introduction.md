@@ -30,7 +30,7 @@ use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
 
 ## Start an OpenFGA server
 
-> [!NOTE] > **Using a managed service?** Skip this step and use your Auth0 FGA or hosted OpenFGA URL instead.
+> **Using a managed service?** Skip this step and use your Auth0 FGA or hosted OpenFGA URL instead.
 
 The easiest way is Docker - one command gets you running:
 
