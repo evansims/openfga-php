@@ -41,7 +41,7 @@ All examples in this guide assume the following setup:
   ```bash
   composer require open-telemetry/api open-telemetry/sdk
   ```
-- **An observability backend** like Jaeger, Zipkin, or a cloud service (optional for getting started)
+- **An OpenTelemetry processing/exporting setup.** While not strictly required to enable telemetry in the SDK, you'll need a way to process and view your telemetry data. This can range from a simple console exporter for local development, a local Jaeger/Zipkin instance, to a full cloud-based observability service.
 
 **Common imports and setup code:**
 
@@ -81,33 +81,6 @@ $modelId = 'your-model-id';
 ```
 
 ## Quick Start
-
-### 1. Basic Setup (No Backend)
-
-The simplest way to get started is with the built-in telemetry that works without any external dependencies:
-
-```php
-// Create a telemetry provider
-$telemetry = TelemetryFactory::create(
-    serviceName: 'my-authorization-service',
-    serviceVersion: '1.0.0'
-);
-
-// Configure the client with telemetry
-$client = new Client(
-    url: $apiUrl,
-    telemetry: $telemetry
-);
-
-// Your authorization operations are now automatically instrumented!
-$result = $client->check(
-    store: $storeId,
-    model: $modelId,
-    tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
-);
-```
-
-### 2. Full OpenTelemetry Setup
 
 For production use with a telemetry backend, install the OpenTelemetry packages and configure them:
 
@@ -250,26 +223,6 @@ $telemetry = TelemetryFactory::createWithCustomProviders($tracer, $meter);
 $client = new Client(
     url: $apiUrl,
     telemetry: $telemetry
-);
-```
-
-### No-Op Mode
-
-For testing or when you want to disable telemetry:
-
-```php
-// Explicitly disable telemetry
-$telemetry = TelemetryFactory::createNoOp(); // Returns null
-
-$client = new Client(
-    url: $apiUrl,
-    telemetry: $telemetry
-);
-
-// Or simply pass null directly
-$client = new Client(
-    url: $apiUrl,
-    telemetry: null  // No telemetry
 );
 ```
 
