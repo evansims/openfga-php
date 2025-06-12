@@ -71,6 +71,7 @@ yarn-error.log*
 # Documentation Build
 /docs/build/
 /.docusaurus/
+/wiki-content/
 
 # Testing
 /phpunit.xml
