@@ -6,6 +6,21 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 
 **Already using OpenTelemetry?** The SDK integrates seamlessly with your existing setup - just configure your telemetry provider and start getting insights into your OpenFGA operations automatically.
 
+## Table of Contents
+
+- [What You'll Get](#what-youll-get)
+- [Prerequisites](#prerequisites)
+- [Quick Start](#quick-start)
+- [Telemetry Data Collected](#telemetry-data-collected)
+- [Configuration Options](#configuration-options)
+- [Common Integration Patterns](#common-integration-patterns)
+- [Example: Complete Authorization Workflow with Tracing](#example-complete-authorization-workflow-with-tracing)
+- [Viewing Your Telemetry Data](#viewing-your-telemetry-data)
+- [Troubleshooting](#troubleshooting)
+- [Event-Driven Telemetry](#event-driven-telemetry)
+- [Advanced Usage](#advanced-usage)
+- [Next Steps](#next-steps)
+
 ## What You'll Get
 
 The SDK automatically instruments and provides telemetry for:
@@ -18,12 +33,52 @@ The SDK automatically instruments and provides telemetry for:
 
 ## Prerequisites
 
+All examples in this guide assume the following setup:
+
+**Requirements:**
 - **PHP 8.3+** with the OpenFGA PHP SDK installed
 - **OpenTelemetry PHP packages** (optional, but recommended for full functionality):
   ```bash
   composer require open-telemetry/api open-telemetry/sdk
   ```
 - **An observability backend** like Jaeger, Zipkin, or a cloud service (optional for getting started)
+
+**Common imports and setup code:**
+
+```php
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+// OpenFGA SDK imports
+use OpenFGA\Client;
+use OpenFGA\Observability\TelemetryFactory;
+
+// OpenTelemetry imports (when using full OpenTelemetry setup)
+use OpenTelemetry\API\Globals;
+use OpenTelemetry\API\Trace\Propagation\TraceContextPropagator;
+use OpenTelemetry\API\Trace\Span;
+use OpenTelemetry\Contrib\Otlp\SpanExporter;
+use OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor;
+use OpenTelemetry\SDK\Trace\TracerProvider;
+
+// Event-driven telemetry imports
+use OpenFGA\Events\{
+    EventDispatcher,
+    HttpRequestSentEvent,
+    HttpResponseReceivedEvent,
+    OperationCompletedEvent,
+    OperationStartedEvent
+};
+
+// Helper functions for common operations
+use function OpenFGA\{allowed, dsl, model, store, tuple, tuples, write};
+
+// Basic client configuration (customize for your environment)
+$apiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
+$storeId = 'your-store-id';
+$modelId = 'your-model-id';
+```
 
 ## Quick Start
 
@@ -32,13 +87,6 @@ The SDK automatically instruments and provides telemetry for:
 The simplest way to get started is with the built-in telemetry that works without any external dependencies:
 
 ```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use OpenFGA\Client;
-use OpenFGA\Observability\TelemetryFactory;
-
 // Create a telemetry provider
 $telemetry = TelemetryFactory::create(
     serviceName: 'my-authorization-service',
@@ -47,17 +95,16 @@ $telemetry = TelemetryFactory::create(
 
 // Configure the client with telemetry
 $client = new Client(
-    url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
+    url: $apiUrl,
     telemetry: $telemetry
 );
 
 // Your authorization operations are now automatically instrumented!
 $result = $client->check(
-    store: 'your-store-id',
-    model: 'your-model-id',
+    store: $storeId,
+    model: $modelId,
     tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
 );
-?>
 ```
 
 ### 2. Full OpenTelemetry Setup
@@ -69,18 +116,6 @@ composer require open-telemetry/api open-telemetry/sdk
 ```
 
 ```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use OpenFGA\Client;
-use OpenFGA\Observability\TelemetryFactory;
-use OpenTelemetry\API\Globals;
-use OpenTelemetry\API\Trace\Propagation\TraceContextPropagator;
-use OpenTelemetry\Contrib\Otlp\SpanExporter;
-use OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor;
-use OpenTelemetry\SDK\Trace\TracerProvider;
-
 // Configure OpenTelemetry (this is a basic example)
 $tracerProvider = new TracerProvider([
     new SimpleSpanProcessor(
@@ -100,19 +135,18 @@ $telemetry = TelemetryFactory::create(
 
 // Configure client
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $apiUrl,
     telemetry: $telemetry
 );
 
 // Operations are now traced and exported to your backend
 $result = $client->listObjects(
-    store: 'store_123',
-    model: 'model_456',
+    store: $storeId,
+    model: $modelId,
     user: 'user:anne',
     relation: 'viewer',
     type: 'document'
 );
-?>
 ```
 
 ## Telemetry Data Collected
@@ -123,7 +157,7 @@ Every HTTP request to the OpenFGA API is automatically instrumented:
 
 **Traces (Spans):**
 
-- Span name: `HTTP {METHOD}` (e.g., `HTTP POST`)
+- Span name: `HTTP {METHOD}` (for example `HTTP POST`)
 - Duration of the entire HTTP request/response cycle
 - HTTP method, URL, status code, response size
 - Error details if the request fails
@@ -151,7 +185,7 @@ Business-level operations provide higher-level observability:
 
 **Traces (Spans):**
 
-- Span name: `openfga.{operation}` (e.g., `openfga.check`, `openfga.write_tuples`)
+- Span name: `openfga.{operation}` (for example `openfga.check`, `openfga.write_tuples`)
 - Duration of the business operation (may include multiple HTTP calls)
 - Store ID, model ID, and operation-specific metadata
 
@@ -206,9 +240,6 @@ $telemetry = TelemetryFactory::create(
 You can provide your own configured OpenTelemetry tracer and meter:
 
 ```php
-use OpenFGA\Observability\TelemetryFactory;
-use OpenTelemetry\API\Globals;
-
 // Get your configured tracer and meter
 $tracer = Globals::tracerProvider()->getTracer('my-service', '1.0.0');
 $meter = Globals::meterProvider()->getMeter('my-service', '1.0.0');
@@ -217,7 +248,7 @@ $meter = Globals::meterProvider()->getMeter('my-service', '1.0.0');
 $telemetry = TelemetryFactory::createWithCustomProviders($tracer, $meter);
 
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $apiUrl,
     telemetry: $telemetry
 );
 ```
@@ -227,19 +258,17 @@ $client = new Client(
 For testing or when you want to disable telemetry:
 
 ```php
-use OpenFGA\Observability\TelemetryFactory;
-
 // Explicitly disable telemetry
 $telemetry = TelemetryFactory::createNoOp(); // Returns null
 
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $apiUrl,
     telemetry: $telemetry
 );
 
 // Or simply pass null directly
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $apiUrl,
     telemetry: null  // No telemetry
 );
 ```
@@ -259,10 +288,7 @@ docker run -d --name jaeger \
 ```
 
 ```php
-<?php
 use OpenTelemetry\Contrib\Jaeger\Exporter as JaegerExporter;
-use OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor;
-use OpenTelemetry\SDK\Trace\TracerProvider;
 
 $tracerProvider = new TracerProvider([
     new SimpleSpanProcessor(
@@ -278,7 +304,6 @@ Globals::registerInitializer(function () use ($tracerProvider) {
 });
 
 $telemetry = TelemetryFactory::create('my-service', '1.0.0');
-?>
 ```
 
 ### Cloud Providers
@@ -286,13 +311,9 @@ $telemetry = TelemetryFactory::create('my-service', '1.0.0');
 For cloud-based observability services:
 
 ```php
-<?php
 // AWS X-Ray, Google Cloud Trace, Azure Monitor, etc.
-use OpenTelemetry\Contrib\Otlp\SpanExporter;
-
 $exporter = new SpanExporter($_ENV['OTEL_EXPORTER_OTLP_ENDPOINT']);
 // Configure with your cloud provider's specific settings
-?>
 ```
 
 ### Existing OpenTelemetry Setup
@@ -300,17 +321,15 @@ $exporter = new SpanExporter($_ENV['OTEL_EXPORTER_OTLP_ENDPOINT']);
 If you already have OpenTelemetry configured in your application:
 
 ```php
-<?php
 // The SDK will automatically use your existing global configuration
 $telemetry = TelemetryFactory::create('my-authorization-service');
 
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $apiUrl,
     telemetry: $telemetry
 );
 
 // Traces will be included in your existing observability setup
-?>
 ```
 
 ## Example: Complete Authorization Workflow with Tracing
@@ -318,14 +337,6 @@ $client = new Client(
 Here's a complete example showing how telemetry works throughout an authorization workflow:
 
 ```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use OpenFGA\Client;
-use OpenFGA\Observability\TelemetryFactory;
-use function OpenFGA\{tuple, tuples};
-
 // Configure telemetry (assumes OpenTelemetry is set up)
 $telemetry = TelemetryFactory::create(
     serviceName: 'document-service',
@@ -333,7 +344,7 @@ $telemetry = TelemetryFactory::create(
 );
 
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $apiUrl,
     telemetry: $telemetry
 );
 
@@ -384,7 +395,6 @@ try {
     // Errors are automatically recorded in spans
     echo "Authorization failed: " . $e->getMessage() . "\n";
 }
-?>
 ```
 
 ## Viewing Your Telemetry Data
@@ -487,11 +497,8 @@ The SDK emits events at key points during operation execution:
 Here's how to create and register custom event listeners:
 
 ```php
-<?php
-
-use OpenFGA\Events\{EventDispatcher, HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
-
 // Create a logging listener
+// Note: This is an example helper class and not part of the SDK.
 final class LoggingEventListener
 {
     public function onHttpRequestSent(HttpRequestSentEvent $event): void
@@ -519,6 +526,7 @@ final class LoggingEventListener
 }
 
 // Create a metrics listener
+// Note: This is an example helper class and not part of the SDK.
 final class MetricsEventListener
 {
     private array $operationTimes = [];
@@ -583,15 +591,6 @@ $eventDispatcher->addListener(OperationCompletedEvent::class, [$metricsListener,
 Here's a complete example showing event-driven telemetry in action:
 
 ```php
-<?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use OpenFGA\Client;
-use OpenFGA\Events\EventDispatcher;
-
-use function OpenFGA\{allowed, dsl, model, store, tuple, write};
-
 // Your custom listeners (defined above)
 $eventDispatcher = new EventDispatcher();
 $loggingListener = new LoggingEventListener();
@@ -606,7 +605,7 @@ $eventDispatcher->addListener(OperationStartedEvent::class, [$metricsListener, '
 $eventDispatcher->addListener(OperationCompletedEvent::class, [$metricsListener, 'onOperationCompleted']);
 
 $client = new Client(
-    url: 'http://localhost:8080',
+    url: $apiUrl,
     eventDispatcher: $eventDispatcher,
 );
 
@@ -636,6 +635,7 @@ print_r($metricsListener->getMetrics());
 **Custom Alerting:**
 
 ```php
+// Note: This is an example helper class and not part of the SDK.
 final class AlertingEventListener
 {
     public function onOperationCompleted(OperationCompletedEvent $event): void
@@ -655,6 +655,7 @@ final class AlertingEventListener
 **Security Monitoring:**
 
 ```php
+// Note: This is an example helper class and not part of the SDK.
 final class SecurityEventListener
 {
     public function onOperationStarted(OperationStartedEvent $event): void
@@ -675,6 +676,7 @@ final class SecurityEventListener
 **Performance Analytics:**
 
 ```php
+// Note: This is an example helper class and not part of the SDK.
 final class PerformanceEventListener
 {
     private array $operationTimings = [];
@@ -723,7 +725,7 @@ $container->singleton(EventDispatcher::class, function () {
 // Configure the client to use the dispatcher
 $container->singleton(Client::class, function ($container) {
     return new Client(
-        url: $_ENV['FGA_API_URL'],
+        url: $apiUrl,
         eventDispatcher: $container->get(EventDispatcher::class),
     );
 });
@@ -739,15 +741,17 @@ Add custom context to your authorization operations:
 // The SDK automatically includes relevant attributes, but you can add more context
 // when configuring your service or through OpenTelemetry's context propagation
 
-use OpenTelemetry\API\Trace\Span;
-
 // Add custom attributes to the current span
 $span = Span::getCurrent();
 $span->setAttribute('user.department', 'engineering');
 $span->setAttribute('request.source', 'mobile-app');
 
 // Now perform your authorization check
-$result = $client->check(/* ... */);
+$result = $client->check(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
+);
 ```
 
 ### Correlation with Application Traces
@@ -755,11 +759,15 @@ $result = $client->check(/* ... */);
 The SDK integrates with your application's existing traces:
 
 ```php
-// If you have an existing span (e.g., from a web request)
+// If you have an existing span (for example from a web request)
 $parentSpan = $yourFramework->getCurrentSpan();
 
 // OpenFGA operations will automatically become child spans
-$result = $client->check(/* ... */); // This becomes a child of $parentSpan
+$result = $client->check(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
+); // This becomes a child of $parentSpan
 ```
 
 ### Metrics-Only Mode

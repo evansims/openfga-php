@@ -1,6 +1,29 @@
 # Results
 
-## Why use Results?
+## Prerequisites
+
+The examples in this guide assume you have the following setup:
+
+```php
+use OpenFGA\Sdk\{Client, ClientInterface};
+use OpenFGA\Sdk\Model\{Store, Configuration};
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+use function OpenFGA\{result, ok, err, unwrap, success, failure, tuple, allowed};
+
+// Initialize client
+$client = new Client(url: 'http://localhost:8080');
+
+// These values are typically from your configuration or previous operations
+$storeId = 'your-store-id';
+$modelId = 'your-model-id';
+$store = $client->getStore($storeId)->unwrap();
+$model = $client->getAuthorizationModel($storeId, $modelId)->unwrap();
+
+// For Laravel users - the collect() function is available
+// For non-Laravel users, you can use array_map/array_filter or similar
+```
+
+## Why use Results
 
 Tired of wrapping every API call in try-catch blocks? The OpenFGA SDK uses Results to make error handling explicit and chainable:
 
@@ -91,6 +114,8 @@ $config = $client->getStore($storeId)
 ### Pipeline with side effects
 
 ```php
+$tuples = [/* your tuples here */];
+
 $client->writeTuples($store, $model, $tuples)
     ->success(fn($response) => $this->logSuccess($response))
     ->failure(fn($error) => $this->logError($error))
@@ -103,12 +128,9 @@ $client->writeTuples($store, $model, $tuples)
 ### Fail gracefully with helper functions
 
 ```php
-use function OpenFGA\{result, ok, err, unwrap, success, failure};
-
 // Return a sensible default when things go wrong
 function getUserPermissions(string $userId): array
 {
-    // Use the helper functions from Helpers.php
     return result(function() use ($userId) {
         return $this->client->listObjects(
             user: $userId,
@@ -130,62 +152,72 @@ function getUserPermissions(string $userId): array
 ### Handling specific error types with enum-based exceptions
 
 ```php
-use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
-use function OpenFGA\{tuple, allowed};
-
 function canUserAccess(string $userId, string $documentId): bool
 {
-    try {
-        return allowed(
-            client: $this->client,
-            store: $this->storeId,
-            model: $this->modelId,
-            tuple: tuple("user:{$userId}", 'viewer', "document:{$documentId}")
-        );
-    } catch (Throwable $e) {
-        // Handle specific enum-based errors with match expression
-        if ($e instanceof ClientException) {
-            return match($e->getError()) {
+    // Call client->check() to get a ResultInterface object
+    $result = $this->client->check(
+        store: $this->storeId,
+        model: $this->modelId,
+        tupleKey: tuple("user:{$userId}", 'viewer', "document:{$documentId}")
+    );
+
+    // Check if the operation failed
+    if ($result->failed()) {
+        $error = $result->err(); // Get the actual error/exception
+
+        // Handle specific enum-based ClientException errors
+        if ($error instanceof ClientException) {
+            return match($error->getError()) { // getError() returns the enum
                 // Network errors can be retried
                 ClientError::Network => $this->retryAfterDelay(function() use ($userId, $documentId) {
+                    // Recursive call or re-attempt logic
                     return $this->canUserAccess($userId, $documentId);
                 }, $maxRetries = 3),
 
                 // Authentication errors should trigger re-auth
-                ClientError::Authentication => $this->handleAuthError($e),
+                ClientError::Authentication => $this->handleAuthError($error), // Pass the error object
 
-                // Fall back to cached permissions for other errors
+                // Fall back to cached permissions for other client errors
                 default => $this->getCachedPermission($userId, $documentId, false)
             };
         }
 
-        // Unknown error types - fail closed for security
+        // Handle other types of Throwable or log unexpected errors
         logger()->error('Unexpected error checking permissions', [
-            'error_type' => $e::class,
+            'error_type' => $error::class,
+            'message' => $error->getMessage(),
             'user' => $userId,
             'document' => $documentId
         ]);
 
-        return false;
+        return false; // Secure default for unhandled errors
     }
+
+    // If successful, unwrap to get the CheckResponse and then getAllowed()
+    return $result->unwrap()->getAllowed();
 }
 ```
 
 ### Collect multiple results
 
 ```php
+$userId = 'user:anne';
+$resourceId = 'document:budget-2024';
+
 $permissions = collect(['read', 'write', 'delete'])
     ->map(fn($action) => $client->check(user: $userId, relation: $action, object: $resourceId))
     ->filter(fn($result) => $result->succeeded())
-    ->map(fn($result) => $result->unwrap()->getIsAllowed())
+    ->map(fn($result) => $result->unwrap()->getAllowed())
     ->toArray();
 ```
 
 ### Add context to errors
 
 ```php
+$tuples = [/* your tuples here */];
+
 $result = $client->writeTuples($store, $model, $tuples)
-    ->failure(function(Throwable $e) use ($store) {
+    ->failure(function(Throwable $e) use ($store, $tuples) {
         logger()->error("Failed to write tuples to store {$store->getId()}", [
             'error' => $e->getMessage(),
             'tuples_count' => count($tuples)
@@ -213,7 +245,7 @@ function checkWithRetry(string $user, string $relation, string $object): bool
             user: $user,
             relation: $relation,
             object: $object
-        )->unwrap()->getIsAllowed();
+        )->unwrap()->getAllowed();
     }, sleepMilliseconds: fn($attempt) => $attempt * 1000);
 }
 ```
@@ -227,7 +259,7 @@ function batchCheck(array $checks): array
         ->map(fn($check) => $this->client->check(...$check))
         ->map(fn($result, $index) => [
             'index' => $index,
-            'allowed' => $result->succeeded() && $result->unwrap()->getIsAllowed(),
+            'allowed' => $result->succeeded() && $result->unwrap()->getAllowed(),
             'error' => $result->failed() ? $result->err()->getMessage() : null
         ])
         ->toArray();
@@ -239,6 +271,7 @@ function batchCheck(array $checks): array
 #### Laravel Service
 
 ```php
+// Note: This is an example helper class for a Laravel application and not part of the SDK.
 class PermissionService
 {
     public function __construct(
@@ -255,7 +288,7 @@ class PermissionService
                 model: $this->modelId,
                 tupleKey: tuple($user, $action, $resource)
             )
-            ->then(fn($response) => $response->getIsAllowed())
+            ->then(fn($response) => $response->getAllowed())
             ->recover(function(Throwable $e) {
                 Log::warning('Permission check failed', [
                     'user' => $user,
@@ -283,7 +316,7 @@ class FgaVoter extends Voter
                 model: $this->model,
                 tupleKey: tuple($token->getUserIdentifier(), $attribute, $subject->getId())
             )
-            ->then(fn($response) => $response->getIsAllowed())
+            ->then(fn($response) => $response->getAllowed())
             ->recover(fn() => false) // Deny on error
             ->unwrap();
     }

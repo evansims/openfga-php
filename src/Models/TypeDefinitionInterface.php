@@ -14,8 +14,8 @@ use Override;
  * the types of objects in your system and the relationships that can exist
  * between them. Each type definition specifies:
  *
- * - The type name (e.g., "document", "user", "organization")
- * - The relations that objects of this type can have (e.g., "viewer", "editor", "owner")
+ * - The type name (for example "document," "user," "organization")
+ * - The relations that objects of this type can have (for example "viewer," "editor," "owner")
  * - Optional metadata for additional context and configuration
  *
  * Type definitions form the schema that OpenFGA uses to understand your
@@ -51,7 +51,7 @@ interface TypeDefinitionInterface extends ModelInterface
      *
      * The type name uniquely identifies this type definition
      * within the authorization model. Common examples include
-     * "user", "document", "folder", "organization", etc.
+     * "user," "document," "folder," "organization," etc.
      *
      * @return string The unique type name
      */

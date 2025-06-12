@@ -334,7 +334,7 @@ final readonly class HttpTupleRepository implements TupleRepositoryInterface
 
                 if (! $lastRequest instanceof RequestInterface) {
                     // For successful responses, we can create a basic WriteTuplesResponse
-                    // even if we couldn't capture the request (e.g., in test scenarios)
+                    // even if we couldn't capture the request (for example in test scenarios)
                     if (200 <= $response->getStatusCode() && 300 > $response->getStatusCode()) {
                         return new Success(new WriteTuplesResponse(
                             transactional: $originalRequest->isTransactional(),

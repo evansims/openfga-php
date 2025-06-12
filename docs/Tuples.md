@@ -6,14 +6,24 @@ A tuple is simply: `(user, relation, object)`
 
 For example: `(user:anne, editor, document:roadmap)` means "Anne can edit the roadmap document."
 
+## Prerequisites
+
+The examples in this guide assume you have the following setup:
+
 ```php
 <?php
 
 use OpenFGA\Client;
-use function OpenFGA\{tuple, tuples, write, delete};
+use OpenFGA\Exceptions\{ClientError, ClientException};
+use OpenFGA\Models\{ConditionParameter, ConditionParameters, RelationshipCondition, TupleKey, TupleKeys};
+use function OpenFGA\{tuple, tuples, write, delete, result};
 
-// Basic setup - see Getting Started for full client initialization
+// Client initialization - see Getting Started for full details
 $client = new Client(url: 'http://localhost:8080');
+
+// Store and model identifiers from your configuration
+$storeId = 'your-store-id';
+$modelId = 'your-model-id';
 ```
 
 ## Granting Permissions
@@ -69,8 +79,6 @@ $client->writeTuples(
 Check what permissions exist by reading tuples:
 
 ```php
-use OpenFGA\Models\TupleKey;
-
 // Find all permissions for a specific document
 $response = $client->readTuples(
     store: $storeId,
@@ -123,8 +131,6 @@ do {
 Add conditions to make permissions context-dependent:
 
 ```php
-use OpenFGA\Models\{ConditionParameter, ConditionParameters, RelationshipCondition, TupleKey, TupleKeys};
-
 // Only allow access during business hours
 $client->writeTuples(
     store: $storeId,
@@ -197,18 +203,17 @@ For checking permissions and querying relationships, see [Queries](Queries.md).
 When working with tuples, it's important to handle errors properly using the SDK's enum-based exception handling:
 
 ```php
-use OpenFGA\Exceptions\{ClientError, ClientException};
-use function OpenFGA\{tuple, write, result};
-
 // Example: Writing tuples with robust error handling
 function addUserToDocument(string $userId, string $documentId, string $role = 'viewer'): bool
 {
+    global $client, $storeId, $modelId;
+    
     // Use result helper for cleaner error handling
-    return result(function() use ($userId, $documentId, $role) {
+    return result(function() use ($client, $storeId, $modelId, $userId, $documentId, $role) {
         return write(
-            client: $this->client,
-            store: $this->storeId,
-            model: $this->modelId,
+            client: $client,
+            store: $storeId,
+            model: $modelId,
             tuples: tuple("user:{$userId}", $role, "document:{$documentId}")
         );
     })

@@ -2,7 +2,25 @@
 
 Ready to check permissions? Once you've set up your [authorization model](Models.md) and [relationship tuples](Tuples.md), it's time to actually use them. This is where OpenFGA shines - answering permission questions in real-time.
 
-## What are queries?
+## Prerequisites
+
+Before diving into the examples, make sure you have the necessary setup:
+
+```php
+use OpenFGA\{Client, ClientInterface};
+use OpenFGA\Models\{TupleKey, Enums\Consistency};
+use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+use function OpenFGA\{allowed, tuple, tuples, result, success, failure, unwrap};
+
+// Your configured client
+$client = new Client(url: 'http://localhost:8080');
+
+// Your store and model identifiers
+$storeId = 'your-store-id';
+$modelId = 'your-model-id';
+```
+
+## What are queries
 
 Queries let you ask OpenFGA about permissions. There are four types:
 
@@ -16,9 +34,6 @@ Queries let you ask OpenFGA about permissions. There are four types:
 This is the most common query. Use it to enforce access control in your app.
 
 ```php
-use OpenFGA\Models\TupleKey;
-use function OpenFGA\tuple;
-
 // Can user:alice view document:roadmap?
 $result = $client->check(
     tupleKey: tuple(
@@ -40,8 +55,6 @@ if ($result->unwrap()->getAllowed()) {
 ### Real-world usage
 
 ```php
-use function OpenFGA\{allowed, tuple};
-
 function canUserEdit(ClientInterface $client, string $storeId, string $modelId, string $userId, string $documentId): bool
 {
     return allowed(
@@ -154,8 +167,6 @@ function getDocumentEditors(string $documentId): array
 When permissions aren't working as expected, use expand to see why. It shows the complete relationship tree.
 
 ```php
-use OpenFGA\Models\TupleKey;
-
 // How can anyone be a viewer of document:roadmap?
 $result = $client->expand(
     tupleKey: new TupleKey(
@@ -178,8 +189,6 @@ This is mainly useful for debugging complex permission structures or understandi
 Test "what-if" scenarios without permanently saving relationships. Perfect for previewing permission changes.
 
 ```php
-use function OpenFGA\{tuple, tuples};
-
 // What if alice joins the engineering team?
 $contextualTuple = tuple(
     user: 'user:alice',
@@ -205,8 +214,6 @@ $wouldHaveAccess = $result->unwrap()->getIsAllowed();
 For read-after-write scenarios, you might need stronger consistency:
 
 ```php
-use OpenFGA\Models\Enums\Consistency;
-
 $result = $client->check(
     tupleKey: tuple(
         user: 'user:alice',
@@ -222,9 +229,6 @@ $result = $client->check(
 All query methods return Result objects. Handle errors gracefully using the Result pattern and helper functions:
 
 ```php
-use function OpenFGA\{tuple, result, success, failure, unwrap};
-use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
-
 // Basic error handling
 $result = $client->check(
     tupleKey: tuple(
@@ -249,6 +253,8 @@ Use enum-based exceptions for more precise error handling with i18n support:
 
 ```php
 // Define a robust permission checking service
+// Note: This is an example helper class and not part of the SDK.
+// It also assumes the existence of a CacheInterface for caching.
 class PermissionService
 {
     public function __construct(
@@ -337,9 +343,7 @@ class PermissionService
 ```php
 use Closure;
 use Illuminate\Http\Request;
-use OpenFGA\ClientInterface;
 use Symfony\Component\HttpFoundation\Response;
-use function OpenFGA\{allowed, tuple};
 
 // Middleware for route protection
 class FgaAuthMiddleware
@@ -421,7 +425,7 @@ function debugUserAccess(string $userId, string $documentId): void
 }
 ```
 
-## What's next?
+## What's next
 
 Now that you can query permissions effectively:
 

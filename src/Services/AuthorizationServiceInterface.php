@@ -99,7 +99,7 @@ interface AuthorizationServiceInterface
      *
      * This method finds all objects of a given type that the specified user has
      * a particular relationship with. It's useful for building filtered lists
-     * based on user permissions (e.g., "show me all documents I can read").
+     * based on user permissions (for example "show all documents the user can read").
      *
      * @param  StoreInterface|string              $store            The store to query
      * @param  AuthorizationModelInterface|string $model            The authorization model to use

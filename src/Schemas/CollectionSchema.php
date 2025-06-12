@@ -28,7 +28,7 @@ final readonly class CollectionSchema implements CollectionSchemaInterface
      * @param class-string $className    The fully qualified collection class name this schema defines
      * @param class-string $itemType     The fully qualified class name for individual items in the collection
      * @param bool         $requireItems Whether the collection must contain at least one item for validation to pass
-     * @param string|null  $wrapperKey   Optional wrapper key for collections that expect data nested under a specific key (e.g., 'child' for Usersets)
+     * @param string|null  $wrapperKey   Optional wrapper key for collections that expect data nested under a specific key (for example 'child' for Usersets)
      *
      * @throws ClientThrowable          If className or itemType are not valid, autoloadable classes
      * @throws InvalidArgumentException If message translation parameters are invalid

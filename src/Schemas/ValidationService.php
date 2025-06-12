@@ -87,7 +87,7 @@ final class ValidationService implements ValidationServiceInterface
             // Check if required property exists
             if (! array_key_exists($name, $data)) {
                 if ($required) {
-                    $errors[] = sprintf("Required property '%s' is missing", $name);
+                    $errors[] = sprintf("Required property '%s' is missing.", $name);
 
                     continue;
                 }
@@ -112,7 +112,7 @@ final class ValidationService implements ValidationServiceInterface
                 // Schema validation produces mixed types by design
                 $validatedData = array_merge($validatedData, [$name => $validatedValue]);
             } catch (SerializationException $e) {
-                $errors[] = sprintf("Property '%s': %s", $name, $e->getMessage());
+                $errors[] = sprintf("Property '%s': %s.", $name, $e->getMessage());
             }
         }
 

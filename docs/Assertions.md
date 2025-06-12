@@ -2,9 +2,9 @@
 
 Think of assertions as unit tests for your permission system. They let you define what should and shouldn't be allowed, then verify your authorization model works correctly before deploying it to production.
 
-## What are assertions?
+## Prerequisites
 
-Assertions are test cases that specify expected outcomes for permission checks. Each assertion says "user X should (or shouldn't) have permission Y on resource Z" and verifies this against your authorization model.
+Before working with assertions, ensure you have the following setup:
 
 ```php
 use OpenFGA\Client;
@@ -12,8 +12,17 @@ use OpenFGA\Models\Assertion;
 use OpenFGA\Collections\Assertions;
 use function OpenFGA\{tuple, tuples};
 
+// Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL']);
+
+// These variables are used throughout the examples
+$storeId = 'your-store-id';
+$modelId = 'your-authorization-model-id';
 ```
+
+## What are assertions
+
+Assertions are test cases that specify expected outcomes for permission checks. Each assertion says "user X should (or shouldn't) have permission Y on resource Z" and verifies this against your authorization model.
 
 ## Writing your first test
 
@@ -158,19 +167,22 @@ $client->writeAssertions(
 
 ## Best practices
 
-**Start with critical paths**: Test the most important permission checks first - admin access, user data privacy, billing permissions.
+**Start with critical paths**: test the most important permission checks first - admin access, user data privacy, billing permissions.
 
-**Test both positive and negative cases**: Don't just test what should work, test what should be blocked.
+**Test both positive and negative cases**: don't just test what should work, test what should be blocked.
 
-**Use realistic data**: Test with actual user IDs, resource names, and permission types from your application.
+**Use realistic data**: test with actual user IDs, resource names, and permission types from your application.
 
-**Update tests when models change**: Assertions should evolve with your authorization model. Treat them like any other test suite.
+**Update tests when models change**: assertions should evolve with your authorization model. Treat them like any other test suite.
 
-**Validate before deployment**: Run assertions in your CI/CD pipeline to catch permission regressions before they reach production.
+**Validate before deployment**: run assertions in your CI/CD pipeline to catch permission regressions before they reach production.
 
 ```php
 // Reading existing assertions for review
-$response = $client->readAssertions(store: $storeId, model: $modelId)->unwrap();
+$response = $client->readAssertions(
+    store: $storeId,
+    model: $modelId,
+)->unwrap();
 
 foreach ($response->getAssertions() as $assertion) {
     $key = $assertion->getTupleKey();

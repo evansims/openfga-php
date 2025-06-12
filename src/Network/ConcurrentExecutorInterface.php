@@ -48,7 +48,7 @@ interface ConcurrentExecutorInterface
     /**
      * Check if the executor supports concurrent execution.
      *
-     * Some environments may not support true concurrency (e.g., missing
+     * Some environments may not support true concurrency (for example missing
      * Fiber support in PHP < 8.1). This method allows checking if the
      * executor can actually run tasks concurrently or will fall back
      * to sequential execution.

@@ -134,9 +134,9 @@ Write a single relationship tuple. Creates a relationship between a user and an 
 | Name        | Type                                                         | Description                                                          |
 | ----------- | ------------------------------------------------------------ | -------------------------------------------------------------------- |
 | `$store`    | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store where the tuple will be written                            |
-| `$user`     | `string`                                                     | The user identifier (e.g., &#039;user:anne&#039;)                    |
-| `$relation` | `string`                                                     | The relationship type (e.g., &#039;reader&#039;, &#039;writer&#039;) |
-| `$object`   | `string`                                                     | The object identifier (e.g., &#039;document:budget-2024&#039;)       |
+| `$user`     | `string`                                                     | The user identifier (for example &#039;user:anne&#039;)                    |
+| `$relation` | `string`                                                     | The relationship type (for example &#039;reader&#039;, &#039;writer&#039;) |
+| `$object`   | `string`                                                     | The object identifier (for example &#039;document:budget-2024&#039;)       |
 
 #### Returns
 

@@ -31,7 +31,7 @@ use OpenFGA\Models\{TupleKeyInterface, UserTypeFilterInterface};
  * - Authorization model versioning for consistent results
  *
  * This provides the inverse perspective to list objects - instead of asking
- * "what can this user access?", it asks "who can access this object?".
+ * "what can this user access?," it asks "who can access this object?"
  *
  * @see Consistency Read consistency options for balancing performance and accuracy
  * @see TupleKeyInterface Individual relationship tuple structure
@@ -104,8 +104,8 @@ interface ListUsersRequestInterface extends RequestInterface
      * Get the relation to check for user access.
      *
      * Specifies the relationship type to evaluate when determining which users
-     * have access to the object. For example, "owner", "editor", "viewer", or
-     * "member". This defines what type of permission or relationship is being
+     * have access to the object. For example, "owner," "editor," "viewer," or
+     * "member." This defines what type of permission or relationship is being
      * queried.
      *
      * @return string The relation name to check for user access

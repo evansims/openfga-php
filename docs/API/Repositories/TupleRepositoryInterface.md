@@ -1,6 +1,6 @@
 # TupleRepositoryInterface
 
-Repository contract for relationship tuple operations. This interface defines the contract for managing relationship tuples within an OpenFGA store. Tuples represent relationships between users and objects (e.g., &quot;user:anne is reader of document:budget&quot;), forming the core data that drives authorization decisions. The repository supports both transactional and non-transactional operations for different scale and consistency requirements. All methods return Result objects following the Result pattern, allowing for consistent error handling without exceptions.
+Repository contract for relationship tuple operations. This interface defines the contract for managing relationship tuples within an OpenFGA store. Tuples represent relationships between users and objects (for example &quot;user:anne is reader of document:budget&quot;), forming the core data that drives authorization decisions. The repository supports both transactional and non-transactional operations for different scale and consistency requirements. All methods return Result objects following the Result pattern, allowing for consistent error handling without exceptions.
 
 ## Namespace
 
@@ -162,7 +162,7 @@ List changes to relationship tuples over time. Retrieves a chronological log of 
 | Name                 | Type                                         | Description                                        |
 | -------------------- | -------------------------------------------- | -------------------------------------------------- |
 | `$store`             | [`StoreInterface`](Models/StoreInterface.md) | The store to query                                 |
-| `$type`              | `string` &#124; `null`                       | Filter by object type (e.g., &quot;document&quot;) |
+| `$type`              | `string` &#124; `null`                       | Filter by object type (for example &quot;document&quot;) |
 | `$startTime`         | `DateTimeImmutable` &#124; `null`            | Filter changes after this time                     |
 | `$continuationToken` | `string` &#124; `null`                       | Token from previous response for pagination        |
 | `$pageSize`          | `int` &#124; `null`                          | Maximum number of changes to return                |

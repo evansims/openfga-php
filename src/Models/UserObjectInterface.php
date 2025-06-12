@@ -10,7 +10,7 @@ use Override;
  * Represents a user object in OpenFGA authorization model.
  *
  * User objects are typed entities that can be subjects in authorization
- * relationships. They consist of a type (e.g., 'user', 'group') and
+ * relationships. They consist of a type (for example 'user', 'group') and
  * a unique identifier within that type.
  */
 interface UserObjectInterface extends ModelInterface
@@ -38,7 +38,7 @@ interface UserObjectInterface extends ModelInterface
     /**
      * Get the type of the user object.
      *
-     * The type defines the category or class of the object (e.g., 'user',
+     * The type defines the category or class of the object (for example 'user',
      * 'group', 'organization') and must be defined in the authorization model.
      *
      * @return string The object type

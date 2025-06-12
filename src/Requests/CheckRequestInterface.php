@@ -83,7 +83,7 @@ interface CheckRequestInterface extends RequestInterface
      * Get the relationship tuple to check for permission.
      *
      * This defines the specific relationship (user, object, relation) to evaluate for authorization.
-     * For example, checking if "user:alice" has "can_view" permission on "document:readme".
+     * For example, checking if "user:alice" has "can_view" permission on "document:readme."
      *
      * @return TupleKeyInterface The relationship tuple specifying what permission to check
      */

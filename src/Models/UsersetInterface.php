@@ -36,7 +36,7 @@ interface UsersetInterface extends ModelInterface
      *
      * A difference operation represents a set subtraction where users are granted
      * access based on one userset but explicitly excluded if they're in another.
-     * This enables sophisticated access control patterns like "all managers except those on leave".
+     * This enables sophisticated access control patterns like "all managers except those on leave."
      *
      * @return DifferenceV1Interface|null The difference operation specification, or null if not used
      */

@@ -633,7 +633,7 @@ class DocumentationGenerator
             return implode(' | ', $convertedTypes); // Added spaces around |
         }
 
-        // Handle array types (e.g., string[] or Type[])
+        // Handle array types (for example string[] or Type[])
         $isArray = false;
         if (str_ends_with($type, '[]')) {
             $isArray = true;
@@ -644,7 +644,7 @@ class DocumentationGenerator
         $isNullable = str_starts_with($type, '?');
         $type = ltrim($type, '?');
 
-        // Handle generic types (e.g., array<string, Type>)
+        // Handle generic types (for example array<string, Type>)
         $genericSuffix = '';
         if (preg_match('/([^<]*)<(.+)>/', $type, $matches)) {
             $type = $matches[1];

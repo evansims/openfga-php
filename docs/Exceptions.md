@@ -2,6 +2,40 @@
 
 This guide explains how to properly handle errors in the OpenFGA PHP SDK using our Result type system and enum-based exceptions.
 
+## Prerequisites
+
+The examples in this guide assume you have the following imports and setup:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use OpenFGA\{Client, ClientInterface, Messages};
+use OpenFGA\Exceptions\{
+    AuthenticationError,
+    AuthenticationException,
+    ClientError,
+    ClientException,
+    ConfigurationError,
+    ConfigurationException,
+    NetworkError,
+    NetworkException,
+    SerializationError,
+    SerializationException
+};
+use OpenFGA\Results\{Failure, ResultInterface, Success};
+use OpenFGA\Translation\Translator;
+use function OpenFGA\{tuple, tuples};
+
+// Basic client setup
+$client = new Client([
+    'url' => 'https://api.openfga.example',
+    'storeId' => 'your-store-id',
+    'authenticationToken' => 'your-token'
+]);
+```
+
 ## Overview
 
 The OpenFGA PHP SDK uses a modern approach to error handling that emphasizes type safety, predictability, and internationalization support. Instead of throwing exceptions for expected error cases, we return `Result` types that explicitly model success and failure states.
@@ -48,13 +82,8 @@ The `Result` type represents either a successful value or a failure. It provides
 ### Basic Usage
 
 ```php
-use OpenFGA\Client;
-
-$client = new Client(/* ... */);
-
 // All SDK methods return Result types
 $result = $client->check(
-    store: $storeId,
     tupleKey: tuple('user:anne', 'reader', 'document:budget')
 );
 
@@ -131,7 +160,6 @@ Use `rethrow()` to convert Result failures back to exceptions when needed:
 public function canUserRead(string $userId, string $documentId): bool
 {
     return $this->client->check(
-        store: $this->storeId,
         tupleKey: tuple($userId, 'reader', $documentId)
     )
     ->rethrow() // Throws the underlying exception if failed
@@ -193,8 +221,6 @@ ClientThrowable (interface)
 General client-side errors that don't fit other categories:
 
 ```php
-use OpenFGA\Domain\Exceptions\ClientError;
-
 // Validation errors
 throw ClientError::Validation->exception(context: [
     'message' => 'Store ID cannot be empty'
@@ -211,8 +237,6 @@ throw ClientError::Network->exception(context: [
 HTTP and network-related errors:
 
 ```php
-use OpenFGA\Exceptions\NetworkError;
-
 // From HTTP status codes
 $error = match($statusCode) {
     400 => NetworkError::Invalid,
@@ -236,8 +260,6 @@ throw $error->exception(
 OAuth/token-related errors:
 
 ```php
-use OpenFGA\Exceptions\AuthenticationError;
-
 // Token validation
 if ($token->isExpired()) {
     throw AuthenticationError::TokenExpired->exception();
@@ -253,8 +275,6 @@ if (!$token->isValid()) {
 Setup and configuration errors:
 
 ```php
-use OpenFGA\Exceptions\ConfigurationError;
-
 // Missing dependencies
 if ($httpClient === null) {
     throw ConfigurationError::HttpClientMissing->exception();
@@ -266,8 +286,6 @@ if ($httpClient === null) {
 JSON encoding/decoding and data transformation errors:
 
 ```php
-use OpenFGA\Exceptions\SerializationError;
-
 // Invalid response data
 if (!is_array($data)) {
     throw SerializationError::Response->exception(context: [
@@ -297,9 +315,9 @@ $accessLevel = match(true) {
 ```php
 $result->failure(function ($error) {
     $response = match($error::class) {
-        NetworkException::class => $this->handleNetworkError($error),
-        AuthenticationException::class => $this->refreshTokenAndRetry(),
-        ClientException::class => $this->logClientError($error),
+        NetworkException::class => handleNetworkError($error),
+        AuthenticationException::class => refreshTokenAndRetry(),
+        ClientException::class => logClientError($error),
         default => throw $error,
     };
 });
@@ -308,16 +326,14 @@ $result->failure(function ($error) {
 ### Matching on Error Enums
 
 ```php
-use OpenFGA\Exceptions\NetworkError;
-
 $result->failure(function ($error) {
     if ($error instanceof NetworkException) {
         $action = match($error->kind) {
-            NetworkError::Timeout => $this->retry(),
-            NetworkError::Unauthenticated => $this->authenticate(),
-            NetworkError::Forbidden => $this->requestAccess(),
-            NetworkError::Server => $this->notifyOps(),
-            default => $this->logError($error),
+            NetworkError::Timeout => retry(),
+            NetworkError::Unauthenticated => authenticate(),
+            NetworkError::Forbidden => requestAccess(),
+            NetworkError::Server => notifyOps(),
+            default => logError($error),
         };
     }
 });
@@ -328,8 +344,6 @@ $result->failure(function ($error) {
 Use match for exhaustive error handling:
 
 ```php
-use OpenFGA\Exceptions\ClientError;
-
 public function translateError(ClientException $error): string
 {
     return match($error->kind) {
@@ -349,19 +363,19 @@ public function translateError(ClientException $error): string
 // ❌ Verbose if/else chains
 if ($error instanceof NetworkException) {
     if ($error->kind === NetworkError::Timeout) {
-        return $this->retry();
+        return retry();
     } elseif ($error->kind === NetworkError::Unauthenticated) {
-        return $this->authenticate();
+        return authenticate();
     } else {
-        return $this->logError($error);
+        return logError($error);
     }
 }
 
 // ✅ Concise match expression
 return match([$error::class, $error->kind ?? null]) {
-    [NetworkException::class, NetworkError::Timeout] => $this->retry(),
-    [NetworkException::class, NetworkError::Unauthenticated] => $this->authenticate(),
-    [NetworkException::class, $_] => $this->logError($error),
+    [NetworkException::class, NetworkError::Timeout] => retry(),
+    [NetworkException::class, NetworkError::Unauthenticated] => authenticate(),
+    [NetworkException::class, $_] => logError($error),
     default => throw $error,
 };
 ```
@@ -479,9 +493,6 @@ $client->setLanguage('fr'); // Switch to French
 This shows how the same error appears differently based on language context:
 
 ```php
-use OpenFGA\Client;
-use function OpenFGA\tuple;
-
 // Create clients with different languages
 $englishClient = new Client(url: 'https://api.openfga.example', language: 'en');
 $spanishClient = new Client(url: 'https://api.openfga.example', language: 'es');
@@ -510,8 +521,6 @@ try {
 The enum-based approach ensures that error handling remains consistent regardless of language:
 
 ```php
-use OpenFGA\Exceptions\ClientError;
-
 $result = $client->check(/* ... */);
 
 $result->failure(function ($error) {
@@ -534,24 +543,15 @@ $result->failure(function ($error) {
 Here's a real-world example showing proper error handling:
 
 ```php
-use OpenFGA\{Client, Messages};
-use OpenFGA\Exceptions\{
-    AuthenticationError,
-    NetworkError,
-    NetworkException,
-    AuthenticationException
-};
-use OpenFGA\Translation\Translator;
-
+// Note: The AccessResult class used within AuthorizationService is an example
+// value object for illustration and not part of the SDK.
 class AuthorizationService
 {
     private Client $client;
-    private string $storeId;
 
     public function checkAccess(string $userId, string $resource): AccessResult
     {
         return $this->client->check(
-            store: $this->storeId,
             tupleKey: tuple($userId, 'reader', $resource)
         )
         ->then(function ($response) {
@@ -601,7 +601,6 @@ class AuthorizationService
     public function grantAccess(string $userId, string $resource): void
     {
         $this->client->writeTuples(
-            store: $this->storeId,
             writes: tuples(
                 tuple($userId, 'reader', $resource)
             )
@@ -625,9 +624,9 @@ class AuthorizationService
 ### Testing Error Conditions
 
 ```php
-use OpenFGA\Exceptions\{ClientError, NetworkError, NetworkException};
-use OpenFGA\Results\Failure;
-
+// Note: The following example assumes a testing environment like Pest or PHPUnit,
+// using assertions like expect() and extending a base TestCase.
+// The AuthorizationService class being tested is also an example helper class.
 class AuthorizationServiceTest extends TestCase
 {
     public function testHandlesNetworkTimeout(): void
@@ -641,7 +640,7 @@ class AuthorizationServiceTest extends TestCase
                 )
             ));
 
-        $service = new AuthorizationService($client, 'store123');
+        $service = new AuthorizationService($client);
         $result = $service->checkAccess('user:anne', 'document:budget');
 
         // Should fail open on timeout
@@ -659,7 +658,7 @@ class AuthorizationServiceTest extends TestCase
                 ])
             ));
 
-        $service = new AuthorizationService($client, 'store123');
+        $service = new AuthorizationService($client);
         $result = $service->checkAccess('invalid-user', 'document:budget');
 
         // Should deny on validation errors
@@ -676,30 +675,15 @@ Here's how the SDK itself handles errors internally:
 ```php
 namespace OpenFGA;
 
-use OpenFGA\Exceptions\{ClientError, NetworkException};
-use OpenFGA\Results\{Success, Failure};
-
 class Client implements ClientInterface
 {
     public function check(
-        string $store,
         TupleKeyInterface $tupleKey,
         ?string $model = null,
     ): ResultInterface {
-        // Validate inputs
-        if (empty($store)) {
-            return new Failure(
-                ClientError::Validation->exception(context: [
-                    'message' => Translator::trans(
-                        Messages::REQUEST_STORE_ID_EMPTY
-                    )
-                ])
-            );
-        }
-
         try {
             // Build and send request
-            $request = $this->buildCheckRequest($store, $tupleKey, $model);
+            $request = $this->buildCheckRequest($tupleKey, $model);
             $response = $this->httpClient->sendRequest($request);
 
             // Handle response

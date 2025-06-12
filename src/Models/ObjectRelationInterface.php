@@ -17,12 +17,12 @@ use Override;
  * - Permission lookups to identify target resources
  *
  * The pair consists of:
- * - Object: The target resource (for example, "document:readme", "folder:private")
- * - Relation: The type of relationship (for example, "viewer", "editor", "owner")
+ * - Object: The target resource (for example, "document:readme," "folder:private")
+ * - Relation: The type of relationship (for example, "viewer," "editor," "owner")
  *
  * Examples:
- * - {object: "document:readme", relation: "viewer"}
- * - {object: "folder:private", relation: "owner"}
+ * - {object: "document:readme," relation: "viewer"}
+ * - {object: "folder:private," relation: "owner"}
  * - {relation: "member"} (object can be omitted in some contexts)
  *
  * @see https://openfga.dev/docs/concepts#relationship-tuples OpenFGA Relationship Tuples
@@ -43,7 +43,7 @@ interface ObjectRelationInterface extends ModelInterface
      * Get the relation name that defines the type of relationship to the object.
      *
      * The relation describes what kind of permission or relationship exists.
-     * Common examples include "owner", "viewer", "editor", "member".
+     * Common examples include "owner," "viewer," "editor," "member."
      *
      * @return string The non-empty relation name
      */

@@ -27,7 +27,7 @@ final readonly class SchemaProperty implements SchemaPropertyInterface
      * @param string                                             $type          The data type (string, integer, boolean, array, object, etc.)
      * @param bool                                               $required      Whether this property is required for validation
      * @param mixed                                              $default       Default value to use when property is missing (for optional properties)
-     * @param string|null                                        $format        Additional format constraint (e.g., 'date', 'datetime')
+     * @param string|null                                        $format        Additional format constraint (for example 'date', 'datetime')
      * @param array<string>|null                                 $enum          Array of allowed values for enumeration validation
      * @param array{type: string, className?: class-string}|null $items         Type specification for array items (when type is 'array')
      * @param class-string|null                                  $className     Fully qualified class name for object types

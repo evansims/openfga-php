@@ -167,7 +167,7 @@ interface ResultInterface
      *
      * @throws ClientThrowable When called on a Failure result
      *
-     * @return mixed The response interface (e.g., CheckResponseInterface, StoreInterface)
+     * @return mixed The response interface (for example CheckResponseInterface, StoreInterface)
      */
     public function val(): mixed;
 }

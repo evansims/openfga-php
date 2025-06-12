@@ -225,7 +225,7 @@ Add a string property to the schema.
 | ----------- | ------------------------------------- | ----------------------------------------------------------------------- |
 | `$name`     | `string`                              | The property name                                                       |
 | `$required` | `bool`                                | Whether the property is required                                        |
-| `$format`   | `string` &#124; `null`                | String format constraint (e.g., &#039;date&#039;, &#039;datetime&#039;) |
+| `$format`   | `string` &#124; `null`                | String format constraint (for example &#039;date&#039;, &#039;datetime&#039;) |
 | `$enum`     | `array&lt;`string`&gt;` &#124; `null` | Array of allowed string values                                          |
 | `$default`  | `mixed`                               | Default value for optional properties                                   |
 

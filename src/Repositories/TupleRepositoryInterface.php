@@ -13,7 +13,7 @@ use OpenFGA\Results\{FailureInterface, SuccessInterface};
  * Repository contract for relationship tuple operations.
  *
  * This interface defines the contract for managing relationship tuples within an OpenFGA store.
- * Tuples represent relationships between users and objects (e.g., "user:anne is reader of document:budget"),
+ * Tuples represent relationships between users and objects (for example "user:anne is reader of document:budget"),
  * forming the core data that drives authorization decisions. The repository supports both
  * transactional and non-transactional operations for different scale and consistency requirements.
  *
@@ -56,7 +56,7 @@ interface TupleRepositoryInterface
      * Results can be filtered by object type and time range.
      *
      * @param  StoreInterface                    $store             The store to query
-     * @param  string|null                       $type              Filter by object type (e.g., "document")
+     * @param  string|null                       $type              Filter by object type (for example "document")
      * @param  DateTimeImmutable|null            $startTime         Filter changes after this time
      * @param  string|null                       $continuationToken Token from previous response for pagination
      * @param  int|null                          $pageSize          Maximum number of changes to return

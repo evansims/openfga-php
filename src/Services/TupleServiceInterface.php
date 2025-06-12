@@ -184,9 +184,9 @@ interface TupleServiceInterface
      * relation. This is the most common operation for establishing permissions.
      *
      * @param  StoreInterface|string             $store    The store where the tuple will be written
-     * @param  string                            $user     The user identifier (e.g., 'user:anne')
-     * @param  string                            $relation The relationship type (e.g., 'reader', 'writer')
-     * @param  string                            $object   The object identifier (e.g., 'document:budget-2024')
+     * @param  string                            $user     The user identifier (for example 'user:anne')
+     * @param  string                            $relation The relationship type (for example 'reader', 'writer')
+     * @param  string                            $object   The object identifier (for example 'document:budget-2024')
      * @return FailureInterface|SuccessInterface Success if written, or Failure with error details
      */
     public function write(
