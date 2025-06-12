@@ -499,7 +499,13 @@ final class Transformer implements TransformerInterface
             $parts = [];
 
             foreach ($union as $child) {
-                $parts[] = self::renderExpression($child, $metadata);
+                $childRendered = self::renderExpression($child, $metadata);
+                // If child is an intersection or difference, wrap in parentheses
+                if ($child->getIntersection() instanceof UsersetsInterface || $child->getDifference() instanceof DifferenceV1Interface) {
+                    $parts[] = '(' . $childRendered . ')';
+                } else {
+                    $parts[] = $childRendered;
+                }
             }
 
             return implode(' or ', $parts);
@@ -512,7 +518,13 @@ final class Transformer implements TransformerInterface
             $parts = [];
 
             foreach ($intersection as $child) {
-                $parts[] = self::renderExpression($child, $metadata);
+                $childRendered = self::renderExpression($child, $metadata);
+                // If child is a union, wrap in parentheses
+                if ($child->getUnion() instanceof UsersetsInterface) {
+                    $parts[] = '(' . $childRendered . ')';
+                } else {
+                    $parts[] = $childRendered;
+                }
             }
 
             return implode(' and ', $parts);
@@ -522,12 +534,17 @@ final class Transformer implements TransformerInterface
         $difference = $userset->getDifference();
 
         if ($difference instanceof DifferenceV1Interface) {
-            $base = self::renderExpression($difference->getBase(), $metadata);
-            $subtract = self::renderExpression($difference->getSubtract(), $metadata);
+            $baseUserset = $difference->getBase();
+            $base = self::renderExpression($baseUserset, $metadata);
+            // Wrap base in parentheses if it's a union or intersection
+            if ($baseUserset->getUnion() instanceof UsersetsInterface || $baseUserset->getIntersection() instanceof UsersetsInterface) {
+                $base = '(' . $base . ')';
+            }
+
+            $subtractUserset = $difference->getSubtract();
+            $subtract = self::renderExpression($subtractUserset, $metadata);
 
             // Wrap subtract in parentheses if it's a union or intersection
-            $subtractUserset = $difference->getSubtract();
-
             if ($subtractUserset->getUnion() instanceof UsersetsInterface || $subtractUserset->getIntersection() instanceof UsersetsInterface) {
                 $subtract = '(' . $subtract . ')';
             }
