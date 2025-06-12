@@ -48,7 +48,7 @@ final class YamlParser
             throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_FILE_DOES_NOT_EXIST, ['filename' => $filename])]);
         }
 
-        $content = @file_get_contents($filename);
+        $content = file_get_contents($filename);
 
         if (false === $content) {
             throw ClientError::Configuration->exception(context: ['message' => Translator::trans(Messages::YAML_CANNOT_READ_FILE, ['filename' => $filename])]);
