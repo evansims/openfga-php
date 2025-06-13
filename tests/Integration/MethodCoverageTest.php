@@ -40,7 +40,6 @@ describe('Method Coverage', function (): void {
             'readTuples',
             'writeAssertions',
             'writeTuples',
-            'assertLastRequest',
             'getLastRequest',
             'getLastResponse',
         ];

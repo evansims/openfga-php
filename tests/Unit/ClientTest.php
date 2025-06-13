@@ -9,7 +9,6 @@ use InvalidArgumentException;
 use OpenFGA\Authentication\{AccessToken, ClientCredentialAuthentication, TokenAuthentication};
 use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Exceptions\ClientException;
-use OpenFGA\Messages;
 use OpenFGA\Models\AuthorizationModel;
 use OpenFGA\Models\{BatchCheckItem, Store, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, BatchCheckItems, Conditions, TupleKeys, TypeDefinitions, UserTypeFilters};
@@ -106,22 +105,6 @@ describe('Client', function (): void {
 
         expect($client->getLanguage())->toBe('es');
     });
-
-    test('Client assertLastRequest throws with configured language', function (): void {
-        $client = new Client(
-            url: 'https://api.example.com',
-            authentication: null,
-            language: 'es',
-        );
-
-        $client->assertLastRequest();
-    })->throws(ClientException::class, trans(Messages::NO_LAST_REQUEST_FOUND, [], 'es'));
-
-    test('Client assertLastRequest throws when no request exists', function (): void {
-        $client = new Client('https://api.example.com');
-
-        $client->assertLastRequest();
-    })->throws(ClientException::class, trans(Messages::NO_LAST_REQUEST_FOUND));
 
     test('Client check returns Result interface', function (): void {
         $client = new Client('https://api.example.com');

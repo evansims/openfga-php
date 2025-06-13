@@ -32,29 +32,6 @@ use Psr\Http\Message\{RequestInterface as HttpRequestInterface, ResponseInterfac
 interface ClientInterface
 {
     /**
-     * Retrieves the last HTTP request made by the client.
-     *
-     * @throws InvalidArgumentException If request validation fails
-     * @throws ClientThrowable          If no last request has been made
-     *
-     * @return HttpRequestInterface The last request
-     *
-     * @example Accessing the last request for debugging
-     * $result = $client->check(
-     *     store: 'store-id',
-     *     model: 'model-id',
-     *     tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget')
-     * );
-     *
-     * $lastRequest = $client->assertLastRequest();
-     *
-     * echo "Method: " . $lastRequest->getMethod();
-     * echo "URL: " . $lastRequest->getUri();
-     * echo "Headers: " . json_encode($lastRequest->getHeaders());
-     */
-    public function assertLastRequest(): HttpRequestInterface;
-
-    /**
      * Performs multiple authorization checks in a single batch request.
      *
      * This method allows checking multiple user-object relationships simultaneously

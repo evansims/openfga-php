@@ -122,27 +122,6 @@ final class Client implements ClientInterface
     /**
      * @inheritDoc
      *
-     * @throws ClientThrowable          If no last request is found
-     * @throws InvalidArgumentException If request parameters are invalid
-     * @throws LogicException           If HTTP service is not available
-     * @throws ReflectionException      If exception creation fails
-     */
-    #[Override]
-    public function assertLastRequest(): HttpRequestInterface
-    {
-        $httpService = $this->getHttpService();
-        $lastRequest = $httpService->getLastRequest();
-
-        if (! $lastRequest instanceof HttpRequestInterface) {
-            throw ClientError::Validation->exception(context: ['message' => Translator::trans(message: Messages::NO_LAST_REQUEST_FOUND, parameters: [], locale: $this->language, )]);
-        }
-
-        return $lastRequest;
-    }
-
-    /**
-     * @inheritDoc
-     *
      * @throws Throwable
      */
     #[Override]
