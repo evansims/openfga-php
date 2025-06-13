@@ -1,5 +1,5 @@
 <div align="center">
-  <p><a href="https://tempestphp.com"><img src="https://raw.githubusercontent.com/evansims/openfga-php/main/.github/openfga.png" width="100" /></a></p>
+  <p><a href="https://openfga.dev"><img src="https://raw.githubusercontent.com/evansims/openfga-php/main/.github/openfga.png" width="100" /></a></p>
 
   <h1>OpenFGA PHP SDK</h1>
 
