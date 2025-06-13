@@ -1,0 +1,167 @@
+# OpenFGA PHP SDK - Messages de traduction français
+# Ces messages correspondent aux cas d'énumération Messages
+
+client:
+  no_last_request_found: "Aucune dernière requête trouvée"
+
+dsl:
+  parse_failed: "Échec de l'analyse de l'entrée DSL"
+  unrecognized_term: "Terme DSL non reconnu : %term%"
+  input_empty: "La chaîne d'entrée ne peut pas être vide"
+  pattern_empty: "Le modèle ne peut pas être vide"
+  unbalanced_parentheses_closing: "Parenthèses déséquilibrées : trop de parenthèses fermantes à la position %position%"
+  unbalanced_parentheses_opening: "Parenthèses déséquilibrées : %count% %parentheses% ouvrantes non fermées"
+  invalid_computed_userset: "Ensemble d'utilisateurs calculé invalide"
+  invalid_computed_userset_relation: "La relation de l'ensemble d'utilisateurs calculé ne peut pas être vide."
+
+assertions:
+  empty_collection: "La collection d'assertions ne peut pas être vide"
+  invalid_tuple_key: "L'assertion contient une clé de tuple invalide : utilisateur, relation et objet sont requis"
+
+auth:
+  invalid_response_format: "Format de réponse invalide"
+  missing_required_fields: "Champs obligatoires manquants dans la réponse"
+  access_token_must_be_string: "access_token doit être une chaîne"
+  expires_in_must_be_integer: "expires_in doit être un entier"
+  user_message:
+    token_expired: "Votre session a expiré. Veuillez vous reconnecter."
+    token_invalid: "Identifiants d'authentification invalides fournis."
+  jwt:
+    invalid_format: "Format de jeton JWT invalide"
+    invalid_header: "En-tête JWT invalide"
+    invalid_payload: "Charge utile JWT invalide"
+    missing_required_claims: "Revendications JWT requises manquantes"
+    token_expired: "Le jeton JWT a expiré"
+    token_not_yet_valid: "Le jeton JWT n'est pas encore valide"
+    invalid_audience: "L'audience du jeton JWT ne correspond pas à l'audience attendue"
+    invalid_issuer: "L'émetteur du jeton JWT ne correspond pas à l'émetteur attendu"
+
+network:
+  error: "Erreur réseau : %message%"
+  unexpected_status: "L'API a répondu avec un code de statut inattendu : %status_code%"
+
+response:
+  unexpected_type: "Type de réponse inattendu reçu"
+
+result:
+  success_no_error: "Le succès n'a pas d'erreur"
+  failure_no_value: "L'échec n'a pas de valeur"
+
+request:
+  store_id_empty: "L'ID du magasin ne peut pas être vide"
+  model_id_empty: "L'ID du modèle d'autorisation ne peut pas être vide"
+  store_name_empty: "Le nom du magasin ne peut pas être vide"
+  transactional_limit_exceeded: "Limite de writeTuples transactionnel dépassée : %count% opérations (max 100). Utilisez le mode non transactionnel ou divisez en plusieurs requêtes."
+  continuation_token_empty: "Le jeton de continuation ne peut pas être vide"
+  page_size_invalid: "pageSize invalide fourni à %className%"
+  object_type_empty: "Le type d'objet ne peut pas être vide"
+  relation_empty: "La relation ne peut pas être vide"
+  user_empty: "L'utilisateur ne peut pas être vide"
+  object_empty: "L'objet ne peut pas être vide"
+  type_empty: "Le type ne peut pas être vide"
+
+validation:
+  batch_check_empty: "La requête de vérification par lot ne peut pas être vide"
+  invalid_correlation_id: 'L''ID de corrélation "%correlationId%" est invalide. Doit correspondre au modèle : %pattern%'
+  batch_tuple_chunk_size_positive: "La taille du bloc doit être un entier positif"
+  batch_tuple_chunk_size_exceeded: "La taille du bloc ne peut pas dépasser %max_size%"
+
+service:
+  http_not_available: "Service HTTP non disponible"
+  schema_validator_not_available: "Validateur de schéma non disponible"
+  tuple_filter_not_available: "Service de filtre de tuple non disponible"
+  store_repository_not_available: "Dépôt de magasin non disponible"
+  tuple_repository_not_available: "Dépôt de tuple non disponible"
+
+model:
+  invalid_tuple_key: "tuple_key invalide fourni à Assertion::fromArray"
+  invalid_identifier_format: "Format d'identifiant invalide : les identifiants ne peuvent pas contenir d'espaces. Trouvé dans %identifier%"
+  typed_wildcard_type_empty: "TypedWildcard::$type ne peut pas être vide."
+  source_info_file_empty: "SourceInfo::$file ne peut pas être vide."
+  leaf_missing_content: "Leaf doit contenir au moins un des éléments suivants : users, computed ou tupleToUserset"
+  not_found: "Le modèle d'autorisation %model_id% n'a pas été trouvé"
+  no_models_in_store: "Aucun modèle d'autorisation trouvé dans le magasin %store_id%"
+  validation_failed: "Échec de la validation du modèle : %message%"
+  type_definitions_empty: "Les définitions de type ne peuvent pas être vides"
+  clone_source_not_found: "Modèle source non trouvé pour le clonage"
+  duplicate_type: "Définition de type dupliquée trouvée : %type%"
+
+collection:
+  undefined_item_type: "Type d'élément non défini pour %class%. Définissez la propriété $itemType ou surchargez le constructeur."
+  invalid_item_type_interface: "Type d'élément attendu pour implémenter %interface%, %given% donné"
+  invalid_item_instance: "Instance attendue de %expected%, %given% donné"
+  invalid_value_type: "Instance attendue de %expected%, %given% donné."
+  key_must_be_string: "La clé doit être une chaîne."
+  invalid_position: "Position invalide"
+  invalid_key_type: "Type de clé invalide ; chaîne attendue, %given% donné."
+
+consistency:
+  higher_consistency:
+    description: "Privilégie la cohérence des données par rapport aux performances de requête, garantissant les résultats les plus récents"
+  minimize_latency:
+    description: "Privilégie les performances de requête par rapport à la cohérence des données, utilisant potentiellement des données légèrement obsolètes"
+  unspecified:
+    description: "Utilise le niveau de cohérence par défaut déterminé par la configuration du serveur OpenFGA"
+
+schema:
+  class_not_found: 'La classe "%className%" n''existe pas ou ne peut pas être chargée automatiquement'
+  item_type_not_found: 'Le type d''élément "%itemType%" n''existe pas ou ne peut pas être chargé automatiquement'
+
+exception:
+  client:
+    authentication: "Erreur d'authentification survenue"
+    configuration: "Erreur de configuration détectée"
+    network: "Erreur de communication réseau"
+    serialization: "Erreur de sérialisation des données"
+    validation: "Échec de la validation de la requête"
+  auth:
+    token_expired: "Le jeton d'authentification a expiré"
+    token_invalid: "Le jeton d'authentification est invalide"
+  config:
+    http_client_missing: "Le client HTTP n'est pas configuré"
+    http_request_factory_missing: "La fabrique de requêtes HTTP n'est pas configurée"
+    http_response_factory_missing: "La fabrique de réponses HTTP n'est pas configurée"
+    http_stream_factory_missing: "La fabrique de flux HTTP n'est pas configurée"
+    invalid_url: "URL invalide fournie : %url%"
+    invalid_language: "Code de langue invalide fourni : %language%"
+    invalid_retry_count: "Nombre de tentatives invalide fourni : %retries%"
+  network:
+    conflict: "Conflit (409) : La requête entre en conflit avec l'état actuel"
+    forbidden: "Interdit (403) : Accès refusé à la ressource demandée"
+    invalid: "Requête incorrecte (400) : La requête est invalide"
+    request: "Échec de la requête : Impossible de terminer la requête HTTP"
+    server: "Erreur interne du serveur (500) : Le serveur a rencontré une erreur"
+    timeout: "Entité non traitable (422) : La requête n'a pas pu être traitée"
+    unauthenticated: "Non autorisé (401) : Authentification requise"
+    undefined_endpoint: "Non trouvé (404) : Le point de terminaison demandé n'existe pas"
+    unexpected: "Réponse inattendue du serveur"
+  serialization:
+    could_not_add_items_to_collection: "Impossible d'ajouter des éléments à la collection %className%"
+    empty_collection: "La collection ne peut pas être vide"
+    invalid_item_type: "Type d'élément invalide pour %property% dans %className% : %expected% attendu, %actual_type% obtenu"
+    missing_required_constructor_parameter: 'Paramètre de constructeur requis manquant "%paramName%" pour la classe %className%'
+    response: "Échec de la sérialisation/désérialisation des données de réponse"
+    undefined_item_type: "Le type d'élément n'est pas défini pour %className%"
+
+tuple_operation:
+  write:
+    description: "Ajoute un nouveau tuple de relation, accordant des permissions ou établissant des relations"
+  delete:
+    description: "Supprime un tuple de relation existant, révoquant des permissions ou supprimant des relations"
+
+store:
+  name_required: "Le nom du magasin est requis et ne peut pas être vide"
+  name_too_long: "Le nom du magasin dépasse la longueur maximale de %d caractères (fourni : %d)"
+  not_found: "Le magasin %s n'a pas été trouvé"
+
+translation:
+  file_not_found: "Fichier de traduction non trouvé : %resource%"
+  unsupported_format: "Format de fichier de traduction non supporté : %format%"
+
+yaml:
+  file_does_not_exist: "Le fichier n'existe pas : %filename%"
+  cannot_read_file: "Impossible de lire le fichier : %filename%"
+  invalid_syntax_missing_colon: "Syntaxe YAML invalide à la ligne %line_number% : deux-points manquants"
+  invalid_syntax_missing_value: "Syntaxe YAML invalide à la ligne %line_number% : valeur manquante"
+  invalid_syntax_empty_key: "Syntaxe YAML invalide à la ligne %line_number% : clé vide"
+  invalid_structure: "Structure YAML invalide à la ligne %line_number%"

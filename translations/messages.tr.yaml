@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - Türkçe Çeviri Mesajları
+# Bu mesajlar Messages enum durumlarına karşılık gelir
+
+client:
+  no_last_request_found: 'Son istek bulunamadı'
+
+dsl:
+  parse_failed: 'DSL girişi ayrıştırılamadı'
+  unrecognized_term: 'Tanınmayan DSL terimi: %term%'
+  input_empty: 'Giriş dizesi boş olamaz'
+  pattern_empty: 'Desen boş olamaz'
+  unbalanced_parentheses_closing: 'Dengesiz parantezler: %position% konumunda çok fazla kapanış parantezi'
+  unbalanced_parentheses_opening: 'Dengesiz parantezler: %count% kapatılmamış açılış %parentheses%'
+  invalid_computed_userset: 'Geçersiz hesaplanmış kullanıcı kümesi'
+  invalid_computed_userset_relation: 'Hesaplanmış kullanıcı kümesi ilişkisi boş olamaz.'
+
+assertions:
+  empty_collection: 'Onaylama koleksiyonu boş olamaz'
+  invalid_tuple_key: 'Onaylama geçersiz tuple anahtarı içeriyor: kullanıcı, ilişki ve nesne gerekli'
+
+auth:
+  invalid_response_format: 'Geçersiz yanıt formatı'
+  missing_required_fields: 'Yanıtta gerekli alanlar eksik'
+  access_token_must_be_string: 'access_token bir dize olmalıdır'
+  expires_in_must_be_integer: 'expires_in bir tamsayı olmalıdır'
+  user_message:
+    token_expired: 'Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.'
+    token_invalid: 'Geçersiz kimlik doğrulama bilgileri sağlandı.'
+  jwt:
+    invalid_format: 'Geçersiz JWT token formatı'
+    invalid_header: 'Geçersiz JWT başlığı'
+    invalid_payload: 'Geçersiz JWT yükü'
+    missing_required_claims: 'Gerekli JWT talepleri eksik'
+    token_expired: 'JWT token süresi doldu'
+    token_not_yet_valid: 'JWT token henüz geçerli değil'
+    invalid_audience: 'JWT token hedef kitlesi beklenen hedef kitle ile eşleşmiyor'
+    invalid_issuer: 'JWT token veren beklenen veren ile eşleşmiyor'
+
+network:
+  error: 'Ağ hatası: %message%'
+  unexpected_status: 'API beklenmeyen durum koduyla yanıt verdi: %status_code%'
+
+response:
+  unexpected_type: 'Beklenmeyen yanıt türü alındı'
+
+result:
+  success_no_error: 'Başarının hatası yok'
+  failure_no_value: 'Başarısızlığın değeri yok'
+
+request:
+  store_id_empty: 'Mağaza ID boş olamaz'
+  model_id_empty: 'Yetkilendirme Modeli ID boş olamaz'
+  store_name_empty: 'Mağaza adı boş olamaz'
+  transactional_limit_exceeded: 'İşlemsel writeTuples sınırı aştı: %count% işlem (maksimum 100). İşlemsel olmayan modu kullanın veya birden fazla isteğe bölün.'
+  continuation_token_empty: 'Devam tokeni boş olamaz'
+  page_size_invalid: '%className% için geçersiz pageSize sağlandı'
+  object_type_empty: 'Nesne türü boş olamaz'
+  relation_empty: 'İlişki boş olamaz'
+  user_empty: 'Kullanıcı boş olamaz'
+  object_empty: 'Nesne boş olamaz'
+  type_empty: 'Tür boş olamaz'
+
+validation:
+  batch_check_empty: 'Toplu kontrol isteği boş olamaz'
+  invalid_correlation_id: 'Korelasyon ID "%correlationId%" geçersiz. Desene uymalı: %pattern%'
+  batch_tuple_chunk_size_positive: 'Parça boyutu pozitif bir tamsayı olmalıdır'
+  batch_tuple_chunk_size_exceeded: 'Parça boyutu %max_size% değerini aşamaz'
+
+service:
+  http_not_available: 'HTTP hizmeti kullanılamıyor'
+  schema_validator_not_available: 'Şema doğrulayıcı kullanılamıyor'
+  tuple_filter_not_available: 'Tuple filtre hizmeti kullanılamıyor'
+  store_repository_not_available: 'Mağaza deposu kullanılamıyor'
+  tuple_repository_not_available: 'Tuple deposu kullanılamıyor'
+
+model:
+  invalid_tuple_key: 'Assertion::fromArray için geçersiz tuple_key sağlandı'
+  invalid_identifier_format: 'Geçersiz tanımlayıcı formatı: tanımlayıcılar boşluk içeremez. %identifier% içinde bulundu'
+  typed_wildcard_type_empty: 'TypedWildcard::$type boş olamaz.'
+  source_info_file_empty: 'SourceInfo::$file boş olamaz.'
+  leaf_missing_content: 'Leaf en az bir users, computed veya tupleToUserset içermelidir'
+  not_found: 'Yetkilendirme modeli %model_id% bulunamadı'
+  no_models_in_store: '%store_id% mağazasında yetkilendirme modeli bulunamadı'
+  validation_failed: 'Model doğrulaması başarısız: %message%'
+  type_definitions_empty: 'Tür tanımları boş olamaz'
+  clone_source_not_found: 'Klonlama için kaynak model bulunamadı'
+  duplicate_type: 'Yinelenen tür tanımı bulundu: %type%'
+
+collection:
+  undefined_item_type: '%class% için tanımlanmamış öğe türü. $itemType özelliğini tanımlayın veya yapıcıyı geçersiz kılın.'
+  invalid_item_type_interface: 'Öğe türünün %interface% uygulaması bekleniyor, %given% verildi'
+  invalid_item_instance: '%expected% örneği bekleniyor, %given% verildi'
+  invalid_value_type: '%expected% örneği bekleniyor, %given% verildi.'
+  key_must_be_string: 'Anahtar bir dize olmalıdır.'
+  invalid_position: 'Geçersiz konum'
+  invalid_key_type: 'Geçersiz anahtar türü; dize bekleniyor, %given% verildi.'
+
+consistency:
+  higher_consistency:
+    description: 'Sorgu performansından ziyade veri tutarlılığını önceleyerek en güncel sonuçları sağlar'
+  minimize_latency:
+    description: 'Veri tutarlılığından ziyade sorgu performansını önceleyerek potansiyel olarak biraz eski veri kullanır'
+  unspecified:
+    description: 'OpenFGA sunucu yapılandırması tarafından belirlenen varsayılan tutarlılık seviyesini kullanır'
+
+schema:
+  class_not_found: 'Sınıf "%className%" mevcut değil veya otomatik yüklenemiyor'
+  item_type_not_found: 'Öğe türü "%itemType%" mevcut değil veya otomatik yüklenemiyor'
+
+exception:
+  client:
+    authentication: 'Kimlik doğrulama hatası oluştu'
+    configuration: 'Yapılandırma hatası tespit edildi'
+    network: 'Ağ iletişim hatası'
+    serialization: 'Veri serileştirme hatası'
+    validation: 'İstek doğrulaması başarısız'
+  auth:
+    token_expired: 'Kimlik doğrulama tokeni süresi doldu'
+    token_invalid: 'Kimlik doğrulama tokeni geçersiz'
+  config:
+    http_client_missing: 'HTTP istemci yapılandırılmamış'
+    http_request_factory_missing: 'HTTP istek fabrikası yapılandırılmamış'
+    http_response_factory_missing: 'HTTP yanıt fabrikası yapılandırılmamış'
+    http_stream_factory_missing: 'HTTP akış fabrikası yapılandırılmamış'
+    invalid_url: 'Geçersiz URL sağlandı: %url%'
+    invalid_language: 'Geçersiz dil kodu sağlandı: %language%'
+    invalid_retry_count: 'Geçersiz yeniden deneme sayısı sağlandı: %retries%'
+  network:
+    conflict: 'Çakışma (409): İstek mevcut durumla çakışıyor'
+    forbidden: 'Yasak (403): İstenen kaynağa erişim reddedildi'
+    invalid: 'Hatalı İstek (400): İstek geçersiz'
+    request: 'İstek başarısız: HTTP isteği tamamlanamadı'
+    server: 'İç Sunucu Hatası (500): Sunucuda hata oluştu'
+    timeout: 'İşlenemeyen Varlık (422): İstek işlenemedi'
+    unauthenticated: 'Yetkisiz (401): Kimlik doğrulama gerekli'
+    undefined_endpoint: 'Bulunamadı (404): İstenen uç nokta mevcut değil'
+    unexpected: 'Sunucudan beklenmeyen yanıt'
+  serialization:
+    could_not_add_items_to_collection: '%className% koleksiyonuna öğeler eklenemedi'
+    empty_collection: 'Koleksiyon boş olamaz'
+    invalid_item_type: '%className% içindeki %property% için geçersiz öğe türü: %expected% bekleniyor, %actual_type% alındı'
+    missing_required_constructor_parameter: '%className% sınıfı için gerekli yapıcı parametresi "%paramName%" eksik'
+    response: 'Yanıt verilerini serileştirme/deserileştirme başarısız'
+    undefined_item_type: '%className% için öğe türü tanımlanmamış'
+
+tuple_operation:
+  write:
+    description: 'Yeni bir ilişki tuple ekler, izinler verir veya ilişkiler kurar'
+  delete:
+    description: 'Mevcut bir ilişki tuple kaldırır, izinleri iptal eder veya ilişkileri siler'
+
+store:
+  name_required: 'Mağaza adı gereklidir ve boş olamaz'
+  name_too_long: 'Mağaza adı %d karakter maksimum uzunluğunu aşıyor (sağlanan: %d)'
+  not_found: 'Mağaza %s bulunamadı'
+
+translation:
+  file_not_found: 'Çeviri dosyası bulunamadı: %resource%'
+  unsupported_format: 'Desteklenmeyen çeviri dosya formatı: %format%'
+
+yaml:
+  file_does_not_exist: 'Dosya mevcut değil: %filename%'
+  cannot_read_file: 'Dosya okunamıyor: %filename%'
+  invalid_syntax_missing_colon: '%line_number% satırında geçersiz YAML sözdizimi: iki nokta eksik'
+  invalid_syntax_missing_value: '%line_number% satırında geçersiz YAML sözdizimi: değer eksik'
+  invalid_syntax_empty_key: '%line_number% satırında geçersiz YAML sözdizimi: boş anahtar'
+  invalid_structure: '%line_number% satırında geçersiz YAML yapısı'
+
+response:
+  unexpected_type: 'Beklenmeyen yanıt türü alındı'

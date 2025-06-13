@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - 한국어 번역 메시지
+# 이 메시지들은 Messages 열거형 케이스에 대응됩니다
+
+client:
+  no_last_request_found: '마지막 요청을 찾을 수 없습니다'
+
+dsl:
+  parse_failed: 'DSL 입력 구문분석에 실패했습니다'
+  unrecognized_term: '인식되지 않은 DSL 용어: %term%'
+  input_empty: '입력 문자열은 비어있을 수 없습니다'
+  pattern_empty: '패턴은 비어있을 수 없습니다'
+  unbalanced_parentheses_closing: '불균형한 괄호: 위치 %position%에 닫는 괄호가 너무 많습니다'
+  unbalanced_parentheses_opening: '불균형한 괄호: %count%개의 열린 %parentheses%가 닫히지 않았습니다'
+  invalid_computed_userset: '잘못된 계산된 사용자 집합'
+  invalid_computed_userset_relation: '계산된 사용자 집합 관계는 비어있을 수 없습니다.'
+
+assertions:
+  empty_collection: '어설션 컬렉션은 비어있을 수 없습니다'
+  invalid_tuple_key: '어설션에 잘못된 튜플 키가 포함되어 있습니다: 사용자, 관계, 객체가 필요합니다'
+
+auth:
+  invalid_response_format: '잘못된 응답 형식'
+  missing_required_fields: '응답에 필수 필드가 누락되었습니다'
+  access_token_must_be_string: 'access_token은 문자열이어야 합니다'
+  expires_in_must_be_integer: 'expires_in은 정수여야 합니다'
+  user_message:
+    token_expired: '세션이 만료되었습니다. 다시 로그인해 주세요.'
+    token_invalid: '잘못된 인증 자격 증명이 제공되었습니다.'
+  jwt:
+    invalid_format: '잘못된 JWT 토큰 형식'
+    invalid_header: '잘못된 JWT 헤더'
+    invalid_payload: '잘못된 JWT 페이로드'
+    missing_required_claims: '필수 JWT 클레임이 누락되었습니다'
+    token_expired: 'JWT 토큰이 만료되었습니다'
+    token_not_yet_valid: 'JWT 토큰이 아직 유효하지 않습니다'
+    invalid_audience: 'JWT 토큰 대상이 예상 대상과 일치하지 않습니다'
+    invalid_issuer: 'JWT 토큰 발급자가 예상 발급자와 일치하지 않습니다'
+
+network:
+  error: '네트워크 오류: %message%'
+  unexpected_status: 'API가 예상치 못한 상태 코드로 응답했습니다: %status_code%'
+
+response:
+  unexpected_type: '예상치 못한 응답 타입을 받았습니다'
+
+result:
+  success_no_error: '성공에는 오류가 없습니다'
+  failure_no_value: '실패에는 값이 없습니다'
+
+request:
+  store_id_empty: '스토어 ID는 비어있을 수 없습니다'
+  model_id_empty: '인증 모델 ID는 비어있을 수 없습니다'
+  store_name_empty: '스토어 이름은 비어있을 수 없습니다'
+  transactional_limit_exceeded: '트랜잭션 writeTuples가 제한을 초과했습니다: %count%개 작업 (최대 100개). 비트랜잭션 모드를 사용하거나 여러 요청으로 분할하세요.'
+  continuation_token_empty: '연속 토큰은 비어있을 수 없습니다'
+  page_size_invalid: '%className%에 잘못된 pageSize가 제공되었습니다'
+  object_type_empty: '객체 타입은 비어있을 수 없습니다'
+  relation_empty: '관계는 비어있을 수 없습니다'
+  user_empty: '사용자는 비어있을 수 없습니다'
+  object_empty: '객체는 비어있을 수 없습니다'
+  type_empty: '타입은 비어있을 수 없습니다'
+
+validation:
+  batch_check_empty: '배치 확인 요청은 비어있을 수 없습니다'
+  invalid_correlation_id: '상관관계 ID "%correlationId%"가 잘못되었습니다. 패턴과 일치해야 합니다: %pattern%'
+  batch_tuple_chunk_size_positive: '청크 크기는 양의 정수여야 합니다'
+  batch_tuple_chunk_size_exceeded: '청크 크기는 %max_size%를 초과할 수 없습니다'
+
+service:
+  http_not_available: 'HTTP 서비스를 사용할 수 없습니다'
+  schema_validator_not_available: '스키마 검증기를 사용할 수 없습니다'
+  tuple_filter_not_available: '튜플 필터 서비스를 사용할 수 없습니다'
+  store_repository_not_available: '스토어 저장소를 사용할 수 없습니다'
+  tuple_repository_not_available: '튜플 저장소를 사용할 수 없습니다'
+
+model:
+  invalid_tuple_key: 'Assertion::fromArray에 잘못된 tuple_key가 제공되었습니다'
+  invalid_identifier_format: '잘못된 식별자 형식: 식별자에는 공백이 포함될 수 없습니다. %identifier%에서 발견되었습니다'
+  typed_wildcard_type_empty: 'TypedWildcard::$type은 비어있을 수 없습니다.'
+  source_info_file_empty: 'SourceInfo::$file은 비어있을 수 없습니다.'
+  leaf_missing_content: 'Leaf는 users, computed 또는 tupleToUserset 중 적어도 하나를 포함해야 합니다'
+  not_found: '인증 모델 %model_id%를 찾을 수 없습니다'
+  no_models_in_store: '스토어 %store_id%에서 인증 모델을 찾을 수 없습니다'
+  validation_failed: '모델 검증에 실패했습니다: %message%'
+  type_definitions_empty: '타입 정의는 비어있을 수 없습니다'
+  clone_source_not_found: '복제할 소스 모델을 찾을 수 없습니다'
+  duplicate_type: '중복된 타입 정의를 발견했습니다: %type%'
+
+collection:
+  undefined_item_type: '%class%의 항목 타입이 정의되지 않았습니다. $itemType 속성을 정의하거나 생성자를 재정의하세요.'
+  invalid_item_type_interface: '항목 타입이 %interface%를 구현해야 합니다. %given%이 제공되었습니다'
+  invalid_item_instance: '%expected%의 인스턴스가 예상됩니다. %given%이 제공되었습니다'
+  invalid_value_type: '%expected%의 인스턴스가 예상됩니다. %given%이 제공되었습니다.'
+  key_must_be_string: '키는 문자열이어야 합니다.'
+  invalid_position: '잘못된 위치'
+  invalid_key_type: '잘못된 키 타입; 문자열이 예상됩니다. %given%이 제공되었습니다.'
+
+consistency:
+  higher_consistency:
+    description: '쿼리 성능보다 데이터 일관성을 우선시하여 가장 최신 결과를 보장합니다'
+  minimize_latency:
+    description: '데이터 일관성보다 쿼리 성능을 우선시하여 약간 오래된 데이터를 사용할 수 있습니다'
+  unspecified:
+    description: 'OpenFGA 서버 구성에 의해 결정되는 기본 일관성 수준을 사용합니다'
+
+schema:
+  class_not_found: '클래스 "%className%"가 존재하지 않거나 자동로드할 수 없습니다'
+  item_type_not_found: '항목 타입 "%itemType%"이 존재하지 않거나 자동로드할 수 없습니다'
+
+exception:
+  client:
+    authentication: '인증 오류가 발생했습니다'
+    configuration: '구성 오류가 감지되었습니다'
+    network: '네트워크 통신 오류'
+    serialization: '데이터 직렬화 오류'
+    validation: '요청 검증에 실패했습니다'
+  auth:
+    token_expired: '인증 토큰이 만료되었습니다'
+    token_invalid: '인증 토큰이 잘못되었습니다'
+  config:
+    http_client_missing: 'HTTP 클라이언트가 구성되지 않았습니다'
+    http_request_factory_missing: 'HTTP 요청 팩토리가 구성되지 않았습니다'
+    http_response_factory_missing: 'HTTP 응답 팩토리가 구성되지 않았습니다'
+    http_stream_factory_missing: 'HTTP 스트림 팩토리가 구성되지 않았습니다'
+    invalid_url: '잘못된 URL이 제공되었습니다: %url%'
+    invalid_language: '잘못된 언어 코드가 제공되었습니다: %language%'
+    invalid_retry_count: '잘못된 재시도 횟수가 제공되었습니다: %retries%'
+  network:
+    conflict: '충돌 (409): 요청이 현재 상태와 충돌합니다'
+    forbidden: '금지됨 (403): 요청된 리소스에 대한 액세스가 거부되었습니다'
+    invalid: '잘못된 요청 (400): 요청이 잘못되었습니다'
+    request: '요청 실패: HTTP 요청을 완료할 수 없습니다'
+    server: '내부 서버 오류 (500): 서버에서 오류가 발생했습니다'
+    timeout: '처리할 수 없는 엔티티 (422): 요청을 처리할 수 없습니다'
+    unauthenticated: '인증되지 않음 (401): 인증이 필요합니다'
+    undefined_endpoint: '찾을 수 없음 (404): 요청된 엔드포인트가 존재하지 않습니다'
+    unexpected: '서버로부터 예상치 못한 응답'
+  serialization:
+    could_not_add_items_to_collection: '컬렉션 %className%에 항목을 추가할 수 없습니다'
+    empty_collection: '컬렉션은 비어있을 수 없습니다'
+    invalid_item_type: '%className%의 %property%에 대한 잘못된 항목 타입: %expected%이 예상되지만 %actual_type%을 받았습니다'
+    missing_required_constructor_parameter: '클래스 %className%의 필수 생성자 매개변수 "%paramName%"이 누락되었습니다'
+    response: '응답 데이터 직렬화/역직렬화에 실패했습니다'
+    undefined_item_type: '%className%의 항목 타입이 정의되지 않았습니다'
+
+tuple_operation:
+  write:
+    description: '새로운 관계 튜플을 추가하여 권한을 부여하거나 관계를 설정합니다'
+  delete:
+    description: '기존 관계 튜플을 제거하여 권한을 취소하거나 관계를 삭제합니다'
+
+store:
+  name_required: '스토어 이름은 필수이며 비어있을 수 없습니다'
+  name_too_long: '스토어 이름이 최대 길이 %d자를 초과했습니다 (제공됨: %d)'
+  not_found: '스토어 %s를 찾을 수 없습니다'
+
+translation:
+  file_not_found: '번역 파일을 찾을 수 없습니다: %resource%'
+  unsupported_format: '지원되지 않는 번역 파일 형식: %format%'
+
+yaml:
+  file_does_not_exist: '파일이 존재하지 않습니다: %filename%'
+  cannot_read_file: '파일을 읽을 수 없습니다: %filename%'
+  invalid_syntax_missing_colon: '%line_number%번째 줄의 YAML 구문이 잘못되었습니다: 콜론 누락'
+  invalid_syntax_missing_value: '%line_number%번째 줄의 YAML 구문이 잘못되었습니다: 값 누락'
+  invalid_syntax_empty_key: '%line_number%번째 줄의 YAML 구문이 잘못되었습니다: 빈 키'
+  invalid_structure: '%line_number%번째 줄의 YAML 구조가 잘못되었습니다'
+
+response:
+  unexpected_type: '예상치 못한 응답 타입을 받았습니다'

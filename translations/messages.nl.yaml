@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - Nederlandse Vertaling Berichten
+# Deze berichten komen overeen met de Messages enum cases
+
+client:
+  no_last_request_found: 'Geen laatste verzoek gevonden'
+
+dsl:
+  parse_failed: 'Verwerken van DSL-invoer is mislukt'
+  unrecognized_term: 'Onbekende DSL-term: %term%'
+  input_empty: 'Invoerstring kan niet leeg zijn'
+  pattern_empty: 'Patroon kan niet leeg zijn'
+  unbalanced_parentheses_closing: 'Ongelijke haakjes: te veel sluithaakjes op positie %position%'
+  unbalanced_parentheses_opening: 'Ongelijke haakjes: %count% ongesloten %parentheses%'
+  invalid_computed_userset: 'Ongeldige berekende gebruikersset'
+  invalid_computed_userset_relation: 'Berekende gebruikersset relatie kan niet leeg zijn.'
+
+assertions:
+  empty_collection: 'Assertieverzameling kan niet leeg zijn'
+  invalid_tuple_key: 'Assertie bevat ongeldige tuple-sleutel: gebruiker, relatie en object zijn vereist'
+
+auth:
+  invalid_response_format: 'Ongeldig responsformaat'
+  missing_required_fields: 'Ontbrekende vereiste velden in respons'
+  access_token_must_be_string: 'access_token moet een string zijn'
+  expires_in_must_be_integer: 'expires_in moet een geheel getal zijn'
+  user_message:
+    token_expired: 'Uw sessie is verlopen. Log opnieuw in.'
+    token_invalid: 'Ongeldige authenticatiegegevens verstrekt.'
+  jwt:
+    invalid_format: 'Ongeldig JWT-tokenformaat'
+    invalid_header: 'Ongeldige JWT-header'
+    invalid_payload: 'Ongeldige JWT-payload'
+    missing_required_claims: 'Ontbrekende vereiste JWT-claims'
+    token_expired: 'JWT-token is verlopen'
+    token_not_yet_valid: 'JWT-token is nog niet geldig'
+    invalid_audience: 'JWT-token doelgroep komt niet overeen met verwachte doelgroep'
+    invalid_issuer: 'JWT-token uitgever komt niet overeen met verwachte uitgever'
+
+network:
+  error: 'Netwerkfout: %message%'
+  unexpected_status: 'API reageerde met een onverwachte statuscode: %status_code%'
+
+response:
+  unexpected_type: 'Onverwacht responstype ontvangen'
+
+result:
+  success_no_error: 'Succes heeft geen fout'
+  failure_no_value: 'Falen heeft geen waarde'
+
+request:
+  store_id_empty: 'Store-ID kan niet leeg zijn'
+  model_id_empty: 'Autorisatiemodel-ID kan niet leeg zijn'
+  store_name_empty: 'Storenaam kan niet leeg zijn'
+  transactional_limit_exceeded: 'Transactionele writeTuples heeft limiet overschreden: %count% operaties (max 100). Gebruik niet-transactionele modus of verdeel over meerdere verzoeken.'
+  continuation_token_empty: 'Vervolgtoken kan niet leeg zijn'
+  page_size_invalid: 'Ongeldige pageSize verstrekt aan %className%'
+  object_type_empty: 'Objecttype kan niet leeg zijn'
+  relation_empty: 'Relatie kan niet leeg zijn'
+  user_empty: 'Gebruiker kan niet leeg zijn'
+  object_empty: 'Object kan niet leeg zijn'
+  type_empty: 'Type kan niet leeg zijn'
+
+validation:
+  batch_check_empty: 'Batchcontrole verzoek kan niet leeg zijn'
+  invalid_correlation_id: 'Correlatie-ID "%correlationId%" is ongeldig. Moet overeenkomen met patroon: %pattern%'
+  batch_tuple_chunk_size_positive: 'Chunkgrootte moet een positief geheel getal zijn'
+  batch_tuple_chunk_size_exceeded: 'Chunkgrootte kan %max_size% niet overschrijden'
+
+service:
+  http_not_available: 'HTTP-service niet beschikbaar'
+  schema_validator_not_available: 'Schema-validator niet beschikbaar'
+  tuple_filter_not_available: 'Tuple-filterservice niet beschikbaar'
+  store_repository_not_available: 'Store-repository niet beschikbaar'
+  tuple_repository_not_available: 'Tuple-repository niet beschikbaar'
+
+model:
+  invalid_tuple_key: 'Ongeldige tuple_key verstrekt aan Assertion::fromArray'
+  invalid_identifier_format: 'Ongeldig identificatieformaat: identificaties kunnen geen witruimte bevatten. Gevonden in %identifier%'
+  typed_wildcard_type_empty: 'TypedWildcard::$type kan niet leeg zijn.'
+  source_info_file_empty: 'SourceInfo::$file kan niet leeg zijn.'
+  leaf_missing_content: 'Leaf moet ten minste één van users, computed of tupleToUserset bevatten'
+  not_found: 'Autorisatiemodel %model_id% niet gevonden'
+  no_models_in_store: 'Geen autorisatiemodellen gevonden in store %store_id%'
+  validation_failed: 'Modelvalidatie mislukt: %message%'
+  type_definitions_empty: 'Typedefinities kunnen niet leeg zijn'
+  clone_source_not_found: 'Bronmodel niet gevonden voor kloning'
+  duplicate_type: 'Dubbele typedefinitie gevonden: %type%'
+
+collection:
+  undefined_item_type: 'Ongedefinieerd itemtype voor %class%. Definieer de $itemType eigenschap of overschrijf de constructor.'
+  invalid_item_type_interface: 'Verwacht itemtype om %interface% te implementeren, %given% gegeven'
+  invalid_item_instance: 'Verwacht instantie van %expected%, %given% gegeven'
+  invalid_value_type: 'Verwacht instantie van %expected%, %given% gegeven.'
+  key_must_be_string: 'Sleutel moet een string zijn.'
+  invalid_position: 'Ongeldige positie'
+  invalid_key_type: 'Ongeldig sleuteltype; verwacht string, %given% gegeven.'
+
+consistency:
+  higher_consistency:
+    description: 'Geeft prioriteit aan dataconsistentie boven queryprestaties, zorgt voor de meest actuele resultaten'
+  minimize_latency:
+    description: 'Geeft prioriteit aan queryprestaties boven dataconsistentie, mogelijk met gebruik van enigszins verouderde data'
+  unspecified:
+    description: 'Gebruikt het standaard consistentieniveau bepaald door de OpenFGA-serverconfiguratie'
+
+schema:
+  class_not_found: 'Klasse "%className%" bestaat niet of kan niet automatisch geladen worden'
+  item_type_not_found: 'Itemtype "%itemType%" bestaat niet of kan niet automatisch geladen worden'
+
+exception:
+  client:
+    authentication: 'Authenticatiefout opgetreden'
+    configuration: 'Configuratiefout gedetecteerd'
+    network: 'Netwerkcommunicatiefout'
+    serialization: 'Data serialisatiefout'
+    validation: 'Verzoekvalidatie mislukt'
+  auth:
+    token_expired: 'Authenticatietoken is verlopen'
+    token_invalid: 'Authenticatietoken is ongeldig'
+  config:
+    http_client_missing: 'HTTP-client is niet geconfigureerd'
+    http_request_factory_missing: 'HTTP-verzoek factory is niet geconfigureerd'
+    http_response_factory_missing: 'HTTP-respons factory is niet geconfigureerd'
+    http_stream_factory_missing: 'HTTP-stream factory is niet geconfigureerd'
+    invalid_url: 'Ongeldige URL verstrekt: %url%'
+    invalid_language: 'Ongeldige taalcode verstrekt: %language%'
+    invalid_retry_count: 'Ongeldig aantal herhalingen verstrekt: %retries%'
+  network:
+    conflict: 'Conflict (409): Het verzoek conflicteert met de huidige staat'
+    forbidden: 'Verboden (403): Toegang geweigerd tot de gevraagde bron'
+    invalid: 'Slecht Verzoek (400): Het verzoek is ongeldig'
+    request: 'Verzoek mislukt: Kan het HTTP-verzoek niet voltooien'
+    server: 'Interne Serverfout (500): De server ondervond een fout'
+    timeout: 'Onverwerkbare Entiteit (422): Het verzoek kon niet verwerkt worden'
+    unauthenticated: 'Ongeautoriseerd (401): Authenticatie vereist'
+    undefined_endpoint: 'Niet Gevonden (404): Het gevraagde eindpunt bestaat niet'
+    unexpected: 'Onverwachte respons van de server'
+  serialization:
+    could_not_add_items_to_collection: 'Kon geen items toevoegen aan verzameling %className%'
+    empty_collection: 'Verzameling kan niet leeg zijn'
+    invalid_item_type: 'Ongeldig itemtype voor %property% in %className%: verwacht %expected%, kreeg %actual_type%'
+    missing_required_constructor_parameter: 'Ontbrekende vereiste constructor parameter "%paramName%" voor klasse %className%'
+    response: 'Mislukt om responsdata te serialiseren/deserialiseren'
+    undefined_item_type: 'Itemtype is niet gedefinieerd voor %className%'
+
+tuple_operation:
+  write:
+    description: 'Voegt een nieuwe relatietuple toe, verleent machtigingen of vestigt relaties'
+  delete:
+    description: 'Verwijdert een bestaande relatietuple, trekt machtigingen in of verwijdert relaties'
+
+store:
+  name_required: 'Storenaam is vereist en kan niet leeg zijn'
+  name_too_long: 'Storenaam overschrijdt maximale lengte van %d karakters (verstrekt: %d)'
+  not_found: 'Store %s niet gevonden'
+
+translation:
+  file_not_found: 'Vertaalbestand niet gevonden: %resource%'
+  unsupported_format: 'Niet ondersteund vertaalbestandformaat: %format%'
+
+yaml:
+  file_does_not_exist: 'Bestand bestaat niet: %filename%'
+  cannot_read_file: 'Kan bestand niet lezen: %filename%'
+  invalid_syntax_missing_colon: 'Ongeldige YAML-syntaxis op regel %line_number%: ontbrekende dubbele punt'
+  invalid_syntax_missing_value: 'Ongeldige YAML-syntaxis op regel %line_number%: ontbrekende waarde'
+  invalid_syntax_empty_key: 'Ongeldige YAML-syntaxis op regel %line_number%: lege sleutel'
+  invalid_structure: 'Ongeldige YAML-structuur op regel %line_number%'
+
+response:
+  unexpected_type: 'Onverwacht responstype ontvangen'

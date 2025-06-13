@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - Svenska Översättningsmeddelanden
+# Dessa meddelanden motsvarar Messages enum-fallen
+
+client:
+  no_last_request_found: 'Ingen senaste förfrågan hittades'
+
+dsl:
+  parse_failed: 'Misslyckades med att tolka DSL-inmatning'
+  unrecognized_term: 'Okänd DSL-term: %term%'
+  input_empty: 'Inmatningssträngen kan inte vara tom'
+  pattern_empty: 'Mönstret kan inte vara tomt'
+  unbalanced_parentheses_closing: 'Obalanserade parenteser: för många avslutande parenteser vid position %position%'
+  unbalanced_parentheses_opening: 'Obalanserade parenteser: %count% ostängda öppnande %parentheses%'
+  invalid_computed_userset: 'Ogiltig beräknad användaruppsättning'
+  invalid_computed_userset_relation: 'Beräknad användaruppsättnings relation kan inte vara tom.'
+
+assertions:
+  empty_collection: 'Påståendesamling kan inte vara tom'
+  invalid_tuple_key: 'Påstående innehåller ogiltig tupel-nyckel: användare, relation och objekt krävs'
+
+auth:
+  invalid_response_format: 'Ogiltigt svarsformat'
+  missing_required_fields: 'Saknade obligatoriska fält i svar'
+  access_token_must_be_string: 'access_token måste vara en sträng'
+  expires_in_must_be_integer: 'expires_in måste vara ett heltal'
+  user_message:
+    token_expired: 'Din session har gått ut. Vänligen logga in igen.'
+    token_invalid: 'Ogiltiga autentiseringsuppgifter tillhandahållna.'
+  jwt:
+    invalid_format: 'Ogiltigt JWT-tokenformat'
+    invalid_header: 'Ogiltig JWT-header'
+    invalid_payload: 'Ogiltig JWT-payload'
+    missing_required_claims: 'Saknade obligatoriska JWT-anspråk'
+    token_expired: 'JWT-token har gått ut'
+    token_not_yet_valid: 'JWT-token är inte giltigt ännu'
+    invalid_audience: 'JWT-tokens målgrupp matchar inte förväntad målgrupp'
+    invalid_issuer: 'JWT-tokens utgivare matchar inte förväntad utgivare'
+
+network:
+  error: 'Nätverksfel: %message%'
+  unexpected_status: 'API svarade med en oväntad statuskod: %status_code%'
+
+response:
+  unexpected_type: 'Oväntad svarstyp mottagen'
+
+result:
+  success_no_error: 'Framgång har inget fel'
+  failure_no_value: 'Misslyckande har inget värde'
+
+request:
+  store_id_empty: 'Butiks-ID kan inte vara tomt'
+  model_id_empty: 'Auktorisationsmodell-ID kan inte vara tomt'
+  store_name_empty: 'Butiksnamn kan inte vara tomt'
+  transactional_limit_exceeded: 'Transaktionell writeTuples överskred gränsen: %count% operationer (max 100). Använd icke-transaktionellt läge eller dela upp i flera förfrågningar.'
+  continuation_token_empty: 'Fortsättningstoken kan inte vara tomt'
+  page_size_invalid: 'Ogiltig pageSize tillhandahållen till %className%'
+  object_type_empty: 'Objekttyp kan inte vara tom'
+  relation_empty: 'Relation kan inte vara tom'
+  user_empty: 'Användare kan inte vara tom'
+  object_empty: 'Objekt kan inte vara tomt'
+  type_empty: 'Typ kan inte vara tom'
+
+validation:
+  batch_check_empty: 'Batch-kontrollförfrågan kan inte vara tom'
+  invalid_correlation_id: 'Korrelations-ID "%correlationId%" är ogiltigt. Måste matcha mönster: %pattern%'
+  batch_tuple_chunk_size_positive: 'Chunkstorlek måste vara ett positivt heltal'
+  batch_tuple_chunk_size_exceeded: 'Chunkstorlek kan inte överstiga %max_size%'
+
+service:
+  http_not_available: 'HTTP-tjänst inte tillgänglig'
+  schema_validator_not_available: 'Schemavalidator inte tillgänglig'
+  tuple_filter_not_available: 'Tupel-filtertjänst inte tillgänglig'
+  store_repository_not_available: 'Butiks-repository inte tillgängligt'
+  tuple_repository_not_available: 'Tupel-repository inte tillgängligt'
+
+model:
+  invalid_tuple_key: 'Ogiltig tuple_key tillhandahållen till Assertion::fromArray'
+  invalid_identifier_format: 'Ogiltigt identifierarformat: identifierare kan inte innehålla mellanslag. Hittades i %identifier%'
+  typed_wildcard_type_empty: 'TypedWildcard::$type kan inte vara tom.'
+  source_info_file_empty: 'SourceInfo::$file kan inte vara tom.'
+  leaf_missing_content: 'Leaf måste innehålla minst en av users, computed eller tupleToUserset'
+  not_found: 'Auktorisationsmodell %model_id% hittades inte'
+  no_models_in_store: 'Inga auktorisationsmodeller hittades i butik %store_id%'
+  validation_failed: 'Modellvalidering misslyckades: %message%'
+  type_definitions_empty: 'Typdefinitioner kan inte vara tomma'
+  clone_source_not_found: 'Källmodell för kloning hittades inte'
+  duplicate_type: 'Dubblerad typdefinition hittades: %type%'
+
+collection:
+  undefined_item_type: 'Odefinierad objekttyp för %class%. Definiera $itemType-egenskapen eller åsidosätt konstruktorn.'
+  invalid_item_type_interface: 'Förväntad objekttyp att implementera %interface%, %given% given'
+  invalid_item_instance: 'Förväntad instans av %expected%, %given% given'
+  invalid_value_type: 'Förväntad instans av %expected%, %given% given.'
+  key_must_be_string: 'Nyckel måste vara en sträng.'
+  invalid_position: 'Ogiltig position'
+  invalid_key_type: 'Ogiltig nyckeltyp; förväntad sträng, %given% given.'
+
+consistency:
+  higher_consistency:
+    description: 'Prioriterar datakonsistens över frågeprestanda, säkerställer de mest uppdaterade resultaten'
+  minimize_latency:
+    description: 'Prioriterar frågeprestanda över datakonsistens, potentiellt använder något föråldrad data'
+  unspecified:
+    description: 'Använder standardkonsistensnivån som bestäms av OpenFGA-serverkonfigurationen'
+
+schema:
+  class_not_found: 'Klass "%className%" existerar inte eller kan inte autoladdas'
+  item_type_not_found: 'Objekttyp "%itemType%" existerar inte eller kan inte autoladdas'
+
+exception:
+  client:
+    authentication: 'Autentiseringsfel inträffade'
+    configuration: 'Konfigurationsfel upptäckt'
+    network: 'Nätverkskommunikationsfel'
+    serialization: 'Dataserialiseringsfel'
+    validation: 'Begäranvalidering misslyckades'
+  auth:
+    token_expired: 'Autentiseringstoken har gått ut'
+    token_invalid: 'Autentiseringstoken är ogiltig'
+  config:
+    http_client_missing: 'HTTP-klient är inte konfigurerad'
+    http_request_factory_missing: 'HTTP-begäranfabrik är inte konfigurerad'
+    http_response_factory_missing: 'HTTP-svarsfabrik är inte konfigurerad'
+    http_stream_factory_missing: 'HTTP-strömfabrik är inte konfigurerad'
+    invalid_url: 'Ogiltig URL tillhandahållen: %url%'
+    invalid_language: 'Ogiltig språkkod tillhandahållen: %language%'
+    invalid_retry_count: 'Ogiltigt antal återförsök tillhandahållet: %retries%'
+  network:
+    conflict: 'Konflikt (409): Begäran står i konflikt med nuvarande tillstånd'
+    forbidden: 'Förbjuden (403): Åtkomst nekad till begärd resurs'
+    invalid: 'Dålig begäran (400): Begäran är ogiltig'
+    request: 'Begäran misslyckades: Kunde inte slutföra HTTP-begäran'
+    server: 'Internt serverfel (500): Servern stötte på ett fel'
+    timeout: 'Obearbetbar entitet (422): Begäran kunde inte bearbetas'
+    unauthenticated: 'Obehörig (401): Autentisering krävs'
+    undefined_endpoint: 'Inte hittad (404): Den begärda slutpunkten existerar inte'
+    unexpected: 'Oväntat svar från servern'
+  serialization:
+    could_not_add_items_to_collection: 'Kunde inte lägga till objekt i samling %className%'
+    empty_collection: 'Samling kan inte vara tom'
+    invalid_item_type: 'Ogiltig objekttyp för %property% i %className%: förväntad %expected%, fick %actual_type%'
+    missing_required_constructor_parameter: 'Saknas obligatorisk konstruktorparameter "%paramName%" för klass %className%'
+    response: 'Misslyckades med att serialisera/deserialisera svarsdata'
+    undefined_item_type: 'Objekttyp är inte definierad för %className%'
+
+tuple_operation:
+  write:
+    description: 'Lägger till en ny relationstupel, beviljar behörigheter eller etablerar relationer'
+  delete:
+    description: 'Tar bort en befintlig relationstupel, återkallar behörigheter eller tar bort relationer'
+
+store:
+  name_required: 'Butiksnamn krävs och kan inte vara tomt'
+  name_too_long: 'Butiksnamn överstiger maximal längd på %d tecken (tillhandahållet: %d)'
+  not_found: 'Butik %s hittades inte'
+
+translation:
+  file_not_found: 'Översättningsfil hittades inte: %resource%'
+  unsupported_format: 'Ostödd översättningsfilformat: %format%'
+
+yaml:
+  file_does_not_exist: 'Filen existerar inte: %filename%'
+  cannot_read_file: 'Kan inte läsa fil: %filename%'
+  invalid_syntax_missing_colon: 'Ogiltig YAML-syntax på rad %line_number%: saknar kolon'
+  invalid_syntax_missing_value: 'Ogiltig YAML-syntax på rad %line_number%: saknar värde'
+  invalid_syntax_empty_key: 'Ogiltig YAML-syntax på rad %line_number%: tom nyckel'
+  invalid_structure: 'Ogiltig YAML-struktur på rad %line_number%'
+
+response:
+  unexpected_type: 'Oväntad svarstyp mottagen'

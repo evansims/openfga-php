@@ -4,8 +4,10 @@
 
 ### Added
 
-- **New i18n Translations**<br />
-  Added German language support for exception messages.
+- **Expanded Internationalization**<br />
+  This release adds i18n support for Chinese (Simplified), Dutch, French, German, Italian, Japanese, Korean, Portuguese (Brazilian), Russian, Swedish, Turkish, and Ukranian, alongside our existing Spanish and English support. We'd eagerly welcome contributions to improve the accuracy of these translations.
+
+  We've also introduced a new enum to simplify working with the i18n system.
 
 ### Fixed
 

@@ -1,0 +1,167 @@
+# OpenFGA PHP SDK - 日本語翻訳メッセージ
+# これらのメッセージはMessages列挙型のケースに対応しています
+
+client:
+  no_last_request_found: '最後のリクエストが見つかりません'
+
+dsl:
+  parse_failed: 'DSL入力の解析に失敗しました'
+  unrecognized_term: '認識されないDSL用語です: %term%'
+  input_empty: '入力文字列を空にすることはできません'
+  pattern_empty: 'パターンを空にすることはできません'
+  unbalanced_parentheses_closing: '括弧の対応が取れていません: 位置%position%に閉じ括弧が多すぎます'
+  unbalanced_parentheses_opening: '括弧の対応が取れていません: %count%個の開き%parentheses%が閉じられていません'
+  invalid_computed_userset: '無効な計算済みユーザーセットです'
+  invalid_computed_userset_relation: "計算済みユーザーセットの関係を空にすることはできません。"
+
+assertions:
+  empty_collection: 'アサーションコレクションを空にすることはできません'
+  invalid_tuple_key: 'アサーションに無効なタプルキーが含まれています: ユーザー、関係、オブジェクトが必須です'
+
+auth:
+  invalid_response_format: '無効なレスポンス形式です'
+  missing_required_fields: 'レスポンスに必須フィールドがありません'
+  access_token_must_be_string: 'access_tokenは文字列である必要があります'
+  expires_in_must_be_integer: 'expires_inは整数である必要があります'
+  user_message:
+    token_expired: 'セッションの有効期限が切れました。再度サインインしてください。'
+    token_invalid: '無効な認証資格情報が提供されました。'
+  jwt:
+    invalid_format: '無効なJWTトークン形式です'
+    invalid_header: '無効なJWTヘッダーです'
+    invalid_payload: '無効なJWTペイロードです'
+    missing_required_claims: '必要なJWTクレームがありません'
+    token_expired: 'JWTトークンの有効期限が切れました'
+    token_not_yet_valid: 'JWTトークンはまだ有効ではありません'
+    invalid_audience: 'JWTトークンの対象者が期待される対象者と一致しません'
+    invalid_issuer: 'JWTトークンの発行者が期待される発行者と一致しません'
+
+network:
+  error: 'ネットワークエラー: %message%'
+  unexpected_status: 'APIが予期しないステータスコードで応答しました: %status_code%'
+
+response:
+  unexpected_type: '予期しないレスポンスタイプを受信しました'
+
+result:
+  success_no_error: '成功にはエラーがありません'
+  failure_no_value: '失敗には値がありません'
+
+request:
+  store_id_empty: 'ストアIDを空にすることはできません'
+  model_id_empty: '認可モデルIDを空にすることはできません'
+  store_name_empty: 'ストア名を空にすることはできません'
+  transactional_limit_exceeded: 'トランザクショナルwriteTuplesが制限を超えました: %count%個の操作（最大100個）。非トランザクショナルモードを使用するか、複数のリクエストに分割してください。'
+  continuation_token_empty: '継続トークンを空にすることはできません'
+  page_size_invalid: '%className%に無効なpageSizeが提供されました'
+  object_type_empty: 'オブジェクトタイプを空にすることはできません'
+  relation_empty: '関係を空にすることはできません'
+  user_empty: 'ユーザーを空にすることはできません'
+  object_empty: 'オブジェクトを空にすることはできません'
+  type_empty: 'タイプを空にすることはできません'
+
+validation:
+  batch_check_empty: 'バッチチェックリクエストを空にすることはできません'
+  invalid_correlation_id: '相関ID「%correlationId%」は無効です。パターンと一致する必要があります: %pattern%'
+  batch_tuple_chunk_size_positive: 'チャンクサイズは正の整数である必要があります'
+  batch_tuple_chunk_size_exceeded: 'チャンクサイズは%max_size%を超えることはできません'
+
+service:
+  http_not_available: 'HTTPサービスが利用できません'
+  schema_validator_not_available: 'スキーマバリデーターが利用できません'
+  tuple_filter_not_available: 'タプルフィルターサービスが利用できません'
+  store_repository_not_available: 'ストアリポジトリが利用できません'
+  tuple_repository_not_available: 'タプルリポジトリが利用できません'
+
+model:
+  invalid_tuple_key: 'Assertion::fromArrayに無効なtuple_keyが提供されました'
+  invalid_identifier_format: '無効な識別子形式です: 識別子に空白文字を含めることはできません。%identifier%で見つかりました'
+  typed_wildcard_type_empty: 'TypedWildcard::$typeを空にすることはできません。'
+  source_info_file_empty: 'SourceInfo::$fileを空にすることはできません。'
+  leaf_missing_content: 'LeafにはusersまたはcomputedまたはtupleToUsersetのうち少なくとも1つが含まれている必要があります'
+  not_found: '認可モデル%model_id%が見つかりませんでした'
+  no_models_in_store: 'ストア%store_id%に認可モデルが見つかりません'
+  validation_failed: 'モデルの検証に失敗しました: %message%'
+  type_definitions_empty: 'タイプ定義を空にすることはできません'
+  clone_source_not_found: 'クローン用のソースモデルが見つかりません'
+  duplicate_type: '重複するタイプ定義が見つかりました: %type%'
+
+collection:
+  undefined_item_type: '%class%のアイテムタイプが未定義です。$itemTypeプロパティを定義するかコンストラクターをオーバーライドしてください。'
+  invalid_item_type_interface: 'アイテムタイプは%interface%を実装する必要があります。%given%が提供されました'
+  invalid_item_instance: '%expected%のインスタンスが期待されます。%given%が提供されました'
+  invalid_value_type: '%expected%のインスタンスが期待されます。%given%が提供されました。'
+  key_must_be_string: 'キーは文字列である必要があります。'
+  invalid_position: '無効な位置です'
+  invalid_key_type: '無効なキータイプです。文字列が期待されます。%given%が提供されました。'
+
+consistency:
+  higher_consistency:
+    description: 'クエリパフォーマンスよりもデータ整合性を優先し、最新の結果を保証します'
+  minimize_latency:
+    description: 'データ整合性よりもクエリパフォーマンスを優先し、わずかに古いデータを使用する可能性があります'
+  unspecified:
+    description: 'OpenFGAサーバー設定によって決定されるデフォルトの整合性レベルを使用します'
+
+schema:
+  class_not_found: 'クラス「%className%」は存在しないか、自動読み込みできません'
+  item_type_not_found: 'アイテムタイプ「%itemType%」は存在しないか、自動読み込みできません'
+
+exception:
+  client:
+    authentication: '認証エラーが発生しました'
+    configuration: '設定エラーが検出されました'
+    network: 'ネットワーク通信エラー'
+    serialization: 'データシリアライゼーションエラー'
+    validation: 'リクエストの検証に失敗しました'
+  auth:
+    token_expired: '認証トークンの有効期限が切れました'
+    token_invalid: '認証トークンが無効です'
+  config:
+    http_client_missing: 'HTTPクライアントが設定されていません'
+    http_request_factory_missing: 'HTTPリクエストファクトリが設定されていません'
+    http_response_factory_missing: 'HTTPレスポンスファクトリが設定されていません'
+    http_stream_factory_missing: 'HTTPストリームファクトリが設定されていません'
+    invalid_url: '無効なURLが提供されました: %url%'
+    invalid_language: '無効な言語コードが提供されました: %language%'
+    invalid_retry_count: '無効な再試行回数が提供されました: %retries%'
+  network:
+    conflict: '競合 (409): リクエストが現在の状態と競合しています'
+    forbidden: '禁止 (403): 要求されたリソースへのアクセスが拒否されました'
+    invalid: '無効なリクエスト (400): リクエストが無効です'
+    request: 'リクエスト失敗: HTTPリクエストを完了できませんでした'
+    server: '内部サーバーエラー (500): サーバーでエラーが発生しました'
+    timeout: '処理不可能エンティティ (422): リクエストを処理できませんでした'
+    unauthenticated: '未認証 (401): 認証が必要です'
+    undefined_endpoint: '見つかりません (404): 要求されたエンドポイントは存在しません'
+    unexpected: 'サーバーからの予期しないレスポンス'
+  serialization:
+    could_not_add_items_to_collection: 'コレクション%className%にアイテムを追加できませんでした'
+    empty_collection: 'コレクションを空にすることはできません'
+    invalid_item_type: '%className%の%property%に無効なアイテムタイプです: %expected%が期待されますが%actual_type%が取得されました'
+    missing_required_constructor_parameter: 'クラス%className%の必須コンストラクターパラメーター「%paramName%」がありません'
+    response: 'レスポンスデータのシリアライズ/デシリアライズに失敗しました'
+    undefined_item_type: '%className%のアイテムタイプが定義されていません'
+
+tuple_operation:
+  write:
+    description: '新しい関係タプルを追加し、権限を付与するか関係を確立します'
+  delete:
+    description: '既存の関係タプルを削除し、権限を取り消すか関係を削除します'
+
+store:
+  name_required: 'ストア名は必須で、空にすることはできません'
+  name_too_long: 'ストア名が最大長%d文字を超えています（提供された文字数: %d）'
+  not_found: 'ストア%sが見つかりませんでした'
+
+translation:
+  file_not_found: '翻訳ファイルが見つかりません: %resource%'
+  unsupported_format: 'サポートされていない翻訳ファイル形式です: %format%'
+
+yaml:
+  file_does_not_exist: 'ファイルが存在しません: %filename%'
+  cannot_read_file: 'ファイルを読み取れません: %filename%'
+  invalid_syntax_missing_colon: '行%line_number%のYAML構文が無効です: コロンがありません'
+  invalid_syntax_missing_value: '行%line_number%のYAML構文が無効です: 値がありません'
+  invalid_syntax_empty_key: '行%line_number%のYAML構文が無効です: キーが空です'
+  invalid_structure: '行%line_number%のYAML構造が無効です'

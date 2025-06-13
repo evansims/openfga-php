@@ -8,56 +8,9 @@ Please review these guidelines before submitting any pull requests.
 1. Fork the project
 1. Create a new branch
 1. Code, test, commit and push
-1. Open a pull request detailing your changes. Make sure to follow the [template](.github/PULL_REQUEST_TEMPLATE.md)
+1. Open a pull request detailing your changes
 
-## Guidelines
-
-- Please ensure the coding style running `composer lint`.
-- Send a coherent commit history, making sure each individual commit in your pull request is meaningful.
-- If your commit history is long, please squash your commits.
-- You may need to [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) to avoid merge conflicts.
-- Please remember that we follow [SemVer](http://semver.org/).
-
-## Error Handling Strategy
-
-The OpenFGA PHP SDK uses the Result pattern for all public API methods. This provides a consistent, predictable way to handle both success and failure cases without relying on exceptions.
-
-### Basic Usage
-
-```php
-$result = $client->check(...);
-
-// Handle success and failure
-$result->success(fn($response) => echo "Allowed: {$response->getAllowed()}")
-       ->failure(fn($error) => error_log("Check failed: {$error->getMessage()}"));
-
-// Get the value or throw exception
-try {
-    $response = $result->unwrap();
-} catch (Throwable $e) {
-    // Handle error
-}
-```
-
-### Result Methods
-
-- `success(callable $callback): self` - Execute callback on success
-- `failure(callable $callback): self` - Execute callback on failure
-- `then(callable $callback): self` - Transform success value
-- `recover(callable $callback): self` - Transform failure to success
-- `unwrap(?callable $callback = null): mixed` - Get value or throw/transform
-- `isSuccess(): bool` - Check if result is successful
-- `isFailure(): bool` - Check if result is failure
-
-### Why Result Pattern?
-
-1. **Explicit Error Handling**: Forces developers to consider both success and failure cases
-2. **Composability**: Chain operations without nested try-catch blocks
-3. **Type Safety**: Return types clearly indicate possibility of failure
-4. **Consistency**: All SDK methods behave the same way
-5. **Flexibility**: Choose between exception-based or value-based error handling
-
-## Setup
+## Development Workflow
 
 Clone your fork, then install the dev dependencies:
 
@@ -65,7 +18,7 @@ Clone your fork, then install the dev dependencies:
 composer install
 ```
 
-## Lint
+## Running Linters
 
 Lint your code:
 
@@ -79,9 +32,9 @@ Lint and fix:
 composer lint:fix
 ```
 
-## Tests
+## Running Tests
 
-Everything:
+Run all tests:
 
 ```bash
 composer test
@@ -113,16 +66,23 @@ Update the documentation:
 composer docs:api
 ```
 
-Update the wiki:
+## Releasing
 
-```bash
-composer docs:wiki
-```
-
-Note: You must have maintainer privileges to update the wiki.
-
-## Making a Release
+Use the `release` Composer command to create a new release.
 
 ```bash
 composer release X.Y.Z
 ```
+
+This command triggers a workflow that will:
+
+- Update the CHANGELOG.md file
+  - Renames the "Unreleased" section to the new version
+- Update the version const in `Client.php`
+- Run our linters and test suite
+- Create a new git tag
+- Push the tag to GitHub
+- Regenerate the API documentation
+- Update the GitHub wiki
+- Update the LLM-friendly llms.txt
+- Draft a new release on GitHub

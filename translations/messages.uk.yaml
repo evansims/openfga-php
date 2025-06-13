@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - Українські Повідомлення Перекладу
+# Ці повідомлення відповідають випадкам перечислення Messages
+
+client:
+  no_last_request_found: 'Останній запит не знайдено'
+
+dsl:
+  parse_failed: 'Не вдалося розібрати введення DSL'
+  unrecognized_term: 'Нерозпізнаний термін DSL: %term%'
+  input_empty: 'Рядок введення не може бути порожнім'
+  pattern_empty: 'Шаблон не може бути порожнім'
+  unbalanced_parentheses_closing: 'Незбалансовані дужки: забагато закриваючих дужок у позиції %position%'
+  unbalanced_parentheses_opening: 'Незбалансовані дужки: %count% незакритих відкриваючих %parentheses%'
+  invalid_computed_userset: 'Недійсний обчислений набір користувачів'
+  invalid_computed_userset_relation: 'Відношення обчисленого набору користувачів не може бути порожнім.'
+
+assertions:
+  empty_collection: 'Колекція тверджень не може бути порожньою'
+  invalid_tuple_key: "Твердження містить недійсний ключ кортежу: потрібні користувач, відношення та об'єкт"
+
+auth:
+  invalid_response_format: 'Недійсний формат відповіді'
+  missing_required_fields: "Відсутні обов'язкові поля у відповіді"
+  access_token_must_be_string: 'access_token має бути рядком'
+  expires_in_must_be_integer: 'expires_in має бути цілим числом'
+  user_message:
+    token_expired: 'Ваша сесія закінчилася. Будь ласка, увійдіть знову.'
+    token_invalid: 'Надано недійсні облікові дані автентифікації.'
+  jwt:
+    invalid_format: 'Недійсний формат JWT токена'
+    invalid_header: 'Недійсний заголовок JWT'
+    invalid_payload: 'Недійсне корисне навантаження JWT'
+    missing_required_claims: "Відсутні обов'язкові твердження JWT"
+    token_expired: 'JWT токен закінчився'
+    token_not_yet_valid: 'JWT токен ще не дійсний'
+    invalid_audience: 'Аудиторія JWT токена не відповідає очікуваній аудиторії'
+    invalid_issuer: 'Видавець JWT токена не відповідає очікуваному видавцю'
+
+network:
+  error: 'Мережева помилка: %message%'
+  unexpected_status: 'API відповів неочікуваним кодом стану: %status_code%'
+
+response:
+  unexpected_type: 'Отримано неочікуваний тип відповіді'
+
+result:
+  success_no_error: 'Успіх не має помилки'
+  failure_no_value: 'Невдача не має значення'
+
+request:
+  store_id_empty: 'ID сховища не може бути порожнім'
+  model_id_empty: 'ID моделі авторизації не може бути порожнім'
+  store_name_empty: "Ім'я сховища не може бути порожнім"
+  transactional_limit_exceeded: 'Транзакційний writeTuples перевищив ліміт: %count% операцій (максимум 100). Використовуйте нетранзакційний режим або розділіть на кілька запитів.'
+  continuation_token_empty: 'Токен продовження не може бути порожнім'
+  page_size_invalid: 'Недійсний pageSize надано для %className%'
+  object_type_empty: "Тип об'єкта не може бути порожнім"
+  relation_empty: 'Відношення не може бути порожнім'
+  user_empty: 'Користувач не може бути порожнім'
+  object_empty: "Об'єкт не може бути порожнім"
+  type_empty: 'Тип не може бути порожнім'
+
+validation:
+  batch_check_empty: 'Запит пакетної перевірки не може бути порожнім'
+  invalid_correlation_id: 'ID кореляції "%correlationId%" недійсний. Має відповідати шаблону: %pattern%'
+  batch_tuple_chunk_size_positive: 'Розмір блоку має бути додатним цілим числом'
+  batch_tuple_chunk_size_exceeded: 'Розмір блоку не може перевищувати %max_size%'
+
+service:
+  http_not_available: 'HTTP сервіс недоступний'
+  schema_validator_not_available: 'Валідатор схеми недоступний'
+  tuple_filter_not_available: 'Служба фільтра кортежів недоступна'
+  store_repository_not_available: 'Репозиторій сховища недоступний'
+  tuple_repository_not_available: 'Репозиторій кортежів недоступний'
+
+model:
+  invalid_tuple_key: 'Недійсний tuple_key надано для Assertion::fromArray'
+  invalid_identifier_format: 'Недійсний формат ідентифікатора: ідентифікатори не можуть містити пробіли. Знайдено в %identifier%'
+  typed_wildcard_type_empty: 'TypedWildcard::$type не може бути порожнім.'
+  source_info_file_empty: 'SourceInfo::$file не може бути порожнім.'
+  leaf_missing_content: 'Leaf має містити принаймні одне з users, computed або tupleToUserset'
+  not_found: 'Модель авторизації %model_id% не знайдена'
+  no_models_in_store: 'Моделі авторизації не знайдені у сховищі %store_id%'
+  validation_failed: 'Перевірка моделі не вдалася: %message%'
+  type_definitions_empty: 'Визначення типів не можуть бути порожніми'
+  clone_source_not_found: 'Вихідна модель для клонування не знайдена'
+  duplicate_type: 'Знайдено дублікат визначення типу: %type%'
+
+collection:
+  undefined_item_type: 'Невизначений тип елемента для %class%. Визначте властивість $itemType або перевизначте конструктор.'
+  invalid_item_type_interface: 'Очікується, що тип елемента реалізує %interface%, надано %given%'
+  invalid_item_instance: 'Очікується екземпляр %expected%, надано %given%'
+  invalid_value_type: 'Очікується екземпляр %expected%, надано %given%.'
+  key_must_be_string: 'Ключ має бути рядком.'
+  invalid_position: 'Недійсна позиція'
+  invalid_key_type: 'Недійсний тип ключа; очікується рядок, надано %given%.'
+
+consistency:
+  higher_consistency:
+    description: 'Пріоритизує узгодженість даних над продуктивністю запитів, забезпечуючи найновіші результати'
+  minimize_latency:
+    description: 'Пріоритизує продуктивність запитів над узгодженістю даних, потенційно використовуючи дещо застарілі дані'
+  unspecified:
+    description: 'Використовує рівень узгодженості за замовчуванням, визначений конфігурацією сервера OpenFGA'
+
+schema:
+  class_not_found: 'Клас "%className%" не існує або не може бути автозавантажений'
+  item_type_not_found: 'Тип елемента "%itemType%" не існує або не може бути автозавантажений'
+
+exception:
+  client:
+    authentication: 'Сталася помилка автентифікації'
+    configuration: 'Виявлено помилку конфігурації'
+    network: "Помилка мережевого з'єднання"
+    serialization: 'Помилка серіалізації даних'
+    validation: 'Перевірка запиту не вдалася'
+  auth:
+    token_expired: 'Токен автентифікації закінчився'
+    token_invalid: 'Токен автентифікації недійсний'
+  config:
+    http_client_missing: 'HTTP клієнт не налаштований'
+    http_request_factory_missing: 'Фабрика HTTP запитів не налаштована'
+    http_response_factory_missing: 'Фабрика HTTP відповідей не налаштована'
+    http_stream_factory_missing: 'Фабрика HTTP потоків не налаштована'
+    invalid_url: 'Надано недійсний URL: %url%'
+    invalid_language: 'Надано недійсний код мови: %language%'
+    invalid_retry_count: 'Надано недійсну кількість повторів: %retries%'
+  network:
+    conflict: 'Конфлікт (409): Запит конфліктує з поточним станом'
+    forbidden: 'Заборонено (403): Доступ до запитуваного ресурсу заборонений'
+    invalid: 'Невірний запит (400): Запит недійсний'
+    request: 'Запит не вдався: Неможливо завершити HTTP запит'
+    server: 'Внутрішня помилка сервера (500): На сервері сталася помилка'
+    timeout: 'Необроблювана сутність (422): Запит не може бути оброблений'
+    unauthenticated: 'Неавторизований (401): Потрібна автентифікація'
+    undefined_endpoint: 'Не знайдено (404): Запитувана кінцева точка не існує'
+    unexpected: 'Неочікувана відповідь від сервера'
+  serialization:
+    could_not_add_items_to_collection: 'Не вдалося додати елементи до колекції %className%'
+    empty_collection: 'Колекція не може бути порожньою'
+    invalid_item_type: 'Недійсний тип елемента для %property% в %className%: очікується %expected%, отримано %actual_type%'
+    missing_required_constructor_parameter: "Відсутній обов'язковий параметр конструктора '%paramName%' для класу %className%"
+    response: 'Не вдалося серіалізувати/десеріалізувати дані відповіді'
+    undefined_item_type: 'Тип елемента не визначений для %className%'
+
+tuple_operation:
+  write:
+    description: 'Додає новий кортеж відношень, надаючи дозволи або встановлюючи відношення'
+  delete:
+    description: 'Видаляє існуючий кортеж відношень, відкликаючи дозволи або видаляючи відношення'
+
+store:
+  name_required: "Ім'я сховища обов'язкове і не може бути порожнім"
+  name_too_long: "Ім'я сховища перевищує максимальну довжину %d символів (надано: %d)"
+  not_found: 'Сховище %s не знайдено'
+
+translation:
+  file_not_found: 'Файл перекладу не знайдено: %resource%'
+  unsupported_format: 'Непідтримуваний формат файлу перекладу: %format%'
+
+yaml:
+  file_does_not_exist: 'Файл не існує: %filename%'
+  cannot_read_file: 'Неможливо прочитати файл: %filename%'
+  invalid_syntax_missing_colon: 'Недійсний синтаксис YAML на рядку %line_number%: відсутня двокрапка'
+  invalid_syntax_missing_value: 'Недійсний синтаксис YAML на рядку %line_number%: відсутнє значення'
+  invalid_syntax_empty_key: 'Недійсний синтаксис YAML на рядку %line_number%: порожній ключ'
+  invalid_structure: 'Недійсна структура YAML на рядку %line_number%'
+
+response:
+  unexpected_type: 'Отримано неочікуваний тип відповіді'

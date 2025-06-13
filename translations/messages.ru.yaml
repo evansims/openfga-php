@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - Русские Переводы Сообщений
+# Эти сообщения соответствуют случаям перечисления Messages
+
+client:
+  no_last_request_found: 'Последний запрос не найден'
+
+dsl:
+  parse_failed: 'Не удалось разобрать ввод DSL'
+  unrecognized_term: 'Нераспознанный термин DSL: %term%'
+  input_empty: 'Строка ввода не может быть пустой'
+  pattern_empty: 'Шаблон не может быть пустым'
+  unbalanced_parentheses_closing: 'Несбалансированные скобки: слишком много закрывающих скобок в позиции %position%'
+  unbalanced_parentheses_opening: 'Несбалансированные скобки: %count% незакрытых открывающих %parentheses%'
+  invalid_computed_userset: 'Недопустимый вычисленный набор пользователей'
+  invalid_computed_userset_relation: 'Отношение вычисленного набора пользователей не может быть пустым.'
+
+assertions:
+  empty_collection: 'Коллекция утверждений не может быть пустой'
+  invalid_tuple_key: 'Утверждение содержит недопустимый ключ кортежа: требуются пользователь, отношение и объект'
+
+auth:
+  invalid_response_format: 'Недопустимый формат ответа'
+  missing_required_fields: 'Отсутствуют обязательные поля в ответе'
+  access_token_must_be_string: 'access_token должен быть строкой'
+  expires_in_must_be_integer: 'expires_in должен быть целым числом'
+  user_message:
+    token_expired: 'Ваша сессия истекла. Пожалуйста, войдите снова.'
+    token_invalid: 'Предоставлены недопустимые учетные данные аутентификации.'
+  jwt:
+    invalid_format: 'Недопустимый формат JWT токена'
+    invalid_header: 'Недопустимый заголовок JWT'
+    invalid_payload: 'Недопустимая полезная нагрузка JWT'
+    missing_required_claims: 'Отсутствуют обязательные утверждения JWT'
+    token_expired: 'JWT токен истек'
+    token_not_yet_valid: 'JWT токен еще не действителен'
+    invalid_audience: 'Аудитория JWT токена не соответствует ожидаемой аудитории'
+    invalid_issuer: 'Издатель JWT токена не соответствует ожидаемому издателю'
+
+network:
+  error: 'Сетевая ошибка: %message%'
+  unexpected_status: 'API ответил неожиданным кодом состояния: %status_code%'
+
+response:
+  unexpected_type: 'Получен неожиданный тип ответа'
+
+result:
+  success_no_error: 'Успех не имеет ошибки'
+  failure_no_value: 'Неудача не имеет значения'
+
+request:
+  store_id_empty: 'ID хранилища не может быть пустым'
+  model_id_empty: 'ID модели авторизации не может быть пустым'
+  store_name_empty: 'Имя хранилища не может быть пустым'
+  transactional_limit_exceeded: 'Транзакционный writeTuples превысил лимит: %count% операций (максимум 100). Используйте нетранзакционный режим или разделите на несколько запросов.'
+  continuation_token_empty: 'Токен продолжения не может быть пустым'
+  page_size_invalid: 'Недопустимый pageSize предоставлен для %className%'
+  object_type_empty: 'Тип объекта не может быть пустым'
+  relation_empty: 'Отношение не может быть пустым'
+  user_empty: 'Пользователь не может быть пустым'
+  object_empty: 'Объект не может быть пустым'
+  type_empty: 'Тип не может быть пустым'
+
+validation:
+  batch_check_empty: 'Запрос пакетной проверки не может быть пустым'
+  invalid_correlation_id: 'ID корреляции "%correlationId%" недопустим. Должен соответствовать шаблону: %pattern%'
+  batch_tuple_chunk_size_positive: 'Размер блока должен быть положительным целым числом'
+  batch_tuple_chunk_size_exceeded: 'Размер блока не может превышать %max_size%'
+
+service:
+  http_not_available: 'HTTP сервис недоступен'
+  schema_validator_not_available: 'Валидатор схемы недоступен'
+  tuple_filter_not_available: 'Служба фильтра кортежей недоступна'
+  store_repository_not_available: 'Репозиторий хранилища недоступен'
+  tuple_repository_not_available: 'Репозиторий кортежей недоступен'
+
+model:
+  invalid_tuple_key: 'Недопустимый tuple_key предоставлен для Assertion::fromArray'
+  invalid_identifier_format: 'Недопустимый формат идентификатора: идентификаторы не могут содержать пробелы. Найдено в %identifier%'
+  typed_wildcard_type_empty: 'TypedWildcard::$type не может быть пустым.'
+  source_info_file_empty: 'SourceInfo::$file не может быть пустым.'
+  leaf_missing_content: 'Leaf должен содержать хотя бы одно из users, computed или tupleToUserset'
+  not_found: 'Модель авторизации %model_id% не найдена'
+  no_models_in_store: 'Модели авторизации не найдены в хранилище %store_id%'
+  validation_failed: 'Проверка модели не удалась: %message%'
+  type_definitions_empty: 'Определения типов не могут быть пустыми'
+  clone_source_not_found: 'Исходная модель для клонирования не найдена'
+  duplicate_type: 'Найдено дублирующееся определение типа: %type%'
+
+collection:
+  undefined_item_type: 'Неопределенный тип элемента для %class%. Определите свойство $itemType или переопределите конструктор.'
+  invalid_item_type_interface: 'Ожидается, что тип элемента реализует %interface%, предоставлено %given%'
+  invalid_item_instance: 'Ожидается экземпляр %expected%, предоставлено %given%'
+  invalid_value_type: 'Ожидается экземпляр %expected%, предоставлено %given%.'
+  key_must_be_string: 'Ключ должен быть строкой.'
+  invalid_position: 'Недопустимая позиция'
+  invalid_key_type: 'Недопустимый тип ключа; ожидается строка, предоставлено %given%.'
+
+consistency:
+  higher_consistency:
+    description: 'Приоритизирует согласованность данных над производительностью запросов, обеспечивая самые актуальные результаты'
+  minimize_latency:
+    description: 'Приоритизирует производительность запросов над согласованностью данных, потенциально используя слегка устаревшие данные'
+  unspecified:
+    description: 'Использует уровень согласованности по умолчанию, определяемый конфигурацией сервера OpenFGA'
+
+schema:
+  class_not_found: 'Класс "%className%" не существует или не может быть автозагружен'
+  item_type_not_found: 'Тип элемента "%itemType%" не существует или не может быть автозагружен'
+
+exception:
+  client:
+    authentication: 'Произошла ошибка аутентификации'
+    configuration: 'Обнаружена ошибка конфигурации'
+    network: 'Ошибка сетевого соединения'
+    serialization: 'Ошибка сериализации данных'
+    validation: 'Проверка запроса не удалась'
+  auth:
+    token_expired: 'Токен аутентификации истек'
+    token_invalid: 'Токен аутентификации недействителен'
+  config:
+    http_client_missing: 'HTTP клиент не настроен'
+    http_request_factory_missing: 'Фабрика HTTP запросов не настроена'
+    http_response_factory_missing: 'Фабрика HTTP ответов не настроена'
+    http_stream_factory_missing: 'Фабрика HTTP потоков не настроена'
+    invalid_url: 'Предоставлен недопустимый URL: %url%'
+    invalid_language: 'Предоставлен недопустимый код языка: %language%'
+    invalid_retry_count: 'Предоставлено недопустимое количество повторов: %retries%'
+  network:
+    conflict: 'Конфликт (409): Запрос конфликтует с текущим состоянием'
+    forbidden: 'Запрещено (403): Доступ к запрашиваемому ресурсу запрещен'
+    invalid: 'Неверный запрос (400): Запрос недействителен'
+    request: 'Запрос не удался: Невозможно выполнить HTTP запрос'
+    server: 'Внутренняя ошибка сервера (500): На сервере произошла ошибка'
+    timeout: 'Необработанная сущность (422): Запрос не может быть обработан'
+    unauthenticated: 'Неавторизован (401): Требуется аутентификация'
+    undefined_endpoint: 'Не найдено (404): Запрашиваемая конечная точка не существует'
+    unexpected: 'Неожиданный ответ от сервера'
+  serialization:
+    could_not_add_items_to_collection: 'Не удалось добавить элементы в коллекцию %className%'
+    empty_collection: 'Коллекция не может быть пустой'
+    invalid_item_type: 'Недопустимый тип элемента для %property% в %className%: ожидается %expected%, получено %actual_type%'
+    missing_required_constructor_parameter: 'Отсутствует обязательный параметр конструктора "%paramName%" для класса %className%'
+    response: 'Не удалось сериализовать/десериализовать данные ответа'
+    undefined_item_type: 'Тип элемента не определен для %className%'
+
+tuple_operation:
+  write:
+    description: 'Добавляет новый кортеж отношений, предоставляя разрешения или устанавливая отношения'
+  delete:
+    description: 'Удаляет существующий кортеж отношений, отзывая разрешения или удаляя отношения'
+
+store:
+  name_required: 'Имя хранилища обязательно и не может быть пустым'
+  name_too_long: 'Имя хранилища превышает максимальную длину в %d символов (предоставлено: %d)'
+  not_found: 'Хранилище %s не найдено'
+
+translation:
+  file_not_found: 'Файл перевода не найден: %resource%'
+  unsupported_format: 'Неподдерживаемый формат файла перевода: %format%'
+
+yaml:
+  file_does_not_exist: 'Файл не существует: %filename%'
+  cannot_read_file: 'Невозможно прочитать файл: %filename%'
+  invalid_syntax_missing_colon: 'Недопустимый синтаксис YAML на строке %line_number%: отсутствует двоеточие'
+  invalid_syntax_missing_value: 'Недопустимый синтаксис YAML на строке %line_number%: отсутствует значение'
+  invalid_syntax_empty_key: 'Недопустимый синтаксис YAML на строке %line_number%: пустой ключ'
+  invalid_structure: 'Недопустимая структура YAML на строке %line_number%'
+
+response:
+  unexpected_type: 'Получен неожиданный тип ответа'

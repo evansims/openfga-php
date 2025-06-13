@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - Messaggi di Traduzione Italiana
+# Questi messaggi corrispondono ai casi dell'enum Messages
+
+client:
+  no_last_request_found: 'Nessuna ultima richiesta trovata'
+
+dsl:
+  parse_failed: 'Impossibile analizzare l''input DSL'
+  unrecognized_term: 'Termine DSL non riconosciuto: %term%'
+  input_empty: 'La stringa di input non può essere vuota'
+  pattern_empty: 'Il pattern non può essere vuoto'
+  unbalanced_parentheses_closing: 'Parentesi non bilanciate: troppe parentesi di chiusura alla posizione %position%'
+  unbalanced_parentheses_opening: 'Parentesi non bilanciate: %count% %parentheses% di apertura non chiuse'
+  invalid_computed_userset: 'Set di utenti calcolato non valido'
+  invalid_computed_userset_relation: "La relazione del set di utenti calcolato non può essere vuota."
+
+assertions:
+  empty_collection: 'La collezione di asserzioni non può essere vuota'
+  invalid_tuple_key: 'L''asserzione contiene una chiave tupla non valida: utente, relazione e oggetto sono obbligatori'
+
+auth:
+  invalid_response_format: 'Formato di risposta non valido'
+  missing_required_fields: 'Campi obbligatori mancanti nella risposta'
+  access_token_must_be_string: 'access_token deve essere una stringa'
+  expires_in_must_be_integer: 'expires_in deve essere un numero intero'
+  user_message:
+    token_expired: 'La tua sessione è scaduta. Per favore, accedi di nuovo.'
+    token_invalid: 'Credenziali di autenticazione non valide fornite.'
+  jwt:
+    invalid_format: 'Formato token JWT non valido'
+    invalid_header: 'Header JWT non valido'
+    invalid_payload: 'Payload JWT non valido'
+    missing_required_claims: 'Claims JWT obbligatori mancanti'
+    token_expired: 'Il token JWT è scaduto'
+    token_not_yet_valid: 'Il token JWT non è ancora valido'
+    invalid_audience: 'L''audience del token JWT non corrisponde all''audience atteso'
+    invalid_issuer: 'L''emittente del token JWT non corrisponde all''emittente atteso'
+
+network:
+  error: 'Errore di rete: %message%'
+  unexpected_status: 'L''API ha risposto con un codice di stato inaspettato: %status_code%'
+
+response:
+  unexpected_type: 'Tipo di risposta inaspettato ricevuto'
+
+result:
+  success_no_error: 'Il successo non ha errori'
+  failure_no_value: 'Il fallimento non ha valore'
+
+request:
+  store_id_empty: 'L''ID dello store non può essere vuoto'
+  model_id_empty: 'L''ID del modello di autorizzazione non può essere vuoto'
+  store_name_empty: 'Il nome dello store non può essere vuoto'
+  transactional_limit_exceeded: 'writeTuples transazionale ha superato il limite: %count% operazioni (massimo 100). Usa la modalità non transazionale o dividi in più richieste.'
+  continuation_token_empty: 'Il token di continuazione non può essere vuoto'
+  page_size_invalid: 'pageSize non valido fornito a %className%'
+  object_type_empty: 'Il tipo di oggetto non può essere vuoto'
+  relation_empty: 'La relazione non può essere vuota'
+  user_empty: 'L''utente non può essere vuoto'
+  object_empty: 'L''oggetto non può essere vuoto'
+  type_empty: 'Il tipo non può essere vuoto'
+
+validation:
+  batch_check_empty: 'La richiesta di controllo batch non può essere vuota'
+  invalid_correlation_id: 'L''ID di correlazione "%correlationId%" non è valido. Deve corrispondere al pattern: %pattern%'
+  batch_tuple_chunk_size_positive: 'La dimensione del chunk deve essere un numero intero positivo'
+  batch_tuple_chunk_size_exceeded: 'La dimensione del chunk non può superare %max_size%'
+
+service:
+  http_not_available: 'Servizio HTTP non disponibile'
+  schema_validator_not_available: 'Validatore schema non disponibile'
+  tuple_filter_not_available: 'Servizio filtro tuple non disponibile'
+  store_repository_not_available: 'Repository store non disponibile'
+  tuple_repository_not_available: 'Repository tuple non disponibile'
+
+model:
+  invalid_tuple_key: 'tuple_key non valido fornito ad Assertion::fromArray'
+  invalid_identifier_format: 'Formato identificatore non valido: gli identificatori non possono contenere spazi. Trovato in %identifier%'
+  typed_wildcard_type_empty: 'TypedWildcard::$type non può essere vuoto.'
+  source_info_file_empty: 'SourceInfo::$file non può essere vuoto.'
+  leaf_missing_content: 'Leaf deve contenere almeno uno tra users, computed o tupleToUserset'
+  not_found: 'Modello di autorizzazione %model_id% non trovato'
+  no_models_in_store: 'Nessun modello di autorizzazione trovato nello store %store_id%'
+  validation_failed: 'Validazione del modello fallita: %message%'
+  type_definitions_empty: 'Le definizioni di tipo non possono essere vuote'
+  clone_source_not_found: 'Modello sorgente non trovato per la clonazione'
+  duplicate_type: 'Definizione di tipo duplicata trovata: %type%'
+
+collection:
+  undefined_item_type: 'Tipo di elemento non definito per %class%. Definire la proprietà $itemType o sovrascrivere il costruttore.'
+  invalid_item_type_interface: 'Il tipo di elemento dovrebbe implementare %interface%, fornito %given%'
+  invalid_item_instance: 'Attesa istanza di %expected%, fornito %given%'
+  invalid_value_type: 'Attesa istanza di %expected%, fornito %given%.'
+  key_must_be_string: 'La chiave deve essere una stringa.'
+  invalid_position: 'Posizione non valida'
+  invalid_key_type: 'Tipo di chiave non valido; attesa stringa, fornito %given%.'
+
+consistency:
+  higher_consistency:
+    description: 'Prioritizza la coerenza dei dati rispetto alle prestazioni delle query, garantendo i risultati più aggiornati'
+  minimize_latency:
+    description: 'Prioritizza le prestazioni delle query rispetto alla coerenza dei dati, potenzialmente utilizzando dati leggermente obsoleti'
+  unspecified:
+    description: 'Utilizza il livello di coerenza predefinito determinato dalla configurazione del server OpenFGA'
+
+schema:
+  class_not_found: 'La classe "%className%" non esiste o non può essere auto-caricata'
+  item_type_not_found: 'Il tipo di elemento "%itemType%" non esiste o non può essere auto-caricato'
+
+exception:
+  client:
+    authentication: 'Si è verificato un errore di autenticazione'
+    configuration: 'Rilevato errore di configurazione'
+    network: 'Errore di comunicazione di rete'
+    serialization: 'Errore di serializzazione dati'
+    validation: 'Validazione della richiesta fallita'
+  auth:
+    token_expired: 'Il token di autenticazione è scaduto'
+    token_invalid: 'Il token di autenticazione non è valido'
+  config:
+    http_client_missing: 'Client HTTP non configurato'
+    http_request_factory_missing: 'Factory delle richieste HTTP non configurata'
+    http_response_factory_missing: 'Factory delle risposte HTTP non configurata'
+    http_stream_factory_missing: 'Factory degli stream HTTP non configurata'
+    invalid_url: 'URL non valido fornito: %url%'
+    invalid_language: 'Codice lingua non valido fornito: %language%'
+    invalid_retry_count: 'Numero di tentativi non valido fornito: %retries%'
+  network:
+    conflict: 'Conflitto (409): La richiesta è in conflitto con lo stato attuale'
+    forbidden: 'Vietato (403): Accesso negato alla risorsa richiesta'
+    invalid: 'Richiesta non valida (400): La richiesta non è valida'
+    request: 'Richiesta fallita: Impossibile completare la richiesta HTTP'
+    server: 'Errore interno del server (500): Il server ha incontrato un errore'
+    timeout: 'Entità non processabile (422): La richiesta non può essere processata'
+    unauthenticated: 'Non autorizzato (401): Autenticazione richiesta'
+    undefined_endpoint: 'Non trovato (404): L''endpoint richiesto non esiste'
+    unexpected: 'Risposta inaspettata dal server'
+  serialization:
+    could_not_add_items_to_collection: 'Impossibile aggiungere elementi alla collezione %className%'
+    empty_collection: 'La collezione non può essere vuota'
+    invalid_item_type: 'Tipo di elemento non valido per %property% in %className%: atteso %expected%, ottenuto %actual_type%'
+    missing_required_constructor_parameter: 'Parametro del costruttore obbligatorio "%paramName%" mancante per la classe %className%'
+    response: 'Fallita la serializzazione/deserializzazione dei dati di risposta'
+    undefined_item_type: 'Tipo di elemento non definito per %className%'
+
+tuple_operation:
+  write:
+    description: 'Aggiunge una nuova tupla di relazione, concedendo permessi o stabilendo relazioni'
+  delete:
+    description: 'Rimuove una tupla di relazione esistente, revocando permessi o rimuovendo relazioni'
+
+store:
+  name_required: 'Il nome dello store è obbligatorio e non può essere vuoto'
+  name_too_long: 'Il nome dello store supera la lunghezza massima di %d caratteri (forniti: %d)'
+  not_found: 'Store %s non trovato'
+
+translation:
+  file_not_found: 'File di traduzione non trovato: %resource%'
+  unsupported_format: 'Formato del file di traduzione non supportato: %format%'
+
+yaml:
+  file_does_not_exist: 'Il file non esiste: %filename%'
+  cannot_read_file: 'Impossibile leggere il file: %filename%'
+  invalid_syntax_missing_colon: 'Sintassi YAML non valida alla riga %line_number%: due punti mancanti'
+  invalid_syntax_missing_value: 'Sintassi YAML non valida alla riga %line_number%: valore mancante'
+  invalid_syntax_empty_key: 'Sintassi YAML non valida alla riga %line_number%: chiave vuota'
+  invalid_structure: 'Struttura YAML non valida alla riga %line_number%'
+
+response:
+  unexpected_type: 'Tipo di risposta inaspettato ricevuto'

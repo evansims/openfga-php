@@ -62,7 +62,7 @@ request:
 
 validation:
   batch_check_empty: "Batch-Check-Anfrage darf nicht leer sein"
-  invalid_correlation_id: "Korrelations-ID "%correlationId%" ist ungültig. Muss dem Muster entsprechen: %pattern%"
+  invalid_correlation_id: "Korrelations-ID '%correlationId%' ist ungültig. Muss dem Muster entsprechen: %pattern%"
   batch_tuple_chunk_size_positive: "Chunk-Größe muss eine positive Ganzzahl sein"
   batch_tuple_chunk_size_exceeded: "Chunk-Größe darf %max_size% nicht überschreiten"
 
@@ -104,8 +104,8 @@ consistency:
     description: "Verwendet die Standard-Konsistenzebene, die durch die OpenFGA-Serverkonfiguration bestimmt wird"
 
 schema:
-  class_not_found: "Klasse "%className%" existiert nicht oder kann nicht automatisch geladen werden"
-  item_type_not_found: "Elementtyp "%itemType%" existiert nicht oder kann nicht automatisch geladen werden"
+  class_not_found: "Klasse '%className%' existiert nicht oder kann nicht automatisch geladen werden"
+  item_type_not_found: "Elementtyp '%itemType%' existiert nicht oder kann nicht automatisch geladen werden"
 
 exception:
   client:
@@ -139,7 +139,7 @@ exception:
     could_not_add_items_to_collection: "Elemente konnten nicht zu Sammlung %className% hinzugefügt werden"
     empty_collection: "Sammlung darf nicht leer sein"
     invalid_item_type: "Ungültiger Elementtyp für %property% in %className%: erwartet %expected%, erhalten %actual_type%"
-    missing_required_constructor_parameter: "Erforderlicher Konstruktorparameter "%paramName%" für Klasse %className% fehlt"
+    missing_required_constructor_parameter: "Erforderlicher Konstruktorparameter '%paramName%' für Klasse %className% fehlt"
     response: "Serialisierung/Deserialisierung der Antwortdaten fehlgeschlagen"
     undefined_item_type: "Elementtyp ist für %className% nicht definiert"
 
