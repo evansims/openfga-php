@@ -1450,9 +1450,8 @@ class DocumentationGenerator
                 }
 
                 foreach ($row as $colIndex => $cell) {
-                    // Use raw cell content length for column width calculation
-                    // This preserves backticks and other markdown formatting in the width
-                    $cellWidth = mb_strlen($cell);
+                    // Calculate display width accounting for multibyte characters
+                    $cellWidth = $this->calculateDisplayWidth($cell);
                     $columnWidths[$colIndex] = max($columnWidths[$colIndex] ?? 0, $cellWidth);
                 }
             }
@@ -1477,8 +1476,12 @@ class DocumentationGenerator
                     $formattedCells = [];
                     foreach ($columnWidths as $colIndex => $width) {
                         $cellContent = $row[$colIndex] ?? '';
-                        $actualWidth = mb_strlen($cellContent);
-                        $padding = $width - $actualWidth;
+                        $actualDisplayWidth = $this->calculateDisplayWidth($cellContent);
+                        
+                        // Calculate padding: target visual width minus actual visual width
+                        // Since spaces are always single-width, we can directly use this difference
+                        $padding = $width - $actualDisplayWidth;
+                        
                         $formattedCells[] = $cellContent . str_repeat(' ', max(0, $padding));
                     }
                     $formattedRows[] = '| ' . implode(' | ', $formattedCells) . ' |';
@@ -1522,6 +1525,97 @@ class DocumentationGenerator
 
         // Convert separator cells to simple dashes for processing
         return array_map(fn($cell) => str_repeat('-', max(3, strlen($cell))), $cells);
+    }
+
+    /**
+     * Calculate the visual display width of text accounting for East Asian characters.
+     *
+     * This method calculates the actual visual width as it would appear in a monospace
+     * font, where East Asian fullwidth characters (CJK) take 2 columns and other 
+     * characters take 1 column. This is needed for proper table alignment in contexts
+     * where visual alignment matters.
+     *
+     * @param string $text Text to measure
+     * @return int Visual display width in columns
+     */
+    private function calculateDisplayWidth(string $text): int
+    {
+        // Convert to UTF-8 if not already
+        if (!mb_check_encoding($text, 'UTF-8')) {
+            $text = mb_convert_encoding($text, 'UTF-8');
+        }
+        
+        $width = 0;
+        $length = mb_strlen($text, 'UTF-8');
+        
+        for ($i = 0; $i < $length; $i++) {
+            $char = mb_substr($text, $i, 1, 'UTF-8');
+            $codepoint = mb_ord($char, 'UTF-8');
+            
+            // Check if character is fullwidth (East Asian)
+            if ($this->isFullwidthCharacter($codepoint)) {
+                $width += 2;
+            } else {
+                $width += 1;
+            }
+        }
+        
+        return $width;
+    }
+
+    /**
+     * Calculate character count for padding calculation.
+     *
+     * When adding padding spaces to align table columns, we need to know
+     * the actual character count to determine how many spaces to add.
+     *
+     * @param string $text Text to measure
+     * @return int Character count
+     */
+    private function calculateCharacterCount(string $text): int
+    {
+        // Convert to UTF-8 if not already
+        if (!mb_check_encoding($text, 'UTF-8')) {
+            $text = mb_convert_encoding($text, 'UTF-8');
+        }
+        
+        return mb_strlen($text, 'UTF-8');
+    }
+
+    /**
+     * Check if a Unicode codepoint represents a fullwidth character.
+     *
+     * Based on Unicode East Asian Width property, fullwidth characters
+     * typically take up 2 columns in fixed-width displays.
+     *
+     * @param int $codepoint Unicode codepoint
+     * @return bool True if character is fullwidth
+     */
+    private function isFullwidthCharacter(int $codepoint): bool
+    {
+        // East Asian fullwidth ranges (common ones used in our translations)
+        return (
+            // CJK Unified Ideographs
+            ($codepoint >= 0x4E00 && $codepoint <= 0x9FFF) ||
+            // CJK Unified Ideographs Extension A
+            ($codepoint >= 0x3400 && $codepoint <= 0x4DBF) ||
+            // CJK Compatibility Ideographs
+            ($codepoint >= 0xF900 && $codepoint <= 0xFAFF) ||
+            // Hiragana
+            ($codepoint >= 0x3040 && $codepoint <= 0x309F) ||
+            // Katakana
+            ($codepoint >= 0x30A0 && $codepoint <= 0x30FF) ||
+            // Katakana Phonetic Extensions
+            ($codepoint >= 0x31F0 && $codepoint <= 0x31FF) ||
+            // Hangul Syllables
+            ($codepoint >= 0xAC00 && $codepoint <= 0xD7AF) ||
+            // CJK Symbols and Punctuation (some)
+            ($codepoint >= 0x3000 && $codepoint <= 0x303F) ||
+            // Fullwidth ASCII variants
+            ($codepoint >= 0xFF01 && $codepoint <= 0xFF5E) ||
+            // Halfwidth and Fullwidth Forms
+            ($codepoint >= 0xFF00 && $codepoint <= 0xFFEF)
+        );
     }
 
     /**
