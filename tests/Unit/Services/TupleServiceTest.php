@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Services;
 
 use DateTimeImmutable;
+use OpenFGA\Language;
 use OpenFGA\Models\{AuthorizationModel, Store, TupleKey};
 use OpenFGA\Models\Collections\{TupleChanges, Tuples};
 use OpenFGA\Models\Collections\{TupleKeys, TypeDefinitions};
@@ -19,7 +20,7 @@ beforeEach(function (): void {
 
     $this->service = new TupleService(
         $this->mockTupleRepository,
-        'en',
+        Language::English,
     );
 
     $this->store = new Store(

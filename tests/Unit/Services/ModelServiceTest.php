@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Services;
 
 use DateTimeImmutable;
+use OpenFGA\Language;
 use OpenFGA\Models\Collections\TypeDefinitions;
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Models\{Store, TypeDefinition};
@@ -17,7 +18,7 @@ beforeEach(function (): void {
 
     $this->service = new ModelService(
         $this->mockModelRepository,
-        'en',
+        Language::English,
     );
 
     $this->store = new Store(

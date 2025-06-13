@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 use OpenFGA\Translation\Translator;
 use PHPUnit\Framework\TestCase;
 
@@ -23,12 +23,12 @@ beforeEach(function (): void {
  *
  * @param  Messages             $message    The message enum case
  * @param  array<string, mixed> $parameters Parameters to substitute in the message
- * @param  string|null          $locale     Optional locale override
+ * @param  Language|null        $language   Optional language override
  * @return string               The translated message
  */
-function trans(Messages $message, array $parameters = [], ?string $locale = null): string
+function trans(Messages $message, array $parameters = [], ?Language $language = null): string
 {
-    return Translator::trans($message, $parameters, $locale);
+    return Translator::trans($message, $parameters, $language);
 }
 
 /**

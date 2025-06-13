@@ -54,8 +54,8 @@ This documentation provides a complete reference for all classes, interfaces, an
 
 ### Advanced Features
 
-* **[Language](./Language/README.md)** - DSL parser for human-readable models
-  * [`DslTransformer`](./Language/DslTransformer.md) - DSL to API model transformer
+* **[DSL](./Transformer.md)** - DSL parser for human-readable models
+  * [`Transformer`](./Transformer.md) - DSL to API model transformer
 * **[Translation](./Translation/README.md)** - Internationalization support
   * [`Messages`](./Messages.md) - All translatable messages in the SDK
 * **[Integration](./Integration/README.md)** - Framework integration helpers
@@ -173,7 +173,7 @@ This documentation provides a complete reference for all classes, interfaces, an
 | [`TelemetryEventListenerInterface`](./Observability/TelemetryEventListenerInterface.md)                 | `Observability`      | Interface for event listeners that forward domain events to telemetry providers. This interface defines the contract ...           |
 | [`TelemetryInterface`](./Observability/TelemetryInterface.md)                                           | `Observability`      | Interface for OpenTelemetry integration in the OpenFGA SDK. This interface provides methods for instrumenting OpenFGA...           |
 | [`TelemetryServiceInterface`](./Services/TelemetryServiceInterface.md)                                  | `Services`           | Service interface for managing telemetry and observability in OpenFGA operations. This service provides a higher-leve...           |
-| [`TransformerInterface`](./Language/TransformerInterface.md)                                            | `Language`           | OpenFGA DSL Transformer Interface for authorization model conversions. This interface defines methods for converting ...           |
+| [`TransformerInterface`](./TransformerInterface.md)                                                     | `OpenFGA`            | OpenFGA DSL Transformer Interface for authorization model conversions. This interface defines methods for converting ...           |
 | [`TranslatorInterface`](./Translation/TranslatorInterface.md)                                           | `Translation`        | Translation service interface for OpenFGA SDK messages. This interface defines the contract for a centralized message...           |
 | [`TupleChangeInterface`](./Models/TupleChangeInterface.md)                                              | `Models`             | Represents a change event for a relationship tuple in OpenFGA. Tuple changes capture the history of relationship modi...           |
 | [`TupleChangesInterface`](./Models/Collections/TupleChangesInterface.md)                                | `Models\Collections` |                                                                                                                                    |
@@ -326,7 +326,7 @@ This documentation provides a complete reference for all classes, interfaces, an
 | [`TelemetryFactory`](./Observability/TelemetryFactory.md)                              | `Observability`      | Factory for creating telemetry providers with OpenTelemetry integration. This factory provides convenient methods for...                |
 | [`TelemetryService`](./Services/TelemetryService.md)                                   | `Services`           | Service implementation for managing telemetry and observability in OpenFGA operations. Provides a higher-level abstra...                |
 | [`TokenAuthentication`](./Authentication/TokenAuthentication.md)                       | `Authentication`     | Token-based authentication strategy for OpenFGA client. This authentication strategy uses a pre-shared token (such as...                |
-| [`Transformer`](./Language/Transformer.md)                                             | `Language`           | OpenFGA DSL Transformer implementation for authorization model conversions. This class provides complete implementati...                |
+| [`Transformer`](./Transformer.md)                                                      | `OpenFGA`            | OpenFGA DSL Transformer implementation for authorization model conversions. This class provides complete implementati...                |
 | [`Translator`](./Translation/Translator.md)                                            | `Translation`        | Translation service for OpenFGA SDK messages. This implementation provides centralized message translation with param...                |
 | [`Tuple`](./Models/Tuple.md)                                                           | `Models`             | Represents a stored relationship tuple in your authorization system. A Tuple is a relationship record that exists in ...                |
 | [`TupleChange`](./Models/TupleChange.md)                                               | `Models`             | Represents a change to a relationship tuple in your authorization store. When you modify relationships in OpenFGA (ad...                |
@@ -370,6 +370,7 @@ This documentation provides a complete reference for all classes, interfaces, an
 | [`ClientError`](./Exceptions/ClientError.md)                 | `Exceptions`   | General client error types for the OpenFGA SDK. Defines high-level error categories that can occur when using the SDK... |
 | [`ConfigurationError`](./Exceptions/ConfigurationError.md)   | `Exceptions`   | Configuration error types for the OpenFGA SDK. Defines specific configuration-related failures that can occur when se... |
 | [`Consistency`](./Models/Enums/Consistency.md)               | `Models\Enums` | Consistency levels for OpenFGA authorization queries. This enum defines the available consistency levels that control... |
+| [`Language`](./Language.md)                                  | `OpenFGA`      | Supported languages for OpenFGA SDK internationalization. This enum represents all available languages for SDK messag... |
 | [`Messages`](./Messages.md)                                  | `OpenFGA`      | Centralized message keys for all exception messages in the OpenFGA PHP SDK. This enum provides type-safe access to al... |
 | [`NetworkError`](./Exceptions/NetworkError.md)               | `Exceptions`   | Network error types for the OpenFGA SDK. Defines specific network and HTTP-related failures that can occur when commu... |
 | [`RequestMethod`](./Network/RequestMethod.md)                | `Network`      | HTTP request methods supported by the OpenFGA API. This enum defines the specific HTTP methods used for communicating... |
@@ -380,4 +381,4 @@ This documentation provides a complete reference for all classes, interfaces, an
 
 ---
 
-Generated on 2025-06-13 00:59:43
+Generated on 2025-06-13 16:36:06

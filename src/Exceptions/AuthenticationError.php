@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Exceptions;
 
 use InvalidArgumentException;
-use OpenFGA\{Messages, Translation\Translator};
+use OpenFGA\{Language, Messages, Translation\Translator};
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
 use ReflectionException;
 use Throwable;
@@ -92,9 +92,11 @@ enum AuthenticationError: string
      */
     public function getUserMessage(?string $locale = null): string
     {
+        $language = null !== $locale ? Language::fromLocale($locale) : null;
+
         return match ($this) {
-            self::TokenExpired => Translator::trans(Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED, [], $locale),
-            self::TokenInvalid => Translator::trans(Messages::AUTH_USER_MESSAGE_TOKEN_INVALID, [], $locale),
+            self::TokenExpired => Translator::trans(Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED, [], $language),
+            self::TokenInvalid => Translator::trans(Messages::AUTH_USER_MESSAGE_TOKEN_INVALID, [], $language),
         };
     }
 

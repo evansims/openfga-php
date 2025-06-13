@@ -11,10 +11,12 @@ Translation service for OpenFGA SDK messages. This implementation provides centr
 * [Methods](#methods)
 
 * [List Operations](#list-operations)
+    * [`getDefaultLanguage()`](#getdefaultlanguage)
     * [`getDefaultLocale()`](#getdefaultlocale)
 * [Utility](#utility)
     * [`has()`](#has)
     * [`reset()`](#reset)
+    * [`setDefaultLanguage()`](#setdefaultlanguage)
     * [`setDefaultLocale()`](#setdefaultlocale)
 * [Other](#other)
     * [`addResource()`](#addresource)
@@ -41,6 +43,23 @@ Translation service for OpenFGA SDK messages. This implementation provides centr
 
 ### List Operations
 
+#### getDefaultLanguage
+
+*<small>Implements Translation\TranslatorInterface</small>*
+
+```php
+public function getDefaultLanguage(): Language
+
+```
+
+Get the current default language. Returns the Language enum representing the current default locale.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L48)
+
+#### Returns
+
+[`Language`](Language.md) — The current default language
+
 #### getDefaultLocale
 
 *<small>Implements Translation\TranslatorInterface</small>*
@@ -52,7 +71,7 @@ public function getDefaultLocale(): string
 
 Get the current default locale.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L46)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L55)
 
 #### Returns
 
@@ -71,7 +90,7 @@ public function has(Messages $message, string|null $locale = NULL): bool
 
 Check if a translation exists for the given message. Determines whether a specific message has been translated in the given locale. This is useful for conditional messaging or fallback handling when translations may not be available for all locales.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L59)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L68)
 
 #### Parameters
 
@@ -95,7 +114,30 @@ public function reset(): void
 
 Reset the translator instance. Clears the current translator instance and forces reinitialization on next use. This is particularly useful for testing scenarios where you need to start with a clean slate or when dynamically switching translation configurations.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L68)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L77)
+
+#### Returns
+
+`void`
+
+#### setDefaultLanguage
+
+*<small>Implements Translation\TranslatorInterface</small>*
+
+```php
+public function setDefaultLanguage(Language $language): void
+
+```
+
+Set the default language for translations. Configures the default language that is used for all translation operations when no specific language is provided. This method provides type-safe language configuration using the Language enum.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L88)
+
+#### Parameters
+
+| Name        | Type                      | Description                    |
+| ----------- | ------------------------- | ------------------------------ |
+| `$language` | [`Language`](Language.md) | The language to set as default |
 
 #### Returns
 
@@ -112,7 +154,7 @@ public function setDefaultLocale(string $locale): void
 
 Set the default locale for translations. Configures the default locale that is used for all translation operations when no specific locale is provided. This setting affects the behavior of all translation methods and determines fallback behavior.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L81)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L101)
 
 #### Parameters
 
@@ -162,21 +204,21 @@ Add a translation resource to the translator. Registers a translation file with 
 *<small>Implements Translation\TranslatorInterface</small>*
 
 ```php
-public function trans(Messages $message, array<string, mixed> $parameters = [], string|null $locale = NULL): string
+public function trans(Messages $message, array<string, mixed> $parameters = [], Language|null $language = NULL): string
 
 ```
 
-Translate a message using a Messages enum case. Performs type-safe message translation using the Messages enum for message identification. This is the preferred method for translating SDK messages as it provides compile-time safety and better IDE support.
+Translate a message using a Messages enum case with Language enum. Provides type-safe message translation using both the Messages and Language enums for maximum compile-time safety and better developer experience. This is the preferred method for translating SDK messages.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L98)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L115)
 
 #### Parameters
 
-| Name          | Type                             | Description                                   |
-| ------------- | -------------------------------- | --------------------------------------------- |
-| `$message`    | [`Messages`](Messages.md)        | The message enum case to translate            |
-| `$parameters` | `array&lt;`string`, `mixed`&gt;` |                                               |
-| `$locale`     | `string` &#124; `null`           | Locale to use (defaults to configured locale) |
+| Name          | Type                                    | Description                                       |
+| ------------- | --------------------------------------- | ------------------------------------------------- |
+| `$message`    | [`Messages`](Messages.md)               | The message enum case to translate                |
+| `$parameters` | `array&lt;`string`, `mixed`&gt;`        |                                                   |
+| `$language`   | [`Language`](Language.md) &#124; `null` | Language to use (defaults to configured language) |
 
 #### Returns
 
@@ -193,7 +235,7 @@ public function transKey(string $key, array<string, mixed> $parameters = [], str
 
 Translate a message using a translation key string. Provides direct translation access using string keys instead of the Messages enum. This method is useful for dynamic translations or when integrating with external translation keys that are not defined in the Messages enum.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L115)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Translation/TranslatorInterface.php#L132)
 
 #### Parameters
 

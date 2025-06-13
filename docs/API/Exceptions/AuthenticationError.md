@@ -81,7 +81,7 @@ public function isTokenRefreshable(): bool
 
 Check if this authentication error indicates the token should be refreshed. Useful for implementing automatic token refresh logic in OAuth flows.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php#L108)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php#L110)
 
 #### Returns
 

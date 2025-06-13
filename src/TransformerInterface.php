@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\Language;
+namespace OpenFGA;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientThrowable, SerializationException};

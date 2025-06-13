@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\Language;
+namespace OpenFGA;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientThrowable, SerializationError};
-use OpenFGA\Messages;
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1Interface, ObjectRelationInterface, RelationMetadataInterface, TupleToUsersetV1Interface, UsersetInterface};
 use OpenFGA\Models\Collections\{RelationMetadataCollection, TypeDefinitionRelationsInterface};
 use OpenFGA\Models\Collections\{RelationReferencesInterface, UsersetsInterface};

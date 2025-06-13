@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit;
 
 use Exception;
-use OpenFGA\ClientInterface;
+use OpenFGA\{ClientInterface, Language};
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError};
 use OpenFGA\Models\{AuthorizationModelInterface, Condition, ConditionParameter, TupleKey};
 use OpenFGA\Models\Collections\{
@@ -31,6 +31,7 @@ use function OpenFGA\{
     dsl,
     err,
     failure,
+    lang,
     model,
     ok,
     result,
@@ -1179,6 +1180,165 @@ condition condition1(region: string) {
 
                 expect($modelId)->toBe($expectedModelId);
             }
+        });
+    });
+
+    // ==============================================================================
+    // Language Helpers Tests
+    // ==============================================================================
+
+    describe('lang() function', function (): void {
+        test('returns default language when no locale provided', function (): void {
+            $result = lang();
+
+            expect($result)->toBeInstanceOf(Language::class);
+            expect($result)->toBe(Language::English);
+            expect($result->value)->toBe('en');
+        });
+
+        test('returns correct language for valid locale codes', function (): void {
+            $testCases = [
+                'en' => Language::English,
+                'de' => Language::German,
+                'es' => Language::Spanish,
+                'fr' => Language::French,
+                'it' => Language::Italian,
+                'ja' => Language::Japanese,
+                'ko' => Language::Korean,
+                'nl' => Language::Dutch,
+                'pt_BR' => Language::PortugueseBrazilian,
+                'ru' => Language::Russian,
+                'sv' => Language::Swedish,
+                'tr' => Language::Turkish,
+                'uk' => Language::Ukrainian,
+                'zh_CN' => Language::ChineseSimplified,
+            ];
+
+            foreach ($testCases as $locale => $expectedLanguage) {
+                $result = lang($locale);
+
+                expect($result)->toBe($expectedLanguage);
+                expect($result->value)->toBe($locale);
+            }
+        });
+
+        test('handles hyphenated locale codes', function (): void {
+            $testCases = [
+                'pt-BR' => Language::PortugueseBrazilian,
+                'zh-CN' => Language::ChineseSimplified,
+            ];
+
+            foreach ($testCases as $locale => $expectedLanguage) {
+                $result = lang($locale);
+
+                expect($result)->toBe($expectedLanguage);
+            }
+        });
+
+        test('returns default language for invalid locale codes', function (): void {
+            $invalidLocales = [
+                'invalid',
+                'xyz',
+                'pt_PT',  // Portuguese Portugal not supported
+                'zh_TW',  // Traditional Chinese not supported
+                'es_ES',  // Spanish Spain not supported
+                '',
+                '123',
+                'zz_ZZ',
+            ];
+
+            foreach ($invalidLocales as $invalidLocale) {
+                $result = lang($invalidLocale);
+
+                expect($result)->toBe(Language::English);
+                expect($result->value)->toBe('en');
+            }
+        });
+
+        test('handles null input gracefully', function (): void {
+            $result = lang(null);
+
+            expect($result)->toBe(Language::English);
+            expect($result->value)->toBe('en');
+        });
+
+        test('is case sensitive for locale codes', function (): void {
+            $testCases = [
+                'EN' => Language::English,  // Should fallback to default
+                'De' => Language::English,  // Should fallback to default
+                'PT_br' => Language::English,  // Should fallback to default
+                'zh_cn' => Language::English,  // Should fallback to default
+            ];
+
+            foreach ($testCases as $locale => $expectedLanguage) {
+                $result = lang($locale);
+
+                expect($result)->toBe($expectedLanguage);
+            }
+        });
+
+        test('works with language methods', function (): void {
+            $german = lang('de');
+
+            expect($german->displayName())->toBe('German');
+            expect($german->nativeName())->toBe('Deutsch');
+            expect($german->isoCode())->toBe('de');
+            expect($german->regionCode())->toBeNull();
+            expect($german->locale())->toBe('de');
+            expect($german->isRightToLeft())->toBeFalse();
+        });
+
+        test('works with regional variants', function (): void {
+            $brazilianPortuguese = lang('pt_BR');
+
+            expect($brazilianPortuguese->displayName())->toBe('Portuguese (Brazilian)');
+            expect($brazilianPortuguese->nativeName())->toBe('Português (Brasil)');
+            expect($brazilianPortuguese->isoCode())->toBe('pt');
+            expect($brazilianPortuguese->regionCode())->toBe('BR');
+            expect($brazilianPortuguese->locale())->toBe('pt_BR');
+        });
+
+        test('provides convenience for client configuration', function (): void {
+            // Simulate how it would be used in Client constructor
+            $testCases = [
+                ['lang' => lang(), 'expected' => 'en'],                    // Default
+                ['lang' => lang('de'), 'expected' => 'de'],               // German
+                ['lang' => lang('pt_BR'), 'expected' => 'pt_BR'],         // Brazilian Portuguese
+                ['lang' => lang('invalid'), 'expected' => 'en'],          // Fallback to default
+            ];
+
+            foreach ($testCases as $case) {
+                expect($case['lang']->value)->toBe($case['expected']);
+            }
+        });
+
+        test('maintains type safety', function (): void {
+            $result = lang('fr');
+
+            expect($result)->toBeInstanceOf(Language::class);
+
+            // Test that we can call enum methods
+            expect($result->cases())->toBeArray();
+            expect($result::default())->toBeInstanceOf(Language::class);
+        });
+
+        test('works in practical scenarios', function (): void {
+            // Test a realistic workflow
+            $userPreferredLanguage = 'de';
+            $clientLanguage = lang($userPreferredLanguage);
+
+            expect($clientLanguage)->toBe(Language::German);
+
+            // Test fallback scenario
+            $unsupportedLanguage = 'ar';  // Arabic not supported
+            $fallbackLanguage = lang($unsupportedLanguage);
+
+            expect($fallbackLanguage)->toBe(Language::English);
+
+            // Test empty/null scenario
+            $defaultLanguage = lang();
+
+            expect($defaultLanguage)->toBe(Language::English);
         });
     });
 

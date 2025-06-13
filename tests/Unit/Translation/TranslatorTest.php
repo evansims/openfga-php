@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit\Translation;
 
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 use OpenFGA\Translation\{Translator, TranslatorInterface};
 
 describe('Translator', function (): void {
@@ -88,8 +88,8 @@ describe('Translator', function (): void {
 
         $message = Messages::NO_LAST_REQUEST_FOUND;
 
-        $englishTranslation = Translator::trans($message, [], 'en');
-        $spanishTranslation = Translator::trans($message, [], 'es');
+        $englishTranslation = Translator::trans($message, [], Language::English);
+        $spanishTranslation = Translator::trans($message, [], Language::Spanish);
 
         expect($englishTranslation)->toBe('No last request found');
         expect($spanishTranslation)->toBe('No se encontró la última solicitud');
@@ -139,20 +139,25 @@ describe('Translator', function (): void {
 
         $message = Messages::NO_LAST_REQUEST_FOUND;
 
-        expect(Translator::has($message, 'fr'))->toBeFalse(); // French not loaded
+        expect(Translator::has($message, 'xx'))->toBeFalse(); // Non-existent locale
     });
 
     test('addResource() adds new translation resources', function (): void {
         $spanishTranslationPath = __DIR__ . '/../../../translations/messages.es.yaml';
 
-        // Spanish should now be auto-loaded, so let's test with French instead
+        // Test with a non-existent locale instead
         $message = Messages::NO_LAST_REQUEST_FOUND;
-        expect(Translator::has($message, 'fr'))->toBeFalse();
+        expect(Translator::has($message, 'xx'))->toBeFalse();
 
         // Test that Spanish was auto-loaded
         expect(Translator::has($message, 'es'))->toBeTrue();
-        $spanishTranslation = Translator::trans($message, [], 'es');
+        $spanishTranslation = Translator::trans($message, [], Language::Spanish);
         expect($spanishTranslation)->toBe('No se encontró la última solicitud');
+
+        // Test that French was also auto-loaded
+        expect(Translator::has($message, 'fr'))->toBeTrue();
+        $frenchTranslation = Translator::trans($message, [], Language::French);
+        expect($frenchTranslation)->not->toBe($message->key()); // Should be translated
 
         // Test manual resource addition with a non-existent locale file
         // This demonstrates that addResource still works for future translations
@@ -258,15 +263,15 @@ describe('Translator', function (): void {
 
         $message = Messages::NO_LAST_REQUEST_FOUND;
 
-        $englishTranslation = Translator::trans($message, [], 'en');
-        $germanTranslation = Translator::trans($message, [], 'de');
+        $englishTranslation = Translator::trans($message, [], Language::English);
+        $germanTranslation = Translator::trans($message, [], Language::German);
 
         expect($englishTranslation)->toBe('No last request found');
         expect($germanTranslation)->toBe('Keine letzte Anfrage gefunden');
 
         // Test another message with complex text
         $authMessage = Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED;
-        $germanAuthTranslation = Translator::trans($authMessage, [], 'de');
+        $germanAuthTranslation = Translator::trans($authMessage, [], Language::German);
         expect($germanAuthTranslation)->toBe('Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.');
     });
 });

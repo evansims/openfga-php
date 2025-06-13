@@ -10,7 +10,6 @@ use LogicException;
 use OpenFGA\Authentication\AuthenticationInterface;
 use OpenFGA\Events\{EventDispatcher, EventDispatcherInterface, HttpRequestSentEvent, HttpResponseReceivedEvent, OperationCompletedEvent, OperationStartedEvent};
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
-use OpenFGA\Language\Transformer;
 use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, DifferenceV1, Metadata, ObjectRelation, RelationMetadata, RelationReference, SourceInfo, StoreInterface, TupleKeyInterface, TupleToUsersetV1, TypeDefinition, Userset};
 use OpenFGA\Models\Collections\{AssertionsInterface, BatchCheckItemsInterface, Conditions, ConditionsInterface, RelationMetadataCollection, RelationReferences, TupleKeysInterface, TypeDefinitionRelations, TypeDefinitions, TypeDefinitionsInterface, UserTypeFiltersInterface, Usersets};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
@@ -63,7 +62,7 @@ final class Client implements ClientInterface
      *
      * @param string                               $url                   The OpenFGA API URL to connect to
      * @param AuthenticationInterface|null         $authentication        The authentication strategy to use for API requests
-     * @param string                               $language              The language code for i18n translations; defaults to 'en' (English)
+     * @param Language                             $language              The language for i18n translations; defaults to English
      * @param positive-int|null                    $httpMaxRetries        Number of times to retry a request before giving up; defaults to 3 (even when null is passed)
      * @param HttpClientInterface|null             $httpClient            Optional PSR-18 HTTP client to use for requests; will use autodiscovery and use the first available if not specified
      * @param ResponseFactoryInterface|null        $httpResponseFactory   Optional PSR-17 HTTP response factory to use for requests; will use autodiscovery and use the first available if not specified
@@ -90,7 +89,7 @@ final class Client implements ClientInterface
     public function __construct(
         private readonly string $url,
         private readonly ?AuthenticationInterface $authentication = null,
-        private readonly string $language = 'en',
+        private readonly Language $language = Language::English,
         private readonly ?int $httpMaxRetries = 3,
         private readonly ?HttpClientInterface $httpClient = null,
         private readonly ?ResponseFactoryInterface $httpResponseFactory = null,
@@ -112,10 +111,6 @@ final class Client implements ClientInterface
     ) {
         if ('' === $url) {
             throw new InvalidArgumentException('URL is required and cannot be empty');
-        }
-
-        if ('' === $language) {
-            throw new InvalidArgumentException('Language is required and cannot be empty');
         }
     }
 
@@ -323,6 +318,19 @@ final class Client implements ClientInterface
      * @return string The configured language code
      */
     public function getLanguage(): string
+    {
+        return $this->language->locale();
+    }
+
+    /**
+     * Get the configured language enum for type-safe access.
+     *
+     * Returns the Language enum representing the currently configured
+     * language, providing access to language metadata and type-safe operations.
+     *
+     * @return Language The configured language enum
+     */
+    public function getLanguageEnum(): Language
     {
         return $this->language;
     }
@@ -1044,6 +1052,7 @@ final class Client implements ClientInterface
 
         $service = new TupleService(
             tupleRepository: $tupleRepository,
+            language: $this->language,
         );
         $this->setStoreSpecificService($serviceId, $service);
 
@@ -1082,7 +1091,7 @@ final class Client implements ClientInterface
         $originalLocale = Translator::getDefaultLocale();
 
         try {
-            Translator::setDefaultLocale(locale: $this->language);
+            $this->language->apply();
 
             return $callback();
         } finally {

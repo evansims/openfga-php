@@ -16,11 +16,11 @@ OpenFGA DSL Transformer implementation for authorization model conversions. This
 
 ## Namespace
 
-`OpenFGA\Language`
+`OpenFGA`
 
 ## Source
 
-[View source code](https://github.com/evansims/openfga-php/blob/main/src/Language/Transformer.php)
+[View source code](https://github.com/evansims/openfga-php/blob/main/src/Transformer.php)
 
 ## Implements
 
@@ -28,13 +28,13 @@ OpenFGA DSL Transformer implementation for authorization model conversions. This
 
 ## Related Classes
 
-* [TransformerInterface](Language/TransformerInterface.md) (interface)
+* [TransformerInterface](TransformerInterface.md) (interface)
 
 ## Methods
 
 #### fromDsl
 
-*<small>Implements Language\TransformerInterface</small>*
+*<small>Implements TransformerInterface</small>*
 
 ```php
 public function fromDsl(string $dsl, SchemaValidatorInterface $validator): AuthorizationModelInterface
@@ -43,7 +43,7 @@ public function fromDsl(string $dsl, SchemaValidatorInterface $validator): Autho
 
 Parse a DSL string into an authorization model. This method converts a human-readable DSL (Domain Specific Language) string into a structured authorization model object that can be used with the OpenFGA API. The DSL provides an intuitive way to define authorization relationships and permissions using familiar syntax.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Language/TransformerInterface.php#L44)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/TransformerInterface.php#L44)
 
 #### Parameters
 
@@ -58,7 +58,7 @@ Parse a DSL string into an authorization model. This method converts a human-rea
 
 #### toDsl
 
-*<small>Implements Language\TransformerInterface</small>*
+*<small>Implements TransformerInterface</small>*
 
 ```php
 public function toDsl(AuthorizationModelInterface $model): string
@@ -67,7 +67,7 @@ public function toDsl(AuthorizationModelInterface $model): string
 
 Convert an authorization model to its DSL string representation. This method transforms a structured authorization model object back into its human-readable DSL format, making it easy to review, edit, or share authorization model definitions. The output can be saved to files, version controlled, or used for documentation purposes.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Language/TransformerInterface.php#L59)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/TransformerInterface.php#L59)
 
 #### Parameters
 

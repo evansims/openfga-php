@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Translation;
 
 use InvalidArgumentException;
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 
 /**
  * Translation service interface for OpenFGA SDK messages.
@@ -39,6 +39,15 @@ interface TranslatorInterface
     public static function addResource(string $format, string $resource, string $locale, string $domain = 'messages'): void;
 
     /**
+     * Get the current default language.
+     *
+     * Returns the Language enum representing the current default locale.
+     *
+     * @return Language The current default language
+     */
+    public static function getDefaultLanguage(): Language;
+
+    /**
      * Get the current default locale.
      *
      * @return string The current default locale code
@@ -68,6 +77,17 @@ interface TranslatorInterface
     public static function reset(): void;
 
     /**
+     * Set the default language for translations.
+     *
+     * Configures the default language that is used for all translation operations
+     * when no specific language is provided. This method provides type-safe language
+     * configuration using the Language enum.
+     *
+     * @param Language $language The language to set as default
+     */
+    public static function setDefaultLanguage(Language $language): void;
+
+    /**
      * Set the default locale for translations.
      *
      * Configures the default locale that is used for all translation operations
@@ -81,21 +101,18 @@ interface TranslatorInterface
     public static function setDefaultLocale(string $locale): void;
 
     /**
-     * Translate a message using a Messages enum case.
+     * Translate a message using a Messages enum case with Language enum.
      *
-     * Performs type-safe message translation using the Messages enum for message
-     * identification. This is the preferred method for translating SDK messages as
-     * it provides compile-time safety and better IDE support.
+     * Provides type-safe message translation using both the Messages and Language enums
+     * for maximum compile-time safety and better developer experience. This is the
+     * preferred method for translating SDK messages.
      *
-     * @param Messages             $message    The message enum case to translate
-     * @param array<string, mixed> $parameters Parameters to substitute in the message (key-value pairs)
-     * @param string|null          $locale     Locale to use (defaults to configured locale)
-     *
-     * @throws InvalidArgumentException If the locale format is invalid
-     *
-     * @return string The translated and parameterized message
+     * @param  Messages             $message    The message enum case to translate
+     * @param  array<string, mixed> $parameters Parameters to substitute in the message (key-value pairs)
+     * @param  Language|null        $language   Language to use (defaults to configured language)
+     * @return string               The translated and parameterized message
      */
-    public static function trans(Messages $message, array $parameters = [], ?string $locale = null): string;
+    public static function trans(Messages $message, array $parameters = [], ?Language $language = null): string;
 
     /**
      * Translate a message using a translation key string.

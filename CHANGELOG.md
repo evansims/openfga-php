@@ -2,12 +2,43 @@
 
 ## [Unreleased]
 
+> _The bunny spreads love with languages new,<br />
+> Twelve tongues to welcome me and you!<br />
+> Pride month brings colors, code brings inclusion,<br />
+> Language enum ends all confusion.<br />
+> Fixed loops and docs with care so bright,<br />
+> OpenFGA shines in rainbow light! 🐇🏳️‍🌈_
+
 ### Added
 
 - **Expanded Internationalization**<br />
-  This release adds i18n support for Chinese (Simplified), Dutch, French, German, Italian, Japanese, Korean, Portuguese (Brazilian), Russian, Swedish, Turkish, and Ukranian, alongside our existing Spanish and English support. We'd eagerly welcome contributions to improve the accuracy of these translations.
+  This release adds i18n support for Chinese (Simplified), Dutch, French, German, Italian, Japanese,
+  Korean, Portuguese (Brazilian), Russian, Swedish, Turkish, and Ukranian, alongside our existing
+  Spanish and English support. We'd eagerly welcome contributions to improve the accuracy of these
+  translations.
 
-  We've also introduced a new enum to simplify working with the i18n system.
+  We've also introduced a new Language enum to simplify working with i18n:
+
+  ```php
+  use OpenFGA\{Client, Language};
+
+  $client = new Client(
+      url: 'http://127.0.0.1:8080',
+      language: Language::English,
+  );
+  ```
+
+  You can use the new `lang()` helper to quickly return a Language enum based on a language code string:
+
+  ```php
+  use OpenFGA\Client;
+  use function OpenFGA\lang;
+
+  $client = new Client(
+      url: 'http://127.0.0.1:8080',
+      language: lang('en'),
+  );
+  ```
 
 ### Fixed
 

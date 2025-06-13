@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Services;
 
 use OpenFGA\Exceptions\{ClientError};
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 use OpenFGA\Models\Collections\Assertions;
 use OpenFGA\Models\Collections\{AssertionsInterface};
 use OpenFGA\Models\{StoreInterface};
@@ -34,11 +34,11 @@ final readonly class AssertionService implements AssertionServiceInterface
      * Create a new assertion service instance.
      *
      * @param AssertionRepositoryInterface $assertionRepository Repository for assertion data access
-     * @param string                       $language            Language for error messages
+     * @param Language                     $language            Language for error messages
      */
     public function __construct(
         private AssertionRepositoryInterface $assertionRepository,
-        private string $language = 'en',
+        private Language $language = Language::English,
     ) {
     }
 

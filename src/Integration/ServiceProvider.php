@@ -6,10 +6,10 @@ namespace OpenFGA\Integration;
 
 use ArrayAccess;
 use OpenFGA\{ClientInterface};
-use OpenFGA\Language\{Transformer, TransformerInterface};
 use OpenFGA\Network\{RequestManagerInterface};
 use OpenFGA\Observability\{TelemetryInterface};
 use OpenFGA\Schemas\{SchemaValidator, SchemaValidatorInterface};
+use OpenFGA\{Transformer, TransformerInterface};
 
 /**
  * Service provider for automatic dependency injection container registration.

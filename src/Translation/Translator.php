@@ -6,19 +6,22 @@ namespace OpenFGA\Translation;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 use Override;
 use ReflectionException;
 
 use function array_key_exists;
 use function array_merge;
+use function basename;
 use function dirname;
 use function file_exists;
+use function glob;
 use function is_array;
 use function is_object;
 use function is_scalar;
 use function is_string;
 use function method_exists;
+use function preg_match;
 use function preg_replace_callback;
 use function sprintf;
 
@@ -73,6 +76,15 @@ final class Translator implements TranslatorInterface
      * @inheritDoc
      */
     #[Override]
+    public static function getDefaultLanguage(): Language
+    {
+        return Language::fromLocale(self::$defaultLocale) ?? Language::default();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
     public static function getDefaultLocale(): string
     {
         return self::$defaultLocale;
@@ -106,6 +118,15 @@ final class Translator implements TranslatorInterface
      * @inheritDoc
      */
     #[Override]
+    public static function setDefaultLanguage(Language $language): void
+    {
+        self::$defaultLocale = $language->locale();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
     public static function setDefaultLocale(string $locale): void
     {
         self::$defaultLocale = $locale;
@@ -114,11 +135,13 @@ final class Translator implements TranslatorInterface
     /**
      * @inheritDoc
      *
-     * @param array<string, mixed> $parameters
+     * @throws InvalidArgumentException If locale configuration is invalid
      */
     #[Override]
-    public static function trans(Messages $message, array $parameters = [], ?string $locale = null): string
+    public static function trans(Messages $message, array $parameters = [], ?Language $language = null): string
     {
+        $locale = $language instanceof Language ? $language->locale() : null;
+
         // Convert parameter keys to %key% format
         /** @var array<string, mixed> $formattedParameters */
         $formattedParameters = [];
@@ -193,13 +216,20 @@ final class Translator implements TranslatorInterface
 
         // Load available translations
         $translationsDir = dirname(__DIR__, 2) . '/translations';
-        $locales = ['en', 'es', 'de'];
 
-        foreach ($locales as $locale) {
-            $translationPath = $translationsDir . '/messages.' . $locale . '.yaml';
+        // Dynamically discover all available translation files
+        $translationFiles = glob($translationsDir . '/messages.*.yaml');
 
-            if (file_exists($translationPath)) {
-                self::addResource('yaml', $translationPath, $locale);
+        if (is_array($translationFiles)) {
+            foreach ($translationFiles as $translationFile) {
+                // Extract locale from filename (messages.locale.yaml)
+                $filename = basename($translationFile);
+
+                if (1 === preg_match('/^messages\.([a-z]{2}(?:[_-][A-Z]{2})?)\.yaml$/', $filename, $matches)) {
+                    /** @psalm-suppress PossiblyUndefinedIntArrayOffset */
+                    $locale = $matches[1];
+                    self::addResource('yaml', $translationFile, $locale);
+                }
             }
         }
 

@@ -50,10 +50,16 @@ cat > "_Sidebar.md" << 'EOF'
 
 ## API Reference
 
+### Core
+
 - **[SDK Client](API-Client)**
+- **[Helper Functions](API-Helpers)**
 - **[Results Pattern](API-Results-README)**
-- **[i18n Messages](API-Messages)**
 - **[DSL Transformer](API-Language-DslTransformer)**
+
+### i18n
+- **[Languages](API-Language)**
+- **[Messages](API-Messages)**
 
 ### Authentication
 - **[Access Token](API-Authentication-AccessToken)**
@@ -123,16 +129,16 @@ echo "📋 Creating custom footer..."
 cat > "_Footer.md" << 'EOF'
 ---
 
-## Quick Navigation
+**Getting Started:** [Introduction](Introduction) • [Installation](Introduction#install-the-sdk) • [Authentication](Authentication)
 
-**Essential Guides:** [Introduction](Introduction) • [Installation](Introduction#install-the-sdk) • [Authentication](Authentication) • [Stores](Stores) • [Models](Models) • [Tuples](Tuples) • [Queries](Queries)
+**Essentials:** [Stores](Stores) • [Authorization Models](Models) • [Relationship Tuples](Tuples) • [Permissions Queries](Queries)
 
-**Advanced Features:** [Helper](Helpers) • [Concurrency](Concurrency) • [Results](Results) • [Exceptions](Exceptions) • [Observability](Observability) • [Integration](Integration)
+**Features:** [Helper Functions](Helpers) • [Concurrency](Concurrency) • [Results](Results) • [Exceptions](Exceptions) • [Observability](Observability) • [Integration](Integration)
 
 ## Developer Resources
 
 - **[API Reference](API-README)** - Full class and method documentation
-- **[Quickstart Examples](Introduction#build-your-first-authorization-system)** - Get up and running in minutes
+- **[Quickstart](Introduction#build-your-first-authorization-system)** - Get up and running in minutes
 - **[Helpers](Introduction#helper-functions)** - Convenient shortcuts for common operations
 - **[Testing Guide](Integration#testing)** - Unit testing with the SDK
 - **[Performance Guide](Concurrency)** - Optimize for high-scale applications
@@ -169,10 +175,10 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
 
     # Remove the first H1 title (# Title) since Wiki generates its own title
     sed -i.bak '/^# /d' "$file"
-    
+
     # Extract the wiki page title from filename and add it back without prefixes
     filename=$(basename "$file" .md)
-    
+
     # Create clean title by removing API prefix and README suffix
     clean_title="$filename"
     if [[ "$clean_title" == API-* ]]; then
@@ -181,10 +187,10 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
     if [[ "$clean_title" == *-README ]]; then
         clean_title="${clean_title%-README}"
     fi
-    
+
     # Convert remaining dashes to spaces for readability
     clean_title=$(echo "$clean_title" | sed 's/-/ /g')
-    
+
     # Add the clean title back as the first line
     sed -i.bak "1i\\
 # $clean_title

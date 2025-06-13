@@ -6,7 +6,7 @@ namespace OpenFGA\Services;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface};
 use OpenFGA\Models\Collections\AuthorizationModelsInterface;
 use OpenFGA\Models\Collections\{ConditionsInterface, TypeDefinitionsInterface};
@@ -37,11 +37,11 @@ final readonly class ModelService implements ModelServiceInterface
      * Create a new model service instance.
      *
      * @param ModelRepositoryInterface $modelRepository Repository for model data access
-     * @param string                   $language        Language for error messages
+     * @param Language                 $language        Language for error messages
      */
     public function __construct(
         private ModelRepositoryInterface $modelRepository,
-        private string $language = 'en',
+        private Language $language = Language::English,
     ) {
     }
 

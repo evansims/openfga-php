@@ -6,6 +6,7 @@ namespace OpenFGA\Tests\Unit\Services;
 
 use DateTimeImmutable;
 use Exception;
+use OpenFGA\Language;
 use OpenFGA\Models\{Assertion, AssertionTupleKey, Store};
 use OpenFGA\Models\Collections\Assertions;
 use OpenFGA\Repositories\AssertionRepositoryInterface;
@@ -17,7 +18,7 @@ beforeEach(function (): void {
 
     $this->service = new AssertionService(
         $this->mockAssertionRepository,
-        'en',
+        Language::English,
     );
 
     $this->store = new Store(

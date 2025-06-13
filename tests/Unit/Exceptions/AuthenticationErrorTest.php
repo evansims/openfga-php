@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit\Exceptions;
 
 use OpenFGA\Exceptions\{AuthenticationError, AuthenticationException, ClientThrowable};
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 use OpenFGA\Translation\Translator;
 use PsrMock\Psr7\{Request, Response};
 use RuntimeException;
@@ -67,7 +67,7 @@ describe('AuthenticationError', function (): void {
         $message = $error->getUserMessage('es');
 
         expect($message)->toBeString()
-            ->and($message)->toBe(Translator::trans(Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED, [], 'es'));
+            ->and($message)->toBe(Translator::trans(Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED, [], Language::Spanish));
     });
 
     test('isTokenRefreshable returns true for TokenExpired', function (): void {

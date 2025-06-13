@@ -6,10 +6,10 @@ namespace OpenFGA\Models;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\ClientThrowable;
-use OpenFGA\Language\Transformer;
 use OpenFGA\Models\Collections\{Conditions, ConditionsInterface, TypeDefinitions, TypeDefinitionsInterface};
 use OpenFGA\Models\Enums\SchemaVersion;
 use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty};
+use OpenFGA\Transformer;
 use Override;
 use ReflectionException;
 

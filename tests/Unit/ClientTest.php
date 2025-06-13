@@ -9,6 +9,7 @@ use InvalidArgumentException;
 use OpenFGA\Authentication\{AccessToken, ClientCredentialAuthentication, TokenAuthentication};
 use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Exceptions\ClientException;
+use OpenFGA\Language;
 use OpenFGA\Models\AuthorizationModel;
 use OpenFGA\Models\{BatchCheckItem, Store, TupleKey};
 use OpenFGA\Models\Collections\{Assertions, BatchCheckItems, Conditions, TupleKeys, TypeDefinitions, UserTypeFilters};
@@ -83,11 +84,12 @@ describe('Client', function (): void {
         $client = new Client(
             url: 'https://api.example.com',
             authentication: null,
-            language: 'es',
+            language: Language::Spanish,
         );
 
         expect($client)->toBeInstanceOf(Client::class);
         expect($client->getLanguage())->toBe('es');
+        expect($client->getLanguageEnum())->toBe(Language::Spanish);
     });
 
     test('Client getLanguage returns default language when not specified', function (): void {
@@ -100,7 +102,7 @@ describe('Client', function (): void {
         $client = new Client(
             url: 'https://api.example.com',
             authentication: null,
-            language: 'es',
+            language: Language::Spanish,
         );
 
         expect($client->getLanguage())->toBe('es');

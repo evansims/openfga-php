@@ -12,6 +12,7 @@ use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Responses\WriteTuplesResponse;
 use OpenFGA\Results\{Failure, ResultInterface, Success};
+use OpenFGA\Translation\Translator;
 use ReflectionException;
 use Throwable;
 
@@ -426,4 +427,64 @@ function model(ClientInterface $client, StoreInterface | string $store, Authoriz
         ->unwrap();
 
     return $response->getModel();
+}
+
+// ==============================================================================
+// Language Helpers
+// ==============================================================================
+
+/**
+ * Helper for quickly obtaining a Language enum instance without extra boilerplate.
+ *
+ * This helper provides a convenient way to get Language enum instances either
+ * by locale code (string) or by returning the default language. It eliminates
+ * the need to write `Language::fromLocale()` or `Language::default()` in most cases.
+ *
+ * @param  string|null $locale Optional locale code (for example, 'en', 'de', 'pt_BR')
+ * @return Language    The matching Language enum or default if locale not provided/found
+ *
+ * @example Getting default language
+ * $defaultLang = lang(); // Returns Language::English
+ * @example Getting language by locale
+ * $portuguese = lang('pt_BR'); // Returns Language::PortugueseBrazilian
+ * $german = lang('de'); // Returns Language::German
+ * @example Using in client configuration
+ * $client = new Client($url, language: lang('de'));
+ */
+function lang(?string $locale = null): Language
+{
+    if (null === $locale) {
+        return Language::default();
+    }
+
+    return Language::fromLocale($locale) ?? Language::default();
+}
+
+/**
+ * Helper for translating messages without needing to call Translator::trans() directly.
+ *
+ * This helper provides a convenient shortcut for translating Messages enum values
+ * using the Translator class. It eliminates the need to write the full
+ * `Translator::trans()` static method call and provides a more fluent API.
+ *
+ * @param Messages             $message    The message enum case to translate
+ * @param array<string, mixed> $parameters Parameters to substitute in the message
+ * @param Language|null        $language   Optional language override for translation
+ *
+ * @throws InvalidArgumentException If message translation parameters are invalid
+ *
+ * @return string The translated message
+ *
+ * @example Basic translation
+ * $message = trans(Messages::NO_LAST_REQUEST_FOUND);
+ * @example Translation with parameters
+ * $message = trans(Messages::NETWORK_ERROR, ['message' => 'Connection timeout']);
+ * @example Translation with specific language
+ * $message = trans(Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED, [], Language::German);
+ * @example Using in service error handling
+ * throw new ClientException(trans(Messages::MODEL_NO_MODELS_IN_STORE, ['store_id' => $storeId]));
+ */
+function trans(Messages $message, array $parameters = [], ?Language $language = null): string
+{
+    return Translator::trans($message, $parameters, $language);
 }

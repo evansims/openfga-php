@@ -7,7 +7,7 @@ namespace OpenFGA\Services;
 use DateTimeImmutable;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientError, ClientThrowable};
-use OpenFGA\Messages;
+use OpenFGA\{Language, Messages};
 use OpenFGA\Models\{AuthorizationModel, Store, TupleKey, TupleKeyInterface};
 use OpenFGA\Models\{AuthorizationModelInterface, StoreInterface};
 use OpenFGA\Models\Collections\{Conditions, TypeDefinitions};
@@ -40,11 +40,11 @@ final readonly class TupleService implements TupleServiceInterface
      * Create a new tuple service instance.
      *
      * @param TupleRepositoryInterface $tupleRepository Repository for tuple data access
-     * @param string                   $language        Language for error messages
+     * @param Language                 $language        Language for error messages
      */
     public function __construct(
         private TupleRepositoryInterface $tupleRepository,
-        private string $language = 'en',
+        private Language $language = Language::English,
     ) {
     }
 

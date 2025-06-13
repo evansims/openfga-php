@@ -1,6 +1,6 @@
 # OpenFGA SDK
 
-**Total Components:** 3
+**Total Components:** 6
 
 ## Subdirectories
 
@@ -10,7 +10,6 @@
 | [`Events`](./Events/README.md) | Event system for cross-cutting concerns like logging and metrics collection. |
 | [`Exceptions`](./Exceptions/README.md) | Exception hierarchy for type-safe error handling throughout the SDK. |
 | [`Integration`](./Integration/README.md) | Framework integration helpers and service providers. |
-| [`Language`](./Language/README.md) | DSL parser and transformer for human-readable authorization models. |
 | [`Models`](./Models/README.md) | Domain models representing OpenFGA entities like stores, tuples, and authorization models. |
 | [`Network`](./Network/README.md) | HTTP client abstractions, retry strategies, and low-level networking components. |
 | [`Observability`](./Observability/README.md) | Telemetry providers and monitoring integrations for operational visibility. |
@@ -27,16 +26,19 @@
 | Name | Description |
 |------|-------------|
 | [`ClientInterface`](./ClientInterface.md) | OpenFGA Client Interface for relationship-based access control operations. This interface defines... |
+| [`TransformerInterface`](./TransformerInterface.md) | OpenFGA DSL Transformer Interface for authorization model conversions. This interface defines met... |
 
 ## Classes
 
 | Name | Description |
 |------|-------------|
 | [`Client`](./Client.md) | OpenFGA Client implementation for relationship-based access control operations. This client provi... |
+| [`Transformer`](./Transformer.md) | OpenFGA DSL Transformer implementation for authorization model conversions. This class provides c... |
 
 ## Enumerations
 
 | Name | Description |
 |------|-------------|
+| [`Language`](./Language.md) | Supported languages for OpenFGA SDK internationalization. This enum represents all available lang... |
 | [`Messages`](./Messages.md) | Centralized message keys for all exception messages in the OpenFGA PHP SDK. This enum provides ty... |
 
