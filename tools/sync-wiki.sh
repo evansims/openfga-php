@@ -50,15 +50,34 @@ cat > "_Sidebar.md" << 'EOF'
 
 ## API Reference
 
-### Core
-- **[Client](API-Client)**
-- **[Client Interface](API-ClientInterface)**
+- **[SDK Client](API-Client)**
+- **[Results Pattern](API-Results-README)**
+- **[i18n Messages](API-Messages)**
+- **[DSL Transformer](API-Language-DslTransformer)**
 
 ### Authentication
 - **[Access Token](API-Authentication-AccessToken)**
 - **[Client Credentials](API-Authentication-ClientCredentialAuthentication)**
-- **[Authentication Interface](API-Authentication-AuthenticationInterface)**
-- **[Access Token Interface](API-Authentication-AccessTokenInterface)**
+- **[More Authentication …](API-Authentication-README)**
+
+### Events
+- **[Event Dispatcher](API-Events-EventDispatcher)**
+- **[HTTP Request Sent Event](API-Events-HttpRequestSentEvent)**
+- **[HTTP Response Received Event](API-Events-HttpResponseReceivedEvent)**
+- **[Operation Started Event](API-Events-OperationStartedEvent)**
+- **[Operation Completed Event](API-Events-OperationCompletedEvent)**
+- **[More Events …](API-Events-README)**
+
+### Exceptions
+- **[Authentication Exception](API-Exceptions-AuthenticationException)**
+- **[Client Exception](API-Exceptions-ClientException)**
+- **[Configuration Exception](API-Exceptions-ConfigurationException)**
+- **[Network Exception](API-Exceptions-NetworkException)**
+- **[Serialization Exception](API-Exceptions-SerializationException)**
+- **[More Exceptions …](API-Exceptions-README)**
+
+### Integration
+- **[Service Provider](API-Integration-ServiceProvider)**
 
 ### Models
 - **[Authorization Model](API-Models-AuthorizationModel)**
@@ -68,23 +87,31 @@ cat > "_Sidebar.md" << 'EOF'
 - **[User](API-Models-User)**
 - **[Assertion](API-Models-Assertion)**
 - **[Condition](API-Models-Condition)**
-- **[Browse Collections →](API-Models)**
+- **[More Models …](API-Models-README)**
+
+### Networking & Concurrency
+- **[Request Manager](API-Network-RequestManager)**
+- **[Request Context](API-Network-RequestContext)**
+- **[Circuit Breaker](API-Network-CircuitBreaker)**
+- **[Parallel Task Executor](API-Network-ParallelTaskExecutor)**
+- **[Fiber Concurrent Executor](API-Network-FiberConcurrentExecutor)**
+- **[Simple Concurrent Executor](API-Network-SimpleConcurrentExecutor)**
+- **[Retry Handler](API-Network-RetryHandler)**
+- **[Exponential Backoff Retry Strategy](API-Network-ExponetialBackoffRetryStrategy)**
+- **[More Networking …](API-Network-README)**
+
+### Observability
+- **[Telemetry Factory](API-Observability-TelemetryFactory)**
+- **[OpenTelemetry Provider](API-Observability-OpenTelemetryProvider)**
 
 ### Requests & Responses
-- **[Requests →](API-Requests)**
-- **[Responses →](API-Responses)**
+- **[Requests →](API-Requests-README)**
+- **[Responses →](API-Responses-README)**
 
 ### Schema & Validation
 - **[Schema](API-Schema-Schema)**
 - **[Schema Validator](API-Schema-SchemaValidator)**
-- **[Browse Schema →](API-Schema)**
-
-### Language Support
-- **[DSL Transformer](API-Language-DslTransformer)**
-
-### Results & Exceptions
-- **[Results →](API-Results)**
-- **[Exceptions →](API-Exceptions)**
+- **[More Schema …](API-Schema)**
 
 ---
 
@@ -104,7 +131,7 @@ cat > "_Footer.md" << 'EOF'
 
 ## Developer Resources
 
-- **[API Reference](API-Client)** - Full class and method documentation
+- **[API Reference](API-README)** - Full class and method documentation
 - **[Quickstart Examples](Introduction#build-your-first-authorization-system)** - Get up and running in minutes
 - **[Helpers](Introduction#helper-functions)** - Convenient shortcuts for common operations
 - **[Testing Guide](Integration#testing)** - Unit testing with the SDK
