@@ -2,6 +2,23 @@
 
 Represents a parameter type definition for ABAC conditions. ConditionParameter defines the type structure for parameters used in attribute-based access control conditions. It specifies the data type (string, int, list, map, etc.) and any generic type parameters for complex types like collections. Use this when defining the expected parameter types for conditions in your authorization model.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getGenericTypes()`](#getgenerictypes)
+    * [`getTypeName()`](#gettypename)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

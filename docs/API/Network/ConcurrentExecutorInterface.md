@@ -2,6 +2,18 @@
 
 Interface for concurrent task execution. This interface defines the contract for executing multiple tasks concurrently, providing improved performance for batch operations. Implementations can use different concurrency strategies such as Fibers, threads, or process pools.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
+* [Other](#other)
+    * [`executeParallel()`](#executeparallel)
+    * [`supportsConcurrency()`](#supportsconcurrency)
+
 ## Namespace
 
 `OpenFGA\Network`

@@ -2,6 +2,18 @@
 
 Request for permanently deleting a store and all its data. This request removes the entire store, including all authorization models, relationship tuples, and associated metadata. This operation is irreversible and should be used with extreme caution in production environments.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

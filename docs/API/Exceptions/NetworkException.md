@@ -2,6 +2,28 @@
 
 Network-related exception for the OpenFGA SDK. Thrown when network or HTTP communication errors occur while interacting with the OpenFGA API. Includes specific HTTP status code errors, request failures, timeouts, and other network-related issues. Provides access to both the HTTP request and response for detailed debugging.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getCode()`](#getcode)
+    * [`getFile()`](#getfile)
+    * [`getLine()`](#getline)
+    * [`getMessage()`](#getmessage)
+    * [`getPrevious()`](#getprevious)
+    * [`getTrace()`](#gettrace)
+    * [`getTraceAsString()`](#gettraceasstring)
+* [Other](#other)
+    * [`context()`](#context)
+    * [`kind()`](#kind)
+    * [`previous()`](#previous)
+    * [`request()`](#request)
+    * [`response()`](#response)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

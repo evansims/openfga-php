@@ -2,6 +2,24 @@
 
 OpenTelemetry implementation for OpenFGA SDK observability. This class provides comprehensive telemetry capabilities for the OpenFGA SDK using OpenTelemetry APIs. It creates structured traces for all operations, records performance metrics, and tracks reliability indicators such as retry attempts and circuit breaker state changes. The implementation follows OpenTelemetry semantic conventions for HTTP clients and RPC operations, ensuring compatibility with standard observability tools and platforms. All telemetry is optional and gracefully degrades when OpenTelemetry is not configured.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`endHttpRequest()`](#endhttprequest)
+    * [`endOperation()`](#endoperation)
+    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
+    * [`recordCircuitBreakerState()`](#recordcircuitbreakerstate)
+    * [`recordOperationMetrics()`](#recordoperationmetrics)
+    * [`recordRetryAttempt()`](#recordretryattempt)
+    * [`recordSpan()`](#recordspan)
+    * [`startHttpRequest()`](#starthttprequest)
+    * [`startOperation()`](#startoperation)
+
 ## Namespace
 
 `OpenFGA\Observability`

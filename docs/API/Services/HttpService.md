@@ -2,6 +2,20 @@
 
 Default implementation of HttpServiceInterface. This implementation delegates to RequestManager for actual HTTP operations, providing a clean abstraction layer between the Client and network concerns. It emits events for telemetry and observability without direct coupling.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getLastRequest()`](#getlastrequest)
+    * [`getLastResponse()`](#getlastresponse)
+* [Other](#other)
+    * [`send()`](#send)
+
 ## Namespace
 
 `OpenFGA\Services`

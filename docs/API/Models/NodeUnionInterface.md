@@ -2,6 +2,19 @@
 
 Represents a union operation between multiple nodes in a userset tree. A node union combines multiple authorization nodes where users from any of the constituent nodes are included in the result set. This implements the logical OR operation in authorization evaluation.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getNodes()`](#getnodes)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

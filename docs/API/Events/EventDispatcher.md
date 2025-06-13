@@ -2,6 +2,23 @@
 
 Simple event dispatcher implementation. Manages event listeners and dispatches events to registered handlers. Supports event propagation control for stoppable events.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`removeListeners()`](#removelisteners)
+* [List Operations](#list-operations)
+    * [`addListener()`](#addlistener)
+    * [`getListeners()`](#getlisteners)
+    * [`hasListeners()`](#haslisteners)
+* [Utility](#utility)
+    * [`dispatch()`](#dispatch)
+
 ## Namespace
 
 `OpenFGA\Events`

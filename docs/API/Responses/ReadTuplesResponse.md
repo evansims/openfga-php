@@ -2,6 +2,22 @@
 
 Response containing a paginated list of relationship tuples. This response provides access to relationship tuples that match the query criteria, with pagination support for handling large result sets. Each tuple represents a specific relationship between a user and an object.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getTuples()`](#gettuples)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

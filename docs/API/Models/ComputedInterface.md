@@ -2,6 +2,19 @@
 
 Represents a computed userset in OpenFGA authorization models. Computed usersets allow you to define relationships that are calculated dynamically based on other relationships. Instead of storing direct relationships, computed usersets reference other relations that should be evaluated to determine the effective permissions. For example, if you want &quot;viewers&quot; of a document to include everyone who is an &quot;editor&quot; of that document, you could use a computed userset that references the &quot;editor&quot; relation. Common userset reference formats: - &quot;#relation&quot; - References a relation on the same object - &quot;object#relation&quot; - References a relation on a specific object
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getUserset()`](#getuserset)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

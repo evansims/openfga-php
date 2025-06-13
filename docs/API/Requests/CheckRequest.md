@@ -2,6 +2,24 @@
 
 Request for performing authorization checks in OpenFGA. This request determines whether a user has a specific relationship with an object based on the configured authorization model and relationship tuples. It&#039;s the core operation for making authorization decisions in your application. The check operation supports contextual tuples, custom contexts, and tracing to provide comprehensive authorization decisions with detailed debugging information.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAuthorizationModel()`](#getauthorizationmodel)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getTrace()`](#gettrace)
+    * [`getTupleKey()`](#gettuplekey)
+
 ## Namespace
 
 `OpenFGA\Requests`

@@ -2,6 +2,24 @@
 
 Represents a leaf node in authorization evaluation trees containing specific users. A Leaf is a terminal node in the authorization evaluation tree that contains a concrete set of users rather than further computation rules. It represents the final resolved users at the end of an authorization evaluation path. Use this when you need to represent the actual users that result from authorization rule evaluation, as opposed to computed or derived usersets.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getComputed()`](#getcomputed)
+    * [`getTupleToUserset()`](#gettupletouserset)
+    * [`getUsers()`](#getusers)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

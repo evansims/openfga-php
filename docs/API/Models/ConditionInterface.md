@@ -2,6 +2,23 @@
 
 Represents a condition that enables dynamic authorization in OpenFGA. Conditions allow OpenFGA to make authorization decisions based on runtime context and parameters, enabling attribute-based access control (ABAC) patterns. Rather than relying solely on static relationships, conditions evaluate expressions against dynamic data to determine if access should be granted. Conditions consist of: - **Expression**: A logical expression that evaluates to true or false - **Parameters**: Typed parameters that can be passed at evaluation time - **Name**: A unique identifier for referencing the condition - **Metadata**: Optional information about the condition definition Common condition use cases: - Time-based access (business hours, expiration dates) - Location-based restrictions (IP address, geographic region) - Resource attributes (document classification, owner validation) - User context (department, clearance level, current project) - Environmental factors (device type, authentication method) Conditions are defined in authorization models and can be referenced by relationship tuples to create dynamic permission rules. When OpenFGA evaluates a conditional relationship, it passes the current context parameters to the condition expression for evaluation. This enables sophisticated authorization patterns like &quot;allow read access to documents during business hours&quot; or &quot;grant edit permissions only to users in the same department as the resource owner.&quot;
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContext()`](#getcontext)
+    * [`getExpression()`](#getexpression)
+    * [`getMetadata()`](#getmetadata)
+    * [`getName()`](#getname)
+    * [`getParameters()`](#getparameters)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

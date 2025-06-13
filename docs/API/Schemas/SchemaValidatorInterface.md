@@ -2,6 +2,20 @@
 
 Interface for schema validation and object transformation in the OpenFGA system. This interface defines the contract for validating raw data (typically from JSON API responses) against registered schemas and transforming that data into properly typed OpenFGA model objects. The validator ensures data integrity and type safety throughout the SDK. Schema validators maintain a registry of schemas and provide validation services for both individual objects and collections. They handle complex validation scenarios including nested objects, arrays, conditional properties, and custom format constraints. The transformation process creates fully initialized model objects with proper type casting, default value handling, and constructor parameter mapping based on the schema definitions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`validateAndTransform()`](#validateandtransform)
+* [List Operations](#list-operations)
+    * [`getSchemas()`](#getschemas)
+* [Model Management](#model-management)
+    * [`registerSchema()`](#registerschema)
+
 ## Namespace
 
 `OpenFGA\Schemas`

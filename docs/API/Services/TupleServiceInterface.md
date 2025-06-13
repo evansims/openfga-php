@@ -2,6 +2,25 @@
 
 Service interface for managing OpenFGA relationship tuples. This service provides business-focused operations for working with relationship tuples, which represent the core relationships in your authorization model. Tuples define who has what relationship to which objects, forming the foundation of your permission system. ## Core Operations The service supports tuple management with enhanced functionality: - Write tuples with validation and duplicate filtering - Read tuples with flexible filtering and pagination - Delete tuples safely with existence checking - Track tuple changes over time for auditing ## Batch Operations For high-throughput scenarios, the service provides: - Batch writes for multiple tuples in a single operation - Transaction support for atomicity guarantees - Automatic chunking to respect API limits - Duplicate filtering to optimize performance ## Usage Example ```php $tupleService = new TupleService($tupleRepository); Write a single tuple $result = $tupleService-&gt;write( $store, &#039;user:anne&#039;, &#039;reader&#039;, &#039;document:budget-2024&#039; ); Read tuples with filters $tuples = $tupleService-&gt;read( $store, user: &#039;user:anne&#039;, relation: &#039;reader&#039; )-&gt;unwrap(); Write multiple tuples $batch = $tupleService-&gt;writeBatch($store, $tupleKeys)-&gt;unwrap(); ```
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`delete()`](#delete)
+    * [`deleteBatch()`](#deletebatch)
+    * [`read()`](#read)
+    * [`write()`](#write)
+    * [`writeBatch()`](#writebatch)
+* [List Operations](#list-operations)
+    * [`getStatistics()`](#getstatistics)
+    * [`listChanges()`](#listchanges)
+* [Utility](#utility)
+    * [`exists()`](#exists)
+
 ## Namespace
 
 `OpenFGA\Services`

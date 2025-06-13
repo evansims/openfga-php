@@ -2,6 +2,25 @@
 
 Request for listing objects that a user has a specific relationship with. This request finds all objects of a given type where the specified user has the requested relationship. It&#039;s useful for building resource lists, dashboards, or any interface that shows what a user can access.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getModel()`](#getmodel)
+    * [`getRelation()`](#getrelation)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getType()`](#gettype)
+    * [`getUser()`](#getuser)
+
 ## Namespace
 
 `OpenFGA\Requests`

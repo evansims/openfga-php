@@ -2,6 +2,21 @@
 
 Serialization error types for the OpenFGA SDK. Defines specific serialization and data processing failures that can occur when converting between different data formats (JSON, objects, etc.) or when validating data structures. Each case provides a factory method to create the corresponding SerializationException. Serialization errors typically occur during data transformation between JSON and PHP objects, schema validation, or when processing API responses. These errors often indicate data format mismatches, missing required fields, or type conversion failures that prevent proper object construction.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [Utility](#utility)
+    * [`isCollectionError()`](#iscollectionerror)
+    * [`isTypeValidationError()`](#istypevalidationerror)
+* [Other](#other)
+    * [`exception()`](#exception)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

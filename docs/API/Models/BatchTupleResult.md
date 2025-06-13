@@ -2,6 +2,34 @@
 
 Represents the result of a batch tuple operation. This model tracks the results of processing a batch of tuple operations, including successful chunks, failed chunks, and overall statistics. It provides methods to analyze the success rate and retrieve details about any failures that occurred during processing.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getErrors()`](#geterrors)
+    * [`getFailedChunks()`](#getfailedchunks)
+    * [`getFirstError()`](#getfirsterror)
+    * [`getResponses()`](#getresponses)
+    * [`getSuccessRate()`](#getsuccessrate)
+    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
+    * [`getTotalChunks()`](#gettotalchunks)
+    * [`getTotalOperations()`](#gettotaloperations)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Utility](#utility)
+    * [`isCompleteFailure()`](#iscompletefailure)
+    * [`isCompleteSuccess()`](#iscompletesuccess)
+    * [`isPartialSuccess()`](#ispartialsuccess)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`throwOnFailure()`](#throwonfailure)
+
 ## Namespace
 
 `OpenFGA\Models`

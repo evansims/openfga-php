@@ -2,6 +2,21 @@
 
 Interface for creating new authorization models in OpenFGA. This interface defines the contract for requests that create new authorization models within an OpenFGA store. Authorization models define the relationship types, object types, and access control rules that govern how permissions are evaluated in your application. An authorization model consists of: - **Type definitions**: Define object types and their allowed relationships - **Conditions**: Define conditional logic for dynamic authorization - **Schema version**: Specifies the model definition language version Authorization models are versioned, allowing you to evolve your permission system over time while maintaining compatibility. Each new model receives a unique ID that can be used to ensure consistent permission evaluation even as the model evolves. Key capabilities include: - Defining object types (documents, folders, organizations, etc.) - Specifying relationship types (owner, editor, viewer, member, etc.) - Creating inheritance and permission hierarchies - Implementing conditional authorization with runtime context - Supporting complex authorization patterns like RBAC, ABAC, and ReBAC
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConditions()`](#getconditions)
+    * [`getRequest()`](#getrequest)
+    * [`getSchemaVersion()`](#getschemaversion)
+    * [`getStore()`](#getstore)
+    * [`getTypeDefinitions()`](#gettypedefinitions)
+
 ## Namespace
 
 `OpenFGA\Requests`

@@ -2,6 +2,18 @@
 
 Base interface for schema definitions in the OpenFGA system. This interface defines the fundamental contract for all schema objects that describe the structure and validation rules for OpenFGA model classes. Schemas serve as the blueprint for validating raw data (typically from JSON API responses) and transforming it into properly typed PHP objects. Schemas encapsulate the validation rules, type information, and metadata needed to ensure data integrity and type safety throughout the OpenFGA SDK. They define which properties are required, their data types, format constraints, default values, and relationships to other objects. This base interface is extended by specialized schema types such as CollectionSchemaInterface for handling arrays and lists of objects with consistent validation behavior.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getClassName()`](#getclassname)
+    * [`getProperties()`](#getproperties)
+    * [`getProperty()`](#getproperty)
+
 ## Namespace
 
 `OpenFGA\Schemas`

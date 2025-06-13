@@ -2,6 +2,19 @@
 
 Interface for permission check response objects. This interface defines the contract for responses returned when performing permission checks in OpenFGA. A check response indicates whether a specific user has a particular permission on a given object, based on the authorization model and current relationship data. Permission checking is the core operation of OpenFGA, allowing applications to make authorization decisions by evaluating user permissions against the defined relationship model and stored tuples.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`getAllowed()`](#getallowed)
+* [List Operations](#list-operations)
+    * [`getResolution()`](#getresolution)
+
 ## Namespace
 
 `OpenFGA\Responses`

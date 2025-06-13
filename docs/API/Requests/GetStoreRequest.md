@@ -2,6 +2,18 @@
 
 Request for retrieving store information by its ID. This request fetches the details of a specific store, including its name and metadata. It&#039;s useful for store management, displaying store information, and validating store existence before performing operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

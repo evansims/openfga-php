@@ -2,6 +2,20 @@
 
 Defines metadata information for conditions in OpenFGA authorization models. ConditionMetadata provides organizational and debugging information about conditions, including the module where they&#039;re defined and source file information. This helps with model analysis, debugging, and development tooling when working with complex authorization conditions. Use this interface when building tools that need to inspect or manipulate condition metadata in authorization models.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModule()`](#getmodule)
+    * [`getSourceInfo()`](#getsourceinfo)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

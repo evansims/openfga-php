@@ -2,6 +2,18 @@
 
 Response containing the results of a batch authorization check. This response contains a map of correlation IDs to check results, allowing you to match each result back to the original check request using the correlation ID that was provided in the batch request.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getResult()`](#getresult)
+    * [`getResultForCorrelationId()`](#getresultforcorrelationid)
+
 ## Namespace
 
 `OpenFGA\Responses`

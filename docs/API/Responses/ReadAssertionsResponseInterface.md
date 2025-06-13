@@ -2,6 +2,18 @@
 
 Interface for assertions reading response objects. This interface defines the contract for responses returned when reading assertions from an OpenFGA authorization model. Assertions are test cases that validate the behavior of an authorization model by specifying expected permission check results. Assertion reading is used for testing authorization models, validating model behavior, and ensuring that permission logic works as expected during development and deployment.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAssertions()`](#getassertions)
+    * [`getModel()`](#getmodel)
+
 ## Namespace
 
 `OpenFGA\Responses`

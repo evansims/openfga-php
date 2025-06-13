@@ -2,6 +2,21 @@
 
 Interface for store creation response objects. This interface defines the contract for responses returned when creating new authorization stores in OpenFGA. A store creation response contains the newly created store&#039;s metadata including its unique identifier, name, and timestamps. Store creation is the foundational operation for establishing an authorization domain where you can define relationship models, write authorization tuples, and perform permission checks.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getCreatedAt()`](#getcreatedat)
+    * [`getUpdatedAt()`](#getupdatedat)
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getName()`](#getname)
+
 ## Namespace
 
 `OpenFGA\Responses`

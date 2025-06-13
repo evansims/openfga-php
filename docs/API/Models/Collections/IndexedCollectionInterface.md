@@ -2,6 +2,40 @@
 
 Represents a type-safe collection indexed by integers, similar to a JSON array. This interface provides a type-safe, feature-rich collection implementation for OpenFGA model objects that maintains array-like semantics while offering additional functionality for filtering, transformation, and validation. IndexedCollections are used throughout the OpenFGA SDK to manage: - Lists of relationship tuples - Collections of type definitions in authorization models - Arrays of conditions and parameters - Sets of user objects and userset operations - Sequences of authorization model versions The collection provides both familiar array-style access (through ArrayAccess) and enhanced functional programming methods (filter, map, reduce) that make working with authorization data more expressive and safer. All items in the collection are validated to ensure they implement the expected ModelInterface. Collections support both mutable operations (like `add()` and `clear()`) for incremental building and immutable operations (like `withItems()` and `filter()`) for functional programming patterns, providing flexibility while maintaining data integrity in authorization contexts where consistency is critical.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`offsetGet()`](#offsetget)
+* [Utility](#utility)
+    * [`isEmpty()`](#isempty)
+    * [`offsetExists()`](#offsetexists)
+    * [`offsetSet()`](#offsetset)
+    * [`offsetUnset()`](#offsetunset)
+* [Other](#other)
+    * [`add()`](#add)
+    * [`clear()`](#clear)
+    * [`count()`](#count)
+    * [`current()`](#current)
+    * [`every()`](#every)
+    * [`filter()`](#filter)
+    * [`first()`](#first)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`key()`](#key)
+    * [`next()`](#next)
+    * [`reduce()`](#reduce)
+    * [`rewind()`](#rewind)
+    * [`some()`](#some)
+    * [`toArray()`](#toarray)
+    * [`valid()`](#valid)
+    * [`withItems()`](#withitems)
+
 ## Namespace
 
 `OpenFGA\Models\Collections`

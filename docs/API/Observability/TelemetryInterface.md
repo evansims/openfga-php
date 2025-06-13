@@ -2,6 +2,23 @@
 
 Interface for OpenTelemetry integration in the OpenFGA SDK. This interface provides methods for instrumenting OpenFGA operations with observability features including distributed tracing, metrics collection, and structured logging. Implementations should integrate with OpenTelemetry or other observability platforms to provide insights into SDK performance and operation outcomes. The interface supports both automatic instrumentation of HTTP requests and business-level instrumentation of OpenFGA API operations. All methods are designed to be safe to call even when no telemetry backend is configured, ensuring the SDK remains functional without observability dependencies.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`endHttpRequest()`](#endhttprequest)
+    * [`endOperation()`](#endoperation)
+    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
+    * [`recordCircuitBreakerState()`](#recordcircuitbreakerstate)
+    * [`recordOperationMetrics()`](#recordoperationmetrics)
+    * [`recordRetryAttempt()`](#recordretryattempt)
+    * [`recordSpan()`](#recordspan)
+    * [`startHttpRequest()`](#starthttprequest)
+    * [`startOperation()`](#startoperation)
+
 ## Namespace
 
 `OpenFGA\Observability`

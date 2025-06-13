@@ -2,6 +2,19 @@
 
 Simple concurrent executor implementation. This implementation provides a fallback for environments without Fiber support. It executes tasks sequentially while maintaining the same interface as the fiber-based implementation.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
+* [Other](#other)
+    * [`executeParallel()`](#executeparallel)
+    * [`supportsConcurrency()`](#supportsconcurrency)
+
 ## Namespace
 
 `OpenFGA\Network`

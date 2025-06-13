@@ -2,6 +2,17 @@
 
 Concrete implementation of the retry handler using standard sleep delays. This final class provides the default implementation of the retry handler that uses actual sleep delays for production use. For testing or custom delay implementations, extend AbstractRetryHandler instead.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`executeWithRetry()`](#executewithretry)
+
 ## Namespace
 
 `OpenFGA\Network`

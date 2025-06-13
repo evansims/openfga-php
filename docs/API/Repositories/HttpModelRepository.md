@@ -2,6 +2,19 @@
 
 HTTP implementation of the model repository. This repository handles authorization model operations via HTTP requests to the OpenFGA API. It converts domain objects to API requests, sends them via the HTTP service, and transforms responses back to domain objects. Supports creating, retrieving, and listing authorization models within a store. Authorization models define the permission structure for your application - the types of objects, the relationships between them, and the rules that govern access. Models are immutable once created; to update permissions, you create a new model version.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`create()`](#create)
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`list()`](#list)
+
 ## Namespace
 
 `OpenFGA\Repositories`

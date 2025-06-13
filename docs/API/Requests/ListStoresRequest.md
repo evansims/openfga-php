@@ -2,6 +2,19 @@
 
 Request for listing all available stores with pagination support. This request retrieves a paginated list of stores accessible to the authenticated user or application. It&#039;s useful for store selection interfaces, administrative dashboards, and multi-tenant applications.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+
 ## Namespace
 
 `OpenFGA\Requests`

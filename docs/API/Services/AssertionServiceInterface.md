@@ -2,6 +2,24 @@
 
 Service interface for managing OpenFGA authorization model assertions. This service provides business-focused operations for working with assertions, which are test cases that validate the behavior of authorization models. Assertions help ensure that your authorization model works as expected by defining specific scenarios and their expected outcomes. ## Core Operations The service supports assertion management with enhanced functionality: - Read existing assertions from authorization models - Write new assertions to validate model behavior - Validate assertion syntax and logic - Batch operations for managing multiple assertions ## Assertion Validation Assertions define test cases like: - &quot;user:anne should have reader access to document:budget-2024&quot; - &quot;user:bob should NOT have admin access to folder:public&quot; - &quot;group:finance#member should have write access to report:quarterly&quot; ## Usage Example ```php $assertionService = new AssertionService($assertionRepository); Read existing assertions $assertions = $assertionService-&gt;readAssertions( $store, $authorizationModel )-&gt;unwrap(); Write new assertions $newAssertions = new Assertions([ new Assertion( new TupleKey(&#039;user:anne&#039;, &#039;reader&#039;, &#039;document:budget&#039;), true // expected result ) ]); $result = $assertionService-&gt;writeAssertions( $store, $authorizationModel, $newAssertions )-&gt;unwrap(); ```
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`validateAssertions()`](#validateassertions)
+* [CRUD Operations](#crud-operations)
+    * [`readAssertions()`](#readassertions)
+    * [`writeAssertions()`](#writeassertions)
+* [List Operations](#list-operations)
+    * [`getAssertionStatistics()`](#getassertionstatistics)
+* [Utility](#utility)
+    * [`clearAssertions()`](#clearassertions)
+    * [`executeAssertions()`](#executeassertions)
+
 ## Namespace
 
 `OpenFGA\Services`

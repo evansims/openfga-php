@@ -2,6 +2,20 @@
 
 Interface for writing test assertions to an authorization model. This interface defines the contract for requests that create or update test assertions for authorization models in OpenFGA. Assertions are automated tests that verify your authorization model behaves as expected by checking specific permission scenarios against known outcomes. Assertions serve multiple important purposes: - **Testing**: Verify that your authorization model produces expected results - **Validation**: Ensure model changes don&#039;t break existing authorization logic - **Documentation**: Provide examples of how permissions should work - **Regression Prevention**: Catch unintended changes to authorization behavior - **Continuous Integration**: Enable automated testing of authorization logic Each assertion defines: - A specific permission check scenario (user, object, relation) - The expected outcome (allowed or denied) - Optional contextual data for conditional authorization Assertions are tied to specific authorization model versions, allowing you to maintain test suites that evolve with your authorization schema. When you create a new model version, you can run existing assertions to ensure backward compatibility or create new assertions for new functionality. This is essential for maintaining confidence in your authorization system as it evolves, especially in complex scenarios with inheritance, conditions, and computed relationships.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAssertions()`](#getassertions)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

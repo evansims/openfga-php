@@ -2,6 +2,25 @@
 
 Represents a user or user specification in authorization contexts. A User can represent different types of entities in your authorization system: a specific user object, a userset (group of users), a wildcard (all users of a type), or a complex difference operation between user groups. This flexible model allows OpenFGA to handle various user identification patterns, from simple &quot;user:alice&quot; references to complex computed user groups based on relationships and rules.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getDifference()`](#getdifference)
+    * [`getObject()`](#getobject)
+    * [`getUserset()`](#getuserset)
+    * [`getWildcard()`](#getwildcard)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

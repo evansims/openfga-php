@@ -2,6 +2,22 @@
 
 Response containing a paginated list of authorization models. This response provides access to authorization models within a store, including pagination support for handling large numbers of models. Each model includes its ID, schema version, and complete type definitions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getModels()`](#getmodels)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

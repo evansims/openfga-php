@@ -2,6 +2,20 @@
 
 HTTP implementation of the store repository. This repository provides a domain-focused abstraction for store operations, handling all HTTP communication through the injected HttpService. It converts domain objects to API requests, sends them via HTTP, and transforms responses back to domain objects while maintaining proper error handling. The repository encapsulates all HTTP-specific concerns including request/response transformation, pagination handling, and API error mapping. It follows the SDK&#039;s Result pattern to provide safe error handling without exceptions for control flow. ## Implementation Details - Uses HttpService for all HTTP operations - Validates responses using SchemaValidator - Transforms API responses to domain objects - Handles pagination for list operations - Provides consistent error handling via Result pattern
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`create()`](#create)
+    * [`delete()`](#delete)
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`list()`](#list)
+
 ## Namespace
 
 `OpenFGA\Repositories`

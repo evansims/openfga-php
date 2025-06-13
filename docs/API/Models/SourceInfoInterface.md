@@ -2,6 +2,19 @@
 
 Represents source file information for OpenFGA model elements. Source information provides debugging and development context by tracking where model elements were originally defined. This is particularly valuable for: - Development tools that need to map runtime errors back to source files - IDE integrations that provide model editing and validation - Debugging complex authorization models with multiple source files - Error reporting that can point users to the exact source location - Model management tools that work across distributed definitions The source information is typically populated when authorization models are compiled from DSL files or other structured formats, allowing tools to maintain the connection between the runtime model and the original source definitions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getFile()`](#getfile)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

@@ -2,6 +2,24 @@
 
 Contains metadata information about a relation in your authorization model. RelationMetadata provides additional context about how a relation behaves, including which user types can be directly assigned to it and source information for debugging. This helps with model validation and provides insights into your authorization structure. Use this when you need to understand the constraints and properties of specific relations in your authorization model.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
+    * [`getModule()`](#getmodule)
+    * [`getSourceInfo()`](#getsourceinfo)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

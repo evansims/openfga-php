@@ -2,6 +2,21 @@
 
 Represents an access token for OpenFGA API authentication. Access tokens are credentials used to authenticate requests to the OpenFGA API. They are typically obtained through OAuth 2.0 flows (such as client credentials) and have a limited lifespan defined by their expiration time. Access tokens provide secure, time-limited access to OpenFGA resources without requiring the transmission of long-lived credentials with each request. This interface defines the contract for managing these tokens, including: - Token value retrieval for Authorization headers - Expiration checking to determine when token refresh is needed - Scope validation for permission boundaries - Token parsing from OAuth server responses
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getExpires()`](#getexpires)
+    * [`getScope()`](#getscope)
+    * [`getToken()`](#gettoken)
+* [Utility](#utility)
+    * [`isExpired()`](#isexpired)
+
 ## Namespace
 
 `OpenFGA\Authentication`

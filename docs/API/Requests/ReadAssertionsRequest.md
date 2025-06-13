@@ -2,6 +2,19 @@
 
 Request for reading test assertions associated with an authorization model. This request retrieves the test assertions that have been defined for an authorization model. These assertions help validate model behavior and ensure authorization logic works as expected in different scenarios.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

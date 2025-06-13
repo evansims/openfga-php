@@ -2,6 +2,23 @@
 
 Represents an OpenFGA authorization model that defines permission structures. Authorization models are the core configuration that defines how permissions work in your application. They specify the types of objects in your system, the relationships that can exist between users and those objects, and the rules that govern how permissions are computed and inherited. An authorization model consists of: - Type definitions that describe object types and their possible relations - Optional conditions that enable context-based authorization decisions - Schema version information for compatibility and evolution - Unique model ID for versioning and deployment tracking Authorization models serve as the blueprint for all authorization decisions, defining the permission logic that OpenFGA uses when evaluating check requests. They can be expressed in both JSON format (for API operations) and DSL format (for human readability and management). Models support versioning, allowing you to evolve your authorization logic over time while maintaining compatibility with existing data and applications. Each model version is immutable once created, ensuring consistent behavior and enabling safe rollbacks when needed.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConditions()`](#getconditions)
+    * [`getId()`](#getid)
+    * [`getSchemaVersion()`](#getschemaversion)
+    * [`getTypeDefinitions()`](#gettypedefinitions)
+* [Other](#other)
+    * [`dsl()`](#dsl)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

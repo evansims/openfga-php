@@ -2,6 +2,18 @@
 
 Interface for tuple changes listing response objects. This interface defines the contract for responses returned when listing changes to relationship tuples in OpenFGA. The response includes a collection of tuple changes and pagination support for handling large change sets efficiently. Tuple change listing is essential for auditing authorization modifications, implementing change feeds, and tracking the evolution of relationship data over time.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getChanges()`](#getchanges)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+
 ## Namespace
 
 `OpenFGA\Responses`

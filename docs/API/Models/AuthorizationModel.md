@@ -2,6 +2,26 @@
 
 Defines the authorization rules and relationships for your application. An AuthorizationModel is the core configuration that tells OpenFGA how permissions work in your system. It defines object types (like documents, folders), relationships (like owner, editor, viewer), and the rules for how those relationships grant access. Think of this as your application&#039;s &quot;permission blueprint&quot; - it describes all the ways users can be related to objects and what those relationships mean for access control decisions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConditions()`](#getconditions)
+    * [`getId()`](#getid)
+    * [`getSchemaVersion()`](#getschemaversion)
+    * [`getTypeDefinitions()`](#gettypedefinitions)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`dsl()`](#dsl)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

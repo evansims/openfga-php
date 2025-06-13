@@ -2,6 +2,22 @@
 
 Represents a single item in a batch check request. Each batch check item contains a tuple key to check, an optional context, optional contextual tuples, and a correlation ID to map the result back to this specific check. The correlation ID must be unique within the batch and follow the pattern: alphanumeric characters or hyphens, maximum 36 characters.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getCorrelationId()`](#getcorrelationid)
+    * [`getTupleKey()`](#gettuplekey)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

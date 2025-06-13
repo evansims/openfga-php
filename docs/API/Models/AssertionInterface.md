@@ -2,6 +2,22 @@
 
 Represents an assertion used to test authorization model correctness. Assertions are test cases that verify whether specific authorization decisions should be allowed or denied. They are essential for validating authorization models and ensuring they behave as expected. Each assertion includes a tuple key to test, the expected result, and optional contextual information for complex scenarios.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getExpectation()`](#getexpectation)
+    * [`getTupleKey()`](#gettuplekey)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

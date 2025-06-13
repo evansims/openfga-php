@@ -2,6 +2,20 @@
 
 Request for listing all authorization models in a store. This request retrieves a paginated list of authorization models, including their IDs and metadata. It&#039;s useful for browsing available models, model management interfaces, and selecting models for operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

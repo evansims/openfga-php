@@ -2,6 +2,26 @@
 
 Service implementation for managing OpenFGA relationship tuples. Provides business-focused operations for working with relationship tuples, which represent the core relationships in your authorization model. This service abstracts the underlying repository implementation and adds value through validation, duplicate filtering, and enhanced error handling.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`delete()`](#delete)
+    * [`deleteBatch()`](#deletebatch)
+    * [`read()`](#read)
+    * [`write()`](#write)
+    * [`writeBatch()`](#writebatch)
+* [List Operations](#list-operations)
+    * [`getStatistics()`](#getstatistics)
+    * [`listChanges()`](#listchanges)
+* [Utility](#utility)
+    * [`exists()`](#exists)
+
 ## Namespace
 
 `OpenFGA\Services`

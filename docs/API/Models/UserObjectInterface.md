@@ -2,6 +2,20 @@
 
 Represents a user object in OpenFGA authorization model. User objects are typed entities that can be subjects in authorization relationships. They consist of a type (for example &#039;user&#039;, &#039;group&#039;) and a unique identifier within that type.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getType()`](#gettype)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

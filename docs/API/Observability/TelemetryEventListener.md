@@ -2,6 +2,20 @@
 
 Event listener that forwards domain events to the telemetry provider. This decouples business logic from telemetry by using events to communicate what happened without the business logic needing to know about telemetry.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`onHttpRequestSent()`](#onhttprequestsent)
+    * [`onHttpResponseReceived()`](#onhttpresponsereceived)
+    * [`onOperationCompleted()`](#onoperationcompleted)
+    * [`onOperationStarted()`](#onoperationstarted)
+
 ## Namespace
 
 `OpenFGA\Observability`

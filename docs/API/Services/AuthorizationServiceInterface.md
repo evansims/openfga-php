@@ -2,6 +2,22 @@
 
 Service interface for authorization operations. This interface defines methods for all authorization operations including permission checks, relationship expansions, and object/user listing. It provides a focused API for authorization decisions separate from store and model management operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`batchCheck()`](#batchcheck)
+    * [`check()`](#check)
+    * [`expand()`](#expand)
+* [List Operations](#list-operations)
+    * [`listObjects()`](#listobjects)
+    * [`listUsers()`](#listusers)
+    * [`streamedListObjects()`](#streamedlistobjects)
+
 ## Namespace
 
 `OpenFGA\Services`

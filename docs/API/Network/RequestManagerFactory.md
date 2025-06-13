@@ -2,6 +2,17 @@
 
 Factory for creating RequestManager instances. This factory encapsulates the creation of RequestManager instances with the appropriate configuration for different use cases (normal requests vs batch operations).
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`create()`](#create)
+    * [`createForBatch()`](#createforbatch)
+    * [`createWithRetries()`](#createwithretries)
+
 ## Namespace
 
 `OpenFGA\Network`

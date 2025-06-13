@@ -2,6 +2,24 @@
 
 Service implementation for high-level store operations. This service provides business-focused abstractions over the StoreRepository, adding validation, convenience methods, and enhanced error messages. It handles common store management patterns while maintaining consistency with the SDK&#039;s Result pattern for error handling. The service is designed to simplify store operations for application developers by providing intuitive methods that handle edge cases and provide clear feedback.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`createStore()`](#createstore)
+    * [`deleteStore()`](#deletestore)
+    * [`getOrCreateStore()`](#getorcreatestore)
+* [List Operations](#list-operations)
+    * [`findStore()`](#findstore)
+    * [`findStoresByName()`](#findstoresbyname)
+    * [`listAllStores()`](#listallstores)
+    * [`listStores()`](#liststores)
+
 ## Namespace
 
 `OpenFGA\Services`

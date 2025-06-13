@@ -2,6 +2,22 @@
 
 Represents a user entry in a users list response. UsersListUser provides a simple wrapper around user identifiers returned from list operations. It ensures consistent representation of users in lists while providing convenient access to the user identifier string. Use this when working with user lists returned from OpenFGA queries or when you need a structured representation of user identifiers.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getUser()`](#getuser)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

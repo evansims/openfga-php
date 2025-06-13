@@ -2,6 +2,21 @@
 
 Response containing a list of objects that a user has a specific relationship with. This response provides an array of object identifiers that the specified user has the given relationship with. Use this to discover what resources a user can access in your authorization system.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getObjects()`](#getobjects)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

@@ -2,6 +2,22 @@
 
 Service implementation for managing telemetry and observability in OpenFGA operations. Provides a higher-level abstraction over the telemetry infrastructure, simplifying the creation and management of telemetry spans, metrics, and events. This service handles common telemetry patterns and provides business-focused methods for tracking operations, performance, and errors.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
+    * [`recordFailure()`](#recordfailure)
+    * [`recordHttpRequest()`](#recordhttprequest)
+    * [`recordOperationMetrics()`](#recordoperationmetrics)
+    * [`recordSuccess()`](#recordsuccess)
+    * [`startOperation()`](#startoperation)
+
 ## Namespace
 
 `OpenFGA\Services`

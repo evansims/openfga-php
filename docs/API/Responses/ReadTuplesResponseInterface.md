@@ -2,6 +2,18 @@
 
 Interface for tuple reading response objects. This interface defines the contract for responses returned when reading relationship tuples from OpenFGA. The response includes a collection of tuples matching the query criteria and pagination support for handling large result sets efficiently. Tuple reading is essential for querying existing relationships, auditing authorization data, and implementing administrative interfaces for relationship management.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getTuples()`](#gettuples)
+
 ## Namespace
 
 `OpenFGA\Responses`

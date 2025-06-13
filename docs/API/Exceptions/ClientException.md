@@ -2,6 +2,28 @@
 
 General client exception for the OpenFGA SDK. Thrown for high-level client errors that can be categorized into different types such as authentication, configuration, network, serialization, or validation failures. Provides detailed context about the failure including the specific error category and any associated HTTP information.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getCode()`](#getcode)
+    * [`getFile()`](#getfile)
+    * [`getLine()`](#getline)
+    * [`getMessage()`](#getmessage)
+    * [`getPrevious()`](#getprevious)
+    * [`getTrace()`](#gettrace)
+    * [`getTraceAsString()`](#gettraceasstring)
+* [Other](#other)
+    * [`context()`](#context)
+    * [`kind()`](#kind)
+    * [`previous()`](#previous)
+    * [`request()`](#request)
+    * [`response()`](#response)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

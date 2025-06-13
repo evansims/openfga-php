@@ -2,6 +2,27 @@
 
 Represents a userset specification for computing groups of users. A Userset defines how to compute a collection of users through various means: computed relationships, tuple-to-userset operations, unions, intersections, or differences. This is a fundamental building block for complex authorization patterns where user groups are derived dynamically. Use this when defining how groups of users should be computed in your authorization model rules.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getComputedUserset()`](#getcomputeduserset)
+    * [`getDifference()`](#getdifference)
+    * [`getDirect()`](#getdirect)
+    * [`getIntersection()`](#getintersection)
+    * [`getTupleToUserset()`](#gettupletouserset)
+    * [`getUnion()`](#getunion)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

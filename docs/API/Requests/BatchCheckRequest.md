@@ -2,6 +2,19 @@
 
 Request for performing multiple authorization checks in a single batch. This request allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`getChecks()`](#getchecks)
+* [List Operations](#list-operations)
+    * [`getRequest()`](#getrequest)
+
 ## Namespace
 
 `OpenFGA\Requests`

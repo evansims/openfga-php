@@ -2,6 +2,23 @@
 
 Response containing the result of an authorization check. This response indicates whether a user has a specific relationship with an object, along with optional resolution details explaining how the decision was reached. Use this to make authorization decisions in your application.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`getAllowed()`](#getallowed)
+* [List Operations](#list-operations)
+    * [`getResolution()`](#getresolution)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

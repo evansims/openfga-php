@@ -2,6 +2,21 @@
 
 Represents a change event for a relationship tuple in OpenFGA. Tuple changes capture the history of relationship modifications in the authorization store. Each change records whether a tuple was written (created) or deleted, along with the timestamp and the specific tuple that was affected. These change events are essential for: - Auditing relationship modifications - Implementing consistency across distributed systems - Debugging authorization issues - Maintaining change history for compliance
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getOperation()`](#getoperation)
+    * [`getTimestamp()`](#gettimestamp)
+    * [`getTupleKey()`](#gettuplekey)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

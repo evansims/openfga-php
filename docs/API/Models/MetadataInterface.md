@@ -2,6 +2,21 @@
 
 Represents metadata associated with OpenFGA authorization model components. Metadata provides additional context and configuration information for authorization model elements. This includes module organization, relation-specific metadata, and source code information for debugging and development purposes. Metadata helps with model organization, documentation, and tooling support for complex authorization models.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModule()`](#getmodule)
+    * [`getRelations()`](#getrelations)
+    * [`getSourceInfo()`](#getsourceinfo)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

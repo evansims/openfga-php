@@ -2,6 +2,21 @@
 
 Event-aware telemetry service that emits domain events. This service extends the base TelemetryService functionality by emitting domain events for operation lifecycle, enabling decoupled observability.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
+    * [`recordFailure()`](#recordfailure)
+    * [`recordHttpRequest()`](#recordhttprequest)
+    * [`recordOperationMetrics()`](#recordoperationmetrics)
+    * [`recordSuccess()`](#recordsuccess)
+    * [`startOperation()`](#startoperation)
+
 ## Namespace
 
 `OpenFGA\Services`

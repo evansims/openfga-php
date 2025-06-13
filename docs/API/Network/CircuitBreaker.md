@@ -2,6 +2,23 @@
 
 Circuit breaker implementation for preventing cascade failures in distributed systems. This class implements the circuit breaker pattern to temporarily disable requests to failing endpoints, preventing resource exhaustion and allowing time for recovery. The circuit breaker tracks failures per endpoint and automatically opens/closes based on failure thresholds and cooldown periods. The circuit breaker operates in three states: - Closed: Normal operation, requests are allowed - Open: Failures exceeded threshold, requests are blocked - Half-Open: After cooldown, limited requests allowed to test recovery
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getFailureCount()`](#getfailurecount)
+* [Utility](#utility)
+    * [`isOpen()`](#isopen)
+* [Other](#other)
+    * [`recordFailure()`](#recordfailure)
+    * [`recordSuccess()`](#recordsuccess)
+    * [`shouldRetry()`](#shouldretry)
+
 ## Namespace
 
 `OpenFGA\Network`

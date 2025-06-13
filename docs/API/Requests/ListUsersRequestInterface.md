@@ -2,6 +2,25 @@
 
 Interface for listing users who have a specific relation to an object. This interface defines the contract for requests that query which users have a specific relationship to a given object. This is similar to the expand operation but focuses specifically on returning the users rather than the complete relationship graph structure. List users operations are particularly useful for: - Building user interfaces that show who has access to a resource - Implementing sharing and collaboration features - Auditing and compliance reporting for access control - Sending notifications to users with specific permissions - Managing team membership and role assignments The operation supports: - Filtering by user types to control result scope - Contextual evaluation with additional runtime data - Temporary relationship tuples for scenario testing - Configurable read consistency levels for performance optimization - Authorization model versioning for consistent results This provides the inverse perspective to list objects - instead of asking &quot;what can this user access?,&quot; it asks &quot;who can access this object?&quot;
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getModel()`](#getmodel)
+    * [`getObject()`](#getobject)
+    * [`getRelation()`](#getrelation)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getUserFilters()`](#getuserfilters)
+
 ## Namespace
 
 `OpenFGA\Requests`

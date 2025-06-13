@@ -2,6 +2,24 @@
 
 Interface for authorization check request specifications. This interface defines the contract for creating authorization check requests that determine whether a user has a specific relationship with an object. It&#039;s the core interface for implementing permission verification in applications.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAuthorizationModel()`](#getauthorizationmodel)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getTrace()`](#gettrace)
+    * [`getTupleKey()`](#gettuplekey)
+
 ## Namespace
 
 `OpenFGA\Requests`

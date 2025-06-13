@@ -2,6 +2,23 @@
 
 Data types supported in OpenFGA condition parameters. This enum defines the available data types that can be used for parameters in OpenFGA authorization model conditions. These types enable type-safe evaluation of conditional logic within authorization rules.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getPhpType()`](#getphptype)
+* [Utility](#utility)
+    * [`isCollection()`](#iscollection)
+    * [`isFlexible()`](#isflexible)
+    * [`isNumeric()`](#isnumeric)
+    * [`isTemporal()`](#istemporal)
+
 ## Namespace
 
 `OpenFGA\Models\Enums`

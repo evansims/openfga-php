@@ -2,6 +2,22 @@
 
 Implementation of request context for OpenFGA API operations. This class provides a concrete implementation of the RequestContextInterface, encapsulating all the information needed to construct and execute HTTP requests to the OpenFGA API. It stores request metadata including HTTP method, URL, headers, body content, and routing configuration in an immutable structure. The RequestContext serves as a data transfer object that carries request information from the high-level API operations down to the HTTP transport layer, ensuring that all necessary context is preserved throughout the request processing pipeline.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getBody()`](#getbody)
+    * [`getHeaders()`](#getheaders)
+    * [`getMethod()`](#getmethod)
+    * [`getUrl()`](#geturl)
+* [Other](#other)
+    * [`useApiUrl()`](#useapiurl)
+
 ## Namespace
 
 `OpenFGA\Network`

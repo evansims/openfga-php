@@ -2,6 +2,23 @@
 
 Service implementation for authorization operations. This service handles all authorization-related queries including permission checks, relationship expansions, and object/user listing. It delegates HTTP communication to the HttpServiceInterface and uses the Result pattern for consistent error handling. The service supports various consistency levels and contextual tuple evaluation for dynamic authorization scenarios. All operations are performed against a specific store and authorization model.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`batchCheck()`](#batchcheck)
+    * [`check()`](#check)
+    * [`expand()`](#expand)
+* [List Operations](#list-operations)
+    * [`listObjects()`](#listobjects)
+    * [`listUsers()`](#listusers)
+    * [`streamedListObjects()`](#streamedlistobjects)
+
 ## Namespace
 
 `OpenFGA\Services`

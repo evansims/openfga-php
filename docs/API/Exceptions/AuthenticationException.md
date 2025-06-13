@@ -2,6 +2,28 @@
 
 Authentication-related exception for the OpenFGA SDK. Thrown when authentication failures occur, such as expired or invalid tokens. Provides detailed context about the authentication failure including the specific error type and any associated HTTP request/response information.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getCode()`](#getcode)
+    * [`getFile()`](#getfile)
+    * [`getLine()`](#getline)
+    * [`getMessage()`](#getmessage)
+    * [`getPrevious()`](#getprevious)
+    * [`getTrace()`](#gettrace)
+    * [`getTraceAsString()`](#gettraceasstring)
+* [Other](#other)
+    * [`context()`](#context)
+    * [`kind()`](#kind)
+    * [`previous()`](#previous)
+    * [`request()`](#request)
+    * [`response()`](#response)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

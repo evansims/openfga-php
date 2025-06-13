@@ -2,6 +2,19 @@
 
 Defines the contract for typed wildcard specifications. A typed wildcard represents &quot;all users of a specific type&quot; in authorization rules. Instead of listing individual users, you can grant permissions to all members of a user type (like &quot;all employees&quot; or &quot;all customers&quot;). Use this when you want to create broad permission grants that automatically apply to all users of a particular type without explicit enumeration.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getType()`](#gettype)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

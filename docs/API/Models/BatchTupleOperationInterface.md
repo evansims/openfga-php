@@ -2,6 +2,26 @@
 
 Interface for batch tuple operations. Defines the contract for organizing tuple writes and deletes into batches that can be processed efficiently while respecting API limitations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getDeletes()`](#getdeletes)
+    * [`getWrites()`](#getwrites)
+* [List Operations](#list-operations)
+    * [`getTotalOperations()`](#gettotaloperations)
+* [Utility](#utility)
+    * [`isEmpty()`](#isempty)
+* [Other](#other)
+    * [`chunk()`](#chunk)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`requiresChunking()`](#requireschunking)
+
 ## Namespace
 
 `OpenFGA\Models`

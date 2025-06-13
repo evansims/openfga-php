@@ -2,6 +2,21 @@
 
 Request for creating a new authorization model in OpenFGA. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConditions()`](#getconditions)
+    * [`getRequest()`](#getrequest)
+    * [`getSchemaVersion()`](#getschemaversion)
+    * [`getStore()`](#getstore)
+    * [`getTypeDefinitions()`](#gettypedefinitions)
+
 ## Namespace
 
 `OpenFGA\Requests`

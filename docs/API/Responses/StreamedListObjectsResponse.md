@@ -2,6 +2,19 @@
 
 Response containing streaming objects that a user has a specific relationship with. This response processes a streaming HTTP response and yields object identifiers as they are received from the server. This allows for memory-efficient processing of large result sets without loading the entire dataset into memory.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getObject()`](#getobject)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

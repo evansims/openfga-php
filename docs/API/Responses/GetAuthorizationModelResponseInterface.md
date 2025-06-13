@@ -2,6 +2,17 @@
 
 Interface for authorization model retrieval response objects. This interface defines the contract for responses returned when retrieving authorization models from OpenFGA. An authorization model defines the relationship types, object types, and permission logic that govern how authorization decisions are made within a store. Authorization models are versioned, allowing you to evolve your permission structure over time while maintaining consistency for existing authorization checks.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModel()`](#getmodel)
+
 ## Namespace
 
 `OpenFGA\Responses`

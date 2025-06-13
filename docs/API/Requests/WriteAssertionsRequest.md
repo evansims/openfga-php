@@ -2,6 +2,20 @@
 
 Request for writing test assertions to validate authorization model behavior. This request stores test assertions that define expected authorization outcomes for specific scenarios. Assertions are used to validate that authorization models behave correctly and can be run as part of testing and validation workflows.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAssertions()`](#getassertions)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

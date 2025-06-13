@@ -2,6 +2,17 @@
 
 Response confirming successful writing of test assertions. This response indicates that test assertions have been successfully stored for an authorization model. The assertions can now be used to validate that the model behaves correctly in various authorization scenarios.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

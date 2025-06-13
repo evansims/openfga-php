@@ -2,6 +2,44 @@
 
 OpenFGA Client implementation for relationship-based access control operations. This client provides a complete implementation of the OpenFGA API, supporting all core operations including store management, authorization model configuration, relationship tuple operations, and authorization checks. The client uses PSR-7, PSR-17 and PSR-18 HTTP standards and implements the Result pattern for error handling. The client supports multiple authentication methods including OAuth 2.0 Client Credentials flow and pre-shared key authentication, with automatic token management and retry capabilities for reliable operation.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`batchCheck()`](#batchcheck)
+    * [`check()`](#check)
+    * [`expand()`](#expand)
+* [CRUD Operations](#crud-operations)
+    * [`createAuthorizationModel()`](#createauthorizationmodel)
+    * [`createStore()`](#createstore)
+    * [`deleteStore()`](#deletestore)
+    * [`readAssertions()`](#readassertions)
+    * [`readTuples()`](#readtuples)
+    * [`writeAssertions()`](#writeassertions)
+    * [`writeTuples()`](#writetuples)
+* [List Operations](#list-operations)
+    * [`getAuthorizationModel()`](#getauthorizationmodel)
+    * [`getLanguage()`](#getlanguage)
+    * [`getLastRequest()`](#getlastrequest)
+    * [`getLastResponse()`](#getlastresponse)
+    * [`getStore()`](#getstore)
+    * [`listAuthorizationModels()`](#listauthorizationmodels)
+    * [`listObjects()`](#listobjects)
+    * [`listStores()`](#liststores)
+    * [`listTupleChanges()`](#listtuplechanges)
+    * [`listUsers()`](#listusers)
+    * [`streamedListObjects()`](#streamedlistobjects)
+* [Utility](#utility)
+    * [`assertLastRequest()`](#assertlastrequest)
+* [Other](#other)
+    * [`dsl()`](#dsl)
+
 ## Namespace
 
 `OpenFGA`

@@ -2,6 +2,26 @@
 
 Fluent builder for creating JSON schemas for data validation and transformation. This builder provides a fluent API for defining validation schemas for model classes, supporting various data types, formats, and validation constraints. It&#039;s used internally by the SDK to validate API responses and ensure data integrity.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Utility](#utility)
+    * [`register()`](#register)
+* [Other](#other)
+    * [`array()`](#array)
+    * [`boolean()`](#boolean)
+    * [`date()`](#date)
+    * [`datetime()`](#datetime)
+    * [`integer()`](#integer)
+    * [`number()`](#number)
+    * [`object()`](#object)
+    * [`string()`](#string)
+
 ## Namespace
 
 `OpenFGA\Schemas`

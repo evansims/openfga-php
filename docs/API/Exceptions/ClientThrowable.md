@@ -2,6 +2,28 @@
 
 Base interface for all OpenFGA SDK exceptions. Extends the standard PHP Throwable interface with additional methods to provide detailed context about SDK-specific errors including HTTP request/response information and categorized error types. This interface ensures consistent error handling across all exception types in the OpenFGA SDK, enabling developers to access rich context information for debugging and error reporting. All OpenFGA exceptions implement this interface to provide a unified error handling experience. OpenFGA exceptions are categorized into specific types: - Authentication errors (token expired, invalid credentials) - Configuration errors (missing PSR components, invalid setup) - Network errors (HTTP failures, timeouts, API unavailability) - Serialization errors (JSON parsing, schema validation failures) - Client errors (general validation and usage errors)
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getCode()`](#getcode)
+    * [`getFile()`](#getfile)
+    * [`getLine()`](#getline)
+    * [`getMessage()`](#getmessage)
+    * [`getPrevious()`](#getprevious)
+    * [`getTrace()`](#gettrace)
+    * [`getTraceAsString()`](#gettraceasstring)
+* [Other](#other)
+    * [`context()`](#context)
+    * [`kind()`](#kind)
+    * [`previous()`](#previous)
+    * [`request()`](#request)
+    * [`response()`](#response)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

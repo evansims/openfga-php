@@ -2,6 +2,17 @@
 
 Default implementation of TupleFilterServiceInterface. Provides efficient duplicate filtering for tuple operations using hash-based lookups to ensure O(n) complexity.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`filterDuplicates()`](#filterduplicates)
+
 ## Namespace
 
 `OpenFGA\Services`

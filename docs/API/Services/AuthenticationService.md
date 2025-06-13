@@ -2,6 +2,19 @@
 
 Service implementation for managing authentication in OpenFGA operations. This service encapsulates all authentication-related logic, providing a clean abstraction over the underlying authentication strategies. It handles token management, authentication request flows, and integrates with telemetry for monitoring authentication performance and failures. The service supports multiple authentication strategies through the AuthenticationInterface, automatically handling token refresh and error recovery patterns. It provides consistent error handling and telemetry integration across all authentication operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAuthorizationHeader()`](#getauthorizationheader)
+* [Other](#other)
+    * [`sendAuthenticationRequest()`](#sendauthenticationrequest)
+
 ## Namespace
 
 `OpenFGA\Services`

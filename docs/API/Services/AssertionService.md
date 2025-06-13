@@ -2,6 +2,25 @@
 
 Service implementation for managing OpenFGA authorization model assertions. Provides business-focused operations for working with assertions, which are test cases that validate the behavior of authorization models. This service abstracts the underlying repository implementation and adds value through validation, convenience methods, and enhanced error handling.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`validateAssertions()`](#validateassertions)
+* [CRUD Operations](#crud-operations)
+    * [`readAssertions()`](#readassertions)
+    * [`writeAssertions()`](#writeassertions)
+* [List Operations](#list-operations)
+    * [`getAssertionStatistics()`](#getassertionstatistics)
+* [Utility](#utility)
+    * [`clearAssertions()`](#clearassertions)
+    * [`executeAssertions()`](#executeassertions)
+
 ## Namespace
 
 `OpenFGA\Services`

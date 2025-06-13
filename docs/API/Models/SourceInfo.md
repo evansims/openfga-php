@@ -2,6 +2,22 @@
 
 Represents source file information for debugging and development tools. SourceInfo provides metadata about where elements of your authorization model were originally defined, including file paths. This information is valuable for development tools, error reporting, and debugging authorization model issues. Use this when you need to trace authorization model elements back to their source definitions for debugging or tooling purposes.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getFile()`](#getfile)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

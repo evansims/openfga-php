@@ -2,6 +2,19 @@
 
 Interface for listing available OpenFGA stores. This interface defines the contract for requests that retrieve a paginated list of all OpenFGA stores accessible to the current authentication context. This is typically used for administrative purposes, allowing users to browse and manage multiple authorization domains. Store listing is essential for: - Administrative dashboards and management interfaces - Store discovery and selection workflows - Monitoring and auditing store usage across an organization - Implementing multi-tenant authorization architectures - Backup and migration tooling that needs to enumerate stores The operation supports pagination to handle large numbers of stores efficiently, ensuring good performance even in environments with hundreds or thousands of authorization domains.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+
 ## Namespace
 
 `OpenFGA\Requests`

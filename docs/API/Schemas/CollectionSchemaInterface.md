@@ -2,6 +2,23 @@
 
 Interface for collection schema definitions in the OpenFGA system. This interface extends the base SchemaInterface to provide specialized validation and structure definitions for collections of objects. Collection schemas handle arrays and lists of objects that conform to specific types, with support for wrapper keys and item requirements. Collection schemas are essential for validating complex data structures like lists of users, authorization models, relationship tuples, and other grouped data returned by the OpenFGA API. Examples of collections include Users, AuthorizationModels, Tuples, and other array-based response data that require consistent validation and type safety.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getClassName()`](#getclassname)
+    * [`getItemType()`](#getitemtype)
+    * [`getProperties()`](#getproperties)
+    * [`getProperty()`](#getproperty)
+    * [`getWrapperKey()`](#getwrapperkey)
+* [Other](#other)
+    * [`requiresItems()`](#requiresitems)
+
 ## Namespace
 
 `OpenFGA\Schemas`

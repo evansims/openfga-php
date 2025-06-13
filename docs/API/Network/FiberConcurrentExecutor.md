@@ -2,6 +2,19 @@
 
 Fiber-based concurrent executor implementation. This implementation uses PHP 8.1+ Fibers to execute tasks concurrently without the overhead of threads or processes. Fibers provide cooperative multitasking, allowing efficient concurrent execution of I/O-bound tasks such as HTTP requests.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
+* [Other](#other)
+    * [`executeParallel()`](#executeparallel)
+    * [`supportsConcurrency()`](#supportsconcurrency)
+
 ## Namespace
 
 `OpenFGA\Network`

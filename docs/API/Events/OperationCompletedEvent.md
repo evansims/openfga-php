@@ -2,6 +2,30 @@
 
 Event fired when a high-level operation completes. This event tracks the completion of business operations with success/failure information.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContext()`](#getcontext)
+    * [`getEventId()`](#geteventid)
+    * [`getEventType()`](#geteventtype)
+    * [`getException()`](#getexception)
+    * [`getModelId()`](#getmodelid)
+    * [`getOccurredAt()`](#getoccurredat)
+    * [`getOperation()`](#getoperation)
+    * [`getPayload()`](#getpayload)
+    * [`getResult()`](#getresult)
+    * [`getStoreId()`](#getstoreid)
+* [Utility](#utility)
+    * [`isPropagationStopped()`](#ispropagationstopped)
+    * [`isSuccessful()`](#issuccessful)
+* [Other](#other)
+    * [`stopPropagation()`](#stoppropagation)
+
 ## Namespace
 
 `OpenFGA\Events`

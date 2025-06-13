@@ -2,6 +2,19 @@
 
 Service for handling HTTP communication. This service abstracts HTTP operations from the Client class, providing a clean interface for sending requests and managing HTTP-related state like last request/response tracking.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getLastRequest()`](#getlastrequest)
+    * [`getLastResponse()`](#getlastresponse)
+* [Other](#other)
+    * [`send()`](#send)
+
 ## Namespace
 
 `OpenFGA\Services`

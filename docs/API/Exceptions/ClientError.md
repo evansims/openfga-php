@@ -2,6 +2,18 @@
 
 General client error types for the OpenFGA SDK. Defines high-level error categories that can occur when using the SDK, providing a way to classify different types of failures such as authentication, configuration, network, serialization, and validation errors. Each case provides a factory method to create the corresponding ClientException. These error categories help applications implement appropriate error handling strategies, retry logic, and user messaging based on the type of failure: - Authentication: Token-related issues, expired credentials, OAuth failures - Configuration: Missing PSR components, invalid SDK setup, configuration errors - Network: HTTP communication failures, timeouts, API connectivity issues - Serialization: JSON parsing errors, schema validation failures, data format issues - Validation: Parameter validation failures, invalid API usage, constraint violations
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`exception()`](#exception)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

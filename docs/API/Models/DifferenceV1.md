@@ -2,6 +2,23 @@
 
 Represents a set difference operation between two usersets. In authorization models, you sometimes need to grant access to one group of users while explicitly excluding another group. DifferenceV1 calculates the difference between a base userset and a subtract userset, effectively giving you &quot;all users in base except those in subtract.&quot; For example, you might want to grant access to all employees except those in a specific department, or all document viewers except the document owner.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getBase()`](#getbase)
+    * [`getSubtract()`](#getsubtract)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

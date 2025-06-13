@@ -2,6 +2,26 @@
 
 Concrete implementation of a successful result containing a value. This class represents the successful outcome of an operation, storing the resulting value and providing type-safe access through the Result pattern&#039;s fluent interface.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`err()`](#err)
+    * [`failed()`](#failed)
+    * [`failure()`](#failure)
+    * [`recover()`](#recover)
+    * [`rethrow()`](#rethrow)
+    * [`succeeded()`](#succeeded)
+    * [`success()`](#success)
+    * [`then()`](#then)
+    * [`unwrap()`](#unwrap)
+    * [`val()`](#val)
+
 ## Namespace
 
 `OpenFGA\Results`

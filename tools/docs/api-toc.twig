@@ -1,0 +1,65 @@
+# OpenFGA PHP SDK API Documentation
+
+## Complete API Reference
+
+This documentation provides a complete reference for all classes, interfaces, and enumerations in the OpenFGA PHP SDK.
+
+### Quick Navigation
+
+* **[Getting Started](../README.md)** - Installation and basic usage
+* **[Core Concepts](../docs/README.md)** - Understanding OpenFGA and the SDK
+* **[Examples](../examples/README.md)** - Code examples and tutorials
+
+## API Components by Category
+
+### Core Client
+* [`Client`](./Client.md) - Main client implementation for all OpenFGA operations
+* [`ClientInterface`](./ClientInterface.md) - Interface definition for the client
+
+### Authentication & Security
+* **[Authentication](./Authentication/README.md)** - OAuth 2.0 and API key authentication
+  * [`OAuth2ClientCredentials`](./Authentication/OAuth2ClientCredentials.md) - OAuth 2.0 client credentials flow
+  * [`PresharedKeyAuth`](./Authentication/PresharedKeyAuth.md) - Pre-shared key authentication
+
+### Domain Models
+* **[Models](./Models/README.md)** - Core domain entities
+  * [`Store`](./Models/Store.md) - OpenFGA store representation
+  * [`AuthorizationModel`](./Models/AuthorizationModel.md) - Authorization model definition
+  * [`TupleKey`](./Models/TupleKey.md) - Relationship tuple representation
+  * **[Collections](./Models/Collections/README.md)** - Type-safe collections
+  * **[Enums](./Models/Enums/README.md)** - Enumeration types
+
+### API Operations
+* **[Requests](./Requests/README.md)** - Request objects for API operations
+* **[Responses](./Responses/README.md)** - Response objects from API calls
+
+### Error Handling
+* **[Results](./Results/README.md)** - Result pattern for functional error handling
+  * [`Success`](./Results/Success.md) - Successful operation result
+  * [`Failure`](./Results/Failure.md) - Failed operation result
+* **[Exceptions](./Exceptions/README.md)** - Exception hierarchy for error cases
+
+### Infrastructure
+* **[Network](./Network/README.md)** - HTTP client and retry mechanisms
+  * [`RequestManager`](./Network/RequestManager.md) - HTTP request management
+  * [`RetryHandler`](./Network/RetryHandler.md) - Retry strategy implementation
+* **[Observability](./Observability/README.md)** - Telemetry and monitoring
+* **[Events](./Events/README.md)** - Event system for cross-cutting concerns
+
+### Advanced Features
+* **[Language](./Language/README.md)** - DSL parser for human-readable models
+  * [`DslTransformer`](./Language/DslTransformer.md) - DSL to API model transformer
+* **[Translation](./Translation/README.md)** - Internationalization support
+  * [`Messages`](./Messages.md) - All translatable messages in the SDK
+* **[Integration](./Integration/README.md)** - Framework integration helpers
+
+### Validation & Schemas
+* **[Schemas](./Schemas/README.md)** - JSON schema validation system
+
+## Component Index
+
+{{ allComponents }}
+
+---
+
+Generated on {{ generatedDate }}

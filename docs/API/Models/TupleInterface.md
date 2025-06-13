@@ -2,6 +2,20 @@
 
 Represents a relationship tuple in the OpenFGA authorization system. Tuples are the fundamental building blocks of OpenFGA that define actual relationships between users, objects, and relations. They represent concrete facts about your system, such as &quot;user:alice has editor relation to document:doc1&quot; or &quot;group:engineering has member relation to user:bob.&quot; These relationships form the data foundation that OpenFGA uses during authorization checks to determine access permissions and evaluate complex authorization policies. Each tuple consists of: - A tuple key that defines the relationship (user, relation, object, optional condition) - A timestamp that tracks when the relationship was established or last modified Tuples can be unconditional (always valid) or conditional (valid only when specific runtime conditions are met). Conditional tuples enable dynamic authorization based on context such as time of day, resource attributes, or environmental factors. The tuple system supports OpenFGA&#039;s core authorization model by providing the actual relationship data that authorization queries evaluate against. Tuples are managed through write operations and queried during check operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getKey()`](#getkey)
+    * [`getTimestamp()`](#gettimestamp)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

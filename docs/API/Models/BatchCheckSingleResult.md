@@ -2,6 +2,25 @@
 
 Represents the result of a single check within a batch check response. Each result contains whether the check was allowed and any error information if the check failed to complete successfully.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`getAllowed()`](#getallowed)
+* [List Operations](#list-operations)
+    * [`getError()`](#geterror)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`toArray()`](#toarray)
+
 ## Namespace
 
 `OpenFGA\Models`

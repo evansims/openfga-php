@@ -2,6 +2,31 @@
 
 Response for tuple writing operations supporting both transactional and non-transactional modes. This response handles results from both transactional writes (all-or-nothing) and non-transactional writes (independent operations with detailed tracking).
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getErrors()`](#geterrors)
+    * [`getFailedChunks()`](#getfailedchunks)
+    * [`getFirstError()`](#getfirsterror)
+    * [`getSuccessRate()`](#getsuccessrate)
+    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
+    * [`getTotalChunks()`](#gettotalchunks)
+    * [`getTotalOperations()`](#gettotaloperations)
+* [Utility](#utility)
+    * [`isCompleteFailure()`](#iscompletefailure)
+    * [`isCompleteSuccess()`](#iscompletesuccess)
+    * [`isPartialSuccess()`](#ispartialsuccess)
+    * [`isTransactional()`](#istransactional)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+    * [`throwOnFailure()`](#throwonfailure)
+
 ## Namespace
 
 `OpenFGA\Responses`

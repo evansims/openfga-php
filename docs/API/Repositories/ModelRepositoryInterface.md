@@ -2,6 +2,18 @@
 
 Repository contract for authorization model operations. This interface defines the contract for managing authorization models within an OpenFGA store. Authorization models define the permission structure for your application - the types of objects, the relationships between them, and the rules that govern access. Models are immutable once created; to update permissions, you create a new model version. All methods return Result objects following the Result pattern, allowing for consistent error handling without exceptions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`create()`](#create)
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`list()`](#list)
+
 ## Namespace
 
 `OpenFGA\Repositories`

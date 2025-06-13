@@ -2,6 +2,26 @@
 
 Represents a single property definition within a schema. This class defines the validation rules, type information, and metadata for individual properties of OpenFGA model objects. Each property specifies how a field should be validated, transformed, and mapped during object creation. Properties support various data types including primitives (string, int, bool), complex objects, arrays, and collections, with optional validation constraints such as required status, default values, format restrictions, and enumeration limits.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getClassName()`](#getclassname)
+    * [`getDefault()`](#getdefault)
+    * [`getEnum()`](#getenum)
+    * [`getFormat()`](#getformat)
+    * [`getItems()`](#getitems)
+    * [`getName()`](#getname)
+    * [`getParameterName()`](#getparametername)
+    * [`getType()`](#gettype)
+* [Utility](#utility)
+    * [`isRequired()`](#isrequired)
+
 ## Namespace
 
 `OpenFGA\Schemas`

@@ -2,6 +2,21 @@
 
 Defines the contract for userset user specifications. A userset user represents a reference to users through a userset relationship, typically in the format &quot;object#relation&quot; where object is the entity and relation defines which users are included. This allows dynamic user groups based on relationships rather than static user lists. Use this when you need to reference users through relationship-based groups in your authorization model.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getRelation()`](#getrelation)
+    * [`getType()`](#gettype)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

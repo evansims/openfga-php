@@ -2,6 +2,29 @@
 
 Represents a batch tuple operation containing both writes and deletes. This model organizes tuple operations for batch processing, allowing you to specify both tuples to write and tuples to delete in a single operation. The batch processor will automatically chunk these operations to respect API limits while maintaining the grouping of related changes.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getDeletes()`](#getdeletes)
+    * [`getWrites()`](#getwrites)
+* [List Operations](#list-operations)
+    * [`getTotalOperations()`](#gettotaloperations)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Utility](#utility)
+    * [`isEmpty()`](#isempty)
+* [Other](#other)
+    * [`chunk()`](#chunk)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`requiresChunking()`](#requireschunking)
+
 ## Namespace
 
 `OpenFGA\Models`

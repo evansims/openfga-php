@@ -2,6 +2,23 @@
 
 Contains metadata information about conditions in your authorization model. ConditionMetadata provides context about ABAC (Attribute-Based Access Control) conditions, including module organization and source information for debugging. This helps you understand where conditions are defined and how they&#039;re structured within your authorization model. Use this when working with conditional authorization rules that depend on runtime attributes and context data.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModule()`](#getmodule)
+    * [`getSourceInfo()`](#getsourceinfo)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

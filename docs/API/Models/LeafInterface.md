@@ -2,6 +2,21 @@
 
 Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are terminal nodes in the authorization evaluation tree that define the actual users or user resolution methods. They represent the final step in determining who has access to a particular resource through a specific relation. A leaf can specify users through one of three mechanisms: 1. **Direct users**: An explicit list of user identifiers 2. **Computed userset**: A reference to another userset to be evaluated 3. **Tuple-to-userset**: A complex resolution that follows tuple relationships Only one of these mechanisms should be active in any given leaf node, as they represent different strategies for determining the final user set.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getComputed()`](#getcomputed)
+    * [`getTupleToUserset()`](#gettupletouserset)
+    * [`getUsers()`](#getusers)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

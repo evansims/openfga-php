@@ -2,6 +2,19 @@
 
 JSON schema definition for validating and transforming data structures. This schema defines validation rules and transformation logic for converting raw API response data into strongly typed model objects. It specifies property types, validation constraints, and mapping rules for accurate data processing.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getClassName()`](#getclassname)
+    * [`getProperties()`](#getproperties)
+    * [`getProperty()`](#getproperty)
+
 ## Namespace
 
 `OpenFGA\Schemas`

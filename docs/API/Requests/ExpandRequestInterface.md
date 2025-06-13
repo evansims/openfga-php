@@ -2,6 +2,22 @@
 
 Interface for expanding relationship graphs in OpenFGA. This interface defines the contract for requests that expand authorization relationships to show the complete graph of users that have access to a resource through various relationship paths. The expand operation traces all possible authorization paths and returns a tree structure showing how permissions are derived. Expand operations are particularly useful for: - Understanding complex authorization chains and inheritance - Debugging permission issues and unexpected access grants - Auditing who has access to sensitive resources and why - Visualizing the authorization graph for administrative purposes - Analyzing the impact of relationship changes before applying them The expansion can include direct relationships, inherited permissions, and computed relationships through complex authorization model rules.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getTupleKey()`](#gettuplekey)
+
 ## Namespace
 
 `OpenFGA\Requests`

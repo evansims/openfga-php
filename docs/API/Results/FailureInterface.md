@@ -2,6 +2,26 @@
 
 Represents a failed result containing an error. Failure results indicate that an operation encountered an error and contain the throwable that caused the failure. They provide safe access to error information while maintaining compatibility with the Result pattern&#039;s fluent interface. Failure results behave predictably in all Result operations: - `succeeded()` always returns false - `failed()` always returns true - `err()` returns the contained error safely - `val()` throws since failures have no values - `failure()` executes callbacks with the error - `success()` skips callbacks and returns unchanged - `then()` skips transformations and returns unchanged - `recover()` applies recovery functions to the error - `rethrow()` throws the error or provided throwable
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`err()`](#err)
+    * [`failed()`](#failed)
+    * [`failure()`](#failure)
+    * [`recover()`](#recover)
+    * [`rethrow()`](#rethrow)
+    * [`succeeded()`](#succeeded)
+    * [`success()`](#success)
+    * [`then()`](#then)
+    * [`unwrap()`](#unwrap)
+    * [`val()`](#val)
+
 ## Namespace
 
 `OpenFGA\Results`

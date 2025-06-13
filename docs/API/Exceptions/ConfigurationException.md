@@ -2,6 +2,28 @@
 
 Configuration-related exception for the OpenFGA SDK. Thrown when configuration errors occur, typically related to missing or invalid PSR HTTP components required for SDK operation. Provides detailed context about the configuration failure and guidance for resolution.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getCode()`](#getcode)
+    * [`getFile()`](#getfile)
+    * [`getLine()`](#getline)
+    * [`getMessage()`](#getmessage)
+    * [`getPrevious()`](#getprevious)
+    * [`getTrace()`](#gettrace)
+    * [`getTraceAsString()`](#gettraceasstring)
+* [Other](#other)
+    * [`context()`](#context)
+    * [`kind()`](#kind)
+    * [`previous()`](#previous)
+    * [`request()`](#request)
+    * [`response()`](#response)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

@@ -2,6 +2,33 @@
 
 Request for writing and deleting relationship tuples in OpenFGA. This request enables batch creation and deletion of relationship tuples, supporting both transactional (all-or-nothing) and non-transactional (independent operations) modes. Transactional mode ensures atomic changes, while non-transactional mode allows for parallel processing with detailed success/failure tracking.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getDeletes()`](#getdeletes)
+    * [`getWrites()`](#getwrites)
+* [List Operations](#list-operations)
+    * [`getMaxParallelRequests()`](#getmaxparallelrequests)
+    * [`getMaxRetries()`](#getmaxretries)
+    * [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getRetryDelaySeconds()`](#getretrydelayseconds)
+    * [`getStopOnFirstError()`](#getstoponfirsterror)
+    * [`getStore()`](#getstore)
+    * [`getTotalOperations()`](#gettotaloperations)
+* [Utility](#utility)
+    * [`isEmpty()`](#isempty)
+    * [`isTransactional()`](#istransactional)
+* [Other](#other)
+    * [`chunk()`](#chunk)
+
 ## Namespace
 
 `OpenFGA\Requests`

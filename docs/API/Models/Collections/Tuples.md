@@ -2,6 +2,42 @@
 
 Collection implementation for OpenFGA tuple objects. This class provides a concrete implementation for managing collections of tuple objects that represent relationship facts in the OpenFGA authorization system. Tuples define the actual relationships between users, objects, and relations that drive authorization decisions. Each tuple includes both the relationship key and a timestamp, making this collection useful for both current state queries and historical analysis.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`offsetGet()`](#offsetget)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Utility](#utility)
+    * [`isEmpty()`](#isempty)
+    * [`offsetExists()`](#offsetexists)
+    * [`offsetSet()`](#offsetset)
+    * [`offsetUnset()`](#offsetunset)
+* [Other](#other)
+    * [`add()`](#add)
+    * [`clear()`](#clear)
+    * [`count()`](#count)
+    * [`current()`](#current)
+    * [`every()`](#every)
+    * [`filter()`](#filter)
+    * [`first()`](#first)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`key()`](#key)
+    * [`next()`](#next)
+    * [`reduce()`](#reduce)
+    * [`rewind()`](#rewind)
+    * [`some()`](#some)
+    * [`toArray()`](#toarray)
+    * [`valid()`](#valid)
+    * [`withItems()`](#withitems)
+
 ## Namespace
 
 `OpenFGA\Models\Collections`

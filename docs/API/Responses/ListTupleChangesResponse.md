@@ -2,6 +2,22 @@
 
 Response containing a paginated list of tuple changes from the store. This response provides a collection of tuple changes (additions, deletions) along with pagination information for retrieving additional pages of results. Use this to track the history of relationship changes in your authorization store.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getChanges()`](#getchanges)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

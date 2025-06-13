@@ -2,6 +2,27 @@
 
 Response containing detailed information about a specific store. This response provides comprehensive store metadata including its unique identifier, name, and timestamps for creation, updates, and deletion (if applicable). Use this to retrieve information about an authorization store.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getCreatedAt()`](#getcreatedat)
+    * [`getDeletedAt()`](#getdeletedat)
+    * [`getUpdatedAt()`](#getupdatedat)
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getName()`](#getname)
+    * [`getStore()`](#getstore)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

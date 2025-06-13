@@ -2,6 +2,18 @@
 
 OpenFGA DSL Transformer implementation for authorization model conversions. This class provides complete implementation for converting between OpenFGA&#039;s Domain Specific Language (DSL) format and structured authorization model objects. It supports complex relationship definitions including unions, intersections, exclusions, and computed usersets with proper precedence handling. The transformer parses DSL syntax including: - Type definitions with relations - Direct user assignments [user, organization#member] - Computed usersets (owner, administrator) - Tuple-to-userset relations (owner from parent) - Boolean operations (and, or, but not) - Parenthetical grouping for precedence
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`fromDsl()`](#fromdsl)
+    * [`toDsl()`](#todsl)
+
 ## Namespace
 
 `OpenFGA\Language`

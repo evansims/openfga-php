@@ -2,6 +2,21 @@
 
 Service interface for managing telemetry and observability in OpenFGA operations. This service provides a higher-level abstraction over the telemetry infrastructure, handling the creation, management, and coordination of telemetry spans, metrics, and events. It simplifies telemetry usage by providing business-focused methods that handle common patterns like operation timing and error tracking. ## Core Functionality The service manages the lifecycle of telemetry data for: - HTTP requests and responses with automatic span management - Business operations with timing and success/failure tracking - Error and exception handling with contextual information - Performance metrics and operational insights ## Usage Example ```php $telemetryService = new TelemetryService($telemetryProvider); Track a complete operation $context = $telemetryService-&gt;startOperation(&#039;check&#039;, $store, $model); try { $result = $businessLogic(); $telemetryService-&gt;recordSuccess($context, $result); return $result; } catch (Throwable $error) { $telemetryService-&gt;recordFailure($context, $error); throw $error; } ```
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
+    * [`recordFailure()`](#recordfailure)
+    * [`recordHttpRequest()`](#recordhttprequest)
+    * [`recordOperationMetrics()`](#recordoperationmetrics)
+    * [`recordSuccess()`](#recordsuccess)
+    * [`startOperation()`](#startoperation)
+
 ## Namespace
 
 `OpenFGA\Services`

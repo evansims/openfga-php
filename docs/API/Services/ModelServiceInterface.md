@@ -2,6 +2,24 @@
 
 Service interface for managing OpenFGA authorization models. This service provides business-focused operations for working with authorization models, abstracting away the underlying repository implementation details and providing enhanced functionality like validation, cloning, and convenience methods. Authorization models define the permission structure for your application, including object types, relationships, and computation rules. Models are immutable once created, ensuring consistent authorization behavior. ## Core Operations The service supports model management with enhanced functionality: - Create models with comprehensive validation - Retrieve models with improved error handling - Clone models between stores for multi-tenant scenarios - Find the latest model version automatically ## Usage Example ```php $modelService = new ModelService($modelRepository); Create a new model with validation $result = $modelService-&gt;createModel( $store, $typeDefinitions, $conditions ); Get the latest model for a store $latest = $modelService-&gt;getLatestModel($store)-&gt;unwrap(); Clone a model to another store $cloned = $modelService-&gt;cloneModel( $sourceStore, $modelId, $targetStore )-&gt;unwrap(); ```
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`validateModel()`](#validatemodel)
+* [CRUD Operations](#crud-operations)
+    * [`createModel()`](#createmodel)
+* [List Operations](#list-operations)
+    * [`findModel()`](#findmodel)
+    * [`getLatestModel()`](#getlatestmodel)
+    * [`listAllModels()`](#listallmodels)
+* [Model Management](#model-management)
+    * [`cloneModel()`](#clonemodel)
+
 ## Namespace
 
 `OpenFGA\Services`

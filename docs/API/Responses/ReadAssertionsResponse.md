@@ -2,6 +2,22 @@
 
 Response containing test assertions associated with an authorization model. This response provides access to test assertions that validate authorization model behavior. These assertions define expected outcomes for specific authorization scenarios and help ensure model correctness.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAssertions()`](#getassertions)
+    * [`getModel()`](#getmodel)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

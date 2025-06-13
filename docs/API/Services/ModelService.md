@@ -2,6 +2,25 @@
 
 Service implementation for managing OpenFGA authorization models. Provides business-focused operations for working with authorization models, including validation, convenience methods, and enhanced error handling. This service abstracts the underlying repository implementation and adds value through additional functionality.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`validateModel()`](#validatemodel)
+* [CRUD Operations](#crud-operations)
+    * [`createModel()`](#createmodel)
+* [List Operations](#list-operations)
+    * [`findModel()`](#findmodel)
+    * [`getLatestModel()`](#getlatestmodel)
+    * [`listAllModels()`](#listallmodels)
+* [Model Management](#model-management)
+    * [`cloneModel()`](#clonemodel)
+
 ## Namespace
 
 `OpenFGA\Services`

@@ -2,6 +2,20 @@
 
 Exponential backoff retry strategy implementation. This strategy implements exponential backoff with jitter for retrying failed operations. It increases the delay between retries exponentially to reduce load on the server during failure scenarios, while adding random jitter to prevent thundering herd problems.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRetryDelay()`](#getretrydelay)
+* [Utility](#utility)
+    * [`isRetryable()`](#isretryable)
+* [Other](#other)
+    * [`execute()`](#execute)
+
 ## Namespace
 
 `OpenFGA\Network`

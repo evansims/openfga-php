@@ -2,6 +2,20 @@
 
 Defines a difference operation between two usersets in authorization models. DifferenceV1 represents a set operation that computes &quot;base minus subtract,&quot; effectively granting access to users in the base userset while explicitly denying access to users in the subtract userset. This enables complex authorization patterns like &quot;all employees except contractors&quot; or &quot;organization members except suspended users.&quot; Use this interface when implementing authorization logic that requires explicit exclusion of certain users from a broader permission set.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getBase()`](#getbase)
+    * [`getSubtract()`](#getsubtract)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

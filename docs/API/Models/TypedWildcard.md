@@ -2,6 +2,22 @@
 
 Represents a wildcard that matches all users of a specific type. In authorization models, you sometimes want to grant permissions to all users of a certain type rather than specific individuals. TypedWildcard lets you specify &quot;all users of type X&quot; in your authorization rules. For example, you might want to grant read access to &quot;all employees&quot; or &quot;all customers&quot; without having to list each individual user.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getType()`](#gettype)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

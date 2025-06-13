@@ -2,6 +2,21 @@
 
 Response containing the expanded userset tree for a relationship query. This response provides a hierarchical tree structure showing how a relationship is computed, including all the users, usersets, and computed relationships that contribute to the final authorization decision.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getTree()`](#gettree)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

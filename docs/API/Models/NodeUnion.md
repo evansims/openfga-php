@@ -2,6 +2,22 @@
 
 Represents a union of multiple nodes in an authorization model tree. When OpenFGA evaluates complex authorization rules, it often needs to combine results from multiple authorization paths. A NodeUnion contains a collection of nodes that should be evaluated together, typically representing an OR relationship where access is granted if any of the contained nodes grants access. This is commonly used in authorization model structures where a user can have access through multiple different permission paths.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getNodes()`](#getnodes)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

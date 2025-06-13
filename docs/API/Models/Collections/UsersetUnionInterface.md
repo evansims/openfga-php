@@ -2,6 +2,40 @@
 
 Represents a specialized collection for userset union operations. This collection is specifically designed for managing usersets in union operations, where users are granted access if they satisfy ANY of the contained usersets. The collection provides optimized serialization for union-specific data structures.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`offsetGet()`](#offsetget)
+* [Utility](#utility)
+    * [`isEmpty()`](#isempty)
+    * [`offsetExists()`](#offsetexists)
+    * [`offsetSet()`](#offsetset)
+    * [`offsetUnset()`](#offsetunset)
+* [Other](#other)
+    * [`add()`](#add)
+    * [`clear()`](#clear)
+    * [`count()`](#count)
+    * [`current()`](#current)
+    * [`every()`](#every)
+    * [`filter()`](#filter)
+    * [`first()`](#first)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`key()`](#key)
+    * [`next()`](#next)
+    * [`reduce()`](#reduce)
+    * [`rewind()`](#rewind)
+    * [`some()`](#some)
+    * [`toArray()`](#toarray)
+    * [`valid()`](#valid)
+    * [`withItems()`](#withitems)
+
 ## Namespace
 
 `OpenFGA\Models\Collections`

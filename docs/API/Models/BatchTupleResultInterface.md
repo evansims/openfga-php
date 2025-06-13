@@ -2,6 +2,31 @@
 
 Interface for batch tuple operation results. Defines the contract for tracking and analyzing the results of batch tuple operations, including success rates, responses, and error handling.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getErrors()`](#geterrors)
+    * [`getFailedChunks()`](#getfailedchunks)
+    * [`getFirstError()`](#getfirsterror)
+    * [`getResponses()`](#getresponses)
+    * [`getSuccessRate()`](#getsuccessrate)
+    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
+    * [`getTotalChunks()`](#gettotalchunks)
+    * [`getTotalOperations()`](#gettotaloperations)
+* [Utility](#utility)
+    * [`isCompleteFailure()`](#iscompletefailure)
+    * [`isCompleteSuccess()`](#iscompletesuccess)
+    * [`isPartialSuccess()`](#ispartialsuccess)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`throwOnFailure()`](#throwonfailure)
+
 ## Namespace
 
 `OpenFGA\Models`

@@ -2,6 +2,19 @@
 
 Interface for retrieving a specific authorization model. This interface defines the contract for requests that fetch a complete authorization model from an OpenFGA store. Authorization models define the relationship types, object types, and access control rules that govern permission evaluation in your application. Retrieving authorization models is essential for: - Inspecting current authorization schema and rules - Building administrative interfaces for model management - Implementing model comparison and diff functionality - Backing up and versioning authorization configurations - Understanding inheritance and relationship patterns - Debugging authorization behavior and rule conflicts The retrieved model includes all type definitions, conditions, and schema information needed to understand how permissions are evaluated.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

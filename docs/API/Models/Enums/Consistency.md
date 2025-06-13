@@ -2,6 +2,22 @@
 
 Consistency levels for OpenFGA authorization queries. This enum defines the available consistency levels that control the trade-off between data consistency and query performance in OpenFGA operations. Different consistency levels affect how fresh the data needs to be when processing authorization checks.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getDescription()`](#getdescription)
+* [Utility](#utility)
+    * [`prioritizesConsistency()`](#prioritizesconsistency)
+* [Other](#other)
+    * [`prioritizesPerformance()`](#prioritizesperformance)
+
 ## Namespace
 
 `OpenFGA\Models\Enums`

@@ -2,6 +2,23 @@
 
 Immutable access token implementation for OpenFGA API authentication. This class represents an OAuth 2.0 access token with expiration tracking and scope management. Access tokens are typically obtained through OAuth flows and provide time-limited access to OpenFGA resources.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getExpires()`](#getexpires)
+    * [`getScope()`](#getscope)
+    * [`getToken()`](#gettoken)
+* [Utility](#utility)
+    * [`isExpired()`](#isexpired)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Authentication`

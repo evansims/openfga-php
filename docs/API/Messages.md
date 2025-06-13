@@ -2,6 +2,19 @@
 
 Centralized message keys for all exception messages in the OpenFGA PHP SDK. This enum provides type-safe access to all translatable message keys used throughout the library for exceptions, error messages, and user-facing text. Messages are organized by category and support parameter substitution for dynamic content through the translation system. All message keys map to translations in the translation files located in the translations/ directory, supporting multiple locales for internationalization.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Translation Tables](#translation-tables)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`key()`](#key)
+
 ## Namespace
 
 `OpenFGA`

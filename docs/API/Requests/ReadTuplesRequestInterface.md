@@ -2,6 +2,22 @@
 
 Interface for reading relationship tuples from an OpenFGA store. This interface defines the contract for requests that query relationship tuples stored in OpenFGA. It supports filtering by tuple patterns and provides pagination for handling large result sets efficiently. Read operations allow you to: - Query existing relationships using tuple key patterns - Filter by specific objects, users, or relations - Use wildcard patterns to match multiple tuples - Configure read consistency for performance optimization - Paginate through large result sets with continuation tokens This is essential for auditing permissions, syncing data to external systems, building administrative interfaces, and implementing custom authorization logic that needs to inspect the relationship graph.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getTupleKey()`](#gettuplekey)
+
 ## Namespace
 
 `OpenFGA\Requests`

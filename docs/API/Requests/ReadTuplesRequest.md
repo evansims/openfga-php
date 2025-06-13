@@ -2,6 +2,22 @@
 
 Request for reading relationship tuples that match specified criteria. This request retrieves tuples from a store based on filtering criteria, with support for pagination and consistency levels. It&#039;s essential for querying existing relationships, debugging authorization data, and building administrative interfaces.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getTupleKey()`](#gettuplekey)
+
 ## Namespace
 
 `OpenFGA\Requests`

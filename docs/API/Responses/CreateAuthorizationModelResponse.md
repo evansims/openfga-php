@@ -2,6 +2,21 @@
 
 Response confirming successful creation of a new authorization model. This response provides the unique identifier of the newly created authorization model, which can be used for subsequent operations like checks, expansions, and model management activities.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModel()`](#getmodel)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

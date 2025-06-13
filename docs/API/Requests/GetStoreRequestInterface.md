@@ -2,6 +2,18 @@
 
 Interface for retrieving information about an OpenFGA store. This interface defines the contract for requests that fetch metadata and configuration information for a specific OpenFGA store. Store information includes details such as the store name, creation time, and other administrative metadata. Getting store information is useful for: - Administrative interfaces and dashboards - Verifying store existence before performing operations - Displaying store metadata to users - Auditing and monitoring store usage - Implementing store management workflows
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

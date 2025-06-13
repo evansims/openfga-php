@@ -2,6 +2,18 @@
 
 Request for creating a new OpenFGA store. Stores provide data isolation for different applications or environments, maintaining separate authorization models, relationship tuples, and providing complete separation from other stores.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getName()`](#getname)
+    * [`getRequest()`](#getrequest)
+
 ## Namespace
 
 `OpenFGA\Requests`

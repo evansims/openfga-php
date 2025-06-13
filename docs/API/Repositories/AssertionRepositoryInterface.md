@@ -2,6 +2,16 @@
 
 Repository interface for managing OpenFGA authorization model assertions. This interface provides data access operations for working with assertions, which are test cases that validate the behavior of authorization models. Implementations handle the underlying storage and retrieval mechanisms.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`read()`](#read)
+    * [`write()`](#write)
+
 ## Namespace
 
 `OpenFGA\Repositories`

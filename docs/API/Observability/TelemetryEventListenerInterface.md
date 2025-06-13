@@ -2,6 +2,19 @@
 
 Interface for event listeners that forward domain events to telemetry providers. This interface defines the contract for handling telemetry-related events throughout the OpenFGA client lifecycle, enabling observability without tightly coupling business logic to telemetry concerns.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`onHttpRequestSent()`](#onhttprequestsent)
+    * [`onHttpResponseReceived()`](#onhttpresponsereceived)
+    * [`onOperationCompleted()`](#onoperationcompleted)
+    * [`onOperationStarted()`](#onoperationstarted)
+
 ## Namespace
 
 `OpenFGA\Observability`

@@ -2,6 +2,19 @@
 
 Interface for OpenFGA authentication strategies. This interface defines the contract for different authentication methods that can be used with the OpenFGA client. Authentication strategies handle the generation and management of authorization headers for API requests.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAuthenticationRequest()`](#getauthenticationrequest)
+    * [`getAuthorizationHeader()`](#getauthorizationheader)
+* [Other](#other)
+    * [`handleAuthenticationResponse()`](#handleauthenticationresponse)
+    * [`requiresAuthentication()`](#requiresauthentication)
+
 ## Namespace
 
 `OpenFGA\Authentication`

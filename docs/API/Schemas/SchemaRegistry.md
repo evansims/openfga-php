@@ -2,6 +2,21 @@
 
 Centralized registry for managing schema definitions across the OpenFGA system. This registry provides a static, global repository for schema definitions that can be accessed throughout the application lifecycle. It serves as the primary mechanism for storing, retrieving, and creating schema definitions for OpenFGA model objects. The registry supports both programmatic schema creation through the builder pattern and direct schema registration for pre-defined schemas. This centralized approach ensures consistent schema validation across all model objects and eliminates the need for redundant schema definitions. Schemas registered here are used by the SchemaValidator for object validation and transformation during API response processing and data serialization operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`create()`](#create)
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+* [Utility](#utility)
+    * [`register()`](#register)
+
 ## Namespace
 
 `OpenFGA\Schemas`

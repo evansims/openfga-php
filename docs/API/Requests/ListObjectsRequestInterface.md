@@ -2,6 +2,25 @@
 
 Interface for listing objects that a user has access to. This interface defines the contract for requests that query which objects a specific user can access for a given relation. This is the inverse of a permission check - instead of asking &quot;can this user access this object?&quot;, it asks &quot;what objects can this user access?&quot; List objects operations support: - Filtering by object type and relation - Contextual evaluation with additional data - Temporary relationship tuples for scenario testing - Configurable read consistency levels - Authorization model versioning for consistent results This is particularly useful for building user interfaces that need to display only the resources a user can access, such as file listings, document repositories, or administrative dashboards.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getModel()`](#getmodel)
+    * [`getRelation()`](#getrelation)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getType()`](#gettype)
+    * [`getUser()`](#getuser)
+
 ## Namespace
 
 `OpenFGA\Requests`

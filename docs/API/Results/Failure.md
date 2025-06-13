@@ -2,6 +2,26 @@
 
 Concrete implementation of a failed result containing an error. This class represents the failed outcome of an operation, storing the error that caused the failure and providing safe access through the Result pattern&#039;s fluent interface.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`err()`](#err)
+    * [`failed()`](#failed)
+    * [`failure()`](#failure)
+    * [`recover()`](#recover)
+    * [`rethrow()`](#rethrow)
+    * [`succeeded()`](#succeeded)
+    * [`success()`](#success)
+    * [`then()`](#then)
+    * [`unwrap()`](#unwrap)
+    * [`val()`](#val)
+
 ## Namespace
 
 `OpenFGA\Results`

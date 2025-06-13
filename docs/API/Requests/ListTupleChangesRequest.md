@@ -2,6 +2,22 @@
 
 Request for listing changes to relationship tuples over time. This request retrieves a chronological list of tuple modifications (creates, updates, deletes) within a store. It&#039;s essential for auditing, change tracking, and building event-driven authorization systems that react to permission changes.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+    * [`getStartTime()`](#getstarttime)
+    * [`getStore()`](#getstore)
+    * [`getType()`](#gettype)
+
 ## Namespace
 
 `OpenFGA\Requests`

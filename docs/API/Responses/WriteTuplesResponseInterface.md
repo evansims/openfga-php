@@ -2,6 +2,30 @@
 
 Interface for tuple writing response objects. This interface defines the contract for responses returned when writing relationship tuples to an OpenFGA store. The response handles both transactional and non-transactional write modes, providing appropriate feedback for each operation type. In transactional mode, all changes succeed or fail together. In non-transactional mode, operations are processed independently with detailed success/failure tracking.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getErrors()`](#geterrors)
+    * [`getFailedChunks()`](#getfailedchunks)
+    * [`getFirstError()`](#getfirsterror)
+    * [`getSuccessRate()`](#getsuccessrate)
+    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
+    * [`getTotalChunks()`](#gettotalchunks)
+    * [`getTotalOperations()`](#gettotaloperations)
+* [Utility](#utility)
+    * [`isCompleteFailure()`](#iscompletefailure)
+    * [`isCompleteSuccess()`](#iscompletesuccess)
+    * [`isPartialSuccess()`](#ispartialsuccess)
+    * [`isTransactional()`](#istransactional)
+* [Other](#other)
+    * [`throwOnFailure()`](#throwonfailure)
+
 ## Namespace
 
 `OpenFGA\Responses`

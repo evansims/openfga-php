@@ -2,6 +2,21 @@
 
 Represents the context for an HTTP request to the OpenFGA API. This interface encapsulates all the essential components needed to construct and execute HTTP requests to the OpenFGA service. It provides a structured way to manage request metadata including HTTP method, target URL, request body, headers, and routing configurations that determine how the request is processed. The request context serves as an abstraction layer between the high-level OpenFGA operations (like authorization checks, relationship writes, etc.) and the low-level HTTP communication details. This separation enables: - Consistent request formatting across different API operations - Centralized management of authentication and headers - Flexible URL routing and API endpoint resolution - Testable and mockable HTTP communication layer Request contexts are typically created by the OpenFGA client during API operations and passed to the RequestManager for actual HTTP execution. The context includes both required elements (method, URL) and optional elements (body, custom headers) that may vary depending on the specific API operation being performed.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getBody()`](#getbody)
+    * [`getHeaders()`](#getheaders)
+    * [`getMethod()`](#getmethod)
+    * [`getUrl()`](#geturl)
+* [Other](#other)
+    * [`useApiUrl()`](#useapiurl)
+
 ## Namespace
 
 `OpenFGA\Network`

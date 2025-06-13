@@ -2,6 +2,19 @@
 
 Interface for reading test assertions from an authorization model. This interface defines the contract for requests that retrieve test assertions associated with a specific authorization model. Assertions are automated tests that verify authorization model behavior by checking specific permission scenarios against expected outcomes. Reading assertions is essential for: - **Test Execution**: Running automated tests to verify model behavior - **Model Validation**: Ensuring authorization logic works as expected - **Debugging**: Understanding test scenarios when troubleshooting issues - **Documentation**: Reviewing examples of how permissions should work - **Continuous Integration**: Automating authorization model testing - **Regression Testing**: Verifying that model changes don&#039;t break existing behavior The retrieved assertions include the test scenarios, expected outcomes, and any contextual data needed to execute the tests. This provides a complete test suite that can be run to validate the authorization model&#039;s correctness.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

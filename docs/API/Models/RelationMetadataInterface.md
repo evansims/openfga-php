@@ -2,6 +2,21 @@
 
 Represents metadata associated with a relation in OpenFGA authorization models. Relation metadata provides additional context and constraints for relations defined in type definitions. This metadata helps with: - Type safety by defining which user types can be directly related - Development tooling by providing source file information - Model organization through module names - Validation and error reporting The metadata is particularly important for: - Ensuring that only appropriate user types can be assigned to relations - Providing helpful error messages when model validation fails - Supporting development tools that work with authorization models - Organizing complex models across multiple modules or files
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
+    * [`getModule()`](#getmodule)
+    * [`getSourceInfo()`](#getsourceinfo)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

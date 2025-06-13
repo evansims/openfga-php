@@ -2,6 +2,17 @@
 
 HTTP implementation of assertion repository for OpenFGA API communication. This repository handles assertion operations by communicating with the OpenFGA HTTP API. It transforms business operations into HTTP requests and responses, handling serialization, deserialization, and error management.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`read()`](#read)
+    * [`write()`](#write)
+
 ## Namespace
 
 `OpenFGA\Repositories`

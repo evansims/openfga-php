@@ -2,6 +2,27 @@
 
 Event fired when a high-level operation starts. This event tracks business operations like check, expand, writeTuples, etc.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContext()`](#getcontext)
+    * [`getEventId()`](#geteventid)
+    * [`getEventType()`](#geteventtype)
+    * [`getModelId()`](#getmodelid)
+    * [`getOccurredAt()`](#getoccurredat)
+    * [`getOperation()`](#getoperation)
+    * [`getPayload()`](#getpayload)
+    * [`getStoreId()`](#getstoreid)
+* [Utility](#utility)
+    * [`isPropagationStopped()`](#ispropagationstopped)
+* [Other](#other)
+    * [`stopPropagation()`](#stoppropagation)
+
 ## Namespace
 
 `OpenFGA\Events`

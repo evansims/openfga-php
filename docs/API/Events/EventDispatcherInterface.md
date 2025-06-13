@@ -2,6 +2,22 @@
 
 Event dispatcher interface for handling domain events. The event dispatcher decouples event publishers from subscribers, allowing for flexible event handling and observability without tight coupling between business logic and infrastructure concerns.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`removeListeners()`](#removelisteners)
+* [List Operations](#list-operations)
+    * [`addListener()`](#addlistener)
+    * [`getListeners()`](#getlisteners)
+    * [`hasListeners()`](#haslisteners)
+* [Utility](#utility)
+    * [`dispatch()`](#dispatch)
+
 ## Namespace
 
 `OpenFGA\Events`

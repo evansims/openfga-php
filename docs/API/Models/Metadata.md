@@ -2,6 +2,24 @@
 
 Contains metadata information about type definitions in your authorization model. Metadata provides additional context about how your authorization types behave, including module information, relation constraints, and source details. This information helps with model validation, debugging, and understanding the structure of your authorization system. Use this when you need insights into the properties and constraints of your authorization model&#039;s type definitions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModule()`](#getmodule)
+    * [`getRelations()`](#getrelations)
+    * [`getSourceInfo()`](#getsourceinfo)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

@@ -2,6 +2,20 @@
 
 HTTP request methods supported by the OpenFGA API. This enum defines the specific HTTP methods used for communicating with the OpenFGA service, following standard HTTP semantics for different types of operations. Each method corresponds to specific types of API operations based on their intended semantic meaning and expected behavior. The OpenFGA API uses different HTTP methods to indicate the nature of the operation being performed, following RESTful principles: - GET for retrieving data without side effects - POST for creating resources or performing operations with side effects - PUT for updating or replacing existing resources - DELETE for removing resources from the system Using the appropriate HTTP method ensures proper caching behavior, idempotency characteristics, and compatibility with HTTP infrastructure components like proxies, load balancers, and CDNs.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [Utility](#utility)
+    * [`hasRequestBody()`](#hasrequestbody)
+    * [`isIdempotent()`](#isidempotent)
+    * [`isSafe()`](#issafe)
+
 ## Namespace
 
 `OpenFGA\Network`

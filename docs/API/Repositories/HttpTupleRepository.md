@@ -2,6 +2,21 @@
 
 HTTP implementation of the tuple repository. This repository handles tuple operations via HTTP requests to the OpenFGA API. It converts domain objects to API requests, sends them via the HTTP service, and transforms responses back to domain objects. Supports both transactional and non-transactional tuple operations with proper error handling.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`delete()`](#delete)
+    * [`read()`](#read)
+    * [`write()`](#write)
+    * [`writeAndDelete()`](#writeanddelete)
+* [List Operations](#list-operations)
+    * [`listChanges()`](#listchanges)
+
 ## Namespace
 
 `OpenFGA\Repositories`

@@ -2,6 +2,41 @@
 
 OpenFGA Client Interface for relationship-based access control operations. This interface defines the complete API for interacting with OpenFGA services, providing methods for managing stores, authorization models, relationship tuples, and performing authorization checks. The client implements the Result pattern, returning Success or Failure objects instead of throwing exceptions. All operations support OpenFGA&#039;s core concepts including stores for data isolation, authorization models for defining permission structures, and relationship tuples for expressing user-object relationships.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`batchCheck()`](#batchcheck)
+    * [`check()`](#check)
+    * [`expand()`](#expand)
+* [CRUD Operations](#crud-operations)
+    * [`createAuthorizationModel()`](#createauthorizationmodel)
+    * [`createStore()`](#createstore)
+    * [`deleteStore()`](#deletestore)
+    * [`readAssertions()`](#readassertions)
+    * [`readTuples()`](#readtuples)
+    * [`writeAssertions()`](#writeassertions)
+    * [`writeTuples()`](#writetuples)
+* [List Operations](#list-operations)
+    * [`getAuthorizationModel()`](#getauthorizationmodel)
+    * [`getLastRequest()`](#getlastrequest)
+    * [`getLastResponse()`](#getlastresponse)
+    * [`getStore()`](#getstore)
+    * [`listAuthorizationModels()`](#listauthorizationmodels)
+    * [`listObjects()`](#listobjects)
+    * [`listStores()`](#liststores)
+    * [`listTupleChanges()`](#listtuplechanges)
+    * [`listUsers()`](#listusers)
+    * [`streamedListObjects()`](#streamedlistobjects)
+* [Utility](#utility)
+    * [`assertLastRequest()`](#assertlastrequest)
+* [Other](#other)
+    * [`dsl()`](#dsl)
+
 ## Namespace
 
 `OpenFGA`

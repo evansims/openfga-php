@@ -2,6 +2,21 @@
 
 Response containing a specific authorization model from the store. This response provides the complete authorization model including type definitions, relationships, and conditions. Use this to retrieve and examine the authorization schema that defines how permissions work in your application.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModel()`](#getmodel)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

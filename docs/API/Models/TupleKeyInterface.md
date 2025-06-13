@@ -2,6 +2,22 @@
 
 Represents a tuple key that defines the components of a relationship in OpenFGA. Tuple keys are the core data structure that defines relationships in the OpenFGA authorization system. They specify the essential components that together describe an authorization relationship: who (user), what (relation), and where (object), with optional conditional logic (condition). The tuple key structure follows the pattern: - **User**: The subject of the relationship (who has the permission) - **Relation**: The type of permission or relationship being defined - **Object**: The resource or entity the permission applies to - **Condition**: Optional runtime constraints that must be satisfied Examples of tuple keys: - `user:alice` has `editor` relation to `document:readme` - `group:engineering` has `member` relation to `user:bob` - `user:contractor` has `read` relation to `file:confidential` when `time_constraint` is met Tuple keys are used throughout OpenFGA operations: - Writing relationships (creating authorization facts) - Reading relationships (querying existing permissions) - Authorization checks (evaluating access requests) - Relationship expansion (understanding permission inheritance) The flexible tuple key design enables OpenFGA to represent complex authorization patterns while maintaining efficient query performance and clear relationship semantics.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getCondition()`](#getcondition)
+    * [`getObject()`](#getobject)
+    * [`getRelation()`](#getrelation)
+    * [`getUser()`](#getuser)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

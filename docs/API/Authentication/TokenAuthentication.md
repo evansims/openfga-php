@@ -2,6 +2,21 @@
 
 Token-based authentication strategy for OpenFGA client. This authentication strategy uses a pre-shared token (such as a Bearer token or API key) for authentication with the OpenFGA API. The token is provided during construction and used as-is for all requests. This strategy is suitable for scenarios where you have a long-lived token or when implementing custom token refresh logic externally. The strategy accepts either a string token or an AccessTokenInterface instance for maximum flexibility.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAuthenticationRequest()`](#getauthenticationrequest)
+    * [`getAuthorizationHeader()`](#getauthorizationheader)
+    * [`getToken()`](#gettoken)
+* [Other](#other)
+    * [`handleAuthenticationResponse()`](#handleauthenticationresponse)
+    * [`requiresAuthentication()`](#requiresauthentication)
+
 ## Namespace
 
 `OpenFGA\Authentication`

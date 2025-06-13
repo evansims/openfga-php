@@ -3,6 +3,46 @@
 {% if classDescription %}{{ classDescription }}
 {% endif %}
 
+## Table of Contents
+
+* [Namespace](#namespace)
+{% if sourceFile is defined and sourceFile is not empty %}
+* [Source](#source)
+{% endif %}
+{% if interfaces is not empty %}
+* [Implements](#implements)
+{% endif %}
+{% if relatedClasses is defined and relatedClasses|length > 0 %}
+* [Related Classes](#related-classes)
+{% endif %}
+{% if constants is defined and constants|length > 0 %}
+* [Constants](#constants)
+{% endif %}
+{% if isEnum and cases is not empty %}
+* [Cases](#cases)
+{% endif %}
+{% if translations is defined and translations is not empty %}
+* [Translation Tables](#translation-tables)
+{% endif %}
+{% if methods is not empty %}
+* [Methods](#methods)
+
+{% set categorized = {} %}
+{% for method in methods %}
+  {% set category = method.category|default('Other') %}
+  {% if categorized[category] is not defined %}
+    {% set categorized = categorized|merge({(category): []}) %}
+  {% endif %}
+  {% set categorized = categorized|merge({(category): categorized[category]|merge([method])}) %}
+{% endfor %}
+{% for category, categoryMethods in categorized %}
+* [{{ category }}](#{{ category|lower|replace({' ': '-'}) }})
+{% for method in categoryMethods %}
+    * [`{{ method.name }}()`](#{{ method.name|lower }})
+{% endfor %}
+{% endfor %}
+{% endif %}
+
 ## Namespace
 `{{ namespace }}`
 

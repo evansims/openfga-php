@@ -2,6 +2,23 @@
 
 Represents a node in a userset tree structure. Nodes are fundamental building blocks in OpenFGA&#039;s authorization model that represent different types of relationships and operations within the access control evaluation tree.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getDifference()`](#getdifference)
+    * [`getIntersection()`](#getintersection)
+    * [`getLeaf()`](#getleaf)
+    * [`getName()`](#getname)
+    * [`getUnion()`](#getunion)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

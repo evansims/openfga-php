@@ -2,6 +2,22 @@
 
 Response containing a paginated list of available stores. This response provides access to stores that the authenticated user or application can access, with pagination support for handling large numbers of stores. Each store includes its ID, name, and creation metadata.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getStores()`](#getstores)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

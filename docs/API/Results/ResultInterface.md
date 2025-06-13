@@ -2,6 +2,25 @@
 
 Represents the result of an operation that can either succeed or fail. The Result pattern provides a safe and composable way to handle operations that might fail without using exceptions for control flow. Results can be chained together using fluent methods, making error handling explicit and predictable. ## Working with Result Types Each Result contains either a success value (specific response interface) or a failure error (Throwable). The specific types are documented in each method&#039;s @return annotation. ## Common Usage Patterns ### Simple Value Extraction ```php $result = $client-&gt;check($store, $model, $tupleKey); if ($result-&gt;succeeded()) { $response = $result-&gt;val(); // Returns CheckResponseInterface $allowed = $response-&gt;getAllowed(); } ``` ### Fluent Error Handling ```php $allowed = $client-&gt;check($store, $model, $tupleKey) -&gt;success(fn($response) =&gt; logger()-&gt;info(&#039;Check succeeded&#039;)) -&gt;failure(fn($error) =&gt; logger()-&gt;error(&#039;Check failed: &#039; . $error-&gt;getMessage())) -&gt;then(fn($response) =&gt; $response-&gt;getAllowed()) -&gt;recover(fn($error) =&gt; false) // Default to not allowed on error -&gt;unwrap(); ``` ### Safe Unwrapping with Default Values ```php $store = $client-&gt;getStore($storeId) -&gt;unwrap(fn($result) =&gt; $result instanceof StoreInterface ? $result : null); ``` ### Transforming Results ```php $storeNames = $client-&gt;listStores() -&gt;then(fn($response) =&gt; array_map( fn($store) =&gt; $store-&gt;getName(), $response-&gt;getStores()-&gt;toArray() )) -&gt;unwrap(); ```
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`err()`](#err)
+    * [`failed()`](#failed)
+    * [`failure()`](#failure)
+    * [`recover()`](#recover)
+    * [`rethrow()`](#rethrow)
+    * [`succeeded()`](#succeeded)
+    * [`success()`](#success)
+    * [`then()`](#then)
+    * [`unwrap()`](#unwrap)
+    * [`val()`](#val)
+
 ## Namespace
 
 `OpenFGA\Results`

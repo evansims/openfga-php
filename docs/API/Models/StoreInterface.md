@@ -2,6 +2,24 @@
 
 Represents an OpenFGA store that contains authorization models and relationship tuples. A store is a logical container for all authorization data in OpenFGA, serving as the fundamental organizational unit for authorization systems. Each store contains: - Authorization models that define the permission structure for your application - Relationship tuples that establish actual relationships between users and resources - Configuration and metadata for authorization behavior Stores provide complete isolation between different authorization contexts, making them ideal for multi-tenant applications where different customers, organizations, or environments need separate authorization domains. Each store operates independently with its own set of models, tuples, and access patterns. The store lifecycle includes creation, updates, and optional soft deletion, with comprehensive timestamp tracking for audit and debugging purposes. Stores can be managed through the OpenFGA management API and serve as the target for all authorization queries and relationship operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getCreatedAt()`](#getcreatedat)
+    * [`getDeletedAt()`](#getdeletedat)
+    * [`getUpdatedAt()`](#getupdatedat)
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getName()`](#getname)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

@@ -2,6 +2,23 @@
 
 Represents a specific user object with type and identifier. A UserObject provides a structured way to represent users in your authorization system with both a type (like &quot;user,&quot; &quot;service,&quot; &quot;bot&quot;) and a unique identifier. This allows for clear categorization of different kinds of entities that can have permissions in your system. Use this when you need to represent users in a structured format rather than simple string identifiers.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getType()`](#gettype)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

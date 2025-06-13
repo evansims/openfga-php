@@ -2,6 +2,18 @@
 
 Interface for authorization models listing response objects. This interface defines the contract for responses returned when listing authorization models from an OpenFGA store. The response includes a collection of authorization models and pagination support for handling large numbers of models efficiently. Authorization model listing is useful for administrative operations, model versioning management, and allowing users to select from available model versions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getModels()`](#getmodels)
+
 ## Namespace
 
 `OpenFGA\Responses`

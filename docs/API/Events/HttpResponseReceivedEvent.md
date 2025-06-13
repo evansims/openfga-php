@@ -2,6 +2,30 @@
 
 Event fired when an HTTP response is received from the OpenFGA API. This event contains both the request and response for complete telemetry tracking.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getEventId()`](#geteventid)
+    * [`getEventType()`](#geteventtype)
+    * [`getException()`](#getexception)
+    * [`getModelId()`](#getmodelid)
+    * [`getOccurredAt()`](#getoccurredat)
+    * [`getOperation()`](#getoperation)
+    * [`getPayload()`](#getpayload)
+    * [`getRequest()`](#getrequest)
+    * [`getResponse()`](#getresponse)
+    * [`getStoreId()`](#getstoreid)
+* [Utility](#utility)
+    * [`isPropagationStopped()`](#ispropagationstopped)
+    * [`isSuccessful()`](#issuccessful)
+* [Other](#other)
+    * [`stopPropagation()`](#stoppropagation)
+
 ## Namespace
 
 `OpenFGA\Events`

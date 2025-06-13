@@ -2,6 +2,29 @@
 
 Interface for writing relationship tuples to an OpenFGA store. This interface defines the contract for requests that modify relationship data in OpenFGA stores. It supports both adding new relationships (writes) and removing existing relationships (deletes) in a single atomic operation. Write operations are transactional, meaning either all changes succeed or all changes are rolled back. This ensures data consistency when making multiple related changes to the authorization graph. The request allows you to: - Add new relationship tuples to establish permissions - Remove existing relationship tuples to revoke permissions - Perform both operations atomically in a single request - Specify which authorization model version to use for validation
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getDeletes()`](#getdeletes)
+    * [`getWrites()`](#getwrites)
+* [List Operations](#list-operations)
+    * [`getMaxParallelRequests()`](#getmaxparallelrequests)
+    * [`getMaxRetries()`](#getmaxretries)
+    * [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getRetryDelaySeconds()`](#getretrydelayseconds)
+    * [`getStopOnFirstError()`](#getstoponfirsterror)
+    * [`getStore()`](#getstore)
+* [Utility](#utility)
+    * [`isTransactional()`](#istransactional)
+
 ## Namespace
 
 `OpenFGA\Requests`

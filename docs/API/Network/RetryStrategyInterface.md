@@ -2,6 +2,19 @@
 
 Interface for implementing retry strategies. This interface defines the contract for different retry strategies that can be used when operations fail. Implementations can provide various retry algorithms such as exponential backoff, linear retry, or custom strategies based on specific requirements.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRetryDelay()`](#getretrydelay)
+* [Utility](#utility)
+    * [`isRetryable()`](#isretryable)
+* [Other](#other)
+    * [`execute()`](#execute)
+
 ## Namespace
 
 `OpenFGA\Network`

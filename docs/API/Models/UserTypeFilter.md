@@ -2,6 +2,23 @@
 
 Represents a filter for limiting users by type and optional relation. UserTypeFilter allows you to constrain authorization queries to specific user types, optionally including only users that have a particular relation. This is useful for filtering results when listing users or performing authorization checks on specific user categories. Use this when you need to limit authorization operations to specific types of users in your system.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRelation()`](#getrelation)
+    * [`getType()`](#gettype)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

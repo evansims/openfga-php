@@ -2,6 +2,20 @@
 
 Defines a tuple-to-userset operation node in authorization evaluation trees. UsersetTreeTupleToUserset represents a node in the userset evaluation tree that resolves users through tuple-to-userset mappings. This enables complex authorization patterns where access is determined by following relationships from one object to usersets on related objects. Use this interface when working with authorization evaluation trees that contain tuple-to-userset operations, typically returned from expand operations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getComputed()`](#getcomputed)
+    * [`getTupleset()`](#gettupleset)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

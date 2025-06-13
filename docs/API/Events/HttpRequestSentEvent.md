@@ -2,6 +2,27 @@
 
 Event fired when an HTTP request is sent to the OpenFGA API. This event contains the outgoing request details for telemetry and debugging.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getEventId()`](#geteventid)
+    * [`getEventType()`](#geteventtype)
+    * [`getModelId()`](#getmodelid)
+    * [`getOccurredAt()`](#getoccurredat)
+    * [`getOperation()`](#getoperation)
+    * [`getPayload()`](#getpayload)
+    * [`getRequest()`](#getrequest)
+    * [`getStoreId()`](#getstoreid)
+* [Utility](#utility)
+    * [`isPropagationStopped()`](#ispropagationstopped)
+* [Other](#other)
+    * [`stopPropagation()`](#stoppropagation)
+
 ## Namespace
 
 `OpenFGA\Events`

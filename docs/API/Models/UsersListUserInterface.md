@@ -2,6 +2,19 @@
 
 Represents a user in a list context for authorization operations. UsersListUser provides a simple wrapper around user identifiers, ensuring they conform to the expected format and can be properly serialized for API operations. This is commonly used in list operations where user identifiers need to be processed in bulk. Use this interface when working with lists of users in authorization contexts, such as batch operations or user enumeration.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getUser()`](#getuser)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

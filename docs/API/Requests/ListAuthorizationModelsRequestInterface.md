@@ -2,6 +2,20 @@
 
 Interface for listing authorization models in a store. This interface defines the contract for requests that retrieve a paginated list of all authorization model versions within a specific OpenFGA store. Authorization models are versioned, and this operation allows you to browse through the evolution of your authorization schema over time. Listing authorization models is useful for: - Administrative interfaces showing model version history - Implementing model rollback and comparison functionality - Auditing changes to authorization schemas over time - Building deployment and migration tools for authorization models - Understanding the evolution of permission structures - Debugging authorization issues by examining model versions Each model in the list includes metadata such as creation time and model ID, allowing you to understand when changes were made and select specific versions for detailed inspection or operational use.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

@@ -2,6 +2,40 @@
 
 Collection interface for OpenFGA type definition objects. This interface defines a collection that holds type definition objects which specify the object types, their relations, and metadata within an authorization model. Type definitions form the core schema that defines how different object types relate to each other in the system.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`offsetGet()`](#offsetget)
+* [Utility](#utility)
+    * [`isEmpty()`](#isempty)
+    * [`offsetExists()`](#offsetexists)
+    * [`offsetSet()`](#offsetset)
+    * [`offsetUnset()`](#offsetunset)
+* [Other](#other)
+    * [`add()`](#add)
+    * [`clear()`](#clear)
+    * [`count()`](#count)
+    * [`current()`](#current)
+    * [`every()`](#every)
+    * [`filter()`](#filter)
+    * [`first()`](#first)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`key()`](#key)
+    * [`next()`](#next)
+    * [`reduce()`](#reduce)
+    * [`rewind()`](#rewind)
+    * [`some()`](#some)
+    * [`toArray()`](#toarray)
+    * [`valid()`](#valid)
+    * [`withItems()`](#withitems)
+
 ## Namespace
 
 `OpenFGA\Models\Collections`

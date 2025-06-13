@@ -2,6 +2,22 @@
 
 Authentication error types for the OpenFGA SDK. Defines specific authentication failure scenarios that can occur when interacting with the OpenFGA API, such as expired or invalid tokens. Each case provides a factory method to create the corresponding AuthenticationException with appropriate context. Authentication errors typically occur during the OAuth 2.0 flow or when using access tokens with OpenFGA API requests. These errors indicate that the provided credentials are no longer valid or were never valid, requiring token refresh or re-authentication.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getUserMessage()`](#getusermessage)
+* [Utility](#utility)
+    * [`isTokenRefreshable()`](#istokenrefreshable)
+* [Other](#other)
+    * [`exception()`](#exception)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

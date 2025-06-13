@@ -2,6 +2,20 @@
 
 Represents a filter for limiting users by their relationships to specific object types. User type filters are used in queries to narrow down the set of users based on their relationships to objects of particular types. This is particularly useful when you want to find users who have specific permissions or roles related to certain categories of resources. The filter can specify: - A required object type that users must be related to - An optional relation that further constrains the relationship type Examples: - Find all users related to &quot;document&quot; objects - Find all users who are &quot;viewers&quot; of &quot;folder&quot; objects - Find all users who are &quot;members&quot; of &quot;organization&quot; objects
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRelation()`](#getrelation)
+    * [`getType()`](#gettype)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

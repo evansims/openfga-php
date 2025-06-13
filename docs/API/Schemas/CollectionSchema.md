@@ -2,6 +2,23 @@
 
 Schema definition specifically for validating and transforming collection data structures. This specialized schema handles arrays of objects, providing validation rules for collections while ensuring each item conforms to the specified item type. It supports wrapper keys for nested collection data and optional item requirements.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getClassName()`](#getclassname)
+    * [`getItemType()`](#getitemtype)
+    * [`getProperties()`](#getproperties)
+    * [`getProperty()`](#getproperty)
+    * [`getWrapperKey()`](#getwrapperkey)
+* [Other](#other)
+    * [`requiresItems()`](#requiresitems)
+
 ## Namespace
 
 `OpenFGA\Schemas`

@@ -2,6 +2,22 @@
 
 Interface for listing historical changes to relationship tuples. This interface defines the contract for requests that query the change history of relationship tuples within an OpenFGA store. It provides a chronological audit trail of all tuple modifications, including writes and deletes, allowing you to track how relationships have evolved over time. Tuple change history is essential for: - **Auditing**: Track who made changes and when for compliance - **Debugging**: Understand how authorization state reached its current condition - **Synchronization**: Keep external systems in sync with authorization changes - **Analytics**: Analyze access patterns and permission trends over time - **Rollback**: Understand what changes need to be reversed The operation supports: - Time-based filtering to focus on specific periods - Object type filtering to track changes for specific resource types - Pagination for handling large change histories efficiently - Chronological ordering to understand the sequence of changes Each change entry includes the tuple that was modified, the type of operation (write or delete), and the timestamp when the change occurred.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getPageSize()`](#getpagesize)
+    * [`getRequest()`](#getrequest)
+    * [`getStartTime()`](#getstarttime)
+    * [`getStore()`](#getstore)
+    * [`getType()`](#gettype)
+
 ## Namespace
 
 `OpenFGA\Requests`

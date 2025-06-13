@@ -2,6 +2,25 @@
 
 Tests whether your authorization model behaves correctly for specific scenarios. Assertions are test cases that verify your authorization rules work as expected. Each assertion checks if a specific authorization question (like &quot;can user:anne read document:budget&quot;) returns the expected result (true for granted, false for denied). Use assertions to validate your authorization model during development and catch permission logic errors before they reach production. They&#039;re especially valuable when making changes to complex authorization rules.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Constants](#constants)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getExpectation()`](#getexpectation)
+    * [`getTupleKey()`](#gettuplekey)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

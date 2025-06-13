@@ -2,6 +2,20 @@
 
 Repository contract for relationship tuple operations. This interface defines the contract for managing relationship tuples within an OpenFGA store. Tuples represent relationships between users and objects (for example &quot;user:anne is reader of document:budget&quot;), forming the core data that drives authorization decisions. The repository supports both transactional and non-transactional operations for different scale and consistency requirements. All methods return Result objects following the Result pattern, allowing for consistent error handling without exceptions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`delete()`](#delete)
+    * [`read()`](#read)
+    * [`write()`](#write)
+    * [`writeAndDelete()`](#writeanddelete)
+* [List Operations](#list-operations)
+    * [`listChanges()`](#listchanges)
+
 ## Namespace
 
 `OpenFGA\Repositories`

@@ -2,6 +2,36 @@
 
 Collection implementation for OpenFGA relation metadata objects. This class provides a concrete implementation for managing keyed collections of relation metadata objects. Relation metadata provides additional context about relations defined in authorization model type definitions, including module information and source file details. The collection uses relation names as keys, enabling efficient retrieval of metadata for specific relations within a type definition.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`offsetGet()`](#offsetget)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Utility](#utility)
+    * [`has()`](#has)
+    * [`isEmpty()`](#isempty)
+    * [`offsetExists()`](#offsetexists)
+    * [`offsetSet()`](#offsetset)
+    * [`offsetUnset()`](#offsetunset)
+* [Other](#other)
+    * [`add()`](#add)
+    * [`count()`](#count)
+    * [`current()`](#current)
+    * [`jsonSerialize()`](#jsonserialize)
+    * [`key()`](#key)
+    * [`next()`](#next)
+    * [`rewind()`](#rewind)
+    * [`toArray()`](#toarray)
+    * [`valid()`](#valid)
+
 ## Namespace
 
 `OpenFGA\Models\Collections`

@@ -2,6 +2,25 @@
 
 Concrete implementation of HTTP request management for OpenFGA API communication. This class provides the core HTTP communication layer for the OpenFGA SDK, handling all aspects of request construction, execution, and response processing. It integrates with PSR-7 HTTP message interfaces and PSR-18 HTTP clients to provide a flexible, testable HTTP transport layer. The RequestManager manages: - PSR-17 factory auto-discovery and configuration - HTTP client configuration and request execution - Authentication header management - Request URL construction and routing - Error response parsing and exception handling - User-Agent header management for SDK identification The implementation uses lazy initialization for PSR components, automatically discovering suitable implementations when not explicitly provided. This ensures compatibility with a wide range of HTTP libraries while maintaining optimal performance.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getHttpClient()`](#gethttpclient)
+    * [`getHttpRequestFactory()`](#gethttprequestfactory)
+    * [`getHttpResponseFactory()`](#gethttpresponsefactory)
+    * [`getHttpStreamFactory()`](#gethttpstreamfactory)
+* [Other](#other)
+    * [`executeParallel()`](#executeparallel)
+    * [`handleResponseException()`](#handleresponseexception)
+    * [`request()`](#request)
+    * [`send()`](#send)
+
 ## Namespace
 
 `OpenFGA\Network`

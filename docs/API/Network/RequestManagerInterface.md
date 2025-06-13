@@ -2,6 +2,22 @@
 
 Manages HTTP requests and responses for OpenFGA API communication. This interface defines the core HTTP communication layer for the OpenFGA SDK, responsible for translating high-level API operations into HTTP requests and processing the responses. It handles all aspects of HTTP communication including request construction, authentication, error handling, and response processing. The RequestManager serves as the bridge between the OpenFGA client&#039;s domain-specific operations and the underlying HTTP transport layer. It abstracts away the complexities of HTTP communication while providing a clean, testable interface for API interactions. Key responsibilities include: - Converting OpenFGA requests to PSR-7 HTTP requests - Managing HTTP client configuration and PSR component integration - Handling authentication headers and API credentials - Executing HTTP requests with retry logic and timeout management - Processing HTTP responses and converting errors to appropriate exceptions - Providing comprehensive error context for debugging and monitoring The implementation uses PSR-7 HTTP message interfaces for maximum compatibility with existing PHP HTTP ecosystems and follows PSR-18 HTTP client standards for pluggable HTTP transport implementations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getHttpClient()`](#gethttpclient)
+    * [`getHttpRequestFactory()`](#gethttprequestfactory)
+    * [`getHttpResponseFactory()`](#gethttpresponsefactory)
+    * [`getHttpStreamFactory()`](#gethttpstreamfactory)
+* [Other](#other)
+    * [`request()`](#request)
+    * [`send()`](#send)
+
 ## Namespace
 
 `OpenFGA\Network`

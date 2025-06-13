@@ -2,6 +2,22 @@
 
 Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexible entities that can represent various types of subjects in authorization relationships. The user concept extends beyond individual people to include groups, roles, services, or any entity that can be granted permissions. OpenFGA supports multiple user representation patterns to accommodate complex authorization scenarios: Direct User Objects**: Simple user identifiers in &quot;type:id&quot; format, such as &quot;user:alice&quot; or &quot;service:backup-agent.&quot; These represent concrete entities with specific identities that can be directly assigned permissions. Usersets**: Dynamic user groups defined through relationships, such as &quot;all editors of document:readme&quot; or &quot;all members of group:engineering.&quot; Usersets enable permissions that automatically adapt as relationships change. Wildcards**: Type-based user groups that match all users of a specific type, such as &quot;all users of type employee.&quot; Wildcards enable broad, organization-wide permissions without enumerating individual users. Difference Operations**: Complex user definitions that include some users while excluding others, such as &quot;all editors except contractors.&quot; This enables fine-grained access control with exception handling. This flexible user model enables OpenFGA to handle sophisticated authorization patterns while maintaining performance and simplicity in common use cases.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getDifference()`](#getdifference)
+    * [`getObject()`](#getobject)
+    * [`getUserset()`](#getuserset)
+    * [`getWildcard()`](#getwildcard)
+* [Other](#other)
+    * [`jsonSerialize()`](#jsonserialize)
+
 ## Namespace
 
 `OpenFGA\Models`

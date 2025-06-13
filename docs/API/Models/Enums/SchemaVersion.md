@@ -2,6 +2,24 @@
 
 OpenFGA authorization model schema versions. This enum defines the supported schema versions for authorization models in OpenFGA, ensuring compatibility between client libraries and the OpenFGA service. Each schema version represents a specific format and feature set for authorization models, with newer versions introducing enhanced capabilities while maintaining backward compatibility wherever possible. Schema versioning enables: - Gradual migration between OpenFGA versions - Feature availability validation - Compatibility checking between clients and servers - Forward and backward compatibility planning When creating authorization models, choose the appropriate schema version based on the features you need and the OpenFGA service version you&#039;re targeting. Newer schema versions provide access to the latest OpenFGA capabilities but may require minimum service versions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getNumericVersion()`](#getnumericversion)
+* [Utility](#utility)
+    * [`isLatest()`](#islatest)
+    * [`isLegacy()`](#islegacy)
+* [Other](#other)
+    * [`compareTo()`](#compareto)
+    * [`supportsConditions()`](#supportsconditions)
+
 ## Namespace
 
 `OpenFGA\Models\Enums`

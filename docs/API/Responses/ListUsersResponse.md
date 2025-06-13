@@ -2,6 +2,21 @@
 
 Response containing a list of users that have a specific relationship with an object. This response provides a collection of users (including user objects, usersets, and typed wildcards) that have the specified relationship with the target object. Use this to discover who has access to resources in your authorization system.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getUsers()`](#getusers)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

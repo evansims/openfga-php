@@ -2,6 +2,22 @@
 
 Configuration error types for the OpenFGA SDK. Defines specific configuration-related failures that can occur when setting up or using the SDK, typically related to missing required PSR HTTP components or invalid configuration parameters. Each case provides a factory method to create the corresponding ConfigurationException. Configuration errors usually occur during SDK initialization when required dependencies are missing or improperly configured. These errors indicate that the SDK cannot operate properly due to missing PSR-7/PSR-17/PSR-18 components or invalid configuration settings.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Constants](#constants)
+* [Cases](#cases)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getRequiredPsrInterface()`](#getrequiredpsrinterface)
+* [Utility](#utility)
+    * [`isHttpComponentMissing()`](#ishttpcomponentmissing)
+* [Other](#other)
+    * [`exception()`](#exception)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

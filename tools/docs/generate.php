@@ -45,6 +45,7 @@ class DocumentationGenerator
         $this->buildClassMap();
         $this->generateDocumentation();
         $this->generateTableOfContents();
+        $this->generateMainApiIndex();
     }
 
     private function buildClassMap(): void
@@ -1361,6 +1362,15 @@ class DocumentationGenerator
         // Remove blank lines that are just whitespace
         $content = preg_replace('/\n[ \t]+\n/', "\n\n", $content);
         
+        // Remove excessive leading whitespace from list items (fix table of contents formatting)
+        $content = preg_replace('/\n[ \t]{10,}(\* \[)/', "\n$1", $content);
+        
+        // Fix table of contents formatting - ensure blank line after Methods heading
+        $content = preg_replace('/(\* \[Methods\]\(#methods\))\n(\* \[)/', "$1\n\n$2", $content);
+        
+        // Handle additional whitespace variations in table of contents
+        $content = preg_replace('/(\* \[Methods\]\(#methods\))\n[ \t]*(\* \[)/', "$1\n\n$2", $content);
+        
         // Fix spacing issues with consecutive headers (h2 followed by h3, h4, etc.)
         $content = preg_replace('/(#{2}\s[^\n]+)\n\n\n(#{3,6}\s)/', "$1\n\n$2", $content);
         
@@ -2099,6 +2109,147 @@ class DocumentationGenerator
         }
         
         return substr($description, 0, $maxLength - 3) . '...';
+    }
+
+    /**
+     * Generate the main API documentation index page.
+     */
+    private function generateMainApiIndex(): void
+    {
+        echo "Generating main API documentation index...\n";
+        
+        // Build a complete component index grouped by type
+        $componentIndex = [
+            'interfaces' => [],
+            'classes' => [],
+            'enums' => []
+        ];
+        
+        foreach ($this->classMap as $className => $_) {
+            try {
+                $reflection = new ReflectionClass($className);
+                
+                // Skip abstract classes that are not interfaces or enums
+                if ($reflection->isAbstract() && !$reflection->isInterface() && !$reflection->isEnum()) {
+                    continue;
+                }
+                
+                $componentInfo = [
+                    'name' => $reflection->getShortName(),
+                    'fullName' => $className,
+                    'namespace' => $reflection->getNamespaceName(),
+                    'description' => $this->truncateDescription(
+                        $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
+                        120
+                    ),
+                    'link' => $this->getComponentLink($className)
+                ];
+                
+                if ($reflection->isInterface()) {
+                    $componentIndex['interfaces'][] = $componentInfo;
+                } elseif ($reflection->isEnum()) {
+                    $componentIndex['enums'][] = $componentInfo;
+                } else {
+                    $componentIndex['classes'][] = $componentInfo;
+                }
+                
+            } catch (\Exception $e) {
+                echo "Error processing $className for API index: " . $e->getMessage() . "\n";
+            }
+        }
+        
+        // Sort each category by name
+        foreach ($componentIndex as &$category) {
+            usort($category, function($a, $b) {
+                return strcmp($a['name'], $b['name']);
+            });
+        }
+        
+        // Generate the component index table
+        $allComponents = $this->generateComponentIndexTable($componentIndex);
+        
+        // Render the main API index
+        $content = $this->twig->render('api-toc.twig', [
+            'allComponents' => $allComponents,
+            'generatedDate' => date('Y-m-d H:i:s')
+        ]);
+        
+        // Clean up markdown
+        $content = $this->cleanupMarkdown($content);
+        
+        // Write the main index file
+        $indexPath = $this->outputDir . '/API-Index.md';
+        file_put_contents($indexPath, $content);
+        
+        echo "Main API documentation index generated at: $indexPath\n";
+    }
+    
+    /**
+     * Generate a markdown table for all components.
+     */
+    private function generateComponentIndexTable(array $componentIndex): string
+    {
+        $markdown = [];
+        
+        // Interfaces section
+        if (!empty($componentIndex['interfaces'])) {
+            $markdown[] = "### All Interfaces";
+            $markdown[] = "";
+            $markdown[] = "| Interface | Namespace | Description |";
+            $markdown[] = "|-----------|-----------|-------------|";
+            
+            foreach ($componentIndex['interfaces'] as $component) {
+                $link = "[`{$component['name']}`]({$component['link']})";
+                $namespace = str_replace('OpenFGA\\', '', $component['namespace']);
+                $markdown[] = "| $link | `$namespace` | {$component['description']} |";
+            }
+            
+            $markdown[] = "";
+        }
+        
+        // Classes section
+        if (!empty($componentIndex['classes'])) {
+            $markdown[] = "### All Classes";
+            $markdown[] = "";
+            $markdown[] = "| Class | Namespace | Description |";
+            $markdown[] = "|-------|-----------|-------------|";
+            
+            foreach ($componentIndex['classes'] as $component) {
+                $link = "[`{$component['name']}`]({$component['link']})";
+                $namespace = str_replace('OpenFGA\\', '', $component['namespace']);
+                $markdown[] = "| $link | `$namespace` | {$component['description']} |";
+            }
+            
+            $markdown[] = "";
+        }
+        
+        // Enums section
+        if (!empty($componentIndex['enums'])) {
+            $markdown[] = "### All Enumerations";
+            $markdown[] = "";
+            $markdown[] = "| Enum | Namespace | Description |";
+            $markdown[] = "|------|-----------|-------------|";
+            
+            foreach ($componentIndex['enums'] as $component) {
+                $link = "[`{$component['name']}`]({$component['link']})";
+                $namespace = str_replace('OpenFGA\\', '', $component['namespace']);
+                $markdown[] = "| $link | `$namespace` | {$component['description']} |";
+            }
+            
+            $markdown[] = "";
+        }
+        
+        return implode("\n", $markdown);
+    }
+    
+    /**
+     * Get the relative link path for a component.
+     */
+    private function getComponentLink(string $className): string
+    {
+        $path = str_replace('OpenFGA\\', '', $className);
+        $path = str_replace('\\', '/', $path);
+        return "./$path.md";
     }
 
     public static function deleteDir(string $dir): void

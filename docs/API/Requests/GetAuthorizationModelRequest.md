@@ -2,6 +2,19 @@
 
 Request for retrieving a specific authorization model by its ID. This request fetches the complete definition of an authorization model, including all type definitions, relations, and conditions. It&#039;s useful for inspecting model configurations, debugging, and model management.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getModel()`](#getmodel)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Requests`

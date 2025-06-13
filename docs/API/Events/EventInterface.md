@@ -2,6 +2,22 @@
 
 Base interface for all domain events. Events represent something significant that happened in the domain. They are immutable value objects that capture the facts about what occurred.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getEventId()`](#geteventid)
+    * [`getEventType()`](#geteventtype)
+    * [`getOccurredAt()`](#getoccurredat)
+    * [`getPayload()`](#getpayload)
+* [Utility](#utility)
+    * [`isPropagationStopped()`](#ispropagationstopped)
+* [Other](#other)
+    * [`stopPropagation()`](#stoppropagation)
+
 ## Namespace
 
 `OpenFGA\Events`

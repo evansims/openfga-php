@@ -2,6 +2,25 @@
 
 Translation service for OpenFGA SDK messages. This implementation provides centralized message translation with parameter substitution without external dependencies. It supports multiple locales, domain-based organization, and automatic fallback to default locale when translations are missing. The service uses a singleton pattern to maintain translation state across the application lifecycle and supports parameter substitution using %parameter% placeholder format for compatibility with existing message definitions.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getDefaultLocale()`](#getdefaultlocale)
+* [Utility](#utility)
+    * [`has()`](#has)
+    * [`reset()`](#reset)
+    * [`setDefaultLocale()`](#setdefaultlocale)
+* [Other](#other)
+    * [`addResource()`](#addresource)
+    * [`trans()`](#trans)
+    * [`transKey()`](#transkey)
+
 ## Namespace
 
 `OpenFGA\Translation`

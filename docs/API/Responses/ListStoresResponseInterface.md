@@ -2,6 +2,18 @@
 
 Interface for stores listing response objects. This interface defines the contract for responses returned when listing authorization stores in OpenFGA. The response includes a collection of stores and pagination support for handling large numbers of stores efficiently. Store listing is useful for administrative operations, allowing you to discover and manage all stores within your OpenFGA instance.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getContinuationToken()`](#getcontinuationtoken)
+    * [`getStores()`](#getstores)
+
 ## Namespace
 
 `OpenFGA\Responses`

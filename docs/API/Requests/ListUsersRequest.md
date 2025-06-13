@@ -2,6 +2,25 @@
 
 Request for listing users who have a specific relationship with an object. This request finds all users (or usersets) that have the specified relationship with a given object, filtered by user type. It&#039;s useful for building access management interfaces, member lists, and permission auditing tools.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getConsistency()`](#getconsistency)
+    * [`getContext()`](#getcontext)
+    * [`getContextualTuples()`](#getcontextualtuples)
+    * [`getModel()`](#getmodel)
+    * [`getObject()`](#getobject)
+    * [`getRelation()`](#getrelation)
+    * [`getRequest()`](#getrequest)
+    * [`getStore()`](#getstore)
+    * [`getUserFilters()`](#getuserfilters)
+
 ## Namespace
 
 `OpenFGA\Requests`

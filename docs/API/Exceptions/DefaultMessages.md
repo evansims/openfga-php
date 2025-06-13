@@ -2,6 +2,22 @@
 
 Maps exception error enums to their default message keys. This class provides the concrete implementation for mapping various error enum types to their corresponding translation message keys. It maintains comprehensive mappings for all error categories in the OpenFGA SDK, enabling consistent and translatable error messages. The class uses static arrays to maintain mappings between error enum values and message keys, providing fast lookup performance while keeping the mappings centralized and maintainable. Each error category has its own mapping array and corresponding method for type-safe access. Error categories supported: - Authentication errors: Token expiration, invalid credentials - Client errors: General validation and usage failures - Configuration errors: Missing PSR components, setup issues - Network errors: HTTP failures, timeouts, connectivity issues - Serialization errors: JSON parsing, schema validation failures
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Other](#other)
+    * [`forAuthenticationError()`](#forauthenticationerror)
+    * [`forClientError()`](#forclienterror)
+    * [`forConfigurationError()`](#forconfigurationerror)
+    * [`forError()`](#forerror)
+    * [`forNetworkError()`](#fornetworkerror)
+    * [`forSerializationError()`](#forserializationerror)
+
 ## Namespace
 
 `OpenFGA\Exceptions`

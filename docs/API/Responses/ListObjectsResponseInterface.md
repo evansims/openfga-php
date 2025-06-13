@@ -2,6 +2,17 @@
 
 Interface for object listing response objects. This interface defines the contract for responses returned when listing objects that a user has access to in OpenFGA. This is the inverse of permission checking - instead of asking &quot;can this user access this object?,&quot; it asks &quot;what objects can this user access?&quot; Object listing is particularly useful for building user interfaces that need to display only the resources a user can access, such as file listings, document repositories, or administrative dashboards.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getObjects()`](#getobjects)
+
 ## Namespace
 
 `OpenFGA\Responses`

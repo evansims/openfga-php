@@ -2,6 +2,15 @@
 
 Service provider for automatic dependency injection container registration. This class enables automatic registration of OpenFGA services in frameworks that support the tbachert/spi service provider interface pattern.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [Utility](#utility)
+    * [`register()`](#register)
+
 ## Namespace
 
 `OpenFGA\Integration`

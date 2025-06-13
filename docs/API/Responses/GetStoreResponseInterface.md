@@ -2,6 +2,23 @@
 
 Interface for store retrieval response objects. This interface defines the contract for responses returned when retrieving store information from OpenFGA. A store retrieval response contains comprehensive metadata about the store including its identifier, name, timestamps, and full store object. Store retrieval is useful for administrative operations, auditing, and displaying store information in management interfaces.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getCreatedAt()`](#getcreatedat)
+    * [`getDeletedAt()`](#getdeletedat)
+    * [`getUpdatedAt()`](#getupdatedat)
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getName()`](#getname)
+    * [`getStore()`](#getstore)
+
 ## Namespace
 
 `OpenFGA\Responses`

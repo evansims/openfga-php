@@ -2,6 +2,19 @@
 
 Repository interface for store operations. This interface defines the contract for store repository implementations, providing a domain-focused abstraction for store management operations. All methods follow the Result pattern, returning either Success or Failure objects to enable safe error handling without exceptions for control flow. Implementations should handle all infrastructure concerns such as HTTP communication, data persistence, or caching while presenting a clean domain interface to the application layer.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`create()`](#create)
+    * [`delete()`](#delete)
+* [List Operations](#list-operations)
+    * [`get()`](#get)
+    * [`list()`](#list)
+
 ## Namespace
 
 `OpenFGA\Repositories`

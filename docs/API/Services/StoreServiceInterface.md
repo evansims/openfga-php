@@ -2,6 +2,23 @@
 
 Service interface for high-level store operations. This interface provides a business-focused abstraction over store management, offering convenience methods and enhanced validation beyond basic CRUD operations. It simplifies common store workflows while maintaining the Result pattern for consistent error handling across the SDK.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`createStore()`](#createstore)
+    * [`deleteStore()`](#deletestore)
+    * [`getOrCreateStore()`](#getorcreatestore)
+* [List Operations](#list-operations)
+    * [`findStore()`](#findstore)
+    * [`findStoresByName()`](#findstoresbyname)
+    * [`listAllStores()`](#listallstores)
+    * [`listStores()`](#liststores)
+
 ## Namespace
 
 `OpenFGA\Services`

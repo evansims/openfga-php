@@ -2,6 +2,21 @@
 
 Validates and transforms data according to registered JSON schemas. This validator ensures that API response data conforms to expected schemas and transforms raw arrays into strongly typed model objects. It handles nested objects, collections, and complex validation rules while providing detailed error reporting for schema violations.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`validateAndTransform()`](#validateandtransform)
+* [List Operations](#list-operations)
+    * [`getSchemas()`](#getschemas)
+* [Model Management](#model-management)
+    * [`registerSchema()`](#registerschema)
+
 ## Namespace
 
 `OpenFGA\Schemas`

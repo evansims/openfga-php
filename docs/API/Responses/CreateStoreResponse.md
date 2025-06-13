@@ -2,6 +2,25 @@
 
 Response confirming successful creation of a new store. This response provides the details of the newly created authorization store, including its unique identifier, name, and creation timestamps. Use the store ID for subsequent operations like managing authorization models and tuples.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [CRUD Operations](#crud-operations)
+    * [`getCreatedAt()`](#getcreatedat)
+    * [`getUpdatedAt()`](#getupdatedat)
+* [List Operations](#list-operations)
+    * [`getId()`](#getid)
+    * [`getName()`](#getname)
+* [Model Management](#model-management)
+    * [`schema()`](#schema)
+* [Other](#other)
+    * [`fromResponse()`](#fromresponse)
+
 ## Namespace
 
 `OpenFGA\Responses`

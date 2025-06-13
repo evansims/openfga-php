@@ -2,6 +2,22 @@
 
 OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This authentication strategy implements the OAuth 2.0 Client Credentials flow for authenticating with the OpenFGA API. It automatically handles token acquisition, caching, and refresh when tokens expire. The strategy requires client credentials (client ID and secret) along with the OAuth issuer and audience parameters. It automatically requests new tokens when the current token expires.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Implements](#implements)
+* [Methods](#methods)
+
+* [List Operations](#list-operations)
+    * [`getAuthenticationRequest()`](#getauthenticationrequest)
+    * [`getAuthorizationHeader()`](#getauthorizationheader)
+    * [`getToken()`](#gettoken)
+* [Other](#other)
+    * [`clearToken()`](#cleartoken)
+    * [`handleAuthenticationResponse()`](#handleauthenticationresponse)
+    * [`requiresAuthentication()`](#requiresauthentication)
+
 ## Namespace
 
 `OpenFGA\Authentication`

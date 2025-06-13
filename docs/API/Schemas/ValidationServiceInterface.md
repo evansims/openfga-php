@@ -2,6 +2,20 @@
 
 Service for validating data against schemas. This service encapsulates the validation logic, separating it from object construction concerns. It validates data structures against registered schemas and provides detailed error reporting.
 
+## Table of Contents
+
+* [Namespace](#namespace)
+* [Source](#source)
+* [Related Classes](#related-classes)
+* [Methods](#methods)
+
+* [Authorization](#authorization)
+    * [`validate()`](#validate)
+    * [`validateProperty()`](#validateproperty)
+* [Model Management](#model-management)
+    * [`hasSchema()`](#hasschema)
+    * [`registerSchema()`](#registerschema)
+
 ## Namespace
 
 `OpenFGA\Schemas`
