@@ -57,7 +57,7 @@ class DocumentationGenerator
         $totalFiles = 0;
         $processedFiles = 0;
 
-        echo "Scanning for PHP files in: " . $this->srcDir . "\n";
+        // echo "Scanning for PHP files in: " . $this->srcDir . "\n";
 
         foreach ($finder as $file) {
             $totalFiles++;
@@ -70,14 +70,14 @@ class DocumentationGenerator
 
                 // Only show progress for every 10 files to reduce noise
                 if ($processedFiles % 10 === 0) {
-                    echo "Processed $processedFiles files...\n";
+                    // echo "Processed $processedFiles files...\n";
                 }
             } else {
-                echo "Skipping file (no class/interface found): " . $file->getRelativePathname() . "\n";
+                // echo "Skipping file (no class/interface found): " . $file->getRelativePathname() . "\n";
             }
         }
 
-        echo "Build complete. Processed $processedFiles of $totalFiles files. Found " . count($this->classMap) . " classes/interfaces.\n";
+        // echo "Build complete. Processed $processedFiles of $totalFiles files. Found " . count($this->classMap) . " classes/interfaces.\n";
     }
 
     /**
@@ -107,14 +107,14 @@ class DocumentationGenerator
 
         $content = @file_get_contents($file);
         if ($content === false) {
-            echo "[DEBUG] Could not read file: $file\n";
+            // echo "[DEBUG] Could not read file: $file\n";
             $cache[$file] = null;
             return null;
         }
 
         // Skip files that don't contain a namespace
         if (!preg_match('/namespace\s+([^;]+);/s', $content, $namespaceMatches)) {
-            echo "[DEBUG] No namespace found in file: $file\n";
+            // echo "[DEBUG] No namespace found in file: $file\n";
             $cache[$file] = null;
             return null;
         }
@@ -128,12 +128,12 @@ class DocumentationGenerator
             $type = $matches[1]; // 'class', 'interface', or 'enum'
             $name = $matches[2];
             $className = $namespace . '\\' . $name;
-            echo "[DEBUG] Found $type: $className in $file\n";
+            // echo "[DEBUG] Found $type: $className in $file\n";
             $cache[$file] = $className;
             return $className;
         }
 
-        echo "[DEBUG] No class, interface, or enum found in file: $file\n";
+        // echo "[DEBUG] No class, interface, or enum found in file: $file\n";
         $cache[$file] = null;
         return null;
     }
@@ -176,13 +176,13 @@ class DocumentationGenerator
                 if ($isInterface) {
                     $interfaceCount++;
                     $processedInterfaces++;
-                    echo "Generating interface: $className ($processedInterfaces/$totalInterfaces)\n";
+                    // echo "Generating interface: $className ($processedInterfaces/$totalInterfaces)\n";
                 } elseif ($isEnum) {
                     $classCount++;
-                    echo "Generating enum: $className\n";
+                    // echo "Generating enum: $className\n";
                 } else {
                     $classCount++;
-                    echo "Generating class: $className\n";
+                    // echo "Generating class: $className\n";
                 }
 
                 $this->generateClassDocumentation($className, $file, $isInterface, $isEnum);
@@ -192,7 +192,7 @@ class DocumentationGenerator
             }
         }
 
-        echo "Documentation generation complete. Generated $classCount classes, $interfaceCount interfaces, and skipped $skippedCount abstract classes.\n";
+        echo "Generated $classCount classes, $interfaceCount interfaces, and skipped $skippedCount abstract classes.\n";
     }
 
     protected function generateClassDocumentation(string $className, string $file, bool $isInterface = false, bool $isEnum = false): void
@@ -404,7 +404,7 @@ class DocumentationGenerator
 
         // Render and save
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
-        echo "Writing to: $outputFile\n";
+        // echo "Writing to: $outputFile\n";
         $content = $this->twig->render('documentation.twig', $classData);
 
         // Clean up markdown formatting
@@ -1713,7 +1713,7 @@ class DocumentationGenerator
      */
     private function generateTableOfContents(): void
     {
-        echo "Generating table-of-contents README.md files...\n";
+        // echo "Generating table-of-contents README.md files...\n";
 
         // Build directory structure from class map
         $directoryStructure = $this->buildDirectoryStructure();
@@ -1723,7 +1723,7 @@ class DocumentationGenerator
             $this->generateDirectoryReadme($directory, $classes);
         }
 
-        echo "Table-of-contents generation complete.\n";
+        // echo "Table-of-contents generation complete.\n";
     }
 
     /**
@@ -1936,7 +1936,7 @@ class DocumentationGenerator
         $readmePath = $outputPath . '/README.md';
         file_put_contents($readmePath, $content);
 
-        echo "Generated README.md for: " . ($directory ?: 'root') . "\n";
+        // echo "Generated README.md for: " . ($directory ?: 'root') . "\n";
     }
 
     /**
@@ -2118,7 +2118,7 @@ class DocumentationGenerator
      */
     private function generateMainApiIndex(): void
     {
-        echo "Generating main API documentation index...\n";
+        // echo "Generating main API documentation index...\n";
 
         // Build a complete component index grouped by type
         $componentIndex = [
@@ -2156,7 +2156,7 @@ class DocumentationGenerator
                 }
 
             } catch (\Exception $e) {
-                echo "Error processing $className for API index: " . $e->getMessage() . "\n";
+                // echo "Error processing $className for API index: " . $e->getMessage() . "\n";
             }
         }
 
@@ -2183,7 +2183,7 @@ class DocumentationGenerator
         $indexPath = $this->outputDir . '/API-Index.md';
         file_put_contents($indexPath, $content);
 
-        echo "Main API documentation index generated at: $indexPath\n";
+        // echo "Main API documentation index generated at: $indexPath\n";
     }
 
     /**
