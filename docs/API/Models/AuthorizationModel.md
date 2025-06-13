@@ -38,8 +38,8 @@ Defines the authorization rules and relationships for your application. An Autho
 
 ## Related Classes
 
-* [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) (interface)
 * [AuthorizationModels](Models/Collections/AuthorizationModels.md) (collection)
+* [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) (interface)
 
 ## Constants
 

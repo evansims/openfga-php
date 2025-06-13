@@ -37,8 +37,8 @@ Represents a relationship tuple key defining a connection between user, relation
 
 ## Related Classes
 
-* [TupleKeyInterface](Models/TupleKeyInterface.md) (interface)
 * [TupleKeys](Models/Collections/TupleKeys.md) (collection)
+* [TupleKeyInterface](Models/TupleKeyInterface.md) (interface)
 
 ## Constants
 

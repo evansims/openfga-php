@@ -36,8 +36,8 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 
 ## Related Classes
 
-* [TypeDefinitionInterface](Models/TypeDefinitionInterface.md) (interface)
 * [TypeDefinitions](Models/Collections/TypeDefinitions.md) (collection)
+* [TypeDefinitionInterface](Models/TypeDefinitionInterface.md) (interface)
 
 ## Constants
 

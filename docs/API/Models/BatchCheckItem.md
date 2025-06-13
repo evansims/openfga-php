@@ -38,8 +38,8 @@ Represents a single item in a batch check request. Each batch check item contain
 
 ## Related Classes
 
-* [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
 * [BatchCheckItems](Models/Collections/BatchCheckItems.md) (collection)
+* [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
 
 ## Constants
 

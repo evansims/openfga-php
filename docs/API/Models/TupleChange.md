@@ -36,8 +36,8 @@ Represents a change to a relationship tuple in your authorization store. When yo
 
 ## Related Classes
 
-* [TupleChangeInterface](Models/TupleChangeInterface.md) (interface)
 * [TupleChanges](Models/Collections/TupleChanges.md) (collection)
+* [TupleChangeInterface](Models/TupleChangeInterface.md) (interface)
 
 ## Constants
 

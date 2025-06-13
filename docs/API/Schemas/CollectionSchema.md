@@ -34,8 +34,8 @@ Schema definition specifically for validating and transforming collection data s
 
 ## Related Classes
 
-* [CollectionSchemaInterface](Schemas/CollectionSchemaInterface.md) (interface)
 * [Schema](Schemas/Schema.md) (item)
+* [CollectionSchemaInterface](Schemas/CollectionSchemaInterface.md) (interface)
 
 ## Methods
 

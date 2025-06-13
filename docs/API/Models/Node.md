@@ -38,8 +38,8 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 
 ## Related Classes
 
-* [NodeInterface](Models/NodeInterface.md) (interface)
 * [Nodes](Models/Collections/Nodes.md) (collection)
+* [NodeInterface](Models/NodeInterface.md) (interface)
 
 ## Constants
 

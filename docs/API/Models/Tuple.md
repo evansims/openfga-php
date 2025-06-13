@@ -35,8 +35,8 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 
 ## Related Classes
 
-* [TupleInterface](Models/TupleInterface.md) (interface)
 * [Tuples](Models/Collections/Tuples.md) (collection)
+* [TupleInterface](Models/TupleInterface.md) (interface)
 
 ## Constants
 

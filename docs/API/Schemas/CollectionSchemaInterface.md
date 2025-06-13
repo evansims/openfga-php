@@ -33,8 +33,8 @@ Interface for collection schema definitions in the OpenFGA system. This interfac
 
 ## Related Classes
 
-* [SchemaInterface](Schemas/SchemaInterface.md) (item)
 * [CollectionSchema](Schemas/CollectionSchema.md) (implementation)
+* [SchemaInterface](Schemas/SchemaInterface.md) (item)
 
 ## Methods
 

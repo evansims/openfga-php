@@ -52,8 +52,8 @@ Collection implementation for OpenFGA relation metadata objects. This class prov
 
 ## Related Classes
 
-* [RelationMetadata](../Models/RelationMetadata.md) (item)
 * [RelationMetadataCollectionInterface](../Models/Collections/RelationMetadataCollectionInterface.md) (interface)
+* [RelationMetadata](../Models/RelationMetadata.md) (item)
 
 ## Methods
 

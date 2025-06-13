@@ -38,8 +38,8 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 
 ## Related Classes
 
-* [ConditionInterface](Models/ConditionInterface.md) (interface)
 * [Conditions](Models/Collections/Conditions.md) (collection)
+* [ConditionInterface](Models/ConditionInterface.md) (interface)
 
 ## Constants
 

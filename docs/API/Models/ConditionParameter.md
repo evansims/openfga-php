@@ -35,8 +35,8 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 
 ## Related Classes
 
-* [ConditionParameterInterface](Models/ConditionParameterInterface.md) (interface)
 * [ConditionParameters](Models/Collections/ConditionParameters.md) (collection)
+* [ConditionParameterInterface](Models/ConditionParameterInterface.md) (interface)
 
 ## Constants
 

@@ -34,8 +34,8 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 
 ## Related Classes
 
-* [ComputedInterface](Models/ComputedInterface.md) (interface)
 * [Computeds](Models/Collections/Computeds.md) (collection)
+* [ComputedInterface](Models/ComputedInterface.md) (interface)
 
 ## Constants
 

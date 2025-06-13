@@ -37,8 +37,8 @@ Represents a reference to a specific relation with optional conditions. A Relati
 
 ## Related Classes
 
-* [RelationReferenceInterface](Models/RelationReferenceInterface.md) (interface)
 * [RelationReferences](Models/Collections/RelationReferences.md) (collection)
+* [RelationReferenceInterface](Models/RelationReferenceInterface.md) (interface)
 
 ## Constants
 

@@ -268,20 +268,20 @@ The following tables show all available translations for each message key used t
 
 ### `assertions.empty_collection`
 
-| Locale | Translation                                           |
-| ------ | ----------------------------------------------------- |
-| `de`   | Assertion-Sammlung darf nicht leer sein               |
-| `en`   | Assertions collection cannot be empty                 |
-| `es`   | La colección de aserciones no puede estar vacía       |
-| `fr`   | La collection d&#039;assertions ne peut pas être vide |
-| `it`   | La collezione di asserzioni non può essere vuota      |
-| `ja`   | アサーションコレクションを空にすることはできません                             |
-| `ko`   | 어설션 컬렉션은 비어있을 수 없습니다                                  |
-| `nl`   | Assertieverzameling kan niet leeg zijn                |
-| `ru`   | Коллекция утверждений не может быть пустой            |
-| `sv`   | Påståendesamling kan inte vara tom                    |
-| `tr`   | Onaylama koleksiyonu boş olamaz                       |
-| `uk`   | Колекція тверджень не може бути порожньою             |
+| Locale  | Translation                                           |
+| ------- | ----------------------------------------------------- |
+| `de`    | Assertion-Sammlung darf nicht leer sein               |
+| `en`    | Assertions collection cannot be empty                 |
+| `fr`    | La collection d&#039;assertions ne peut pas être vide |
+| `it`    | La collezione di asserzioni non può essere vuota      |
+| `ja`    | アサーションコレクションを空にすることはできません                             |
+| `ko`    | 어설션 컬렉션은 비어있을 수 없습니다                                  |
+| `nl`    | Assertieverzameling kan niet leeg zijn                |
+| `pt_BR` | A coleção de asserções não pode estar vazia           |
+| `ru`    | Коллекция утверждений не может быть пустой            |
+| `sv`    | Påståendesamling kan inte vara tom                    |
+| `tr`    | Onaylama koleksiyonu boş olamaz                       |
+| `uk`    | Колекція тверджень не може бути порожньою             |
 
 ### `assertions.invalid_tuple_key`
 
@@ -289,7 +289,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------------------------------------------------------- |
 | `de`   | Assertion enthält ungültigen Tupel-Schlüssel: Benutzer, Relation und Objekt sind erforderlich              |
 | `en`   | Assertion contains invalid tuple key: user, relation, and object are required                              |
-| `es`   | La aserción contiene una clave de tupla inválida: se requieren usuario, relación y objeto                  |
 | `fr`   | L&#039;assertion contient une clé de tuple invalide : utilisateur, relation et objet sont requis           |
 | `it`   | L&#039;&#039;asserzione contiene una chiave tupla non valida: utente, relazione e oggetto sono obbligatori |
 | `ja`   | アサーションに無効なタプルキーが含まれています: ユーザー、関係、オブジェクトが必須です                                                               |
@@ -306,7 +305,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------- |
 | `de`   | access_token muss eine Zeichenkette sein |
 | `en`   | access_token must be a string            |
-| `es`   | access_token debe ser una cadena         |
 | `fr`   | access_token doit être une chaîne        |
 | `it`   | access_token deve essere una stringa     |
 | `ja`   | access_tokenは文字列である必要があります               |
@@ -323,7 +321,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------- |
 | `de`   | Authentifizierungstoken ist abgelaufen    |
 | `en`   | Authentication token has expired          |
-| `es`   | El token de autenticación ha expirado     |
 | `fr`   | Le jeton d&#039;authentification a expiré |
 | `it`   | Il token di autenticazione è scaduto      |
 | `ja`   | 認証トークンの有効期限が切れました                         |
@@ -340,7 +337,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------- |
 | `de`   | Authentifizierungstoken ist ungültig          |
 | `en`   | Authentication token is invalid               |
-| `es`   | El token de autenticación es inválido         |
 | `fr`   | Le jeton d&#039;authentification est invalide |
 | `it`   | Il token di autenticazione non è valido       |
 | `ja`   | 認証トークンが無効です                                   |
@@ -357,7 +353,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------- |
 | `de`   | expires_in muss eine Ganzzahl sein      |
 | `en`   | expires_in must be an integer           |
-| `es`   | expires_in debe ser un entero           |
 | `fr`   | expires_in doit être un entier          |
 | `it`   | expires_in deve essere un numero intero |
 | `ja`   | expires_inは整数である必要があります                 |
@@ -374,7 +369,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------ |
 | `de`   | Ungültiges Antwortformat       |
 | `en`   | Invalid response format        |
-| `es`   | Formato de respuesta inválido  |
 | `fr`   | Format de réponse invalide     |
 | `it`   | Formato di risposta non valido |
 | `ja`   | 無効なレスポンス形式です                   |
@@ -391,7 +385,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------- |
 | `de`   | Erforderliche Felder in der Antwort fehlen    |
 | `en`   | Missing required fields in response           |
-| `es`   | Faltan campos requeridos en la respuesta      |
 | `fr`   | Champs obligatoires manquants dans la réponse |
 | `it`   | Campi obbligatori mancanti nella risposta     |
 | `ja`   | レスポンスに必須フィールドがありません                           |
@@ -408,7 +401,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------- |
 | `de`   | Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an. |
 | `en`   | Your session has expired. Please sign in again.               |
-| `es`   | Su sesión ha expirado. Por favor, inicie sesión nuevamente.   |
 | `fr`   | Votre session a expiré. Veuillez vous reconnecter.            |
 | `it`   | La tua sessione è scaduta. Per favore, accedi di nuovo.       |
 | `ja`   | セッションの有効期限が切れました。再度サインインしてください。                               |
@@ -425,7 +417,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------------------- |
 | `de`   | Ungültige Authentifizierungsdaten bereitgestellt.         |
 | `en`   | Invalid authentication credentials provided.              |
-| `es`   | Credenciales de autenticación inválidas proporcionadas.   |
 | `fr`   | Identifiants d&#039;authentification invalides fournis.   |
 | `it`   | Credenziali di autenticazione non valide fornite.         |
 | `ja`   | 無効な認証資格情報が提供されました。                                        |
@@ -442,7 +433,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------------- |
 | `de`   | Chunk-Größe darf %max_size% nicht überschreiten     |
 | `en`   | Chunk size cannot exceed %max_size%                 |
-| `es`   | El tamaño del fragmento no puede exceder %max_size% |
 | `fr`   | La taille du bloc ne peut pas dépasser %max_size%   |
 | `it`   | La dimensione del chunk non può superare %max_size% |
 | `ja`   | チャンクサイズは%max_size%を超えることはできません                      |
@@ -459,7 +449,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------- |
 | `de`   | Chunk-Größe muss eine positive Ganzzahl sein                  |
 | `en`   | Chunk size must be a positive integer                         |
-| `es`   | El tamaño del fragmento debe ser un entero positivo           |
 | `fr`   | La taille du bloc doit être un entier positif                 |
 | `it`   | La dimensione del chunk deve essere un numero intero positivo |
 | `ja`   | チャンクサイズは正の整数である必要があります                                        |
@@ -476,7 +465,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------- |
 | `de`   | Authentifizierungsfehler aufgetreten        |
 | `en`   | Authentication error occurred               |
-| `es`   | Error de autenticación                      |
 | `fr`   | Erreur d&#039;authentification survenue     |
 | `it`   | Si è verificato un errore di autenticazione |
 | `ja`   | 認証エラーが発生しました                                |
@@ -493,7 +481,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------- |
 | `de`   | Konfigurationsfehler erkannt      |
 | `en`   | Configuration error detected      |
-| `es`   | Error de configuración detectado  |
 | `fr`   | Erreur de configuration détectée  |
 | `it`   | Rilevato errore di configurazione |
 | `ja`   | 設定エラーが検出されました                     |
@@ -510,7 +497,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------- |
 | `de`   | Netzwerkkommunikationsfehler      |
 | `en`   | Network communication error       |
-| `es`   | Error de comunicación de red      |
 | `fr`   | Erreur de communication réseau    |
 | `it`   | Errore di comunicazione di rete   |
 | `ja`   | ネットワーク通信エラー                       |
@@ -527,7 +513,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------- |
 | `de`   | Datenserialisierungsfehler          |
 | `en`   | Data serialization error            |
-| `es`   | Error de serialización de datos     |
 | `fr`   | Erreur de sérialisation des données |
 | `it`   | Errore di serializzazione dati      |
 | `ja`   | データシリアライゼーションエラー                    |
@@ -544,7 +529,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------ |
 | `de`   | Anfragvalidierung fehlgeschlagen     |
 | `en`   | Request validation failed            |
-| `es`   | La validación de la solicitud falló  |
 | `fr`   | Échec de la validation de la requête |
 | `it`   | Validazione della richiesta fallita  |
 | `ja`   | リクエストの検証に失敗しました                      |
@@ -557,54 +541,51 @@ The following tables show all available translations for each message key used t
 
 ### `collection.invalid_item_instance`
 
-| Locale | Translation                                                     |
-| ------ | --------------------------------------------------------------- |
-| `de`   | Erwartete Instanz von %expected%, %given% gegeben               |
-| `en`   | Expected instance of %expected%, %given% given                  |
-| `es`   | Se esperaba una instancia de %expected%, se proporcionó %given% |
-| `fr`   | Instance attendue de %expected%, %given% donné                  |
-| `it`   | Attesa istanza di %expected%, fornito %given%                   |
-| `ja`   | %expected%のインスタンスが期待されます。%given%が提供されました                        |
-| `ko`   | %expected%의 인스턴스가 예상됩니다. %given%이 제공되었습니다                       |
-| `nl`   | Verwacht instantie van %expected%, %given% gegeven              |
-| `ru`   | Ожидается экземпляр %expected%, предоставлено %given%           |
-| `sv`   | Förväntad instans av %expected%, %given% given                  |
-| `tr`   | %expected% örneği bekleniyor, %given% verildi                   |
-| `uk`   | Очікується екземпляр %expected%, надано %given%                 |
+| Locale | Translation                                           |
+| ------ | ----------------------------------------------------- |
+| `de`   | Erwartete Instanz von %expected%, %given% gegeben     |
+| `en`   | Expected instance of %expected%, %given% given        |
+| `fr`   | Instance attendue de %expected%, %given% donné        |
+| `it`   | Attesa istanza di %expected%, fornito %given%         |
+| `ja`   | %expected%のインスタンスが期待されます。%given%が提供されました              |
+| `ko`   | %expected%의 인스턴스가 예상됩니다. %given%이 제공되었습니다             |
+| `nl`   | Verwacht instantie van %expected%, %given% gegeven    |
+| `ru`   | Ожидается экземпляр %expected%, предоставлено %given% |
+| `sv`   | Förväntad instans av %expected%, %given% given        |
+| `tr`   | %expected% örneği bekleniyor, %given% verildi         |
+| `uk`   | Очікується екземпляр %expected%, надано %given%       |
 
 ### `collection.invalid_item_type_interface`
 
-| Locale | Translation                                                                        |
-| ------ | ---------------------------------------------------------------------------------- |
-| `de`   | Erwarteter Elementtyp sollte %interface% implementieren, %given% gegeben           |
-| `en`   | Expected item type to implement %interface%, %given% given                         |
-| `es`   | Se esperaba que el tipo de elemento implemente %interface%, se proporcionó %given% |
-| `fr`   | Type d&#039;élément attendu pour implémenter %interface%, %given% donné            |
-| `it`   | Il tipo di elemento dovrebbe implementare %interface%, fornito %given%             |
-| `ja`   | アイテムタイプは%interface%を実装する必要があります。%given%が提供されました                                    |
-| `ko`   | 항목 타입이 %interface%를 구현해야 합니다. %given%이 제공되었습니다                                     |
-| `nl`   | Verwacht itemtype om %interface% te implementeren, %given% gegeven                 |
-| `ru`   | Ожидается, что тип элемента реализует %interface%, предоставлено %given%           |
-| `sv`   | Förväntad objekttyp att implementera %interface%, %given% given                    |
-| `tr`   | Öğe türünün %interface% uygulaması bekleniyor, %given% verildi                     |
-| `uk`   | Очікується, що тип елемента реалізує %interface%, надано %given%                   |
+| Locale | Translation                                                              |
+| ------ | ------------------------------------------------------------------------ |
+| `de`   | Erwarteter Elementtyp sollte %interface% implementieren, %given% gegeben |
+| `en`   | Expected item type to implement %interface%, %given% given               |
+| `fr`   | Type d&#039;élément attendu pour implémenter %interface%, %given% donné  |
+| `it`   | Il tipo di elemento dovrebbe implementare %interface%, fornito %given%   |
+| `ja`   | アイテムタイプは%interface%を実装する必要があります。%given%が提供されました                          |
+| `ko`   | 항목 타입이 %interface%를 구현해야 합니다. %given%이 제공되었습니다                           |
+| `nl`   | Verwacht itemtype om %interface% te implementeren, %given% gegeven       |
+| `ru`   | Ожидается, что тип элемента реализует %interface%, предоставлено %given% |
+| `sv`   | Förväntad objekttyp att implementera %interface%, %given% given          |
+| `tr`   | Öğe türünün %interface% uygulaması bekleniyor, %given% verildi           |
+| `uk`   | Очікується, що тип елемента реалізує %interface%, надано %given%         |
 
 ### `collection.invalid_key_type`
 
-| Locale | Translation                                                         |
-| ------ | ------------------------------------------------------------------- |
-| `de`   | Ungültiger Schlüsseltyp; Zeichenkette erwartet, %given% gegeben.    |
-| `en`   | Invalid key type; expected string, %given% given.                   |
-| `es`   | Tipo de clave inválido; se esperaba cadena, se proporcionó %given%. |
-| `fr`   | Type de clé invalide ; chaîne attendue, %given% donné.              |
-| `it`   | Tipo di chiave non valido; attesa stringa, fornito %given%.         |
-| `ja`   | 無効なキータイプです。文字列が期待されます。%given%が提供されました。                              |
-| `ko`   | 잘못된 키 타입; 문자열이 예상됩니다. %given%이 제공되었습니다.                             |
-| `nl`   | Ongeldig sleuteltype; verwacht string, %given% gegeven.             |
-| `ru`   | Недопустимый тип ключа; ожидается строка, предоставлено %given%.    |
-| `sv`   | Ogiltig nyckeltyp; förväntad sträng, %given% given.                 |
-| `tr`   | Geçersiz anahtar türü; dize bekleniyor, %given% verildi.            |
-| `uk`   | Недійсний тип ключа; очікується рядок, надано %given%.              |
+| Locale | Translation                                                      |
+| ------ | ---------------------------------------------------------------- |
+| `de`   | Ungültiger Schlüsseltyp; Zeichenkette erwartet, %given% gegeben. |
+| `en`   | Invalid key type; expected string, %given% given.                |
+| `fr`   | Type de clé invalide ; chaîne attendue, %given% donné.           |
+| `it`   | Tipo di chiave non valido; attesa stringa, fornito %given%.      |
+| `ja`   | 無効なキータイプです。文字列が期待されます。%given%が提供されました。                           |
+| `ko`   | 잘못된 키 타입; 문자열이 예상됩니다. %given%이 제공되었습니다.                          |
+| `nl`   | Ongeldig sleuteltype; verwacht string, %given% gegeven.          |
+| `ru`   | Недопустимый тип ключа; ожидается строка, предоставлено %given%. |
+| `sv`   | Ogiltig nyckeltyp; förväntad sträng, %given% given.              |
+| `tr`   | Geçersiz anahtar türü; dize bekleniyor, %given% verildi.         |
+| `uk`   | Недійсний тип ключа; очікується рядок, надано %given%.           |
 
 ### `collection.invalid_position`
 
@@ -612,7 +593,6 @@ The following tables show all available translations for each message key used t
 | ------ | -------------------- |
 | `de`   | Ungültige Position   |
 | `en`   | Invalid position     |
-| `es`   | Posición inválida    |
 | `fr`   | Position invalide    |
 | `it`   | Posizione non valida |
 | `ja`   | 無効な位置です              |
@@ -625,20 +605,19 @@ The following tables show all available translations for each message key used t
 
 ### `collection.invalid_value_type`
 
-| Locale | Translation                                                      |
-| ------ | ---------------------------------------------------------------- |
-| `de`   | Erwartete Instanz von %expected%, %given% gegeben.               |
-| `en`   | Expected instance of %expected%, %given% given.                  |
-| `es`   | Se esperaba una instancia de %expected%, se proporcionó %given%. |
-| `fr`   | Instance attendue de %expected%, %given% donné.                  |
-| `it`   | Attesa istanza di %expected%, fornito %given%.                   |
-| `ja`   | %expected%のインスタンスが期待されます。%given%が提供されました。                        |
-| `ko`   | %expected%의 인스턴스가 예상됩니다. %given%이 제공되었습니다.                       |
-| `nl`   | Verwacht instantie van %expected%, %given% gegeven.              |
-| `ru`   | Ожидается экземпляр %expected%, предоставлено %given%.           |
-| `sv`   | Förväntad instans av %expected%, %given% given.                  |
-| `tr`   | %expected% örneği bekleniyor, %given% verildi.                   |
-| `uk`   | Очікується екземпляр %expected%, надано %given%.                 |
+| Locale | Translation                                            |
+| ------ | ------------------------------------------------------ |
+| `de`   | Erwartete Instanz von %expected%, %given% gegeben.     |
+| `en`   | Expected instance of %expected%, %given% given.        |
+| `fr`   | Instance attendue de %expected%, %given% donné.        |
+| `it`   | Attesa istanza di %expected%, fornito %given%.         |
+| `ja`   | %expected%のインスタンスが期待されます。%given%が提供されました。              |
+| `ko`   | %expected%의 인스턴스가 예상됩니다. %given%이 제공되었습니다.             |
+| `nl`   | Verwacht instantie van %expected%, %given% gegeven.    |
+| `ru`   | Ожидается экземпляр %expected%, предоставлено %given%. |
+| `sv`   | Förväntad instans av %expected%, %given% given.        |
+| `tr`   | %expected% örneği bekleniyor, %given% verildi.         |
+| `uk`   | Очікується екземпляр %expected%, надано %given%.       |
 
 ### `collection.key_must_be_string`
 
@@ -646,7 +625,6 @@ The following tables show all available translations for each message key used t
 | ------ | -------------------------------------- |
 | `de`   | Schlüssel muss eine Zeichenkette sein. |
 | `en`   | Key must be a string.                  |
-| `es`   | La clave debe ser una cadena.          |
 | `fr`   | La clé doit être une chaîne.           |
 | `it`   | La chiave deve essere una stringa.     |
 | `ja`   | キーは文字列である必要があります。                      |
@@ -663,7 +641,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------------------------------------------------------------------- |
 | `de`   | Undefinierter Elementtyp für %class%. Definieren Sie die $itemType-Eigenschaft oder überschreiben Sie den Konstruktor. |
 | `en`   | Undefined item type for %class%. Define the $itemType property or override the constructor.                            |
-| `es`   | Tipo de elemento indefinido para %class%. Define la propiedad $itemType o sobrescribe el constructor.                  |
 | `fr`   | Type d&#039;élément non défini pour %class%. Définissez la propriété $itemType ou surchargez le constructeur.          |
 | `it`   | Tipo di elemento non definito per %class%. Definire la proprietà $itemType o sovrascrivere il costruttore.             |
 | `ja`   | %class%のアイテムタイプが未定義です。$itemTypeプロパティを定義するかコンストラクターをオーバーライドしてください。                                                      |
@@ -680,7 +657,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------- |
 | `de`   | HTTP-Client ist nicht konfiguriert      |
 | `en`   | HTTP client is not configured           |
-| `es`   | El cliente HTTP no está configurado     |
 | `fr`   | Le client HTTP n&#039;est pas configuré |
 | `it`   | Client HTTP non configurato             |
 | `ja`   | HTTPクライアントが設定されていません                    |
@@ -697,7 +673,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------ |
 | `de`   | HTTP-Request-Factory ist nicht konfiguriert            |
 | `en`   | HTTP request factory is not configured                 |
-| `es`   | La fábrica de solicitudes HTTP no está configurada     |
 | `fr`   | La fabrique de requêtes HTTP n&#039;est pas configurée |
 | `it`   | Factory delle richieste HTTP non configurata           |
 | `ja`   | HTTPリクエストファクトリが設定されていません                               |
@@ -714,7 +689,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------ |
 | `de`   | HTTP-Response-Factory ist nicht konfiguriert           |
 | `en`   | HTTP response factory is not configured                |
-| `es`   | La fábrica de respuestas HTTP no está configurada      |
 | `fr`   | La fabrique de réponses HTTP n&#039;est pas configurée |
 | `it`   | Factory delle risposte HTTP non configurata            |
 | `ja`   | HTTPレスポンスファクトリが設定されていません                               |
@@ -731,7 +705,6 @@ The following tables show all available translations for each message key used t
 | ------ | -------------------------------------------------- |
 | `de`   | HTTP-Stream-Factory ist nicht konfiguriert         |
 | `en`   | HTTP stream factory is not configured              |
-| `es`   | La fábrica de streams HTTP no está configurada     |
 | `fr`   | La fabrique de flux HTTP n&#039;est pas configurée |
 | `it`   | Factory degli stream HTTP non configurata          |
 | `ja`   | HTTPストリームファクトリが設定されていません                           |
@@ -744,20 +717,19 @@ The following tables show all available translations for each message key used t
 
 ### `exception.config.invalid_language`
 
-| Locale | Translation                                         |
-| ------ | --------------------------------------------------- |
-| `de`   | Ungültiger Sprachcode bereitgestellt: %language%    |
-| `en`   | Invalid language code provided: %language%          |
-| `es`   | Código de idioma inválido proporcionado: %language% |
-| `fr`   | Code de langue invalide fourni : %language%         |
-| `it`   | Codice lingua non valido fornito: %language%        |
-| `ja`   | 無効な言語コードが提供されました: %language%                        |
-| `ko`   | 잘못된 언어 코드가 제공되었습니다: %language%                      |
-| `nl`   | Ongeldige taalcode verstrekt: %language%            |
-| `ru`   | Предоставлен недопустимый код языка: %language%     |
-| `sv`   | Ogiltig språkkod tillhandahållen: %language%        |
-| `tr`   | Geçersiz dil kodu sağlandı: %language%              |
-| `uk`   | Надано недійсний код мови: %language%               |
+| Locale | Translation                                      |
+| ------ | ------------------------------------------------ |
+| `de`   | Ungültiger Sprachcode bereitgestellt: %language% |
+| `en`   | Invalid language code provided: %language%       |
+| `fr`   | Code de langue invalide fourni : %language%      |
+| `it`   | Codice lingua non valido fornito: %language%     |
+| `ja`   | 無効な言語コードが提供されました: %language%                     |
+| `ko`   | 잘못된 언어 코드가 제공되었습니다: %language%                   |
+| `nl`   | Ongeldige taalcode verstrekt: %language%         |
+| `ru`   | Предоставлен недопустимый код языка: %language%  |
+| `sv`   | Ogiltig språkkod tillhandahållen: %language%     |
+| `tr`   | Geçersiz dil kodu sağlandı: %language%           |
+| `uk`   | Надано недійсний код мови: %language%            |
 
 ### `exception.config.invalid_retry_count`
 
@@ -765,7 +737,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------------------- |
 | `de`   | Ungültige Wiederholungsanzahl bereitgestellt: %retries%   |
 | `en`   | Invalid retry count provided: %retries%                   |
-| `es`   | Número de reintentos inválido proporcionado: %retries%    |
 | `fr`   | Nombre de tentatives invalide fourni : %retries%          |
 | `it`   | Numero di tentativi non valido fornito: %retries%         |
 | `ja`   | 無効な再試行回数が提供されました: %retries%                               |
@@ -782,7 +753,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------ |
 | `de`   | Ungültige URL bereitgestellt: %url%  |
 | `en`   | Invalid URL provided: %url%          |
-| `es`   | URL inválida proporcionada: %url%    |
 | `fr`   | URL invalide fournie : %url%         |
 | `it`   | URL non valido fornito: %url%        |
 | `ja`   | 無効なURLが提供されました: %url%                |
@@ -799,7 +769,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------------------------------------------------------ |
 | `de`   | Priorisiert Datenkonsistenz über Abfrageleistung und gewährleistet die aktuellsten Ergebnisse                            |
 | `en`   | Prioritizes data consistency over query performance, ensuring the most up-to-date results                                |
-| `es`   | Prioriza la consistencia de datos sobre el rendimiento de consultas, asegurando los resultados más actualizados          |
 | `fr`   | Privilégie la cohérence des données par rapport aux performances de requête, garantissant les résultats les plus récents |
 | `it`   | Prioritizza la coerenza dei dati rispetto alle prestazioni delle query, garantendo i risultati più aggiornati            |
 | `ja`   | クエリパフォーマンスよりもデータ整合性を優先し、最新の結果を保証します                                                                                      |
@@ -816,7 +785,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `de`   | Priorisiert Abfrageleistung über Datenkonsistenz, verwendet möglicherweise leicht veraltete Daten                                         |
 | `en`   | Prioritizes query performance over data consistency, potentially using slightly stale data                                                |
-| `es`   | Prioriza el rendimiento de consultas sobre la consistencia de datos, potencialmente usando datos ligeramente obsoletos                    |
 | `fr`   | Privilégie les performances de requête par rapport à la cohérence des données, utilisant potentiellement des données légèrement obsolètes |
 | `it`   | Prioritizza le prestazioni delle query rispetto alla coerenza dei dati, potenzialmente utilizzando dati leggermente obsoleti              |
 | `ja`   | データ整合性よりもクエリパフォーマンスを優先し、わずかに古いデータを使用する可能性があります                                                                                            |
@@ -829,20 +797,19 @@ The following tables show all available translations for each message key used t
 
 ### `consistency.unspecified.description`
 
-| Locale | Translation                                                                                       |
-| ------ | ------------------------------------------------------------------------------------------------- |
-| `de`   | Verwendet die Standard-Konsistenzebene, die durch die OpenFGA-Serverkonfiguration bestimmt wird   |
-| `en`   | Uses the default consistency level determined by the OpenFGA server configuration                 |
-| `es`   | Usa el nivel de consistencia predeterminado determinado por la configuración del servidor OpenFGA |
-| `fr`   | Utilise le niveau de cohérence par défaut déterminé par la configuration du serveur OpenFGA       |
-| `it`   | Utilizza il livello di coerenza predefinito determinato dalla configurazione del server OpenFGA   |
-| `ja`   | OpenFGAサーバー設定によって決定されるデフォルトの整合性レベルを使用します                                                          |
-| `ko`   | OpenFGA 서버 구성에 의해 결정되는 기본 일관성 수준을 사용합니다                                                           |
-| `nl`   | Gebruikt het standaard consistentieniveau bepaald door de OpenFGA-serverconfiguratie              |
-| `ru`   | Использует уровень согласованности по умолчанию, определяемый конфигурацией сервера OpenFGA       |
-| `sv`   | Använder standardkonsistensnivån som bestäms av OpenFGA-serverkonfigurationen                     |
-| `tr`   | OpenFGA sunucu yapılandırması tarafından belirlenen varsayılan tutarlılık seviyesini kullanır     |
-| `uk`   | Використовує рівень узгодженості за замовчуванням, визначений конфігурацією сервера OpenFGA       |
+| Locale | Translation                                                                                     |
+| ------ | ----------------------------------------------------------------------------------------------- |
+| `de`   | Verwendet die Standard-Konsistenzebene, die durch die OpenFGA-Serverkonfiguration bestimmt wird |
+| `en`   | Uses the default consistency level determined by the OpenFGA server configuration               |
+| `fr`   | Utilise le niveau de cohérence par défaut déterminé par la configuration du serveur OpenFGA     |
+| `it`   | Utilizza il livello di coerenza predefinito determinato dalla configurazione del server OpenFGA |
+| `ja`   | OpenFGAサーバー設定によって決定されるデフォルトの整合性レベルを使用します                                                        |
+| `ko`   | OpenFGA 서버 구성에 의해 결정되는 기본 일관성 수준을 사용합니다                                                         |
+| `nl`   | Gebruikt het standaard consistentieniveau bepaald door de OpenFGA-serverconfiguratie            |
+| `ru`   | Использует уровень согласованности по умолчанию, определяемый конфигурацией сервера OpenFGA     |
+| `sv`   | Använder standardkonsistensnivån som bestäms av OpenFGA-serverkonfigurationen                   |
+| `tr`   | OpenFGA sunucu yapılandırması tarafından belirlenen varsayılan tutarlılık seviyesini kullanır   |
+| `uk`   | Використовує рівень узгодженості за замовчуванням, визначений конфігурацією сервера OpenFGA     |
 
 ### `dsl.input_empty`
 
@@ -850,7 +817,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------- |
 | `de`   | Eingabezeichenkette darf nicht leer sein      |
 | `en`   | Input string cannot be empty                  |
-| `es`   | La cadena de entrada no puede estar vacía     |
 | `fr`   | La chaîne d&#039;entrée ne peut pas être vide |
 | `it`   | La stringa di input non può essere vuota      |
 | `ja`   | 入力文字列を空にすることはできません                            |
@@ -867,7 +833,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------- |
 | `de`   | Ungültiges berechnetes Benutzerset            |
 | `en`   | Invalid computed userset                      |
-| `es`   | Conjunto de usuarios calculado inválido       |
 | `fr`   | Ensemble d&#039;utilisateurs calculé invalide |
 | `it`   | Set di utenti calcolato non valido            |
 | `ja`   | 無効な計算済みユーザーセットです                              |
@@ -884,7 +849,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------------------------------------------- |
 | `de`   | Berechnete Benutzerset-Relation darf nicht leer sein.                             |
 | `en`   | Computed userset relation cannot be empty.                                        |
-| `es`   | La relación del userset computado no puede estar vacía.                           |
 | `fr`   | La relation de l&#039;ensemble d&#039;utilisateurs calculé ne peut pas être vide. |
 | `it`   | La relazione del set di utenti calcolato non può essere vuota.                    |
 | `ja`   | 計算済みユーザーセットの関係を空にすることはできません。                                                      |
@@ -901,7 +865,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------- |
 | `de`   | DSL-Eingabe konnte nicht geparst werden       |
 | `en`   | Failed to parse DSL input                     |
-| `es`   | No se pudo analizar la entrada DSL            |
 | `fr`   | Échec de l&#039;analyse de l&#039;entrée DSL  |
 | `it`   | Impossibile analizzare l&#039;&#039;input DSL |
 | `ja`   | DSL入力の解析に失敗しました                               |
@@ -918,7 +881,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------- |
 | `de`   | Muster darf nicht leer sein     |
 | `en`   | Pattern cannot be empty         |
-| `es`   | El patrón no puede estar vacío  |
 | `fr`   | Le modèle ne peut pas être vide |
 | `it`   | Il pattern non può essere vuoto |
 | `ja`   | パターンを空にすることはできません               |
@@ -931,20 +893,19 @@ The following tables show all available translations for each message key used t
 
 ### `dsl.unbalanced_parentheses_closing`
 
-| Locale | Translation                                                                           |
-| ------ | ------------------------------------------------------------------------------------- |
-| `de`   | Unausgeglichene Klammern: zu viele schließende Klammern an Position %position%        |
-| `en`   | Unbalanced parentheses: too many closing parentheses at position %position%           |
-| `es`   | Paréntesis desequilibrados: demasiados paréntesis de cierre en la posición %position% |
-| `fr`   | Parenthèses déséquilibrées : trop de parenthèses fermantes à la position %position%   |
-| `it`   | Parentesi non bilanciate: troppe parentesi di chiusura alla posizione %position%      |
-| `ja`   | 括弧の対応が取れていません: 位置%position%に閉じ括弧が多すぎます                                                |
-| `ko`   | 불균형한 괄호: 위치 %position%에 닫는 괄호가 너무 많습니다                                                |
-| `nl`   | Ongelijke haakjes: te veel sluithaakjes op positie %position%                         |
-| `ru`   | Несбалансированные скобки: слишком много закрывающих скобок в позиции %position%      |
-| `sv`   | Obalanserade parenteser: för många avslutande parenteser vid position %position%      |
-| `tr`   | Dengesiz parantezler: %position% konumunda çok fazla kapanış parantezi                |
-| `uk`   | Незбалансовані дужки: забагато закриваючих дужок у позиції %position%                 |
+| Locale | Translation                                                                         |
+| ------ | ----------------------------------------------------------------------------------- |
+| `de`   | Unausgeglichene Klammern: zu viele schließende Klammern an Position %position%      |
+| `en`   | Unbalanced parentheses: too many closing parentheses at position %position%         |
+| `fr`   | Parenthèses déséquilibrées : trop de parenthèses fermantes à la position %position% |
+| `it`   | Parentesi non bilanciate: troppe parentesi di chiusura alla posizione %position%    |
+| `ja`   | 括弧の対応が取れていません: 位置%position%に閉じ括弧が多すぎます                                              |
+| `ko`   | 불균형한 괄호: 위치 %position%에 닫는 괄호가 너무 많습니다                                              |
+| `nl`   | Ongelijke haakjes: te veel sluithaakjes op positie %position%                       |
+| `ru`   | Несбалансированные скобки: слишком много закрывающих скобок в позиции %position%    |
+| `sv`   | Obalanserade parenteser: för många avslutande parenteser vid position %position%    |
+| `tr`   | Dengesiz parantezler: %position% konumunda çok fazla kapanış parantezi              |
+| `uk`   | Незбалансовані дужки: забагато закриваючих дужок у позиції %position%               |
 
 ### `dsl.unbalanced_parentheses_opening`
 
@@ -952,7 +913,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------ |
 | `de`   | Unausgeglichene Klammern: %count% ungeschlossene öffnende %parentheses%  |
 | `en`   | Unbalanced parentheses: %count% unclosed opening %parentheses%           |
-| `es`   | Paréntesis desequilibrados: %count% %parentheses% de apertura sin cerrar |
 | `fr`   | Parenthèses déséquilibrées : %count% %parentheses% ouvrantes non fermées |
 | `it`   | Parentesi non bilanciate: %count% %parentheses% di apertura non chiuse   |
 | `ja`   | 括弧の対応が取れていません: %count%個の開き%parentheses%が閉じられていません                        |
@@ -969,7 +929,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------ |
 | `de`   | Unerkannter DSL-Begriff: %term%      |
 | `en`   | Unrecognized DSL term: %term%        |
-| `es`   | Término DSL no reconocido: %term%    |
 | `fr`   | Terme DSL non reconnu : %term%       |
 | `it`   | Termine DSL non riconosciuto: %term% |
 | `ja`   | 認識されないDSL用語です: %term%                |
@@ -982,20 +941,19 @@ The following tables show all available translations for each message key used t
 
 ### `validation.batch_check_empty`
 
-| Locale | Translation                                                 |
-| ------ | ----------------------------------------------------------- |
-| `de`   | Batch-Check-Anfrage darf nicht leer sein                    |
-| `en`   | Batch check request cannot be empty                         |
-| `es`   | La solicitud de verificación por lotes no puede estar vacía |
-| `fr`   | La requête de vérification par lot ne peut pas être vide    |
-| `it`   | La richiesta di controllo batch non può essere vuota        |
-| `ja`   | バッチチェックリクエストを空にすることはできません                                   |
-| `ko`   | 배치 확인 요청은 비어있을 수 없습니다                                       |
-| `nl`   | Batchcontrole verzoek kan niet leeg zijn                    |
-| `ru`   | Запрос пакетной проверки не может быть пустым               |
-| `sv`   | Batch-kontrollförfrågan kan inte vara tom                   |
-| `tr`   | Toplu kontrol isteği boş olamaz                             |
-| `uk`   | Запит пакетної перевірки не може бути порожнім              |
+| Locale | Translation                                              |
+| ------ | -------------------------------------------------------- |
+| `de`   | Batch-Check-Anfrage darf nicht leer sein                 |
+| `en`   | Batch check request cannot be empty                      |
+| `fr`   | La requête de vérification par lot ne peut pas être vide |
+| `it`   | La richiesta di controllo batch non può essere vuota     |
+| `ja`   | バッチチェックリクエストを空にすることはできません                                |
+| `ko`   | 배치 확인 요청은 비어있을 수 없습니다                                    |
+| `nl`   | Batchcontrole verzoek kan niet leeg zijn                 |
+| `ru`   | Запрос пакетной проверки не может быть пустым            |
+| `sv`   | Batch-kontrollförfrågan kan inte vara tom                |
+| `tr`   | Toplu kontrol isteği boş olamaz                          |
+| `uk`   | Запит пакетної перевірки не може бути порожнім           |
 
 ### `validation.invalid_correlation_id`
 
@@ -1003,7 +961,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------------------------------------------------ |
 | `de`   | Korrelations-ID &#039;%correlationId%&#039; ist ungültig. Muss dem Muster entsprechen: %pattern%                   |
 | `en`   | Correlation ID &quot;%correlationId%&quot; is invalid. Must match pattern: %pattern%                               |
-| `es`   | ID de correlación &quot;%correlationId%&quot; es inválido. Debe coincidir con el patrón: %pattern%                 |
 | `fr`   | L&#039;&#039;ID de corrélation &quot;%correlationId%&quot; est invalide. Doit correspondre au modèle : %pattern%   |
 | `it`   | L&#039;&#039;ID di correlazione &quot;%correlationId%&quot; non è valido. Deve corrispondere al pattern: %pattern% |
 | `ja`   | 相関ID「%correlationId%」は無効です。パターンと一致する必要があります: %pattern%                                                             |
@@ -1020,7 +977,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------------------------------- |
 | `de`   | JWT-Token-Zielgruppe stimmt nicht mit erwarteter Zielgruppe überein                |
 | `en`   | JWT token audience does not match expected audience                                |
-| `es`   | La audiencia del token JWT no coincide con la audiencia esperada                   |
 | `fr`   | L&#039;audience du jeton JWT ne correspond pas à l&#039;audience attendue          |
 | `it`   | L&#039;&#039;audience del token JWT non corrisponde all&#039;&#039;audience atteso |
 | `ja`   | JWTトークンの対象者が期待される対象者と一致しません                                                        |
@@ -1037,7 +993,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------ |
 | `de`   | Ungültiges JWT-Token-Format    |
 | `en`   | Invalid JWT token format       |
-| `es`   | Formato de token JWT inválido  |
 | `fr`   | Format de jeton JWT invalide   |
 | `it`   | Formato token JWT non valido   |
 | `ja`   | 無効なJWTトークン形式です                 |
@@ -1054,7 +1009,6 @@ The following tables show all available translations for each message key used t
 | ------ | -------------------------- |
 | `de`   | Ungültiger JWT-Header      |
 | `en`   | Invalid JWT header         |
-| `es`   | Encabezado JWT inválido    |
 | `fr`   | En-tête JWT invalide       |
 | `it`   | Header JWT non valido      |
 | `ja`   | 無効なJWTヘッダーです               |
@@ -1071,7 +1025,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------------------ |
 | `de`   | JWT-Token-Aussteller stimmt nicht mit erwartetem Aussteller überein                  |
 | `en`   | JWT token issuer does not match expected issuer                                      |
-| `es`   | El emisor del token JWT no coincide con el emisor esperado                           |
 | `fr`   | L&#039;émetteur du jeton JWT ne correspond pas à l&#039;émetteur attendu             |
 | `it`   | L&#039;&#039;emittente del token JWT non corrisponde all&#039;&#039;emittente atteso |
 | `ja`   | JWTトークンの発行者が期待される発行者と一致しません                                                          |
@@ -1088,7 +1041,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------- |
 | `de`   | Ungültige JWT-Nutzlast             |
 | `en`   | Invalid JWT payload                |
-| `es`   | Carga útil JWT inválida            |
 | `fr`   | Charge utile JWT invalide          |
 | `it`   | Payload JWT non valido             |
 | `ja`   | 無効なJWTペイロードです                      |
@@ -1105,7 +1057,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------- |
 | `de`   | Erforderliche JWT-Claims fehlen          |
 | `en`   | Missing required JWT claims              |
-| `es`   | Faltan claims requeridos en el JWT       |
 | `fr`   | Revendications JWT requises manquantes   |
 | `it`   | Claims JWT obbligatori mancanti          |
 | `ja`   | 必要なJWTクレームがありません                         |
@@ -1122,7 +1073,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------ |
 | `de`   | JWT-Token ist abgelaufen |
 | `en`   | JWT token has expired    |
-| `es`   | El token JWT ha expirado |
 | `fr`   | Le jeton JWT a expiré    |
 | `it`   | Il token JWT è scaduto   |
 | `ja`   | JWTトークンの有効期限が切れました       |
@@ -1139,7 +1089,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------- |
 | `de`   | JWT-Token ist noch nicht gültig           |
 | `en`   | JWT token is not yet valid                |
-| `es`   | El token JWT aún no es válido             |
 | `fr`   | Le jeton JWT n&#039;est pas encore valide |
 | `it`   | Il token JWT non è ancora valido          |
 | `ja`   | JWTトークンはまだ有効ではありません                       |
@@ -1152,37 +1101,35 @@ The following tables show all available translations for each message key used t
 
 ### `model.duplicate_type`
 
-| Locale | Translation                                          |
-| ------ | ---------------------------------------------------- |
-| `de`   | Doppelte Typdefinition gefunden: %type%              |
-| `en`   | Duplicate type definition found: %type%              |
-| `es`   | Se encontró una definición de tipo duplicada: %type% |
-| `fr`   | Définition de type dupliquée trouvée : %type%        |
-| `it`   | Definizione di tipo duplicata trovata: %type%        |
-| `ja`   | 重複するタイプ定義が見つかりました: %type%                            |
-| `ko`   | 중복된 타입 정의를 발견했습니다: %type%                            |
-| `nl`   | Dubbele typedefinitie gevonden: %type%               |
-| `ru`   | Найдено дублирующееся определение типа: %type%       |
-| `sv`   | Dubblerad typdefinition hittades: %type%             |
-| `tr`   | Yinelenen tür tanımı bulundu: %type%                 |
-| `uk`   | Знайдено дублікат визначення типу: %type%            |
+| Locale | Translation                                    |
+| ------ | ---------------------------------------------- |
+| `de`   | Doppelte Typdefinition gefunden: %type%        |
+| `en`   | Duplicate type definition found: %type%        |
+| `fr`   | Définition de type dupliquée trouvée : %type%  |
+| `it`   | Definizione di tipo duplicata trovata: %type%  |
+| `ja`   | 重複するタイプ定義が見つかりました: %type%                      |
+| `ko`   | 중복된 타입 정의를 발견했습니다: %type%                      |
+| `nl`   | Dubbele typedefinitie gevonden: %type%         |
+| `ru`   | Найдено дублирующееся определение типа: %type% |
+| `sv`   | Dubblerad typdefinition hittades: %type%       |
+| `tr`   | Yinelenen tür tanımı bulundu: %type%           |
+| `uk`   | Знайдено дублікат визначення типу: %type%      |
 
 ### `model.invalid_identifier_format`
 
-| Locale | Translation                                                                                                              |
-| ------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `de`   | Ungültiges Bezeichnerformat: Bezeichner dürfen keine Leerzeichen enthalten. Gefunden in %identifier%                     |
-| `en`   | Invalid identifier format: identifiers cannot contain whitespace. Found in %identifier%                                  |
-| `es`   | Formato de identificador inválido: los identificadores no pueden contener espacios en blanco. Encontrado en %identifier% |
-| `fr`   | Format d&#039;identifiant invalide : les identifiants ne peuvent pas contenir d&#039;espaces. Trouvé dans %identifier%   |
-| `it`   | Formato identificatore non valido: gli identificatori non possono contenere spazi. Trovato in %identifier%               |
-| `ja`   | 無効な識別子形式です: 識別子に空白文字を含めることはできません。%identifier%で見つかりました                                                                    |
-| `ko`   | 잘못된 식별자 형식: 식별자에는 공백이 포함될 수 없습니다. %identifier%에서 발견되었습니다                                                                 |
-| `nl`   | Ongeldig identificatieformaat: identificaties kunnen geen witruimte bevatten. Gevonden in %identifier%                   |
-| `ru`   | Недопустимый формат идентификатора: идентификаторы не могут содержать пробелы. Найдено в %identifier%                    |
-| `sv`   | Ogiltigt identifierarformat: identifierare kan inte innehålla mellanslag. Hittades i %identifier%                        |
-| `tr`   | Geçersiz tanımlayıcı formatı: tanımlayıcılar boşluk içeremez. %identifier% içinde bulundu                                |
-| `uk`   | Недійсний формат ідентифікатора: ідентифікатори не можуть містити пробіли. Знайдено в %identifier%                       |
+| Locale | Translation                                                                                                            |
+| ------ | ---------------------------------------------------------------------------------------------------------------------- |
+| `de`   | Ungültiges Bezeichnerformat: Bezeichner dürfen keine Leerzeichen enthalten. Gefunden in %identifier%                   |
+| `en`   | Invalid identifier format: identifiers cannot contain whitespace. Found in %identifier%                                |
+| `fr`   | Format d&#039;identifiant invalide : les identifiants ne peuvent pas contenir d&#039;espaces. Trouvé dans %identifier% |
+| `it`   | Formato identificatore non valido: gli identificatori non possono contenere spazi. Trovato in %identifier%             |
+| `ja`   | 無効な識別子形式です: 識別子に空白文字を含めることはできません。%identifier%で見つかりました                                                                  |
+| `ko`   | 잘못된 식별자 형식: 식별자에는 공백이 포함될 수 없습니다. %identifier%에서 발견되었습니다                                                               |
+| `nl`   | Ongeldig identificatieformaat: identificaties kunnen geen witruimte bevatten. Gevonden in %identifier%                 |
+| `ru`   | Недопустимый формат идентификатора: идентификаторы не могут содержать пробелы. Найдено в %identifier%                  |
+| `sv`   | Ogiltigt identifierarformat: identifierare kan inte innehålla mellanslag. Hittades i %identifier%                      |
+| `tr`   | Geçersiz tanımlayıcı formatı: tanımlayıcılar boşluk içeremez. %identifier% içinde bulundu                              |
+| `uk`   | Недійсний формат ідентифікатора: ідентифікатори не можуть містити пробіли. Знайдено в %identifier%                     |
 
 ### `model.invalid_tuple_key`
 
@@ -1190,7 +1137,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------ |
 | `de`   | Ungültiger tuple_key für Assertion::fromArray bereitgestellt |
 | `en`   | Invalid tuple_key provided to Assertion::fromArray           |
-| `es`   | tuple_key inválido proporcionado a Assertion::fromArray      |
 | `fr`   | tuple_key invalide fourni à Assertion::fromArray             |
 | `it`   | tuple_key non valido fornito ad Assertion::fromArray         |
 | `ja`   | Assertion::fromArrayに無効なtuple_keyが提供されました                    |
@@ -1207,7 +1153,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------------------------------------- |
 | `de`   | Blatt muss mindestens eines von users, computed oder tupleToUserset enthalten            |
 | `en`   | Leaf must contain at least one of users, computed or tupleToUserset                      |
-| `es`   | Leaf debe contener al menos uno de: users, computed o tupleToUserset                     |
 | `fr`   | Leaf doit contenir au moins un des éléments suivants : users, computed ou tupleToUserset |
 | `it`   | Leaf deve contenere almeno uno tra users, computed o tupleToUserset                      |
 | `ja`   | LeafにはusersまたはcomputedまたはtupleToUsersetのうち少なくとも1つが含まれている必要があります                          |
@@ -1224,7 +1169,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------ |
 | `de`   | Keine Autorisierungsmodelle in Store %store_id% gefunden           |
 | `en`   | No authorization models found in store %store_id%                  |
-| `es`   | No se encontraron modelos de autorización en el almacén %store_id% |
 | `fr`   | Aucun modèle d&#039;autorisation trouvé dans le magasin %store_id% |
 | `it`   | Nessun modello di autorizzazione trovato nello store %store_id%    |
 | `ja`   | ストア%store_id%に認可モデルが見つかりません                                        |
@@ -1241,7 +1185,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------- |
 | `de`   | SourceInfo::$file darf nicht leer sein.  |
 | `en`   | SourceInfo::$file cannot be empty.       |
-| `es`   | SourceInfo::$file no puede estar vacío.  |
 | `fr`   | SourceInfo::$file ne peut pas être vide. |
 | `it`   | SourceInfo::$file non può essere vuoto.  |
 | `ja`   | SourceInfo::$fileを空にすることはできません。          |
@@ -1258,7 +1201,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------- |
 | `de`   | Typdefinitionen dürfen nicht leer sein            |
 | `en`   | Type definitions cannot be empty                  |
-| `es`   | Las definiciones de tipo no pueden estar vacías   |
 | `fr`   | Les définitions de type ne peuvent pas être vides |
 | `it`   | Le definizioni di tipo non possono essere vuote   |
 | `ja`   | タイプ定義を空にすることはできません                                |
@@ -1275,7 +1217,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------- |
 | `de`   | TypedWildcard::$type darf nicht leer sein.  |
 | `en`   | TypedWildcard::$type cannot be empty.       |
-| `es`   | TypedWildcard::$type no puede estar vacío.  |
 | `fr`   | TypedWildcard::$type ne peut pas être vide. |
 | `it`   | TypedWildcard::$type non può essere vuoto.  |
 | `ja`   | TypedWildcard::$typeを空にすることはできません。          |
@@ -1292,7 +1233,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------- |
 | `de`   | Netzwerkfehler: %message%   |
 | `en`   | Network error: %message%    |
-| `es`   | Error de red: %message%     |
 | `fr`   | Erreur réseau : %message%   |
 | `it`   | Errore di rete: %message%   |
 | `ja`   | ネットワークエラー: %message%        |
@@ -1309,7 +1249,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------------------------------------- |
 | `de`   | Konflikt (409): Die Anfrage steht im Konflikt mit dem aktuellen Zustand |
 | `en`   | Conflict (409): The request conflicts with the current state            |
-| `es`   | Conflicto (409): La solicitud entra en conflicto con el estado actual   |
 | `fr`   | Conflit (409) : La requête entre en conflit avec l&#039;état actuel     |
 | `it`   | Conflitto (409): La richiesta è in conflitto con lo stato attuale       |
 | `ja`   | 競合 (409): リクエストが現在の状態と競合しています                                           |
@@ -1326,7 +1265,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------------------------------- |
 | `de`   | Verboten (403): Zugriff auf die angeforderte Ressource verweigert |
 | `en`   | Forbidden (403): Access denied to the requested resource          |
-| `es`   | Prohibido (403): Acceso denegado al recurso solicitado            |
 | `fr`   | Interdit (403) : Accès refusé à la ressource demandée             |
 | `it`   | Vietato (403): Accesso negato alla risorsa richiesta              |
 | `ja`   | 禁止 (403): 要求されたリソースへのアクセスが拒否されました                                 |
@@ -1343,7 +1281,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------------------- |
 | `de`   | Ungültige Anfrage (400): Die Anfrage ist ungültig     |
 | `en`   | Bad Request (400): The request is invalid             |
-| `es`   | Solicitud incorrecta (400): La solicitud no es válida |
 | `fr`   | Requête incorrecte (400) : La requête est invalide    |
 | `it`   | Richiesta non valida (400): La richiesta non è valida |
 | `ja`   | 無効なリクエスト (400): リクエストが無効です                            |
@@ -1360,7 +1297,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------------------- |
 | `de`   | Anfrage fehlgeschlagen: HTTP-Anfrage konnte nicht abgeschlossen werden |
 | `en`   | Request failed: Unable to complete the HTTP request                    |
-| `es`   | Solicitud fallida: No se pudo completar la solicitud HTTP              |
 | `fr`   | Échec de la requête : Impossible de terminer la requête HTTP           |
 | `it`   | Richiesta fallita: Impossibile completare la richiesta HTTP            |
 | `ja`   | リクエスト失敗: HTTPリクエストを完了できませんでした                                          |
@@ -1377,7 +1313,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------------------------------- |
 | `de`   | Interner Serverfehler (500): Der Server ist auf einen Fehler gestoßen |
 | `en`   | Internal Server Error (500): The server encountered an error          |
-| `es`   | Error interno del servidor (500): El servidor encontró un error       |
 | `fr`   | Erreur interne du serveur (500) : Le serveur a rencontré une erreur   |
 | `it`   | Errore interno del server (500): Il server ha incontrato un errore    |
 | `ja`   | 内部サーバーエラー (500): サーバーでエラーが発生しました                                      |
@@ -1394,7 +1329,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------------ |
 | `de`   | Nicht verarbeitbare Entität (422): Die Anfrage konnte nicht verarbeitet werden |
 | `en`   | Unprocessable Entity (422): The request could not be processed                 |
-| `es`   | Entidad no procesable (422): No se pudo procesar la solicitud                  |
 | `fr`   | Entité non traitable (422) : La requête n&#039;a pas pu être traitée           |
 | `it`   | Entità non processabile (422): La richiesta non può essere processata          |
 | `ja`   | 処理不可能エンティティ (422): リクエストを処理できませんでした                                            |
@@ -1411,7 +1345,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------- |
 | `de`   | Nicht autorisiert (401): Authentifizierung erforderlich |
 | `en`   | Unauthorized (401): Authentication required             |
-| `es`   | No autorizado (401): Se requiere autenticación          |
 | `fr`   | Non autorisé (401) : Authentification requise           |
 | `it`   | Non autorizzato (401): Autenticazione richiesta         |
 | `ja`   | 未認証 (401): 認証が必要です                                      |
@@ -1428,7 +1361,6 @@ The following tables show all available translations for each message key used t
 | ------ | -------------------------------------------------------------------- |
 | `de`   | Nicht gefunden (404): Der angeforderte Endpunkt existiert nicht      |
 | `en`   | Not Found (404): The requested endpoint does not exist               |
-| `es`   | No encontrado (404): El endpoint solicitado no existe                |
 | `fr`   | Non trouvé (404) : Le point de terminaison demandé n&#039;existe pas |
 | `it`   | Non trovato (404): L&#039;&#039;endpoint richiesto non esiste        |
 | `ja`   | 見つかりません (404): 要求されたエンドポイントは存在しません                                   |
@@ -1445,7 +1377,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------- |
 | `de`   | Unerwartete Antwort vom Server      |
 | `en`   | Unexpected response from the server |
-| `es`   | Respuesta inesperada del servidor   |
 | `fr`   | Réponse inattendue du serveur       |
 | `it`   | Risposta inaspettata dal server     |
 | `ja`   | サーバーからの予期しないレスポンス                   |
@@ -1462,7 +1393,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------------ |
 | `de`   | API antwortete mit einem unerwarteten Statuscode: %status_code%                |
 | `en`   | API responded with an unexpected status code: %status_code%                    |
-| `es`   | La API respondió con un código de estado inesperado: %status_code%             |
 | `fr`   | L&#039;API a répondu avec un code de statut inattendu : %status_code%          |
 | `it`   | L&#039;&#039;API ha risposto con un codice di stato inaspettato: %status_code% |
 | `ja`   | APIが予期しないステータスコードで応答しました: %status_code%                                        |
@@ -1475,20 +1405,19 @@ The following tables show all available translations for each message key used t
 
 ### `client.no_last_request_found`
 
-| Locale | Translation                        |
-| ------ | ---------------------------------- |
-| `de`   | Keine letzte Anfrage gefunden      |
-| `en`   | No last request found              |
-| `es`   | No se encontró la última solicitud |
-| `fr`   | Aucune dernière requête trouvée    |
-| `it`   | Nessuna ultima richiesta trovata   |
-| `ja`   | 最後のリクエストが見つかりません                   |
-| `ko`   | 마지막 요청을 찾을 수 없습니다                  |
-| `nl`   | Geen laatste verzoek gevonden      |
-| `ru`   | Последний запрос не найден         |
-| `sv`   | Ingen senaste förfrågan hittades   |
-| `tr`   | Son istek bulunamadı               |
-| `uk`   | Останній запит не знайдено         |
+| Locale | Translation                      |
+| ------ | -------------------------------- |
+| `de`   | Keine letzte Anfrage gefunden    |
+| `en`   | No last request found            |
+| `fr`   | Aucune dernière requête trouvée  |
+| `it`   | Nessuna ultima richiesta trovata |
+| `ja`   | 最後のリクエストが見つかりません                 |
+| `ko`   | 마지막 요청을 찾을 수 없습니다                |
+| `nl`   | Geen laatste verzoek gevonden    |
+| `ru`   | Последний запрос не найден       |
+| `sv`   | Ingen senaste förfrågan hittades |
+| `tr`   | Son istek bulunamadı             |
+| `uk`   | Останній запит не знайдено       |
 
 ### `request.continuation_token_empty`
 
@@ -1496,7 +1425,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------- |
 | `de`   | Fortsetzungstoken darf nicht leer sein         |
 | `en`   | Continuation token cannot be empty             |
-| `es`   | El token de continuación no puede estar vacío  |
 | `fr`   | Le jeton de continuation ne peut pas être vide |
 | `it`   | Il token di continuazione non può essere vuoto |
 | `ja`   | 継続トークンを空にすることはできません                            |
@@ -1513,7 +1441,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------ |
 | `de`   | Autorisierungsmodell-ID darf nicht leer sein                       |
 | `en`   | Authorization Model ID cannot be empty                             |
-| `es`   | El ID del modelo de autorización no puede estar vacío              |
 | `fr`   | L&#039;ID du modèle d&#039;autorisation ne peut pas être vide      |
 | `it`   | L&#039;&#039;ID del modello di autorizzazione non può essere vuoto |
 | `ja`   | 認可モデルIDを空にすることはできません                                               |
@@ -1530,7 +1457,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------- |
 | `de`   | Objekt darf nicht leer sein               |
 | `en`   | Object cannot be empty                    |
-| `es`   | El objeto no puede estar vacío            |
 | `fr`   | L&#039;objet ne peut pas être vide        |
 | `it`   | L&#039;&#039;oggetto non può essere vuoto |
 | `ja`   | オブジェクトを空にすることはできません                       |
@@ -1547,7 +1473,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------ |
 | `de`   | Objekttyp darf nicht leer sein             |
 | `en`   | Object type cannot be empty                |
-| `es`   | El tipo de objeto no puede estar vacío     |
 | `fr`   | Le type d&#039;objet ne peut pas être vide |
 | `it`   | Il tipo di oggetto non può essere vuoto    |
 | `ja`   | オブジェクトタイプを空にすることはできません                     |
@@ -1564,7 +1489,6 @@ The following tables show all available translations for each message key used t
 | ------ | -------------------------------------------------- |
 | `de`   | Ungültige pageSize für %className% bereitgestellt  |
 | `en`   | Invalid pageSize provided to %className%           |
-| `es`   | pageSize inválido proporcionado a %className%      |
 | `fr`   | pageSize invalide fourni à %className%             |
 | `it`   | pageSize non valido fornito a %className%          |
 | `ja`   | %className%に無効なpageSizeが提供されました                    |
@@ -1581,7 +1505,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------- |
 | `de`   | Relation darf nicht leer sein     |
 | `en`   | Relation cannot be empty          |
-| `es`   | La relación no puede estar vacía  |
 | `fr`   | La relation ne peut pas être vide |
 | `it`   | La relazione non può essere vuota |
 | `ja`   | 関係を空にすることはできません                   |
@@ -1598,7 +1521,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------ |
 | `de`   | Store-ID darf nicht leer sein                    |
 | `en`   | Store ID cannot be empty                         |
-| `es`   | El ID del almacén no puede estar vacío           |
 | `fr`   | L&#039;ID du magasin ne peut pas être vide       |
 | `it`   | L&#039;&#039;ID dello store non può essere vuoto |
 | `ja`   | ストアIDを空にすることはできません                               |
@@ -1611,20 +1533,19 @@ The following tables show all available translations for each message key used t
 
 ### `request.store_name_empty`
 
-| Locale | Translation                                |
-| ------ | ------------------------------------------ |
-| `de`   | Store-Name darf nicht leer sein            |
-| `en`   | Store name cannot be empty                 |
-| `es`   | El nombre del almacén no puede estar vacío |
-| `fr`   | Le nom du magasin ne peut pas être vide    |
-| `it`   | Il nome dello store non può essere vuoto   |
-| `ja`   | ストア名を空にすることはできません                          |
-| `ko`   | 스토어 이름은 비어있을 수 없습니다                        |
-| `nl`   | Storenaam kan niet leeg zijn               |
-| `ru`   | Имя хранилища не может быть пустым         |
-| `sv`   | Butiksnamn kan inte vara tomt              |
-| `tr`   | Mağaza adı boş olamaz                      |
-| `uk`   | Ім&#039;я сховища не може бути порожнім    |
+| Locale | Translation                              |
+| ------ | ---------------------------------------- |
+| `de`   | Store-Name darf nicht leer sein          |
+| `en`   | Store name cannot be empty               |
+| `fr`   | Le nom du magasin ne peut pas être vide  |
+| `it`   | Il nome dello store non può essere vuoto |
+| `ja`   | ストア名を空にすることはできません                        |
+| `ko`   | 스토어 이름은 비어있을 수 없습니다                      |
+| `nl`   | Storenaam kan niet leeg zijn             |
+| `ru`   | Имя хранилища не может быть пустым       |
+| `sv`   | Butiksnamn kan inte vara tomt            |
+| `tr`   | Mağaza adı boş olamaz                    |
+| `uk`   | Ім&#039;я сховища не може бути порожнім  |
 
 ### `request.transactional_limit_exceeded`
 
@@ -1632,7 +1553,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `de`   | Transaktionale writeTuples-Grenze überschritten: %count% Operationen (max. 100). Verwenden Sie den nicht-transaktionalen Modus oder teilen Sie in mehrere Anfragen auf. |
 | `en`   | Transactional writeTuples exceeded limit: %count% operations (max 100). Use non-transactional mode or split into multiple requests.                                     |
-| `es`   | WriteTuples transaccional excedió el límite: %count% operaciones (máx. 100). Use modo no transaccional o divida en múltiples solicitudes.                               |
 | `fr`   | Limite de writeTuples transactionnel dépassée : %count% opérations (max 100). Utilisez le mode non transactionnel ou divisez en plusieurs requêtes.                     |
 | `it`   | writeTuples transazionale ha superato il limite: %count% operazioni (massimo 100). Usa la modalità non transazionale o dividi in più richieste.                         |
 | `ja`   | トランザクショナルwriteTuplesが制限を超えました: %count%個の操作（最大100個）。非トランザクショナルモードを使用するか、複数のリクエストに分割してください。                                                                               |
@@ -1649,7 +1569,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------- |
 | `de`   | Typ darf nicht leer sein      |
 | `en`   | Type cannot be empty          |
-| `es`   | El tipo no puede estar vacío  |
 | `fr`   | Le type ne peut pas être vide |
 | `it`   | Il tipo non può essere vuoto  |
 | `ja`   | タイプを空にすることはできません              |
@@ -1666,7 +1585,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------- |
 | `de`   | Benutzer darf nicht leer sein            |
 | `en`   | User cannot be empty                     |
-| `es`   | El usuario no puede estar vacío          |
 | `fr`   | L&#039;utilisateur ne peut pas être vide |
 | `it`   | L&#039;&#039;utente non può essere vuoto |
 | `ja`   | ユーザーを空にすることはできません                        |
@@ -1683,7 +1601,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------- |
 | `de`   | Unerwarteter Antworttyp erhalten      |
 | `en`   | Unexpected response type received     |
-| `es`   | Tipo de respuesta inesperado recibido |
 | `fr`   | Type de réponse inattendu reçu        |
 | `it`   | Tipo di risposta inaspettato ricevuto |
 | `ja`   | 予期しないレスポンスタイプを受信しました                  |
@@ -1700,7 +1617,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------- |
 | `de`   | Fehlschlag hat keinen Wert          |
 | `en`   | Failure has no value                |
-| `es`   | El resultado fallido no tiene valor |
 | `fr`   | L&#039;échec n&#039;a pas de valeur |
 | `it`   | Il fallimento non ha valore         |
 | `ja`   | 失敗には値がありません                         |
@@ -1717,7 +1633,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------ |
 | `de`   | Erfolg hat keinen Fehler             |
 | `en`   | Success has no error                 |
-| `es`   | El resultado exitoso no tiene error  |
 | `fr`   | Le succès n&#039;a pas d&#039;erreur |
 | `it`   | Il successo non ha errori            |
 | `ja`   | 成功にはエラーがありません                        |
@@ -1734,7 +1649,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------------------------------------------------------------------- |
 | `de`   | Klasse &#039;%className%&#039; existiert nicht oder kann nicht automatisch geladen werden             |
 | `en`   | Class &quot;%className%&quot; does not exist or cannot be autoloaded                                  |
-| `es`   | La clase &quot;%className%&quot; no existe o no se puede cargar automáticamente                       |
 | `fr`   | La classe &quot;%className%&quot; n&#039;&#039;existe pas ou ne peut pas être chargée automatiquement |
 | `it`   | La classe &quot;%className%&quot; non esiste o non può essere auto-caricata                           |
 | `ja`   | クラス「%className%」は存在しないか、自動読み込みできません                                                                   |
@@ -1751,7 +1665,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------------------------------------------------------------------- |
 | `de`   | Elementtyp &#039;%itemType%&#039; existiert nicht oder kann nicht automatisch geladen werden                           |
 | `en`   | Item type &quot;%itemType%&quot; does not exist or cannot be autoloaded                                                |
-| `es`   | El tipo de elemento &quot;%itemType%&quot; no existe o no se puede cargar automáticamente                              |
 | `fr`   | Le type d&#039;&#039;élément &quot;%itemType%&quot; n&#039;&#039;existe pas ou ne peut pas être chargé automatiquement |
 | `it`   | Il tipo di elemento &quot;%itemType%&quot; non esiste o non può essere auto-caricato                                   |
 | `ja`   | アイテムタイプ「%itemType%」は存在しないか、自動読み込みできません                                                                                 |
@@ -1768,7 +1681,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------ |
 | `de`   | Elemente konnten nicht zu Sammlung %className% hinzugefügt werden  |
 | `en`   | Could not add items to collection %className%                      |
-| `es`   | No se pudieron agregar elementos a la colección %className%        |
 | `fr`   | Impossible d&#039;ajouter des éléments à la collection %className% |
 | `it`   | Impossibile aggiungere elementi alla collezione %className%        |
 | `ja`   | コレクション%className%にアイテムを追加できませんでした                                  |
@@ -1785,7 +1697,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------- |
 | `de`   | Sammlung darf nicht leer sein       |
 | `en`   | Collection cannot be empty          |
-| `es`   | La colección no puede estar vacía   |
 | `fr`   | La collection ne peut pas être vide |
 | `it`   | La collezione non può essere vuota  |
 | `ja`   | コレクションを空にすることはできません                 |
@@ -1798,20 +1709,19 @@ The following tables show all available translations for each message key used t
 
 ### `exception.serialization.invalid_item_type`
 
-| Locale | Translation                                                                                               |
-| ------ | --------------------------------------------------------------------------------------------------------- |
-| `de`   | Ungültiger Elementtyp für %property% in %className%: erwartet %expected%, erhalten %actual_type%          |
-| `en`   | Invalid item type for %property% in %className%: expected %expected%, got %actual_type%                   |
-| `es`   | Tipo de elemento inválido para %property% en %className%: se esperaba %expected%, se obtuvo %actual_type% |
-| `fr`   | Type d&#039;élément invalide pour %property% dans %className% : %expected% attendu, %actual_type% obtenu  |
-| `it`   | Tipo di elemento non valido per %property% in %className%: atteso %expected%, ottenuto %actual_type%      |
-| `ja`   | %className%の%property%に無効なアイテムタイプです: %expected%が期待されますが%actual_type%が取得されました                              |
-| `ko`   | %className%의 %property%에 대한 잘못된 항목 타입: %expected%이 예상되지만 %actual_type%을 받았습니다                             |
-| `nl`   | Ongeldig itemtype voor %property% in %className%: verwacht %expected%, kreeg %actual_type%                |
-| `ru`   | Недопустимый тип элемента для %property% в %className%: ожидается %expected%, получено %actual_type%      |
-| `sv`   | Ogiltig objekttyp för %property% i %className%: förväntad %expected%, fick %actual_type%                  |
-| `tr`   | %className% içindeki %property% için geçersiz öğe türü: %expected% bekleniyor, %actual_type% alındı       |
-| `uk`   | Недійсний тип елемента для %property% в %className%: очікується %expected%, отримано %actual_type%        |
+| Locale | Translation                                                                                              |
+| ------ | -------------------------------------------------------------------------------------------------------- |
+| `de`   | Ungültiger Elementtyp für %property% in %className%: erwartet %expected%, erhalten %actual_type%         |
+| `en`   | Invalid item type for %property% in %className%: expected %expected%, got %actual_type%                  |
+| `fr`   | Type d&#039;élément invalide pour %property% dans %className% : %expected% attendu, %actual_type% obtenu |
+| `it`   | Tipo di elemento non valido per %property% in %className%: atteso %expected%, ottenuto %actual_type%     |
+| `ja`   | %className%の%property%に無効なアイテムタイプです: %expected%が期待されますが%actual_type%が取得されました                             |
+| `ko`   | %className%의 %property%에 대한 잘못된 항목 타입: %expected%이 예상되지만 %actual_type%을 받았습니다                            |
+| `nl`   | Ongeldig itemtype voor %property% in %className%: verwacht %expected%, kreeg %actual_type%               |
+| `ru`   | Недопустимый тип элемента для %property% в %className%: ожидается %expected%, получено %actual_type%     |
+| `sv`   | Ogiltig objekttyp för %property% i %className%: förväntad %expected%, fick %actual_type%                 |
+| `tr`   | %className% içindeki %property% için geçersiz öğe türü: %expected% bekleniyor, %actual_type% alındı      |
+| `uk`   | Недійсний тип елемента для %property% в %className%: очікується %expected%, отримано %actual_type%       |
 
 ### `exception.serialization.missing_required_constructor_parameter`
 
@@ -1819,7 +1729,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------------------------------- |
 | `de`   | Erforderlicher Konstruktorparameter &#039;%paramName%&#039; für Klasse %className% fehlt          |
 | `en`   | Missing required constructor parameter &quot;%paramName%&quot; for class %className%              |
-| `es`   | Falta el parámetro requerido del constructor &quot;%paramName%&quot; para la clase %className%    |
 | `fr`   | Paramètre de constructeur requis manquant &quot;%paramName%&quot; pour la classe %className%      |
 | `it`   | Parametro del costruttore obbligatorio &quot;%paramName%&quot; mancante per la classe %className% |
 | `ja`   | クラス%className%の必須コンストラクターパラメーター「%paramName%」がありません                                                |
@@ -1836,7 +1745,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------------------------------- |
 | `de`   | Serialisierung/Deserialisierung der Antwortdaten fehlgeschlagen   |
 | `en`   | Failed to serialize/deserialize response data                     |
-| `es`   | No se pudieron serializar/deserializar los datos de respuesta     |
 | `fr`   | Échec de la sérialisation/désérialisation des données de réponse  |
 | `it`   | Fallita la serializzazione/deserializzazione dei dati di risposta |
 | `ja`   | レスポンスデータのシリアライズ/デシリアライズに失敗しました                                    |
@@ -1853,7 +1761,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------- |
 | `de`   | Elementtyp ist für %className% nicht definiert                |
 | `en`   | Item type is not defined for %className%                      |
-| `es`   | El tipo de elemento no está definido para %className%         |
 | `fr`   | Le type d&#039;élément n&#039;est pas défini pour %className% |
 | `it`   | Tipo di elemento non definito per %className%                 |
 | `ja`   | %className%のアイテムタイプが定義されていません                                 |
@@ -1870,7 +1777,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------- |
 | `de`   | HTTP-Service nicht verfügbar  |
 | `en`   | HTTP service not available    |
-| `es`   | Servicio HTTP no disponible   |
 | `fr`   | Service HTTP non disponible   |
 | `it`   | Servizio HTTP non disponibile |
 | `ja`   | HTTPサービスが利用できません              |
@@ -1887,7 +1793,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------- |
 | `de`   | Schema-Validator nicht verfügbar    |
 | `en`   | Schema validator not available      |
-| `es`   | Validador de esquema no disponible  |
 | `fr`   | Validateur de schéma non disponible |
 | `it`   | Validatore schema non disponibile   |
 | `ja`   | スキーマバリデーターが利用できません                  |
@@ -1900,54 +1805,51 @@ The following tables show all available translations for each message key used t
 
 ### `service.store_repository_not_available`
 
-| Locale | Translation                          |
-| ------ | ------------------------------------ |
-| `de`   | Store-Repository nicht verfügbar     |
-| `en`   | Store repository not available       |
-| `es`   | Repositorio de almacén no disponible |
-| `fr`   | Dépôt de magasin non disponible      |
-| `it`   | Repository store non disponibile     |
-| `ja`   | ストアリポジトリが利用できません                     |
-| `ko`   | 스토어 저장소를 사용할 수 없습니다                  |
-| `nl`   | Store-repository niet beschikbaar    |
-| `ru`   | Репозиторий хранилища недоступен     |
-| `sv`   | Butiks-repository inte tillgängligt  |
-| `tr`   | Mağaza deposu kullanılamıyor         |
-| `uk`   | Репозиторій сховища недоступний      |
+| Locale | Translation                         |
+| ------ | ----------------------------------- |
+| `de`   | Store-Repository nicht verfügbar    |
+| `en`   | Store repository not available      |
+| `fr`   | Dépôt de magasin non disponible     |
+| `it`   | Repository store non disponibile    |
+| `ja`   | ストアリポジトリが利用できません                    |
+| `ko`   | 스토어 저장소를 사용할 수 없습니다                 |
+| `nl`   | Store-repository niet beschikbaar   |
+| `ru`   | Репозиторий хранилища недоступен    |
+| `sv`   | Butiks-repository inte tillgängligt |
+| `tr`   | Mağaza deposu kullanılamıyor        |
+| `uk`   | Репозиторій сховища недоступний     |
 
 ### `service.tuple_filter_not_available`
 
-| Locale | Translation                                |
-| ------ | ------------------------------------------ |
-| `de`   | Tupel-Filter-Service nicht verfügbar       |
-| `en`   | Tuple filter service not available         |
-| `es`   | Servicio de filtro de tuplas no disponible |
-| `fr`   | Service de filtre de tuple non disponible  |
-| `it`   | Servizio filtro tuple non disponibile      |
-| `ja`   | タプルフィルターサービスが利用できません                       |
-| `ko`   | 튜플 필터 서비스를 사용할 수 없습니다                      |
-| `nl`   | Tuple-filterservice niet beschikbaar       |
-| `ru`   | Служба фильтра кортежей недоступна         |
-| `sv`   | Tupel-filtertjänst inte tillgänglig        |
-| `tr`   | Tuple filtre hizmeti kullanılamıyor        |
-| `uk`   | Служба фільтра кортежів недоступна         |
+| Locale | Translation                               |
+| ------ | ----------------------------------------- |
+| `de`   | Tupel-Filter-Service nicht verfügbar      |
+| `en`   | Tuple filter service not available        |
+| `fr`   | Service de filtre de tuple non disponible |
+| `it`   | Servizio filtro tuple non disponibile     |
+| `ja`   | タプルフィルターサービスが利用できません                      |
+| `ko`   | 튜플 필터 서비스를 사용할 수 없습니다                     |
+| `nl`   | Tuple-filterservice niet beschikbaar      |
+| `ru`   | Служба фильтра кортежей недоступна        |
+| `sv`   | Tupel-filtertjänst inte tillgänglig       |
+| `tr`   | Tuple filtre hizmeti kullanılamıyor       |
+| `uk`   | Служба фільтра кортежів недоступна        |
 
 ### `service.tuple_repository_not_available`
 
-| Locale | Translation                         |
-| ------ | ----------------------------------- |
-| `de`   | Tupel-Repository nicht verfügbar    |
-| `en`   | Tuple repository not available      |
-| `es`   | Repositorio de tuplas no disponible |
-| `fr`   | Dépôt de tuple non disponible       |
-| `it`   | Repository tuple non disponibile    |
-| `ja`   | タプルリポジトリが利用できません                    |
-| `ko`   | 튜플 저장소를 사용할 수 없습니다                  |
-| `nl`   | Tuple-repository niet beschikbaar   |
-| `ru`   | Репозиторий кортежей недоступен     |
-| `sv`   | Tupel-repository inte tillgängligt  |
-| `tr`   | Tuple deposu kullanılamıyor         |
-| `uk`   | Репозиторій кортежів недоступний    |
+| Locale | Translation                        |
+| ------ | ---------------------------------- |
+| `de`   | Tupel-Repository nicht verfügbar   |
+| `en`   | Tuple repository not available     |
+| `fr`   | Dépôt de tuple non disponible      |
+| `it`   | Repository tuple non disponibile   |
+| `ja`   | タプルリポジトリが利用できません                   |
+| `ko`   | 튜플 저장소를 사용할 수 없습니다                 |
+| `nl`   | Tuple-repository niet beschikbaar  |
+| `ru`   | Репозиторий кортежей недоступен    |
+| `sv`   | Tupel-repository inte tillgängligt |
+| `tr`   | Tuple deposu kullanılamıyor        |
+| `uk`   | Репозиторій кортежів недоступний   |
 
 ### `store.name_required`
 
@@ -1955,7 +1857,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------- |
 | `de`   | Store-Name ist erforderlich und darf nicht leer sein       |
 | `en`   | Store name is required and cannot be empty                 |
-| `es`   | El nombre del almacén es requerido y no puede estar vacío  |
 | `fr`   | Le nom du magasin est requis et ne peut pas être vide      |
 | `it`   | Il nome dello store è obbligatorio e non può essere vuoto  |
 | `ja`   | ストア名は必須で、空にすることはできません                                      |
@@ -1968,20 +1869,19 @@ The following tables show all available translations for each message key used t
 
 ### `store.name_too_long`
 
-| Locale | Translation                                                                          |
-| ------ | ------------------------------------------------------------------------------------ |
-| `de`   | Store-Name überschreitet maximale Länge von %d Zeichen (bereitgestellt: %d)          |
-| `en`   | Store name exceeds maximum length of %d characters (provided: %d)                    |
-| `es`   | El nombre del almacén excede la longitud máxima de %d caracteres (proporcionado: %d) |
-| `fr`   | Le nom du magasin dépasse la longueur maximale de %d caractères (fourni : %d)        |
-| `it`   | Il nome dello store supera la lunghezza massima di %d caratteri (forniti: %d)        |
-| `ja`   | ストア名が最大長%d文字を超えています（提供された文字数: %d）                                                    |
-| `ko`   | 스토어 이름이 최대 길이 %d자를 초과했습니다 (제공됨: %d)                                                  |
-| `nl`   | Storenaam overschrijdt maximale lengte van %d karakters (verstrekt: %d)              |
-| `ru`   | Имя хранилища превышает максимальную длину в %d символов (предоставлено: %d)         |
-| `sv`   | Butiksnamn överstiger maximal längd på %d tecken (tillhandahållet: %d)               |
-| `tr`   | Mağaza adı %d karakter maksimum uzunluğunu aşıyor (sağlanan: %d)                     |
-| `uk`   | Ім&#039;я сховища перевищує максимальну довжину %d символів (надано: %d)             |
+| Locale | Translation                                                                   |
+| ------ | ----------------------------------------------------------------------------- |
+| `de`   | Store-Name überschreitet maximale Länge von %d Zeichen (bereitgestellt: %d)   |
+| `en`   | Store name exceeds maximum length of %d characters (provided: %d)             |
+| `fr`   | Le nom du magasin dépasse la longueur maximale de %d caractères (fourni : %d) |
+| `it`   | Il nome dello store supera la lunghezza massima di %d caratteri (forniti: %d) |
+| `ja`   | ストア名が最大長%d文字を超えています（提供された文字数: %d）                                             |
+| `ko`   | 스토어 이름이 최대 길이 %d자를 초과했습니다 (제공됨: %d)                                           |
+| `nl`   | Storenaam overschrijdt maximale lengte van %d karakters (verstrekt: %d)       |
+| `ru`   | Имя хранилища превышает максимальную длину в %d символов (предоставлено: %d)  |
+| `sv`   | Butiksnamn överstiger maximal längd på %d tecken (tillhandahållet: %d)        |
+| `tr`   | Mağaza adı %d karakter maksimum uzunluğunu aşıyor (sağlanan: %d)              |
+| `uk`   | Ім&#039;я сховища перевищує максимальну довжину %d символів (надано: %d)      |
 
 ### `store.not_found`
 
@@ -1989,7 +1889,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------- |
 | `de`   | Store %s wurde nicht gefunden         |
 | `en`   | Store %s was not found                |
-| `es`   | No se encontró el almacén %s          |
 | `fr`   | Le magasin %s n&#039;a pas été trouvé |
 | `it`   | Store %s non trovato                  |
 | `ja`   | ストア%sが見つかりませんでした                      |
@@ -2002,37 +1901,35 @@ The following tables show all available translations for each message key used t
 
 ### `translation.file_not_found`
 
-| Locale | Translation                                     |
-| ------ | ----------------------------------------------- |
-| `de`   | Übersetzungsdatei nicht gefunden: %resource%    |
-| `en`   | Translation file not found: %resource%          |
-| `es`   | Archivo de traducción no encontrado: %resource% |
-| `fr`   | Fichier de traduction non trouvé : %resource%   |
-| `it`   | File di traduzione non trovato: %resource%      |
-| `ja`   | 翻訳ファイルが見つかりません: %resource%                      |
-| `ko`   | 번역 파일을 찾을 수 없습니다: %resource%                    |
-| `nl`   | Vertaalbestand niet gevonden: %resource%        |
-| `ru`   | Файл перевода не найден: %resource%             |
-| `sv`   | Översättningsfil hittades inte: %resource%      |
-| `tr`   | Çeviri dosyası bulunamadı: %resource%           |
-| `uk`   | Файл перекладу не знайдено: %resource%          |
+| Locale | Translation                                   |
+| ------ | --------------------------------------------- |
+| `de`   | Übersetzungsdatei nicht gefunden: %resource%  |
+| `en`   | Translation file not found: %resource%        |
+| `fr`   | Fichier de traduction non trouvé : %resource% |
+| `it`   | File di traduzione non trovato: %resource%    |
+| `ja`   | 翻訳ファイルが見つかりません: %resource%                    |
+| `ko`   | 번역 파일을 찾을 수 없습니다: %resource%                  |
+| `nl`   | Vertaalbestand niet gevonden: %resource%      |
+| `ru`   | Файл перевода не найден: %resource%           |
+| `sv`   | Översättningsfil hittades inte: %resource%    |
+| `tr`   | Çeviri dosyası bulunamadı: %resource%         |
+| `uk`   | Файл перекладу не знайдено: %resource%        |
 
 ### `translation.unsupported_format`
 
-| Locale | Translation                                              |
-| ------ | -------------------------------------------------------- |
-| `de`   | Nicht unterstütztes Übersetzungsdateiformat: %format%    |
-| `en`   | Unsupported translation file format: %format%            |
-| `es`   | Formato de archivo de traducción no compatible: %format% |
-| `fr`   | Format de fichier de traduction non supporté : %format%  |
-| `it`   | Formato del file di traduzione non supportato: %format%  |
-| `ja`   | サポートされていない翻訳ファイル形式です: %format%                           |
-| `ko`   | 지원되지 않는 번역 파일 형식: %format%                               |
-| `nl`   | Niet ondersteund vertaalbestandformaat: %format%         |
-| `ru`   | Неподдерживаемый формат файла перевода: %format%         |
-| `sv`   | Ostödd översättningsfilformat: %format%                  |
-| `tr`   | Desteklenmeyen çeviri dosya formatı: %format%            |
-| `uk`   | Непідтримуваний формат файлу перекладу: %format%         |
+| Locale | Translation                                             |
+| ------ | ------------------------------------------------------- |
+| `de`   | Nicht unterstütztes Übersetzungsdateiformat: %format%   |
+| `en`   | Unsupported translation file format: %format%           |
+| `fr`   | Format de fichier de traduction non supporté : %format% |
+| `it`   | Formato del file di traduzione non supportato: %format% |
+| `ja`   | サポートされていない翻訳ファイル形式です: %format%                          |
+| `ko`   | 지원되지 않는 번역 파일 형식: %format%                              |
+| `nl`   | Niet ondersteund vertaalbestandformaat: %format%        |
+| `ru`   | Неподдерживаемый формат файла перевода: %format%        |
+| `sv`   | Ostödd översättningsfilformat: %format%                 |
+| `tr`   | Desteklenmeyen çeviri dosya formatı: %format%           |
+| `uk`   | Непідтримуваний формат файлу перекладу: %format%        |
 
 ### `tuple_operation.delete.description`
 
@@ -2040,7 +1937,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------------------------------------------------------- |
 | `de`   | Entfernt ein vorhandenes Beziehungstupel, widerruft Berechtigungen oder entfernt Beziehungen  |
 | `en`   | Removes an existing relationship tuple, revoking permissions or removing relationships        |
-| `es`   | Elimina una tupla de relación existente, revocando permisos o eliminando relaciones           |
 | `fr`   | Supprime un tuple de relation existant, révoquant des permissions ou supprimant des relations |
 | `it`   | Rimuove una tupla di relazione esistente, revocando permessi o rimuovendo relazioni           |
 | `ja`   | 既存の関係タプルを削除し、権限を取り消すか関係を削除します                                                                 |
@@ -2057,7 +1953,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------------------------- |
 | `de`   | Fügt ein neues Beziehungstupel hinzu, gewährt Berechtigungen oder stellt Beziehungen her    |
 | `en`   | Adds a new relationship tuple, granting permissions or establishing relationships           |
-| `es`   | Agrega una nueva tupla de relación, otorgando permisos o estableciendo relaciones           |
 | `fr`   | Ajoute un nouveau tuple de relation, accordant des permissions ou établissant des relations |
 | `it`   | Aggiunge una nuova tupla di relazione, concedendo permessi o stabilendo relazioni           |
 | `ja`   | 新しい関係タプルを追加し、権限を付与するか関係を確立します                                                               |
@@ -2074,7 +1969,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------- |
 | `de`   | Datei kann nicht gelesen werden: %filename% |
 | `en`   | Cannot read file: %filename%                |
-| `es`   | No se puede leer el archivo: %filename%     |
 | `fr`   | Impossible de lire le fichier : %filename%  |
 | `it`   | Impossibile leggere il file: %filename%     |
 | `ja`   | ファイルを読み取れません: %filename%                    |
@@ -2091,7 +1985,6 @@ The following tables show all available translations for each message key used t
 | ------ | ----------------------------------------- |
 | `de`   | Datei existiert nicht: %filename%         |
 | `en`   | File does not exist: %filename%           |
-| `es`   | El archivo no existe: %filename%          |
 | `fr`   | Le fichier n&#039;existe pas : %filename% |
 | `it`   | Il file non esiste: %filename%            |
 | `ja`   | ファイルが存在しません: %filename%                   |
@@ -2108,7 +2001,6 @@ The following tables show all available translations for each message key used t
 | ------ | --------------------------------------------------- |
 | `de`   | Ungültige YAML-Struktur in Zeile %line_number%      |
 | `en`   | Invalid YAML structure on line %line_number%        |
-| `es`   | Estructura YAML inválida en la línea %line_number%  |
 | `fr`   | Structure YAML invalide à la ligne %line_number%    |
 | `it`   | Struttura YAML non valida alla riga %line_number%   |
 | `ja`   | 行%line_number%のYAML構造が無効です                          |
@@ -2125,7 +2017,6 @@ The following tables show all available translations for each message key used t
 | ------ | ---------------------------------------------------------------- |
 | `de`   | Ungültige YAML-Syntax in Zeile %line_number%: leerer Schlüssel   |
 | `en`   | Invalid YAML syntax on line %line_number%: empty key             |
-| `es`   | Sintaxis YAML inválida en la línea %line_number%: clave vacía    |
 | `fr`   | Syntaxe YAML invalide à la ligne %line_number% : clé vide        |
 | `it`   | Sintassi YAML non valida alla riga %line_number%: chiave vuota   |
 | `ja`   | 行%line_number%のYAML構文が無効です: キーが空です                               |
@@ -2142,7 +2033,6 @@ The following tables show all available translations for each message key used t
 | ------ | -------------------------------------------------------------------------- |
 | `de`   | Ungültige YAML-Syntax in Zeile %line_number%: fehlender Doppelpunkt        |
 | `en`   | Invalid YAML syntax on line %line_number%: missing colon                   |
-| `es`   | Sintaxis YAML inválida en la línea %line_number%: falta dos puntos         |
 | `fr`   | Syntaxe YAML invalide à la ligne %line_number% : deux-points manquants     |
 | `it`   | Sintassi YAML non valida alla riga %line_number%: due punti mancanti       |
 | `ja`   | 行%line_number%のYAML構文が無効です: コロンがありません                                      |
@@ -2159,7 +2049,6 @@ The following tables show all available translations for each message key used t
 | ------ | ------------------------------------------------------------------------- |
 | `de`   | Ungültige YAML-Syntax in Zeile %line_number%: fehlender Wert              |
 | `en`   | Invalid YAML syntax on line %line_number%: missing value                  |
-| `es`   | Sintaxis YAML inválida en la línea %line_number%: falta valor             |
 | `fr`   | Syntaxe YAML invalide à la ligne %line_number% : valeur manquante         |
 | `it`   | Sintassi YAML non valida alla riga %line_number%: valore mancante         |
 | `ja`   | 行%line_number%のYAML構文が無効です: 値がありません                                       |

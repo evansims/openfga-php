@@ -39,8 +39,8 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 
 ## Related Classes
 
-* [StoreInterface](Models/StoreInterface.md) (interface)
 * [Stores](Models/Collections/Stores.md) (collection)
+* [StoreInterface](Models/StoreInterface.md) (interface)
 
 ## Constants
 

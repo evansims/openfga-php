@@ -1623,7 +1623,7 @@ class DocumentationGenerator
 
         foreach ($translationFiles as $file) {
             $filename = basename($file);
-            if (preg_match('/messages\.([a-z]{2})\.yaml$/', $filename, $matches)) {
+            if (preg_match('/messages\.([a-z]{2,}(?:_[A-Z]{2,})?)\.yaml$/', $filename, $matches)) {
                 $locale = $matches[1];
                 try {
                     $translations[$locale] = YamlParser::parseFile($file);
