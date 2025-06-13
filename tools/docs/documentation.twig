@@ -93,7 +93,7 @@ The following tables show all available translations for each message key used t
 
 | Locale | Translation |
 |--------|-------------|
-{% for locale, translation in localeTranslations %}| `{{ locale }}` | {{ translation }} |
+{% for locale, translationData in localeTranslations %}| {{ translationData.displayName }} | {{ translationData.translation }} |
 {% endfor %}
 
 {% endif %}

@@ -54,8 +54,8 @@ This documentation provides a complete reference for all classes, interfaces, an
 
 ### Advanced Features
 
-* **[DSL](./Transformer.md)** - DSL parser for human-readable models
-  * [`Transformer`](./Transformer.md) - DSL to API model transformer
+* **[Language](./Language/README.md)** - DSL parser for human-readable models
+  * [`DslTransformer`](./Language/DslTransformer.md) - DSL to API model transformer
 * **[Translation](./Translation/README.md)** - Internationalization support
   * [`Messages`](./Messages.md) - All translatable messages in the SDK
 * **[Integration](./Integration/README.md)** - Framework integration helpers
@@ -381,4 +381,4 @@ This documentation provides a complete reference for all classes, interfaces, an
 
 ---
 
-Generated on 2025-06-13 16:36:06
+Generated on 2025-06-13 17:20:32

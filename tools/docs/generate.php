@@ -7,6 +7,7 @@ namespace OpenFGA\Tools;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
+use OpenFGA\Language;
 use OpenFGA\Translation\YamlParser;
 
 // Load Composer autoloader
@@ -1661,7 +1662,10 @@ class DocumentationGenerator
                 foreach ($translations as $locale => $data) {
                     $value = $this->getNestedValue($data, $messageKey);
                     if ($value !== null) {
-                        $organized[$messageKey][$locale] = $value;
+                        $organized[$messageKey][$locale] = [
+                            'displayName' => $this->getLocaleDisplayName($locale),
+                            'translation' => $value
+                        ];
                     }
                 }
             }
@@ -1676,7 +1680,10 @@ class DocumentationGenerator
                     foreach ($translations as $locale => $data) {
                         $value = $this->getNestedValue($data, $messageKey);
                         if ($value !== null) {
-                            $organized[$messageKey][$locale] = $value;
+                            $organized[$messageKey][$locale] = [
+                                'displayName' => $this->getLocaleDisplayName($locale),
+                                'translation' => $value
+                            ];
                         }
                     }
                 }
@@ -1684,6 +1691,19 @@ class DocumentationGenerator
         }
 
         return $organized;
+    }
+
+    /**
+     * Get the display name for a locale code using the Language enum.
+     *
+     * @param string $locale The locale code (e.g., 'en', 'pt_BR')
+     * @return string The display name (e.g., 'English', 'Portuguese (Brazilian)')
+     */
+    private function getLocaleDisplayName(string $locale): string
+    {
+        $language = Language::fromLocale($locale);
+        
+        return $language !== null ? $language->displayName() : $locale;
     }
 
     /**
