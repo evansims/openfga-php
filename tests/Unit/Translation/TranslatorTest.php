@@ -250,4 +250,23 @@ describe('Translator', function (): void {
         expect($translation)->toBe('Invalid response format');
         expect($translation)->not()->toBe($message->key());
     });
+
+    test('German translations work correctly', function (): void {
+        // Test German translation resource
+        $germanTranslationPath = __DIR__ . '/../../../translations/messages.de.yaml';
+        Translator::addResource('yaml', $germanTranslationPath, 'de');
+
+        $message = Messages::NO_LAST_REQUEST_FOUND;
+
+        $englishTranslation = Translator::trans($message, [], 'en');
+        $germanTranslation = Translator::trans($message, [], 'de');
+
+        expect($englishTranslation)->toBe('No last request found');
+        expect($germanTranslation)->toBe('Keine letzte Anfrage gefunden');
+
+        // Test another message with complex text
+        $authMessage = Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED;
+        $germanAuthTranslation = Translator::trans($authMessage, [], 'de');
+        expect($germanAuthTranslation)->toBe('Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.');
+    });
 });

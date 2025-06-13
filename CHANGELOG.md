@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+### Added
+
+- **New i18n Translations**<br />
+  Added German language support for exception messages.
+
+### Fixed
+
+- Resolved an issue with operator precedence in the DSL transformer.
+- Resolved a potential infinite loop issue in fiber concurrency.
+
+### Documentation
+
+- Various improvements to our written guides, particularly around Observability.
+- Improvements to source code comment blocks to improve generated API documentation and IDE hinting.
+
 ## [1.3.0] - June 10, 2025
 
 > _Threads and fibers dance,<br />

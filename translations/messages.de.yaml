@@ -1,0 +1,170 @@
+# OpenFGA PHP SDK - Deutsche Übersetzung
+# Diese Nachrichten entsprechen den Messages-Enum-Fällen
+
+client:
+  no_last_request_found: "Keine letzte Anfrage gefunden"
+
+dsl:
+  parse_failed: "DSL-Eingabe konnte nicht geparst werden"
+  unrecognized_term: "Unerkannter DSL-Begriff: %term%"
+  input_empty: "Eingabezeichenkette darf nicht leer sein"
+  pattern_empty: "Muster darf nicht leer sein"
+  unbalanced_parentheses_closing: "Unausgeglichene Klammern: zu viele schließende Klammern an Position %position%"
+  unbalanced_parentheses_opening: "Unausgeglichene Klammern: %count% ungeschlossene öffnende %parentheses%"
+  invalid_computed_userset: "Ungültiges berechnetes Benutzerset"
+  invalid_computed_userset_relation: "Berechnete Benutzerset-Relation darf nicht leer sein."
+
+assertions:
+  empty_collection: "Assertion-Sammlung darf nicht leer sein"
+  invalid_tuple_key: "Assertion enthält ungültigen Tupel-Schlüssel: Benutzer, Relation und Objekt sind erforderlich"
+
+auth:
+  invalid_response_format: "Ungültiges Antwortformat"
+  missing_required_fields: "Erforderliche Felder in der Antwort fehlen"
+  access_token_must_be_string: "access_token muss eine Zeichenkette sein"
+  expires_in_must_be_integer: "expires_in muss eine Ganzzahl sein"
+  user_message:
+    token_expired: "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an."
+    token_invalid: "Ungültige Authentifizierungsdaten bereitgestellt."
+  jwt:
+    invalid_format: "Ungültiges JWT-Token-Format"
+    invalid_header: "Ungültiger JWT-Header"
+    invalid_payload: "Ungültige JWT-Nutzlast"
+    missing_required_claims: "Erforderliche JWT-Claims fehlen"
+    token_expired: "JWT-Token ist abgelaufen"
+    token_not_yet_valid: "JWT-Token ist noch nicht gültig"
+    invalid_audience: "JWT-Token-Zielgruppe stimmt nicht mit erwarteter Zielgruppe überein"
+    invalid_issuer: "JWT-Token-Aussteller stimmt nicht mit erwartetem Aussteller überein"
+
+network:
+  error: "Netzwerkfehler: %message%"
+  unexpected_status: "API antwortete mit einem unerwarteten Statuscode: %status_code%"
+
+response:
+  unexpected_type: "Unerwarteter Antworttyp erhalten"
+
+result:
+  success_no_error: "Erfolg hat keinen Fehler"
+  failure_no_value: "Fehlschlag hat keinen Wert"
+
+request:
+  store_id_empty: "Store-ID darf nicht leer sein"
+  model_id_empty: "Autorisierungsmodell-ID darf nicht leer sein"
+  store_name_empty: "Store-Name darf nicht leer sein"
+  transactional_limit_exceeded: "Transaktionale writeTuples-Grenze überschritten: %count% Operationen (max. 100). Verwenden Sie den nicht-transaktionalen Modus oder teilen Sie in mehrere Anfragen auf."
+  continuation_token_empty: "Fortsetzungstoken darf nicht leer sein"
+  page_size_invalid: "Ungültige pageSize für %className% bereitgestellt"
+  object_type_empty: "Objekttyp darf nicht leer sein"
+  relation_empty: "Relation darf nicht leer sein"
+  user_empty: "Benutzer darf nicht leer sein"
+  object_empty: "Objekt darf nicht leer sein"
+  type_empty: "Typ darf nicht leer sein"
+
+validation:
+  batch_check_empty: "Batch-Check-Anfrage darf nicht leer sein"
+  invalid_correlation_id: "Korrelations-ID "%correlationId%" ist ungültig. Muss dem Muster entsprechen: %pattern%"
+  batch_tuple_chunk_size_positive: "Chunk-Größe muss eine positive Ganzzahl sein"
+  batch_tuple_chunk_size_exceeded: "Chunk-Größe darf %max_size% nicht überschreiten"
+
+service:
+  http_not_available: "HTTP-Service nicht verfügbar"
+  schema_validator_not_available: "Schema-Validator nicht verfügbar"
+  tuple_filter_not_available: "Tupel-Filter-Service nicht verfügbar"
+  store_repository_not_available: "Store-Repository nicht verfügbar"
+  tuple_repository_not_available: "Tupel-Repository nicht verfügbar"
+
+model:
+  invalid_tuple_key: "Ungültiger tuple_key für Assertion::fromArray bereitgestellt"
+  invalid_identifier_format: "Ungültiges Bezeichnerformat: Bezeichner dürfen keine Leerzeichen enthalten. Gefunden in %identifier%"
+  typed_wildcard_type_empty: "TypedWildcard::$type darf nicht leer sein."
+  source_info_file_empty: "SourceInfo::$file darf nicht leer sein."
+  leaf_missing_content: "Blatt muss mindestens eines von users, computed oder tupleToUserset enthalten"
+  not_found: "Autorisierungsmodell %model_id% wurde nicht gefunden"
+  no_models_in_store: "Keine Autorisierungsmodelle in Store %store_id% gefunden"
+  validation_failed: "Modellvalidierung fehlgeschlagen: %message%"
+  type_definitions_empty: "Typdefinitionen dürfen nicht leer sein"
+  clone_source_not_found: "Quellmodell zum Klonen nicht gefunden"
+  duplicate_type: "Doppelte Typdefinition gefunden: %type%"
+
+collection:
+  undefined_item_type: "Undefinierter Elementtyp für %class%. Definieren Sie die $itemType-Eigenschaft oder überschreiben Sie den Konstruktor."
+  invalid_item_type_interface: "Erwarteter Elementtyp sollte %interface% implementieren, %given% gegeben"
+  invalid_item_instance: "Erwartete Instanz von %expected%, %given% gegeben"
+  invalid_value_type: "Erwartete Instanz von %expected%, %given% gegeben."
+  key_must_be_string: "Schlüssel muss eine Zeichenkette sein."
+  invalid_position: "Ungültige Position"
+  invalid_key_type: "Ungültiger Schlüsseltyp; Zeichenkette erwartet, %given% gegeben."
+
+consistency:
+  higher_consistency:
+    description: "Priorisiert Datenkonsistenz über Abfrageleistung und gewährleistet die aktuellsten Ergebnisse"
+  minimize_latency:
+    description: "Priorisiert Abfrageleistung über Datenkonsistenz, verwendet möglicherweise leicht veraltete Daten"
+  unspecified:
+    description: "Verwendet die Standard-Konsistenzebene, die durch die OpenFGA-Serverkonfiguration bestimmt wird"
+
+schema:
+  class_not_found: "Klasse "%className%" existiert nicht oder kann nicht automatisch geladen werden"
+  item_type_not_found: "Elementtyp "%itemType%" existiert nicht oder kann nicht automatisch geladen werden"
+
+exception:
+  client:
+    authentication: "Authentifizierungsfehler aufgetreten"
+    configuration: "Konfigurationsfehler erkannt"
+    network: "Netzwerkkommunikationsfehler"
+    serialization: "Datenserialisierungsfehler"
+    validation: "Anfragvalidierung fehlgeschlagen"
+  auth:
+    token_expired: "Authentifizierungstoken ist abgelaufen"
+    token_invalid: "Authentifizierungstoken ist ungültig"
+  config:
+    http_client_missing: "HTTP-Client ist nicht konfiguriert"
+    http_request_factory_missing: "HTTP-Request-Factory ist nicht konfiguriert"
+    http_response_factory_missing: "HTTP-Response-Factory ist nicht konfiguriert"
+    http_stream_factory_missing: "HTTP-Stream-Factory ist nicht konfiguriert"
+    invalid_url: "Ungültige URL bereitgestellt: %url%"
+    invalid_language: "Ungültiger Sprachcode bereitgestellt: %language%"
+    invalid_retry_count: "Ungültige Wiederholungsanzahl bereitgestellt: %retries%"
+  network:
+    conflict: "Konflikt (409): Die Anfrage steht im Konflikt mit dem aktuellen Zustand"
+    forbidden: "Verboten (403): Zugriff auf die angeforderte Ressource verweigert"
+    invalid: "Ungültige Anfrage (400): Die Anfrage ist ungültig"
+    request: "Anfrage fehlgeschlagen: HTTP-Anfrage konnte nicht abgeschlossen werden"
+    server: "Interner Serverfehler (500): Der Server ist auf einen Fehler gestoßen"
+    timeout: "Nicht verarbeitbare Entität (422): Die Anfrage konnte nicht verarbeitet werden"
+    unauthenticated: "Nicht autorisiert (401): Authentifizierung erforderlich"
+    undefined_endpoint: "Nicht gefunden (404): Der angeforderte Endpunkt existiert nicht"
+    unexpected: "Unerwartete Antwort vom Server"
+  serialization:
+    could_not_add_items_to_collection: "Elemente konnten nicht zu Sammlung %className% hinzugefügt werden"
+    empty_collection: "Sammlung darf nicht leer sein"
+    invalid_item_type: "Ungültiger Elementtyp für %property% in %className%: erwartet %expected%, erhalten %actual_type%"
+    missing_required_constructor_parameter: "Erforderlicher Konstruktorparameter "%paramName%" für Klasse %className% fehlt"
+    response: "Serialisierung/Deserialisierung der Antwortdaten fehlgeschlagen"
+    undefined_item_type: "Elementtyp ist für %className% nicht definiert"
+
+tuple_operation:
+  write:
+    description: "Fügt ein neues Beziehungstupel hinzu, gewährt Berechtigungen oder stellt Beziehungen her"
+  delete:
+    description: "Entfernt ein vorhandenes Beziehungstupel, widerruft Berechtigungen oder entfernt Beziehungen"
+
+store:
+  name_required: "Store-Name ist erforderlich und darf nicht leer sein"
+  name_too_long: "Store-Name überschreitet maximale Länge von %d Zeichen (bereitgestellt: %d)"
+  not_found: "Store %s wurde nicht gefunden"
+
+translation:
+  file_not_found: "Übersetzungsdatei nicht gefunden: %resource%"
+  unsupported_format: "Nicht unterstütztes Übersetzungsdateiformat: %format%"
+
+yaml:
+  file_does_not_exist: "Datei existiert nicht: %filename%"
+  cannot_read_file: "Datei kann nicht gelesen werden: %filename%"
+  invalid_syntax_missing_colon: "Ungültige YAML-Syntax in Zeile %line_number%: fehlender Doppelpunkt"
+  invalid_syntax_missing_value: "Ungültige YAML-Syntax in Zeile %line_number%: fehlender Wert"
+  invalid_syntax_empty_key: "Ungültige YAML-Syntax in Zeile %line_number%: leerer Schlüssel"
+  invalid_structure: "Ungültige YAML-Struktur in Zeile %line_number%"
+
+response:
+  unexpected_type: "Unerwarteter Antworttyp erhalten"

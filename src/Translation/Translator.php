@@ -193,7 +193,7 @@ final class Translator implements TranslatorInterface
 
         // Load available translations
         $translationsDir = dirname(__DIR__, 2) . '/translations';
-        $locales = ['en', 'es']; // Add more locales as they become available
+        $locales = ['en', 'es', 'de'];
 
         foreach ($locales as $locale) {
             $translationPath = $translationsDir . '/messages.' . $locale . '.yaml';
