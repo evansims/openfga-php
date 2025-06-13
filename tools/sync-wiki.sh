@@ -169,6 +169,26 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
 
     # Remove the first H1 title (# Title) since Wiki generates its own title
     sed -i.bak '/^# /d' "$file"
+    
+    # Extract the wiki page title from filename and add it back without prefixes
+    filename=$(basename "$file" .md)
+    
+    # Create clean title by removing API prefix and README suffix
+    clean_title="$filename"
+    if [[ "$clean_title" == API-* ]]; then
+        clean_title="${clean_title#API-}"
+    fi
+    if [[ "$clean_title" == *-README ]]; then
+        clean_title="${clean_title%-README}"
+    fi
+    
+    # Convert remaining dashes to spaces for readability
+    clean_title=$(echo "$clean_title" | sed 's/-/ /g')
+    
+    # Add the clean title back as the first line
+    sed -i.bak "1i\\
+# $clean_title
+" "$file"
 
     # Convert internal markdown links to wiki format
     # Handle links with anchors: file.md#anchor -> file#anchor
