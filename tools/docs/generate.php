@@ -24,6 +24,8 @@ use Twig\Loader\FilesystemLoader;
 
 class DocumentationGenerator
 {
+    private const TRANSLATION_FILE_REGEX = '/messages\.([a-z]{2,}(?:_[A-Z]{2,})?)\.yaml$/';
+
     private string $srcDir;
     private string $outputDir;
     private Environment $twig;
@@ -378,21 +380,21 @@ class DocumentationGenerator
                 'Utility' => 7,
                 'Other' => 8,
             ];
-            
+
             $aCategoryWeight = $categoryOrder[$a['category']] ?? 999;
             $bCategoryWeight = $categoryOrder[$b['category']] ?? 999;
-            
+
             if ($aCategoryWeight !== $bCategoryWeight) {
                 return $aCategoryWeight <=> $bCategoryWeight;
             }
-            
+
             return strcmp($a['name'], $b['name']);
         });
-        
+
         // Add method statistics and related classes
         $classData['methodStats'] = $this->calculateMethodStatistics($classData['methods']);
         $classData['relatedClasses'] = $this->findRelatedClasses($reflection);
-        
+
         // Add translation tables for Messages class
         if ($className === 'OpenFGA\Messages') {
             $translationData = $this->loadTranslationData();
@@ -404,7 +406,7 @@ class DocumentationGenerator
         $outputFile = $outputPath . '/' . $reflection->getShortName() . '.md';
         echo "Writing to: $outputFile\n";
         $content = $this->twig->render('documentation.twig', $classData);
-        
+
         // Clean up markdown formatting
         $content = $this->cleanupMarkdown($content);
 
@@ -478,7 +480,7 @@ class DocumentationGenerator
     {
         $params = [];
         $namespace = $method->getDeclaringClass()->getNamespaceName();
-        
+
         foreach ($method->getParameters() as $param) {
             // Get raw type without markdown links for the signature
             $paramStr = $this->getParameterType($param, $namespace, false) . ' ';
@@ -550,13 +552,13 @@ class DocumentationGenerator
             implode(', ', $params),
             $returnTypeStr
         );
-        
+
         // If signature is longer than 120 characters or has more than 3 parameters, use multi-line format
         if (strlen($singleLineSignature) > 120 || count($params) > 3) {
             if (empty($params)) {
                 return sprintf('public function %s()%s', $method->getName(), $returnTypeStr);
             }
-            
+
             return sprintf(
                 "public function %s(\n    %s,\n)%s",
                 $method->getName(),
@@ -564,7 +566,7 @@ class DocumentationGenerator
                 $returnTypeStr
             );
         }
-        
+
         return $singleLineSignature;
     }
 
@@ -744,7 +746,7 @@ class DocumentationGenerator
                     'OpenFGA\\Exceptions',
                     'OpenFGA\\Models\\Enums',
                 ];
-                
+
                 foreach ($commonNamespaces as $namespace) {
                     $possibleFullName = $namespace . '\\' . $type;
                     if (array_key_exists($possibleFullName, $this->classMap)) {
@@ -766,7 +768,7 @@ class DocumentationGenerator
             if (!empty($currentFilePath)) {
                 $currentDir = dirname($currentFilePath);
                 $targetDir = dirname($relativePath);
-                
+
                 // If both files are in the same directory, use just the filename
                 if ($currentDir === $targetDir) {
                     $targetPath = basename($relativePath) . '.md';
@@ -922,14 +924,14 @@ class DocumentationGenerator
         $lines = explode("\n", $docComment);
         foreach ($lines as $line) {
             $trimmedLine = trim($line, "/* \t\n\r");
-            
+
             // Match @return type - capture the full type including generics
             // This regex matches: type or type<...> or type1|type2 etc
             if (preg_match('/@return\s+([\w\\\\\[\]]+(?:<[^>]+>)?(?:\s*\|\s*[\w\\\\\[\]]+(?:<[^>]+>)?)*)(?:\s+.*)?$/', $trimmedLine, $matches)) {
                 return trim($matches[1]);
             }
         }
-        
+
         return null;
     }
 
@@ -943,15 +945,15 @@ class DocumentationGenerator
         // Create regex that matches @param type $paramName
         // Support complex types like array<string, mixed>
         $paramRegex = '/@param\s+([\w\\\\\[\]]+(?:<[^>]+>)?(?:\s*\|\s*[\w\\\\\[\]]+(?:<[^>]+>)?)*)\s+\$' . preg_quote($paramName, '/') . '\b/';
-        
+
         foreach ($lines as $line) {
             $trimmedLine = trim($line, "/* \t\n\r");
-            
+
             if (preg_match($paramRegex, $trimmedLine, $matches)) {
                 return trim($matches[1]);
             }
         }
-        
+
         return null;
     }
 
@@ -986,7 +988,7 @@ class DocumentationGenerator
 
         $relativePath = $this->getRelativePathFromProjectRoot($filePath);
         $lineNumber = $method->getStartLine();
-        
+
         return "https://github.com/evansims/openfga-php/blob/main/{$relativePath}#L{$lineNumber}";
     }
 
@@ -997,17 +999,17 @@ class DocumentationGenerator
     {
         // Find the project root by looking for composer.json
         $projectRoot = $this->findProjectRoot($filePath);
-        
+
         if ($projectRoot) {
             return str_replace($projectRoot . '/', '', $filePath);
         }
-        
+
         // Fallback: assume src directory structure
         if (str_contains($filePath, '/src/')) {
             $parts = explode('/src/', $filePath);
             return 'src/' . end($parts);
         }
-        
+
         return basename($filePath);
     }
 
@@ -1017,14 +1019,14 @@ class DocumentationGenerator
     private function findProjectRoot(string $startPath): ?string
     {
         $currentPath = is_file($startPath) ? dirname($startPath) : $startPath;
-        
+
         while ($currentPath !== '/' && $currentPath !== '') {
             if (file_exists($currentPath . '/composer.json')) {
                 return $currentPath;
             }
             $currentPath = dirname($currentPath);
         }
-        
+
         return null;
     }
 
@@ -1040,26 +1042,26 @@ class DocumentationGenerator
 
         // Get actual parameter names from reflection
         $reflectionParams = array_map(fn($p) => $p->getName(), $method->getParameters());
-        
+
         // Extract parameter descriptions from PHPDoc
         $paramDescriptions = [];
         $lines = explode("\n", $docComment);
-        
+
         foreach ($lines as $line) {
             $trimmedLine = trim($line, "/* \t\n\r");
-            
+
             // Match @param with flexible type and parameter name
             if (preg_match('/@param\s+[^\s]+\s+\$([a-zA-Z_][a-zA-Z0-9_]*)(?:\s+(.*))?$/', $trimmedLine, $matches)) {
                 $paramName = $matches[1];
                 $description = isset($matches[2]) ? trim($matches[2]) : '';
-                
+
                 // Only include if parameter actually exists in method signature
                 if (in_array($paramName, $reflectionParams, true)) {
                     $paramDescriptions[$paramName] = $description;
                 }
             }
         }
-        
+
         return $paramDescriptions;
     }
 
@@ -1076,10 +1078,10 @@ class DocumentationGenerator
         $lines = explode("\n", $docComment);
         $currentExample = null;
         $inExample = false;
-        
+
         foreach ($lines as $line) {
             $trimmedLine = trim($line, "/* \t\n\r");
-            
+
             if (preg_match('/@example(?:\s+(.*))?$/', $trimmedLine, $matches)) {
                 // Start of new example
                 if ($currentExample !== null) {
@@ -1108,17 +1110,17 @@ class DocumentationGenerator
                 }
             }
         }
-        
+
         // Add final example if exists
         if ($currentExample !== null) {
             $examples[] = $currentExample;
         }
-        
+
         // Clean up examples
         foreach ($examples as &$example) {
             // Join lines and clean up formatting
             $codeLines = $example['code'];
-            
+
             // Remove empty lines at start and end
             while (!empty($codeLines) && trim($codeLines[0]) === '') {
                 array_shift($codeLines);
@@ -1126,7 +1128,7 @@ class DocumentationGenerator
             while (!empty($codeLines) && trim(end($codeLines)) === '') {
                 array_pop($codeLines);
             }
-            
+
             // Find minimum indentation (excluding empty lines)
             $minIndent = PHP_INT_MAX;
             foreach ($codeLines as $line) {
@@ -1135,7 +1137,7 @@ class DocumentationGenerator
                     $minIndent = min($minIndent, $indent);
                 }
             }
-            
+
             // Remove common indentation and normalize
             if ($minIndent > 0 && $minIndent !== PHP_INT_MAX) {
                 $codeLines = array_map(function($line) use ($minIndent) {
@@ -1145,10 +1147,10 @@ class DocumentationGenerator
                     return substr($line, $minIndent);
                 }, $codeLines);
             }
-            
+
             $example['code'] = implode("\n", $codeLines);
         }
-        
+
         return $examples;
     }
 
@@ -1158,7 +1160,7 @@ class DocumentationGenerator
     private function categorizeMethod(ReflectionMethod $method): string
     {
         $methodName = strtolower($method->getName());
-        
+
         $categories = [
             'Authorization' => ['check', 'expand', 'allow', 'verify', 'validate'],
             'CRUD Operations' => ['create', 'read', 'write', 'delete', 'update', 'remove'],
@@ -1168,7 +1170,7 @@ class DocumentationGenerator
             'Tuple Operations' => ['tuple', 'relation', 'relationship'],
             'Utility' => ['assert', 'get', 'set', 'has', 'is'],
         ];
-        
+
         foreach ($categories as $category => $patterns) {
             foreach ($patterns as $pattern) {
                 if (str_contains($methodName, $pattern)) {
@@ -1176,10 +1178,10 @@ class DocumentationGenerator
                 }
             }
         }
-        
+
         return 'Other';
     }
-    
+
     /**
      * Calculate method statistics for overview
      */
@@ -1191,23 +1193,23 @@ class DocumentationGenerator
             'withExamples' => 0,
             'withDescription' => 0,
         ];
-        
+
         foreach ($methods as $method) {
             $category = $method['category'];
             $stats['categories'][$category] = ($stats['categories'][$category] ?? 0) + 1;
-            
+
             if (!empty($method['examples'])) {
                 $stats['withExamples']++;
             }
-            
+
             if (!empty($method['description'])) {
                 $stats['withDescription']++;
             }
         }
-        
+
         return $stats;
     }
-    
+
     /**
      * Find classes related to the current class
      */
@@ -1216,14 +1218,14 @@ class DocumentationGenerator
         $related = [];
         $className = $class->getName();
         $shortName = $class->getShortName();
-        
+
         foreach ($this->classMap as $otherClassName => $filePath) {
             if ($otherClassName === $className) {
                 continue;
             }
-            
+
             $otherShortName = substr($otherClassName, strrpos($otherClassName, '\\') + 1);
-            
+
             // Look for naming patterns that suggest relationships
             $patterns = [
                 // Interface/Implementation pairs
@@ -1236,7 +1238,7 @@ class DocumentationGenerator
                 str_replace('s', '', $shortName) . 's' => 'collection',
                 str_replace('Collection', '', $shortName) => 'item',
             ];
-            
+
             foreach ($patterns as $pattern => $relationship) {
                 if ($otherShortName === $pattern) {
                     $related[] = [
@@ -1248,10 +1250,10 @@ class DocumentationGenerator
                 }
             }
         }
-        
+
         return $related;
     }
-    
+
     /**
      * Generate markdown link for related class
      */
@@ -1261,9 +1263,9 @@ class DocumentationGenerator
         $targetPath = str_replace('\\', '/', $targetPath);
         $currentPath = str_replace('OpenFGA\\', '', $currentNamespace);
         $currentPath = str_replace('\\', '/', $currentPath);
-        
+
         $targetShortName = substr($targetClassName, strrpos($targetClassName, '\\') + 1);
-        
+
         // Calculate relative path
         if ($currentPath !== '') {
             $currentDepth = substr_count($currentPath, '/');
@@ -1271,7 +1273,7 @@ class DocumentationGenerator
         } else {
             $relativePath = $targetPath . '.md';
         }
-        
+
         return "[$targetShortName]($relativePath)";
     }
 
@@ -1293,20 +1295,20 @@ class DocumentationGenerator
         // Normalize line endings
         $content = str_replace("\r\n", "\n", $content);
         $content = str_replace("\r", "\n", $content);
-        
+
         // Split into lines for processing
         $lines = explode("\n", $content);
         $cleanedLines = [];
         $consecutiveBlankLines = 0;
-        
+
         foreach ($lines as $line) {
             // Remove trailing whitespace
             $line = rtrim($line);
-            
+
             // Check if line is blank (empty or only whitespace)
             if (trim($line) === '') {
                 $consecutiveBlankLines++;
-                
+
                 // Only allow maximum of 2 consecutive blank lines
                 if ($consecutiveBlankLines <= 2) {
                     $cleanedLines[] = '';
@@ -1316,24 +1318,24 @@ class DocumentationGenerator
                 $cleanedLines[] = $line;
             }
         }
-        
+
         // Remove trailing blank lines at the end
         while (!empty($cleanedLines) && end($cleanedLines) === '') {
             array_pop($cleanedLines);
         }
-        
+
         // Ensure file ends with single newline
         $cleanedLines[] = '';
-        
+
         // Join lines back together
         $content = implode("\n", $cleanedLines);
-        
+
         // Apply additional cleanup patterns
         $content = $this->applyMarkdownCleanupPatterns($content);
-        
+
         // Format tables for better readability
         $content = $this->formatTables($content);
-        
+
         return $content;
     }
 
@@ -1347,40 +1349,40 @@ class DocumentationGenerator
     {
         // First, normalize all multiple blank lines to exactly one blank line
         $content = preg_replace('/\n{3,}/', "\n\n", $content);
-        
+
         // Ensure proper spacing around headers (single blank line before and after)
         // Add blank line before headers if missing (but not at start of document)
         $content = preg_replace('/(?<!\n\n)(?<!^)\n(#{1,6}\s)/', "\n\n$1", $content);
-        
+
         // Add blank line after headers if missing
         $content = preg_replace('/(#{1,6}\s[^\n]+)\n(?!\n)/', "$1\n\n", $content);
-        
+
         // Ensure proper spacing around code blocks
         $content = preg_replace('/(?<!\n\n)\n(```)/', "\n\n$1", $content);
         $content = preg_replace('/(```[^\n]*(?:\n(?!```)[^\n]*)*\n```)\n(?!\n)/', "$1\n\n", $content);
-        
+
         // Remove blank lines that are just whitespace
         $content = preg_replace('/\n[ \t]+\n/', "\n\n", $content);
-        
+
         // Remove excessive leading whitespace from list items (fix table of contents formatting)
         $content = preg_replace('/\n[ \t]{10,}(\* \[)/', "\n$1", $content);
-        
+
         // Fix table of contents formatting - ensure blank line after Methods heading
         $content = preg_replace('/(\* \[Methods\]\(#methods\))\n(\* \[)/', "$1\n\n$2", $content);
-        
+
         // Handle additional whitespace variations in table of contents
         $content = preg_replace('/(\* \[Methods\]\(#methods\))\n[ \t]*(\* \[)/', "$1\n\n$2", $content);
-        
+
         // Fix spacing issues with consecutive headers (h2 followed by h3, h4, etc.)
         $content = preg_replace('/(#{2}\s[^\n]+)\n\n\n(#{3,6}\s)/', "$1\n\n$2", $content);
-        
+
         // Specific cleanup for method sections - ensure consistent spacing
         $content = preg_replace('/(\n#{4}\s[^\n]+)\n\n\n(```php)/', "$1\n\n$2", $content);
-        
+
         // Final pass: ensure we never have more than one blank line anywhere
         // BUT preserve table structure by NOT adding blank lines between table rows
         $content = preg_replace('/\n{3,}/', "\n\n", $content);
-        
+
         return $content;
     }
 
@@ -1399,23 +1401,23 @@ class DocumentationGenerator
     {
         // Pattern to match markdown tables (header + separator + data rows)
         $tablePattern = '/(?:^|\n)((?:\|[^\n]*\|\n)+)/m';
-        
+
         return preg_replace_callback($tablePattern, function($matches) {
             $tableContent = trim($matches[1]);
             $lines = explode("\n", $tableContent);
-            
+
             if (count($lines) < 2) {
                 return $matches[0]; // Not a valid table
             }
-            
+
             // Parse all rows
             $rows = [];
             $separatorIndex = -1;
-            
+
             foreach ($lines as $index => $line) {
                 $line = trim($line);
                 if (empty($line)) continue;
-                
+
                 // Check if this is a separator row (contains only |, -, :, and spaces)
                 if (preg_match('/^\|[\s\-:|]+\|$/', $line)) {
                     $separatorIndex = count($rows);
@@ -1424,11 +1426,11 @@ class DocumentationGenerator
                     $rows[] = $this->parseTableRow($line);
                 }
             }
-            
+
             if ($separatorIndex === -1 || count($rows) < 2) {
                 return $matches[0]; // Not a valid table structure
             }
-            
+
             // Ensure all rows have the same number of columns
             $maxColumns = max(array_map('count', $rows));
             foreach ($rows as &$row) {
@@ -1437,7 +1439,7 @@ class DocumentationGenerator
                 }
             }
             unset($row);
-            
+
             // Calculate maximum width for each column based on actual display width
             $columnWidths = [];
             foreach ($rows as $rowIndex => $row) {
@@ -1445,7 +1447,7 @@ class DocumentationGenerator
                 if ($rowIndex === $separatorIndex) {
                     continue;
                 }
-                
+
                 foreach ($row as $colIndex => $cell) {
                     // Use raw cell content length for column width calculation
                     // This preserves backticks and other markdown formatting in the width
@@ -1453,12 +1455,12 @@ class DocumentationGenerator
                     $columnWidths[$colIndex] = max($columnWidths[$colIndex] ?? 0, $cellWidth);
                 }
             }
-            
+
             // Ensure minimum column widths
             foreach ($columnWidths as $colIndex => $width) {
                 $columnWidths[$colIndex] = max($width, 3); // Minimum 3 characters per column
             }
-            
+
             // Format the table
             $formattedRows = [];
             foreach ($rows as $rowIndex => $row) {
@@ -1481,11 +1483,11 @@ class DocumentationGenerator
                     $formattedRows[] = '| ' . implode(' | ', $formattedCells) . ' |';
                 }
             }
-            
+
             return "\n" . implode("\n", $formattedRows) . "\n";
         }, $content);
     }
-    
+
     /**
      * Parse a table row into individual cells.
      *
@@ -1496,13 +1498,13 @@ class DocumentationGenerator
     {
         // Remove leading/trailing |
         $line = trim($line, '| ');
-        
+
         // Split by | and trim each cell
         $cells = array_map('trim', explode('|', $line));
-        
+
         return $cells;
     }
-    
+
     /**
      * Parse a separator row into individual cells.
      *
@@ -1513,14 +1515,14 @@ class DocumentationGenerator
     {
         // Remove leading/trailing |
         $line = trim($line, '| ');
-        
+
         // Split by | and trim each cell
         $cells = array_map('trim', explode('|', $line));
-        
+
         // Convert separator cells to simple dashes for processing
         return array_map(fn($cell) => str_repeat('-', max(3, strlen($cell))), $cells);
     }
-    
+
     /**
      * Strip markdown formatting to calculate actual display width.
      *
@@ -1531,22 +1533,22 @@ class DocumentationGenerator
     {
         // Remove markdown links [text](url)
         $text = preg_replace('/\[([^\]]*)\]\([^)]*\)/', '$1', $text);
-        
+
         // Remove backticks
         $text = str_replace('`', '', $text);
-        
+
         // Remove bold/italic markers
         $text = preg_replace('/[*_]{1,2}([^*_]*)[*_]{1,2}/', '$1', $text);
-        
+
         // Decode HTML entities for length calculation
         $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-        
+
         return $text;
     }
 
     /**
      * Format a constant value for display in documentation.
-     * 
+     *
      * Removes unnecessary quotes from string values while preserving proper
      * formatting for other types.
      */
@@ -1555,15 +1557,15 @@ class DocumentationGenerator
         if (is_string($value)) {
             return $value;
         }
-        
+
         if (is_bool($value)) {
             return $value ? 'true' : 'false';
         }
-        
+
         if (is_null($value)) {
             return 'null';
         }
-        
+
         if (is_array($value)) {
             if (empty($value)) {
                 return '[]';
@@ -1571,24 +1573,24 @@ class DocumentationGenerator
             // For simple arrays, show a formatted representation
             return '[' . implode(', ', array_map(fn($v) => $this->formatConstantValue($v), $value)) . ']';
         }
-        
+
         if (is_object($value)) {
             // For enum cases or other objects, try to get a meaningful representation
             if ($value instanceof \BackedEnum) {
                 return (string) $value->value;
             }
-            
+
             if ($value instanceof \UnitEnum) {
                 return $value->name;
             }
-            
+
             if (method_exists($value, '__toString')) {
                 return (string) $value;
             }
-            
+
             return get_class($value);
         }
-        
+
         // For numbers and other scalar types
         return (string) $value;
     }
@@ -1604,7 +1606,7 @@ class DocumentationGenerator
 
     /**
      * Load translation data for all available locales.
-     * 
+     *
      * @return array<string, array<string, mixed>>
      */
     private function loadTranslationData(): array
@@ -1616,14 +1618,14 @@ class DocumentationGenerator
 
         $translations = [];
         $translationFiles = glob($translationsDir . '/messages.*.yaml');
-        
+
         if (!$translationFiles) {
             return [];
         }
 
         foreach ($translationFiles as $file) {
             $filename = basename($file);
-            if (preg_match('/messages\.([a-z]{2})\.yaml$/', $filename, $matches)) {
+            if (preg_match(DocumentationGenerator::TRANSLATION_FILE_REGEX, $filename, $matches)) {
                 $locale = $matches[1];
                 try {
                     $translations[$locale] = YamlParser::parseFile($file);
@@ -1638,24 +1640,24 @@ class DocumentationGenerator
 
     /**
      * Extract message keys from the Messages enum and organize them with their translations.
-     * 
+     *
      * @param array<string, array<string, mixed>> $translations
      * @return array<string, array<string, mixed>>
      */
     private function organizeMessageTranslations(array $translations): array
     {
         $organized = [];
-        
+
         // Get all message keys from the Messages enum
         $messagesClass = new ReflectionClass('OpenFGA\\Messages');
-        
+
         // For PHP 8.1+ enums, use getCases()
         if (method_exists($messagesClass, 'getCases')) {
             $cases = $messagesClass->getCases();
             foreach ($cases as $case) {
                 $messageKey = $case->getValue()->value;
                 $organized[$messageKey] = [];
-                
+
                 foreach ($translations as $locale => $data) {
                     $value = $this->getNestedValue($data, $messageKey);
                     if ($value !== null) {
@@ -1670,7 +1672,7 @@ class DocumentationGenerator
                 if ($constantValue instanceof \OpenFGA\Messages) {
                     $messageKey = $constantValue->value;
                     $organized[$messageKey] = [];
-                    
+
                     foreach ($translations as $locale => $data) {
                         $value = $this->getNestedValue($data, $messageKey);
                         if ($value !== null) {
@@ -1680,13 +1682,13 @@ class DocumentationGenerator
                 }
             }
         }
-        
+
         return $organized;
     }
 
     /**
      * Get a nested value from an array using dot notation.
-     * 
+     *
      * @param array<string, mixed> $array
      * @param string $key
      * @return mixed
@@ -1695,14 +1697,14 @@ class DocumentationGenerator
     {
         $keys = explode('.', $key);
         $current = $array;
-        
+
         foreach ($keys as $keyPart) {
             if (!is_array($current) || !array_key_exists($keyPart, $current)) {
                 return null;
             }
             $current = $current[$keyPart];
         }
-        
+
         return $current;
     }
 
@@ -1712,15 +1714,15 @@ class DocumentationGenerator
     private function generateTableOfContents(): void
     {
         echo "Generating table-of-contents README.md files...\n";
-        
+
         // Build directory structure from class map
         $directoryStructure = $this->buildDirectoryStructure();
-        
+
         // Generate README.md for each directory
         foreach ($directoryStructure as $directory => $classes) {
             $this->generateDirectoryReadme($directory, $classes);
         }
-        
+
         echo "Table-of-contents generation complete.\n";
     }
 
@@ -1731,16 +1733,16 @@ class DocumentationGenerator
     {
         $structure = [];
         $subdirectories = [];
-        
+
         foreach ($this->classMap as $className => $filePath) {
             try {
                 $reflection = new ReflectionClass($className);
-                
+
                 // Skip abstract classes that are not interfaces or enums
                 if ($reflection->isAbstract() && !$reflection->isInterface() && !$reflection->isEnum()) {
                     continue;
                 }
-                
+
                 // Get the namespace path relative to OpenFGA
                 $namespace = $reflection->getNamespaceName();
                 if ($namespace === 'OpenFGA') {
@@ -1749,10 +1751,10 @@ class DocumentationGenerator
                     $directory = str_replace('OpenFGA\\', '', $namespace);
                     $directory = str_replace('\\', '/', $directory);
                 }
-                
+
                 // Track parent directories to identify subdirectories
                 $this->trackSubdirectories($directory, $subdirectories);
-                
+
                 // Categorize the class
                 $classInfo = [
                     'name' => $reflection->getShortName(),
@@ -1761,19 +1763,19 @@ class DocumentationGenerator
                     'description' => $this->extractDescriptionFromDocComment($reflection->getDocComment() ?: ''),
                     'file' => $reflection->getShortName() . '.md'
                 ];
-                
+
                 $structure[$directory][] = $classInfo;
-                
+
             } catch (\Exception $e) {
                 echo "Error processing class $className for TOC: " . $e->getMessage() . "\n";
             }
         }
-        
+
         // Add subdirectory information to each directory
         foreach ($structure as $directory => &$directoryData) {
             $directoryData['subdirectories'] = $subdirectories[$directory] ?? [];
         }
-        
+
         // Sort classes within each directory
         foreach ($structure as $directory => &$directoryData) {
             if (isset($directoryData['subdirectories'])) {
@@ -1781,20 +1783,20 @@ class DocumentationGenerator
                 $classes = array_filter($directoryData, function($key) {
                     return $key !== 'subdirectories';
                 }, ARRAY_FILTER_USE_KEY);
-                
+
                 usort($classes, function($a, $b) {
                     // Sort by type first (interfaces, then classes, then enums), then by name
                     $typeOrder = ['interface' => 1, 'class' => 2, 'enum' => 3];
                     $aTypeOrder = $typeOrder[$a['type']] ?? 4;
                     $bTypeOrder = $typeOrder[$b['type']] ?? 4;
-                    
+
                     if ($aTypeOrder !== $bTypeOrder) {
                         return $aTypeOrder <=> $bTypeOrder;
                     }
-                    
+
                     return strcmp($a['name'], $b['name']);
                 });
-                
+
                 $directoryData = [
                     'classes' => $classes,
                     'subdirectories' => $directoryData['subdirectories']
@@ -1805,16 +1807,16 @@ class DocumentationGenerator
                     $typeOrder = ['interface' => 1, 'class' => 2, 'enum' => 3];
                     $aTypeOrder = $typeOrder[$a['type']] ?? 4;
                     $bTypeOrder = $typeOrder[$b['type']] ?? 4;
-                    
+
                     if ($aTypeOrder !== $bTypeOrder) {
                         return $aTypeOrder <=> $bTypeOrder;
                     }
-                    
+
                     return strcmp($a['name'], $b['name']);
                 });
             }
         }
-        
+
         return $structure;
     }
 
@@ -1826,14 +1828,14 @@ class DocumentationGenerator
         if (empty($directory)) {
             return;
         }
-        
+
         $parts = explode('/', $directory);
         $currentPath = '';
-        
+
         for ($i = 0; $i < count($parts); $i++) {
             $parentPath = $currentPath;
             $currentPath .= ($currentPath ? '/' : '') . $parts[$i];
-            
+
             // Track this as a subdirectory of its parent
             if ($i > 0) {
                 if (!isset($subdirectories[$parentPath])) {
@@ -1876,7 +1878,7 @@ class DocumentationGenerator
         // Check if data has the new structure with subdirectories or old structure
         $classes = [];
         $subdirectories = [];
-        
+
         if (isset($data['classes']) && isset($data['subdirectories'])) {
             // New structure with subdirectories
             $classes = $data['classes'];
@@ -1885,11 +1887,11 @@ class DocumentationGenerator
             // Old structure - just an array of classes
             $classes = $data;
         }
-        
+
         if (empty($classes) && empty($subdirectories)) {
             return;
         }
-        
+
         // Determine output directory
         if ($directory === '') {
             $outputPath = $this->outputDir;
@@ -1900,25 +1902,25 @@ class DocumentationGenerator
             $directoryName = basename($directory);
             $breadcrumb = $this->generateBreadcrumb($directory);
         }
-        
+
         // Ensure directory exists
         if (!is_dir($outputPath)) {
             mkdir($outputPath, 0755, true);
         }
-        
+
         // Group classes by type
         $groupedClasses = [
             'interface' => [],
             'class' => [],
             'enum' => []
         ];
-        
+
         foreach ($classes as $classInfo) {
             if (isset($classInfo['type'])) {
                 $groupedClasses[$classInfo['type']][] = $classInfo;
             }
         }
-        
+
         // If we have subdirectories, add them to the structure
         if (!empty($subdirectories)) {
             $groupedClasses = [
@@ -1926,14 +1928,14 @@ class DocumentationGenerator
                 'subdirectories' => $subdirectories
             ];
         }
-        
+
         // Generate content
         $content = $this->generateReadmeContent($directoryName, $breadcrumb, $groupedClasses, $directory);
-        
+
         // Write README.md file
         $readmePath = $outputPath . '/README.md';
         file_put_contents($readmePath, $content);
-        
+
         echo "Generated README.md for: " . ($directory ?: 'root') . "\n";
     }
 
@@ -1944,13 +1946,13 @@ class DocumentationGenerator
     {
         $parts = explode('/', $directory);
         $breadcrumbs = ['[API Documentation](../README.md)'];
-        
+
         $currentPath = '';
         foreach ($parts as $part) {
             $currentPath .= ($currentPath ? '/' : '') . $part;
             $breadcrumbs[] = $part;
         }
-        
+
         return implode(' > ', $breadcrumbs);
     }
 
@@ -1960,73 +1962,73 @@ class DocumentationGenerator
     private function generateReadmeContent(string $directoryName, string $breadcrumb, array $groupedClasses, string $directory): string
     {
         $content = [];
-        
+
         // Header
         $content[] = "# $directoryName";
         $content[] = '';
-        
+
         // Breadcrumb (if not root)
         if (!empty($breadcrumb)) {
             $content[] = $breadcrumb;
             $content[] = '';
         }
-        
+
         // Description based on directory name
         $description = $this->getDirectoryDescription($directory);
         if ($description) {
             $content[] = $description;
             $content[] = '';
         }
-        
+
         // Check if we have subdirectories (from the restructured data)
         $subdirectories = [];
         $classes = [];
-        
+
         if (isset($groupedClasses['classes']) && isset($groupedClasses['subdirectories'])) {
             // New structure with subdirectories
             $subdirectories = $groupedClasses['subdirectories'];
             $classes = $groupedClasses['classes'];
-            
+
             // Regroup classes by type
             $groupedClasses = [
                 'interface' => [],
                 'class' => [],
                 'enum' => []
             ];
-            
+
             foreach ($classes as $classInfo) {
                 $groupedClasses[$classInfo['type']][] = $classInfo;
             }
         }
-        
+
         // Statistics
         $totalClasses = array_sum(array_map('count', $groupedClasses));
         $content[] = "**Total Components:** $totalClasses";
         $content[] = '';
-        
+
         // Subdirectories section (if any exist)
         if (!empty($subdirectories)) {
             $content[] = "## Subdirectories";
             $content[] = '';
             $content[] = '| Directory | Description |';
             $content[] = '|-----------|-------------|';
-            
+
             sort($subdirectories); // Sort alphabetically
             foreach ($subdirectories as $subdir) {
                 $subdirPath = $directory ? "$directory/$subdir" : $subdir;
                 $subdirDescription = $this->getDirectoryDescription($subdirPath);
                 $content[] = "| [`$subdir`](./$subdir/README.md) | $subdirDescription |";
             }
-            
+
             $content[] = '';
         }
-        
+
         // Table of contents by type
         foreach ($groupedClasses as $type => $classes) {
             if (empty($classes)) {
                 continue;
             }
-            
+
             $typeTitle = ucfirst($type) . 's';
             if ($type === 'class') {
                 $typeTitle = 'Classes';
@@ -2035,30 +2037,30 @@ class DocumentationGenerator
             } elseif ($type === 'enum') {
                 $typeTitle = 'Enumerations';
             }
-            
+
             $content[] = "## $typeTitle";
             $content[] = '';
-            
+
             // Create table
             $content[] = '| Name | Description |';
             $content[] = '|------|-------------|';
-            
+
             foreach ($classes as $classInfo) {
                 $name = "[`{$classInfo['name']}`](./{$classInfo['file']})";
                 $description = $this->truncateDescription($classInfo['description'], 100);
                 $content[] = "| $name | $description |";
             }
-            
+
             $content[] = '';
         }
-        
+
         // Footer with navigation
         if (!empty($breadcrumb)) {
             $content[] = '---';
             $content[] = '';
             $content[] = '[← Back to API Documentation](../README.md)';
         }
-        
+
         return implode("\n", $content) . "\n";
     }
 
@@ -2088,7 +2090,7 @@ class DocumentationGenerator
             'Translation' => 'Internationalization support and message translation utilities.',
             'Schemas' => 'JSON schema validation for ensuring data integrity and type safety.',
         ];
-        
+
         return $descriptions[$directory] ?? '';
     }
 
@@ -2100,14 +2102,14 @@ class DocumentationGenerator
         if (empty($description)) {
             return '';
         }
-        
+
         // Remove newlines and excessive whitespace
         $description = preg_replace('/\s+/', ' ', trim($description));
-        
+
         if (strlen($description) <= $maxLength) {
             return $description;
         }
-        
+
         return substr($description, 0, $maxLength - 3) . '...';
     }
 
@@ -2117,23 +2119,23 @@ class DocumentationGenerator
     private function generateMainApiIndex(): void
     {
         echo "Generating main API documentation index...\n";
-        
+
         // Build a complete component index grouped by type
         $componentIndex = [
             'interfaces' => [],
             'classes' => [],
             'enums' => []
         ];
-        
+
         foreach ($this->classMap as $className => $_) {
             try {
                 $reflection = new ReflectionClass($className);
-                
+
                 // Skip abstract classes that are not interfaces or enums
                 if ($reflection->isAbstract() && !$reflection->isInterface() && !$reflection->isEnum()) {
                     continue;
                 }
-                
+
                 $componentInfo = [
                     'name' => $reflection->getShortName(),
                     'fullName' => $className,
@@ -2144,7 +2146,7 @@ class DocumentationGenerator
                     ),
                     'link' => $this->getComponentLink($className)
                 ];
-                
+
                 if ($reflection->isInterface()) {
                     $componentIndex['interfaces'][] = $componentInfo;
                 } elseif ($reflection->isEnum()) {
@@ -2152,96 +2154,96 @@ class DocumentationGenerator
                 } else {
                     $componentIndex['classes'][] = $componentInfo;
                 }
-                
+
             } catch (\Exception $e) {
                 echo "Error processing $className for API index: " . $e->getMessage() . "\n";
             }
         }
-        
+
         // Sort each category by name
         foreach ($componentIndex as &$category) {
             usort($category, function($a, $b) {
                 return strcmp($a['name'], $b['name']);
             });
         }
-        
+
         // Generate the component index table
         $allComponents = $this->generateComponentIndexTable($componentIndex);
-        
+
         // Render the main API index
         $content = $this->twig->render('api-toc.twig', [
             'allComponents' => $allComponents,
             'generatedDate' => date('Y-m-d H:i:s')
         ]);
-        
+
         // Clean up markdown
         $content = $this->cleanupMarkdown($content);
-        
+
         // Write the main index file
         $indexPath = $this->outputDir . '/API-Index.md';
         file_put_contents($indexPath, $content);
-        
+
         echo "Main API documentation index generated at: $indexPath\n";
     }
-    
+
     /**
      * Generate a markdown table for all components.
      */
     private function generateComponentIndexTable(array $componentIndex): string
     {
         $markdown = [];
-        
+
         // Interfaces section
         if (!empty($componentIndex['interfaces'])) {
             $markdown[] = "### All Interfaces";
             $markdown[] = "";
             $markdown[] = "| Interface | Namespace | Description |";
             $markdown[] = "|-----------|-----------|-------------|";
-            
+
             foreach ($componentIndex['interfaces'] as $component) {
                 $link = "[`{$component['name']}`]({$component['link']})";
                 $namespace = str_replace('OpenFGA\\', '', $component['namespace']);
                 $markdown[] = "| $link | `$namespace` | {$component['description']} |";
             }
-            
+
             $markdown[] = "";
         }
-        
+
         // Classes section
         if (!empty($componentIndex['classes'])) {
             $markdown[] = "### All Classes";
             $markdown[] = "";
             $markdown[] = "| Class | Namespace | Description |";
             $markdown[] = "|-------|-----------|-------------|";
-            
+
             foreach ($componentIndex['classes'] as $component) {
                 $link = "[`{$component['name']}`]({$component['link']})";
                 $namespace = str_replace('OpenFGA\\', '', $component['namespace']);
                 $markdown[] = "| $link | `$namespace` | {$component['description']} |";
             }
-            
+
             $markdown[] = "";
         }
-        
+
         // Enums section
         if (!empty($componentIndex['enums'])) {
             $markdown[] = "### All Enumerations";
             $markdown[] = "";
             $markdown[] = "| Enum | Namespace | Description |";
             $markdown[] = "|------|-----------|-------------|";
-            
+
             foreach ($componentIndex['enums'] as $component) {
                 $link = "[`{$component['name']}`]({$component['link']})";
                 $namespace = str_replace('OpenFGA\\', '', $component['namespace']);
                 $markdown[] = "| $link | `$namespace` | {$component['description']} |";
             }
-            
+
             $markdown[] = "";
         }
-        
+
         return implode("\n", $markdown);
     }
-    
+
     /**
      * Get the relative link path for a component.
      */
