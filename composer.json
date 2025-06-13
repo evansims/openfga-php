@@ -71,10 +71,7 @@
   "autoload": {
     "psr-4": {
       "OpenFGA\\": "src/"
-    },
-    "files": [
-      "src/Helpers.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
