@@ -11,7 +11,7 @@ use OpenFGA\Network\{RequestContext, RequestMethod};
 use OpenFGA\Requests\BatchCheckRequest;
 use Psr\Http\Message\{StreamFactoryInterface, StreamInterface};
 
-use function OpenFGA\{tuple};
+use function OpenFGA\tuple;
 
 beforeEach(function (): void {
     $this->stream = $this->createMock(StreamInterface::class);
