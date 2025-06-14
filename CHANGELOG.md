@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.4.0] - June 14, 2025
 
 > _New languages spread love, twelve brand new,<br />
 > From Chinese to Swedish, German too!<br />
