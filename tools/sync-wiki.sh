@@ -173,9 +173,6 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
     # Remove YAML front matter (everything between --- lines at the start)
     sed -i.bak '/^---$/,/^---$/d' "$file"
 
-    # Remove the first H1 title (# Title) since Wiki generates its own title
-    sed -i.bak '/^# /d' "$file"
-
     # Extract the wiki page title from filename and add it back without prefixes
     filename=$(basename "$file" .md)
 
@@ -191,10 +188,20 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
     # Convert remaining dashes to spaces for readability
     clean_title=$(echo "$clean_title" | sed 's/-/ /g')
 
-    # Add the clean title back as the first line
-    sed -i.bak "1i\\
+    # Handle title removal differently for written guides vs API docs
+    if [[ "$file" == "./API-"* ]]; then
+        # For API docs: Remove ALL H1 titles and add clean title
+        sed -i.bak '/^# /d' "$file"
+        
+        # Add the clean title back as the first line
+        sed -i.bak "1i\\
 # $clean_title
 " "$file"
+    else
+        # For written guides: Remove only the FIRST H1 title completely
+        # Wiki will auto-generate the page title, so we don't want any H1 at the top
+        sed -i.bak '1{/^# /d;}' "$file"
+    fi
 
     # Convert internal markdown links to wiki format
     # Handle links with anchors: file.md#anchor -> file#anchor
@@ -254,31 +261,52 @@ git config user.name "$(git config --global user.name)"
 git config user.email "$(git config --global user.email)"
 
 # Clear existing wiki content (except .git)
+echo "🧹 Clearing existing wiki content..."
 find . -type f -not -path "./.git/*" -delete 2>/dev/null || true
+find . -type d -empty -not -path "./.git/*" -delete 2>/dev/null || true
 
 # Copy new content
+echo "📋 Copying new content..."
 cp -r ../wiki-content/* .
+
+# Force add timestamp to ensure changes are detected
+echo "⏰ Last updated: $(date)" >> .sync-timestamp
 
 # Add and commit changes
 git add .
 
-if git diff --staged --quiet; then
-    echo "ℹ️  No changes to Wiki"
+# Debug: Show what files are staged
+echo "🔍 Checking staged changes..."
+STAGED_FILES=$(git diff --staged --name-only)
+if [ -n "$STAGED_FILES" ]; then
+    echo "📄 Staged files:"
+    echo "$STAGED_FILES" | head -10
+    echo "🔍 Sample diff:"
+    git diff --staged --stat | head -5
 else
-    echo "💾 Committing changes..."
-    git commit -m "Sync documentation from main branch
+    echo "❌ No staged files found"
+fi
 
-📖 Updated documentation
+# Always sync wiki content (force mode is now default)
+# The wiki should always reflect the current state of documentation
+if git diff --staged --quiet; then
+    echo "ℹ️  No file changes detected, but syncing anyway to ensure wiki is up to date"
+else
+    echo "💾 Committing detected changes..."
+fi
+
+git commit -m "Sync documentation from main branch
+
+📖 Updated documentation  
 🤖 Generated automatically"
 
-    # Push changes (force push to overwrite any upstream conflicts)
-    # The generated documentation is the authoritative source, so we force push
-    # to ensure our generated content takes precedence over any manual wiki edits
-    echo "🚀 Pushing to Wiki..."
-    git push --force origin master 2>/dev/null || git push --force origin main 2>/dev/null || git push --force -u origin master
-    echo "✅ Wiki updated successfully!"
-    echo "🌐 View at: https://github.com/evansims/openfga-php/wiki"
-fi
+# Push changes (force push to overwrite any upstream conflicts)
+# The generated documentation is the authoritative source, so we force push
+# to ensure our generated content takes precedence over any manual wiki edits
+echo "🚀 Pushing to Wiki..."
+git push --force origin master 2>/dev/null || git push --force origin main 2>/dev/null || git push --force -u origin master
+echo "✅ Wiki updated successfully!"
+echo "🌐 View at: https://github.com/evansims/openfga-php/wiki"
 
 # Cleanup
 cd ..
