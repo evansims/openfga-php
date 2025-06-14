@@ -4,17 +4,17 @@ Interface for schema validation and object transformation in the OpenFGA system.
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`validateAndTransform()`](#validateandtransform)
-* [List Operations](#list-operations)
-    * [`getSchemas()`](#getschemas)
-* [Model Management](#model-management)
-    * [`registerSchema()`](#registerschema)
+- [Authorization](#authorization)
+  - [`validateAndTransform()`](#validateandtransform)
+- [List Operations](#list-operations)
+  - [`getSchemas()`](#getschemas)
+- [Model Management](#model-management)
+  - [`registerSchema()`](#registerschema)
 
 ## Namespace
 
@@ -26,7 +26,7 @@ Interface for schema validation and object transformation in the OpenFGA system.
 
 ## Related Classes
 
-* [SchemaValidator](Schemas/SchemaValidator.md) (implementation)
+- [SchemaValidator](Schemas/SchemaValidator.md) (implementation)
 
 ## Methods
 

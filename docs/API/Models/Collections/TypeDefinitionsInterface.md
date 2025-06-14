@@ -4,37 +4,37 @@ Collection interface for OpenFGA type definition objects. This interface defines
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Utility](#utility)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`clear()`](#clear)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`every()`](#every)
-    * [`filter()`](#filter)
-    * [`first()`](#first)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`reduce()`](#reduce)
-    * [`rewind()`](#rewind)
-    * [`some()`](#some)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
-    * [`withItems()`](#withitems)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Utility](#utility)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`clear()`](#clear)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`every()`](#every)
+  - [`filter()`](#filter)
+  - [`first()`](#first)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`reduce()`](#reduce)
+  - [`rewind()`](#rewind)
+  - [`some()`](#some)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
+  - [`withItems()`](#withitems)
 
 ## Namespace
 
@@ -46,16 +46,16 @@ Collection interface for OpenFGA type definition objects. This interface defines
 
 ## Implements
 
-* [`IndexedCollectionInterface`](IndexedCollectionInterface.md)
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
+- [`IndexedCollectionInterface`](IndexedCollectionInterface.md)
+- `Traversable`
+- `JsonSerializable`
+- `Iterator`
+- `Countable`
+- `ArrayAccess`
 
 ## Related Classes
 
-* [TypeDefinitions](../Models/Collections/TypeDefinitions.md) (implementation)
+- [TypeDefinitions](../Models/Collections/TypeDefinitions.md) (implementation)
 
 ## Methods
 

@@ -4,16 +4,16 @@ Interface for retrieving a specific authorization model. This interface defines 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Interface for retrieving a specific authorization model. This interface defines 
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (response)
-* [GetAuthorizationModelRequest](Requests/GetAuthorizationModelRequest.md) (implementation)
+- [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (response)
+- [GetAuthorizationModelRequest](Requests/GetAuthorizationModelRequest.md) (implementation)
 
 ## Methods
 

@@ -4,19 +4,19 @@ Request for reading relationship tuples that match specified criteria. This requ
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getPageSize()`](#getpagesize)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getTupleKey()`](#gettuplekey)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getPageSize()`](#getpagesize)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getTupleKey()`](#gettuplekey)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Request for reading relationship tuples that match specified criteria. This requ
 
 ## Implements
 
-* [`ReadTuplesRequestInterface`](ReadTuplesRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`ReadTuplesRequestInterface`](ReadTuplesRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (response)
-* [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md) (interface)
+- [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (response)
+- [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md) (interface)
 
 ## Methods
 

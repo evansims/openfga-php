@@ -4,21 +4,21 @@ Service interface for managing OpenFGA authorization models. This service provid
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`validateModel()`](#validatemodel)
-* [CRUD Operations](#crud-operations)
-    * [`createModel()`](#createmodel)
-* [List Operations](#list-operations)
-    * [`findModel()`](#findmodel)
-    * [`getLatestModel()`](#getlatestmodel)
-    * [`listAllModels()`](#listallmodels)
-* [Model Management](#model-management)
-    * [`cloneModel()`](#clonemodel)
+- [Authorization](#authorization)
+  - [`validateModel()`](#validatemodel)
+- [CRUD Operations](#crud-operations)
+  - [`createModel()`](#createmodel)
+- [List Operations](#list-operations)
+  - [`findModel()`](#findmodel)
+  - [`getLatestModel()`](#getlatestmodel)
+  - [`listAllModels()`](#listallmodels)
+- [Model Management](#model-management)
+  - [`cloneModel()`](#clonemodel)
 
 ## Namespace
 
@@ -30,7 +30,7 @@ Service interface for managing OpenFGA authorization models. This service provid
 
 ## Related Classes
 
-* [ModelService](Services/ModelService.md) (implementation)
+- [ModelService](Services/ModelService.md) (implementation)
 
 ## Methods
 

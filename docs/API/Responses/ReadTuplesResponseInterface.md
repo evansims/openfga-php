@@ -4,15 +4,15 @@ Interface for tuple reading response objects. This interface defines the contrac
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getTuples()`](#gettuples)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getTuples()`](#gettuples)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for tuple reading response objects. This interface defines the contrac
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (implementation)
-* [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md) (request)
+- [ReadTuplesResponse](Responses/ReadTuplesResponse.md) (implementation)
+- [ReadTuplesRequestInterface](Requests/ReadTuplesRequestInterface.md) (request)
 
 ## Methods
 

@@ -4,16 +4,16 @@ Simple concurrent executor implementation. This implementation provides a fallba
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
-* [Other](#other)
-    * [`executeParallel()`](#executeparallel)
-    * [`supportsConcurrency()`](#supportsconcurrency)
+- [List Operations](#list-operations)
+  - [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
+- [Other](#other)
+  - [`executeParallel()`](#executeparallel)
+  - [`supportsConcurrency()`](#supportsconcurrency)
 
 ## Namespace
 
@@ -25,7 +25,7 @@ Simple concurrent executor implementation. This implementation provides a fallba
 
 ## Implements
 
-* [`ConcurrentExecutorInterface`](ConcurrentExecutorInterface.md)
+- [`ConcurrentExecutorInterface`](ConcurrentExecutorInterface.md)
 
 ## Methods
 

@@ -4,20 +4,20 @@ Represents a tuple-to-userset relationship that derives permissions from related
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputedUserset()`](#getcomputeduserset)
-    * [`getTupleset()`](#gettupleset)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputedUserset()`](#getcomputeduserset)
+  - [`getTupleset()`](#gettupleset)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Represents a tuple-to-userset relationship that derives permissions from related
 
 ## Implements
 
-* [`TupleToUsersetV1Interface`](TupleToUsersetV1Interface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`TupleToUsersetV1Interface`](TupleToUsersetV1Interface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md) (interface)
+- [TupleToUsersetV1Interface](Models/TupleToUsersetV1Interface.md) (interface)
 
 ## Constants
 

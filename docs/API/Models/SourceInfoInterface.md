@@ -4,16 +4,16 @@ Represents source file information for OpenFGA model elements. Source informatio
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getFile()`](#getfile)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getFile()`](#getfile)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Represents source file information for OpenFGA model elements. Source informatio
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [SourceInfo](Models/SourceInfo.md) (implementation)
+- [SourceInfo](Models/SourceInfo.md) (implementation)
 
 ## Methods
 

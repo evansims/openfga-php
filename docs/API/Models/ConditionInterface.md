@@ -4,20 +4,20 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContext()`](#getcontext)
-    * [`getExpression()`](#getexpression)
-    * [`getMetadata()`](#getmetadata)
-    * [`getName()`](#getname)
-    * [`getParameters()`](#getparameters)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getContext()`](#getcontext)
+  - [`getExpression()`](#getexpression)
+  - [`getMetadata()`](#getmetadata)
+  - [`getName()`](#getname)
+  - [`getParameters()`](#getparameters)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,12 +29,12 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Condition](Models/Condition.md) (implementation)
+- [Condition](Models/Condition.md) (implementation)
 
 ## Methods
 

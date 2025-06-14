@@ -4,24 +4,24 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getCreatedAt()`](#getcreatedat)
-    * [`getDeletedAt()`](#getdeletedat)
-    * [`getUpdatedAt()`](#getupdatedat)
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getName()`](#getname)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [CRUD Operations](#crud-operations)
+  - [`getCreatedAt()`](#getcreatedat)
+  - [`getDeletedAt()`](#getdeletedat)
+  - [`getUpdatedAt()`](#getupdatedat)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getName()`](#getname)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -33,14 +33,14 @@ Represents an OpenFGA authorization store that contains your permission data. A 
 
 ## Implements
 
-* [`StoreInterface`](StoreInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`StoreInterface`](StoreInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [StoreInterface](Models/StoreInterface.md) (interface)
-* [Stores](Models/Collections/Stores.md) (collection)
+- [StoreInterface](Models/StoreInterface.md) (interface)
+- [Stores](Models/Collections/Stores.md) (collection)
 
 ## Constants
 

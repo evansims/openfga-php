@@ -4,28 +4,28 @@ Response for tuple writing operations supporting both transactional and non-tran
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getErrors()`](#geterrors)
-    * [`getFailedChunks()`](#getfailedchunks)
-    * [`getFirstError()`](#getfirsterror)
-    * [`getSuccessRate()`](#getsuccessrate)
-    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
-    * [`getTotalChunks()`](#gettotalchunks)
-    * [`getTotalOperations()`](#gettotaloperations)
-* [Utility](#utility)
-    * [`isCompleteFailure()`](#iscompletefailure)
-    * [`isCompleteSuccess()`](#iscompletesuccess)
-    * [`isPartialSuccess()`](#ispartialsuccess)
-    * [`isTransactional()`](#istransactional)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
-    * [`throwOnFailure()`](#throwonfailure)
+- [List Operations](#list-operations)
+  - [`getErrors()`](#geterrors)
+  - [`getFailedChunks()`](#getfailedchunks)
+  - [`getFirstError()`](#getfirsterror)
+  - [`getSuccessRate()`](#getsuccessrate)
+  - [`getSuccessfulChunks()`](#getsuccessfulchunks)
+  - [`getTotalChunks()`](#gettotalchunks)
+  - [`getTotalOperations()`](#gettotaloperations)
+- [Utility](#utility)
+  - [`isCompleteFailure()`](#iscompletefailure)
+  - [`isCompleteSuccess()`](#iscompletesuccess)
+  - [`isPartialSuccess()`](#ispartialsuccess)
+  - [`isTransactional()`](#istransactional)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
+  - [`throwOnFailure()`](#throwonfailure)
 
 ## Namespace
 
@@ -37,13 +37,13 @@ Response for tuple writing operations supporting both transactional and non-tran
 
 ## Implements
 
-* [`WriteTuplesResponseInterface`](WriteTuplesResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`WriteTuplesResponseInterface`](WriteTuplesResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md) (interface)
-* [WriteTuplesRequest](Requests/WriteTuplesRequest.md) (request)
+- [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md) (interface)
+- [WriteTuplesRequest](Requests/WriteTuplesRequest.md) (request)
 
 ## Methods
 

@@ -4,27 +4,27 @@ Interface for tuple writing response objects. This interface defines the contrac
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getErrors()`](#geterrors)
-    * [`getFailedChunks()`](#getfailedchunks)
-    * [`getFirstError()`](#getfirsterror)
-    * [`getSuccessRate()`](#getsuccessrate)
-    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
-    * [`getTotalChunks()`](#gettotalchunks)
-    * [`getTotalOperations()`](#gettotaloperations)
-* [Utility](#utility)
-    * [`isCompleteFailure()`](#iscompletefailure)
-    * [`isCompleteSuccess()`](#iscompletesuccess)
-    * [`isPartialSuccess()`](#ispartialsuccess)
-    * [`isTransactional()`](#istransactional)
-* [Other](#other)
-    * [`throwOnFailure()`](#throwonfailure)
+- [List Operations](#list-operations)
+  - [`getErrors()`](#geterrors)
+  - [`getFailedChunks()`](#getfailedchunks)
+  - [`getFirstError()`](#getfirsterror)
+  - [`getSuccessRate()`](#getsuccessrate)
+  - [`getSuccessfulChunks()`](#getsuccessfulchunks)
+  - [`getTotalChunks()`](#gettotalchunks)
+  - [`getTotalOperations()`](#gettotaloperations)
+- [Utility](#utility)
+  - [`isCompleteFailure()`](#iscompletefailure)
+  - [`isCompleteSuccess()`](#iscompletesuccess)
+  - [`isPartialSuccess()`](#ispartialsuccess)
+  - [`isTransactional()`](#istransactional)
+- [Other](#other)
+  - [`throwOnFailure()`](#throwonfailure)
 
 ## Namespace
 
@@ -36,12 +36,12 @@ Interface for tuple writing response objects. This interface defines the contrac
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [WriteTuplesResponse](Responses/WriteTuplesResponse.md) (implementation)
-* [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md) (request)
+- [WriteTuplesResponse](Responses/WriteTuplesResponse.md) (implementation)
+- [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md) (request)
 
 ## Methods
 

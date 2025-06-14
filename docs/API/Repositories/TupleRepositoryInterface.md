@@ -4,17 +4,17 @@ Repository contract for relationship tuple operations. This interface defines th
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`delete()`](#delete)
-    * [`read()`](#read)
-    * [`write()`](#write)
-    * [`writeAndDelete()`](#writeanddelete)
-* [List Operations](#list-operations)
-    * [`listChanges()`](#listchanges)
+- [CRUD Operations](#crud-operations)
+  - [`delete()`](#delete)
+  - [`read()`](#read)
+  - [`write()`](#write)
+  - [`writeAndDelete()`](#writeanddelete)
+- [List Operations](#list-operations)
+  - [`listChanges()`](#listchanges)
 
 ## Namespace
 

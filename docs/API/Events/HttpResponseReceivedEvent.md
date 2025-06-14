@@ -4,27 +4,27 @@ Event fired when an HTTP response is received from the OpenFGA API. This event c
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getEventId()`](#geteventid)
-    * [`getEventType()`](#geteventtype)
-    * [`getException()`](#getexception)
-    * [`getModelId()`](#getmodelid)
-    * [`getOccurredAt()`](#getoccurredat)
-    * [`getOperation()`](#getoperation)
-    * [`getPayload()`](#getpayload)
-    * [`getRequest()`](#getrequest)
-    * [`getResponse()`](#getresponse)
-    * [`getStoreId()`](#getstoreid)
-* [Utility](#utility)
-    * [`isPropagationStopped()`](#ispropagationstopped)
-    * [`isSuccessful()`](#issuccessful)
-* [Other](#other)
-    * [`stopPropagation()`](#stoppropagation)
+- [List Operations](#list-operations)
+  - [`getEventId()`](#geteventid)
+  - [`getEventType()`](#geteventtype)
+  - [`getException()`](#getexception)
+  - [`getModelId()`](#getmodelid)
+  - [`getOccurredAt()`](#getoccurredat)
+  - [`getOperation()`](#getoperation)
+  - [`getPayload()`](#getpayload)
+  - [`getRequest()`](#getrequest)
+  - [`getResponse()`](#getresponse)
+  - [`getStoreId()`](#getstoreid)
+- [Utility](#utility)
+  - [`isPropagationStopped()`](#ispropagationstopped)
+  - [`isSuccessful()`](#issuccessful)
+- [Other](#other)
+  - [`stopPropagation()`](#stoppropagation)
 
 ## Namespace
 
@@ -36,7 +36,7 @@ Event fired when an HTTP response is received from the OpenFGA API. This event c
 
 ## Implements
 
-* [`EventInterface`](EventInterface.md)
+- [`EventInterface`](EventInterface.md)
 
 ## Methods
 

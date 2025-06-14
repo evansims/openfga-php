@@ -4,9 +4,9 @@ Registry for managing schema definitions in the OpenFGA system. This interface p
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
 
 ## Namespace
 
@@ -18,4 +18,4 @@ Registry for managing schema definitions in the OpenFGA system. This interface p
 
 ## Related Classes
 
-* [SchemaRegistry](Schemas/SchemaRegistry.md) (implementation)
+- [SchemaRegistry](Schemas/SchemaRegistry.md) (implementation)

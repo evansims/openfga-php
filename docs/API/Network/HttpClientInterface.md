@@ -4,12 +4,12 @@ HTTP client interface for sending HTTP requests. This interface abstracts the HT
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`send()`](#send)
+- [Other](#other)
+  - [`send()`](#send)
 
 ## Namespace
 

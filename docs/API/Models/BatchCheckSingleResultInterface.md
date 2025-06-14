@@ -4,18 +4,18 @@ Represents the result of a single check within a batch check response. Each resu
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`getAllowed()`](#getallowed)
-* [List Operations](#list-operations)
-    * [`getError()`](#geterror)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [Authorization](#authorization)
+  - [`getAllowed()`](#getallowed)
+- [List Operations](#list-operations)
+  - [`getError()`](#geterror)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Represents the result of a single check within a batch check response. Each resu
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [BatchCheckSingleResult](Models/BatchCheckSingleResult.md) (implementation)
+- [BatchCheckSingleResult](Models/BatchCheckSingleResult.md) (implementation)
 
 ## Methods
 

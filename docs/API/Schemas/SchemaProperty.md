@@ -4,23 +4,23 @@ Represents a single property definition within a schema. This class defines the 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getClassName()`](#getclassname)
-    * [`getDefault()`](#getdefault)
-    * [`getEnum()`](#getenum)
-    * [`getFormat()`](#getformat)
-    * [`getItems()`](#getitems)
-    * [`getName()`](#getname)
-    * [`getParameterName()`](#getparametername)
-    * [`getType()`](#gettype)
-* [Utility](#utility)
-    * [`isRequired()`](#isrequired)
+- [List Operations](#list-operations)
+  - [`getClassName()`](#getclassname)
+  - [`getDefault()`](#getdefault)
+  - [`getEnum()`](#getenum)
+  - [`getFormat()`](#getformat)
+  - [`getItems()`](#getitems)
+  - [`getName()`](#getname)
+  - [`getParameterName()`](#getparametername)
+  - [`getType()`](#gettype)
+- [Utility](#utility)
+  - [`isRequired()`](#isrequired)
 
 ## Namespace
 
@@ -32,11 +32,11 @@ Represents a single property definition within a schema. This class defines the 
 
 ## Implements
 
-* [`SchemaPropertyInterface`](SchemaPropertyInterface.md)
+- [`SchemaPropertyInterface`](SchemaPropertyInterface.md)
 
 ## Related Classes
 
-* [SchemaPropertyInterface](Schemas/SchemaPropertyInterface.md) (interface)
+- [SchemaPropertyInterface](Schemas/SchemaPropertyInterface.md) (interface)
 
 ## Methods
 

@@ -4,15 +4,15 @@ Interface for concurrent task execution. This interface defines the contract for
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
-* [Other](#other)
-    * [`executeParallel()`](#executeparallel)
-    * [`supportsConcurrency()`](#supportsconcurrency)
+- [List Operations](#list-operations)
+  - [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
+- [Other](#other)
+  - [`executeParallel()`](#executeparallel)
+  - [`supportsConcurrency()`](#supportsconcurrency)
 
 ## Namespace
 

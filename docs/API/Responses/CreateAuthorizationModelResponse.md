@@ -4,18 +4,18 @@ Response confirming successful creation of a new authorization model. This respo
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModel()`](#getmodel)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getModel()`](#getmodel)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -27,13 +27,13 @@ Response confirming successful creation of a new authorization model. This respo
 
 ## Implements
 
-* [`CreateAuthorizationModelResponseInterface`](CreateAuthorizationModelResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`CreateAuthorizationModelResponseInterface`](CreateAuthorizationModelResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (interface)
-* [CreateAuthorizationModelRequest](Requests/CreateAuthorizationModelRequest.md) (request)
+- [CreateAuthorizationModelResponseInterface](Responses/CreateAuthorizationModelResponseInterface.md) (interface)
+- [CreateAuthorizationModelRequest](Requests/CreateAuthorizationModelRequest.md) (request)
 
 ## Methods
 

@@ -4,22 +4,22 @@ Represents a relationship tuple key defining a connection between user, relation
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getCondition()`](#getcondition)
-    * [`getObject()`](#getobject)
-    * [`getRelation()`](#getrelation)
-    * [`getUser()`](#getuser)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getCondition()`](#getcondition)
+  - [`getObject()`](#getobject)
+  - [`getRelation()`](#getrelation)
+  - [`getUser()`](#getuser)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -31,14 +31,14 @@ Represents a relationship tuple key defining a connection between user, relation
 
 ## Implements
 
-* [`TupleKeyInterface`](TupleKeyInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`TupleKeyInterface`](TupleKeyInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [TupleKeyInterface](Models/TupleKeyInterface.md) (interface)
-* [TupleKeys](Models/Collections/TupleKeys.md) (collection)
+- [TupleKeyInterface](Models/TupleKeyInterface.md) (interface)
+- [TupleKeys](Models/Collections/TupleKeys.md) (collection)
 
 ## Constants
 

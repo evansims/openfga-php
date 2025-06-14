@@ -4,18 +4,18 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputed()`](#getcomputed)
-    * [`getTupleToUserset()`](#gettupletouserset)
-    * [`getUsers()`](#getusers)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputed()`](#getcomputed)
+  - [`getTupleToUserset()`](#gettupletouserset)
+  - [`getUsers()`](#getusers)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Leaf](Models/Leaf.md) (implementation)
+- [Leaf](Models/Leaf.md) (implementation)
 
 ## Methods
 

@@ -4,17 +4,17 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModule()`](#getmodule)
-    * [`getSourceInfo()`](#getsourceinfo)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getModule()`](#getmodule)
+  - [`getSourceInfo()`](#getsourceinfo)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [ConditionMetadata](Models/ConditionMetadata.md) (implementation)
+- [ConditionMetadata](Models/ConditionMetadata.md) (implementation)
 
 ## Methods
 

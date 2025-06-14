@@ -4,23 +4,23 @@ Represents a failed result containing an error. Failure results indicate that an
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`err()`](#err)
-    * [`failed()`](#failed)
-    * [`failure()`](#failure)
-    * [`recover()`](#recover)
-    * [`rethrow()`](#rethrow)
-    * [`succeeded()`](#succeeded)
-    * [`success()`](#success)
-    * [`then()`](#then)
-    * [`unwrap()`](#unwrap)
-    * [`val()`](#val)
+- [Other](#other)
+  - [`err()`](#err)
+  - [`failed()`](#failed)
+  - [`failure()`](#failure)
+  - [`recover()`](#recover)
+  - [`rethrow()`](#rethrow)
+  - [`succeeded()`](#succeeded)
+  - [`success()`](#success)
+  - [`then()`](#then)
+  - [`unwrap()`](#unwrap)
+  - [`val()`](#val)
 
 ## Namespace
 
@@ -32,11 +32,11 @@ Represents a failed result containing an error. Failure results indicate that an
 
 ## Implements
 
-* [`ResultInterface`](ResultInterface.md)
+- [`ResultInterface`](ResultInterface.md)
 
 ## Related Classes
 
-* [Failure](Results/Failure.md) (implementation)
+- [Failure](Results/Failure.md) (implementation)
 
 ## Methods
 

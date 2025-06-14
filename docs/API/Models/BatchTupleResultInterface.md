@@ -4,28 +4,28 @@ Interface for batch tuple operation results. Defines the contract for tracking a
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getErrors()`](#geterrors)
-    * [`getFailedChunks()`](#getfailedchunks)
-    * [`getFirstError()`](#getfirsterror)
-    * [`getResponses()`](#getresponses)
-    * [`getSuccessRate()`](#getsuccessrate)
-    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
-    * [`getTotalChunks()`](#gettotalchunks)
-    * [`getTotalOperations()`](#gettotaloperations)
-* [Utility](#utility)
-    * [`isCompleteFailure()`](#iscompletefailure)
-    * [`isCompleteSuccess()`](#iscompletesuccess)
-    * [`isPartialSuccess()`](#ispartialsuccess)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`throwOnFailure()`](#throwonfailure)
+- [List Operations](#list-operations)
+  - [`getErrors()`](#geterrors)
+  - [`getFailedChunks()`](#getfailedchunks)
+  - [`getFirstError()`](#getfirsterror)
+  - [`getResponses()`](#getresponses)
+  - [`getSuccessRate()`](#getsuccessrate)
+  - [`getSuccessfulChunks()`](#getsuccessfulchunks)
+  - [`getTotalChunks()`](#gettotalchunks)
+  - [`getTotalOperations()`](#gettotaloperations)
+- [Utility](#utility)
+  - [`isCompleteFailure()`](#iscompletefailure)
+  - [`isCompleteSuccess()`](#iscompletesuccess)
+  - [`isPartialSuccess()`](#ispartialsuccess)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`throwOnFailure()`](#throwonfailure)
 
 ## Namespace
 
@@ -37,12 +37,12 @@ Interface for batch tuple operation results. Defines the contract for tracking a
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [BatchTupleResult](Models/BatchTupleResult.md) (implementation)
+- [BatchTupleResult](Models/BatchTupleResult.md) (implementation)
 
 ## Methods
 

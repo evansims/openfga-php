@@ -4,17 +4,17 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getType()`](#gettype)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getType()`](#gettype)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,13 +26,13 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `Stringable`
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `Stringable`
+- `JsonSerializable`
 
 ## Related Classes
 
-* [UserObject](Models/UserObject.md) (implementation)
+- [UserObject](Models/UserObject.md) (implementation)
 
 ## Methods
 

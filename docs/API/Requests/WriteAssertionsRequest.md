@@ -4,17 +4,17 @@ Request for writing test assertions to validate authorization model behavior. Th
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAssertions()`](#getassertions)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getAssertions()`](#getassertions)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -26,13 +26,13 @@ Request for writing test assertions to validate authorization model behavior. Th
 
 ## Implements
 
-* [`WriteAssertionsRequestInterface`](WriteAssertionsRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`WriteAssertionsRequestInterface`](WriteAssertionsRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (response)
-* [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (interface)
+- [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (response)
+- [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (interface)
 
 ## Methods
 

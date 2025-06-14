@@ -4,19 +4,19 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAuthenticationRequest()`](#getauthenticationrequest)
-    * [`getAuthorizationHeader()`](#getauthorizationheader)
-    * [`getToken()`](#gettoken)
-* [Other](#other)
-    * [`clearToken()`](#cleartoken)
-    * [`handleAuthenticationResponse()`](#handleauthenticationresponse)
-    * [`requiresAuthentication()`](#requiresauthentication)
+- [List Operations](#list-operations)
+  - [`getAuthenticationRequest()`](#getauthenticationrequest)
+  - [`getAuthorizationHeader()`](#getauthorizationheader)
+  - [`getToken()`](#gettoken)
+- [Other](#other)
+  - [`clearToken()`](#cleartoken)
+  - [`handleAuthenticationResponse()`](#handleauthenticationresponse)
+  - [`requiresAuthentication()`](#requiresauthentication)
 
 ## Namespace
 
@@ -28,7 +28,7 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 
 ## Implements
 
-* [`AuthenticationInterface`](AuthenticationInterface.md)
+- [`AuthenticationInterface`](AuthenticationInterface.md)
 
 ## Methods
 

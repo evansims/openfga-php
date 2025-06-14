@@ -4,19 +4,19 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getPageSize()`](#getpagesize)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getTupleKey()`](#gettuplekey)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getPageSize()`](#getpagesize)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getTupleKey()`](#gettuplekey)
 
 ## Namespace
 
@@ -28,12 +28,12 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (response)
-* [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (implementation)
+- [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (response)
+- [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (implementation)
 
 ## Methods
 

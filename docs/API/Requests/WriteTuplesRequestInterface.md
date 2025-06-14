@@ -4,26 +4,26 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getDeletes()`](#getdeletes)
-    * [`getWrites()`](#getwrites)
-* [List Operations](#list-operations)
-    * [`getMaxParallelRequests()`](#getmaxparallelrequests)
-    * [`getMaxRetries()`](#getmaxretries)
-    * [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getRetryDelaySeconds()`](#getretrydelayseconds)
-    * [`getStopOnFirstError()`](#getstoponfirsterror)
-    * [`getStore()`](#getstore)
-* [Utility](#utility)
-    * [`isTransactional()`](#istransactional)
+- [CRUD Operations](#crud-operations)
+  - [`getDeletes()`](#getdeletes)
+  - [`getWrites()`](#getwrites)
+- [List Operations](#list-operations)
+  - [`getMaxParallelRequests()`](#getmaxparallelrequests)
+  - [`getMaxRetries()`](#getmaxretries)
+  - [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getRetryDelaySeconds()`](#getretrydelayseconds)
+  - [`getStopOnFirstError()`](#getstoponfirsterror)
+  - [`getStore()`](#getstore)
+- [Utility](#utility)
+  - [`isTransactional()`](#istransactional)
 
 ## Namespace
 
@@ -35,12 +35,12 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md) (response)
-* [WriteTuplesRequest](Requests/WriteTuplesRequest.md) (implementation)
+- [WriteTuplesResponseInterface](Responses/WriteTuplesResponseInterface.md) (response)
+- [WriteTuplesRequest](Requests/WriteTuplesRequest.md) (implementation)
 
 ## Methods
 

@@ -4,37 +4,37 @@ Represents a type-safe collection indexed by integers, similar to a JSON array. 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Utility](#utility)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`clear()`](#clear)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`every()`](#every)
-    * [`filter()`](#filter)
-    * [`first()`](#first)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`reduce()`](#reduce)
-    * [`rewind()`](#rewind)
-    * [`some()`](#some)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
-    * [`withItems()`](#withitems)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Utility](#utility)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`clear()`](#clear)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`every()`](#every)
+  - [`filter()`](#filter)
+  - [`first()`](#first)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`reduce()`](#reduce)
+  - [`rewind()`](#rewind)
+  - [`some()`](#some)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
+  - [`withItems()`](#withitems)
 
 ## Namespace
 
@@ -46,15 +46,15 @@ Represents a type-safe collection indexed by integers, similar to a JSON array. 
 
 ## Implements
 
-* `ArrayAccess`
-* `Countable`
-* `Iterator`
-* `JsonSerializable`
-* `Traversable`
+- `ArrayAccess`
+- `Countable`
+- `Iterator`
+- `JsonSerializable`
+- `Traversable`
 
 ## Related Classes
 
-* [IndexedCollection](../Models/Collections/IndexedCollection.md) (implementation)
+- [IndexedCollection](../Models/Collections/IndexedCollection.md) (implementation)
 
 ## Methods
 

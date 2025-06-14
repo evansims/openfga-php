@@ -4,19 +4,19 @@ Response containing test assertions associated with an authorization model. This
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAssertions()`](#getassertions)
-    * [`getModel()`](#getmodel)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getAssertions()`](#getassertions)
+  - [`getModel()`](#getmodel)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Response containing test assertions associated with an authorization model. This
 
 ## Implements
 
-* [`ReadAssertionsResponseInterface`](ReadAssertionsResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ReadAssertionsResponseInterface`](ReadAssertionsResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (interface)
-* [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (request)
+- [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (interface)
+- [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (request)
 
 ## Methods
 

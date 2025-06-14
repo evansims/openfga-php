@@ -4,26 +4,26 @@ Represents a batch tuple operation containing both writes and deletes. This mode
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getDeletes()`](#getdeletes)
-    * [`getWrites()`](#getwrites)
-* [List Operations](#list-operations)
-    * [`getTotalOperations()`](#gettotaloperations)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Utility](#utility)
-    * [`isEmpty()`](#isempty)
-* [Other](#other)
-    * [`chunk()`](#chunk)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`requiresChunking()`](#requireschunking)
+- [CRUD Operations](#crud-operations)
+  - [`getDeletes()`](#getdeletes)
+  - [`getWrites()`](#getwrites)
+- [List Operations](#list-operations)
+  - [`getTotalOperations()`](#gettotaloperations)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Utility](#utility)
+  - [`isEmpty()`](#isempty)
+- [Other](#other)
+  - [`chunk()`](#chunk)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`requiresChunking()`](#requireschunking)
 
 ## Namespace
 
@@ -35,13 +35,13 @@ Represents a batch tuple operation containing both writes and deletes. This mode
 
 ## Implements
 
-* [`BatchTupleOperationInterface`](BatchTupleOperationInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`BatchTupleOperationInterface`](BatchTupleOperationInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [BatchTupleOperationInterface](Models/BatchTupleOperationInterface.md) (interface)
+- [BatchTupleOperationInterface](Models/BatchTupleOperationInterface.md) (interface)
 
 ## Constants
 

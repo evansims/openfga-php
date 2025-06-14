@@ -4,18 +4,18 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
-    * [`getModule()`](#getmodule)
-    * [`getSourceInfo()`](#getsourceinfo)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
+  - [`getModule()`](#getmodule)
+  - [`getSourceInfo()`](#getsourceinfo)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [RelationMetadata](Models/RelationMetadata.md) (implementation)
+- [RelationMetadata](Models/RelationMetadata.md) (implementation)
 
 ## Methods
 

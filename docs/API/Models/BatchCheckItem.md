@@ -4,23 +4,23 @@ Represents a single item in a batch check request. Each batch check item contain
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getCorrelationId()`](#getcorrelationid)
-    * [`getTupleKey()`](#gettuplekey)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`toArray()`](#toarray)
+- [List Operations](#list-operations)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getCorrelationId()`](#getcorrelationid)
+  - [`getTupleKey()`](#gettuplekey)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`toArray()`](#toarray)
 
 ## Namespace
 
@@ -32,14 +32,14 @@ Represents a single item in a batch check request. Each batch check item contain
 
 ## Implements
 
-* [`BatchCheckItemInterface`](BatchCheckItemInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`BatchCheckItemInterface`](BatchCheckItemInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
-* [BatchCheckItems](Models/Collections/BatchCheckItems.md) (collection)
+- [BatchCheckItemInterface](Models/BatchCheckItemInterface.md) (interface)
+- [BatchCheckItems](Models/Collections/BatchCheckItems.md) (collection)
 
 ## Constants
 

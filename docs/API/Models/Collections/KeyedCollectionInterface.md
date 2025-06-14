@@ -4,31 +4,31 @@ Represents a collection that is indexed by a string, like a JSON object.
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Utility](#utility)
-    * [`has()`](#has)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`rewind()`](#rewind)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Utility](#utility)
+  - [`has()`](#has)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`rewind()`](#rewind)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
 
 ## Namespace
 
@@ -40,15 +40,15 @@ Represents a collection that is indexed by a string, like a JSON object.
 
 ## Implements
 
-* `ArrayAccess`
-* `Countable`
-* `Iterator`
-* `JsonSerializable`
-* `Traversable`
+- `ArrayAccess`
+- `Countable`
+- `Iterator`
+- `JsonSerializable`
+- `Traversable`
 
 ## Related Classes
 
-* [KeyedCollection](../Models/Collections/KeyedCollection.md) (implementation)
+- [KeyedCollection](../Models/Collections/KeyedCollection.md) (implementation)
 
 ## Methods
 

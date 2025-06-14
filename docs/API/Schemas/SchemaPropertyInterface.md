@@ -4,22 +4,22 @@ Interface for schema property definitions. This interface defines the contract f
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getClassName()`](#getclassname)
-    * [`getDefault()`](#getdefault)
-    * [`getEnum()`](#getenum)
-    * [`getFormat()`](#getformat)
-    * [`getItems()`](#getitems)
-    * [`getName()`](#getname)
-    * [`getParameterName()`](#getparametername)
-    * [`getType()`](#gettype)
-* [Utility](#utility)
-    * [`isRequired()`](#isrequired)
+- [List Operations](#list-operations)
+  - [`getClassName()`](#getclassname)
+  - [`getDefault()`](#getdefault)
+  - [`getEnum()`](#getenum)
+  - [`getFormat()`](#getformat)
+  - [`getItems()`](#getitems)
+  - [`getName()`](#getname)
+  - [`getParameterName()`](#getparametername)
+  - [`getType()`](#gettype)
+- [Utility](#utility)
+  - [`isRequired()`](#isrequired)
 
 ## Namespace
 
@@ -31,7 +31,7 @@ Interface for schema property definitions. This interface defines the contract f
 
 ## Related Classes
 
-* [SchemaProperty](Schemas/SchemaProperty.md) (implementation)
+- [SchemaProperty](Schemas/SchemaProperty.md) (implementation)
 
 ## Methods
 

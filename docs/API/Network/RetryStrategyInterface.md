@@ -4,16 +4,16 @@ Interface for implementing retry strategies. This interface defines the contract
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRetryDelay()`](#getretrydelay)
-* [Utility](#utility)
-    * [`isRetryable()`](#isretryable)
-* [Other](#other)
-    * [`execute()`](#execute)
+- [List Operations](#list-operations)
+  - [`getRetryDelay()`](#getretrydelay)
+- [Utility](#utility)
+  - [`isRetryable()`](#isretryable)
+- [Other](#other)
+  - [`execute()`](#execute)
 
 ## Namespace
 

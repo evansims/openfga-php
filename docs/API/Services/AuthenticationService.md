@@ -4,16 +4,16 @@ Service implementation for managing authentication in OpenFGA operations. This s
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAuthorizationHeader()`](#getauthorizationheader)
-* [Other](#other)
-    * [`sendAuthenticationRequest()`](#sendauthenticationrequest)
+- [List Operations](#list-operations)
+  - [`getAuthorizationHeader()`](#getauthorizationheader)
+- [Other](#other)
+  - [`sendAuthenticationRequest()`](#sendauthenticationrequest)
 
 ## Namespace
 
@@ -25,11 +25,11 @@ Service implementation for managing authentication in OpenFGA operations. This s
 
 ## Implements
 
-* [`AuthenticationServiceInterface`](AuthenticationServiceInterface.md)
+- [`AuthenticationServiceInterface`](AuthenticationServiceInterface.md)
 
 ## Related Classes
 
-* [AuthenticationServiceInterface](Services/AuthenticationServiceInterface.md) (interface)
+- [AuthenticationServiceInterface](Services/AuthenticationServiceInterface.md) (interface)
 
 ## Methods
 

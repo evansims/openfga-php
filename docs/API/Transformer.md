@@ -4,15 +4,15 @@ OpenFGA DSL Transformer implementation for authorization model conversions. This
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`fromDsl()`](#fromdsl)
-    * [`toDsl()`](#todsl)
+- [Other](#other)
+  - [`fromDsl()`](#fromdsl)
+  - [`toDsl()`](#todsl)
 
 ## Namespace
 
@@ -24,11 +24,11 @@ OpenFGA DSL Transformer implementation for authorization model conversions. This
 
 ## Implements
 
-* [`TransformerInterface`](TransformerInterface.md)
+- [`TransformerInterface`](TransformerInterface.md)
 
 ## Related Classes
 
-* [TransformerInterface](TransformerInterface.md) (interface)
+- [TransformerInterface](TransformerInterface.md) (interface)
 
 ## Methods
 

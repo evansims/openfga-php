@@ -4,20 +4,20 @@ Service interface for high-level store operations. This interface provides a bus
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`createStore()`](#createstore)
-    * [`deleteStore()`](#deletestore)
-    * [`getOrCreateStore()`](#getorcreatestore)
-* [List Operations](#list-operations)
-    * [`findStore()`](#findstore)
-    * [`findStoresByName()`](#findstoresbyname)
-    * [`listAllStores()`](#listallstores)
-    * [`listStores()`](#liststores)
+- [CRUD Operations](#crud-operations)
+  - [`createStore()`](#createstore)
+  - [`deleteStore()`](#deletestore)
+  - [`getOrCreateStore()`](#getorcreatestore)
+- [List Operations](#list-operations)
+  - [`findStore()`](#findstore)
+  - [`findStoresByName()`](#findstoresbyname)
+  - [`listAllStores()`](#listallstores)
+  - [`listStores()`](#liststores)
 
 ## Namespace
 
@@ -29,7 +29,7 @@ Service interface for high-level store operations. This interface provides a bus
 
 ## Related Classes
 
-* [StoreService](Services/StoreService.md) (implementation)
+- [StoreService](Services/StoreService.md) (implementation)
 
 ## Methods
 

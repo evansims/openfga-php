@@ -4,23 +4,23 @@ Represents a successful result containing a value. Success results indicate that
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`err()`](#err)
-    * [`failed()`](#failed)
-    * [`failure()`](#failure)
-    * [`recover()`](#recover)
-    * [`rethrow()`](#rethrow)
-    * [`succeeded()`](#succeeded)
-    * [`success()`](#success)
-    * [`then()`](#then)
-    * [`unwrap()`](#unwrap)
-    * [`val()`](#val)
+- [Other](#other)
+  - [`err()`](#err)
+  - [`failed()`](#failed)
+  - [`failure()`](#failure)
+  - [`recover()`](#recover)
+  - [`rethrow()`](#rethrow)
+  - [`succeeded()`](#succeeded)
+  - [`success()`](#success)
+  - [`then()`](#then)
+  - [`unwrap()`](#unwrap)
+  - [`val()`](#val)
 
 ## Namespace
 
@@ -32,11 +32,11 @@ Represents a successful result containing a value. Success results indicate that
 
 ## Implements
 
-* [`ResultInterface`](ResultInterface.md)
+- [`ResultInterface`](ResultInterface.md)
 
 ## Related Classes
 
-* [Success](Results/Success.md) (implementation)
+- [Success](Results/Success.md) (implementation)
 
 ## Methods
 

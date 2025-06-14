@@ -4,13 +4,13 @@ Base interface for all OpenFGA model objects. This interface establishes the fou
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -22,7 +22,7 @@ Base interface for all OpenFGA model objects. This interface establishes the fou
 
 ## Implements
 
-* `JsonSerializable`
+- `JsonSerializable`
 
 ## Methods
 

@@ -4,19 +4,19 @@ Response containing a paginated list of tuple changes from the store. This respo
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getChanges()`](#getchanges)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getChanges()`](#getchanges)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Response containing a paginated list of tuple changes from the store. This respo
 
 ## Implements
 
-* [`ListTupleChangesResponseInterface`](ListTupleChangesResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ListTupleChangesResponseInterface`](ListTupleChangesResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (interface)
-* [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (request)
+- [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (interface)
+- [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (request)
 
 ## Methods
 

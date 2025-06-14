@@ -4,21 +4,21 @@ Defines the contract for userset specifications in authorization models. A users
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputedUserset()`](#getcomputeduserset)
-    * [`getDifference()`](#getdifference)
-    * [`getDirect()`](#getdirect)
-    * [`getIntersection()`](#getintersection)
-    * [`getTupleToUserset()`](#gettupletouserset)
-    * [`getUnion()`](#getunion)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputedUserset()`](#getcomputeduserset)
+  - [`getDifference()`](#getdifference)
+  - [`getDirect()`](#getdirect)
+  - [`getIntersection()`](#getintersection)
+  - [`getTupleToUserset()`](#gettupletouserset)
+  - [`getUnion()`](#getunion)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -30,12 +30,12 @@ Defines the contract for userset specifications in authorization models. A users
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Userset](Models/Userset.md) (implementation)
+- [Userset](Models/Userset.md) (implementation)
 
 ## Methods
 

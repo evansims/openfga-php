@@ -2,31 +2,31 @@
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Utility](#utility)
-    * [`has()`](#has)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`rewind()`](#rewind)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Utility](#utility)
+  - [`has()`](#has)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`rewind()`](#rewind)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
 
 ## Namespace
 
@@ -38,16 +38,16 @@
 
 ## Implements
 
-* [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
+- [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
+- `Traversable`
+- `JsonSerializable`
+- `Iterator`
+- `Countable`
+- `ArrayAccess`
 
 ## Related Classes
 
-* [TypeDefinitionRelations](../Models/Collections/TypeDefinitionRelations.md) (implementation)
+- [TypeDefinitionRelations](../Models/Collections/TypeDefinitionRelations.md) (implementation)
 
 ## Methods
 

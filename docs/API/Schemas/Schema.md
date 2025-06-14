@@ -4,16 +4,16 @@ JSON schema definition for validating and transforming data structures. This sch
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getClassName()`](#getclassname)
-    * [`getProperties()`](#getproperties)
-    * [`getProperty()`](#getproperty)
+- [List Operations](#list-operations)
+  - [`getClassName()`](#getclassname)
+  - [`getProperties()`](#getproperties)
+  - [`getProperty()`](#getproperty)
 
 ## Namespace
 
@@ -25,11 +25,11 @@ JSON schema definition for validating and transforming data structures. This sch
 
 ## Implements
 
-* [`SchemaInterface`](SchemaInterface.md)
+- [`SchemaInterface`](SchemaInterface.md)
 
 ## Related Classes
 
-* [SchemaInterface](Schemas/SchemaInterface.md) (interface)
+- [SchemaInterface](Schemas/SchemaInterface.md) (interface)
 
 ## Methods
 

@@ -4,20 +4,20 @@ Represents a node in a userset tree structure. Nodes are fundamental building bl
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDifference()`](#getdifference)
-    * [`getIntersection()`](#getintersection)
-    * [`getLeaf()`](#getleaf)
-    * [`getName()`](#getname)
-    * [`getUnion()`](#getunion)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getDifference()`](#getdifference)
+  - [`getIntersection()`](#getintersection)
+  - [`getLeaf()`](#getleaf)
+  - [`getName()`](#getname)
+  - [`getUnion()`](#getunion)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,12 +29,12 @@ Represents a node in a userset tree structure. Nodes are fundamental building bl
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Node](Models/Node.md) (implementation)
+- [Node](Models/Node.md) (implementation)
 
 ## Methods
 

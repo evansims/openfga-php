@@ -4,19 +4,19 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getCondition()`](#getcondition)
-    * [`getObject()`](#getobject)
-    * [`getRelation()`](#getrelation)
-    * [`getUser()`](#getuser)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getCondition()`](#getcondition)
+  - [`getObject()`](#getobject)
+  - [`getRelation()`](#getrelation)
+  - [`getUser()`](#getuser)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,12 +28,12 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [TupleKey](Models/TupleKey.md) (implementation)
+- [TupleKey](Models/TupleKey.md) (implementation)
 
 ## Methods
 

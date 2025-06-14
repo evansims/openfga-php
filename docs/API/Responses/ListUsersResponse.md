@@ -4,18 +4,18 @@ Response containing a list of users that have a specific relationship with an ob
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getUsers()`](#getusers)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getUsers()`](#getusers)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -27,13 +27,13 @@ Response containing a list of users that have a specific relationship with an ob
 
 ## Implements
 
-* [`ListUsersResponseInterface`](ListUsersResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ListUsersResponseInterface`](ListUsersResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md) (interface)
-* [ListUsersRequest](Requests/ListUsersRequest.md) (request)
+- [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md) (interface)
+- [ListUsersRequest](Requests/ListUsersRequest.md) (request)
 
 ## Methods
 

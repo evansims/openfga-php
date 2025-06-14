@@ -4,24 +4,24 @@ Response containing detailed information about a specific store. This response p
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getCreatedAt()`](#getcreatedat)
-    * [`getDeletedAt()`](#getdeletedat)
-    * [`getUpdatedAt()`](#getupdatedat)
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getName()`](#getname)
-    * [`getStore()`](#getstore)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [CRUD Operations](#crud-operations)
+  - [`getCreatedAt()`](#getcreatedat)
+  - [`getDeletedAt()`](#getdeletedat)
+  - [`getUpdatedAt()`](#getupdatedat)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getName()`](#getname)
+  - [`getStore()`](#getstore)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -33,13 +33,13 @@ Response containing detailed information about a specific store. This response p
 
 ## Implements
 
-* [`GetStoreResponseInterface`](GetStoreResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`GetStoreResponseInterface`](GetStoreResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md) (interface)
-* [GetStoreRequest](Requests/GetStoreRequest.md) (request)
+- [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md) (interface)
+- [GetStoreRequest](Requests/GetStoreRequest.md) (request)
 
 ## Methods
 

@@ -4,19 +4,19 @@ Maps exception error enums to their default message keys. This class provides th
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`forAuthenticationError()`](#forauthenticationerror)
-    * [`forClientError()`](#forclienterror)
-    * [`forConfigurationError()`](#forconfigurationerror)
-    * [`forError()`](#forerror)
-    * [`forNetworkError()`](#fornetworkerror)
-    * [`forSerializationError()`](#forserializationerror)
+- [Other](#other)
+  - [`forAuthenticationError()`](#forauthenticationerror)
+  - [`forClientError()`](#forclienterror)
+  - [`forConfigurationError()`](#forconfigurationerror)
+  - [`forError()`](#forerror)
+  - [`forNetworkError()`](#fornetworkerror)
+  - [`forSerializationError()`](#forserializationerror)
 
 ## Namespace
 
@@ -28,11 +28,11 @@ Maps exception error enums to their default message keys. This class provides th
 
 ## Implements
 
-* [`DefaultMessagesInterface`](DefaultMessagesInterface.md)
+- [`DefaultMessagesInterface`](DefaultMessagesInterface.md)
 
 ## Related Classes
 
-* [DefaultMessagesInterface](Exceptions/DefaultMessagesInterface.md) (interface)
+- [DefaultMessagesInterface](Exceptions/DefaultMessagesInterface.md) (interface)
 
 ## Methods
 

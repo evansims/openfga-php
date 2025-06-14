@@ -4,17 +4,17 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getKey()`](#getkey)
-    * [`getTimestamp()`](#gettimestamp)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getKey()`](#getkey)
+  - [`getTimestamp()`](#gettimestamp)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Tuple](Models/Tuple.md) (implementation)
+- [Tuple](Models/Tuple.md) (implementation)
 
 ## Methods
 

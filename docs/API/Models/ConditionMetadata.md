@@ -4,20 +4,20 @@ Contains metadata information about conditions in your authorization model. Cond
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModule()`](#getmodule)
-    * [`getSourceInfo()`](#getsourceinfo)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getModule()`](#getmodule)
+  - [`getSourceInfo()`](#getsourceinfo)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Contains metadata information about conditions in your authorization model. Cond
 
 ## Implements
 
-* [`ConditionMetadataInterface`](ConditionMetadataInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`ConditionMetadataInterface`](ConditionMetadataInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [ConditionMetadataInterface](Models/ConditionMetadataInterface.md) (interface)
+- [ConditionMetadataInterface](Models/ConditionMetadataInterface.md) (interface)
 
 ## Constants
 

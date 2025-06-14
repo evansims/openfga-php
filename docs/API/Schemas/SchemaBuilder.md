@@ -4,23 +4,23 @@ Fluent builder for creating JSON schemas for data validation and transformation.
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Utility](#utility)
-    * [`register()`](#register)
-* [Other](#other)
-    * [`array()`](#array)
-    * [`boolean()`](#boolean)
-    * [`date()`](#date)
-    * [`datetime()`](#datetime)
-    * [`integer()`](#integer)
-    * [`number()`](#number)
-    * [`object()`](#object)
-    * [`string()`](#string)
+- [Utility](#utility)
+  - [`register()`](#register)
+- [Other](#other)
+  - [`array()`](#array)
+  - [`boolean()`](#boolean)
+  - [`date()`](#date)
+  - [`datetime()`](#datetime)
+  - [`integer()`](#integer)
+  - [`number()`](#number)
+  - [`object()`](#object)
+  - [`string()`](#string)
 
 ## Namespace
 
@@ -32,11 +32,11 @@ Fluent builder for creating JSON schemas for data validation and transformation.
 
 ## Implements
 
-* [`SchemaBuilderInterface`](SchemaBuilderInterface.md)
+- [`SchemaBuilderInterface`](SchemaBuilderInterface.md)
 
 ## Related Classes
 
-* [SchemaBuilderInterface](Schemas/SchemaBuilderInterface.md) (interface)
+- [SchemaBuilderInterface](Schemas/SchemaBuilderInterface.md) (interface)
 
 ## Methods
 

@@ -4,18 +4,18 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getMetadata()`](#getmetadata)
-    * [`getRelations()`](#getrelations)
-    * [`getType()`](#gettype)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getMetadata()`](#getmetadata)
+  - [`getRelations()`](#getrelations)
+  - [`getType()`](#gettype)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [TypeDefinition](Models/TypeDefinition.md) (implementation)
+- [TypeDefinition](Models/TypeDefinition.md) (implementation)
 
 ## Methods
 

@@ -4,15 +4,15 @@ Repository contract for authorization model operations. This interface defines t
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`create()`](#create)
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`list()`](#list)
+- [CRUD Operations](#crud-operations)
+  - [`create()`](#create)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`list()`](#list)
 
 ## Namespace
 

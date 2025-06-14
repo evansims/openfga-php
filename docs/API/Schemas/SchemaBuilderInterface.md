@@ -4,22 +4,22 @@ Interface for building schema definitions using the builder pattern. This interf
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Utility](#utility)
-    * [`register()`](#register)
-* [Other](#other)
-    * [`array()`](#array)
-    * [`boolean()`](#boolean)
-    * [`date()`](#date)
-    * [`datetime()`](#datetime)
-    * [`integer()`](#integer)
-    * [`number()`](#number)
-    * [`object()`](#object)
-    * [`string()`](#string)
+- [Utility](#utility)
+  - [`register()`](#register)
+- [Other](#other)
+  - [`array()`](#array)
+  - [`boolean()`](#boolean)
+  - [`date()`](#date)
+  - [`datetime()`](#datetime)
+  - [`integer()`](#integer)
+  - [`number()`](#number)
+  - [`object()`](#object)
+  - [`string()`](#string)
 
 ## Namespace
 
@@ -31,7 +31,7 @@ Interface for building schema definitions using the builder pattern. This interf
 
 ## Related Classes
 
-* [SchemaBuilder](Schemas/SchemaBuilder.md) (implementation)
+- [SchemaBuilder](Schemas/SchemaBuilder.md) (implementation)
 
 ## Methods
 

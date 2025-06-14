@@ -4,17 +4,17 @@ HTTP request methods supported by the OpenFGA API. This enum defines the specifi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [Utility](#utility)
-    * [`hasRequestBody()`](#hasrequestbody)
-    * [`isIdempotent()`](#isidempotent)
-    * [`isSafe()`](#issafe)
+- [Utility](#utility)
+  - [`hasRequestBody()`](#hasrequestbody)
+  - [`isIdempotent()`](#isidempotent)
+  - [`isSafe()`](#issafe)
 
 ## Namespace
 
@@ -26,8 +26,8 @@ HTTP request methods supported by the OpenFGA API. This enum defines the specifi
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

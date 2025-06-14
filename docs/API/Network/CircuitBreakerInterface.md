@@ -4,19 +4,19 @@ Circuit breaker interface for preventing cascade failures in distributed systems
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getFailureCount()`](#getfailurecount)
-* [Utility](#utility)
-    * [`isOpen()`](#isopen)
-* [Other](#other)
-    * [`recordFailure()`](#recordfailure)
-    * [`recordSuccess()`](#recordsuccess)
-    * [`shouldRetry()`](#shouldretry)
+- [List Operations](#list-operations)
+  - [`getFailureCount()`](#getfailurecount)
+- [Utility](#utility)
+  - [`isOpen()`](#isopen)
+- [Other](#other)
+  - [`recordFailure()`](#recordfailure)
+  - [`recordSuccess()`](#recordsuccess)
+  - [`shouldRetry()`](#shouldretry)
 
 ## Namespace
 
@@ -28,7 +28,7 @@ Circuit breaker interface for preventing cascade failures in distributed systems
 
 ## Related Classes
 
-* [CircuitBreaker](Network/CircuitBreaker.md) (implementation)
+- [CircuitBreaker](Network/CircuitBreaker.md) (implementation)
 
 ## Methods
 

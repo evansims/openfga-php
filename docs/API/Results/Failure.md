@@ -4,23 +4,23 @@ Concrete implementation of a failed result containing an error. This class repre
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`err()`](#err)
-    * [`failed()`](#failed)
-    * [`failure()`](#failure)
-    * [`recover()`](#recover)
-    * [`rethrow()`](#rethrow)
-    * [`succeeded()`](#succeeded)
-    * [`success()`](#success)
-    * [`then()`](#then)
-    * [`unwrap()`](#unwrap)
-    * [`val()`](#val)
+- [Other](#other)
+  - [`err()`](#err)
+  - [`failed()`](#failed)
+  - [`failure()`](#failure)
+  - [`recover()`](#recover)
+  - [`rethrow()`](#rethrow)
+  - [`succeeded()`](#succeeded)
+  - [`success()`](#success)
+  - [`then()`](#then)
+  - [`unwrap()`](#unwrap)
+  - [`val()`](#val)
 
 ## Namespace
 
@@ -32,12 +32,12 @@ Concrete implementation of a failed result containing an error. This class repre
 
 ## Implements
 
-* [`ResultInterface`](ResultInterface.md)
-* [`FailureInterface`](FailureInterface.md)
+- [`ResultInterface`](ResultInterface.md)
+- [`FailureInterface`](FailureInterface.md)
 
 ## Related Classes
 
-* [FailureInterface](Results/FailureInterface.md) (interface)
+- [FailureInterface](Results/FailureInterface.md) (interface)
 
 ## Methods
 

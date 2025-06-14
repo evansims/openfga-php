@@ -4,20 +4,20 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputed()`](#getcomputed)
-    * [`getTupleset()`](#gettupleset)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputed()`](#getcomputed)
+  - [`getTupleset()`](#gettupleset)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Represents a tuple-to-userset operation node in authorization evaluation trees. 
 
 ## Implements
 
-* [`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md) (interface)
+- [UsersetTreeTupleToUsersetInterface](Models/UsersetTreeTupleToUsersetInterface.md) (interface)
 
 ## Constants
 

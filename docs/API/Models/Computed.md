@@ -4,19 +4,19 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getUserset()`](#getuserset)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getUserset()`](#getuserset)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,14 +28,14 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 
 ## Implements
 
-* [`ComputedInterface`](ComputedInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`ComputedInterface`](ComputedInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [ComputedInterface](Models/ComputedInterface.md) (interface)
-* [Computeds](Models/Collections/Computeds.md) (collection)
+- [ComputedInterface](Models/ComputedInterface.md) (interface)
+- [Computeds](Models/Collections/Computeds.md) (collection)
 
 ## Constants
 

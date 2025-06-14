@@ -4,14 +4,14 @@ HTTP implementation of assertion repository for OpenFGA API communication. This 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`read()`](#read)
-    * [`write()`](#write)
+- [CRUD Operations](#crud-operations)
+  - [`read()`](#read)
+  - [`write()`](#write)
 
 ## Namespace
 
@@ -23,7 +23,7 @@ HTTP implementation of assertion repository for OpenFGA API communication. This 
 
 ## Implements
 
-* [`AssertionRepositoryInterface`](AssertionRepositoryInterface.md)
+- [`AssertionRepositoryInterface`](AssertionRepositoryInterface.md)
 
 ## Methods
 

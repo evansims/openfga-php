@@ -4,18 +4,18 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [Utility](#utility)
-    * [`isCollectionError()`](#iscollectionerror)
-    * [`isTypeValidationError()`](#istypevalidationerror)
-* [Other](#other)
-    * [`exception()`](#exception)
+- [Utility](#utility)
+  - [`isCollectionError()`](#iscollectionerror)
+  - [`isTypeValidationError()`](#istypevalidationerror)
+- [Other](#other)
+  - [`exception()`](#exception)
 
 ## Namespace
 
@@ -27,8 +27,8 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

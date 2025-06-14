@@ -4,15 +4,15 @@ Interface for tuple changes listing response objects. This interface defines the
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getChanges()`](#getchanges)
-    * [`getContinuationToken()`](#getcontinuationtoken)
+- [List Operations](#list-operations)
+  - [`getChanges()`](#getchanges)
+  - [`getContinuationToken()`](#getcontinuationtoken)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for tuple changes listing response objects. This interface defines the
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (implementation)
-* [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (request)
+- [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (implementation)
+- [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (request)
 
 ## Methods
 

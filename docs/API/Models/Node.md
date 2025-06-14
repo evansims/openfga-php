@@ -4,23 +4,23 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDifference()`](#getdifference)
-    * [`getIntersection()`](#getintersection)
-    * [`getLeaf()`](#getleaf)
-    * [`getName()`](#getname)
-    * [`getUnion()`](#getunion)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getDifference()`](#getdifference)
+  - [`getIntersection()`](#getintersection)
+  - [`getLeaf()`](#getleaf)
+  - [`getName()`](#getname)
+  - [`getUnion()`](#getunion)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -32,14 +32,14 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 
 ## Implements
 
-* [`NodeInterface`](NodeInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`NodeInterface`](NodeInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [NodeInterface](Models/NodeInterface.md) (interface)
-* [Nodes](Models/Collections/Nodes.md) (collection)
+- [NodeInterface](Models/NodeInterface.md) (interface)
+- [Nodes](Models/Collections/Nodes.md) (collection)
 
 ## Constants
 

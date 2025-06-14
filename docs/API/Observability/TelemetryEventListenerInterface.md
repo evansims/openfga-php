@@ -4,16 +4,16 @@ Interface for event listeners that forward domain events to telemetry providers.
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`onHttpRequestSent()`](#onhttprequestsent)
-    * [`onHttpResponseReceived()`](#onhttpresponsereceived)
-    * [`onOperationCompleted()`](#onoperationcompleted)
-    * [`onOperationStarted()`](#onoperationstarted)
+- [Other](#other)
+  - [`onHttpRequestSent()`](#onhttprequestsent)
+  - [`onHttpResponseReceived()`](#onhttpresponsereceived)
+  - [`onOperationCompleted()`](#onoperationcompleted)
+  - [`onOperationStarted()`](#onoperationstarted)
 
 ## Namespace
 
@@ -25,7 +25,7 @@ Interface for event listeners that forward domain events to telemetry providers.
 
 ## Related Classes
 
-* [TelemetryEventListener](Observability/TelemetryEventListener.md) (implementation)
+- [TelemetryEventListener](Observability/TelemetryEventListener.md) (implementation)
 
 ## Methods
 

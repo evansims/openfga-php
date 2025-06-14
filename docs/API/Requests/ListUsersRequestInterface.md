@@ -4,22 +4,22 @@ Interface for listing users who have a specific relation to an object. This inte
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getModel()`](#getmodel)
-    * [`getObject()`](#getobject)
-    * [`getRelation()`](#getrelation)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getUserFilters()`](#getuserfilters)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getModel()`](#getmodel)
+  - [`getObject()`](#getobject)
+  - [`getRelation()`](#getrelation)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getUserFilters()`](#getuserfilters)
 
 ## Namespace
 
@@ -31,12 +31,12 @@ Interface for listing users who have a specific relation to an object. This inte
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md) (response)
-* [ListUsersRequest](Requests/ListUsersRequest.md) (implementation)
+- [ListUsersResponseInterface](Responses/ListUsersResponseInterface.md) (response)
+- [ListUsersRequest](Requests/ListUsersRequest.md) (implementation)
 
 ## Methods
 

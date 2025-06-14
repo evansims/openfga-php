@@ -4,9 +4,9 @@ Base interface for all OpenFGA API response objects. This interface establishes 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
 
 ## Namespace
 
@@ -18,5 +18,5 @@ Base interface for all OpenFGA API response objects. This interface establishes 
 
 ## Related Classes
 
-* [Response](Responses/Response.md) (implementation)
-* [RequestInterface](Requests/RequestInterface.md) (request)
+- [Response](Responses/Response.md) (implementation)
+- [RequestInterface](Requests/RequestInterface.md) (request)

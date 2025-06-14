@@ -4,18 +4,18 @@ Represents the context for an HTTP request to the OpenFGA API. This interface en
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getBody()`](#getbody)
-    * [`getHeaders()`](#getheaders)
-    * [`getMethod()`](#getmethod)
-    * [`getUrl()`](#geturl)
-* [Other](#other)
-    * [`useApiUrl()`](#useapiurl)
+- [List Operations](#list-operations)
+  - [`getBody()`](#getbody)
+  - [`getHeaders()`](#getheaders)
+  - [`getMethod()`](#getmethod)
+  - [`getUrl()`](#geturl)
+- [Other](#other)
+  - [`useApiUrl()`](#useapiurl)
 
 ## Namespace
 
@@ -27,7 +27,7 @@ Represents the context for an HTTP request to the OpenFGA API. This interface en
 
 ## Related Classes
 
-* [RequestContext](Network/RequestContext.md) (implementation)
+- [RequestContext](Network/RequestContext.md) (implementation)
 
 ## Methods
 

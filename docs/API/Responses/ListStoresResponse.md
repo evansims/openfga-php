@@ -4,19 +4,19 @@ Response containing a paginated list of available stores. This response provides
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getStores()`](#getstores)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getStores()`](#getstores)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Response containing a paginated list of available stores. This response provides
 
 ## Implements
 
-* [`ListStoresResponseInterface`](ListStoresResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ListStoresResponseInterface`](ListStoresResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (interface)
-* [ListStoresRequest](Requests/ListStoresRequest.md) (request)
+- [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (interface)
+- [ListStoresRequest](Requests/ListStoresRequest.md) (request)
 
 ## Methods
 

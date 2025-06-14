@@ -4,19 +4,19 @@ Interface for listing historical changes to relationship tuples. This interface 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getPageSize()`](#getpagesize)
-    * [`getRequest()`](#getrequest)
-    * [`getStartTime()`](#getstarttime)
-    * [`getStore()`](#getstore)
-    * [`getType()`](#gettype)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getPageSize()`](#getpagesize)
+  - [`getRequest()`](#getrequest)
+  - [`getStartTime()`](#getstarttime)
+  - [`getStore()`](#getstore)
+  - [`getType()`](#gettype)
 
 ## Namespace
 
@@ -28,12 +28,12 @@ Interface for listing historical changes to relationship tuples. This interface 
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (response)
-* [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (implementation)
+- [ListTupleChangesResponseInterface](Responses/ListTupleChangesResponseInterface.md) (response)
+- [ListTupleChangesRequest](Requests/ListTupleChangesRequest.md) (implementation)
 
 ## Methods
 

@@ -4,19 +4,19 @@ Base interface for all domain events. Events represent something significant tha
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getEventId()`](#geteventid)
-    * [`getEventType()`](#geteventtype)
-    * [`getOccurredAt()`](#getoccurredat)
-    * [`getPayload()`](#getpayload)
-* [Utility](#utility)
-    * [`isPropagationStopped()`](#ispropagationstopped)
-* [Other](#other)
-    * [`stopPropagation()`](#stoppropagation)
+- [List Operations](#list-operations)
+  - [`getEventId()`](#geteventid)
+  - [`getEventType()`](#geteventtype)
+  - [`getOccurredAt()`](#getoccurredat)
+  - [`getPayload()`](#getpayload)
+- [Utility](#utility)
+  - [`isPropagationStopped()`](#ispropagationstopped)
+- [Other](#other)
+  - [`stopPropagation()`](#stoppropagation)
 
 ## Namespace
 

@@ -4,19 +4,19 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getUser()`](#getuser)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getUser()`](#getuser)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,14 +28,14 @@ Represents a user entry in a users list response. UsersListUser provides a simpl
 
 ## Implements
 
-* [`UsersListUserInterface`](UsersListUserInterface.md)
-* `Stringable`
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UsersListUserInterface`](UsersListUserInterface.md)
+- `Stringable`
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UsersListUserInterface](Models/UsersListUserInterface.md) (interface)
+- [UsersListUserInterface](Models/UsersListUserInterface.md) (interface)
 
 ## Constants
 

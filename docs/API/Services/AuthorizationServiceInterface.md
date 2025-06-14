@@ -4,19 +4,19 @@ Service interface for authorization operations. This interface defines methods f
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`batchCheck()`](#batchcheck)
-    * [`check()`](#check)
-    * [`expand()`](#expand)
-* [List Operations](#list-operations)
-    * [`listObjects()`](#listobjects)
-    * [`listUsers()`](#listusers)
-    * [`streamedListObjects()`](#streamedlistobjects)
+- [Authorization](#authorization)
+  - [`batchCheck()`](#batchcheck)
+  - [`check()`](#check)
+  - [`expand()`](#expand)
+- [List Operations](#list-operations)
+  - [`listObjects()`](#listobjects)
+  - [`listUsers()`](#listusers)
+  - [`streamedListObjects()`](#streamedlistobjects)
 
 ## Namespace
 
@@ -28,7 +28,7 @@ Service interface for authorization operations. This interface defines methods f
 
 ## Related Classes
 
-* [AuthorizationService](Services/AuthorizationService.md) (implementation)
+- [AuthorizationService](Services/AuthorizationService.md) (implementation)
 
 ## Methods
 

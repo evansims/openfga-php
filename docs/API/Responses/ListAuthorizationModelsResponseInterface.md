@@ -4,15 +4,15 @@ Interface for authorization models listing response objects. This interface defi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getModels()`](#getmodels)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getModels()`](#getmodels)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for authorization models listing response objects. This interface defi
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListAuthorizationModelsResponse](Responses/ListAuthorizationModelsResponse.md) (implementation)
-* [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md) (request)
+- [ListAuthorizationModelsResponse](Responses/ListAuthorizationModelsResponse.md) (implementation)
+- [ListAuthorizationModelsRequestInterface](Requests/ListAuthorizationModelsRequestInterface.md) (request)
 
 ## Methods
 

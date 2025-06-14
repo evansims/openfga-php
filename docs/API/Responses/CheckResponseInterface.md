@@ -4,16 +4,16 @@ Interface for permission check response objects. This interface defines the cont
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`getAllowed()`](#getallowed)
-* [List Operations](#list-operations)
-    * [`getResolution()`](#getresolution)
+- [Authorization](#authorization)
+  - [`getAllowed()`](#getallowed)
+- [List Operations](#list-operations)
+  - [`getResolution()`](#getresolution)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Interface for permission check response objects. This interface defines the cont
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [CheckResponse](Responses/CheckResponse.md) (implementation)
-* [CheckRequestInterface](Requests/CheckRequestInterface.md) (request)
+- [CheckResponse](Responses/CheckResponse.md) (implementation)
+- [CheckRequestInterface](Requests/CheckRequestInterface.md) (request)
 
 ## Methods
 

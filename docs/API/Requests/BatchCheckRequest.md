@@ -4,16 +4,16 @@ Request for performing multiple authorization checks in a single batch. This req
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`getChecks()`](#getchecks)
-* [List Operations](#list-operations)
-    * [`getRequest()`](#getrequest)
+- [Authorization](#authorization)
+  - [`getChecks()`](#getchecks)
+- [List Operations](#list-operations)
+  - [`getRequest()`](#getrequest)
 
 ## Namespace
 
@@ -25,13 +25,13 @@ Request for performing multiple authorization checks in a single batch. This req
 
 ## Implements
 
-* [`BatchCheckRequestInterface`](BatchCheckRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`BatchCheckRequestInterface`](BatchCheckRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [BatchCheckResponse](Responses/BatchCheckResponse.md) (response)
-* [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (interface)
+- [BatchCheckResponse](Responses/BatchCheckResponse.md) (response)
+- [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (interface)
 
 ## Methods
 

@@ -4,18 +4,18 @@ Service interface for managing telemetry and observability in OpenFGA operations
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
-    * [`recordFailure()`](#recordfailure)
-    * [`recordHttpRequest()`](#recordhttprequest)
-    * [`recordOperationMetrics()`](#recordoperationmetrics)
-    * [`recordSuccess()`](#recordsuccess)
-    * [`startOperation()`](#startoperation)
+- [Other](#other)
+  - [`recordAuthenticationEvent()`](#recordauthenticationevent)
+  - [`recordFailure()`](#recordfailure)
+  - [`recordHttpRequest()`](#recordhttprequest)
+  - [`recordOperationMetrics()`](#recordoperationmetrics)
+  - [`recordSuccess()`](#recordsuccess)
+  - [`startOperation()`](#startoperation)
 
 ## Namespace
 
@@ -27,7 +27,7 @@ Service interface for managing telemetry and observability in OpenFGA operations
 
 ## Related Classes
 
-* [TelemetryService](Services/TelemetryService.md) (implementation)
+- [TelemetryService](Services/TelemetryService.md) (implementation)
 
 ## Methods
 

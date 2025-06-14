@@ -4,13 +4,13 @@ Service for filtering and deduplicating tuple operations. This service encapsula
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`filterDuplicates()`](#filterduplicates)
+- [Other](#other)
+  - [`filterDuplicates()`](#filterduplicates)
 
 ## Namespace
 
@@ -22,7 +22,7 @@ Service for filtering and deduplicating tuple operations. This service encapsula
 
 ## Related Classes
 
-* [TupleFilterService](Services/TupleFilterService.md) (implementation)
+- [TupleFilterService](Services/TupleFilterService.md) (implementation)
 
 ## Methods
 

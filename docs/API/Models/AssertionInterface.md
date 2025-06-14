@@ -4,19 +4,19 @@ Represents an assertion used to test authorization model correctness. Assertions
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getExpectation()`](#getexpectation)
-    * [`getTupleKey()`](#gettuplekey)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getExpectation()`](#getexpectation)
+  - [`getTupleKey()`](#gettuplekey)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,12 +28,12 @@ Represents an assertion used to test authorization model correctness. Assertions
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Assertion](Models/Assertion.md) (implementation)
+- [Assertion](Models/Assertion.md) (implementation)
 
 ## Methods
 

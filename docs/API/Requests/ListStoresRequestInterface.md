@@ -4,16 +4,16 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getPageSize()`](#getpagesize)
-    * [`getRequest()`](#getrequest)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getPageSize()`](#getpagesize)
+  - [`getRequest()`](#getrequest)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (response)
-* [ListStoresRequest](Requests/ListStoresRequest.md) (implementation)
+- [ListStoresResponseInterface](Responses/ListStoresResponseInterface.md) (response)
+- [ListStoresRequest](Requests/ListStoresRequest.md) (implementation)
 
 ## Methods
 

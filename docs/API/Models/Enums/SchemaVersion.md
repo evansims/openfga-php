@@ -4,21 +4,21 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getNumericVersion()`](#getnumericversion)
-* [Utility](#utility)
-    * [`isLatest()`](#islatest)
-    * [`isLegacy()`](#islegacy)
-* [Other](#other)
-    * [`compareTo()`](#compareto)
-    * [`supportsConditions()`](#supportsconditions)
+- [List Operations](#list-operations)
+  - [`getNumericVersion()`](#getnumericversion)
+- [Utility](#utility)
+  - [`isLatest()`](#islatest)
+  - [`isLegacy()`](#islegacy)
+- [Other](#other)
+  - [`compareTo()`](#compareto)
+  - [`supportsConditions()`](#supportsconditions)
 
 ## Namespace
 
@@ -30,8 +30,8 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

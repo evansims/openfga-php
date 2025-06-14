@@ -4,14 +4,14 @@ Interface for object listing response objects. This interface defines the contra
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObjects()`](#getobjects)
+- [List Operations](#list-operations)
+  - [`getObjects()`](#getobjects)
 
 ## Namespace
 
@@ -23,12 +23,12 @@ Interface for object listing response objects. This interface defines the contra
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListObjectsResponse](Responses/ListObjectsResponse.md) (implementation)
-* [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md) (request)
+- [ListObjectsResponse](Responses/ListObjectsResponse.md) (implementation)
+- [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md) (request)
 
 ## Methods
 

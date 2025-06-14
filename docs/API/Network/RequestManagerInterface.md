@@ -4,19 +4,19 @@ Manages HTTP requests and responses for OpenFGA API communication. This interfac
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getHttpClient()`](#gethttpclient)
-    * [`getHttpRequestFactory()`](#gethttprequestfactory)
-    * [`getHttpResponseFactory()`](#gethttpresponsefactory)
-    * [`getHttpStreamFactory()`](#gethttpstreamfactory)
-* [Other](#other)
-    * [`request()`](#request)
-    * [`send()`](#send)
+- [List Operations](#list-operations)
+  - [`getHttpClient()`](#gethttpclient)
+  - [`getHttpRequestFactory()`](#gethttprequestfactory)
+  - [`getHttpResponseFactory()`](#gethttpresponsefactory)
+  - [`getHttpStreamFactory()`](#gethttpstreamfactory)
+- [Other](#other)
+  - [`request()`](#request)
+  - [`send()`](#send)
 
 ## Namespace
 
@@ -28,7 +28,7 @@ Manages HTTP requests and responses for OpenFGA API communication. This interfac
 
 ## Related Classes
 
-* [RequestManager](Network/RequestManager.md) (implementation)
+- [RequestManager](Network/RequestManager.md) (implementation)
 
 ## Methods
 

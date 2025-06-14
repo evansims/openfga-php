@@ -4,14 +4,14 @@ Factory for creating RequestManager instances. This factory encapsulates the cre
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`create()`](#create)
-    * [`createForBatch()`](#createforbatch)
-    * [`createWithRetries()`](#createwithretries)
+- [CRUD Operations](#crud-operations)
+  - [`create()`](#create)
+  - [`createForBatch()`](#createforbatch)
+  - [`createWithRetries()`](#createwithretries)
 
 ## Namespace
 

@@ -4,16 +4,16 @@ Service for handling HTTP communication. This service abstracts HTTP operations 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getLastRequest()`](#getlastrequest)
-    * [`getLastResponse()`](#getlastresponse)
-* [Other](#other)
-    * [`send()`](#send)
+- [List Operations](#list-operations)
+  - [`getLastRequest()`](#getlastrequest)
+  - [`getLastResponse()`](#getlastresponse)
+- [Other](#other)
+  - [`send()`](#send)
 
 ## Namespace
 
@@ -25,7 +25,7 @@ Service for handling HTTP communication. This service abstracts HTTP operations 
 
 ## Related Classes
 
-* [HttpService](Services/HttpService.md) (implementation)
+- [HttpService](Services/HttpService.md) (implementation)
 
 ## Methods
 

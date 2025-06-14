@@ -4,21 +4,21 @@ Represents an OpenFGA store that contains authorization models and relationship 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getCreatedAt()`](#getcreatedat)
-    * [`getDeletedAt()`](#getdeletedat)
-    * [`getUpdatedAt()`](#getupdatedat)
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getName()`](#getname)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [CRUD Operations](#crud-operations)
+  - [`getCreatedAt()`](#getcreatedat)
+  - [`getDeletedAt()`](#getdeletedat)
+  - [`getUpdatedAt()`](#getupdatedat)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getName()`](#getname)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -30,12 +30,12 @@ Represents an OpenFGA store that contains authorization models and relationship 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Store](Models/Store.md) (implementation)
+- [Store](Models/Store.md) (implementation)
 
 ## Methods
 

@@ -4,18 +4,18 @@ Defines the contract for assertion tuple keys used in authorization model testin
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObject()`](#getobject)
-    * [`getRelation()`](#getrelation)
-    * [`getUser()`](#getuser)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getObject()`](#getobject)
+  - [`getRelation()`](#getrelation)
+  - [`getUser()`](#getuser)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Defines the contract for assertion tuple keys used in authorization model testin
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [AssertionTupleKey](Models/AssertionTupleKey.md) (implementation)
+- [AssertionTupleKey](Models/AssertionTupleKey.md) (implementation)
 
 ## Methods
 

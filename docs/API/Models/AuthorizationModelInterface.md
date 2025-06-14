@@ -4,20 +4,20 @@ Represents an OpenFGA authorization model that defines permission structures. Au
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConditions()`](#getconditions)
-    * [`getId()`](#getid)
-    * [`getSchemaVersion()`](#getschemaversion)
-    * [`getTypeDefinitions()`](#gettypedefinitions)
-* [Other](#other)
-    * [`dsl()`](#dsl)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getConditions()`](#getconditions)
+  - [`getId()`](#getid)
+  - [`getSchemaVersion()`](#getschemaversion)
+  - [`getTypeDefinitions()`](#gettypedefinitions)
+- [Other](#other)
+  - [`dsl()`](#dsl)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,12 +29,12 @@ Represents an OpenFGA authorization model that defines permission structures. Au
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [AuthorizationModel](Models/AuthorizationModel.md) (implementation)
+- [AuthorizationModel](Models/AuthorizationModel.md) (implementation)
 
 ## Methods
 

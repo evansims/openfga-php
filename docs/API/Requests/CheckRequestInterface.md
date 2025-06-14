@@ -4,21 +4,21 @@ Interface for authorization check request specifications. This interface defines
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAuthorizationModel()`](#getauthorizationmodel)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getTrace()`](#gettrace)
-    * [`getTupleKey()`](#gettuplekey)
+- [List Operations](#list-operations)
+  - [`getAuthorizationModel()`](#getauthorizationmodel)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getTrace()`](#gettrace)
+  - [`getTupleKey()`](#gettuplekey)
 
 ## Namespace
 
@@ -30,12 +30,12 @@ Interface for authorization check request specifications. This interface defines
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [CheckResponseInterface](Responses/CheckResponseInterface.md) (response)
-* [CheckRequest](Requests/CheckRequest.md) (implementation)
+- [CheckResponseInterface](Responses/CheckResponseInterface.md) (response)
+- [CheckRequest](Requests/CheckRequest.md) (implementation)
 
 ## Methods
 

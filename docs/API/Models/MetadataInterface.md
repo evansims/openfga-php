@@ -4,18 +4,18 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModule()`](#getmodule)
-    * [`getRelations()`](#getrelations)
-    * [`getSourceInfo()`](#getsourceinfo)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getModule()`](#getmodule)
+  - [`getRelations()`](#getrelations)
+  - [`getSourceInfo()`](#getsourceinfo)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [Metadata](Models/Metadata.md) (implementation)
+- [Metadata](Models/Metadata.md) (implementation)
 
 ## Methods
 

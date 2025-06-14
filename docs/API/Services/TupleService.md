@@ -4,23 +4,23 @@ Service implementation for managing OpenFGA relationship tuples. Provides busine
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`delete()`](#delete)
-    * [`deleteBatch()`](#deletebatch)
-    * [`read()`](#read)
-    * [`write()`](#write)
-    * [`writeBatch()`](#writebatch)
-* [List Operations](#list-operations)
-    * [`getStatistics()`](#getstatistics)
-    * [`listChanges()`](#listchanges)
-* [Utility](#utility)
-    * [`exists()`](#exists)
+- [CRUD Operations](#crud-operations)
+  - [`delete()`](#delete)
+  - [`deleteBatch()`](#deletebatch)
+  - [`read()`](#read)
+  - [`write()`](#write)
+  - [`writeBatch()`](#writebatch)
+- [List Operations](#list-operations)
+  - [`getStatistics()`](#getstatistics)
+  - [`listChanges()`](#listchanges)
+- [Utility](#utility)
+  - [`exists()`](#exists)
 
 ## Namespace
 
@@ -32,11 +32,11 @@ Service implementation for managing OpenFGA relationship tuples. Provides busine
 
 ## Implements
 
-* [`TupleServiceInterface`](TupleServiceInterface.md)
+- [`TupleServiceInterface`](TupleServiceInterface.md)
 
 ## Related Classes
 
-* [TupleServiceInterface](Services/TupleServiceInterface.md) (interface)
+- [TupleServiceInterface](Services/TupleServiceInterface.md) (interface)
 
 ## Methods
 

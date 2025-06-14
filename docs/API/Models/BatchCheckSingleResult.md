@@ -4,22 +4,22 @@ Represents the result of a single check within a batch check response. Each resu
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`getAllowed()`](#getallowed)
-* [List Operations](#list-operations)
-    * [`getError()`](#geterror)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`toArray()`](#toarray)
+- [Authorization](#authorization)
+  - [`getAllowed()`](#getallowed)
+- [List Operations](#list-operations)
+  - [`getError()`](#geterror)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`toArray()`](#toarray)
 
 ## Namespace
 
@@ -31,13 +31,13 @@ Represents the result of a single check within a batch check response. Each resu
 
 ## Implements
 
-* [`BatchCheckSingleResultInterface`](BatchCheckSingleResultInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`BatchCheckSingleResultInterface`](BatchCheckSingleResultInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) (interface)
+- [BatchCheckSingleResultInterface](Models/BatchCheckSingleResultInterface.md) (interface)
 
 ## Constants
 

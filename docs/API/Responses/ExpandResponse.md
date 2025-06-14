@@ -4,18 +4,18 @@ Response containing the expanded userset tree for a relationship query. This res
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getTree()`](#gettree)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getTree()`](#gettree)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -27,13 +27,13 @@ Response containing the expanded userset tree for a relationship query. This res
 
 ## Implements
 
-* [`ExpandResponseInterface`](ExpandResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ExpandResponseInterface`](ExpandResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ExpandResponseInterface](Responses/ExpandResponseInterface.md) (interface)
-* [ExpandRequest](Requests/ExpandRequest.md) (request)
+- [ExpandResponseInterface](Responses/ExpandResponseInterface.md) (interface)
+- [ExpandRequest](Requests/ExpandRequest.md) (request)
 
 ## Methods
 

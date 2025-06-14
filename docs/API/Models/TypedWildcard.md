@@ -4,19 +4,19 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getType()`](#gettype)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getType()`](#gettype)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,14 +28,14 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 
 ## Implements
 
-* [`TypedWildcardInterface`](TypedWildcardInterface.md)
-* `Stringable`
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`TypedWildcardInterface`](TypedWildcardInterface.md)
+- `Stringable`
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [TypedWildcardInterface](Models/TypedWildcardInterface.md) (interface)
+- [TypedWildcardInterface](Models/TypedWildcardInterface.md) (interface)
 
 ## Constants
 

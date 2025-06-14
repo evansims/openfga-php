@@ -4,17 +4,17 @@ Interface for listing authorization models in a store. This interface defines th
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getPageSize()`](#getpagesize)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getPageSize()`](#getpagesize)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Interface for listing authorization models in a store. This interface defines th
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (response)
-* [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (implementation)
+- [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (response)
+- [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (implementation)
 
 ## Methods
 

@@ -4,24 +4,24 @@ Supported languages for OpenFGA SDK internationalization. This enum represents a
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [Utility](#utility)
-    * [`displayName()`](#displayname)
-    * [`isActive()`](#isactive)
-    * [`isRightToLeft()`](#isrighttoleft)
-    * [`isoCode()`](#isocode)
-* [Other](#other)
-    * [`apply()`](#apply)
-    * [`locale()`](#locale)
-    * [`nativeName()`](#nativename)
-    * [`regionCode()`](#regioncode)
-    * [`withLocale()`](#withlocale)
+- [Utility](#utility)
+  - [`displayName()`](#displayname)
+  - [`isActive()`](#isactive)
+  - [`isRightToLeft()`](#isrighttoleft)
+  - [`isoCode()`](#isocode)
+- [Other](#other)
+  - [`apply()`](#apply)
+  - [`locale()`](#locale)
+  - [`nativeName()`](#nativename)
+  - [`regionCode()`](#regioncode)
+  - [`withLocale()`](#withlocale)
 
 ## Namespace
 
@@ -33,8 +33,8 @@ Supported languages for OpenFGA SDK internationalization. This enum represents a
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

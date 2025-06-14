@@ -4,16 +4,16 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getNodes()`](#getnodes)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getNodes()`](#getnodes)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [NodeUnion](Models/NodeUnion.md) (implementation)
+- [NodeUnion](Models/NodeUnion.md) (implementation)
 
 ## Methods
 

@@ -4,14 +4,14 @@ Interface for user listing response objects. This interface defines the contract
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getUsers()`](#getusers)
+- [List Operations](#list-operations)
+  - [`getUsers()`](#getusers)
 
 ## Namespace
 
@@ -23,12 +23,12 @@ Interface for user listing response objects. This interface defines the contract
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListUsersResponse](Responses/ListUsersResponse.md) (implementation)
-* [ListUsersRequestInterface](Requests/ListUsersRequestInterface.md) (request)
+- [ListUsersResponse](Responses/ListUsersResponse.md) (implementation)
+- [ListUsersRequestInterface](Requests/ListUsersRequestInterface.md) (request)
 
 ## Methods
 

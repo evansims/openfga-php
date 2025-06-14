@@ -4,23 +4,23 @@ Interface for batch tuple operations. Defines the contract for organizing tuple 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getDeletes()`](#getdeletes)
-    * [`getWrites()`](#getwrites)
-* [List Operations](#list-operations)
-    * [`getTotalOperations()`](#gettotaloperations)
-* [Utility](#utility)
-    * [`isEmpty()`](#isempty)
-* [Other](#other)
-    * [`chunk()`](#chunk)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`requiresChunking()`](#requireschunking)
+- [CRUD Operations](#crud-operations)
+  - [`getDeletes()`](#getdeletes)
+  - [`getWrites()`](#getwrites)
+- [List Operations](#list-operations)
+  - [`getTotalOperations()`](#gettotaloperations)
+- [Utility](#utility)
+  - [`isEmpty()`](#isempty)
+- [Other](#other)
+  - [`chunk()`](#chunk)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`requiresChunking()`](#requireschunking)
 
 ## Namespace
 
@@ -32,12 +32,12 @@ Interface for batch tuple operations. Defines the contract for organizing tuple 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [BatchTupleOperation](Models/BatchTupleOperation.md) (implementation)
+- [BatchTupleOperation](Models/BatchTupleOperation.md) (implementation)
 
 ## Methods
 

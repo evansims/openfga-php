@@ -4,22 +4,22 @@ Represents the result of an operation that can either succeed or fail. The Resul
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`err()`](#err)
-    * [`failed()`](#failed)
-    * [`failure()`](#failure)
-    * [`recover()`](#recover)
-    * [`rethrow()`](#rethrow)
-    * [`succeeded()`](#succeeded)
-    * [`success()`](#success)
-    * [`then()`](#then)
-    * [`unwrap()`](#unwrap)
-    * [`val()`](#val)
+- [Other](#other)
+  - [`err()`](#err)
+  - [`failed()`](#failed)
+  - [`failure()`](#failure)
+  - [`recover()`](#recover)
+  - [`rethrow()`](#rethrow)
+  - [`succeeded()`](#succeeded)
+  - [`success()`](#success)
+  - [`then()`](#then)
+  - [`unwrap()`](#unwrap)
+  - [`val()`](#val)
 
 ## Namespace
 
@@ -31,7 +31,7 @@ Represents the result of an operation that can either succeed or fail. The Resul
 
 ## Related Classes
 
-* [Result](Results/Result.md) (implementation)
+- [Result](Results/Result.md) (implementation)
 
 ## Methods
 

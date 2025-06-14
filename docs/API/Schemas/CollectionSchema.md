@@ -4,20 +4,20 @@ Schema definition specifically for validating and transforming collection data s
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getClassName()`](#getclassname)
-    * [`getItemType()`](#getitemtype)
-    * [`getProperties()`](#getproperties)
-    * [`getProperty()`](#getproperty)
-    * [`getWrapperKey()`](#getwrapperkey)
-* [Other](#other)
-    * [`requiresItems()`](#requiresitems)
+- [List Operations](#list-operations)
+  - [`getClassName()`](#getclassname)
+  - [`getItemType()`](#getitemtype)
+  - [`getProperties()`](#getproperties)
+  - [`getProperty()`](#getproperty)
+  - [`getWrapperKey()`](#getwrapperkey)
+- [Other](#other)
+  - [`requiresItems()`](#requiresitems)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Schema definition specifically for validating and transforming collection data s
 
 ## Implements
 
-* [`CollectionSchemaInterface`](CollectionSchemaInterface.md)
-* [`SchemaInterface`](SchemaInterface.md)
+- [`CollectionSchemaInterface`](CollectionSchemaInterface.md)
+- [`SchemaInterface`](SchemaInterface.md)
 
 ## Related Classes
 
-* [CollectionSchemaInterface](Schemas/CollectionSchemaInterface.md) (interface)
-* [Schema](Schemas/Schema.md) (item)
+- [CollectionSchemaInterface](Schemas/CollectionSchemaInterface.md) (interface)
+- [Schema](Schemas/Schema.md) (item)
 
 ## Methods
 

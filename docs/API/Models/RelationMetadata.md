@@ -4,21 +4,21 @@ Contains metadata information about a relation in your authorization model. Rela
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
-    * [`getModule()`](#getmodule)
-    * [`getSourceInfo()`](#getsourceinfo)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
+  - [`getModule()`](#getmodule)
+  - [`getSourceInfo()`](#getsourceinfo)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -30,13 +30,13 @@ Contains metadata information about a relation in your authorization model. Rela
 
 ## Implements
 
-* [`RelationMetadataInterface`](RelationMetadataInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`RelationMetadataInterface`](RelationMetadataInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [RelationMetadataInterface](Models/RelationMetadataInterface.md) (interface)
+- [RelationMetadataInterface](Models/RelationMetadataInterface.md) (interface)
 
 ## Constants
 

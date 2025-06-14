@@ -4,18 +4,18 @@ Defines the contract for userset user specifications. A userset user represents 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getRelation()`](#getrelation)
-    * [`getType()`](#gettype)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getRelation()`](#getrelation)
+  - [`getType()`](#gettype)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Defines the contract for userset user specifications. A userset user represents 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [UsersetUser](Models/UsersetUser.md) (implementation)
+- [UsersetUser](Models/UsersetUser.md) (implementation)
 
 ## Methods
 

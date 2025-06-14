@@ -4,16 +4,16 @@ Response containing streaming objects that a user has a specific relationship wi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObject()`](#getobject)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getObject()`](#getobject)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Response containing streaming objects that a user has a specific relationship wi
 
 ## Implements
 
-* [`StreamedListObjectsResponseInterface`](StreamedListObjectsResponseInterface.md)
+- [`StreamedListObjectsResponseInterface`](StreamedListObjectsResponseInterface.md)
 
 ## Related Classes
 
-* [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (interface)
-* [StreamedListObjectsRequest](Requests/StreamedListObjectsRequest.md) (request)
+- [StreamedListObjectsResponseInterface](Responses/StreamedListObjectsResponseInterface.md) (interface)
+- [StreamedListObjectsRequest](Requests/StreamedListObjectsRequest.md) (request)
 
 ## Methods
 

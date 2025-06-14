@@ -4,9 +4,9 @@ OpenFGA DSL Transformer Interface for authorization model conversions. This inte
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
 
 ## Namespace
 
@@ -18,4 +18,4 @@ OpenFGA DSL Transformer Interface for authorization model conversions. This inte
 
 ## Related Classes
 
-* [Transformer](Transformer.md) (implementation)
+- [Transformer](Transformer.md) (implementation)

@@ -4,18 +4,18 @@ Service for validating data against schemas. This service encapsulates validatio
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`validate()`](#validate)
-    * [`validateProperty()`](#validateproperty)
-* [Model Management](#model-management)
-    * [`hasSchema()`](#hasschema)
-    * [`registerSchema()`](#registerschema)
+- [Authorization](#authorization)
+  - [`validate()`](#validate)
+  - [`validateProperty()`](#validateproperty)
+- [Model Management](#model-management)
+  - [`hasSchema()`](#hasschema)
+  - [`registerSchema()`](#registerschema)
 
 ## Namespace
 
@@ -27,11 +27,11 @@ Service for validating data against schemas. This service encapsulates validatio
 
 ## Implements
 
-* [`ValidationServiceInterface`](ValidationServiceInterface.md)
+- [`ValidationServiceInterface`](ValidationServiceInterface.md)
 
 ## Related Classes
 
-* [ValidationServiceInterface](Schemas/ValidationServiceInterface.md) (interface)
+- [ValidationServiceInterface](Schemas/ValidationServiceInterface.md) (interface)
 
 ## Methods
 

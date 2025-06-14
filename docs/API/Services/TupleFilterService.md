@@ -4,14 +4,14 @@ Default implementation of TupleFilterServiceInterface. Provides efficient duplic
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`filterDuplicates()`](#filterduplicates)
+- [Other](#other)
+  - [`filterDuplicates()`](#filterduplicates)
 
 ## Namespace
 
@@ -23,11 +23,11 @@ Default implementation of TupleFilterServiceInterface. Provides efficient duplic
 
 ## Implements
 
-* [`TupleFilterServiceInterface`](TupleFilterServiceInterface.md)
+- [`TupleFilterServiceInterface`](TupleFilterServiceInterface.md)
 
 ## Related Classes
 
-* [TupleFilterServiceInterface](Services/TupleFilterServiceInterface.md) (interface)
+- [TupleFilterServiceInterface](Services/TupleFilterServiceInterface.md) (interface)
 
 ## Methods
 

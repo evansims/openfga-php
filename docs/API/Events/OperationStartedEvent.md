@@ -4,24 +4,24 @@ Event fired when a high-level operation starts. This event tracks business opera
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContext()`](#getcontext)
-    * [`getEventId()`](#geteventid)
-    * [`getEventType()`](#geteventtype)
-    * [`getModelId()`](#getmodelid)
-    * [`getOccurredAt()`](#getoccurredat)
-    * [`getOperation()`](#getoperation)
-    * [`getPayload()`](#getpayload)
-    * [`getStoreId()`](#getstoreid)
-* [Utility](#utility)
-    * [`isPropagationStopped()`](#ispropagationstopped)
-* [Other](#other)
-    * [`stopPropagation()`](#stoppropagation)
+- [List Operations](#list-operations)
+  - [`getContext()`](#getcontext)
+  - [`getEventId()`](#geteventid)
+  - [`getEventType()`](#geteventtype)
+  - [`getModelId()`](#getmodelid)
+  - [`getOccurredAt()`](#getoccurredat)
+  - [`getOperation()`](#getoperation)
+  - [`getPayload()`](#getpayload)
+  - [`getStoreId()`](#getstoreid)
+- [Utility](#utility)
+  - [`isPropagationStopped()`](#ispropagationstopped)
+- [Other](#other)
+  - [`stopPropagation()`](#stoppropagation)
 
 ## Namespace
 
@@ -33,7 +33,7 @@ Event fired when a high-level operation starts. This event tracks business opera
 
 ## Implements
 
-* [`EventInterface`](EventInterface.md)
+- [`EventInterface`](EventInterface.md)
 
 ## Methods
 

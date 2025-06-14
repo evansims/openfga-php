@@ -4,31 +4,31 @@ Collection interface for OpenFGA relation metadata objects. This interface defin
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Utility](#utility)
-    * [`has()`](#has)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`rewind()`](#rewind)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Utility](#utility)
+  - [`has()`](#has)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`rewind()`](#rewind)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
 
 ## Namespace
 
@@ -40,17 +40,17 @@ Collection interface for OpenFGA relation metadata objects. This interface defin
 
 ## Implements
 
-* [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
+- [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
+- `Traversable`
+- `JsonSerializable`
+- `Iterator`
+- `Countable`
+- `ArrayAccess`
 
 ## Related Classes
 
-* [RelationMetadataCollection](../Models/Collections/RelationMetadataCollection.md) (implementation)
-* [RelationMetadataInterface](../Models/RelationMetadataInterface.md) (item)
+- [RelationMetadataCollection](../Models/Collections/RelationMetadataCollection.md) (implementation)
+- [RelationMetadataInterface](../Models/RelationMetadataInterface.md) (item)
 
 ## Methods
 

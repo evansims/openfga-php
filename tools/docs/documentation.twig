@@ -5,40 +5,40 @@
 
 ## Table of Contents
 
-* [Namespace](#namespace)
+- [Namespace](#namespace)
 {% if sourceFile is defined and sourceFile is not empty %}
-* [Source](#source)
+- [Source](#source)
 {% endif %}
 {% if interfaces is not empty %}
-* [Implements](#implements)
+- [Implements](#implements)
 {% endif %}
 {% if relatedClasses is defined and relatedClasses|length > 0 %}
-* [Related Classes](#related-classes)
+- [Related Classes](#related-classes)
 {% endif %}
 {% if constants is defined and constants|length > 0 %}
-* [Constants](#constants)
+- [Constants](#constants)
 {% endif %}
 {% if isEnum and cases is not empty %}
-* [Cases](#cases)
+- [Cases](#cases)
 {% endif %}
 {% if translations is defined and translations is not empty %}
-* [Translation Tables](#translation-tables)
+- [Translation Tables](#translation-tables)
 {% endif %}
 {% if methods is not empty %}
-* [Methods](#methods)
+- [Methods](#methods)
 
 {% set categorized = {} %}
-{% for method in methods %}
-  {% set category = method.category|default('Other') %}
-  {% if categorized[category] is not defined %}
-    {% set categorized = categorized|merge({(category): []}) %}
-  {% endif %}
-  {% set categorized = categorized|merge({(category): categorized[category]|merge([method])}) %}
-{% endfor %}
+{%- for method in methods -%}
+  {%- set category = method.category|default('Other') -%}
+  {%- if categorized[category] is not defined -%}
+    {%- set categorized = categorized|merge({(category): []}) -%}
+  {%- endif -%}
+  {%- set categorized = categorized|merge({(category): categorized[category]|merge([method])}) -%}
+{%- endfor %}
 {% for category, categoryMethods in categorized %}
-* [{{ category }}](#{{ category|lower|replace({' ': '-'}) }})
+- [{{ category }}](#{{ category|lower|replace({' ': '-'}) }})
 {% for method in categoryMethods %}
-    * [`{{ method.name }}()`](#{{ method.name|lower }})
+  - [`{{ method.name }}()`](#{{ method.name|lower }})
 {% endfor %}
 {% endfor %}
 {% endif %}
@@ -54,14 +54,14 @@
 {% if interfaces is not empty %}
 ## Implements
 {% for interface in interfaces %}
-* {{ interface }}
+- {{ interface }}
 {% endfor %}
 {% endif %}
 
 {% if relatedClasses is defined and relatedClasses|length > 0 %}
 ## Related Classes
 {% for related in relatedClasses %}
-* {{ related.link }} ({{ related.relationship }})
+- {{ related.link }} ({{ related.relationship }})
 {% endfor %}
 {% endif %}
 
@@ -104,13 +104,13 @@ The following tables show all available translations for each message key used t
 ## Methods
 
 {% set categorized = {} %}
-{% for method in methods %}
-    {% set category = method.category|default('Other') %}
-    {% if categorized[category] is not defined %}
-        {% set categorized = categorized|merge({(category): []}) %}
-    {% endif %}
-    {% set categorized = categorized|merge({(category): categorized[category]|merge([method])}) %}
-{% endfor %}
+{%- for method in methods -%}
+    {%- set category = method.category|default('Other') -%}
+    {%- if categorized[category] is not defined -%}
+        {%- set categorized = categorized|merge({(category): []}) -%}
+    {%- endif -%}
+    {%- set categorized = categorized|merge({(category): categorized[category]|merge([method])}) -%}
+{%- endfor %}
 
 {% for category, categoryMethods in categorized %}
 {% if categorized|length > 1 %}

@@ -4,22 +4,22 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getExpectation()`](#getexpectation)
-    * [`getTupleKey()`](#gettuplekey)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getExpectation()`](#getexpectation)
+  - [`getTupleKey()`](#gettuplekey)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -31,13 +31,13 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 
 ## Implements
 
-* [`AssertionInterface`](AssertionInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`AssertionInterface`](AssertionInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [AssertionInterface](Models/AssertionInterface.md) (interface)
+- [AssertionInterface](Models/AssertionInterface.md) (interface)
 
 ## Constants
 

@@ -4,20 +4,20 @@ Service implementation for authorization operations. This service handles all au
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`batchCheck()`](#batchcheck)
-    * [`check()`](#check)
-    * [`expand()`](#expand)
-* [List Operations](#list-operations)
-    * [`listObjects()`](#listobjects)
-    * [`listUsers()`](#listusers)
-    * [`streamedListObjects()`](#streamedlistobjects)
+- [Authorization](#authorization)
+  - [`batchCheck()`](#batchcheck)
+  - [`check()`](#check)
+  - [`expand()`](#expand)
+- [List Operations](#list-operations)
+  - [`listObjects()`](#listobjects)
+  - [`listUsers()`](#listusers)
+  - [`streamedListObjects()`](#streamedlistobjects)
 
 ## Namespace
 
@@ -29,11 +29,11 @@ Service implementation for authorization operations. This service handles all au
 
 ## Implements
 
-* [`AuthorizationServiceInterface`](AuthorizationServiceInterface.md)
+- [`AuthorizationServiceInterface`](AuthorizationServiceInterface.md)
 
 ## Related Classes
 
-* [AuthorizationServiceInterface](Services/AuthorizationServiceInterface.md) (interface)
+- [AuthorizationServiceInterface](Services/AuthorizationServiceInterface.md) (interface)
 
 ## Methods
 

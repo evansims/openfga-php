@@ -4,21 +4,21 @@ Represents a change to a relationship tuple in your authorization store. When yo
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getOperation()`](#getoperation)
-    * [`getTimestamp()`](#gettimestamp)
-    * [`getTupleKey()`](#gettuplekey)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getOperation()`](#getoperation)
+  - [`getTimestamp()`](#gettimestamp)
+  - [`getTupleKey()`](#gettuplekey)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -30,14 +30,14 @@ Represents a change to a relationship tuple in your authorization store. When yo
 
 ## Implements
 
-* [`TupleChangeInterface`](TupleChangeInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`TupleChangeInterface`](TupleChangeInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [TupleChangeInterface](Models/TupleChangeInterface.md) (interface)
-* [TupleChanges](Models/Collections/TupleChanges.md) (collection)
+- [TupleChangeInterface](Models/TupleChangeInterface.md) (interface)
+- [TupleChanges](Models/Collections/TupleChanges.md) (collection)
 
 ## Constants
 

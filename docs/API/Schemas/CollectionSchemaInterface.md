@@ -4,20 +4,20 @@ Interface for collection schema definitions in the OpenFGA system. This interfac
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getClassName()`](#getclassname)
-    * [`getItemType()`](#getitemtype)
-    * [`getProperties()`](#getproperties)
-    * [`getProperty()`](#getproperty)
-    * [`getWrapperKey()`](#getwrapperkey)
-* [Other](#other)
-    * [`requiresItems()`](#requiresitems)
+- [List Operations](#list-operations)
+  - [`getClassName()`](#getclassname)
+  - [`getItemType()`](#getitemtype)
+  - [`getProperties()`](#getproperties)
+  - [`getProperty()`](#getproperty)
+  - [`getWrapperKey()`](#getwrapperkey)
+- [Other](#other)
+  - [`requiresItems()`](#requiresitems)
 
 ## Namespace
 
@@ -29,12 +29,12 @@ Interface for collection schema definitions in the OpenFGA system. This interfac
 
 ## Implements
 
-* [`SchemaInterface`](SchemaInterface.md)
+- [`SchemaInterface`](SchemaInterface.md)
 
 ## Related Classes
 
-* [SchemaInterface](Schemas/SchemaInterface.md) (item)
-* [CollectionSchema](Schemas/CollectionSchema.md) (implementation)
+- [SchemaInterface](Schemas/SchemaInterface.md) (item)
+- [CollectionSchema](Schemas/CollectionSchema.md) (implementation)
 
 ## Methods
 

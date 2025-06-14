@@ -4,39 +4,39 @@ Collection implementation for OpenFGA tuple objects. This class provides a concr
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Utility](#utility)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`clear()`](#clear)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`every()`](#every)
-    * [`filter()`](#filter)
-    * [`first()`](#first)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`reduce()`](#reduce)
-    * [`rewind()`](#rewind)
-    * [`some()`](#some)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
-    * [`withItems()`](#withitems)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Utility](#utility)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`clear()`](#clear)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`every()`](#every)
+  - [`filter()`](#filter)
+  - [`first()`](#first)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`reduce()`](#reduce)
+  - [`rewind()`](#rewind)
+  - [`some()`](#some)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
+  - [`withItems()`](#withitems)
 
 ## Namespace
 
@@ -48,17 +48,17 @@ Collection implementation for OpenFGA tuple objects. This class provides a concr
 
 ## Implements
 
-* [`IndexedCollectionInterface`](IndexedCollectionInterface.md)
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
-* [`TuplesInterface`](TuplesInterface.md)
+- [`IndexedCollectionInterface`](IndexedCollectionInterface.md)
+- `Traversable`
+- `JsonSerializable`
+- `Iterator`
+- `Countable`
+- `ArrayAccess`
+- [`TuplesInterface`](TuplesInterface.md)
 
 ## Related Classes
 
-* [TuplesInterface](../Models/Collections/TuplesInterface.md) (interface)
+- [TuplesInterface](../Models/Collections/TuplesInterface.md) (interface)
 
 ## Methods
 

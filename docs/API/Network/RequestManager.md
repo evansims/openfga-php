@@ -4,22 +4,22 @@ Concrete implementation of HTTP request management for OpenFGA API communication
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getHttpClient()`](#gethttpclient)
-    * [`getHttpRequestFactory()`](#gethttprequestfactory)
-    * [`getHttpResponseFactory()`](#gethttpresponsefactory)
-    * [`getHttpStreamFactory()`](#gethttpstreamfactory)
-* [Other](#other)
-    * [`executeParallel()`](#executeparallel)
-    * [`handleResponseException()`](#handleresponseexception)
-    * [`request()`](#request)
-    * [`send()`](#send)
+- [List Operations](#list-operations)
+  - [`getHttpClient()`](#gethttpclient)
+  - [`getHttpRequestFactory()`](#gethttprequestfactory)
+  - [`getHttpResponseFactory()`](#gethttpresponsefactory)
+  - [`getHttpStreamFactory()`](#gethttpstreamfactory)
+- [Other](#other)
+  - [`executeParallel()`](#executeparallel)
+  - [`handleResponseException()`](#handleresponseexception)
+  - [`request()`](#request)
+  - [`send()`](#send)
 
 ## Namespace
 
@@ -31,11 +31,11 @@ Concrete implementation of HTTP request management for OpenFGA API communication
 
 ## Implements
 
-* [`RequestManagerInterface`](RequestManagerInterface.md)
+- [`RequestManagerInterface`](RequestManagerInterface.md)
 
 ## Related Classes
 
-* [RequestManagerInterface](Network/RequestManagerInterface.md) (interface)
+- [RequestManagerInterface](Network/RequestManagerInterface.md) (interface)
 
 ## Methods
 

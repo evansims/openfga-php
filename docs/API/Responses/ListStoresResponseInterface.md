@@ -4,15 +4,15 @@ Interface for stores listing response objects. This interface defines the contra
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getStores()`](#getstores)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getStores()`](#getstores)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for stores listing response objects. This interface defines the contra
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListStoresResponse](Responses/ListStoresResponse.md) (implementation)
-* [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (request)
+- [ListStoresResponse](Responses/ListStoresResponse.md) (implementation)
+- [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (request)
 
 ## Methods
 

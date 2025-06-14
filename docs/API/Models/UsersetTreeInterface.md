@@ -4,16 +4,16 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRoot()`](#getroot)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getRoot()`](#getroot)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Defines a tree structure for representing complex userset operations. UsersetTre
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [UsersetTree](Models/UsersetTree.md) (implementation)
+- [UsersetTree](Models/UsersetTree.md) (implementation)
 
 ## Methods
 

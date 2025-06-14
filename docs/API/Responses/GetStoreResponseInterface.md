@@ -4,20 +4,20 @@ Interface for store retrieval response objects. This interface defines the contr
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getCreatedAt()`](#getcreatedat)
-    * [`getDeletedAt()`](#getdeletedat)
-    * [`getUpdatedAt()`](#getupdatedat)
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getName()`](#getname)
-    * [`getStore()`](#getstore)
+- [CRUD Operations](#crud-operations)
+  - [`getCreatedAt()`](#getcreatedat)
+  - [`getDeletedAt()`](#getdeletedat)
+  - [`getUpdatedAt()`](#getupdatedat)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getName()`](#getname)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -29,12 +29,12 @@ Interface for store retrieval response objects. This interface defines the contr
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [GetStoreResponse](Responses/GetStoreResponse.md) (implementation)
-* [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (request)
+- [GetStoreResponse](Responses/GetStoreResponse.md) (implementation)
+- [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (request)
 
 ## Methods
 

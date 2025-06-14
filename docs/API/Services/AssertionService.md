@@ -4,22 +4,22 @@ Service implementation for managing OpenFGA authorization model assertions. Prov
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`validateAssertions()`](#validateassertions)
-* [CRUD Operations](#crud-operations)
-    * [`readAssertions()`](#readassertions)
-    * [`writeAssertions()`](#writeassertions)
-* [List Operations](#list-operations)
-    * [`getAssertionStatistics()`](#getassertionstatistics)
-* [Utility](#utility)
-    * [`clearAssertions()`](#clearassertions)
-    * [`executeAssertions()`](#executeassertions)
+- [Authorization](#authorization)
+  - [`validateAssertions()`](#validateassertions)
+- [CRUD Operations](#crud-operations)
+  - [`readAssertions()`](#readassertions)
+  - [`writeAssertions()`](#writeassertions)
+- [List Operations](#list-operations)
+  - [`getAssertionStatistics()`](#getassertionstatistics)
+- [Utility](#utility)
+  - [`clearAssertions()`](#clearassertions)
+  - [`executeAssertions()`](#executeassertions)
 
 ## Namespace
 
@@ -31,11 +31,11 @@ Service implementation for managing OpenFGA authorization model assertions. Prov
 
 ## Implements
 
-* [`AssertionServiceInterface`](AssertionServiceInterface.md)
+- [`AssertionServiceInterface`](AssertionServiceInterface.md)
 
 ## Related Classes
 
-* [AssertionServiceInterface](Services/AssertionServiceInterface.md) (interface)
+- [AssertionServiceInterface](Services/AssertionServiceInterface.md) (interface)
 
 ## Methods
 

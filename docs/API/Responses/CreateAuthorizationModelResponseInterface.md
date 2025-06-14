@@ -4,14 +4,14 @@ Interface for authorization model creation response objects. This interface defi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModel()`](#getmodel)
+- [List Operations](#list-operations)
+  - [`getModel()`](#getmodel)
 
 ## Namespace
 
@@ -23,12 +23,12 @@ Interface for authorization model creation response objects. This interface defi
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (implementation)
-* [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md) (request)
+- [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (implementation)
+- [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md) (request)
 
 ## Methods
 

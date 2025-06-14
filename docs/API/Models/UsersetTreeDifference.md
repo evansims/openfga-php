@@ -4,20 +4,20 @@ Represents a difference operation node in authorization evaluation trees. Userse
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getBase()`](#getbase)
-    * [`getSubtract()`](#getsubtract)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getBase()`](#getbase)
+  - [`getSubtract()`](#getsubtract)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Represents a difference operation node in authorization evaluation trees. Userse
 
 ## Implements
 
-* [`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md) (interface)
+- [UsersetTreeDifferenceInterface](Models/UsersetTreeDifferenceInterface.md) (interface)
 
 ## Constants
 

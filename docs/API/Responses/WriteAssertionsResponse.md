@@ -4,14 +4,14 @@ Response confirming successful writing of test assertions. This response indicat
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -23,13 +23,13 @@ Response confirming successful writing of test assertions. This response indicat
 
 ## Implements
 
-* [`WriteAssertionsResponseInterface`](WriteAssertionsResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`WriteAssertionsResponseInterface`](WriteAssertionsResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (interface)
-* [WriteAssertionsRequest](Requests/WriteAssertionsRequest.md) (request)
+- [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (interface)
+- [WriteAssertionsRequest](Requests/WriteAssertionsRequest.md) (request)
 
 ## Methods
 

@@ -4,13 +4,13 @@ PSR-18 compliant HTTP client implementation. This implementation wraps any PSR-1
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`send()`](#send)
+- [Other](#other)
+  - [`send()`](#send)
 
 ## Namespace
 
@@ -22,7 +22,7 @@ PSR-18 compliant HTTP client implementation. This implementation wraps any PSR-1
 
 ## Implements
 
-* [`HttpClientInterface`](HttpClientInterface.md)
+- [`HttpClientInterface`](HttpClientInterface.md)
 
 ## Methods
 

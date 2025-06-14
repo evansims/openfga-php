@@ -4,19 +4,19 @@ Response containing a paginated list of relationship tuples. This response provi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getTuples()`](#gettuples)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getTuples()`](#gettuples)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Response containing a paginated list of relationship tuples. This response provi
 
 ## Implements
 
-* [`ReadTuplesResponseInterface`](ReadTuplesResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ReadTuplesResponseInterface`](ReadTuplesResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (interface)
-* [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (request)
+- [ReadTuplesResponseInterface](Responses/ReadTuplesResponseInterface.md) (interface)
+- [ReadTuplesRequest](Requests/ReadTuplesRequest.md) (request)
 
 ## Methods
 

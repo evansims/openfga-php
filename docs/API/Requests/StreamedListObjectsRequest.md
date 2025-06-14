@@ -4,22 +4,22 @@ Request for streaming objects that a user has a specific relationship with. This
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getModel()`](#getmodel)
-    * [`getRelation()`](#getrelation)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getType()`](#gettype)
-    * [`getUser()`](#getuser)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getModel()`](#getmodel)
+  - [`getRelation()`](#getrelation)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getType()`](#gettype)
+  - [`getUser()`](#getuser)
 
 ## Namespace
 
@@ -31,13 +31,13 @@ Request for streaming objects that a user has a specific relationship with. This
 
 ## Implements
 
-* [`StreamedListObjectsRequestInterface`](StreamedListObjectsRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`StreamedListObjectsRequestInterface`](StreamedListObjectsRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [StreamedListObjectsResponse](Responses/StreamedListObjectsResponse.md) (response)
-* [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md) (interface)
+- [StreamedListObjectsResponse](Responses/StreamedListObjectsResponse.md) (response)
+- [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md) (interface)
 
 ## Methods
 

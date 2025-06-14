@@ -4,21 +4,21 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObject()`](#getobject)
-    * [`getRelation()`](#getrelation)
-    * [`getUser()`](#getuser)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getObject()`](#getobject)
+  - [`getRelation()`](#getrelation)
+  - [`getUser()`](#getuser)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -30,13 +30,13 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 
 ## Implements
 
-* [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md) (interface)
+- [AssertionTupleKeyInterface](Models/AssertionTupleKeyInterface.md) (interface)
 
 ## Constants
 

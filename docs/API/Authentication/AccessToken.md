@@ -4,20 +4,20 @@ Immutable access token implementation for OpenFGA API authentication. This class
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getExpires()`](#getexpires)
-    * [`getScope()`](#getscope)
-    * [`getToken()`](#gettoken)
-* [Utility](#utility)
-    * [`isExpired()`](#isexpired)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getExpires()`](#getexpires)
+  - [`getScope()`](#getscope)
+  - [`getToken()`](#gettoken)
+- [Utility](#utility)
+  - [`isExpired()`](#isexpired)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -29,12 +29,12 @@ Immutable access token implementation for OpenFGA API authentication. This class
 
 ## Implements
 
-* [`AccessTokenInterface`](AccessTokenInterface.md)
-* `Stringable`
+- [`AccessTokenInterface`](AccessTokenInterface.md)
+- `Stringable`
 
 ## Related Classes
 
-* [AccessTokenInterface](Authentication/AccessTokenInterface.md) (interface)
+- [AccessTokenInterface](Authentication/AccessTokenInterface.md) (interface)
 
 ## Methods
 

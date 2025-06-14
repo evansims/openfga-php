@@ -4,19 +4,19 @@ Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDifference()`](#getdifference)
-    * [`getObject()`](#getobject)
-    * [`getUserset()`](#getuserset)
-    * [`getWildcard()`](#getwildcard)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getDifference()`](#getdifference)
+  - [`getObject()`](#getobject)
+  - [`getUserset()`](#getuserset)
+  - [`getWildcard()`](#getwildcard)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,12 +28,12 @@ Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexi
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [User](Models/User.md) (implementation)
+- [User](Models/User.md) (implementation)
 
 ## Methods
 

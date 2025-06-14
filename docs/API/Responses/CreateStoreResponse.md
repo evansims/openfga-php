@@ -4,22 +4,22 @@ Response confirming successful creation of a new store. This response provides t
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getCreatedAt()`](#getcreatedat)
-    * [`getUpdatedAt()`](#getupdatedat)
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getName()`](#getname)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [CRUD Operations](#crud-operations)
+  - [`getCreatedAt()`](#getcreatedat)
+  - [`getUpdatedAt()`](#getupdatedat)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getName()`](#getname)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -31,13 +31,13 @@ Response confirming successful creation of a new store. This response provides t
 
 ## Implements
 
-* [`CreateStoreResponseInterface`](CreateStoreResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`CreateStoreResponseInterface`](CreateStoreResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (interface)
-* [CreateStoreRequest](Requests/CreateStoreRequest.md) (request)
+- [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (interface)
+- [CreateStoreRequest](Requests/CreateStoreRequest.md) (request)
 
 ## Methods
 

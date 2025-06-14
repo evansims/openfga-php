@@ -4,16 +4,16 @@ Repository interface for store operations. This interface defines the contract f
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`create()`](#create)
-    * [`delete()`](#delete)
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`list()`](#list)
+- [CRUD Operations](#crud-operations)
+  - [`create()`](#create)
+  - [`delete()`](#delete)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`list()`](#list)
 
 ## Namespace
 

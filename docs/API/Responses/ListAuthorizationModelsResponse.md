@@ -4,19 +4,19 @@ Response containing a paginated list of authorization models. This response prov
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getModels()`](#getmodels)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getModels()`](#getmodels)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Response containing a paginated list of authorization models. This response prov
 
 ## Implements
 
-* [`ListAuthorizationModelsResponseInterface`](ListAuthorizationModelsResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ListAuthorizationModelsResponseInterface`](ListAuthorizationModelsResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (interface)
-* [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (request)
+- [ListAuthorizationModelsResponseInterface](Responses/ListAuthorizationModelsResponseInterface.md) (interface)
+- [ListAuthorizationModelsRequest](Requests/ListAuthorizationModelsRequest.md) (request)
 
 ## Methods
 

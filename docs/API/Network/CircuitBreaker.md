@@ -4,20 +4,20 @@ Circuit breaker implementation for preventing cascade failures in distributed sy
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getFailureCount()`](#getfailurecount)
-* [Utility](#utility)
-    * [`isOpen()`](#isopen)
-* [Other](#other)
-    * [`recordFailure()`](#recordfailure)
-    * [`recordSuccess()`](#recordsuccess)
-    * [`shouldRetry()`](#shouldretry)
+- [List Operations](#list-operations)
+  - [`getFailureCount()`](#getfailurecount)
+- [Utility](#utility)
+  - [`isOpen()`](#isopen)
+- [Other](#other)
+  - [`recordFailure()`](#recordfailure)
+  - [`recordSuccess()`](#recordsuccess)
+  - [`shouldRetry()`](#shouldretry)
 
 ## Namespace
 
@@ -29,11 +29,11 @@ Circuit breaker implementation for preventing cascade failures in distributed sy
 
 ## Implements
 
-* [`CircuitBreakerInterface`](CircuitBreakerInterface.md)
+- [`CircuitBreakerInterface`](CircuitBreakerInterface.md)
 
 ## Related Classes
 
-* [CircuitBreakerInterface](Network/CircuitBreakerInterface.md) (interface)
+- [CircuitBreakerInterface](Network/CircuitBreakerInterface.md) (interface)
 
 ## Methods
 

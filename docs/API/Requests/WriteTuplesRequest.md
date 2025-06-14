@@ -4,30 +4,30 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getDeletes()`](#getdeletes)
-    * [`getWrites()`](#getwrites)
-* [List Operations](#list-operations)
-    * [`getMaxParallelRequests()`](#getmaxparallelrequests)
-    * [`getMaxRetries()`](#getmaxretries)
-    * [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getRetryDelaySeconds()`](#getretrydelayseconds)
-    * [`getStopOnFirstError()`](#getstoponfirsterror)
-    * [`getStore()`](#getstore)
-    * [`getTotalOperations()`](#gettotaloperations)
-* [Utility](#utility)
-    * [`isEmpty()`](#isempty)
-    * [`isTransactional()`](#istransactional)
-* [Other](#other)
-    * [`chunk()`](#chunk)
+- [CRUD Operations](#crud-operations)
+  - [`getDeletes()`](#getdeletes)
+  - [`getWrites()`](#getwrites)
+- [List Operations](#list-operations)
+  - [`getMaxParallelRequests()`](#getmaxparallelrequests)
+  - [`getMaxRetries()`](#getmaxretries)
+  - [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getRetryDelaySeconds()`](#getretrydelayseconds)
+  - [`getStopOnFirstError()`](#getstoponfirsterror)
+  - [`getStore()`](#getstore)
+  - [`getTotalOperations()`](#gettotaloperations)
+- [Utility](#utility)
+  - [`isEmpty()`](#isempty)
+  - [`isTransactional()`](#istransactional)
+- [Other](#other)
+  - [`chunk()`](#chunk)
 
 ## Namespace
 
@@ -39,13 +39,13 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
 
 ## Implements
 
-* [`WriteTuplesRequestInterface`](WriteTuplesRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`WriteTuplesRequestInterface`](WriteTuplesRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [WriteTuplesResponse](Responses/WriteTuplesResponse.md) (response)
-* [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md) (interface)
+- [WriteTuplesResponse](Responses/WriteTuplesResponse.md) (response)
+- [WriteTuplesRequestInterface](Requests/WriteTuplesRequestInterface.md) (interface)
 
 ## Methods
 

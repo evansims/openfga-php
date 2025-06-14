@@ -4,27 +4,27 @@ Event fired when a high-level operation completes. This event tracks the complet
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContext()`](#getcontext)
-    * [`getEventId()`](#geteventid)
-    * [`getEventType()`](#geteventtype)
-    * [`getException()`](#getexception)
-    * [`getModelId()`](#getmodelid)
-    * [`getOccurredAt()`](#getoccurredat)
-    * [`getOperation()`](#getoperation)
-    * [`getPayload()`](#getpayload)
-    * [`getResult()`](#getresult)
-    * [`getStoreId()`](#getstoreid)
-* [Utility](#utility)
-    * [`isPropagationStopped()`](#ispropagationstopped)
-    * [`isSuccessful()`](#issuccessful)
-* [Other](#other)
-    * [`stopPropagation()`](#stoppropagation)
+- [List Operations](#list-operations)
+  - [`getContext()`](#getcontext)
+  - [`getEventId()`](#geteventid)
+  - [`getEventType()`](#geteventtype)
+  - [`getException()`](#getexception)
+  - [`getModelId()`](#getmodelid)
+  - [`getOccurredAt()`](#getoccurredat)
+  - [`getOperation()`](#getoperation)
+  - [`getPayload()`](#getpayload)
+  - [`getResult()`](#getresult)
+  - [`getStoreId()`](#getstoreid)
+- [Utility](#utility)
+  - [`isPropagationStopped()`](#ispropagationstopped)
+  - [`isSuccessful()`](#issuccessful)
+- [Other](#other)
+  - [`stopPropagation()`](#stoppropagation)
 
 ## Namespace
 
@@ -36,7 +36,7 @@ Event fired when a high-level operation completes. This event tracks the complet
 
 ## Implements
 
-* [`EventInterface`](EventInterface.md)
+- [`EventInterface`](EventInterface.md)
 
 ## Methods
 

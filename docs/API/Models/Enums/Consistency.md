@@ -4,19 +4,19 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDescription()`](#getdescription)
-* [Utility](#utility)
-    * [`prioritizesConsistency()`](#prioritizesconsistency)
-* [Other](#other)
-    * [`prioritizesPerformance()`](#prioritizesperformance)
+- [List Operations](#list-operations)
+  - [`getDescription()`](#getdescription)
+- [Utility](#utility)
+  - [`prioritizesConsistency()`](#prioritizesconsistency)
+- [Other](#other)
+  - [`prioritizesPerformance()`](#prioritizesperformance)
 
 ## Namespace
 
@@ -28,8 +28,8 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

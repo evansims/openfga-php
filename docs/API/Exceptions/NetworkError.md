@@ -4,15 +4,15 @@ Network error types for the OpenFGA SDK. Defines specific network and HTTP-relat
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`exception()`](#exception)
+- [Other](#other)
+  - [`exception()`](#exception)
 
 ## Namespace
 
@@ -24,8 +24,8 @@ Network error types for the OpenFGA SDK. Defines specific network and HTTP-relat
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

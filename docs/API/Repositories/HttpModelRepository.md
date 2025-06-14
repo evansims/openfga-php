@@ -4,16 +4,16 @@ HTTP implementation of the model repository. This repository handles authorizati
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`create()`](#create)
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`list()`](#list)
+- [CRUD Operations](#crud-operations)
+  - [`create()`](#create)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`list()`](#list)
 
 ## Namespace
 
@@ -25,7 +25,7 @@ HTTP implementation of the model repository. This repository handles authorizati
 
 ## Implements
 
-* [`ModelRepositoryInterface`](ModelRepositoryInterface.md)
+- [`ModelRepositoryInterface`](ModelRepositoryInterface.md)
 
 ## Methods
 

@@ -4,17 +4,17 @@ Defines a difference operation between two usersets in authorization models. Dif
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getBase()`](#getbase)
-    * [`getSubtract()`](#getsubtract)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getBase()`](#getbase)
+  - [`getSubtract()`](#getsubtract)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Defines a difference operation between two usersets in authorization models. Dif
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [DifferenceV1](Models/DifferenceV1.md) (implementation)
+- [DifferenceV1](Models/DifferenceV1.md) (implementation)
 
 ## Methods
 

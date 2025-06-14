@@ -4,19 +4,19 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getNodes()`](#getnodes)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getNodes()`](#getnodes)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 
 ## Implements
 
-* [`NodeUnionInterface`](NodeUnionInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`NodeUnionInterface`](NodeUnionInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [NodeUnionInterface](Models/NodeUnionInterface.md) (interface)
+- [NodeUnionInterface](Models/NodeUnionInterface.md) (interface)
 
 ## Constants
 

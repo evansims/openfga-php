@@ -4,20 +4,20 @@ Represents a set difference operation between two usersets. In authorization mod
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getBase()`](#getbase)
-    * [`getSubtract()`](#getsubtract)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getBase()`](#getbase)
+  - [`getSubtract()`](#getsubtract)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Represents a set difference operation between two usersets. In authorization mod
 
 ## Implements
 
-* [`DifferenceV1Interface`](DifferenceV1Interface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`DifferenceV1Interface`](DifferenceV1Interface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [DifferenceV1Interface](Models/DifferenceV1Interface.md) (interface)
+- [DifferenceV1Interface](Models/DifferenceV1Interface.md) (interface)
 
 ## Constants
 

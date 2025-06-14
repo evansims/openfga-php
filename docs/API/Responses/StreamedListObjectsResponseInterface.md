@@ -4,13 +4,13 @@ Response interface for streaming objects that a user has a specific relationship
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObject()`](#getobject)
+- [List Operations](#list-operations)
+  - [`getObject()`](#getobject)
 
 ## Namespace
 
@@ -22,8 +22,8 @@ Response interface for streaming objects that a user has a specific relationship
 
 ## Related Classes
 
-* [StreamedListObjectsResponse](Responses/StreamedListObjectsResponse.md) (implementation)
-* [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md) (request)
+- [StreamedListObjectsResponse](Responses/StreamedListObjectsResponse.md) (implementation)
+- [StreamedListObjectsRequestInterface](Requests/StreamedListObjectsRequestInterface.md) (request)
 
 ## Methods
 

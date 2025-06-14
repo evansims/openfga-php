@@ -4,17 +4,17 @@ Service for validating data against schemas. This service encapsulates the valid
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`validate()`](#validate)
-    * [`validateProperty()`](#validateproperty)
-* [Model Management](#model-management)
-    * [`hasSchema()`](#hasschema)
-    * [`registerSchema()`](#registerschema)
+- [Authorization](#authorization)
+  - [`validate()`](#validate)
+  - [`validateProperty()`](#validateproperty)
+- [Model Management](#model-management)
+  - [`hasSchema()`](#hasschema)
+  - [`registerSchema()`](#registerschema)
 
 ## Namespace
 
@@ -26,7 +26,7 @@ Service for validating data against schemas. This service encapsulates the valid
 
 ## Related Classes
 
-* [ValidationService](Schemas/ValidationService.md) (implementation)
+- [ValidationService](Schemas/ValidationService.md) (implementation)
 
 ## Methods
 

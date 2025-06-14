@@ -4,14 +4,14 @@ Interface for relationship expansion response objects. This interface defines th
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getTree()`](#gettree)
+- [List Operations](#list-operations)
+  - [`getTree()`](#gettree)
 
 ## Namespace
 
@@ -23,12 +23,12 @@ Interface for relationship expansion response objects. This interface defines th
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ExpandResponse](Responses/ExpandResponse.md) (implementation)
-* [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (request)
+- [ExpandResponse](Responses/ExpandResponse.md) (implementation)
+- [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (request)
 
 ## Methods
 

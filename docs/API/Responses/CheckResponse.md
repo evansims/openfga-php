@@ -4,20 +4,20 @@ Response containing the result of an authorization check. This response indicate
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`getAllowed()`](#getallowed)
-* [List Operations](#list-operations)
-    * [`getResolution()`](#getresolution)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [Authorization](#authorization)
+  - [`getAllowed()`](#getallowed)
+- [List Operations](#list-operations)
+  - [`getResolution()`](#getresolution)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Response containing the result of an authorization check. This response indicate
 
 ## Implements
 
-* [`CheckResponseInterface`](CheckResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`CheckResponseInterface`](CheckResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [CheckResponseInterface](Responses/CheckResponseInterface.md) (interface)
-* [CheckRequest](Requests/CheckRequest.md) (request)
+- [CheckResponseInterface](Responses/CheckResponseInterface.md) (interface)
+- [CheckRequest](Requests/CheckRequest.md) (request)
 
 ## Methods
 

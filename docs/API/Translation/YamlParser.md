@@ -4,8 +4,8 @@ Simple YAML parser for translation files. This lightweight YAML parser handles t
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
+- [Namespace](#namespace)
+- [Source](#source)
 
 ## Namespace
 

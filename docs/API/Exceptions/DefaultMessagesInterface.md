@@ -4,9 +4,9 @@ Interface for mapping exception error enums to their default message keys. Provi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
 
 ## Namespace
 
@@ -18,4 +18,4 @@ Interface for mapping exception error enums to their default message keys. Provi
 
 ## Related Classes
 
-* [DefaultMessages](Exceptions/DefaultMessages.md) (implementation)
+- [DefaultMessages](Exceptions/DefaultMessages.md) (implementation)

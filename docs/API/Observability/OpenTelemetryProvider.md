@@ -4,21 +4,21 @@ OpenTelemetry implementation for OpenFGA SDK observability. This class provides 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`endHttpRequest()`](#endhttprequest)
-    * [`endOperation()`](#endoperation)
-    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
-    * [`recordCircuitBreakerState()`](#recordcircuitbreakerstate)
-    * [`recordOperationMetrics()`](#recordoperationmetrics)
-    * [`recordRetryAttempt()`](#recordretryattempt)
-    * [`recordSpan()`](#recordspan)
-    * [`startHttpRequest()`](#starthttprequest)
-    * [`startOperation()`](#startoperation)
+- [Other](#other)
+  - [`endHttpRequest()`](#endhttprequest)
+  - [`endOperation()`](#endoperation)
+  - [`recordAuthenticationEvent()`](#recordauthenticationevent)
+  - [`recordCircuitBreakerState()`](#recordcircuitbreakerstate)
+  - [`recordOperationMetrics()`](#recordoperationmetrics)
+  - [`recordRetryAttempt()`](#recordretryattempt)
+  - [`recordSpan()`](#recordspan)
+  - [`startHttpRequest()`](#starthttprequest)
+  - [`startOperation()`](#startoperation)
 
 ## Namespace
 
@@ -30,7 +30,7 @@ OpenTelemetry implementation for OpenFGA SDK observability. This class provides 
 
 ## Implements
 
-* [`TelemetryInterface`](TelemetryInterface.md)
+- [`TelemetryInterface`](TelemetryInterface.md)
 
 ## Methods
 

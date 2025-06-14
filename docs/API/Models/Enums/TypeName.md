@@ -4,20 +4,20 @@ Data types supported in OpenFGA condition parameters. This enum defines the avai
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getPhpType()`](#getphptype)
-* [Utility](#utility)
-    * [`isCollection()`](#iscollection)
-    * [`isFlexible()`](#isflexible)
-    * [`isNumeric()`](#isnumeric)
-    * [`isTemporal()`](#istemporal)
+- [List Operations](#list-operations)
+  - [`getPhpType()`](#getphptype)
+- [Utility](#utility)
+  - [`isCollection()`](#iscollection)
+  - [`isFlexible()`](#isflexible)
+  - [`isNumeric()`](#isnumeric)
+  - [`isTemporal()`](#istemporal)
 
 ## Namespace
 
@@ -29,8 +29,8 @@ Data types supported in OpenFGA condition parameters. This enum defines the avai
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

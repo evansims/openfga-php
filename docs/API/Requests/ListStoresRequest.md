@@ -4,16 +4,16 @@ Request for listing all available stores with pagination support. This request r
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getPageSize()`](#getpagesize)
-    * [`getRequest()`](#getrequest)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getPageSize()`](#getpagesize)
+  - [`getRequest()`](#getrequest)
 
 ## Namespace
 
@@ -25,13 +25,13 @@ Request for listing all available stores with pagination support. This request r
 
 ## Implements
 
-* [`ListStoresRequestInterface`](ListStoresRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`ListStoresRequestInterface`](ListStoresRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListStoresResponse](Responses/ListStoresResponse.md) (response)
-* [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (interface)
+- [ListStoresResponse](Responses/ListStoresResponse.md) (response)
+- [ListStoresRequestInterface](Requests/ListStoresRequestInterface.md) (interface)
 
 ## Methods
 

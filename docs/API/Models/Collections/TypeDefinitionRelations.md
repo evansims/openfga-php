@@ -2,33 +2,33 @@
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Utility](#utility)
-    * [`has()`](#has)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`rewind()`](#rewind)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Utility](#utility)
+  - [`has()`](#has)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`rewind()`](#rewind)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
 
 ## Namespace
 
@@ -40,17 +40,17 @@
 
 ## Implements
 
-* [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
-* [`TypeDefinitionRelationsInterface`](TypeDefinitionRelationsInterface.md)
+- [`KeyedCollectionInterface`](KeyedCollectionInterface.md)
+- `Traversable`
+- `JsonSerializable`
+- `Iterator`
+- `Countable`
+- `ArrayAccess`
+- [`TypeDefinitionRelationsInterface`](TypeDefinitionRelationsInterface.md)
 
 ## Related Classes
 
-* [TypeDefinitionRelationsInterface](../Models/Collections/TypeDefinitionRelationsInterface.md) (interface)
+- [TypeDefinitionRelationsInterface](../Models/Collections/TypeDefinitionRelationsInterface.md) (interface)
 
 ## Methods
 

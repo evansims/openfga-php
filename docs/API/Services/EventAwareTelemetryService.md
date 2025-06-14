@@ -4,18 +4,18 @@ Event-aware telemetry service that emits domain events. This service extends the
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
-    * [`recordFailure()`](#recordfailure)
-    * [`recordHttpRequest()`](#recordhttprequest)
-    * [`recordOperationMetrics()`](#recordoperationmetrics)
-    * [`recordSuccess()`](#recordsuccess)
-    * [`startOperation()`](#startoperation)
+- [Other](#other)
+  - [`recordAuthenticationEvent()`](#recordauthenticationevent)
+  - [`recordFailure()`](#recordfailure)
+  - [`recordHttpRequest()`](#recordhttprequest)
+  - [`recordOperationMetrics()`](#recordoperationmetrics)
+  - [`recordSuccess()`](#recordsuccess)
+  - [`startOperation()`](#startoperation)
 
 ## Namespace
 
@@ -27,7 +27,7 @@ Event-aware telemetry service that emits domain events. This service extends the
 
 ## Implements
 
-* [`TelemetryServiceInterface`](TelemetryServiceInterface.md)
+- [`TelemetryServiceInterface`](TelemetryServiceInterface.md)
 
 ## Methods
 

@@ -4,22 +4,22 @@ Interface for listing objects that a user has access to. This interface defines 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getModel()`](#getmodel)
-    * [`getRelation()`](#getrelation)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getType()`](#gettype)
-    * [`getUser()`](#getuser)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getModel()`](#getmodel)
+  - [`getRelation()`](#getrelation)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getType()`](#gettype)
+  - [`getUser()`](#getuser)
 
 ## Namespace
 
@@ -31,12 +31,12 @@ Interface for listing objects that a user has access to. This interface defines 
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (response)
-* [ListObjectsRequest](Requests/ListObjectsRequest.md) (implementation)
+- [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (response)
+- [ListObjectsRequest](Requests/ListObjectsRequest.md) (implementation)
 
 ## Methods
 

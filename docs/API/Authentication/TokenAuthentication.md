@@ -4,18 +4,18 @@ Token-based authentication strategy for OpenFGA client. This authentication stra
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAuthenticationRequest()`](#getauthenticationrequest)
-    * [`getAuthorizationHeader()`](#getauthorizationheader)
-    * [`getToken()`](#gettoken)
-* [Other](#other)
-    * [`handleAuthenticationResponse()`](#handleauthenticationresponse)
-    * [`requiresAuthentication()`](#requiresauthentication)
+- [List Operations](#list-operations)
+  - [`getAuthenticationRequest()`](#getauthenticationrequest)
+  - [`getAuthorizationHeader()`](#getauthorizationheader)
+  - [`getToken()`](#gettoken)
+- [Other](#other)
+  - [`handleAuthenticationResponse()`](#handleauthenticationresponse)
+  - [`requiresAuthentication()`](#requiresauthentication)
 
 ## Namespace
 
@@ -27,7 +27,7 @@ Token-based authentication strategy for OpenFGA client. This authentication stra
 
 ## Implements
 
-* [`AuthenticationInterface`](AuthenticationInterface.md)
+- [`AuthenticationInterface`](AuthenticationInterface.md)
 
 ## Methods
 

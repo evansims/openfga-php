@@ -4,15 +4,15 @@ Handles batch processing of write tuple requests. This class encapsulates the lo
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getLastRequest()`](#getlastrequest)
-    * [`getLastResponse()`](#getlastresponse)
-* [Other](#other)
-    * [`process()`](#process)
+- [List Operations](#list-operations)
+  - [`getLastRequest()`](#getlastrequest)
+  - [`getLastResponse()`](#getlastresponse)
+- [Other](#other)
+  - [`process()`](#process)
 
 ## Namespace
 

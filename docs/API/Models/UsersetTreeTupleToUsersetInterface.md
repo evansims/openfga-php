@@ -4,17 +4,17 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputed()`](#getcomputed)
-    * [`getTupleset()`](#gettupleset)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputed()`](#getcomputed)
+  - [`getTupleset()`](#gettupleset)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [UsersetTreeTupleToUserset](Models/UsersetTreeTupleToUserset.md) (implementation)
+- [UsersetTreeTupleToUserset](Models/UsersetTreeTupleToUserset.md) (implementation)
 
 ## Methods
 

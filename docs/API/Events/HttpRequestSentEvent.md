@@ -4,24 +4,24 @@ Event fired when an HTTP request is sent to the OpenFGA API. This event contains
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getEventId()`](#geteventid)
-    * [`getEventType()`](#geteventtype)
-    * [`getModelId()`](#getmodelid)
-    * [`getOccurredAt()`](#getoccurredat)
-    * [`getOperation()`](#getoperation)
-    * [`getPayload()`](#getpayload)
-    * [`getRequest()`](#getrequest)
-    * [`getStoreId()`](#getstoreid)
-* [Utility](#utility)
-    * [`isPropagationStopped()`](#ispropagationstopped)
-* [Other](#other)
-    * [`stopPropagation()`](#stoppropagation)
+- [List Operations](#list-operations)
+  - [`getEventId()`](#geteventid)
+  - [`getEventType()`](#geteventtype)
+  - [`getModelId()`](#getmodelid)
+  - [`getOccurredAt()`](#getoccurredat)
+  - [`getOperation()`](#getoperation)
+  - [`getPayload()`](#getpayload)
+  - [`getRequest()`](#getrequest)
+  - [`getStoreId()`](#getstoreid)
+- [Utility](#utility)
+  - [`isPropagationStopped()`](#ispropagationstopped)
+- [Other](#other)
+  - [`stopPropagation()`](#stoppropagation)
 
 ## Namespace
 
@@ -33,7 +33,7 @@ Event fired when an HTTP request is sent to the OpenFGA API. This event contains
 
 ## Implements
 
-* [`EventInterface`](EventInterface.md)
+- [`EventInterface`](EventInterface.md)
 
 ## Methods
 

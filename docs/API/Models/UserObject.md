@@ -4,20 +4,20 @@ Represents a specific user object with type and identifier. A UserObject provide
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getType()`](#gettype)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getType()`](#gettype)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,14 +29,14 @@ Represents a specific user object with type and identifier. A UserObject provide
 
 ## Implements
 
-* [`UserObjectInterface`](UserObjectInterface.md)
-* `Stringable`
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UserObjectInterface`](UserObjectInterface.md)
+- `Stringable`
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UserObjectInterface](Models/UserObjectInterface.md) (interface)
+- [UserObjectInterface](Models/UserObjectInterface.md) (interface)
 
 ## Constants
 

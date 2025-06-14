@@ -4,16 +4,16 @@ Request for reading test assertions associated with an authorization model. This
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -25,13 +25,13 @@ Request for reading test assertions associated with an authorization model. This
 
 ## Implements
 
-* [`ReadAssertionsRequestInterface`](ReadAssertionsRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`ReadAssertionsRequestInterface`](ReadAssertionsRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (response)
-* [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (interface)
+- [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (response)
+- [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (interface)
 
 ## Methods
 

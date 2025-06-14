@@ -4,23 +4,23 @@ Defines the authorization rules and relationships for your application. An Autho
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConditions()`](#getconditions)
-    * [`getId()`](#getid)
-    * [`getSchemaVersion()`](#getschemaversion)
-    * [`getTypeDefinitions()`](#gettypedefinitions)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`dsl()`](#dsl)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getConditions()`](#getconditions)
+  - [`getId()`](#getid)
+  - [`getSchemaVersion()`](#getschemaversion)
+  - [`getTypeDefinitions()`](#gettypedefinitions)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`dsl()`](#dsl)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -32,14 +32,14 @@ Defines the authorization rules and relationships for your application. An Autho
 
 ## Implements
 
-* [`AuthorizationModelInterface`](AuthorizationModelInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`AuthorizationModelInterface`](AuthorizationModelInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) (interface)
-* [AuthorizationModels](Models/Collections/AuthorizationModels.md) (collection)
+- [AuthorizationModelInterface](Models/AuthorizationModelInterface.md) (interface)
+- [AuthorizationModels](Models/Collections/AuthorizationModels.md) (collection)
 
 ## Constants
 

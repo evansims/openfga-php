@@ -4,9 +4,9 @@ Translation service interface for OpenFGA SDK messages. This interface defines t
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
 
 ## Namespace
 
@@ -18,4 +18,4 @@ Translation service interface for OpenFGA SDK messages. This interface defines t
 
 ## Related Classes
 
-* [Translator](Translation/Translator.md) (implementation)
+- [Translator](Translation/Translator.md) (implementation)

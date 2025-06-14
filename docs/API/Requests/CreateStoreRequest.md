@@ -4,15 +4,15 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getName()`](#getname)
-    * [`getRequest()`](#getrequest)
+- [List Operations](#list-operations)
+  - [`getName()`](#getname)
+  - [`getRequest()`](#getrequest)
 
 ## Namespace
 
@@ -24,13 +24,13 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 
 ## Implements
 
-* [`CreateStoreRequestInterface`](CreateStoreRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`CreateStoreRequestInterface`](CreateStoreRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [CreateStoreResponse](Responses/CreateStoreResponse.md) (response)
-* [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (interface)
+- [CreateStoreResponse](Responses/CreateStoreResponse.md) (response)
+- [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (interface)
 
 ## Methods
 

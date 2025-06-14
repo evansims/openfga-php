@@ -4,23 +4,23 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContext()`](#getcontext)
-    * [`getExpression()`](#getexpression)
-    * [`getMetadata()`](#getmetadata)
-    * [`getName()`](#getname)
-    * [`getParameters()`](#getparameters)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getContext()`](#getcontext)
+  - [`getExpression()`](#getexpression)
+  - [`getMetadata()`](#getmetadata)
+  - [`getName()`](#getname)
+  - [`getParameters()`](#getparameters)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -32,14 +32,14 @@ Represents an ABAC (Attribute-Based Access Control) condition in your authorizat
 
 ## Implements
 
-* [`ConditionInterface`](ConditionInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`ConditionInterface`](ConditionInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [ConditionInterface](Models/ConditionInterface.md) (interface)
-* [Conditions](Models/Collections/Conditions.md) (collection)
+- [ConditionInterface](Models/ConditionInterface.md) (interface)
+- [Conditions](Models/Collections/Conditions.md) (collection)
 
 ## Constants
 

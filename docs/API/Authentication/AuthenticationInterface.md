@@ -4,16 +4,16 @@ Interface for OpenFGA authentication strategies. This interface defines the cont
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAuthenticationRequest()`](#getauthenticationrequest)
-    * [`getAuthorizationHeader()`](#getauthorizationheader)
-* [Other](#other)
-    * [`handleAuthenticationResponse()`](#handleauthenticationresponse)
-    * [`requiresAuthentication()`](#requiresauthentication)
+- [List Operations](#list-operations)
+  - [`getAuthenticationRequest()`](#getauthenticationrequest)
+  - [`getAuthorizationHeader()`](#getauthorizationheader)
+- [Other](#other)
+  - [`handleAuthenticationResponse()`](#handleauthenticationresponse)
+  - [`requiresAuthentication()`](#requiresauthentication)
 
 ## Namespace
 

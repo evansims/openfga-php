@@ -4,21 +4,21 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getMetadata()`](#getmetadata)
-    * [`getRelations()`](#getrelations)
-    * [`getType()`](#gettype)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getMetadata()`](#getmetadata)
+  - [`getRelations()`](#getrelations)
+  - [`getType()`](#gettype)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -30,14 +30,14 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 
 ## Implements
 
-* [`TypeDefinitionInterface`](TypeDefinitionInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`TypeDefinitionInterface`](TypeDefinitionInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [TypeDefinitionInterface](Models/TypeDefinitionInterface.md) (interface)
-* [TypeDefinitions](Models/Collections/TypeDefinitions.md) (collection)
+- [TypeDefinitionInterface](Models/TypeDefinitionInterface.md) (interface)
+- [TypeDefinitions](Models/Collections/TypeDefinitions.md) (collection)
 
 ## Constants
 

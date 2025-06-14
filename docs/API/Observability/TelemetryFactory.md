@@ -4,8 +4,8 @@ Factory for creating telemetry providers with OpenTelemetry integration. This fa
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
+- [Namespace](#namespace)
+- [Source](#source)
 
 ## Namespace
 

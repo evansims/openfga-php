@@ -4,19 +4,19 @@ Event dispatcher interface for handling domain events. The event dispatcher deco
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`removeListeners()`](#removelisteners)
-* [List Operations](#list-operations)
-    * [`addListener()`](#addlistener)
-    * [`getListeners()`](#getlisteners)
-    * [`hasListeners()`](#haslisteners)
-* [Utility](#utility)
-    * [`dispatch()`](#dispatch)
+- [CRUD Operations](#crud-operations)
+  - [`removeListeners()`](#removelisteners)
+- [List Operations](#list-operations)
+  - [`addListener()`](#addlistener)
+  - [`getListeners()`](#getlisteners)
+  - [`hasListeners()`](#haslisteners)
+- [Utility](#utility)
+  - [`dispatch()`](#dispatch)
 
 ## Namespace
 
@@ -28,7 +28,7 @@ Event dispatcher interface for handling domain events. The event dispatcher deco
 
 ## Related Classes
 
-* [EventDispatcher](Events/EventDispatcher.md) (implementation)
+- [EventDispatcher](Events/EventDispatcher.md) (implementation)
 
 ## Methods
 

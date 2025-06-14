@@ -4,20 +4,20 @@ Interface for OpenTelemetry integration in the OpenFGA SDK. This interface provi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`endHttpRequest()`](#endhttprequest)
-    * [`endOperation()`](#endoperation)
-    * [`recordAuthenticationEvent()`](#recordauthenticationevent)
-    * [`recordCircuitBreakerState()`](#recordcircuitbreakerstate)
-    * [`recordOperationMetrics()`](#recordoperationmetrics)
-    * [`recordRetryAttempt()`](#recordretryattempt)
-    * [`recordSpan()`](#recordspan)
-    * [`startHttpRequest()`](#starthttprequest)
-    * [`startOperation()`](#startoperation)
+- [Other](#other)
+  - [`endHttpRequest()`](#endhttprequest)
+  - [`endOperation()`](#endoperation)
+  - [`recordAuthenticationEvent()`](#recordauthenticationevent)
+  - [`recordCircuitBreakerState()`](#recordcircuitbreakerstate)
+  - [`recordOperationMetrics()`](#recordoperationmetrics)
+  - [`recordRetryAttempt()`](#recordretryattempt)
+  - [`recordSpan()`](#recordspan)
+  - [`startHttpRequest()`](#starthttprequest)
+  - [`startOperation()`](#startoperation)
 
 ## Namespace
 

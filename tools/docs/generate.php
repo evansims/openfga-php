@@ -1366,13 +1366,13 @@ class DocumentationGenerator
         $content = preg_replace('/\n[ \t]+\n/', "\n\n", $content);
 
         // Remove excessive leading whitespace from list items (fix table of contents formatting)
-        $content = preg_replace('/\n[ \t]{10,}(\* \[)/', "\n$1", $content);
+        $content = preg_replace('/\n[ \t]{10,}(- \[)/', "\n$1", $content);
 
         // Fix table of contents formatting - ensure blank line after Methods heading
-        $content = preg_replace('/(\* \[Methods\]\(#methods\))\n(\* \[)/', "$1\n\n$2", $content);
+        $content = preg_replace('/(- \[Methods\]\(#methods\))\n(- \[)/', "$1\n\n$2", $content);
 
         // Handle additional whitespace variations in table of contents
-        $content = preg_replace('/(\* \[Methods\]\(#methods\))\n[ \t]*(\* \[)/', "$1\n\n$2", $content);
+        $content = preg_replace('/(- \[Methods\]\(#methods\))\n[ \t]*(- \[)/', "$1\n\n$2", $content);
 
         // Fix spacing issues with consecutive headers (h2 followed by h3, h4, etc.)
         $content = preg_replace('/(#{2}\s[^\n]+)\n\n\n(#{3,6}\s)/', "$1\n\n$2", $content);

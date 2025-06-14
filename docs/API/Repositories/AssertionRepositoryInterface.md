@@ -4,13 +4,13 @@ Repository interface for managing OpenFGA authorization model assertions. This i
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`read()`](#read)
-    * [`write()`](#write)
+- [CRUD Operations](#crud-operations)
+  - [`read()`](#read)
+  - [`write()`](#write)
 
 ## Namespace
 

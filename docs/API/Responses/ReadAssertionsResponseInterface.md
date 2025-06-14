@@ -4,15 +4,15 @@ Interface for assertions reading response objects. This interface defines the co
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAssertions()`](#getassertions)
-    * [`getModel()`](#getmodel)
+- [List Operations](#list-operations)
+  - [`getAssertions()`](#getassertions)
+  - [`getModel()`](#getmodel)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for assertions reading response objects. This interface defines the co
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (implementation)
-* [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (request)
+- [ReadAssertionsResponse](Responses/ReadAssertionsResponse.md) (implementation)
+- [ReadAssertionsRequestInterface](Requests/ReadAssertionsRequestInterface.md) (request)
 
 ## Methods
 

@@ -4,14 +4,14 @@ Interface for authorization model retrieval response objects. This interface def
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModel()`](#getmodel)
+- [List Operations](#list-operations)
+  - [`getModel()`](#getmodel)
 
 ## Namespace
 
@@ -23,12 +23,12 @@ Interface for authorization model retrieval response objects. This interface def
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (implementation)
-* [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md) (request)
+- [GetAuthorizationModelResponse](Responses/GetAuthorizationModelResponse.md) (implementation)
+- [GetAuthorizationModelRequestInterface](Requests/GetAuthorizationModelRequestInterface.md) (request)
 
 ## Methods
 

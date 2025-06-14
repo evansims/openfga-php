@@ -4,19 +4,19 @@ Operations that can be performed on relationship tuples in OpenFGA. This enum de
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDescription()`](#getdescription)
-* [Utility](#utility)
-    * [`grantsPermissions()`](#grantspermissions)
-    * [`isIdempotent()`](#isidempotent)
-    * [`revokesPermissions()`](#revokespermissions)
+- [List Operations](#list-operations)
+  - [`getDescription()`](#getdescription)
+- [Utility](#utility)
+  - [`grantsPermissions()`](#grantspermissions)
+  - [`isIdempotent()`](#isidempotent)
+  - [`revokesPermissions()`](#revokespermissions)
 
 ## Namespace
 
@@ -28,8 +28,8 @@ Operations that can be performed on relationship tuples in OpenFGA. This enum de
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

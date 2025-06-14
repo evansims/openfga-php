@@ -4,24 +4,24 @@ Translation service for OpenFGA SDK messages. This implementation provides centr
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDefaultLanguage()`](#getdefaultlanguage)
-    * [`getDefaultLocale()`](#getdefaultlocale)
-* [Utility](#utility)
-    * [`has()`](#has)
-    * [`reset()`](#reset)
-    * [`setDefaultLanguage()`](#setdefaultlanguage)
-    * [`setDefaultLocale()`](#setdefaultlocale)
-* [Other](#other)
-    * [`addResource()`](#addresource)
-    * [`trans()`](#trans)
-    * [`transKey()`](#transkey)
+- [List Operations](#list-operations)
+  - [`getDefaultLanguage()`](#getdefaultlanguage)
+  - [`getDefaultLocale()`](#getdefaultlocale)
+- [Utility](#utility)
+  - [`has()`](#has)
+  - [`reset()`](#reset)
+  - [`setDefaultLanguage()`](#setdefaultlanguage)
+  - [`setDefaultLocale()`](#setdefaultlocale)
+- [Other](#other)
+  - [`addResource()`](#addresource)
+  - [`trans()`](#trans)
+  - [`transKey()`](#transkey)
 
 ## Namespace
 
@@ -33,11 +33,11 @@ Translation service for OpenFGA SDK messages. This implementation provides centr
 
 ## Implements
 
-* [`TranslatorInterface`](TranslatorInterface.md)
+- [`TranslatorInterface`](TranslatorInterface.md)
 
 ## Related Classes
 
-* [TranslatorInterface](Translation/TranslatorInterface.md) (interface)
+- [TranslatorInterface](Translation/TranslatorInterface.md) (interface)
 
 ## Methods
 

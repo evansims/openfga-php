@@ -4,19 +4,19 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getUserMessage()`](#getusermessage)
-* [Utility](#utility)
-    * [`isTokenRefreshable()`](#istokenrefreshable)
-* [Other](#other)
-    * [`exception()`](#exception)
+- [List Operations](#list-operations)
+  - [`getUserMessage()`](#getusermessage)
+- [Utility](#utility)
+  - [`isTokenRefreshable()`](#istokenrefreshable)
+- [Other](#other)
+  - [`exception()`](#exception)
 
 ## Namespace
 
@@ -28,8 +28,8 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

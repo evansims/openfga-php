@@ -4,15 +4,15 @@ Base interface for schema definitions in the OpenFGA system. This interface defi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getClassName()`](#getclassname)
-    * [`getProperties()`](#getproperties)
-    * [`getProperty()`](#getproperty)
+- [List Operations](#list-operations)
+  - [`getClassName()`](#getclassname)
+  - [`getProperties()`](#getproperties)
+  - [`getProperty()`](#getproperty)
 
 ## Namespace
 
@@ -24,7 +24,7 @@ Base interface for schema definitions in the OpenFGA system. This interface defi
 
 ## Related Classes
 
-* [Schema](Schemas/Schema.md) (implementation)
+- [Schema](Schemas/Schema.md) (implementation)
 
 ## Methods
 

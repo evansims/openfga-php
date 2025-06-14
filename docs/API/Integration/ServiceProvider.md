@@ -4,12 +4,12 @@ Service provider for automatic dependency injection container registration. This
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [Utility](#utility)
-    * [`register()`](#register)
+- [Utility](#utility)
+  - [`register()`](#register)
 
 ## Namespace
 

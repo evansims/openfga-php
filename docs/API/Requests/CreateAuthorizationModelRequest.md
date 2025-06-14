@@ -4,18 +4,18 @@ Request for creating a new authorization model in OpenFGA. Authorization models 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConditions()`](#getconditions)
-    * [`getRequest()`](#getrequest)
-    * [`getSchemaVersion()`](#getschemaversion)
-    * [`getStore()`](#getstore)
-    * [`getTypeDefinitions()`](#gettypedefinitions)
+- [List Operations](#list-operations)
+  - [`getConditions()`](#getconditions)
+  - [`getRequest()`](#getrequest)
+  - [`getSchemaVersion()`](#getschemaversion)
+  - [`getStore()`](#getstore)
+  - [`getTypeDefinitions()`](#gettypedefinitions)
 
 ## Namespace
 
@@ -27,13 +27,13 @@ Request for creating a new authorization model in OpenFGA. Authorization models 
 
 ## Implements
 
-* [`CreateAuthorizationModelRequestInterface`](CreateAuthorizationModelRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`CreateAuthorizationModelRequestInterface`](CreateAuthorizationModelRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (response)
-* [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md) (interface)
+- [CreateAuthorizationModelResponse](Responses/CreateAuthorizationModelResponse.md) (response)
+- [CreateAuthorizationModelRequestInterface](Requests/CreateAuthorizationModelRequestInterface.md) (interface)
 
 ## Methods
 

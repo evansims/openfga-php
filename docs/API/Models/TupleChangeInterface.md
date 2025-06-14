@@ -4,18 +4,18 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getOperation()`](#getoperation)
-    * [`getTimestamp()`](#gettimestamp)
-    * [`getTupleKey()`](#gettuplekey)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getOperation()`](#getoperation)
+  - [`getTimestamp()`](#gettimestamp)
+  - [`getTupleKey()`](#gettuplekey)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [TupleChange](Models/TupleChange.md) (implementation)
+- [TupleChange](Models/TupleChange.md) (implementation)
 
 ## Methods
 

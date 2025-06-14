@@ -4,20 +4,20 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getGenericTypes()`](#getgenerictypes)
-    * [`getTypeName()`](#gettypename)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getGenericTypes()`](#getgenerictypes)
+  - [`getTypeName()`](#gettypename)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,14 +29,14 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 
 ## Implements
 
-* [`ConditionParameterInterface`](ConditionParameterInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`ConditionParameterInterface`](ConditionParameterInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [ConditionParameterInterface](Models/ConditionParameterInterface.md) (interface)
-* [ConditionParameters](Models/Collections/ConditionParameters.md) (collection)
+- [ConditionParameterInterface](Models/ConditionParameterInterface.md) (interface)
+- [ConditionParameters](Models/Collections/ConditionParameters.md) (collection)
 
 ## Constants
 

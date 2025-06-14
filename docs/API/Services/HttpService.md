@@ -4,17 +4,17 @@ Default implementation of HttpServiceInterface. This implementation delegates to
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getLastRequest()`](#getlastrequest)
-    * [`getLastResponse()`](#getlastresponse)
-* [Other](#other)
-    * [`send()`](#send)
+- [List Operations](#list-operations)
+  - [`getLastRequest()`](#getlastrequest)
+  - [`getLastResponse()`](#getlastresponse)
+- [Other](#other)
+  - [`send()`](#send)
 
 ## Namespace
 
@@ -26,11 +26,11 @@ Default implementation of HttpServiceInterface. This implementation delegates to
 
 ## Implements
 
-* [`HttpServiceInterface`](HttpServiceInterface.md)
+- [`HttpServiceInterface`](HttpServiceInterface.md)
 
 ## Related Classes
 
-* [HttpServiceInterface](Services/HttpServiceInterface.md) (interface)
+- [HttpServiceInterface](Services/HttpServiceInterface.md) (interface)
 
 ## Methods
 

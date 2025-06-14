@@ -4,15 +4,15 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getName()`](#getname)
-    * [`getRequest()`](#getrequest)
+- [List Operations](#list-operations)
+  - [`getName()`](#getname)
+  - [`getRequest()`](#getrequest)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (response)
-* [CreateStoreRequest](Requests/CreateStoreRequest.md) (implementation)
+- [CreateStoreResponseInterface](Responses/CreateStoreResponseInterface.md) (response)
+- [CreateStoreRequest](Requests/CreateStoreRequest.md) (implementation)
 
 ## Methods
 

@@ -4,17 +4,17 @@ HTTP implementation of the store repository. This repository provides a domain-f
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`create()`](#create)
-    * [`delete()`](#delete)
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`list()`](#list)
+- [CRUD Operations](#crud-operations)
+  - [`create()`](#create)
+  - [`delete()`](#delete)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`list()`](#list)
 
 ## Namespace
 
@@ -26,7 +26,7 @@ HTTP implementation of the store repository. This repository provides a domain-f
 
 ## Implements
 
-* [`StoreRepositoryInterface`](StoreRepositoryInterface.md)
+- [`StoreRepositoryInterface`](StoreRepositoryInterface.md)
 
 ## Methods
 

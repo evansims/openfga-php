@@ -4,31 +4,31 @@ Represents the result of a batch tuple operation. This model tracks the results 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getErrors()`](#geterrors)
-    * [`getFailedChunks()`](#getfailedchunks)
-    * [`getFirstError()`](#getfirsterror)
-    * [`getResponses()`](#getresponses)
-    * [`getSuccessRate()`](#getsuccessrate)
-    * [`getSuccessfulChunks()`](#getsuccessfulchunks)
-    * [`getTotalChunks()`](#gettotalchunks)
-    * [`getTotalOperations()`](#gettotaloperations)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Utility](#utility)
-    * [`isCompleteFailure()`](#iscompletefailure)
-    * [`isCompleteSuccess()`](#iscompletesuccess)
-    * [`isPartialSuccess()`](#ispartialsuccess)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`throwOnFailure()`](#throwonfailure)
+- [List Operations](#list-operations)
+  - [`getErrors()`](#geterrors)
+  - [`getFailedChunks()`](#getfailedchunks)
+  - [`getFirstError()`](#getfirsterror)
+  - [`getResponses()`](#getresponses)
+  - [`getSuccessRate()`](#getsuccessrate)
+  - [`getSuccessfulChunks()`](#getsuccessfulchunks)
+  - [`getTotalChunks()`](#gettotalchunks)
+  - [`getTotalOperations()`](#gettotaloperations)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Utility](#utility)
+  - [`isCompleteFailure()`](#iscompletefailure)
+  - [`isCompleteSuccess()`](#iscompletesuccess)
+  - [`isPartialSuccess()`](#ispartialsuccess)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`throwOnFailure()`](#throwonfailure)
 
 ## Namespace
 
@@ -40,13 +40,13 @@ Represents the result of a batch tuple operation. This model tracks the results 
 
 ## Implements
 
-* [`BatchTupleResultInterface`](BatchTupleResultInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`BatchTupleResultInterface`](BatchTupleResultInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [BatchTupleResultInterface](Models/BatchTupleResultInterface.md) (interface)
+- [BatchTupleResultInterface](Models/BatchTupleResultInterface.md) (interface)
 
 ## Constants
 

@@ -4,40 +4,40 @@ OpenFGA Client implementation for relationship-based access control operations. 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`batchCheck()`](#batchcheck)
-    * [`check()`](#check)
-    * [`expand()`](#expand)
-* [CRUD Operations](#crud-operations)
-    * [`createAuthorizationModel()`](#createauthorizationmodel)
-    * [`createStore()`](#createstore)
-    * [`deleteStore()`](#deletestore)
-    * [`readAssertions()`](#readassertions)
-    * [`readTuples()`](#readtuples)
-    * [`writeAssertions()`](#writeassertions)
-    * [`writeTuples()`](#writetuples)
-* [List Operations](#list-operations)
-    * [`getAuthorizationModel()`](#getauthorizationmodel)
-    * [`getLanguage()`](#getlanguage)
-    * [`getLanguageEnum()`](#getlanguageenum)
-    * [`getLastRequest()`](#getlastrequest)
-    * [`getLastResponse()`](#getlastresponse)
-    * [`getStore()`](#getstore)
-    * [`listAuthorizationModels()`](#listauthorizationmodels)
-    * [`listObjects()`](#listobjects)
-    * [`listStores()`](#liststores)
-    * [`listTupleChanges()`](#listtuplechanges)
-    * [`listUsers()`](#listusers)
-    * [`streamedListObjects()`](#streamedlistobjects)
-* [Other](#other)
-    * [`dsl()`](#dsl)
+- [Authorization](#authorization)
+  - [`batchCheck()`](#batchcheck)
+  - [`check()`](#check)
+  - [`expand()`](#expand)
+- [CRUD Operations](#crud-operations)
+  - [`createAuthorizationModel()`](#createauthorizationmodel)
+  - [`createStore()`](#createstore)
+  - [`deleteStore()`](#deletestore)
+  - [`readAssertions()`](#readassertions)
+  - [`readTuples()`](#readtuples)
+  - [`writeAssertions()`](#writeassertions)
+  - [`writeTuples()`](#writetuples)
+- [List Operations](#list-operations)
+  - [`getAuthorizationModel()`](#getauthorizationmodel)
+  - [`getLanguage()`](#getlanguage)
+  - [`getLanguageEnum()`](#getlanguageenum)
+  - [`getLastRequest()`](#getlastrequest)
+  - [`getLastResponse()`](#getlastresponse)
+  - [`getStore()`](#getstore)
+  - [`listAuthorizationModels()`](#listauthorizationmodels)
+  - [`listObjects()`](#listobjects)
+  - [`listStores()`](#liststores)
+  - [`listTupleChanges()`](#listtuplechanges)
+  - [`listUsers()`](#listusers)
+  - [`streamedListObjects()`](#streamedlistobjects)
+- [Other](#other)
+  - [`dsl()`](#dsl)
 
 ## Namespace
 
@@ -49,11 +49,11 @@ OpenFGA Client implementation for relationship-based access control operations. 
 
 ## Implements
 
-* [`ClientInterface`](ClientInterface.md)
+- [`ClientInterface`](ClientInterface.md)
 
 ## Related Classes
 
-* [ClientInterface](ClientInterface.md) (interface)
+- [ClientInterface](ClientInterface.md) (interface)
 
 ## Constants
 

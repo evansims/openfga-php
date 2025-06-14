@@ -4,18 +4,18 @@ Represents an access token for OpenFGA API authentication. Access tokens are cre
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getExpires()`](#getexpires)
-    * [`getScope()`](#getscope)
-    * [`getToken()`](#gettoken)
-* [Utility](#utility)
-    * [`isExpired()`](#isexpired)
+- [List Operations](#list-operations)
+  - [`getExpires()`](#getexpires)
+  - [`getScope()`](#getscope)
+  - [`getToken()`](#gettoken)
+- [Utility](#utility)
+  - [`isExpired()`](#isexpired)
 
 ## Namespace
 
@@ -27,11 +27,11 @@ Represents an access token for OpenFGA API authentication. Access tokens are cre
 
 ## Implements
 
-* `Stringable`
+- `Stringable`
 
 ## Related Classes
 
-* [AccessToken](Authentication/AccessToken.md) (implementation)
+- [AccessToken](Authentication/AccessToken.md) (implementation)
 
 ## Methods
 

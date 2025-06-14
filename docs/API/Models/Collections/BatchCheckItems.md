@@ -4,39 +4,39 @@ Collection of batch check items for batch authorization requests. This collectio
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-    * [`offsetGet()`](#offsetget)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Utility](#utility)
-    * [`isEmpty()`](#isempty)
-    * [`offsetExists()`](#offsetexists)
-    * [`offsetSet()`](#offsetset)
-    * [`offsetUnset()`](#offsetunset)
-* [Other](#other)
-    * [`add()`](#add)
-    * [`clear()`](#clear)
-    * [`count()`](#count)
-    * [`current()`](#current)
-    * [`every()`](#every)
-    * [`filter()`](#filter)
-    * [`first()`](#first)
-    * [`jsonSerialize()`](#jsonserialize)
-    * [`key()`](#key)
-    * [`next()`](#next)
-    * [`reduce()`](#reduce)
-    * [`rewind()`](#rewind)
-    * [`some()`](#some)
-    * [`toArray()`](#toarray)
-    * [`valid()`](#valid)
-    * [`withItems()`](#withitems)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+  - [`offsetGet()`](#offsetget)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Utility](#utility)
+  - [`isEmpty()`](#isempty)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
+- [Other](#other)
+  - [`add()`](#add)
+  - [`clear()`](#clear)
+  - [`count()`](#count)
+  - [`current()`](#current)
+  - [`every()`](#every)
+  - [`filter()`](#filter)
+  - [`first()`](#first)
+  - [`jsonSerialize()`](#jsonserialize)
+  - [`key()`](#key)
+  - [`next()`](#next)
+  - [`reduce()`](#reduce)
+  - [`rewind()`](#rewind)
+  - [`some()`](#some)
+  - [`toArray()`](#toarray)
+  - [`valid()`](#valid)
+  - [`withItems()`](#withitems)
 
 ## Namespace
 
@@ -48,17 +48,17 @@ Collection of batch check items for batch authorization requests. This collectio
 
 ## Implements
 
-* [`IndexedCollectionInterface`](IndexedCollectionInterface.md)
-* `Traversable`
-* `JsonSerializable`
-* `Iterator`
-* `Countable`
-* `ArrayAccess`
-* [`BatchCheckItemsInterface`](BatchCheckItemsInterface.md)
+- [`IndexedCollectionInterface`](IndexedCollectionInterface.md)
+- `Traversable`
+- `JsonSerializable`
+- `Iterator`
+- `Countable`
+- `ArrayAccess`
+- [`BatchCheckItemsInterface`](BatchCheckItemsInterface.md)
 
 ## Related Classes
 
-* [BatchCheckItemsInterface](../Models/Collections/BatchCheckItemsInterface.md) (interface)
+- [BatchCheckItemsInterface](../Models/Collections/BatchCheckItemsInterface.md) (interface)
 
 ## Methods
 

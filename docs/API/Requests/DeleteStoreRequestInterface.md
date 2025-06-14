@@ -4,15 +4,15 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (response)
-* [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (implementation)
+- [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (response)
+- [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (implementation)
 
 ## Methods
 

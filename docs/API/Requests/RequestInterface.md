@@ -4,13 +4,13 @@ Base interface for all OpenFGA API request objects. This interface defines the c
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRequest()`](#getrequest)
+- [List Operations](#list-operations)
+  - [`getRequest()`](#getrequest)
 
 ## Namespace
 
@@ -22,7 +22,7 @@ Base interface for all OpenFGA API request objects. This interface defines the c
 
 ## Related Classes
 
-* [ResponseInterface](Responses/ResponseInterface.md) (response)
+- [ResponseInterface](Responses/ResponseInterface.md) (response)
 
 ## Methods
 

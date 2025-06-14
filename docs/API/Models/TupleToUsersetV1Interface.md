@@ -4,17 +4,17 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputedUserset()`](#getcomputeduserset)
-    * [`getTupleset()`](#gettupleset)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputedUserset()`](#getcomputeduserset)
+  - [`getTupleset()`](#gettupleset)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [TupleToUsersetV1](Models/TupleToUsersetV1.md) (implementation)
+- [TupleToUsersetV1](Models/TupleToUsersetV1.md) (implementation)
 
 ## Methods
 

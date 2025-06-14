@@ -4,19 +4,19 @@ Request for expanding a relationship to show all users who have that relationshi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getTupleKey()`](#gettuplekey)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getTupleKey()`](#gettuplekey)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Request for expanding a relationship to show all users who have that relationshi
 
 ## Implements
 
-* [`ExpandRequestInterface`](ExpandRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`ExpandRequestInterface`](ExpandRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ExpandResponse](Responses/ExpandResponse.md) (response)
-* [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (interface)
+- [ExpandResponse](Responses/ExpandResponse.md) (response)
+- [ExpandRequestInterface](Requests/ExpandRequestInterface.md) (interface)
 
 ## Methods
 

@@ -4,17 +4,17 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getGenericTypes()`](#getgenerictypes)
-    * [`getTypeName()`](#gettypename)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getGenericTypes()`](#getgenerictypes)
+  - [`getTypeName()`](#gettypename)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [ConditionParameter](Models/ConditionParameter.md) (implementation)
+- [ConditionParameter](Models/ConditionParameter.md) (implementation)
 
 ## Methods
 

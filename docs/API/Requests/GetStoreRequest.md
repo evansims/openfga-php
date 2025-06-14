@@ -4,15 +4,15 @@ Request for retrieving store information by its ID. This request fetches the det
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -24,13 +24,13 @@ Request for retrieving store information by its ID. This request fetches the det
 
 ## Implements
 
-* [`GetStoreRequestInterface`](GetStoreRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`GetStoreRequestInterface`](GetStoreRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [GetStoreResponse](Responses/GetStoreResponse.md) (response)
-* [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (interface)
+- [GetStoreResponse](Responses/GetStoreResponse.md) (response)
+- [GetStoreRequestInterface](Requests/GetStoreRequestInterface.md) (interface)
 
 ## Methods
 

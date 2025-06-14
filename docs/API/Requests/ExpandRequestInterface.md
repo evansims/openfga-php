@@ -4,19 +4,19 @@ Interface for expanding relationship graphs in OpenFGA. This interface defines t
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getTupleKey()`](#gettuplekey)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getTupleKey()`](#gettuplekey)
 
 ## Namespace
 
@@ -28,12 +28,12 @@ Interface for expanding relationship graphs in OpenFGA. This interface defines t
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ExpandResponseInterface](Responses/ExpandResponseInterface.md) (response)
-* [ExpandRequest](Requests/ExpandRequest.md) (implementation)
+- [ExpandResponseInterface](Responses/ExpandResponseInterface.md) (response)
+- [ExpandRequest](Requests/ExpandRequest.md) (implementation)
 
 ## Methods
 

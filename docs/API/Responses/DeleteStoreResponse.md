@@ -4,14 +4,14 @@ Response confirming successful deletion of a store. This response is returned wh
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -23,13 +23,13 @@ Response confirming successful deletion of a store. This response is returned wh
 
 ## Implements
 
-* [`DeleteStoreResponseInterface`](DeleteStoreResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`DeleteStoreResponseInterface`](DeleteStoreResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (interface)
-* [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (request)
+- [DeleteStoreResponseInterface](Responses/DeleteStoreResponseInterface.md) (interface)
+- [DeleteStoreRequest](Requests/DeleteStoreRequest.md) (request)
 
 ## Methods
 

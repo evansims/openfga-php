@@ -4,12 +4,12 @@ Executes tasks in parallel using the RequestManager infrastructure. This class p
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`execute()`](#execute)
+- [Other](#other)
+  - [`execute()`](#execute)
 
 ## Namespace
 

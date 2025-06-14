@@ -4,18 +4,18 @@ Response containing a list of objects that a user has a specific relationship wi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObjects()`](#getobjects)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getObjects()`](#getobjects)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -27,13 +27,13 @@ Response containing a list of objects that a user has a specific relationship wi
 
 ## Implements
 
-* [`ListObjectsResponseInterface`](ListObjectsResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ListObjectsResponseInterface`](ListObjectsResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (interface)
-* [ListObjectsRequest](Requests/ListObjectsRequest.md) (request)
+- [ListObjectsResponseInterface](Responses/ListObjectsResponseInterface.md) (interface)
+- [ListObjectsRequest](Requests/ListObjectsRequest.md) (request)
 
 ## Methods
 

@@ -4,21 +4,21 @@ Request for performing authorization checks in OpenFGA. This request determines 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAuthorizationModel()`](#getauthorizationmodel)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getTrace()`](#gettrace)
-    * [`getTupleKey()`](#gettuplekey)
+- [List Operations](#list-operations)
+  - [`getAuthorizationModel()`](#getauthorizationmodel)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getTrace()`](#gettrace)
+  - [`getTupleKey()`](#gettuplekey)
 
 ## Namespace
 
@@ -30,13 +30,13 @@ Request for performing authorization checks in OpenFGA. This request determines 
 
 ## Implements
 
-* [`CheckRequestInterface`](CheckRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`CheckRequestInterface`](CheckRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [CheckResponse](Responses/CheckResponse.md) (response)
-* [CheckRequestInterface](Requests/CheckRequestInterface.md) (interface)
+- [CheckResponse](Responses/CheckResponse.md) (response)
+- [CheckRequestInterface](Requests/CheckRequestInterface.md) (interface)
 
 ## Methods
 

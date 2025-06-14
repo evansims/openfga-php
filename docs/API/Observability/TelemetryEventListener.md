@@ -4,17 +4,17 @@ Event listener that forwards domain events to the telemetry provider. This decou
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`onHttpRequestSent()`](#onhttprequestsent)
-    * [`onHttpResponseReceived()`](#onhttpresponsereceived)
-    * [`onOperationCompleted()`](#onoperationcompleted)
-    * [`onOperationStarted()`](#onoperationstarted)
+- [Other](#other)
+  - [`onHttpRequestSent()`](#onhttprequestsent)
+  - [`onHttpResponseReceived()`](#onhttpresponsereceived)
+  - [`onOperationCompleted()`](#onoperationcompleted)
+  - [`onOperationStarted()`](#onoperationstarted)
 
 ## Namespace
 
@@ -26,11 +26,11 @@ Event listener that forwards domain events to the telemetry provider. This decou
 
 ## Implements
 
-* [`TelemetryEventListenerInterface`](TelemetryEventListenerInterface.md)
+- [`TelemetryEventListenerInterface`](TelemetryEventListenerInterface.md)
 
 ## Related Classes
 
-* [TelemetryEventListenerInterface](Observability/TelemetryEventListenerInterface.md) (interface)
+- [TelemetryEventListenerInterface](Observability/TelemetryEventListenerInterface.md) (interface)
 
 ## Methods
 

@@ -4,21 +4,21 @@ Service interface for managing OpenFGA authorization model assertions. This serv
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`validateAssertions()`](#validateassertions)
-* [CRUD Operations](#crud-operations)
-    * [`readAssertions()`](#readassertions)
-    * [`writeAssertions()`](#writeassertions)
-* [List Operations](#list-operations)
-    * [`getAssertionStatistics()`](#getassertionstatistics)
-* [Utility](#utility)
-    * [`clearAssertions()`](#clearassertions)
-    * [`executeAssertions()`](#executeassertions)
+- [Authorization](#authorization)
+  - [`validateAssertions()`](#validateassertions)
+- [CRUD Operations](#crud-operations)
+  - [`readAssertions()`](#readassertions)
+  - [`writeAssertions()`](#writeassertions)
+- [List Operations](#list-operations)
+  - [`getAssertionStatistics()`](#getassertionstatistics)
+- [Utility](#utility)
+  - [`clearAssertions()`](#clearassertions)
+  - [`executeAssertions()`](#executeassertions)
 
 ## Namespace
 
@@ -30,7 +30,7 @@ Service interface for managing OpenFGA authorization model assertions. This serv
 
 ## Related Classes
 
-* [AssertionService](Services/AssertionService.md) (implementation)
+- [AssertionService](Services/AssertionService.md) (implementation)
 
 ## Methods
 

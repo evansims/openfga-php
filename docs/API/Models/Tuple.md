@@ -4,20 +4,20 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getKey()`](#getkey)
-    * [`getTimestamp()`](#gettimestamp)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getKey()`](#getkey)
+  - [`getTimestamp()`](#gettimestamp)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,14 +29,14 @@ Represents a stored relationship tuple in your authorization system. A Tuple is 
 
 ## Implements
 
-* [`TupleInterface`](TupleInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`TupleInterface`](TupleInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [TupleInterface](Models/TupleInterface.md) (interface)
-* [Tuples](Models/Collections/Tuples.md) (collection)
+- [TupleInterface](Models/TupleInterface.md) (interface)
+- [Tuples](Models/Collections/Tuples.md) (collection)
 
 ## Constants
 

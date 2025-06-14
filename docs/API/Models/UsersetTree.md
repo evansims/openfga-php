@@ -4,19 +4,19 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRoot()`](#getroot)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getRoot()`](#getroot)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 
 ## Implements
 
-* [`UsersetTreeInterface`](UsersetTreeInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UsersetTreeInterface`](UsersetTreeInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UsersetTreeInterface](Models/UsersetTreeInterface.md) (interface)
+- [UsersetTreeInterface](Models/UsersetTreeInterface.md) (interface)
 
 ## Constants
 

@@ -4,18 +4,18 @@ Validates and transforms data according to registered JSON schemas. This validat
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Authorization](#authorization)
-    * [`validateAndTransform()`](#validateandtransform)
-* [List Operations](#list-operations)
-    * [`getSchemas()`](#getschemas)
-* [Model Management](#model-management)
-    * [`registerSchema()`](#registerschema)
+- [Authorization](#authorization)
+  - [`validateAndTransform()`](#validateandtransform)
+- [List Operations](#list-operations)
+  - [`getSchemas()`](#getschemas)
+- [Model Management](#model-management)
+  - [`registerSchema()`](#registerschema)
 
 ## Namespace
 
@@ -27,11 +27,11 @@ Validates and transforms data according to registered JSON schemas. This validat
 
 ## Implements
 
-* [`SchemaValidatorInterface`](SchemaValidatorInterface.md)
+- [`SchemaValidatorInterface`](SchemaValidatorInterface.md)
 
 ## Related Classes
 
-* [SchemaValidatorInterface](Schemas/SchemaValidatorInterface.md) (interface)
+- [SchemaValidatorInterface](Schemas/SchemaValidatorInterface.md) (interface)
 
 ## Methods
 

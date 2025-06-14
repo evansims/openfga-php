@@ -4,25 +4,25 @@ Configuration-related exception for the OpenFGA SDK. Thrown when configuration e
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getCode()`](#getcode)
-    * [`getFile()`](#getfile)
-    * [`getLine()`](#getline)
-    * [`getMessage()`](#getmessage)
-    * [`getPrevious()`](#getprevious)
-    * [`getTrace()`](#gettrace)
-    * [`getTraceAsString()`](#gettraceasstring)
-* [Other](#other)
-    * [`context()`](#context)
-    * [`kind()`](#kind)
-    * [`previous()`](#previous)
-    * [`request()`](#request)
-    * [`response()`](#response)
+- [List Operations](#list-operations)
+  - [`getCode()`](#getcode)
+  - [`getFile()`](#getfile)
+  - [`getLine()`](#getline)
+  - [`getMessage()`](#getmessage)
+  - [`getPrevious()`](#getprevious)
+  - [`getTrace()`](#gettrace)
+  - [`getTraceAsString()`](#gettraceasstring)
+- [Other](#other)
+  - [`context()`](#context)
+  - [`kind()`](#kind)
+  - [`previous()`](#previous)
+  - [`request()`](#request)
+  - [`response()`](#response)
 
 ## Namespace
 
@@ -34,9 +34,9 @@ Configuration-related exception for the OpenFGA SDK. Thrown when configuration e
 
 ## Implements
 
-* `Stringable`
-* `Throwable`
-* [`ClientThrowable`](ClientThrowable.md)
+- `Stringable`
+- `Throwable`
+- [`ClientThrowable`](ClientThrowable.md)
 
 ## Methods
 

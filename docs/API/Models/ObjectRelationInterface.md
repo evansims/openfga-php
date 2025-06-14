@@ -4,17 +4,17 @@ Represents an object-relation pair in OpenFGA authorization models. Object-relat
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObject()`](#getobject)
-    * [`getRelation()`](#getrelation)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getObject()`](#getobject)
+  - [`getRelation()`](#getrelation)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Represents an object-relation pair in OpenFGA authorization models. Object-relat
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [ObjectRelation](Models/ObjectRelation.md) (implementation)
+- [ObjectRelation](Models/ObjectRelation.md) (implementation)
 
 ## Methods
 

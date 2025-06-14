@@ -4,22 +4,22 @@ Represents a reference to a specific relation with optional conditions. A Relati
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getCondition()`](#getcondition)
-    * [`getRelation()`](#getrelation)
-    * [`getType()`](#gettype)
-    * [`getWildcard()`](#getwildcard)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getCondition()`](#getcondition)
+  - [`getRelation()`](#getrelation)
+  - [`getType()`](#gettype)
+  - [`getWildcard()`](#getwildcard)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -31,14 +31,14 @@ Represents a reference to a specific relation with optional conditions. A Relati
 
 ## Implements
 
-* [`RelationReferenceInterface`](RelationReferenceInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`RelationReferenceInterface`](RelationReferenceInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [RelationReferenceInterface](Models/RelationReferenceInterface.md) (interface)
-* [RelationReferences](Models/Collections/RelationReferences.md) (collection)
+- [RelationReferenceInterface](Models/RelationReferenceInterface.md) (interface)
+- [RelationReferences](Models/Collections/RelationReferences.md) (collection)
 
 ## Constants
 

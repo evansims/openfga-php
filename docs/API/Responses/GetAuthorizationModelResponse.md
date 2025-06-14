@@ -4,18 +4,18 @@ Response containing a specific authorization model from the store. This response
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModel()`](#getmodel)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`fromResponse()`](#fromresponse)
+- [List Operations](#list-operations)
+  - [`getModel()`](#getmodel)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`fromResponse()`](#fromresponse)
 
 ## Namespace
 
@@ -27,13 +27,13 @@ Response containing a specific authorization model from the store. This response
 
 ## Implements
 
-* [`GetAuthorizationModelResponseInterface`](GetAuthorizationModelResponseInterface.md)
-* [`ResponseInterface`](ResponseInterface.md)
+- [`GetAuthorizationModelResponseInterface`](GetAuthorizationModelResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (interface)
-* [GetAuthorizationModelRequest](Requests/GetAuthorizationModelRequest.md) (request)
+- [GetAuthorizationModelResponseInterface](Responses/GetAuthorizationModelResponseInterface.md) (interface)
+- [GetAuthorizationModelRequest](Requests/GetAuthorizationModelRequest.md) (request)
 
 ## Methods
 

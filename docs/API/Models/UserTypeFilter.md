@@ -4,20 +4,20 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRelation()`](#getrelation)
-    * [`getType()`](#gettype)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getRelation()`](#getrelation)
+  - [`getType()`](#gettype)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 
 ## Implements
 
-* [`UserTypeFilterInterface`](UserTypeFilterInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UserTypeFilterInterface`](UserTypeFilterInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UserTypeFilterInterface](Models/UserTypeFilterInterface.md) (interface)
+- [UserTypeFilterInterface](Models/UserTypeFilterInterface.md) (interface)
 
 ## Constants
 

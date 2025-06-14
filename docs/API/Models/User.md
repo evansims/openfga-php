@@ -4,22 +4,22 @@ Represents a user or user specification in authorization contexts. A User can re
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getDifference()`](#getdifference)
-    * [`getObject()`](#getobject)
-    * [`getUserset()`](#getuserset)
-    * [`getWildcard()`](#getwildcard)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getDifference()`](#getdifference)
+  - [`getObject()`](#getobject)
+  - [`getUserset()`](#getuserset)
+  - [`getWildcard()`](#getwildcard)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -31,13 +31,13 @@ Represents a user or user specification in authorization contexts. A User can re
 
 ## Implements
 
-* [`UserInterface`](UserInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UserInterface`](UserInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UserInterface](Models/UserInterface.md) (interface)
+- [UserInterface](Models/UserInterface.md) (interface)
 
 ## Constants
 

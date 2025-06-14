@@ -4,10 +4,10 @@ Interface for store deletion response objects. This interface defines the contra
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
 
 ## Namespace
 
@@ -19,9 +19,9 @@ Interface for store deletion response objects. This interface defines the contra
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [DeleteStoreResponse](Responses/DeleteStoreResponse.md) (implementation)
-* [DeleteStoreRequestInterface](Requests/DeleteStoreRequestInterface.md) (request)
+- [DeleteStoreResponse](Responses/DeleteStoreResponse.md) (implementation)
+- [DeleteStoreRequestInterface](Requests/DeleteStoreRequestInterface.md) (request)

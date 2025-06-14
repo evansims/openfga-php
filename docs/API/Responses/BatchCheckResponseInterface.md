@@ -4,15 +4,15 @@ Response containing the results of a batch authorization check. This response co
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getResult()`](#getresult)
-    * [`getResultForCorrelationId()`](#getresultforcorrelationid)
+- [List Operations](#list-operations)
+  - [`getResult()`](#getresult)
+  - [`getResultForCorrelationId()`](#getresultforcorrelationid)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Response containing the results of a batch authorization check. This response co
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [BatchCheckResponse](Responses/BatchCheckResponse.md) (implementation)
-* [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (request)
+- [BatchCheckResponse](Responses/BatchCheckResponse.md) (implementation)
+- [BatchCheckRequestInterface](Requests/BatchCheckRequestInterface.md) (request)
 
 ## Methods
 

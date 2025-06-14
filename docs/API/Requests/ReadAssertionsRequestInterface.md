@@ -4,16 +4,16 @@ Interface for reading test assertions from an authorization model. This interfac
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -25,12 +25,12 @@ Interface for reading test assertions from an authorization model. This interfac
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (response)
-* [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (implementation)
+- [ReadAssertionsResponseInterface](Responses/ReadAssertionsResponseInterface.md) (response)
+- [ReadAssertionsRequest](Requests/ReadAssertionsRequest.md) (implementation)
 
 ## Methods
 

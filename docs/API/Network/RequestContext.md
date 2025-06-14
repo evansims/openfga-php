@@ -4,19 +4,19 @@ Implementation of request context for OpenFGA API operations. This class provide
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getBody()`](#getbody)
-    * [`getHeaders()`](#getheaders)
-    * [`getMethod()`](#getmethod)
-    * [`getUrl()`](#geturl)
-* [Other](#other)
-    * [`useApiUrl()`](#useapiurl)
+- [List Operations](#list-operations)
+  - [`getBody()`](#getbody)
+  - [`getHeaders()`](#getheaders)
+  - [`getMethod()`](#getmethod)
+  - [`getUrl()`](#geturl)
+- [Other](#other)
+  - [`useApiUrl()`](#useapiurl)
 
 ## Namespace
 
@@ -28,11 +28,11 @@ Implementation of request context for OpenFGA API operations. This class provide
 
 ## Implements
 
-* [`RequestContextInterface`](RequestContextInterface.md)
+- [`RequestContextInterface`](RequestContextInterface.md)
 
 ## Related Classes
 
-* [RequestContextInterface](Network/RequestContextInterface.md) (interface)
+- [RequestContextInterface](Network/RequestContextInterface.md) (interface)
 
 ## Methods
 

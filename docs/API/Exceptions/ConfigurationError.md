@@ -4,19 +4,19 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRequiredPsrInterface()`](#getrequiredpsrinterface)
-* [Utility](#utility)
-    * [`isHttpComponentMissing()`](#ishttpcomponentmissing)
-* [Other](#other)
-    * [`exception()`](#exception)
+- [List Operations](#list-operations)
+  - [`getRequiredPsrInterface()`](#getrequiredpsrinterface)
+- [Utility](#utility)
+  - [`isHttpComponentMissing()`](#ishttpcomponentmissing)
+- [Other](#other)
+  - [`exception()`](#exception)
 
 ## Namespace
 
@@ -28,8 +28,8 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 

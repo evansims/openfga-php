@@ -4,14 +4,14 @@ Concrete implementation of the retry handler using standard sleep delays. This f
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`executeWithRetry()`](#executewithretry)
+- [Other](#other)
+  - [`executeWithRetry()`](#executewithretry)
 
 ## Namespace
 
@@ -23,11 +23,11 @@ Concrete implementation of the retry handler using standard sleep delays. This f
 
 ## Implements
 
-* [`RetryHandlerInterface`](RetryHandlerInterface.md)
+- [`RetryHandlerInterface`](RetryHandlerInterface.md)
 
 ## Related Classes
 
-* [RetryHandlerInterface](Network/RetryHandlerInterface.md) (interface)
+- [RetryHandlerInterface](Network/RetryHandlerInterface.md) (interface)
 
 ## Methods
 

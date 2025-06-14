@@ -4,16 +4,16 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getType()`](#gettype)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getType()`](#gettype)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -25,13 +25,13 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `Stringable`
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `Stringable`
+- `JsonSerializable`
 
 ## Related Classes
 
-* [TypedWildcard](Models/TypedWildcard.md) (implementation)
+- [TypedWildcard](Models/TypedWildcard.md) (implementation)
 
 ## Methods
 

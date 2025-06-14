@@ -4,19 +4,19 @@ Request for listing changes to relationship tuples over time. This request retri
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getContinuationToken()`](#getcontinuationtoken)
-    * [`getPageSize()`](#getpagesize)
-    * [`getRequest()`](#getrequest)
-    * [`getStartTime()`](#getstarttime)
-    * [`getStore()`](#getstore)
-    * [`getType()`](#gettype)
+- [List Operations](#list-operations)
+  - [`getContinuationToken()`](#getcontinuationtoken)
+  - [`getPageSize()`](#getpagesize)
+  - [`getRequest()`](#getrequest)
+  - [`getStartTime()`](#getstarttime)
+  - [`getStore()`](#getstore)
+  - [`getType()`](#gettype)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Request for listing changes to relationship tuples over time. This request retri
 
 ## Implements
 
-* [`ListTupleChangesRequestInterface`](ListTupleChangesRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`ListTupleChangesRequestInterface`](ListTupleChangesRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (response)
-* [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (interface)
+- [ListTupleChangesResponse](Responses/ListTupleChangesResponse.md) (response)
+- [ListTupleChangesRequestInterface](Requests/ListTupleChangesRequestInterface.md) (interface)
 
 ## Methods
 

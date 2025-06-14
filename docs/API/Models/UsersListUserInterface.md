@@ -4,16 +4,16 @@ Represents a user in a list context for authorization operations. UsersListUser 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getUser()`](#getuser)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getUser()`](#getuser)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -25,13 +25,13 @@ Represents a user in a list context for authorization operations. UsersListUser 
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `Stringable`
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `Stringable`
+- `JsonSerializable`
 
 ## Related Classes
 
-* [UsersListUser](Models/UsersListUser.md) (implementation)
+- [UsersListUser](Models/UsersListUser.md) (implementation)
 
 ## Methods
 

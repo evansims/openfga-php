@@ -4,19 +4,19 @@ Defines the contract for relation references with optional conditions. A relatio
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getCondition()`](#getcondition)
-    * [`getRelation()`](#getrelation)
-    * [`getType()`](#gettype)
-    * [`getWildcard()`](#getwildcard)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getCondition()`](#getcondition)
+  - [`getRelation()`](#getrelation)
+  - [`getType()`](#gettype)
+  - [`getWildcard()`](#getwildcard)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,12 +28,12 @@ Defines the contract for relation references with optional conditions. A relatio
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [RelationReference](Models/RelationReference.md) (implementation)
+- [RelationReference](Models/RelationReference.md) (implementation)
 
 ## Methods
 

@@ -4,18 +4,18 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`create()`](#create)
-* [List Operations](#list-operations)
-    * [`get()`](#get)
-* [Utility](#utility)
-    * [`register()`](#register)
+- [CRUD Operations](#crud-operations)
+  - [`create()`](#create)
+- [List Operations](#list-operations)
+  - [`get()`](#get)
+- [Utility](#utility)
+  - [`register()`](#register)
 
 ## Namespace
 
@@ -27,11 +27,11 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 
 ## Implements
 
-* [`SchemaRegistryInterface`](SchemaRegistryInterface.md)
+- [`SchemaRegistryInterface`](SchemaRegistryInterface.md)
 
 ## Related Classes
 
-* [SchemaRegistryInterface](Schemas/SchemaRegistryInterface.md) (interface)
+- [SchemaRegistryInterface](Schemas/SchemaRegistryInterface.md) (interface)
 
 ## Methods
 

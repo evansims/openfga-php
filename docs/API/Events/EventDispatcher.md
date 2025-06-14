@@ -4,20 +4,20 @@ Simple event dispatcher implementation. Manages event listeners and dispatches e
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`removeListeners()`](#removelisteners)
-* [List Operations](#list-operations)
-    * [`addListener()`](#addlistener)
-    * [`getListeners()`](#getlisteners)
-    * [`hasListeners()`](#haslisteners)
-* [Utility](#utility)
-    * [`dispatch()`](#dispatch)
+- [CRUD Operations](#crud-operations)
+  - [`removeListeners()`](#removelisteners)
+- [List Operations](#list-operations)
+  - [`addListener()`](#addlistener)
+  - [`getListeners()`](#getlisteners)
+  - [`hasListeners()`](#haslisteners)
+- [Utility](#utility)
+  - [`dispatch()`](#dispatch)
 
 ## Namespace
 
@@ -29,11 +29,11 @@ Simple event dispatcher implementation. Manages event listeners and dispatches e
 
 ## Implements
 
-* [`EventDispatcherInterface`](EventDispatcherInterface.md)
+- [`EventDispatcherInterface`](EventDispatcherInterface.md)
 
 ## Related Classes
 
-* [EventDispatcherInterface](Events/EventDispatcherInterface.md) (interface)
+- [EventDispatcherInterface](Events/EventDispatcherInterface.md) (interface)
 
 ## Methods
 

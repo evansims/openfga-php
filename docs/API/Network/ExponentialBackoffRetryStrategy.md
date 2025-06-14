@@ -4,17 +4,17 @@ Exponential backoff retry strategy implementation. This strategy implements expo
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRetryDelay()`](#getretrydelay)
-* [Utility](#utility)
-    * [`isRetryable()`](#isretryable)
-* [Other](#other)
-    * [`execute()`](#execute)
+- [List Operations](#list-operations)
+  - [`getRetryDelay()`](#getretrydelay)
+- [Utility](#utility)
+  - [`isRetryable()`](#isretryable)
+- [Other](#other)
+  - [`execute()`](#execute)
 
 ## Namespace
 
@@ -26,7 +26,7 @@ Exponential backoff retry strategy implementation. This strategy implements expo
 
 ## Implements
 
-* [`RetryStrategyInterface`](RetryStrategyInterface.md)
+- [`RetryStrategyInterface`](RetryStrategyInterface.md)
 
 ## Methods
 

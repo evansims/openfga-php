@@ -4,22 +4,22 @@ Service interface for managing OpenFGA relationship tuples. This service provide
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`delete()`](#delete)
-    * [`deleteBatch()`](#deletebatch)
-    * [`read()`](#read)
-    * [`write()`](#write)
-    * [`writeBatch()`](#writebatch)
-* [List Operations](#list-operations)
-    * [`getStatistics()`](#getstatistics)
-    * [`listChanges()`](#listchanges)
-* [Utility](#utility)
-    * [`exists()`](#exists)
+- [CRUD Operations](#crud-operations)
+  - [`delete()`](#delete)
+  - [`deleteBatch()`](#deletebatch)
+  - [`read()`](#read)
+  - [`write()`](#write)
+  - [`writeBatch()`](#writebatch)
+- [List Operations](#list-operations)
+  - [`getStatistics()`](#getstatistics)
+  - [`listChanges()`](#listchanges)
+- [Utility](#utility)
+  - [`exists()`](#exists)
 
 ## Namespace
 
@@ -31,7 +31,7 @@ Service interface for managing OpenFGA relationship tuples. This service provide
 
 ## Related Classes
 
-* [TupleService](Services/TupleService.md) (implementation)
+- [TupleService](Services/TupleService.md) (implementation)
 
 ## Methods
 

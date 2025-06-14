@@ -4,19 +4,19 @@ Represents source file information for debugging and development tools. SourceIn
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getFile()`](#getfile)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getFile()`](#getfile)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -28,13 +28,13 @@ Represents source file information for debugging and development tools. SourceIn
 
 ## Implements
 
-* [`SourceInfoInterface`](SourceInfoInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`SourceInfoInterface`](SourceInfoInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [SourceInfoInterface](Models/SourceInfoInterface.md) (interface)
+- [SourceInfoInterface](Models/SourceInfoInterface.md) (interface)
 
 ## Constants
 

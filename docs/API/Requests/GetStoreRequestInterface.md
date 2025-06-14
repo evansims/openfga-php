@@ -4,15 +4,15 @@ Interface for retrieving information about an OpenFGA store. This interface defi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -24,12 +24,12 @@ Interface for retrieving information about an OpenFGA store. This interface defi
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md) (response)
-* [GetStoreRequest](Requests/GetStoreRequest.md) (implementation)
+- [GetStoreResponseInterface](Responses/GetStoreResponseInterface.md) (response)
+- [GetStoreRequest](Requests/GetStoreRequest.md) (implementation)
 
 ## Methods
 

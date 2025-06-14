@@ -4,24 +4,24 @@ Represents a userset specification for computing groups of users. A Userset defi
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputedUserset()`](#getcomputeduserset)
-    * [`getDifference()`](#getdifference)
-    * [`getDirect()`](#getdirect)
-    * [`getIntersection()`](#getintersection)
-    * [`getTupleToUserset()`](#gettupletouserset)
-    * [`getUnion()`](#getunion)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputedUserset()`](#getcomputeduserset)
+  - [`getDifference()`](#getdifference)
+  - [`getDirect()`](#getdirect)
+  - [`getIntersection()`](#getintersection)
+  - [`getTupleToUserset()`](#gettupletouserset)
+  - [`getUnion()`](#getunion)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -33,13 +33,13 @@ Represents a userset specification for computing groups of users. A Userset defi
 
 ## Implements
 
-* [`UsersetInterface`](UsersetInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`UsersetInterface`](UsersetInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [UsersetInterface](Models/UsersetInterface.md) (interface)
+- [UsersetInterface](Models/UsersetInterface.md) (interface)
 
 ## Constants
 

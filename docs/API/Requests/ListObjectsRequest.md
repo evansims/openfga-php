@@ -4,22 +4,22 @@ Request for listing objects that a user has a specific relationship with. This r
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getConsistency()`](#getconsistency)
-    * [`getContext()`](#getcontext)
-    * [`getContextualTuples()`](#getcontextualtuples)
-    * [`getModel()`](#getmodel)
-    * [`getRelation()`](#getrelation)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
-    * [`getType()`](#gettype)
-    * [`getUser()`](#getuser)
+- [List Operations](#list-operations)
+  - [`getConsistency()`](#getconsistency)
+  - [`getContext()`](#getcontext)
+  - [`getContextualTuples()`](#getcontextualtuples)
+  - [`getModel()`](#getmodel)
+  - [`getRelation()`](#getrelation)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
+  - [`getType()`](#gettype)
+  - [`getUser()`](#getuser)
 
 ## Namespace
 
@@ -31,13 +31,13 @@ Request for listing objects that a user has a specific relationship with. This r
 
 ## Implements
 
-* [`ListObjectsRequestInterface`](ListObjectsRequestInterface.md)
-* [`RequestInterface`](RequestInterface.md)
+- [`ListObjectsRequestInterface`](ListObjectsRequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [ListObjectsResponse](Responses/ListObjectsResponse.md) (response)
-* [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md) (interface)
+- [ListObjectsResponse](Responses/ListObjectsResponse.md) (response)
+- [ListObjectsRequestInterface](Requests/ListObjectsRequestInterface.md) (interface)
 
 ## Methods
 

@@ -4,18 +4,18 @@ Interface for store creation response objects. This interface defines the contra
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`getCreatedAt()`](#getcreatedat)
-    * [`getUpdatedAt()`](#getupdatedat)
-* [List Operations](#list-operations)
-    * [`getId()`](#getid)
-    * [`getName()`](#getname)
+- [CRUD Operations](#crud-operations)
+  - [`getCreatedAt()`](#getcreatedat)
+  - [`getUpdatedAt()`](#getupdatedat)
+- [List Operations](#list-operations)
+  - [`getId()`](#getid)
+  - [`getName()`](#getname)
 
 ## Namespace
 
@@ -27,12 +27,12 @@ Interface for store creation response objects. This interface defines the contra
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [CreateStoreResponse](Responses/CreateStoreResponse.md) (implementation)
-* [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (request)
+- [CreateStoreResponse](Responses/CreateStoreResponse.md) (implementation)
+- [CreateStoreRequestInterface](Requests/CreateStoreRequestInterface.md) (request)
 
 ## Methods
 

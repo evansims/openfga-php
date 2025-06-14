@@ -4,13 +4,13 @@ Retry handler interface for advanced HTTP request retry strategies. This interfa
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`executeWithRetry()`](#executewithretry)
+- [Other](#other)
+  - [`executeWithRetry()`](#executewithretry)
 
 ## Namespace
 
@@ -22,7 +22,7 @@ Retry handler interface for advanced HTTP request retry strategies. This interfa
 
 ## Related Classes
 
-* [RetryHandler](Network/RetryHandler.md) (implementation)
+- [RetryHandler](Network/RetryHandler.md) (implementation)
 
 ## Methods
 

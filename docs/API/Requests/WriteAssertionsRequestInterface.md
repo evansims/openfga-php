@@ -4,17 +4,17 @@ Interface for writing test assertions to an authorization model. This interface 
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getAssertions()`](#getassertions)
-    * [`getModel()`](#getmodel)
-    * [`getRequest()`](#getrequest)
-    * [`getStore()`](#getstore)
+- [List Operations](#list-operations)
+  - [`getAssertions()`](#getassertions)
+  - [`getModel()`](#getmodel)
+  - [`getRequest()`](#getrequest)
+  - [`getStore()`](#getstore)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Interface for writing test assertions to an authorization model. This interface 
 
 ## Implements
 
-* [`RequestInterface`](RequestInterface.md)
+- [`RequestInterface`](RequestInterface.md)
 
 ## Related Classes
 
-* [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (response)
-* [WriteAssertionsRequest](Requests/WriteAssertionsRequest.md) (implementation)
+- [WriteAssertionsResponseInterface](Responses/WriteAssertionsResponseInterface.md) (response)
+- [WriteAssertionsRequest](Requests/WriteAssertionsRequest.md) (implementation)
 
 ## Methods
 

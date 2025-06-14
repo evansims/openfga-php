@@ -4,18 +4,18 @@ HTTP implementation of the tuple repository. This repository handles tuple opera
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`delete()`](#delete)
-    * [`read()`](#read)
-    * [`write()`](#write)
-    * [`writeAndDelete()`](#writeanddelete)
-* [List Operations](#list-operations)
-    * [`listChanges()`](#listchanges)
+- [CRUD Operations](#crud-operations)
+  - [`delete()`](#delete)
+  - [`read()`](#read)
+  - [`write()`](#write)
+  - [`writeAndDelete()`](#writeanddelete)
+- [List Operations](#list-operations)
+  - [`listChanges()`](#listchanges)
 
 ## Namespace
 
@@ -27,7 +27,7 @@ HTTP implementation of the tuple repository. This repository handles tuple opera
 
 ## Implements
 
-* [`TupleRepositoryInterface`](TupleRepositoryInterface.md)
+- [`TupleRepositoryInterface`](TupleRepositoryInterface.md)
 
 ## Methods
 

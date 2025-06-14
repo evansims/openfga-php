@@ -4,20 +4,20 @@ Represents a reference to a specific relation on an object. In authorization mod
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getObject()`](#getobject)
-    * [`getRelation()`](#getrelation)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getObject()`](#getobject)
+  - [`getRelation()`](#getrelation)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -29,13 +29,13 @@ Represents a reference to a specific relation on an object. In authorization mod
 
 ## Implements
 
-* [`ObjectRelationInterface`](ObjectRelationInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`ObjectRelationInterface`](ObjectRelationInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [ObjectRelationInterface](Models/ObjectRelationInterface.md) (interface)
+- [ObjectRelationInterface](Models/ObjectRelationInterface.md) (interface)
 
 ## Constants
 

@@ -4,10 +4,10 @@ Interface for assertions writing response objects. This interface defines the co
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
 
 ## Namespace
 
@@ -19,9 +19,9 @@ Interface for assertions writing response objects. This interface defines the co
 
 ## Implements
 
-* [`ResponseInterface`](ResponseInterface.md)
+- [`ResponseInterface`](ResponseInterface.md)
 
 ## Related Classes
 
-* [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (implementation)
-* [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (request)
+- [WriteAssertionsResponse](Responses/WriteAssertionsResponse.md) (implementation)
+- [WriteAssertionsRequestInterface](Requests/WriteAssertionsRequestInterface.md) (request)

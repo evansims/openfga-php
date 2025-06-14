@@ -4,21 +4,21 @@ Represents a leaf node in authorization evaluation trees containing specific use
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Constants](#constants)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Constants](#constants)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getComputed()`](#getcomputed)
-    * [`getTupleToUserset()`](#gettupletouserset)
-    * [`getUsers()`](#getusers)
-* [Model Management](#model-management)
-    * [`schema()`](#schema)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getComputed()`](#getcomputed)
+  - [`getTupleToUserset()`](#gettupletouserset)
+  - [`getUsers()`](#getusers)
+- [Model Management](#model-management)
+  - [`schema()`](#schema)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -30,13 +30,13 @@ Represents a leaf node in authorization evaluation trees containing specific use
 
 ## Implements
 
-* [`LeafInterface`](LeafInterface.md)
-* `JsonSerializable`
-* [`ModelInterface`](ModelInterface.md)
+- [`LeafInterface`](LeafInterface.md)
+- `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
 
 ## Related Classes
 
-* [LeafInterface](Models/LeafInterface.md) (interface)
+- [LeafInterface](Models/LeafInterface.md) (interface)
 
 ## Constants
 

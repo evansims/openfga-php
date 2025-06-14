@@ -4,21 +4,21 @@ Service implementation for high-level store operations. This service provides bu
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [CRUD Operations](#crud-operations)
-    * [`createStore()`](#createstore)
-    * [`deleteStore()`](#deletestore)
-    * [`getOrCreateStore()`](#getorcreatestore)
-* [List Operations](#list-operations)
-    * [`findStore()`](#findstore)
-    * [`findStoresByName()`](#findstoresbyname)
-    * [`listAllStores()`](#listallstores)
-    * [`listStores()`](#liststores)
+- [CRUD Operations](#crud-operations)
+  - [`createStore()`](#createstore)
+  - [`deleteStore()`](#deletestore)
+  - [`getOrCreateStore()`](#getorcreatestore)
+- [List Operations](#list-operations)
+  - [`findStore()`](#findstore)
+  - [`findStoresByName()`](#findstoresbyname)
+  - [`listAllStores()`](#listallstores)
+  - [`listStores()`](#liststores)
 
 ## Namespace
 
@@ -30,11 +30,11 @@ Service implementation for high-level store operations. This service provides bu
 
 ## Implements
 
-* [`StoreServiceInterface`](StoreServiceInterface.md)
+- [`StoreServiceInterface`](StoreServiceInterface.md)
 
 ## Related Classes
 
-* [StoreServiceInterface](Services/StoreServiceInterface.md) (interface)
+- [StoreServiceInterface](Services/StoreServiceInterface.md) (interface)
 
 ## Methods
 

@@ -4,17 +4,17 @@ Represents a filter for limiting users by their relationships to specific object
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Related Classes](#related-classes)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Related Classes](#related-classes)
+- [Methods](#methods)
 
-* [List Operations](#list-operations)
-    * [`getRelation()`](#getrelation)
-    * [`getType()`](#gettype)
-* [Other](#other)
-    * [`jsonSerialize()`](#jsonserialize)
+- [List Operations](#list-operations)
+  - [`getRelation()`](#getrelation)
+  - [`getType()`](#gettype)
+- [Other](#other)
+  - [`jsonSerialize()`](#jsonserialize)
 
 ## Namespace
 
@@ -26,12 +26,12 @@ Represents a filter for limiting users by their relationships to specific object
 
 ## Implements
 
-* [`ModelInterface`](ModelInterface.md)
-* `JsonSerializable`
+- [`ModelInterface`](ModelInterface.md)
+- `JsonSerializable`
 
 ## Related Classes
 
-* [UserTypeFilter](Models/UserTypeFilter.md) (implementation)
+- [UserTypeFilter](Models/UserTypeFilter.md) (implementation)
 
 ## Methods
 
