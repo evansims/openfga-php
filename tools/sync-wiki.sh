@@ -34,19 +34,19 @@ cat > "_Sidebar.md" << 'EOF'
 - **[Authentication](Authentication)**
 
 ## Essentials
-- **[Stores](Stores)**
+- **[Authorization Stores](Stores)**
 - **[Authorization Models](Models)**
 - **[Relationship Tuples](Tuples)**
-- **[Permissions Queries](Queries)**
-- **[Assertions](Assertions)**
+- **[Permission Queries](Queries)**
+- **[Testing with Assertions](Assertions)**
 
 ## Features
 - **[Helper Functions](Helpers)**
 - **[Concurrency](Concurrency)**
-- **[Exceptions](Exceptions)**
-- **[Integration](Integration)**
-- **[Observability](Observability)**
-- **[Results](Results)**
+- **[Error Handling](Exceptions)**
+- **[Framework Integration](Integration)**
+- **[OpenTelemetry Observability](Observability)**
+- **[Result Pattern](Results)**
 
 ## API Reference
 
@@ -192,14 +192,14 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
     if [[ "$file" == "./API-"* ]]; then
         # For API docs: Remove ALL H1 titles and add clean title
         sed -i.bak '/^# /d' "$file"
-        
+
         # Add the clean title back as the first line
         sed -i.bak "1i\\
 # $clean_title
 " "$file"
     else
-        # For written guides: Remove only the FIRST H1 title completely
-        # Wiki will auto-generate the page title, so we don't want any H1 at the top
+        # For written guides: Remove the first H1 header completely
+        # Wiki will auto-generate the page title from filename
         sed -i.bak '1{/^# /d;}' "$file"
     fi
 
@@ -297,7 +297,7 @@ fi
 
 git commit -m "Sync documentation from main branch
 
-📖 Updated documentation  
+📖 Updated documentation
 🤖 Generated automatically"
 
 # Push changes (force push to overwrite any upstream conflicts)
