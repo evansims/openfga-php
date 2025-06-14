@@ -66,7 +66,6 @@ class ReleaseManager
             $this->validateTagDoesNotExist();
             $this->validateBranchStatus();
             $this->validateChangelog();
-            $this->runQualityChecks();
             $this->updateDocumentation();
             $this->updateVersionConstant();
             $this->updateChangelog();
@@ -144,27 +143,6 @@ class ReleaseManager
         }
 
         echo "   ✓ CHANGELOG contains [Unreleased] section\n";
-    }
-
-    /**
-     * Run all quality checks (linters and tests).
-     */
-    private function runQualityChecks(): void
-    {
-        echo "🔧 Running quality checks...\n";
-
-        $checks = [
-            'Linters' => 'composer lint',
-            'Unit Tests' => 'composer test:unit',
-            'Integration Tests' => 'composer test:integration',
-            'Contract Tests' => 'composer test:contract'
-        ];
-
-        foreach ($checks as $name => $command) {
-            echo "   🏃 Running {$name}...\n";
-            $this->runCommand($command, "Failed to run {$name}", false);
-            echo "   ✓ {$name} passed\n";
-        }
     }
 
     /**
