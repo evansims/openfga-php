@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA;
 
 use Closure;
+use Generator;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{ClientException, ClientThrowable};
 use OpenFGA\Models\{AuthorizationModelInterface, ConditionInterface, StoreInterface, TupleKey, TupleKeyInterface};
@@ -380,7 +381,11 @@ function delete(
 }
 
 /**
- * Check for a relationship.
+ * Check for a relationship with guaranteed boolean result.
+ *
+ * This helper safely checks permissions and returns false for any error
+ * condition (network failures, authentication issues, malformed requests, etc.).
+ * Use the standard client->check() method if you need detailed error information.
  *
  * @param ClientInterface                    $client           an OpenFGA client
  * @param StoreInterface|string              $store            the store to use
@@ -391,17 +396,18 @@ function delete(
  * @param ?TupleKeysInterface                $contextualTuples the contextual tuples to use for the check
  * @param ?Consistency                       $consistency      the consistency to use for the check
  *
- * @throws Throwable if the check fails
- *
- * @return bool true if the tuple is allowed, false otherwise
+ * @return bool true if explicitly allowed, false for denied or any error
  */
 function allowed(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface | string $model, TupleKeyInterface $tuple, ?bool $trace = null, ?object $context = null, ?TupleKeysInterface $contextualTuples = null, ?Consistency $consistency = null): bool
 {
-    /** @var Responses\CheckResponseInterface $response */
-    $response = $client->check(store: $store, model: $model, tupleKey: $tuple, trace: $trace, context: $context, contextualTuples: $contextualTuples, consistency: $consistency)
-        ->unwrap();
-
-    return $response->getAllowed() ?? false;
+    try {
+        $response = $client->check(store: $store, model: $model, tupleKey: $tuple, trace: $trace, context: $context, contextualTuples: $contextualTuples, consistency: $consistency)
+            ->unwrap();
+        return $response->getAllowed() ?? false;
+    } catch (Throwable) {
+        // Return false for any error (network, auth, validation, etc.)
+        return false;
+    }
 }
 
 /**
@@ -427,6 +433,220 @@ function model(ClientInterface $client, StoreInterface | string $store, Authoriz
         ->unwrap();
 
     return $response->getModel();
+}
+
+/**
+ * Stream all objects a user has a specific relation to.
+ *
+ * This helper provides a simplified way to use the streamedListObjects method,
+ * which efficiently retrieves all objects of a given type that a user has access to
+ * through a specific relationship. Unlike the regular listObjects method, this streams
+ * results without pagination limitations.
+ *
+ * @param ClientInterface                    $client           The OpenFGA client
+ * @param StoreInterface|string              $store            The store to query
+ * @param AuthorizationModelInterface|string $model            The authorization model to use
+ * @param string                             $type             The object type to search for (e.g., 'document', 'folder')
+ * @param string                             $relation         The relation to check (e.g., 'viewer', 'owner')
+ * @param string                             $user             The user to check for (e.g., 'user:anne')
+ * @param ?object                            $context          Optional context for condition evaluation
+ * @param ?TupleKeysInterface                $contextualTuples Optional contextual tuples for the query
+ * @param ?Consistency                       $consistency      Optional consistency level for the query
+ *
+ * @throws Throwable If the query fails
+ *
+ * @return array<string> Array of object IDs the user has the specified relation to
+ *
+ * @example Find all documents a user can view
+ * $documents = objects($client, $store, $model, 'document', 'viewer', 'user:anne');
+ * // Returns: ['document:budget', 'document:forecast', 'document:report']
+ * @example Find all folders a user owns with contextual tuples
+ * $ownedFolders = objects(
+ *     $client,
+ *     $store,
+ *     $model,
+ *     'folder',
+ *     'owner',
+ *     'user:bob',
+ *     contextualTuples: tuples(
+ *         tuple('user:bob', 'owner', 'folder:temp')
+ *     )
+ * );
+ */
+function objects(
+    ClientInterface $client,
+    StoreInterface | string $store,
+    AuthorizationModelInterface | string $model,
+    string $type,
+    string $relation,
+    string $user,
+    ?object $context = null,
+    ?TupleKeysInterface $contextualTuples = null,
+    ?Consistency $consistency = null,
+): array {
+    /** @var Generator<int, Responses\StreamedListObjectsResponseInterface> $generator */
+    $generator = $client->streamedListObjects(
+        store: $store,
+        model: $model,
+        type: $type,
+        relation: $relation,
+        user: $user,
+        context: $context,
+        contextualTuples: $contextualTuples,
+        consistency: $consistency,
+    )->unwrap();
+
+    $objects = [];
+
+    foreach ($generator as $streamedResponse) {
+        $objects[] = $streamedResponse->getObject();
+    }
+
+    return $objects;
+}
+
+/**
+ * List all authorization models in a store with automatic pagination.
+ *
+ * This helper provides a simplified way to retrieve all authorization models from a store,
+ * automatically handling pagination to collect all available models. Unlike the regular
+ * listAuthorizationModels method, this continues fetching until all models are retrieved.
+ *
+ * @param ClientInterface       $client The OpenFGA client
+ * @param StoreInterface|string $store  The store to list models from
+ *
+ * @throws Throwable If the operation fails
+ *
+ * @return array<AuthorizationModelInterface> Array of all authorization models in the store
+ *
+ * @example Get all authorization models in a store
+ * $allModels = models($client, $storeId);
+ * foreach ($allModels as $model) {
+ *     echo "Model: {$model->getId()}\n";
+ * }
+ * @example Find the latest authorization model
+ * $allModels = models($client, $store);
+ * $latestModel = end($allModels); // Models are typically returned in chronological order
+ */
+function models(
+    ClientInterface $client,
+    StoreInterface | string $store,
+): array {
+    $allModels = [];
+    $continuationToken = null;
+
+    do {
+        /** @var Responses\ListAuthorizationModelsResponseInterface $response */
+        $response = $client->listAuthorizationModels(
+            store: $store,
+            continuationToken: $continuationToken,
+        )->unwrap();
+
+        // Add models from current page to collection
+        foreach ($response->getModels() as $model) {
+            $allModels[] = $model;
+        }
+
+        // Get continuation token for next page
+        $continuationToken = $response->getContinuationToken();
+    } while (null !== $continuationToken);
+
+    return $allModels;
+}
+
+/**
+ * Perform batch authorization checks with simplified syntax.
+ *
+ * This helper provides a simplified way to perform multiple authorization checks
+ * in a single request. It automatically handles correlation ID generation and
+ * BatchCheckItems creation, making batch checks more approachable.
+ *
+ * @param ClientInterface                    $client The OpenFGA client
+ * @param StoreInterface|string              $store  The store to check against
+ * @param AuthorizationModelInterface|string $model  The authorization model to use
+ * @param array<TupleKeyInterface|array<string, mixed>> $checks Array of checks to perform
+ *
+ * @throws ClientThrowable          If batch item validation fails
+ * @throws InvalidArgumentException If check specification is invalid
+ * @throws ReflectionException      If schema reflection fails
+ * @throws Throwable                If the batch check operation fails
+ *
+ * @return array<string, bool> Map of correlation ID to allowed/denied result
+ *
+ * @example Simple batch check with automatic correlation IDs
+ * $results = checks($client, $store, $model, [
+ *     tuple('user:anne', 'viewer', 'document:budget'),
+ *     tuple('user:bob', 'editor', 'document:budget'),
+ *     tuple('user:charlie', 'owner', 'document:budget')
+ * ]);
+ * // Returns: ['check-0' => true, 'check-1' => false, 'check-2' => true]
+ * @example Batch check with custom correlation IDs and context
+ * $results = checks($client, $store, $model, [
+ *     ['tuple' => tuple('user:anne', 'viewer', 'document:budget'), 'id' => 'anne-budget-view'],
+ *     ['tuple' => tuple('user:bob', 'editor', 'document:budget'), 'id' => 'bob-budget-edit', 'context' => (object)['time' => '10:00']],
+ *     ['tuple' => tuple('user:charlie', 'owner', 'document:budget'), 'id' => 'charlie-budget-own']
+ * ]);
+ * // Returns: ['anne-budget-view' => true, 'bob-budget-edit' => false, 'charlie-budget-own' => true]
+ */
+/**
+ * @psalm-suppress MixedAssignment
+ * @psalm-suppress MissingThrowsDocblock
+ * @phpstan-ignore-next-line missingType.iterableValue
+ */
+function checks(
+    ClientInterface $client,
+    StoreInterface | string $store,
+    AuthorizationModelInterface | string $model,
+    array $checks,
+): array {
+    $batchItems = [];
+
+    foreach ($checks as $index => $check) {
+        $correlationId = "check-{$index}";
+        $context = null;
+        $contextualTuples = null;
+
+        if ($check instanceof TupleKeyInterface) {
+            // Simple tuple - use default correlation ID
+            $tupleKey = $check;
+        } elseif (is_array($check) && isset($check['tuple']) && $check['tuple'] instanceof TupleKeyInterface) {
+            // Detailed check specification
+            $id = $check['id'] ?? null;
+            $correlationId = is_string($id) ? $id : "check-{$index}";
+            $tupleKey = $check['tuple'];
+
+            $contextValue = $check['context'] ?? null;
+            $context = is_object($contextValue) ? $contextValue : null;
+
+            $contextualTuplesValue = $check['contextualTuples'] ?? null;
+            $contextualTuples = $contextualTuplesValue instanceof TupleKeysInterface ? $contextualTuplesValue : null;
+        } else {
+            throw new InvalidArgumentException("Invalid check specification at index {$index}");
+        }
+
+        $batchItems[] = new Models\BatchCheckItem(
+            tupleKey: $tupleKey,
+            correlationId: $correlationId,
+            contextualTuples: $contextualTuples,
+            context: $context,
+        );
+    }
+
+    $batchCheckItems = new Models\Collections\BatchCheckItems($batchItems);
+
+    /** @var Responses\BatchCheckResponseInterface $response */
+    $response = $client->batchCheck(
+        store: $store,
+        model: $model,
+        checks: $batchCheckItems,
+    )->unwrap();
+
+    $results = [];
+    foreach ($response->getResult() as $correlationId => $result) {
+        $results[$correlationId] = $result->getAllowed() ?? false;
+    }
+
+    return $results;
 }
 
 // ==============================================================================
