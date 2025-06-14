@@ -220,4 +220,108 @@ describe('ReadAssertionsResponse', function (): void {
 
         ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
     })->throws(NetworkException::class);
+
+    describe('fromResponse successful scenarios', function (): void {
+        test('successfully processes valid response data', function (): void {
+            $responseData = [
+                'assertions' => [
+                    [
+                        'tuple_key' => [
+                            'user' => 'user:alice',
+                            'relation' => 'reader',
+                            'object' => 'document:budget',
+                        ],
+                        'expectation' => true,
+                    ],
+                ],
+                'authorization_model_id' => 'model-123',
+            ];
+
+            $httpResponse = new SimpleResponse(200, json_encode($responseData));
+            $request = test()->createMock(RequestInterface::class);
+            $validator = new SchemaValidator;
+
+            $result = ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
+
+            expect($result)->toBeInstanceOf(ReadAssertionsResponse::class);
+            expect($result->getModel())->toBe('model-123');
+            expect($result->getAssertions())->not->toBeNull();
+            expect($result->getAssertions()->count())->toBe(1);
+        });
+
+        test('handles response with no assertions', function (): void {
+            $responseData = [
+                'authorization_model_id' => 'model-456',
+            ];
+
+            $httpResponse = new SimpleResponse(200, json_encode($responseData));
+            $request = test()->createMock(RequestInterface::class);
+            $validator = new SchemaValidator;
+
+            $result = ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
+
+            expect($result)->toBeInstanceOf(ReadAssertionsResponse::class);
+            expect($result->getModel())->toBe('model-456');
+            expect($result->getAssertions())->toBeNull();
+        });
+
+        test('handles response with empty assertions array', function (): void {
+            $responseData = [
+                'assertions' => [],
+                'authorization_model_id' => 'model-789',
+            ];
+
+            $httpResponse = new SimpleResponse(200, json_encode($responseData));
+            $request = test()->createMock(RequestInterface::class);
+            $validator = new SchemaValidator;
+
+            $result = ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
+
+            expect($result)->toBeInstanceOf(ReadAssertionsResponse::class);
+            expect($result->getModel())->toBe('model-789');
+            expect($result->getAssertions())->not->toBeNull();
+            expect($result->getAssertions()->count())->toBe(0);
+        });
+
+        test('handles response with multiple assertions', function (): void {
+            $responseData = [
+                'assertions' => [
+                    [
+                        'tuple_key' => [
+                            'user' => 'user:alice',
+                            'relation' => 'reader',
+                            'object' => 'document:budget',
+                        ],
+                        'expectation' => true,
+                    ],
+                    [
+                        'tuple_key' => [
+                            'user' => 'user:bob',
+                            'relation' => 'writer',
+                            'object' => 'document:budget',
+                        ],
+                        'expectation' => false,
+                    ],
+                ],
+                'authorization_model_id' => 'model-abc',
+            ];
+
+            $httpResponse = new SimpleResponse(200, json_encode($responseData));
+            $request = test()->createMock(RequestInterface::class);
+            $validator = new SchemaValidator;
+
+            $result = ReadAssertionsResponse::fromResponse($httpResponse, $request, $validator);
+
+            expect($result)->toBeInstanceOf(ReadAssertionsResponse::class);
+            expect($result->getModel())->toBe('model-abc');
+            expect($result->getAssertions())->not->toBeNull();
+            expect($result->getAssertions()->count())->toBe(2);
+
+            $assertions = $result->getAssertions()->toArray();
+            expect($assertions[0]->getTupleKey()->getUser())->toBe('user:alice');
+            expect($assertions[0]->getExpectation())->toBeTrue();
+            expect($assertions[1]->getTupleKey()->getUser())->toBe('user:bob');
+            expect($assertions[1]->getExpectation())->toBeFalse();
+        });
+    });
 });

@@ -331,4 +331,123 @@ describe('BatchTupleOperation', function (): void {
         expect($chunks[0]->getTotalOperations())->toBe(5);
         expect($chunks[1]->getTotalOperations())->toBe(5);
     });
+
+    describe('additional coverage tests', function (): void {
+        test('isEmpty returns true for operation with no writes or deletes', function (): void {
+            $operation = new BatchTupleOperation;
+
+            expect($operation->isEmpty())->toBeTrue();
+        });
+
+        test('isEmpty returns false when operation has writes', function (): void {
+            $writes = tuples(tuple('user:alice', 'reader', 'document:1'));
+            $operation = new BatchTupleOperation(writes: $writes);
+
+            expect($operation->isEmpty())->toBeFalse();
+        });
+
+        test('isEmpty returns false when operation has deletes', function (): void {
+            $deletes = tuples(tuple('user:alice', 'reader', 'document:1'));
+            $operation = new BatchTupleOperation(deletes: $deletes);
+
+            expect($operation->isEmpty())->toBeFalse();
+        });
+
+        test('requiresChunking returns true for operations exceeding max tuples', function (): void {
+            $writes = [];
+
+            for ($i = 0; BatchTupleOperation::MAX_TUPLES_PER_REQUEST + 1 > $i; $i++) {
+                $writes[] = tuple("user:user{$i}", 'reader', "document:{$i}");
+            }
+
+            $operation = new BatchTupleOperation(writes: tuples(...$writes));
+
+            expect($operation->requiresChunking())->toBeTrue();
+        });
+
+        test('requiresChunking returns false for operations within limits', function (): void {
+            $writes = tuples(tuple('user:alice', 'reader', 'document:1'));
+            $operation = new BatchTupleOperation(writes: $writes);
+
+            expect($operation->requiresChunking())->toBeFalse();
+        });
+
+        test('requiresChunking returns false for empty operations', function (): void {
+            $operation = new BatchTupleOperation;
+
+            expect($operation->requiresChunking())->toBeFalse();
+        });
+
+        test('requiresChunking with custom chunk size', function (): void {
+            $writes = [];
+
+            for ($i = 0; 50 > $i; $i++) {
+                $writes[] = tuple("user:user{$i}", 'reader', "document:{$i}");
+            }
+
+            $operation = new BatchTupleOperation(writes: tuples(...$writes));
+
+            expect($operation->requiresChunking(30))->toBeTrue();  // 50 > 30
+            expect($operation->requiresChunking(60))->toBeFalse(); // 50 <= 60
+        });
+
+        test('chunked operations maintain data integrity', function (): void {
+            $writes = [];
+
+            for ($i = 0; 150 > $i; $i++) {
+                $writes[] = tuple("user:user{$i}", 'reader', "document:{$i}");
+            }
+
+            $operation = new BatchTupleOperation(writes: tuples(...$writes));
+            $chunks = $operation->chunk();
+
+            expect($chunks)->toHaveCount(2); // 150 / 100 = 2
+            expect($chunks[0]->getTotalOperations())->toBe(100);
+            expect($chunks[1]->getTotalOperations())->toBe(50);
+
+            // Verify all original operations are preserved
+            $totalReconstructed = 0;
+
+            foreach ($chunks as $chunk) {
+                $totalReconstructed += $chunk->getTotalOperations();
+            }
+            expect($totalReconstructed)->toBe(150);
+        });
+
+        test('jsonSerialize includes all operation data', function (): void {
+            $writes = tuples(
+                tuple('user:alice', 'reader', 'document:1'),
+                tuple('user:bob', 'reader', 'document:2'),
+            );
+            $deletes = tuples(tuple('user:charlie', 'reader', 'document:3'));
+
+            $operation = new BatchTupleOperation(writes: $writes, deletes: $deletes);
+            $json = $operation->jsonSerialize();
+
+            expect($json)->toHaveKey('writes');
+            expect($json)->toHaveKey('deletes');
+
+            // The TupleKeys collection serializes to an array structure
+            expect($json['writes'])->toBeArray();
+            expect($json['deletes'])->toBeArray();
+        });
+
+        test('jsonSerialize excludes null values', function (): void {
+            $writes = tuples(tuple('user:alice', 'reader', 'document:1'));
+            $operation = new BatchTupleOperation(writes: $writes); // no deletes
+
+            $json = $operation->jsonSerialize();
+
+            expect($json)->toHaveKey('writes');
+            expect($json)->not->toHaveKey('deletes');
+        });
+
+        test('jsonSerialize returns empty array for empty operation', function (): void {
+            $operation = new BatchTupleOperation; // no writes or deletes
+
+            $json = $operation->jsonSerialize();
+
+            expect($json)->toBe([]);
+        });
+    });
 });
