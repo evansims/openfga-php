@@ -378,7 +378,3 @@ This documentation provides a complete reference for all classes, interfaces, an
 | [`SerializationError`](./Exceptions/SerializationError.md)   | `Exceptions`   | Serialization error types for the OpenFGA SDK. Defines specific serialization and data processing failures that can o... |
 | [`TupleOperation`](./Models/Enums/TupleOperation.md)         | `Models\Enums` | Operations that can be performed on relationship tuples in OpenFGA. This enum defines the available operations for ma... |
 | [`TypeName`](./Models/Enums/TypeName.md)                     | `Models\Enums` | Data types supported in OpenFGA condition parameters. This enum defines the available data types that can be used for... |
-
----
-
-Generated on 2025-06-14 02:28:52
