@@ -7,17 +7,18 @@ declare(strict_types=1);
  *
  * This tool helps prepare the repository for a new release by:
  * 1. Validating the version follows SemVer 2.0 spec exactly
- * 2. Verifying we're on the main branch and up to date with remote
- * 3. Validating the CHANGELOG has an [Unreleased] section
- * 4. Running all linters and tests
- * 5. Updating API documentation
- * 6. Updating the VERSION constant in Client.php
- * 7. Updating the CHANGELOG with the new version and date
- * 8. Prompting for user confirmation before creating release
- * 9. Creating and pushing a git tag for the new version
- * 10. Updating wiki documentation
- * 11. Creating a GitHub release draft with CHANGELOG content
- * 12. Adding a new [Unreleased] section to the CHANGELOG for future development
+ * 2. Verifying no git tag exists for this version
+ * 3. Checking for uncommitted changes (aborts if any exist)
+ * 4. Verifying we're on the main branch and up to date with remote
+ * 5. Validating the CHANGELOG has an [Unreleased] section
+ * 6. Updating API documentation
+ * 7. Updating the VERSION constant in Client.php
+ * 8. Updating the CHANGELOG with the new version and date
+ * 9. Prompting for user confirmation before creating release
+ * 10. Committing all release preparation changes
+ * 11. Creating and pushing a git tag for the new version
+ * 12. Updating wiki documentation
+ * 13. Creating a GitHub release draft with CHANGELOG content
  *
  * Usage: php tools/release.php <version>
  * Example: php tools/release.php 1.2.3
@@ -64,6 +65,7 @@ class ReleaseManager
         try {
             $this->validateVersion();
             $this->validateTagDoesNotExist();
+            $this->checkUncommittedChanges();
             $this->validateBranchStatus();
             $this->validateChangelog();
             $this->updateDocumentation();
@@ -75,6 +77,9 @@ class ReleaseManager
                 echo "\n🛑 Release process canceled by user.\n";
                 exit(0);
             }
+
+            // Commit all release changes before creating tag
+            $this->commitReleaseChanges();
 
             // Create and push git tag
             $this->createAndPushTag();
@@ -280,6 +285,91 @@ class ReleaseManager
         }
 
         echo "   ✓ Tag v{$this->version} does not exist\n";
+    }
+
+    /**
+     * Check for uncommitted changes and abort if any exist.
+     */
+    private function checkUncommittedChanges(): void
+    {
+        echo "🔍 Checking for uncommitted changes...\n";
+
+        // Check for staged changes
+        $stagedChanges = $this->runCommand('git diff --cached --name-only', 'Failed to check for staged changes', true);
+        
+        // Check for unstaged changes
+        $unstagedChanges = $this->runCommand('git diff --name-only', 'Failed to check for unstaged changes', true);
+        
+        // Check for untracked files
+        $untrackedFiles = $this->runCommand('git ls-files --others --exclude-standard', 'Failed to check for untracked files', true);
+
+        $hasChanges = false;
+        $changeDetails = [];
+
+        if (!empty($stagedChanges) && count($stagedChanges) > 0 && !empty(array_filter($stagedChanges))) {
+            $hasChanges = true;
+            $changeDetails[] = "Staged changes:\n   - " . implode("\n   - ", array_filter($stagedChanges));
+        }
+
+        if (!empty($unstagedChanges) && count($unstagedChanges) > 0 && !empty(array_filter($unstagedChanges))) {
+            $hasChanges = true;
+            $changeDetails[] = "Unstaged changes:\n   - " . implode("\n   - ", array_filter($unstagedChanges));
+        }
+
+        if (!empty($untrackedFiles) && count($untrackedFiles) > 0 && !empty(array_filter($untrackedFiles))) {
+            $hasChanges = true;
+            $changeDetails[] = "Untracked files:\n   - " . implode("\n   - ", array_filter($untrackedFiles));
+        }
+
+        if ($hasChanges) {
+            throw new RuntimeException(
+                "There are uncommitted changes in the repository.\n" .
+                "Please commit or stash all changes before creating a release.\n\n" .
+                implode("\n\n", $changeDetails) . "\n\n" .
+                "To commit changes: git add . && git commit -m \"Your commit message\"\n" .
+                "To stash changes: git stash"
+            );
+        }
+
+        echo "   ✓ No uncommitted changes found\n";
+    }
+
+    /**
+     * Commit all changes made by the release tool.
+     */
+    private function commitReleaseChanges(): void
+    {
+        echo "📝 Committing release changes...\n";
+
+        // Check if there are any changes to commit
+        $statusOutput = $this->runCommand('git status --porcelain', 'Failed to check git status', true);
+        
+        if (empty($statusOutput) || count(array_filter($statusOutput)) === 0) {
+            echo "   ℹ️  No changes to commit\n";
+            return;
+        }
+
+        // Add all changes
+        $this->runCommand('git add .', 'Failed to stage release changes');
+
+        // Create commit message
+        $commitMessage = "chore: prepare release v{$this->version}
+
+- Update VERSION constant to {$this->version}
+- Update CHANGELOG.md with release {$this->version}
+- Update API documentation
+
+🤖 Generated with Claude Code (https://claude.ai/code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>";
+
+        // Commit the changes
+        $this->runCommand(
+            "git commit -m " . escapeshellarg($commitMessage),
+            'Failed to commit release changes'
+        );
+
+        echo "   ✓ Release changes committed\n";
     }
 
     /**
