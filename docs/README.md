@@ -14,41 +14,41 @@
 
 Build your authorization integration
 
-- [Introduction](Introduction.md)
+- [Introduction](Introduction.md)<br />
   Start here to get your first authorization check working.
-- [Installation](Introduction.md#install-the-sdk)
+- [Installation](Introduction.md#install-the-sdk)<br />
   Install the SDK and set up your first authorization store.
-- [Authentication](Authentication.md)
+- [Authentication](Authentication.md)<br />
   Set up authentication for production environments and managed services.
 
 ## Essentials
 
 Learn the core concepts and patterns
 
-- [Stores](Stores.md)
+- [Stores](Stores.md)<br />
   Manage authorization stores for multi-tenant applications and environment separation.
-- [Authorization Models](Models.md)
+- [Authorization Models](Models.md)<br />
   Learn how to define your permission rules using OpenFGA's intuitive DSL.
-- [Relationship Tuples](Tuples.md)
+- [Relationship Tuples](Tuples.md)<br />
   Understand how to grant and revoke specific permissions between users and resources.
-- [Permission Queries](Queries.md)
+- [Permission Queries](Queries.md)<br />
   Master the four types of queries: check permissions, list objects, find users, and expand relationships.
-- [Assertions](Assertions.md)
+- [Assertions](Assertions.md)<br />
   Define test cases to verify your authorization model.
 
 ## Features
 
 Explore advanced features and patterns
 
-- [Helper Functions](Helpers.md)
+- [Helper Functions](Helpers.md)<br />
   Simplify your code with convenient helper functions for common authorization operations.
-- [Concurrency](Concurrency.md)
+- [Concurrency](Concurrency.md)<br />
   Leveraging the SDK's powerful concurrency features to improve performance when working with large-scale authorization operations.
-- [Exceptions](Exceptions.md)
+- [Exceptions](Exceptions.md)<br />
   Handling errors and exceptions in your authorization system.
-- [Integration](Integration.md)
+- [Integration](Integration.md)<br />
   Integrating OpenFGA with your existing systems and frameworks.
-- [Observability](Observability.md)
+- [Observability](Observability.md)<br />
   Comprehensive tracing and metrics to monitor your authorization system.
-- [Results](Results.md)
+- [Results](Results.md)<br />
   Building robust applications with proper response handling using the SDK's Result pattern.
