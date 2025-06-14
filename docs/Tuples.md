@@ -16,7 +16,7 @@ The examples in this guide assume you have the following setup:
 use OpenFGA\Client;
 use OpenFGA\Exceptions\{ClientError, ClientException};
 use OpenFGA\Models\{ConditionParameter, ConditionParameters, RelationshipCondition, TupleKey, TupleKeys};
-use function OpenFGA\{tuple, tuples, write, delete, result};
+use function OpenFGA\{tuple, tuples, write, delete, allowed, store, model, dsl, result, success, failure, unwrap};
 
 // Client initialization - see Getting Started for full details
 $client = new Client(url: 'http://localhost:8080');
@@ -59,19 +59,25 @@ delete(
 Handle multiple permission changes in one transaction:
 
 ```php
-// Grant access to multiple users and revoke old permissions
-$client->writeTuples(
+// Grant access to multiple users
+write(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    writes: tuples(
+    tuples: tuples(
         tuple('user:bob', 'viewer', 'document:roadmap'),
         tuple('user:charlie', 'editor', 'document:roadmap'),
         tuple('team:marketing#member', 'viewer', 'folder:campaigns')
-    ),
-    deletes: tuples(
-        tuple('user:anne', 'owner', 'document:old-spec')
     )
-)->unwrap();
+);
+
+// Revoke old permissions
+delete(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuples: tuple('user:anne', 'owner', 'document:old-spec')
+);
 ```
 
 ## Reading Existing Permissions
@@ -132,23 +138,22 @@ Add conditions to make permissions context-dependent:
 
 ```php
 // Only allow access during business hours
-$client->writeTuples(
+write(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    writes: new TupleKeys([
-        new TupleKey(
-            user: 'user:contractor',
-            relation: 'viewer',
-            object: 'document:sensitive',
-            condition: new RelationshipCondition(
-                name: 'business_hours',
-                context: [
-                    'timezone' => 'America/New_York'
-                ]
-            )
+    tuples: tuple(
+        user: 'user:contractor',
+        relation: 'viewer',
+        object: 'document:sensitive',
+        condition: new RelationshipCondition(
+            name: 'business_hours',
+            context: [
+                'timezone' => 'America/New_York'
+            ]
         )
-    ])
-)->unwrap();
+    )
+);
 ```
 
 ### Tracking Changes
@@ -291,3 +296,7 @@ try {
     }
 }
 ```
+
+## What's Next?
+
+After writing tuples to grant permissions, you'll want to verify those permissions are working correctly. The **[Queries](Queries.md)** guide covers how to check permissions, list user access, and discover relationships using the tuples you've created.

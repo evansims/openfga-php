@@ -10,7 +10,7 @@ Before diving into the examples, make sure you have the necessary setup:
 use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Models\{TupleKey, Enums\Consistency};
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
-use function OpenFGA\{allowed, tuple, tuples, result, success, failure, unwrap};
+use function OpenFGA\{allowed, tuple, tuples, write, delete, store, model, dsl, result, success, failure, unwrap};
 
 // Your configured client
 $client = new Client(url: 'http://localhost:8080');
@@ -35,15 +35,14 @@ This is the most common query. Use it to enforce access control in your app.
 
 ```php
 // Can user:alice view document:roadmap?
-$result = $client->check(
-    tupleKey: tuple(
-        user: 'user:alice',
-        relation: 'viewer',
-        object: 'document:roadmap'
-    )
+$canView = allowed(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuple: tuple('user:alice', 'viewer', 'document:roadmap')
 );
 
-if ($result->unwrap()->getAllowed()) {
+if ($canView) {
     // Alice can view the document
     echo "Access granted";
 } else {
@@ -72,6 +71,8 @@ if (!canUserEdit($client, $storeId, $modelId, $currentUserId, $documentId)) {
 
 // For multiple checks, use the Result pattern for better error handling
 $editResult = $client->check(
+    store: $storeId,
+    model: $modelId,
     tupleKey: tuple("user:{$userId}", 'editor', "document:{$documentId}")
 );
 
@@ -88,6 +89,8 @@ Perfect for building dashboards and filtered lists. Shows what a user can access
 ```php
 // What documents can alice edit?
 $result = $client->listObjects(
+    store: $storeId,
+    model: $modelId,
     user: 'user:alice',
     relation: 'editor',
     type: 'document'
@@ -169,10 +172,12 @@ When permissions aren't working as expected, use expand to see why. It shows the
 ```php
 // How can anyone be a viewer of document:roadmap?
 $result = $client->expand(
-    tupleKey: new TupleKey(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: tuple(
+        user: '',  // Note: empty user for expand query
         relation: 'viewer',
         object: 'document:roadmap'
-        // Note: no user specified for expand
     )
 );
 

@@ -339,3 +339,7 @@ $newModelId = $client->createAuthorizationModel(/*...*/)
 - Verify relationships are written correctly as tuples
 - Check if you're querying with the right object/relation names
 - Use [read tuples](Tuples.md#reading-existing-permissions) to see what permissions exist
+
+## What's Next?
+
+Once you've created your authorization model, it's crucial to test it thoroughly. The **[Assertions](Assertions.md)** guide shows you how to write comprehensive tests for your authorization models, ensuring they behave exactly as expected before deploying to production.

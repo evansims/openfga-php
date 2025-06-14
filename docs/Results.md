@@ -5,8 +5,8 @@
 The examples in this guide assume you have the following setup:
 
 ```php
-use OpenFGA\Sdk\{Client, ClientInterface};
-use OpenFGA\Sdk\Model\{Store, Configuration};
+use OpenFGA\{Client, ClientInterface};
+use OpenFGA\Models\{Store, AuthorizationModel};
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
 use function OpenFGA\{result, ok, err, unwrap, success, failure, tuple, allowed};
 
@@ -105,9 +105,8 @@ $result = $client->getStore($storeId)
 ### Provide fallbacks with `recover()`
 
 ```php
-$config = $client->getStore($storeId)
-    ->then(fn($store) => $store->getConfiguration())
-    ->recover(fn($error) => Configuration::default())
+$model = $client->getAuthorizationModel($storeId, $modelId)
+    ->recover(fn($error) => $this->getDefaultModel())
     ->unwrap();
 ```
 

@@ -158,6 +158,10 @@ If authentication isn't working locally:
 - Confirm your OpenFGA server allows unauthenticated requests
 - Check the server logs for authentication requirements
 
+### Handling authentication errors
+
+For comprehensive error handling patterns including authentication failures, see the **[Results](Results.md)** guide which covers specific error handling for authentication errors.
+
 ### Environment variable loading
 
 Use a package like `vlucas/phpdotenv` for development:

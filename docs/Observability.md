@@ -18,7 +18,9 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 - [Viewing Your Telemetry Data](#viewing-your-telemetry-data)
 - [Troubleshooting](#troubleshooting)
 - [Event-Driven Telemetry](#event-driven-telemetry)
-- [Advanced Usage](#advanced-usage)
+- [Advanced OpenTelemetry Integration](#advanced-opentelemetry-integration)
+- [Advanced Monitoring Patterns](#advanced-monitoring-patterns)
+- [Testing Advanced Observability](#testing-advanced-observability)
 
 ## What You Get
 
@@ -602,6 +604,21 @@ final class AlertingEventListener
             ]);
         }
     }
+
+    private function sendAlert(array $data): void
+    {
+        // Integration with your alerting system
+        // Example: PagerDuty, Slack, email, etc.
+        $alertPayload = json_encode([
+            'severity' => 'warning',
+            'summary' => "OpenFGA operation failed: {$data['operation']}",
+            'details' => $data,
+            'timestamp' => date('c'),
+        ]);
+
+        // Send to your alerting endpoint
+        // curl_post($alertingEndpoint, $alertPayload);
+    }
 }
 ```
 
@@ -620,8 +637,21 @@ final class SecurityEventListener
                 'operation' => $event->getOperation(),
                 'store_id' => $event->getStoreId(),
                 'user_ip' => $_SERVER['REMOTE_ADDR'] ?? 'unknown',
+                'user_agent' => $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
             ]);
         }
+    }
+
+    private function logSecurityEvent(array $event): void
+    {
+        // Send to security information and event management (SIEM) system
+        $securityLog = json_encode([
+            'event_type' => 'authorization_check',
+            'metadata' => $event,
+        ]);
+
+        // Log to security monitoring system
+        error_log($securityLog, 3, '/var/log/security/openfga.log');
     }
 }
 ```
@@ -634,6 +664,11 @@ final class PerformanceEventListener
 {
     private array $operationTimings = [];
 
+    public function onOperationStarted(OperationStartedEvent $event): void
+    {
+        $this->operationTimings[$event->getEventId()] = microtime(true);
+    }
+
     public function onOperationCompleted(OperationCompletedEvent $event): void
     {
         $timing = $this->calculateTiming($event);
@@ -644,7 +679,26 @@ final class PerformanceEventListener
             'duration_ms' => $timing,
             'store_id' => $event->getStoreId(),
             'success' => $event->isSuccessful(),
+            'timestamp' => time(),
         ]);
+    }
+
+    private function calculateTiming(OperationCompletedEvent $event): float
+    {
+        $startTime = $this->operationTimings[$event->getEventId()] ?? microtime(true);
+        return (microtime(true) - $startTime) * 1000; // Convert to milliseconds
+    }
+
+    private function exportToAnalytics(array $data): void
+    {
+        // Send to analytics platform (Google Analytics, Mixpanel, etc.)
+        $analyticsPayload = json_encode([
+            'event_name' => 'openfga_operation',
+            'properties' => $data,
+        ]);
+
+        // Send to analytics endpoint
+        // $this->analyticsClient->track($analyticsPayload);
     }
 }
 ```
@@ -670,6 +724,8 @@ $container->singleton(EventDispatcher::class, function () {
     // Register all your listeners
     $dispatcher->addListener(OperationStartedEvent::class, [LoggingEventListener::class, 'onOperationStarted']);
     $dispatcher->addListener(OperationCompletedEvent::class, [MetricsEventListener::class, 'onOperationCompleted']);
+    $dispatcher->addListener(OperationCompletedEvent::class, [AlertingEventListener::class, 'onOperationCompleted']);
+    $dispatcher->addListener(OperationStartedEvent::class, [SecurityEventListener::class, 'onOperationStarted']);
     // ... more listeners
 
     return $dispatcher;
@@ -684,7 +740,7 @@ $container->singleton(Client::class, function ($container) {
 });
 ```
 
-## Advanced Usage
+## Advanced OpenTelemetry Integration
 
 ### Custom Attributes
 
@@ -698,6 +754,8 @@ Add custom context to your authorization operations:
 $span = Span::getCurrent();
 $span->setAttribute('user.department', 'engineering');
 $span->setAttribute('request.source', 'mobile-app');
+$span->setAttribute('tenant.id', $tenantId);
+$span->setAttribute('session.id', $sessionId);
 
 // Now perform your authorization check
 $result = $client->check(
@@ -723,6 +781,31 @@ $result = $client->check(
 ); // This becomes a child of $parentSpan
 ```
 
+### Distributed Tracing Across Services
+
+When your authorization spans multiple services:
+
+```php
+// Service A: Create a span and propagate context
+$tracer = Globals::tracerProvider()->getTracer('user-service');
+$span = $tracer->spanBuilder('authorize_user_access')->startSpan();
+
+// Inject trace context into headers for service-to-service calls
+$headers = [];
+TraceContextPropagator::getInstance()->inject($headers);
+
+// Service B: Extract context and continue the trace
+$extractedContext = TraceContextPropagator::getInstance()->extract($headers);
+Context::storage()->attach($extractedContext);
+
+// OpenFGA operations will continue the distributed trace
+$allowed = $client->check(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
+);
+```
+
 ### Metrics-Only Mode
 
 If you only want metrics without distributed tracing:
@@ -730,9 +813,184 @@ If you only want metrics without distributed tracing:
 ```php
 // Configure OpenTelemetry with metrics only
 use OpenTelemetry\SDK\Metrics\MeterProvider;
+use OpenTelemetry\Contrib\Otlp\MetricExporter;
 
-$meterProvider = new MeterProvider(/* your exporters */);
-// Don't configure a tracer provider
+$meterProvider = new MeterProvider([
+    new MetricExporter($_ENV['OTEL_EXPORTER_OTLP_ENDPOINT'])
+]);
 
+// Don't configure a tracer provider - only metrics will be collected
 $telemetry = TelemetryFactory::create('my-service');
+```
+
+### Custom Sampling Strategies
+
+For high-traffic applications, implement custom sampling:
+
+```php
+// Custom sampler based on operation type
+use OpenTelemetry\SDK\Trace\Sampler\ParentBased;
+use OpenTelemetry\SDK\Trace\Sampler\TraceIdRatioBasedSampler;
+
+$customSampler = new ParentBased(
+    new TraceIdRatioBasedSampler(0.1) // Sample 10% of traces
+);
+
+$tracerProvider = new TracerProvider([
+    new SimpleSpanProcessor($exporter)
+], sampler: $customSampler);
+```
+
+## Advanced Monitoring Patterns
+
+### Circuit Breaker Monitoring
+
+Monitor and alert on circuit breaker state changes:
+
+```php
+// Note: This is an example helper class and not part of the SDK.
+final class CircuitBreakerEventListener
+{
+    public function onOperationCompleted(OperationCompletedEvent $event): void
+    {
+        // Check if the failure rate indicates circuit breaker activation
+        $failureRate = $this->calculateFailureRate($event->getStoreId());
+        
+        if ($failureRate > 0.5) { // 50% failure threshold
+            $this->alertCircuitBreakerRisk([
+                'store_id' => $event->getStoreId(),
+                'failure_rate' => $failureRate,
+                'operation' => $event->getOperation(),
+            ]);
+        }
+    }
+
+    private function calculateFailureRate(string $storeId): float
+    {
+        // Calculate failure rate for the store over recent operations
+        // This would integrate with your metrics storage
+        return 0.0; // Placeholder
+    }
+}
+```
+
+### A/B Testing Integration
+
+Track authorization model performance across different versions:
+
+```php
+// Note: This is an example helper class and not part of the SDK.
+final class ABTestingEventListener
+{
+    public function onOperationCompleted(OperationCompletedEvent $event): void
+    {
+        $this->trackModelPerformance([
+            'model_id' => $event->getModelId(),
+            'operation' => $event->getOperation(),
+            'duration_ms' => $event->getDuration(),
+            'success' => $event->isSuccessful(),
+            'variant' => $this->getModelVariant($event->getModelId()),
+        ]);
+    }
+
+    private function getModelVariant(string $modelId): string
+    {
+        // Determine which A/B test variant this model represents
+        return 'control'; // or 'treatment'
+    }
+}
+```
+
+### SLA Monitoring
+
+Track service level objectives:
+
+```php
+// Note: This is an example helper class and not part of the SDK.
+final class SLAEventListener
+{
+    private const SLO_LATENCY_MS = 100; // 100ms SLO
+    private const SLO_SUCCESS_RATE = 0.999; // 99.9% success rate
+
+    public function onOperationCompleted(OperationCompletedEvent $event): void
+    {
+        $this->recordSLAMetrics([
+            'operation' => $event->getOperation(),
+            'latency_slo_met' => $event->getDuration() <= self::SLO_LATENCY_MS,
+            'success_slo_met' => $event->isSuccessful(),
+            'timestamp' => time(),
+        ]);
+    }
+
+    private function recordSLAMetrics(array $metrics): void
+    {
+        // Send to SLA monitoring dashboard
+        // Track error budget consumption
+    }
+}
+```
+
+## Testing Advanced Observability
+
+### Unit Testing Event Listeners
+
+```php
+use PHPUnit\Framework\TestCase;
+
+class SecurityEventListenerTest extends TestCase
+{
+    public function testLogsSecurityEventForCheckOperations(): void
+    {
+        $listener = new SecurityEventListener();
+        $event = new OperationStartedEvent(
+            eventId: 'test-123',
+            operation: 'check',
+            storeId: 'store-123'
+        );
+
+        // Capture log output
+        ob_start();
+        $listener->onOperationStarted($event);
+        $output = ob_get_clean();
+
+        $this->assertStringContainsString('authorization_check', $output);
+        $this->assertStringContainsString('store-123', $output);
+    }
+}
+```
+
+### Integration Testing with Telemetry
+
+```php
+class TelemetryIntegrationTest extends TestCase
+{
+    public function testOperationCreatesExpectedSpans(): void
+    {
+        // Configure test tracer
+        $spanProcessor = new InMemorySpanProcessor();
+        $tracerProvider = new TracerProvider([$spanProcessor]);
+        
+        $telemetry = TelemetryFactory::createWithCustomProviders(
+            $tracerProvider->getTracer('test'),
+            null
+        );
+
+        $client = new Client(
+            url: 'http://localhost:8080',
+            telemetry: $telemetry
+        );
+
+        // Perform operation
+        $client->check(
+            store: 'test-store',
+            model: 'test-model',
+            tupleKey: tuple('user:test', 'viewer', 'doc:test')
+        );
+
+        // Assert spans were created
+        $spans = $spanProcessor->getSpans();
+        $this->assertCount(2, $spans); // HTTP + operation spans
+        $this->assertEquals('openfga.check', $spans[1]->getName());
+    }
+}
 ```

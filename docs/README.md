@@ -49,6 +49,6 @@ Explore advanced features and patterns
 - [Integration](Integration.md)<br />
   Integrating OpenFGA with your existing systems and frameworks.
 - [Observability](Observability.md)<br />
-  Comprehensive tracing and metrics to monitor your authorization system.
+  Essential tracing and metrics to monitor your authorization system, including advanced event-driven telemetry and custom monitoring patterns.
 - [Results](Results.md)<br />
   Building robust applications with proper response handling using the SDK's Result pattern.

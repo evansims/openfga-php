@@ -192,4 +192,257 @@ foreach ($response->getAssertions() as $assertion) {
 }
 ```
 
+## CI/CD Integration
+
+Integrate assertion testing into your deployment pipeline to catch permission regressions before they reach production.
+
+### GitHub Actions Example
+
+```yaml
+# .github/workflows/authorization-tests.yml
+name: Authorization Model Tests
+
+on:
+  push:
+    paths:
+      - 'authorization-models/**'
+      - 'tests/authorization/**'
+  pull_request:
+    paths:
+      - 'authorization-models/**'
+      - 'tests/authorization/**'
+
+jobs:
+  test-authorization:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader
+        
+      - name: Start OpenFGA Server
+        run: |
+          docker run -d --name openfga \
+            -p 8080:8080 \
+            openfga/openfga:latest \
+            run --playground-enabled
+          
+      - name: Wait for OpenFGA
+        run: |
+          timeout 30 bash -c 'until curl -f http://localhost:8080/healthz; do sleep 1; done'
+          
+      - name: Run Authorization Tests
+        run: php tests/authorization/run-assertions.php
+        env:
+          FGA_API_URL: http://localhost:8080
+```
+
+### Test Runner Script
+
+```php
+<?php
+// tests/authorization/run-assertions.php
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use OpenFGA\Client;
+use OpenFGA\Models\Assertions;
+use function OpenFGA\{store, model};
+
+/**
+ * Authorization test runner for CI/CD pipelines.
+ * 
+ * This script validates authorization models against assertions to ensure
+ * permission logic works correctly before deployment.
+ */
+class AuthorizationTestRunner
+{
+    private Client $client;
+    
+    public function __construct()
+    {
+        $this->client = new Client(
+            url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080'
+        );
+    }
+    
+    public function runAllTests(): bool
+    {
+        $success = true;
+        
+        // Test each model file in your project
+        $modelFiles = glob(__DIR__ . '/../../authorization-models/*.fga');
+        
+        foreach ($modelFiles as $modelFile) {
+            $modelName = basename($modelFile, '.fga');
+            echo "Testing model: {$modelName}\n";
+            
+            $success = $this->testModel($modelFile) && $success;
+        }
+        
+        return $success;
+    }
+    
+    private function testModel(string $modelFile): bool
+    {
+        try {
+            // Create test store
+            $storeId = store($this->client, "test-{$modelFile}-" . time());
+            
+            // Load and create model from DSL file
+            $dsl = file_get_contents($modelFile);
+            $authModel = $this->client->dsl($dsl)->unwrap();
+            $modelId = model($this->client, $storeId, $authModel);
+            
+            // Load assertions for this model
+            $assertionsFile = str_replace('.fga', '.assertions.php', $modelFile);
+            if (!file_exists($assertionsFile)) {
+                echo "  Warning: No assertions file found for {$modelFile}\n";
+                return true;
+            }
+            
+            $assertions = require $assertionsFile;
+            
+            // Write assertions and validate
+            $this->client->writeAssertions(
+                store: $storeId,
+                model: $modelId,
+                assertions: new Assertions($assertions)
+            )->unwrap();
+            
+            echo "  ✓ All assertions passed\n";
+            
+            // Clean up test store
+            $this->client->deleteStore($storeId)->unwrap();
+            
+            return true;
+            
+        } catch (Exception $e) {
+            echo "  ✗ Test failed: {$e->getMessage()}\n";
+            return false;
+        }
+    }
+}
+
+// Run tests
+$runner = new AuthorizationTestRunner();
+$success = $runner->runAllTests();
+
+exit($success ? 0 : 1);
+```
+
+### Model Assertions File Example
+
+```php
+<?php
+// authorization-models/document-system.assertions.php
+
+use OpenFGA\Models\Assertion;
+use function OpenFGA\{tuple};
+
+return [
+    // Document ownership tests
+    new Assertion(tuple('user:alice', 'owner', 'document:1'), true),
+    new Assertion(tuple('user:bob', 'owner', 'document:1'), false),
+    
+    // Inherited permissions tests
+    new Assertion(tuple('user:alice', 'editor', 'document:1'), true), // Owner can edit
+    new Assertion(tuple('user:alice', 'viewer', 'document:1'), true), // Owner can view
+    
+    // Team permissions tests
+    new Assertion(tuple('team:engineering#member', 'viewer', 'document:roadmap'), true),
+    new Assertion(tuple('team:marketing#member', 'viewer', 'document:roadmap'), false),
+    
+    // Conditional permissions tests
+    new Assertion(tuple('user:contractor', 'viewer', 'document:sensitive'), true),
+    // Note: Conditional assertions require context to be set during testing
+];
+```
+
+### Integration with Testing Frameworks
+
+#### PHPUnit Integration
+
+```php
+<?php
+// tests/Unit/AuthorizationModelTest.php
+
+use PHPUnit\Framework\TestCase;
+use OpenFGA\Client;
+use OpenFGA\Models\Assertions;
+
+class AuthorizationModelTest extends TestCase
+{
+    private Client $client;
+    private string $storeId;
+    private string $modelId;
+    
+    protected function setUp(): void
+    {
+        $this->client = new Client(url: $_ENV['FGA_API_URL']);
+        
+        // Create test store and model
+        $this->storeId = store($this->client, 'test-' . uniqid());
+        $dsl = file_get_contents(__DIR__ . '/../../authorization-models/main.fga');
+        $authModel = $this->client->dsl($dsl)->unwrap();
+        $this->modelId = model($this->client, $this->storeId, $authModel);
+    }
+    
+    protected function tearDown(): void
+    {
+        // Clean up test store
+        $this->client->deleteStore($this->storeId);
+    }
+    
+    public function testDocumentPermissions(): void
+    {
+        $assertions = require __DIR__ . '/../../authorization-models/document-system.assertions.php';
+        
+        $result = $this->client->writeAssertions(
+            store: $this->storeId,
+            model: $this->modelId,
+            assertions: new Assertions($assertions)
+        );
+        
+        $this->assertTrue($result->succeeded());
+    }
+}
+```
+
+### Docker Compose for Local Testing
+
+```yaml
+# docker-compose.test.yml
+version: '3.8'
+
+services:
+  openfga:
+    image: openfga/openfga:latest
+    command: run --playground-enabled
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=memory
+      
+  php-tests:
+    build: .
+    depends_on:
+      - openfga
+    environment:
+      - FGA_API_URL=http://openfga:8080
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: php tests/authorization/run-assertions.php
+```
+
+Run with: `docker-compose -f docker-compose.test.yml up --build`
+
 Remember: assertions replace all existing tests for a model when you call `writeAssertions()`. Always include your complete test suite in each call.
