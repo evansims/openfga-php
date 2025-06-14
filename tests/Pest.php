@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 define('OPENFGA_TESTS_DIR', __DIR__);
 
 require_once implode(DIRECTORY_SEPARATOR, [OPENFGA_TESTS_DIR, '..', 'vendor', 'autoload.php']);
+require_once implode(DIRECTORY_SEPARATOR, [OPENFGA_TESTS_DIR, 'bootstrap.php']);
 
 pest()->extend(TestCase::class)->in(__DIR__);
 
