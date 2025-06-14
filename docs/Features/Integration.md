@@ -1,5 +1,3 @@
-# Framework Integration
-
 Ready to integrate OpenFGA into your existing application? This guide shows you how to add authorization to popular PHP frameworks and patterns.
 
 ## Prerequisites
@@ -33,7 +31,7 @@ $storeId = $config['store_id'];
 $modelId = $config['model_id'];
 ```
 
-**Environment Variables:**
+**Environment Variables:**  
 All examples assume these environment variables are configured:
 
 - `OPENFGA_URL` - Your OpenFGA server URL

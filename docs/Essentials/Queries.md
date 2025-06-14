@@ -1,6 +1,4 @@
-# Queries
-
-Ready to check permissions? Once you've set up your [authorization model](Models.md) and [relationship tuples](Tuples.md), it's time to actually use them. This is where OpenFGA shines - answering permission questions in real-time.
+Once you've set up your [authorization model](Models.md) and [relationship tuples](Tuples.md), it's time to actually put them to use.
 
 ## Prerequisites
 
@@ -10,30 +8,35 @@ Before diving into the examples, make sure you have the necessary setup:
 use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Models\{TupleKey, Enums\Consistency};
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
-use function OpenFGA\{allowed, tuple, tuples, write, delete, store, model, dsl, result, success, failure, unwrap};
 
-// Your configured client
-$client = new Client(url: 'http://localhost:8080');
+$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 
-// Your store and model identifiers
-$storeId = 'your-store-id';
-$modelId = 'your-model-id';
+$storeId = 'your-store-id'; // From creating a store
+$modelId = 'your-model-id'; // From creating an authorization model
 ```
 
-## What are queries
+## Queries
 
 Queries let you ask OpenFGA about permissions. There are four types:
 
-- **Check permissions** - "Can Alice edit this document?"
-- **List accessible objects** - "What documents can Alice edit?"
-- **Find users with permission** - "Who can edit this document?"
-- **Expand relationships** - "How does Alice have edit access?" (for debugging)
+- **Check permissions**<br />
+  "Can Alice edit this document?"
+- **List accessible objects**<br />
+  "What documents can Alice edit?"
+- **Find users with permission**<br />
+  "Who can edit this document?"
+- **Expand relationships**<br />
+  "How does Alice have edit access?"
 
-## Check permissions
+### Check permissions
 
-This is the most common query. Use it to enforce access control in your app.
+This is the query your application will make most often, and how you'll enforce access control.
+
+You can use the `allowed` [helper](../Features/Helpers.md) to check permissions and return a boolean value:
 
 ```php
+use function OpenFGA\{allowed, tuple};
+
 // Can user:alice view document:roadmap?
 $canView = allowed(
     client: $client,
@@ -42,47 +45,62 @@ $canView = allowed(
     tuple: tuple('user:alice', 'viewer', 'document:roadmap')
 );
 
-if ($canView) {
-    // Alice can view the document
-    echo "Access granted";
-} else {
-    // Alice cannot view the document
-    echo "Access denied";
-}
+echo match($canView) {
+    true => "Alice CAN view the roadmap",
+    false => "Alice CANNOT view the roadmap",
+};
 ```
 
-### Real-world usage
+This helper is a convenience wrapper around the `check` method. It will silently ignore errors. If you need to handle errors gracefully, use the Client `check` method with the [`Result` pattern](../Features/Results.md):
 
 ```php
-function canUserEdit(ClientInterface $client, string $storeId, string $modelId, string $userId, string $documentId): bool
-{
-    return allowed(
-        client: $client,
-        store: $storeId,
-        model: $modelId,
-        tuple: tuple("user:{$userId}", 'editor', "document:{$documentId}")
-    );
-}
+use OpenFGA\Results\{SuccessInterface, FailureInterface};
+use OpenFGA\Models\{CheckResponse, CheckResponseInterface};
+use function OpenFGA\tuple;
+use Throwable;
 
-// In your controller or middleware
-if (!canUserEdit($client, $storeId, $modelId, $currentUserId, $documentId)) {
-    throw new ForbiddenException('You cannot edit this document');
-}
-
-// For multiple checks, use the Result pattern for better error handling
-$editResult = $client->check(
+// Can user:alice view document:roadmap?
+$canView = $client->check(
     store: $storeId,
     model: $modelId,
-    tupleKey: tuple("user:{$userId}", 'editor', "document:{$documentId}")
-);
+    tupleKey: tuple('user:alice', 'viewer', 'document:roadmap')
+)
+    ->failure(fn(Throwable $error) => logError($error)) // ex: log error, send alert, etc.
+    ->success(fn(CheckResponseInterface $response) => logSuccess($response)) // ex: log success, etc.
+    ->then(fn(CheckResponseInterface $response) => $response?->getAllowed() ?? false) // ex: return boolean
+    ->recover(fn(Throwable $error) => false) // ex: ignore errors; fallback to `false`
+    ->unwrap();
 
-if ($editResult->failed()) {
-    logger()->warning('Permission check failed', ['error' => $editResult->err()->getMessage()]);
-    // Handle error - maybe return false or show a generic error
-}
+echo match($canView) {
+    true => "Alice CAN view the roadmap",
+    false => "Alice CANNOT view the roadmap",
+};
 ```
 
-## List accessible objects
+#### Checking multiple permissions at once
+
+If you need to check multiple permissions at once, use batch checks:
+
+```php
+use OpenFGA\Models\{BatchCheckItem, BatchCheckItems};
+
+$results = $client->batchCheck(
+  store: $storeId,
+  model: $modelId,
+  checks: new BatchCheckItems([
+    new BatchCheckItem(
+      tupleKey: tuple('user:alice', 'viewer', 'document:roadmap'),
+      trace: true,
+    ),
+    new BatchCheckItem(
+      tupleKey: tuple('user:bob', 'viewer', 'document:roadmap'),
+      trace: true,
+    ),
+  ])
+)
+```
+
+### List accessible objects
 
 Perfect for building dashboards and filtered lists. Shows what a user can access.
 
@@ -100,7 +118,7 @@ $documentIds = $result->unwrap()->getObjects();
 // Returns: ['roadmap', 'budget', 'proposal']
 ```
 
-### Building a document list
+#### Building a document list
 
 ```php
 function getEditableDocuments(string $userId): array
@@ -118,7 +136,7 @@ function getEditableDocuments(string $userId): array
 }
 ```
 
-## Find users with permission
+### Find users with permission
 
 Great for admin interfaces and sharing features. Shows who has access to something.
 
@@ -140,7 +158,7 @@ foreach ($users as $user) {
 }
 ```
 
-### Building a sharing interface
+#### Building a sharing interface
 
 ```php
 function getDocumentEditors(string $documentId): array
@@ -165,7 +183,7 @@ function getDocumentEditors(string $documentId): array
 }
 ```
 
-## Expand relationships (debugging)
+### Expand relationships
 
 When permissions aren't working as expected, use expand to see why. It shows the complete relationship tree.
 

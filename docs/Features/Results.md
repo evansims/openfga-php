@@ -1,5 +1,3 @@
-# Results
-
 ## Prerequisites
 
 The examples in this guide assume you have the following setup:
@@ -324,9 +322,9 @@ class FgaVoter extends Voter
 
 ## When to use what
 
-- **`unwrap()`** - When you want simple exception-based error handling
-- **`success()` / `failure()`** - For side effects like logging without changing the result
-- **`then()`** - To transform success values or chain operations
-- **`recover()`** - To provide fallbacks or convert failures to successes
+- **`unwrap()`** **unwrap()** - When you want simple exception-based error handling
+- **`success()`** **success()** **/** **`failure()`** **failure()** - For side effects like logging without changing the result
+- **`then()`** **then()** - To transform success values or chain operations
+- **`recover()`** **recover()** - To provide fallbacks or convert failures to successes
 
 The Result pattern makes error handling explicit and composable. Chain operations confidently knowing failures won't break your pipeline.

@@ -1,5 +1,3 @@
-# Relationship Tuples
-
 Relationship tuples are where the rubber meets the road. They're the actual permissions in your system - who can do what to which resource.
 
 A tuple is simply: `(user, relation, object)`
@@ -201,7 +199,7 @@ write(
 
 Now Anne can edit the technical specs because she's a member of the engineering team.
 
-For checking permissions and querying relationships, see [Queries](Queries.md).
+For checking permissions and querying relationships, see Queries.
 
 ## Error Handling with Tuples
 
@@ -299,4 +297,4 @@ try {
 
 ## What's Next?
 
-After writing tuples to grant permissions, you'll want to verify those permissions are working correctly. The **[Queries](Queries.md)** guide covers how to check permissions, list user access, and discover relationships using the tuples you've created.
+After writing tuples to grant permissions, you'll want to verify those permissions are working correctly. The **Queries** guide covers how to check permissions, list user access, and discover relationships using the tuples you've created.

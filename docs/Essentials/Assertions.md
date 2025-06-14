@@ -1,5 +1,3 @@
-# Testing Your Authorization Model
-
 Think of assertions as unit tests for your permission system. They let you define what should and shouldn't be allowed, then verify your authorization model works correctly before deploying it to production.
 
 ## Prerequisites

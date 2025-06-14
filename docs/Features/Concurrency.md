@@ -1,5 +1,3 @@
-# Concurrency Guide
-
 Learn how to leverage the OpenFGA PHP SDK's powerful concurrency features to dramatically improve performance when working with large-scale authorization operations. This guide covers async patterns, fiber-based parallelism, and batch operations that can speed up your authorization workflows by orders of magnitude.
 
 ## Prerequisites
@@ -24,15 +22,15 @@ With this setup established, the examples below focus on the concurrency feature
 
 ## Table of Contents
 
-- [Quick Start](#quick-start)
-- [Core Concepts](#core-concepts)
-- [Batch Operations](#batch-operations)
-- [Parallel Processing Patterns](#parallel-processing-patterns)
-- [Error Handling and Resilience](#error-handling-and-resilience)
-- [Integration with Async Frameworks](#integration-with-async-frameworks)
-- [Performance Optimization](#performance-optimization)
-- [Monitoring and Debugging](#monitoring-and-debugging)
-- [Best Practices](#best-practices)
+- Quick Start
+- Core Concepts
+- Batch Operations
+- Parallel Processing Patterns
+- Error Handling and Resilience
+- Integration with Async Frameworks
+- Performance Optimization
+- Monitoring and Debugging
+- Best Practices
 
 ## Quick Start
 

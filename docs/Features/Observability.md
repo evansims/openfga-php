@@ -1,5 +1,3 @@
-# OpenTelemetry Observability with the OpenFGA PHP SDK
-
 The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observability, providing distributed tracing, metrics collection, and telemetry data to help you monitor, debug, and optimize your authorization workflows. Whether you're troubleshooting performance issues or gaining insights into your application's authorization patterns, the SDK's telemetry features give you the visibility you need.
 
 **New to OpenTelemetry?** It's an open-source observability framework that helps you collect, process, and export telemetry data (metrics, logs, and traces) from your applications. Think of it as a way to understand what your application is doing under the hood.
@@ -8,19 +6,19 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 
 ## Table of Contents
 
-- [What You Get](#what-you-get)
-- [Prerequisites](#prerequisites)
-- [Quick Start](#quick-start)
-- [Telemetry Data Collected](#telemetry-data-collected)
-- [Configuration Options](#configuration-options)
-- [Common Integration Patterns](#common-integration-patterns)
-- [Example: Complete Authorization Workflow with Tracing](#example-complete-authorization-workflow-with-tracing)
-- [Viewing Your Telemetry Data](#viewing-your-telemetry-data)
-- [Troubleshooting](#troubleshooting)
-- [Event-Driven Telemetry](#event-driven-telemetry)
-- [Advanced OpenTelemetry Integration](#advanced-opentelemetry-integration)
-- [Advanced Monitoring Patterns](#advanced-monitoring-patterns)
-- [Testing Advanced Observability](#testing-advanced-observability)
+- What You Get
+- Prerequisites
+- Quick Start
+- Telemetry Data Collected
+- Configuration Options
+- Common Integration Patterns
+- Example: Complete Authorization Workflow with Tracing
+- Viewing Your Telemetry Data
+- Troubleshooting
+- Event-Driven Telemetry
+- Advanced OpenTelemetry Integration
+- Advanced Monitoring Patterns
+- Testing Advanced Observability
 
 ## What You Get
 
@@ -40,9 +38,11 @@ All examples in this guide assume the following setup:
 
 - **PHP 8.3+** with the OpenFGA PHP SDK installed
 - **OpenTelemetry PHP packages** (optional, but recommended for full functionality):
+
   ```bash
   composer require open-telemetry/api open-telemetry/sdk
   ```
+
 - **An OpenTelemetry processing/exporting setup.** While not strictly required to enable telemetry in the SDK, you'll need a way to process and view your telemetry data. This can range from a simple console exporter for local development, a local Jaeger/Zipkin instance, to a full cloud-based observability service.
 
 **Common imports and setup code:**
@@ -143,7 +143,7 @@ Every HTTP request to the OpenFGA API is automatically instrumented:
 
 **Example span attributes:**
 
-```
+````
 http.method: POST
 http.url: https://api.fga.example/stores/123/check
 http.scheme: https
@@ -152,7 +152,7 @@ http.status_code: 200
 http.response.size: 1024
 openfga.sdk.name: openfga-php
 openfga.sdk.version: 1.0.0
-```
+````
 
 ### OpenFGA Operation Telemetry
 
@@ -171,13 +171,13 @@ Business-level operations provide higher-level observability:
 
 **Example operation span:**
 
-```
+````
 openfga.operation: check
 openfga.store_id: store_01H1234567890ABCDEF
 openfga.model_id: model_01H1234567890ABCDEF
 openfga.sdk.name: openfga-php
 openfga.sdk.version: 1.0.0
-```
+````
 
 ### Retry and Reliability Telemetry
 
@@ -404,9 +404,11 @@ try {
    ```
 
 3. **Check your backend connectivity:**
+
    - Ensure your OTLP endpoint is reachable
    - Verify authentication if required
    - Check firewall and network settings
+
 
 ### Performance Impact
 
@@ -442,10 +444,10 @@ The SDK provides a powerful event-driven telemetry system that allows you to cre
 
 The SDK emits events at key points during operation execution:
 
-- **`OperationStartedEvent`** - When an OpenFGA operation begins (check, write, etc.)
-- **`OperationCompletedEvent`** - When an operation finishes (success or failure)
-- **`HttpRequestSentEvent`** - When HTTP requests are sent to the OpenFGA API
-- **`HttpResponseReceivedEvent`** - When HTTP responses are received
+- **`OperationStartedEvent`** **OperationStartedEvent** - When an OpenFGA operation begins (check, write, etc.)
+- **`OperationCompletedEvent`** **OperationCompletedEvent** - When an operation finishes (success or failure)
+- **`HttpRequestSentEvent`** **HttpRequestSentEvent** - When HTTP requests are sent to the OpenFGA API
+- **`HttpResponseReceivedEvent`** **HttpResponseReceivedEvent** - When HTTP responses are received
 
 ### Creating Custom Event Listeners
 

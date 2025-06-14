@@ -1,30 +1,24 @@
-# Stores
-
-Think of a store as your authorization workspace. It contains your permission rules, user relationships, and everything needed to answer "can this user do that?" Each store is completely isolated - perfect for separating environments, tenants, or applications.
-
-Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
+Think of a store as your authorization database. It contains your permission rules, user relationships, and everything needed to answer "can this user do that?" Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
 
 ## Prerequisites
 
 The examples in this guide assume you have the following setup:
 
 ```php
+<?php
 use OpenFGA\Client;
 use function OpenFGA\store;
 
-// Initialize your client
-$client = new Client(url: $_ENV['FGA_API_URL']);
+$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ```
 
 ## What are stores
 
 A store holds three things:
 
-- **Authorization models** - your permission rules
-- **Relationship tuples** - who can do what
-- **Assertions** - tests to verify everything works
-
-Most apps start with one store and add more as they grow.
+- [Authorization models](Models.md) - your permission rules
+- [Relationship tuples](Tuples.md) - who can do what
+- [Assertions](Assertions.md) - tests to verify everything works
 
 ## Single application setup
 
@@ -38,7 +32,7 @@ $storeId = store($client, 'myapp-production'); // Save this!
 $client = $client->withStore(store: $storeId);
 ```
 
-Store that ID in your environment configuration - you'll need it for every API call.
+Save that Store ID in your environment configuration - you'll need it for every future API call.
 
 ## Multi-tenant patterns
 
@@ -137,27 +131,13 @@ do {
 - Different environments (dev/staging/production)
 - Different customers in SaaS apps
 - Different applications with no shared permissions
-- Compliance requirements for data isolation
+- Compliance requirements
 
 **When to use a single store:**
 
 - Different user roles (use authorization models instead)
 - Different features in the same app (use object types)
 - A/B testing (use different object IDs)
-
-**Naming conventions:**
-
-```php
-// Good names
-'myapp-production'
-'customer-acme-corp'
-'billing-service-staging'
-
-// Avoid
-'store1'
-'test'
-'temp'
-```
 
 **Pro tips:**
 
