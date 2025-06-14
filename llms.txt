@@ -22,7 +22,7 @@ This document contains comprehensive information about the OpenFGA PHP SDK for A
 ### SDK Overview and Quick Start
 
 <div align="center">
-  <p><a href="https://tempestphp.com"><img src="https://raw.githubusercontent.com/evansims/openfga-php/main/.github/openfga.png" width="100" /></a></p>
+  <p><a href="https://openfga.dev"><img src="https://raw.githubusercontent.com/evansims/openfga-php/main/.github/openfga.png" width="100" /></a></p>
 
   <h1>OpenFGA PHP SDK</h1>
 
@@ -63,6 +63,8 @@ Learn the core concepts and patterns
 
 Explore advanced features and patterns
 
+- [Helper Functions](Helpers.md)<br />
+  Simplify your code with convenient helper functions for common authorization operations.
 - [Concurrency](Concurrency.md)<br />
   Leveraging the SDK's powerful concurrency features to improve performance when working with large-scale authorization operations.
 - [Exceptions](Exceptions.md)<br />
@@ -81,10 +83,6 @@ Explore advanced features and patterns
 
 Build your first authorization system in under 10 minutes. You'll install the SDK, connect to OpenFGA, and check your first permission.
 
-##### What you'll learn
-
-By the end of this guide, you'll have a working authorization system that can answer questions like "Can Alice view this document?" and understand the core concepts that power modern permission systems.
-
 ##### Prerequisites
 
 **Required:**
@@ -93,7 +91,9 @@ By the end of this guide, you'll have a working authorization system that can an
 - An OpenFGA server (local or remote)
 
 **HTTP Libraries (auto-detected):**
-The SDK will automatically discover and use existing PSR-7/17/18 libraries in your project. If you don't have any yet:
+The SDK will automatically discover and use existing PSR-7/17/18 libraries in your project.
+
+If you don't have any compatible libraries installed yet, you can use Guzzle:
 
 ```bash
 composer require guzzlehttp/guzzle guzzlehttp/psr7
@@ -111,6 +111,8 @@ use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
 
 ##### Start an OpenFGA server
 
+> **Using a managed service?** Skip this step and use your Auth0 FGA or hosted OpenFGA URL instead.
+
 The easiest way is Docker - one command gets you running:
 
 ```bash
@@ -118,8 +120,6 @@ docker run -d -p 8080:8080 --name openfga openfga/openfga run
 ```
 
 Your server is now accessible at `http://localhost:8080`.
-
-**Using a managed service?** Skip this step and use your Auth0 FGA or hosted OpenFGA URL instead.
 
 ##### Install the SDK
 
@@ -135,17 +135,17 @@ $client = new Client(url: 'http://localhost:8080');
 
 That's it. The client automatically discovers your HTTP libraries and handles all the low-level communication.
 
-**For production:** You'll want authentication and better error handling. We'll cover that in [Authentication →](Authentication.md) and [Results →](Results.md).
+**For production:** you'll want authentication and better error handling. We'll cover that in [Authentication →](Authentication.md) and [Results →](Results.md).
 
 ##### How authorization works
 
 Every authorization system needs three things:
 
-**1. A store** — Think of this as a database for your permissions. Each application or tenant gets its own store.
+**1. A store**—Think of this as a database for your permissions. Each application or tenant gets its own store.
 
-**2. A model** — The rules that define what permissions exist. Like "documents can have viewers and editors."
+**2. A model**—The rules that define what permissions exist. Like "documents can have viewers and editors."
 
-**3. Relationships** — Specific permissions between users and resources. Like "Alice can view document:readme."
+**3. Relationships**—Specific permissions between users and resources. Like "Alice can view document:readme."
 
 Once you have these, you can ask questions like "Can Alice edit this document?" and get instant answers.
 
@@ -205,35 +205,35 @@ echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
 
 You should see confirmation messages and a final "Alice can view readme" success message.
 
-##### What's next?
+##### Helper functions
 
-Now that you have a working authorization system, here's your path forward:
+The example above uses helper functions like `store()`, `dsl()`, `write()`, and `allowed()`. These helpers dramatically simplify common operations:
 
-###### Next Steps for New Developers
+```php
+// With helpers - clean and readable
+$storeId = store($client, 'my-app');
+write($client, $storeId, $modelId, tuple('user:anne', 'viewer', 'doc:readme'));
+$canView = allowed($client, $storeId, $modelId, tuple('user:anne', 'viewer', 'doc:readme'));
 
-**If you're just getting started:**
+// Without helpers - more verbose
+$response = $client->createStore(name: 'my-app')->unwrap();
+$storeId = $response->getId();
 
-1. **[Authorization Models →](Models.md)** - Build more complex permission rules
-2. **[Relationship Tuples →](Tuples.md)** - Learn to manage permissions at scale
-3. **[Queries →](Queries.md)** - Master all four types of permission checks
+$client->writeTuples(
+    store: $storeId,
+    model: $modelId,
+    writes: new TupleKeys([new TupleKey('user:anne', 'viewer', 'doc:readme')])
+)->unwrap();
 
-**If you're ready for production:**
+$response = $client->check(
+    store: $storeId,
+    model: $modelId,
+    tupleKey: new TupleKey('user:anne', 'viewer', 'doc:readme')
+)->unwrap();
+$canView = $response->getAllowed();
+```
 
-1. **[Authentication →](Authentication.md)** - Secure your OpenFGA connection
-2. **[Results →](Results.md)** - Handle errors gracefully with the Result pattern
-3. **[Stores →](Stores.md)** - Manage multiple environments and tenants
-
-###### Advanced Topics
-
-**Performance & Scale:**
-
-- **[Concurrency →](Concurrency.md)** - Optimize batch operations with PHP fibers
-- **[Observability →](Observability.md)** - Monitor and debug with OpenTelemetry
-
-**Quality Assurance:**
-
-- **[Assertions →](Assertions.md)** - Test your authorization models
-- **[Exceptions →](Exceptions.md)** - Master error handling patterns
+Learn more about all available helpers in the [Helper Functions Guide](Helpers.md).
 
 
 ### Authentication and Configuration
@@ -270,7 +270,7 @@ $client = new Client(
 $client = new Client(url: 'http://localhost:8080');
 ```
 
-##### When do you need authentication?
+##### When do you need authentication
 
 - **Production environments** - Always required
 - **Auth0 FGA** - Always required
@@ -431,7 +431,7 @@ use function OpenFGA\store;
 $client = new Client(url: $_ENV['FGA_API_URL']);
 ```
 
-##### What are stores?
+##### What are stores
 
 A store holds three things:
 
@@ -580,10 +580,6 @@ do {
 - Save store IDs in your configuration
 - Test your app works with store switching
 - Document which team owns each store
-
-##### Next steps
-
-With your store ready, create an [Authorization Model](Models.md) to define your permission rules.
 
 
 ### Authorization Models and DSL
@@ -930,16 +926,6 @@ $newModelId = $client->createAuthorizationModel(/*...*/)
 - Check if you're querying with the right object/relation names
 - Use [read tuples](Tuples.md#reading-existing-permissions) to see what permissions exist
 
-##### What's next
-
-Now that you have a model:
-
-1. **[Write relationship tuples](Tuples.md)** - Connect users to objects with actual permissions
-2. **[Perform queries](Queries.md)** - Check permissions and list accessible objects
-3. **[Test with assertions](Assertions.md)** - Verify your model works as designed
-
-Your authorization model is the foundation everything else builds on. Take time to design it well - changing it later requires migrating all your tuples.
-
 
 ### Relationship Tuples
 
@@ -1262,7 +1248,7 @@ $storeId = 'your-store-id';
 $modelId = 'your-model-id';
 ```
 
-##### What are queries?
+##### What are queries
 
 Queries let you ask OpenFGA about permissions. There are four types:
 
@@ -1667,22 +1653,6 @@ function debugUserAccess(string $userId, string $documentId): void
 }
 ```
 
-##### What's next?
-
-Now that you can query permissions effectively:
-
-**Essential next steps:**
-
-- **[Results →](Results.md)** - Handle errors gracefully in production
-- **[Tuples →](Tuples.md)** - Learn to grant and revoke permissions
-- **[Models →](Models.md)** - Build more sophisticated permission rules
-
-**Advanced topics:**
-
-- **[Assertions →](Assertions.md)** - Test your permission logic automatically
-- **[Concurrency →](Concurrency.md)** - Optimize batch operations
-- **[Observability →](Observability.md)** - Monitor query performance
-
 
 ### Testing with Assertions
 
@@ -1708,7 +1678,7 @@ $storeId = 'your-store-id';
 $modelId = 'your-authorization-model-id';
 ```
 
-##### What are assertions?
+##### What are assertions
 
 Assertions are test cases that specify expected outcomes for permission checks. Each assertion says "user X should (or shouldn't) have permission Y on resource Z" and verifies this against your authorization model.
 
@@ -1855,15 +1825,15 @@ $client->writeAssertions(
 
 ##### Best practices
 
-**Start with critical paths**: Test the most important permission checks first - admin access, user data privacy, billing permissions.
+**Start with critical paths**: test the most important permission checks first - admin access, user data privacy, billing permissions.
 
-**Test both positive and negative cases**: Don't just test what should work, test what should be blocked.
+**Test both positive and negative cases**: don't just test what should work, test what should be blocked.
 
-**Use realistic data**: Test with actual user IDs, resource names, and permission types from your application.
+**Use realistic data**: test with actual user IDs, resource names, and permission types from your application.
 
-**Update tests when models change**: Assertions should evolve with your authorization model. Treat them like any other test suite.
+**Update tests when models change**: assertions should evolve with your authorization model. Treat them like any other test suite.
 
-**Validate before deployment**: Run assertions in your CI/CD pipeline to catch permission regressions before they reach production.
+**Validate before deployment**: run assertions in your CI/CD pipeline to catch permission regressions before they reach production.
 
 ```php
 // Reading existing assertions for review
@@ -1910,7 +1880,7 @@ $model = $client->getAuthorizationModel($storeId, $modelId)->unwrap();
 // For non-Laravel users, you can use array_map/array_filter or similar
 ```
 
-##### Why use Results?
+##### Why use Results
 
 Tired of wrapping every API call in try-catch blocks? The OpenFGA SDK uses Results to make error handling explicit and chainable:
 
@@ -2232,7 +2202,7 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 
 ##### Table of Contents
 
-- [What You'll Get](#what-youll-get)
+- [What You Get](#what-you-get)
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
 - [Telemetry Data Collected](#telemetry-data-collected)
@@ -2243,9 +2213,8 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 - [Troubleshooting](#troubleshooting)
 - [Event-Driven Telemetry](#event-driven-telemetry)
 - [Advanced Usage](#advanced-usage)
-- [Next Steps](#next-steps)
 
-##### What You'll Get
+##### What You Get
 
 The SDK automatically instruments and provides telemetry for:
 
@@ -2260,12 +2229,13 @@ The SDK automatically instruments and provides telemetry for:
 All examples in this guide assume the following setup:
 
 **Requirements:**
+
 - **PHP 8.3+** with the OpenFGA PHP SDK installed
 - **OpenTelemetry PHP packages** (optional, but recommended for full functionality):
   ```bash
   composer require open-telemetry/api open-telemetry/sdk
   ```
-- **An observability backend** like Jaeger, Zipkin, or a cloud service (optional for getting started)
+- **An OpenTelemetry processing/exporting setup.** While not strictly required to enable telemetry in the SDK, you'll need a way to process and view your telemetry data. This can range from a simple console exporter for local development, a local Jaeger/Zipkin instance, to a full cloud-based observability service.
 
 **Common imports and setup code:**
 
@@ -2305,33 +2275,6 @@ $modelId = 'your-model-id';
 ```
 
 ##### Quick Start
-
-###### 1. Basic Setup (No Backend)
-
-The simplest way to get started is with the built-in telemetry that works without any external dependencies:
-
-```php
-// Create a telemetry provider
-$telemetry = TelemetryFactory::create(
-    serviceName: 'my-authorization-service',
-    serviceVersion: '1.0.0'
-);
-
-// Configure the client with telemetry
-$client = new Client(
-    url: $apiUrl,
-    telemetry: $telemetry
-);
-
-// Your authorization operations are now automatically instrumented!
-$result = $client->check(
-    store: $storeId,
-    model: $modelId,
-    tupleKey: tuple(user: 'user:anne', relation: 'viewer', object: 'document:readme')
-);
-```
-
-###### 2. Full OpenTelemetry Setup
 
 For production use with a telemetry backend, install the OpenTelemetry packages and configure them:
 
@@ -2474,26 +2417,6 @@ $telemetry = TelemetryFactory::createWithCustomProviders($tracer, $meter);
 $client = new Client(
     url: $apiUrl,
     telemetry: $telemetry
-);
-```
-
-###### No-Op Mode
-
-For testing or when you want to disable telemetry:
-
-```php
-// Explicitly disable telemetry
-$telemetry = TelemetryFactory::createNoOp(); // Returns null
-
-$client = new Client(
-    url: $apiUrl,
-    telemetry: $telemetry
-);
-
-// Or simply pass null directly
-$client = new Client(
-    url: $apiUrl,
-    telemetry: null  // No telemetry
 );
 ```
 
@@ -3007,36 +2930,6 @@ $meterProvider = new MeterProvider(/* your exporters */);
 
 $telemetry = TelemetryFactory::create('my-service');
 ```
-
-##### Next Steps
-
-**Getting Started:**
-
-- Try the basic setup with your existing OpenFGA instance
-- Add Jaeger for local development to see traces immediately
-- Review the [Introduction.md](Introduction.md) guide for basic OpenFGA usage
-- Run the [event-driven telemetry example](../examples/event-driven-telemetry/example.php) to see custom listeners in action
-
-**Production Setup:**
-
-- Configure proper sampling rates for high-traffic applications
-- Set up dashboards in your observability platform
-- Implement alerting on key metrics like error rates and latency
-- Consider event-driven telemetry for custom monitoring integrations
-
-**Integration:**
-
-- Explore the [Authentication.md](Authentication.md) guide for secure telemetry
-- Read about [Results.md](Results.md) for error handling patterns that work well with observability
-- Check [Queries.md](Queries.md) for the operations you'll be monitoring
-
-**Examples:**
-
-- [OpenTelemetry observability example](../examples/observability/example.php) - Complete OpenTelemetry setup
-- [Event-driven telemetry example](../examples/event-driven-telemetry/example.php) - Custom event listeners
-- [All observability examples](../examples/README.md) - Complete collection
-
-For more details on the OpenTelemetry ecosystem, visit the [official OpenTelemetry documentation](https://opentelemetry.io/docs/).
 
 
 ## API Reference Documentation
