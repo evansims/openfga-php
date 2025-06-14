@@ -3,7 +3,8 @@
 {% if classDescription %}{{ classDescription }}
 {% endif %}
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 {% if sourceFile is defined and sourceFile is not empty %}
@@ -26,22 +27,12 @@
 {% endif %}
 {% if methods is not empty %}
 - [Methods](#methods)
-
-{% set categorized = {} %}
-{%- for method in methods -%}
-  {%- set category = method.category|default('Other') -%}
-  {%- if categorized[category] is not defined -%}
-    {%- set categorized = categorized|merge({(category): []}) -%}
-  {%- endif -%}
-  {%- set categorized = categorized|merge({(category): categorized[category]|merge([method])}) -%}
-{%- endfor %}
-{% for category, categoryMethods in categorized %}
-- [{{ category }}](#{{ category|lower|replace({' ': '-'}) }})
-{% for method in categoryMethods %}
+{% for method in methods %}
   - [`{{ method.name }}()`](#{{ method.name|lower }})
 {% endfor %}
-{% endfor %}
 {% endif %}
+
+</details>
 
 ## Namespace
 `{{ namespace }}`
@@ -103,21 +94,8 @@ The following tables show all available translations for each message key used t
 {% if methods is not empty %}
 ## Methods
 
-{% set categorized = {} %}
-{%- for method in methods -%}
-    {%- set category = method.category|default('Other') -%}
-    {%- if categorized[category] is not defined -%}
-        {%- set categorized = categorized|merge({(category): []}) -%}
-    {%- endif -%}
-    {%- set categorized = categorized|merge({(category): categorized[category]|merge([method])}) -%}
-{%- endfor %}
-
-{% for category, categoryMethods in categorized %}
-{% if categorized|length > 1 %}
-### {{ category }}
-{% endif %}
-{% for method in categoryMethods %}
-#### {{ method.name }}
+{% for method in methods %}
+### {{ method.name }}
 
 {% if method.isFromInterface is defined and method.isFromInterface %}
 *<small>Implements {{ method.fromInterface|replace({'OpenFGA\\': ''}) }}</small>*  
@@ -162,6 +140,5 @@ The following tables show all available translations for each message key used t
 {% else %} — {{ method.return.description }}{% endif %}{% endif %}
 {% endif %}
 
-{% endfor %}
 {% endfor %}
 {% endif %}

@@ -15,7 +15,18 @@ composer docs:api
 echo "🔧 Preparing wiki content..."
 rm -rf wiki-content
 mkdir -p wiki-content
-cp -r docs/* wiki-content/
+
+# Copy main README.md
+cp docs/README.md wiki-content/
+
+# Copy API documentation (preserving structure)
+cp -r docs/API wiki-content/
+
+# Flatten written guides into wiki-content root
+find docs -name "*.md" -not -path "docs/README.md" -not -path "docs/API/*" | while read file; do
+    filename=$(basename "$file")
+    cp "$file" "wiki-content/$filename"
+done
 
 cd wiki-content
 
@@ -30,7 +41,7 @@ echo "📋 Creating custom sidebar..."
 cat > "_Sidebar.md" << 'EOF'
 ## Getting Started
 - **[Introduction](Introduction)**
-- **[Installation](Introduction#install-the-sdk)**
+- **[Installation](Installation)**
 - **[Authentication](Authentication)**
 
 ## Essentials
@@ -129,7 +140,7 @@ echo "📋 Creating custom footer..."
 cat > "_Footer.md" << 'EOF'
 ---
 
-**Getting Started:** [Introduction](Introduction) • [Installation](Introduction#install-the-sdk) • [Authentication](Authentication)
+**Getting Started:** [Introduction](Introduction) • [Installation](Installation) • [Authentication](Authentication)
 
 **Essentials:** [Stores](Stores) • [Authorization Models](Models) • [Relationship Tuples](Tuples) • [Permissions Queries](Queries)
 

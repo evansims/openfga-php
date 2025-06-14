@@ -369,26 +369,8 @@ class DocumentationGenerator
             $classData['methods'][] = $methodData;
         }
 
-        // Sort methods by category, then alphabetically
+        // Sort methods alphabetically by name
         usort($classData['methods'], function($a, $b) {
-            $categoryOrder = [
-                'Authorization' => 1,
-                'CRUD Operations' => 2,
-                'List Operations' => 3,
-                'Store Management' => 4,
-                'Model Management' => 5,
-                'Tuple Operations' => 6,
-                'Utility' => 7,
-                'Other' => 8,
-            ];
-
-            $aCategoryWeight = $categoryOrder[$a['category']] ?? 999;
-            $bCategoryWeight = $categoryOrder[$b['category']] ?? 999;
-
-            if ($aCategoryWeight !== $bCategoryWeight) {
-                return $aCategoryWeight <=> $bCategoryWeight;
-            }
-
             return strcmp($a['name'], $b['name']);
         });
 
