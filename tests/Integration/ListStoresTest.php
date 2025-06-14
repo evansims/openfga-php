@@ -11,6 +11,7 @@ use OpenFGA\{Client, Messages};
 use OpenFGA\Exceptions\ClientException;
 
 use function count;
+use function OpenFGA\trans;
 use function sprintf;
 
 describe('List Stores', function (): void {

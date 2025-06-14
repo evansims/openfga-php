@@ -8,6 +8,8 @@ use Buzz\Client\FileGetContents;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 
+use function OpenFGA\dsl;
+
 describe('Authorization Model', function (): void {
     beforeEach(function (): void {
         $this->responseFactory = new Psr17Factory;
@@ -51,7 +53,7 @@ describe('Authorization Model', function (): void {
             define owner: [user]
     ';
 
-        $model = $this->client->dsl($dsl)->rethrow()->unwrap();
+        $model = dsl($this->client, $dsl);
 
         $createResponse = $this->client->createAuthorizationModel(
             store: $this->storeId,
@@ -142,7 +144,7 @@ describe('Authorization Model', function (): void {
             define reader: [user] or member from owner
     ';
 
-        $model = $this->client->dsl($dsl)->rethrow()->unwrap();
+        $model = dsl($this->client, $dsl);
 
         $createResponse = $this->client->createAuthorizationModel(
             store: $this->storeId,
