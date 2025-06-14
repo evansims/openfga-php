@@ -76,7 +76,10 @@
   "autoload-dev": {
     "psr-4": {
       "OpenFGA\\Tests\\": "tests/"
-    }
+    },
+    "files": [
+      "src/Helpers.php"
+    ]
   },
   "config": {
     "allow-plugins": {
