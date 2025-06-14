@@ -13,7 +13,7 @@
 
 - **Expanded Internationalization**<br />
   This release adds i18n support for Chinese (Simplified), Dutch, French, German, Italian, Japanese,
-  Korean, Portuguese (Brazilian), Russian, Swedish, Turkish, and Ukranian, alongside our existing
+  Korean, Portuguese (Brazilian), Russian, Swedish, Turkish, and Ukrainian, alongside our existing
   Spanish and English support. We'd eagerly welcome contributions to improve the accuracy of these
   translations.
 
