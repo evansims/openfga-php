@@ -4,16 +4,16 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 
 ## Table of Contents
 
-* [Namespace](#namespace)
-* [Source](#source)
-* [Implements](#implements)
-* [Constants](#constants)
-* [Cases](#cases)
-* [Translation Tables](#translation-tables)
-* [Methods](#methods)
+- [Namespace](#namespace)
+- [Source](#source)
+- [Implements](#implements)
+- [Constants](#constants)
+- [Cases](#cases)
+- [Translation Tables](#translation-tables)
+- [Methods](#methods)
 
-* [Other](#other)
-    * [`key()`](#key)
+- [Other](#other)
+  - [`key()`](#key)
 
 ## Namespace
 
@@ -25,8 +25,8 @@ Centralized message keys for all exception messages in the OpenFGA PHP SDK. This
 
 ## Implements
 
-* `UnitEnum`
-* `BackedEnum`
+- `UnitEnum`
+- `BackedEnum`
 
 ## Constants
 
