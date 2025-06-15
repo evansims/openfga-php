@@ -5,32 +5,40 @@ declare(strict_types=1);
 namespace OpenFGA\Tests\Unit;
 
 use Exception;
+use InvalidArgumentException;
 use OpenFGA\{ClientInterface, Language};
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError};
-use OpenFGA\Models\{AuthorizationModelInterface, Condition, ConditionParameter, TupleKey};
+use OpenFGA\Models\{AuthorizationModelInterface, BatchCheckItem, Condition, ConditionParameter, TupleKey, TupleKeyInterface};
 use OpenFGA\Models\Collections\{
     ConditionParameters,
     Conditions,
     TupleKeys,
     TypeDefinitions
 };
-use OpenFGA\Models\Enums\{SchemaVersion, TypeName};
+use OpenFGA\Models\Collections\{TupleKeysInterface, UserTypeFiltersInterface, Users};
+use OpenFGA\Models\Collections\UserTypeFilters;
+use OpenFGA\Models\Enums\{Consistency, SchemaVersion, TypeName};
+use OpenFGA\Models\{User, UserTypeFilter};
 use OpenFGA\Responses\{
     CheckResponseInterface,
     CreateAuthorizationModelResponseInterface,
     CreateStoreResponseInterface,
     WriteTuplesResponseInterface
 };
+use OpenFGA\Responses\ListUsersResponseInterface;
 use OpenFGA\Results\{Failure, Success};
 use RuntimeException;
 use Throwable;
 
 use function OpenFGA\{
     allowed,
+    check,
     delete,
     dsl,
     err,
     failure,
+    filter,
+    filters,
     lang,
     model,
     ok,
@@ -40,6 +48,7 @@ use function OpenFGA\{
     tuple,
     tuples,
     unwrap,
+    users,
     write
 };
 
@@ -230,6 +239,192 @@ describe('Helper Functions', function (): void {
             expect($collection->get(0)->getUser())->toBe('user:anne');
             expect($collection->get(1)->getUser())->toBe('user:bob');
             expect($collection->get(2)->getUser())->toBe('user:charlie');
+        });
+    });
+
+    describe('check() function', function (): void {
+        test('creates BatchCheckItem with TupleKey and correlation', function (): void {
+            $tupleKey = tuple('user:anne', 'viewer', 'document:budget');
+            $correlation = 'anne-check';
+
+            $batchCheckItem = check($correlation, $tupleKey);
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getTupleKey())->toBe($tupleKey);
+            expect($batchCheckItem->getCorrelationId())->toBe($correlation);
+            expect($batchCheckItem->getContextualTuples())->toBeNull();
+            expect($batchCheckItem->getContext())->toBeNull();
+        });
+
+        test('creates BatchCheckItem with individual parameters', function (): void {
+            $batchCheckItem = check(user: 'user:anne', relation: 'viewer', object: 'document:budget');
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getTupleKey()->getUser())->toBe('user:anne');
+            expect($batchCheckItem->getTupleKey()->getRelation())->toBe('viewer');
+            expect($batchCheckItem->getTupleKey()->getObject())->toBe('document:budget');
+            expect($batchCheckItem->getContextualTuples())->toBeNull();
+            expect($batchCheckItem->getContext())->toBeNull();
+        });
+
+        test('creates BatchCheckItem with individual parameters and correlation', function (): void {
+            $batchCheckItem = check('anne-check', user: 'user:anne', relation: 'viewer', object: 'document:budget');
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getTupleKey()->getUser())->toBe('user:anne');
+            expect($batchCheckItem->getTupleKey()->getRelation())->toBe('viewer');
+            expect($batchCheckItem->getTupleKey()->getObject())->toBe('document:budget');
+            expect($batchCheckItem->getCorrelationId())->toBe('anne-check');
+        });
+
+        test('throws exception when individual parameters are incomplete', function (): void {
+            check(user: 'user:anne', object: 'document:budget');
+        })->throws(InvalidArgumentException::class, 'Either $tuple must be provided, or all of $user, $relation, and $object must be provided');
+
+        test('creates BatchCheckItem with auto-generated correlation ID', function (): void {
+            $tupleKey = tuple('user:anne', 'viewer', 'document:budget');
+
+            $batchCheckItem = check(tuple: $tupleKey);
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getTupleKey())->toBe($tupleKey);
+            expect($batchCheckItem->getCorrelationId())->toBeString();
+            expect($batchCheckItem->getCorrelationId())->toHaveLength(36);
+            expect($batchCheckItem->getContextualTuples())->toBeNull();
+            expect($batchCheckItem->getContext())->toBeNull();
+        });
+
+        test('generates consistent correlation ID for same tuple', function (): void {
+            $tupleKey1 = tuple('user:anne', 'viewer', 'document:budget');
+            $tupleKey2 = tuple('user:anne', 'viewer', 'document:budget');
+
+            $batchCheckItem1 = check(tuple: $tupleKey1);
+            $batchCheckItem2 = check(tuple: $tupleKey2);
+
+            expect($batchCheckItem1->getCorrelationId())->toBe($batchCheckItem2->getCorrelationId());
+        });
+
+        test('generates different correlation ID for different tuples', function (): void {
+            $tupleKey1 = tuple('user:anne', 'viewer', 'document:budget');
+            $tupleKey2 = tuple('user:bob', 'viewer', 'document:budget');
+
+            $batchCheckItem1 = check(tuple: $tupleKey1);
+            $batchCheckItem2 = check(tuple: $tupleKey2);
+
+            expect($batchCheckItem1->getCorrelationId())->not->toBe($batchCheckItem2->getCorrelationId());
+        });
+
+        test('creates BatchCheckItem with context', function (): void {
+            $tupleKey = tuple('user:bob', 'editor', 'document:budget');
+            $correlation = 'bob-edit-check';
+            $context = (object) ['time' => '10:00', 'department' => 'finance'];
+
+            $batchCheckItem = check($correlation, $tupleKey, context: $context);
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getContext())->toBe($context);
+        });
+
+        test('creates BatchCheckItem with contextual tuples', function (): void {
+            $tupleKey = tuple('user:charlie', 'owner', 'document:budget');
+            $correlation = 'charlie-owner-check';
+            $contextualTuples = tuples(
+                tuple('user:charlie', 'member', 'team:finance'),
+            );
+
+            $batchCheckItem = check($correlation, $tupleKey, contextualTuples: $contextualTuples);
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getContextualTuples())->toBe($contextualTuples);
+        });
+
+        test('creates BatchCheckItem with all parameters', function (): void {
+            $tupleKey = tuple('user:david', 'admin', 'system:config');
+            $correlation = 'david-admin-check';
+            $contextualTuples = tuples(
+                tuple('user:david', 'member', 'group:administrators'),
+            );
+            $context = (object) ['ip' => '192.168.1.1', 'time' => '14:30'];
+
+            $batchCheckItem = check($correlation, $tupleKey, contextualTuples: $contextualTuples, context: $context);
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getTupleKey())->toBe($tupleKey);
+            expect($batchCheckItem->getCorrelationId())->toBe($correlation);
+            expect($batchCheckItem->getContextualTuples())->toBe($contextualTuples);
+            expect($batchCheckItem->getContext())->toBe($context);
+        });
+
+        test('validates correlation ID format when provided', function (): void {
+            $tupleKey = tuple('user:anne', 'viewer', 'document:budget');
+
+            check('invalid correlation id with spaces', $tupleKey);
+        })->throws(Exception::class);
+
+        test('handles different correlation ID formats', function (): void {
+            $tupleKey = tuple('user:anne', 'viewer', 'document:budget');
+
+            $validIds = [
+                'simple',
+                'with-hyphens',
+                'with_underscores',
+                'with123numbers',
+                'a',
+                '123456789012345678901234567890123456', // 36 characters max
+            ];
+
+            foreach ($validIds as $correlation) {
+                $batchCheckItem = check($correlation, $tupleKey);
+                expect($batchCheckItem->getCorrelationId())->toBe($correlation);
+            }
+        });
+
+        test('works with different tuple key formats', function (): void {
+            $testCases = [
+                tuple('user:anne', 'viewer', 'document:budget'),
+                tuple('group:admins#member', 'editor', 'folder:root'),
+                tuple('user:*', 'viewer', 'document:public'),
+                tuple('application:client', 'can_read', 'resource:data'),
+            ];
+
+            foreach ($testCases as $tupleKey) {
+                $batchCheckItem = check('test-check', $tupleKey);
+                expect($batchCheckItem->getTupleKey())->toBe($tupleKey);
+            }
+        });
+
+        test('preserves tuple key with conditions', function (): void {
+            $condition = new Condition(
+                name: 'inRegion',
+                expression: 'params.region == "us-east"',
+                parameters: new ConditionParameters([
+                    new ConditionParameter(typeName: TypeName::STRING),
+                ]),
+            );
+
+            $tupleKey = tuple('user:anne', 'viewer', 'document:regional', $condition);
+            $batchCheckItem = check('conditional-check', $tupleKey);
+
+            expect($batchCheckItem->getTupleKey()->getCondition())->toBe($condition);
+        });
+
+        test('creates BatchCheckItem with individual parameters and condition', function (): void {
+            $condition = new Condition(
+                name: 'inRegion',
+                expression: 'params.region == "us-east"',
+                parameters: new ConditionParameters([
+                    new ConditionParameter(typeName: TypeName::STRING),
+                ]),
+            );
+
+            $batchCheckItem = check('conditional-check', user: 'user:anne', relation: 'viewer', object: 'document:regional', condition: $condition);
+
+            expect($batchCheckItem)->toBeInstanceOf(BatchCheckItem::class);
+            expect($batchCheckItem->getTupleKey()->getUser())->toBe('user:anne');
+            expect($batchCheckItem->getTupleKey()->getRelation())->toBe('viewer');
+            expect($batchCheckItem->getTupleKey()->getObject())->toBe('document:regional');
+            expect($batchCheckItem->getTupleKey()->getCondition())->toBe($condition);
+            expect($batchCheckItem->getCorrelationId())->toBe('conditional-check');
         });
     });
 
@@ -968,7 +1163,7 @@ condition condition1(region: string) {
             expect($result)->toBe(false);
         });
 
-        test('throws exception when check fails', function (): void {
+        test('returns false when check fails', function (): void {
             $storeId = 'store-fail';
             $modelId = 'model-fail';
             $tuple = new TupleKey('user:anne', 'viewer', 'document:roadmap');
@@ -979,8 +1174,10 @@ condition condition1(region: string) {
                 ->method('check')
                 ->willReturn(new Failure($exception));
 
-            allowed($client, $storeId, $modelId, $tuple);
-        })->throws(Exception::class, 'Check operation failed');
+            $result = allowed($client, $storeId, $modelId, $tuple);
+
+            expect($result)->toBe(false);
+        });
 
         test('works with tuple helper function', function (): void {
             $storeId = 'store-helper';
@@ -1035,6 +1232,140 @@ condition condition1(region: string) {
 
                 expect($result)->toBe($expectedResult);
             }
+        });
+
+        test('works with individual parameters', function (): void {
+            $storeId = 'store-individual';
+            $modelId = 'model-individual';
+
+            $response = test()->createMock(CheckResponseInterface::class);
+            $response->method('getAllowed')->willReturn(true);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('check')
+                ->with(
+                    $this->equalTo($storeId),
+                    $this->equalTo($modelId),
+                    $this->callback(fn ($tupleKey) => $tupleKey instanceof TupleKeyInterface
+                            && 'user:anne' === $tupleKey->getUser()
+                            && 'viewer' === $tupleKey->getRelation()
+                            && 'document:budget' === $tupleKey->getObject()),
+                    $this->isNull(),
+                    $this->isNull(),
+                    $this->isNull(),
+                    $this->isNull(),
+                )
+                ->willReturn(new Success($response));
+
+            $result = allowed($client, $storeId, $modelId, user: 'user:anne', relation: 'viewer', object: 'document:budget');
+
+            expect($result)->toBe(true);
+        });
+
+        test('works with individual parameters and condition', function (): void {
+            $storeId = 'store-condition';
+            $modelId = 'model-condition';
+            $condition = new Condition(
+                name: 'inRegion',
+                expression: 'params.region == "us-east"',
+                parameters: new ConditionParameters([
+                    new ConditionParameter(typeName: TypeName::STRING),
+                ]),
+            );
+
+            $response = test()->createMock(CheckResponseInterface::class);
+            $response->method('getAllowed')->willReturn(true);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('check')
+                ->with(
+                    $this->equalTo($storeId),
+                    $this->equalTo($modelId),
+                    $this->callback(fn ($tupleKey) => $tupleKey instanceof TupleKeyInterface
+                            && 'user:bob' === $tupleKey->getUser()
+                            && 'editor' === $tupleKey->getRelation()
+                            && 'document:regional' === $tupleKey->getObject()
+                            && $tupleKey->getCondition() === $condition),
+                    $this->isNull(),
+                    $this->isNull(),
+                    $this->isNull(),
+                    $this->isNull(),
+                )
+                ->willReturn(new Success($response));
+
+            $result = allowed($client, $storeId, $modelId, user: 'user:bob', relation: 'editor', object: 'document:regional', condition: $condition);
+
+            expect($result)->toBe(true);
+        });
+
+        test('works with individual parameters and all options', function (): void {
+            $storeId = 'store-full';
+            $modelId = 'model-full';
+            $contextualTuples = tuples(
+                tuple('user:charlie', 'member', 'team:finance'),
+            );
+            $context = (object) ['time' => '10:00', 'department' => 'finance'];
+
+            $response = test()->createMock(CheckResponseInterface::class);
+            $response->method('getAllowed')->willReturn(false);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('check')
+                ->with(
+                    $this->equalTo($storeId),
+                    $this->equalTo($modelId),
+                    $this->callback(fn ($tupleKey) => $tupleKey instanceof TupleKeyInterface
+                            && 'user:charlie' === $tupleKey->getUser()
+                            && 'owner' === $tupleKey->getRelation()
+                            && 'document:secret' === $tupleKey->getObject()),
+                    $this->equalTo(true),
+                    $this->equalTo($context),
+                    $this->equalTo($contextualTuples),
+                    $this->equalTo(Consistency::HIGHER_CONSISTENCY),
+                )
+                ->willReturn(new Success($response));
+
+            $result = allowed(
+                $client,
+                $storeId,
+                $modelId,
+                user: 'user:charlie',
+                relation: 'owner',
+                object: 'document:secret',
+                trace: true,
+                context: $context,
+                contextualTuples: $contextualTuples,
+                consistency: Consistency::HIGHER_CONSISTENCY,
+            );
+
+            expect($result)->toBe(false);
+        });
+
+        test('returns false when individual parameters are incomplete', function (): void {
+            $storeId = 'store-incomplete';
+            $modelId = 'model-incomplete';
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->never())->method('check');
+
+            $result = allowed($client, $storeId, $modelId, user: 'user:anne', object: 'document:budget');
+
+            expect($result)->toBe(false);
+        });
+
+        test('returns false when no tuple or individual parameters provided', function (): void {
+            $storeId = 'store-empty';
+            $modelId = 'model-empty';
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->never())->method('check');
+
+            $result = allowed($client, $storeId, $modelId);
+
+            expect($result)->toBe(false);
         });
     });
 
@@ -1451,6 +1782,362 @@ condition condition1(region: string) {
             $isAllowed = allowed($client, $storeId, $modelId, $tuple);
 
             expect($isAllowed)->toBe(false);
+        });
+    });
+
+    describe('users() function', function (): void {
+        test('returns array of users when successful', function (): void {
+            $storeId = 'store-users';
+            $modelId = 'model-users';
+            $object = 'document:roadmap';
+            $relation = 'viewer';
+
+            $userFilters = test()->createMock(UserTypeFiltersInterface::class);
+
+            // Create User objects with string object values
+            $users = [
+                new User(object: 'user:anne'),
+                new User(object: 'user:bob'),
+                new User(object: 'user:charlie'),
+            ];
+            $usersCollection = new Users($users);
+
+            $response = test()->createMock(ListUsersResponseInterface::class);
+            $response->method('getUsers')->willReturn($usersCollection);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listUsers')
+                ->with(
+                    $this->equalTo($storeId),
+                    $this->equalTo($modelId),
+                    $this->equalTo($object),
+                    $this->equalTo($relation),
+                    $this->equalTo($userFilters),
+                    $this->isNull(),
+                    $this->isNull(),
+                    $this->isNull(),
+                )
+                ->willReturn(new Success($response));
+
+            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+
+            expect($result)->toBeArray();
+            expect($result)->toHaveCount(3);
+            expect($result)->toBe(['user:anne', 'user:bob', 'user:charlie']);
+        });
+
+        test('returns empty array when no users found', function (): void {
+            $storeId = 'store-empty';
+            $modelId = 'model-empty';
+            $object = 'document:private';
+            $relation = 'owner';
+
+            $userFilters = test()->createMock(UserTypeFiltersInterface::class);
+
+            // Create an empty users collection
+            $usersCollection = new Users([]);
+
+            $response = test()->createMock(ListUsersResponseInterface::class);
+            $response->method('getUsers')->willReturn($usersCollection);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listUsers')
+                ->willReturn(new Success($response));
+
+            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+
+            expect($result)->toBeArray();
+            expect($result)->toBeEmpty();
+        });
+
+        test('returns empty array when operation fails', function (): void {
+            $storeId = 'store-fail';
+            $modelId = 'model-fail';
+            $object = 'document:error';
+            $relation = 'viewer';
+
+            $userFilters = test()->createMock(UserTypeFiltersInterface::class);
+            $exception = new Exception('List users operation failed');
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listUsers')
+                ->willReturn(new Failure($exception));
+
+            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+
+            expect($result)->toBeArray();
+            expect($result)->toBeEmpty();
+        });
+
+        test('works with optional parameters', function (): void {
+            $storeId = 'store-optional';
+            $modelId = 'model-optional';
+            $object = 'folder:shared';
+            $relation = 'editor';
+
+            $userFilters = test()->createMock(UserTypeFiltersInterface::class);
+            $context = (object) ['time' => '2024-01-01'];
+            $contextualTuples = test()->createMock(TupleKeysInterface::class);
+            $consistency = Consistency::MINIMIZE_LATENCY;
+
+            // Create users collection with one user
+            $users = [new User(object: 'user:dave')];
+            $usersCollection = new Users($users);
+
+            $response = test()->createMock(ListUsersResponseInterface::class);
+            $response->method('getUsers')->willReturn($usersCollection);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listUsers')
+                ->with(
+                    $this->equalTo($storeId),
+                    $this->equalTo($modelId),
+                    $this->equalTo($object),
+                    $this->equalTo($relation),
+                    $this->equalTo($userFilters),
+                    $this->equalTo($context),
+                    $this->equalTo($contextualTuples),
+                    $this->equalTo($consistency),
+                )
+                ->willReturn(new Success($response));
+
+            $result = \OpenFGA\users(
+                $client,
+                $storeId,
+                $modelId,
+                $object,
+                $relation,
+                $userFilters,
+                $context,
+                $contextualTuples,
+                $consistency,
+            );
+
+            expect($result)->toBeArray();
+            expect($result)->toHaveCount(1);
+            expect($result)->toBe(['user:dave']);
+        });
+
+        test('handles mixed user types in response', function (): void {
+            $storeId = 'store-mixed';
+            $modelId = 'model-mixed';
+            $object = 'project:website';
+            $relation = 'contributor';
+
+            $userFilters = test()->createMock(UserTypeFiltersInterface::class);
+
+            // Create users collection with mixed types
+            $users = [
+                new User(object: 'user:anne'),
+                new User(object: 'group:engineering'),
+                new User(object: 'user:bob'),
+                new User(object: 'team:frontend#member'),
+                new User(object: 'application:ci-bot'),
+            ];
+            $usersCollection = new Users($users);
+
+            $response = test()->createMock(ListUsersResponseInterface::class);
+            $response->method('getUsers')->willReturn($usersCollection);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listUsers')
+                ->willReturn(new Success($response));
+
+            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+
+            expect($result)->toBeArray();
+            expect($result)->toHaveCount(5);
+            expect($result)->toContain('user:anne');
+            expect($result)->toContain('group:engineering');
+            expect($result)->toContain('team:frontend#member');
+        });
+    });
+
+    describe('filter() function', function (): void {
+        test('creates UserTypeFilter with type only', function (): void {
+            $filter = filter('user');
+
+            expect($filter)->toBeInstanceOf(UserTypeFilter::class);
+            expect($filter->getType())->toBe('user');
+            expect($filter->getRelation())->toBeNull();
+        });
+
+        test('creates UserTypeFilter with type and relation', function (): void {
+            $filter = filter('group', 'member');
+
+            expect($filter)->toBeInstanceOf(UserTypeFilter::class);
+            expect($filter->getType())->toBe('group');
+            expect($filter->getRelation())->toBe('member');
+        });
+
+        test('handles various user types', function (): void {
+            $userTypes = [
+                'user',
+                'group',
+                'organization',
+                'team',
+                'service_account',
+                'application',
+            ];
+
+            foreach ($userTypes as $type) {
+                $filter = filter($type);
+                expect($filter->getType())->toBe($type);
+                expect($filter->getRelation())->toBeNull();
+            }
+        });
+
+        test('handles various relations', function (): void {
+            $relations = [
+                'member',
+                'admin',
+                'owner',
+                'viewer',
+                'editor',
+                'contributor',
+                'manager',
+            ];
+
+            foreach ($relations as $relation) {
+                $filter = filter('user', $relation);
+                expect($filter->getType())->toBe('user');
+                expect($filter->getRelation())->toBe($relation);
+            }
+        });
+
+        test('works with complex type and relation combinations', function (): void {
+            $combinations = [
+                ['organization', 'admin'],
+                ['team', 'owner'],
+                ['group', 'member'],
+                ['service_account', null],
+                ['application', 'viewer'],
+            ];
+
+            foreach ($combinations as [$type, $relation]) {
+                $filter = filter($type, $relation);
+                expect($filter->getType())->toBe($type);
+                expect($filter->getRelation())->toBe($relation);
+            }
+        });
+    });
+
+    describe('filters() function', function (): void {
+        test('creates UserTypeFilters from single filter', function (): void {
+            $userFilter = filter('user');
+            $filters = filters($userFilter);
+
+            expect($filters)->toBeInstanceOf(UserTypeFilters::class);
+            expect($filters->count())->toBe(1);
+            expect($filters->get(0))->toBe($userFilter);
+        });
+
+        test('creates UserTypeFilters from multiple filters', function (): void {
+            $userFilter = filter('user');
+            $groupFilter = filter('group', 'member');
+            $orgFilter = filter('organization', 'admin');
+
+            $filters = filters($userFilter, $groupFilter, $orgFilter);
+
+            expect($filters)->toBeInstanceOf(UserTypeFilters::class);
+            expect($filters->count())->toBe(3);
+            expect($filters->get(0))->toBe($userFilter);
+            expect($filters->get(1))->toBe($groupFilter);
+            expect($filters->get(2))->toBe($orgFilter);
+        });
+
+        test('creates empty UserTypeFilters with no arguments', function (): void {
+            $filters = filters();
+
+            expect($filters)->toBeInstanceOf(UserTypeFilters::class);
+            expect($filters->count())->toBe(0);
+        });
+
+        test('works with inline filter creation', function (): void {
+            $filters = filters(
+                filter('user'),
+                filter('group', 'member'),
+                filter('organization', 'admin'),
+                filter('service_account'),
+            );
+
+            expect($filters->count())->toBe(4);
+            expect($filters->get(0)->getType())->toBe('user');
+            expect($filters->get(0)->getRelation())->toBeNull();
+            expect($filters->get(1)->getType())->toBe('group');
+            expect($filters->get(1)->getRelation())->toBe('member');
+            expect($filters->get(2)->getType())->toBe('organization');
+            expect($filters->get(2)->getRelation())->toBe('admin');
+            expect($filters->get(3)->getType())->toBe('service_account');
+            expect($filters->get(3)->getRelation())->toBeNull();
+        });
+
+        test('can be iterated over', function (): void {
+            $filters = filters(
+                filter('user'),
+                filter('group', 'member'),
+                filter('team', 'owner'),
+            );
+
+            $types = [];
+            $relations = [];
+
+            foreach ($filters as $filter) {
+                $types[] = $filter->getType();
+                $relations[] = $filter->getRelation();
+            }
+
+            expect($types)->toBe(['user', 'group', 'team']);
+            expect($relations)->toBe([null, 'member', 'owner']);
+        });
+
+        test('integrates with users() helper function', function (): void {
+            $storeId = 'store-integration';
+            $modelId = 'model-integration';
+            $object = 'document:integration';
+            $relation = 'viewer';
+
+            // Create filters using helper functions
+            $userFilters = filters(
+                filter('user'),
+                filter('group', 'member'),
+            );
+
+            // Create User objects for the response
+            $users = [
+                new User(object: 'user:alice'),
+                new User(object: 'group:developers'),
+            ];
+            $usersCollection = new Users($users);
+
+            $response = test()->createMock(ListUsersResponseInterface::class);
+            $response->method('getUsers')->willReturn($usersCollection);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listUsers')
+                ->with(
+                    $this->equalTo($storeId),
+                    $this->equalTo($modelId),
+                    $this->equalTo($object),
+                    $this->equalTo($relation),
+                    $this->equalTo($userFilters),
+                    $this->isNull(),
+                    $this->isNull(),
+                    $this->isNull(),
+                )
+                ->willReturn(new Success($response));
+
+            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+
+            expect($result)->toBeArray();
+            expect($result)->toHaveCount(2);
+            expect($result)->toBe(['user:alice', 'group:developers']);
         });
     });
 });
