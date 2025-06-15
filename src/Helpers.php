@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OpenFGA;
 
 use Closure;
+use DateTimeImmutable;
 use Generator;
 use InvalidArgumentException;
 use OpenFGA\Context\Context;
@@ -12,6 +13,7 @@ use OpenFGA\Exceptions\{ClientError, ClientException, ClientThrowable};
 use OpenFGA\Models\{AuthorizationModelInterface, BatchCheckItem, BatchCheckItemInterface, ConditionInterface, StoreInterface, TupleKey, TupleKeyInterface, UserObjectInterface, UserTypeFilter, UserTypeFilterInterface};
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface, UserTypeFilters, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\Consistency;
+use OpenFGA\Models\TupleChangeInterface;
 use OpenFGA\Responses\{WriteTuplesResponse, WriteTuplesResponseInterface};
 use OpenFGA\Results\{Failure, FailureInterface, ResultInterface, Success, SuccessInterface};
 use OpenFGA\{Translation\Translator};
@@ -597,6 +599,88 @@ function read(
     } while (null !== $continuationToken);
 
     return $allTuples;
+}
+
+/**
+ * List all tuple changes in a store with automatic pagination.
+ *
+ * This helper provides a simplified way to retrieve all tuple changes from a store,
+ * automatically handling pagination to collect all available changes. Changes track
+ * the history of relationship modifications (creates and deletes) in your authorization
+ * store, essential for auditing, debugging, and maintaining consistency.
+ *
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client and store.
+ *
+ * @param ?ClientInterface           $client    The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null $store     The store to list changes from (optional if in context)
+ * @param int                        $pageSize  Number of changes per page (default: 50, must be positive)
+ * @param ?string                    $type      Filter changes by object type (optional)
+ * @param ?DateTimeImmutable         $startTime Only include changes at or after this time (optional)
+ *
+ * @throws ClientException          If required parameters are missing and not available in context
+ * @throws InvalidArgumentException If pageSize is not positive
+ * @throws Throwable                If the operation fails
+ *
+ * @return array<TupleChangeInterface> Array of all tuple changes in the store
+ *
+ * @example Get all changes in a store with explicit parameters
+ * $allChanges = changes($client, $store);
+ * foreach ($allChanges as $change) {
+ *     echo "Change: {$change->getOperation()->value} at {$change->getTimestamp()->format('Y-m-d H:i:s')}\n";
+ * }
+ * @example Get changes for specific object type
+ * $documentChanges = changes($client, $store, type: 'document');
+ * @example Get recent changes since yesterday
+ * $recentChanges = changes($client, $store, startTime: new DateTimeImmutable('-1 day'));
+ * @example Using with context (no explicit client/store needed)
+ * context(function() {
+ *     $allChanges = changes();
+ *     return count($allChanges); // Return total change count
+ * }, client: $client, store: $store);
+ * @example Custom page size for large datasets
+ * $changes = changes($client, $store, pageSize: 100);
+ *
+ * @see https://openfga.dev/docs/interacting/read-tuple-changes Reading tuple changes
+ */
+function changes(
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    int $pageSize = 50,
+    ?string $type = null,
+    ?DateTimeImmutable $startTime = null,
+): array {
+    // Ensure pageSize is positive
+    if (0 >= $pageSize) {
+        $pageSize = 50;
+    }
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+
+    $allChanges = [];
+    $continuationToken = null;
+
+    do {
+        /** @var Responses\ListTupleChangesResponseInterface $response */
+        $response = $client->listTupleChanges(
+            store: $store,
+            continuationToken: $continuationToken,
+            pageSize: $pageSize,
+            type: $type,
+            startTime: $startTime,
+        )->unwrap();
+
+        // Add changes from this page to our collection
+        foreach ($response->getChanges() as $change) {
+            $allChanges[] = $change;
+        }
+
+        // Get continuation token for next page
+        $continuationToken = $response->getContinuationToken();
+    } while (null !== $continuationToken);
+
+    return $allChanges;
 }
 
 /**

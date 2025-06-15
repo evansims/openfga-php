@@ -53,7 +53,7 @@ describe('Authorization Model', function (): void {
             define owner: [user]
     ';
 
-        $model = dsl($this->client, $dsl);
+        $model = dsl($dsl, $this->client);
 
         $createResponse = $this->client->createAuthorizationModel(
             store: $this->storeId,
@@ -144,7 +144,7 @@ describe('Authorization Model', function (): void {
             define reader: [user] or member from owner
     ';
 
-        $model = dsl($this->client, $dsl);
+        $model = dsl($dsl, $this->client);
 
         $createResponse = $this->client->createAuthorizationModel(
             store: $this->storeId,

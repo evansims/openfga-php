@@ -9,17 +9,18 @@ use Exception;
 use InvalidArgumentException;
 use OpenFGA\{ClientInterface, Language};
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError};
-use OpenFGA\Models\{AuthorizationModelInterface, BatchCheckItem, Condition, ConditionParameter, TupleKey, TupleKeyInterface};
+use OpenFGA\Models\{AuthorizationModelInterface, BatchCheckItem, Condition, ConditionParameter, TupleChange, TupleChangeInterface, TupleKey, TupleKeyInterface};
 use OpenFGA\Models\Collections\{
     ConditionParameters,
     Conditions,
+    TupleChanges,
     TupleKeys,
     Tuples,
     TypeDefinitions
 };
 use OpenFGA\Models\Collections\{TupleKeysInterface, UserTypeFiltersInterface, Users};
 use OpenFGA\Models\Collections\UserTypeFilters;
-use OpenFGA\Models\Enums\{Consistency, SchemaVersion, TypeName};
+use OpenFGA\Models\Enums\{Consistency, SchemaVersion, TupleOperation, TypeName};
 use OpenFGA\Models\Tuple;
 use OpenFGA\Models\{User, UserTypeFilter};
 use OpenFGA\Responses\{
@@ -28,13 +29,14 @@ use OpenFGA\Responses\{
     CreateStoreResponseInterface,
     WriteTuplesResponseInterface
 };
-use OpenFGA\Responses\{ListUsersResponseInterface, ReadTuplesResponseInterface};
+use OpenFGA\Responses\{ListTupleChangesResponseInterface, ListUsersResponseInterface, ReadTuplesResponseInterface};
 use OpenFGA\Results\{Failure, Success};
 use RuntimeException;
 use Throwable;
 
 use function OpenFGA\{
     allowed,
+    changes,
     check,
     delete,
     dsl,
@@ -1240,6 +1242,217 @@ condition condition1(region: string) {
                 ->willReturn(new Success($response));
 
             read($client, $storeId, consistency: $consistency);
+        });
+    });
+
+    describe('changes() function', function (): void {
+        test('lists all changes with automatic pagination', function (): void {
+            $storeId = 'store-changes';
+
+            // Mock first page response
+            $firstPageResponse = test()->createMock(ListTupleChangesResponseInterface::class);
+            $firstPageResponse->method('getChanges')->willReturn(new TupleChanges([
+                new TupleChange(
+                    new TupleKey('user:anne', 'viewer', 'document:1'),
+                    TupleOperation::TUPLE_OPERATION_WRITE,
+                    new DateTimeImmutable('2024-01-01 10:00:00'),
+                ),
+                new TupleChange(
+                    new TupleKey('user:bob', 'viewer', 'document:2'),
+                    TupleOperation::TUPLE_OPERATION_WRITE,
+                    new DateTimeImmutable('2024-01-01 11:00:00'),
+                ),
+            ]));
+            $firstPageResponse->method('getContinuationToken')->willReturn('page-2-token');
+
+            // Mock second page response
+            $secondPageResponse = test()->createMock(ListTupleChangesResponseInterface::class);
+            $secondPageResponse->method('getChanges')->willReturn(new TupleChanges([
+                new TupleChange(
+                    new TupleKey('user:charlie', 'editor', 'document:3'),
+                    TupleOperation::TUPLE_OPERATION_DELETE,
+                    new DateTimeImmutable('2024-01-01 12:00:00'),
+                ),
+            ]));
+            $secondPageResponse->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->exactly(2))
+                ->method('listTupleChanges')
+                ->willReturnOnConsecutiveCalls(
+                    new Success($firstPageResponse),
+                    new Success($secondPageResponse),
+                );
+
+            $allChanges = changes($client, $storeId);
+
+            expect($allChanges)->toHaveCount(3);
+            expect($allChanges[0])->toBeInstanceOf(TupleChangeInterface::class);
+            expect($allChanges[0]->getTupleKey()->getUser())->toBe('user:anne');
+            expect($allChanges[0]->getOperation())->toBe(TupleOperation::TUPLE_OPERATION_WRITE);
+            expect($allChanges[1]->getTupleKey()->getUser())->toBe('user:bob');
+            expect($allChanges[2]->getTupleKey()->getUser())->toBe('user:charlie');
+            expect($allChanges[2]->getOperation())->toBe(TupleOperation::TUPLE_OPERATION_DELETE);
+        });
+
+        test('lists changes with type filter', function (): void {
+            $storeId = 'store-filter';
+            $type = 'document';
+
+            $response = test()->createMock(ListTupleChangesResponseInterface::class);
+            $response->method('getChanges')->willReturn(new TupleChanges([
+                new TupleChange(
+                    new TupleKey('user:anne', 'viewer', 'document:1'),
+                    TupleOperation::TUPLE_OPERATION_WRITE,
+                    new DateTimeImmutable('2024-01-01 10:00:00'),
+                ),
+            ]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listTupleChanges')
+                ->with(
+                    store: $storeId,
+                    continuationToken: null,
+                    pageSize: 50,
+                    type: $type,
+                    startTime: null,
+                )
+                ->willReturn(new Success($response));
+
+            $allChanges = changes($client, $storeId, type: $type);
+
+            expect($allChanges)->toHaveCount(1);
+            expect($allChanges[0]->getTupleKey()->getObject())->toBe('document:1');
+        });
+
+        test('lists changes with start time filter', function (): void {
+            $storeId = 'store-time';
+            $startTime = new DateTimeImmutable('2024-01-01 09:00:00');
+
+            $response = test()->createMock(ListTupleChangesResponseInterface::class);
+            $response->method('getChanges')->willReturn(new TupleChanges([
+                new TupleChange(
+                    new TupleKey('user:anne', 'viewer', 'document:1'),
+                    TupleOperation::TUPLE_OPERATION_WRITE,
+                    new DateTimeImmutable('2024-01-01 10:00:00'),
+                ),
+            ]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listTupleChanges')
+                ->with(
+                    store: $storeId,
+                    continuationToken: null,
+                    pageSize: 50,
+                    type: null,
+                    startTime: $startTime,
+                )
+                ->willReturn(new Success($response));
+
+            $allChanges = changes($client, $storeId, startTime: $startTime);
+
+            expect($allChanges)->toHaveCount(1);
+            expect($allChanges[0]->getTimestamp())->toEqual($startTime->modify('+1 hour'));
+        });
+
+        test('handles empty results', function (): void {
+            $storeId = 'store-empty';
+
+            $response = test()->createMock(ListTupleChangesResponseInterface::class);
+            $response->method('getChanges')->willReturn(new TupleChanges([]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listTupleChanges')
+                ->willReturn(new Success($response));
+
+            $allChanges = changes($client, $storeId);
+
+            expect($allChanges)->toHaveCount(0);
+            expect($allChanges)->toBe([]);
+        });
+
+        test('respects custom page size', function (): void {
+            $storeId = 'store-pagesize';
+            $customPageSize = 25;
+
+            $response = test()->createMock(ListTupleChangesResponseInterface::class);
+            $response->method('getChanges')->willReturn(new TupleChanges([]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listTupleChanges')
+                ->with(
+                    store: $storeId,
+                    continuationToken: null,
+                    pageSize: $customPageSize,
+                    type: null,
+                    startTime: null,
+                )
+                ->willReturn(new Success($response));
+
+            changes($client, $storeId, pageSize: $customPageSize);
+        });
+
+        test('validates page size is positive', function (): void {
+            $storeId = 'store-validation';
+
+            $response = test()->createMock(ListTupleChangesResponseInterface::class);
+            $response->method('getChanges')->willReturn(new TupleChanges([]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listTupleChanges')
+                ->with(
+                    store: $storeId,
+                    continuationToken: null,
+                    pageSize: 50, // Should default to 50 when negative value provided
+                    type: null,
+                    startTime: null,
+                )
+                ->willReturn(new Success($response));
+
+            changes($client, $storeId, pageSize: -10); // Invalid page size
+        });
+
+        test('combines type and start time filters', function (): void {
+            $storeId = 'store-combined';
+            $type = 'document';
+            $startTime = new DateTimeImmutable('2024-01-01 09:00:00');
+
+            $response = test()->createMock(ListTupleChangesResponseInterface::class);
+            $response->method('getChanges')->willReturn(new TupleChanges([
+                new TupleChange(
+                    new TupleKey('user:anne', 'viewer', 'document:1'),
+                    TupleOperation::TUPLE_OPERATION_WRITE,
+                    new DateTimeImmutable('2024-01-01 10:00:00'),
+                ),
+            ]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('listTupleChanges')
+                ->with(
+                    store: $storeId,
+                    continuationToken: null,
+                    pageSize: 50,
+                    type: $type,
+                    startTime: $startTime,
+                )
+                ->willReturn(new Success($response));
+
+            $allChanges = changes($client, $storeId, type: $type, startTime: $startTime);
+
+            expect($allChanges)->toHaveCount(1);
+            expect($allChanges[0]->getTupleKey()->getObject())->toBe('document:1');
         });
     });
 
