@@ -1,14 +1,5 @@
 This guide shows you how to configure the SDK for various authentication methods and use cases.
 
-## Prerequisites
-
-The examples in this guide assume you have the following imports available:
-
-```php
-use OpenFGA\{Client, ClientInterface};
-use OpenFGA\Authentication\{ClientCredentialAuthentication, TokenAuthentication};
-```
-
 ## Configurations
 
 ### Client Credentials (OIDC)
@@ -16,6 +7,9 @@ use OpenFGA\Authentication\{ClientCredentialAuthentication, TokenAuthentication}
 This is the recommended authentication method when using the SDK with [Auth0 FGA](https://auth0.com/fine-grained-authorization). The SDK handles OAuth token management automatically.
 
 ```php
+use OpenFGA\Client;
+use OpenFGA\Authentication\ClientCredentialAuthentication;
+
 $client = new Client(
     url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
     authentication: new ClientCredentialAuthentication(
@@ -42,6 +36,9 @@ FGA_AUDIENCE=https://api.us1.fga.dev/
 For simpler setups or self-hosted OpenFGA instances that support API tokens:
 
 ```php
+use OpenFGA\Client;
+use OpenFGA\Authentication\TokenAuthentication;
+
 $client = new Client(
     url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
     authentication: new TokenAuthentication($_ENV['FGA_API_TOKEN']),
@@ -60,6 +57,8 @@ FGA_API_TOKEN=your_api_token
 Unless configured, the SDK will fallback to operating without any authentication method. This is suiable for local development against a Docker container or development server:
 
 ```php
+use OpenFGA\Client;
+
 $client = new Client(
     url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
 );
