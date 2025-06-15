@@ -46,7 +46,6 @@ Begin integrating the SDK by initializing an SDK Client in your application:
 
 ```php
 use OpenFGA\Client;
-use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
 
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ```
@@ -56,6 +55,8 @@ In a production environment you'll want [authentication](Authentication.md) and 
 #### 3.2. Create a Store
 
 ```php
+use function OpenFGA\store;
+
 $storeId = store($client, 'example-document-system');
 echo "Created store: {$storeId}\n";
 ```
@@ -63,6 +64,8 @@ echo "Created store: {$storeId}\n";
 #### 3.3 Define a Model
 
 ```php
+use function OpenFGA\dsl;
+
 $dsl = <<<DSL
 model
   schema 1.1
@@ -81,6 +84,8 @@ $model = dsl($client, $dsl);
 #### 3.4 Create a Model
 
 ```php
+use function OpenFGA\model;
+
 $modelId = model($client, $storeId, $model);
 
 echo "Created model: {$modelId}\n";
@@ -89,6 +94,8 @@ echo "Created model: {$modelId}\n";
 #### 3.5 Grant Permission
 
 ```php
+use function OpenFGA\{write, tuple};
+
 write(
     client: $client,
     store: $storeId,
@@ -102,6 +109,8 @@ echo "Granted alice viewer permission on readme\n";
 #### 3.6 Check Permission
 
 ```php
+use function OpenFGA\{allowed, tuple};
+
 $canView = allowed(
     client: $client,
     store: $storeId,

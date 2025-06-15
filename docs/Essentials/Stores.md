@@ -1,4 +1,4 @@
-**Stores can be thought of as your authorization database.** Store contain your permission rules, user relationships, and everything needed to answer "can this user do that?" Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
+**Stores can be thought of as your authorization database.** They contain your permission rules, user relationships, and everything needed to answer "can this user do that?" Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
 
 ## Prerequisites
 
@@ -6,7 +6,6 @@ The examples in this guide assume you have the following setup:
 
 ```php
 use OpenFGA\Client;
-use function OpenFGA\store;
 
 // Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
@@ -25,6 +24,8 @@ A store holds three things:
 For a typical application, create one store per environment:
 
 ```php
+use function OpenFGA\store;
+
 // Create your production store
 $storeId = store($client, 'myapp-production'); // Save this!
 
@@ -32,7 +33,7 @@ $storeId = store($client, 'myapp-production'); // Save this!
 $client = $client->withStore(store: $storeId);
 ```
 
-Save that Store ID in your environment configuration - you'll need it for every future API call.
+Save that `$storeId` in your environment configuration. You'll need it for future API calls.
 
 ## Multi-tenant patterns
 
@@ -94,6 +95,7 @@ Finding and managing existing stores:
 ```php
 // List all stores
 $stores = $client->listStores(pageSize: 20)->unwrap();
+
 foreach ($stores->getStores() as $store) {
     echo "{$store->getName()}: {$store->getId()}\n";
 }
