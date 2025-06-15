@@ -5,10 +5,7 @@
 Before diving into the examples, make sure you have the necessary setup:
 
 ```php
-use OpenFGA\{Client, ClientInterface};
-use OpenFGA\Enums\Consistency;
-use OpenFGA\Models\TupleKey;
-use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+use OpenFGA\Client;
 
 // Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
@@ -58,8 +55,7 @@ echo match($canView) {
 <summary>Use the Client <code>check</code> method if you need more control over the operation…</summary>
 
 ```php
-use OpenFGA\Results\{SuccessInterface, FailureInterface};
-use OpenFGA\Models\{CheckResponse, CheckResponseInterface};
+use OpenFGA\Responses\CheckResponseInterface;
 use Throwable;
 use function OpenFGA\tuple;
 
@@ -119,7 +115,10 @@ $results = checks(
 <summary>Use the Client <code>batchCheck</code> method directly if you need more control over the operation…</summary>
 
 ```php
-use OpenFGA\Models\{BatchCheckItem, BatchCheckItems};
+use OpenFGA\Models\BatchCheckItem;
+use OpenFGA\Models\Collections\BatchCheckItems;
+use OpenFGA\Responses\BatchCheckResponseInterface;
+use Throwable;
 
 // *Can* Alice or Bob view the "roadmap" document?
 
@@ -158,6 +157,8 @@ $result = $client->batchCheck(
 Use the `objects` helper to retrieve a list of objects a user can access.
 
 ```php
+use function OpenFGA\objects;
+
 // *What* documents can Alice edit?
 $documents = objects(
     client: $client,
@@ -177,6 +178,9 @@ $documents = objects(
 <summary>Use the Client <code>streamedListObjects</code> or <code>listObjects</code> methods directly if you need more control over the operation…</summary>
 
 ```php
+use OpenFGA\Responses\StreamedListObjectsResponseInterface;
+use Throwable;
+
 // *What* documents can Alice edit?
 $documents = $client->streamedListObjects(
     store: $storeId,
@@ -201,6 +205,8 @@ $documents = $client->streamedListObjects(
 Use the `users` helper to retrieve a list of users who have a specific permission on an object.
 
 ```php
+use function OpenFGA\users;
+
 // *Who* can edit the "roadmap" document?
 $editors = users(
     client: $client,
@@ -225,6 +231,9 @@ foreach ($editors as $editor) {
 <summary>Use the Client <code>listUsers</code> method directly if you need more control over the operation…</summary>
 
 ```php
+use OpenFGA\Responses\ListUsersResponseInterface;
+use Throwable;
+
 // *Who* can edit the "roadmap" document?
 $editors = $client->listUsers(
     store: $storeId,
@@ -274,6 +283,10 @@ The `expand` helper wraps the Client `expand` method and is intended for situati
 <summary>Use the Client <code>expand</code> method directly if you need more control over the operation…</summary>
 
 ```php
+use OpenFGA\Responses\ExpandResponseInterface;
+use Throwable;
+use function OpenFGA\tuple;
+
 // *How* can a user be considered a viewer of the "roadmap" document?
 $tree = $client->expand(
     store: $storeId,
@@ -335,7 +348,7 @@ For read-after-write scenarios, you might need stronger consistency:
 
 ```php
 use OpenFGA\Enums\Consistency;
-use OpenFGA\{tuple, tuples, allowed};
+use OpenFGA\{tuple, allowed};
 
 $result = allowed(
     client: $client,
@@ -355,6 +368,10 @@ $result = allowed(
 Use enum-based exceptions for more precise error handling with i18n support:
 
 ```php
+use OpenFGA\ClientInterface;
+use OpenFGA\Exceptions\{ClientException, ClientError}
+use function OpenFGA\{tuple};
+
 // Define a robust permission checking service
 // Note: This is an example helper class and not part of the SDK.
 // It also assumes the existence of a CacheInterface for caching.
@@ -444,9 +461,11 @@ class PermissionService
 ### Permission gates for routes
 
 ```php
+use OpenFGA\ClientInterface;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use function OpenFGA\{allowed, tuple};
 
 // Middleware for route protection
 class FgaAuthMiddleware
@@ -534,7 +553,7 @@ function debugUserAccess(ClientInterface $client, string $storeId, string $model
     );
 
     echo "Permission structure:\n";
-    print_r($tree->toArray());
+    print_r($tree);
 
     // List all relationships for this document
     $allTuples = read(
