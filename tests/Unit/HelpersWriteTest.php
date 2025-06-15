@@ -41,7 +41,7 @@ describe('Helpers write and delete functions', function (): void {
             )
             ->willReturn(new Success($this->mockResponse));
 
-        write($this->mockClient, 'store-id', 'model-id', $singleTuple);
+        write($singleTuple, $this->mockClient, 'store-id', 'model-id');
     });
 
     test('write() with multiple tuples defaults to transactional', function (): void {
@@ -70,7 +70,7 @@ describe('Helpers write and delete functions', function (): void {
             )
             ->willReturn(new Success($this->mockResponse));
 
-        write($this->mockClient, 'store-id', 'model-id', $multipleTuples);
+        write($multipleTuples, $this->mockClient, 'store-id', 'model-id');
     });
 
     test('write() can use non-transactional mode', function (): void {
@@ -93,7 +93,7 @@ describe('Helpers write and delete functions', function (): void {
             )
             ->willReturn(new Success($this->mockResponse));
 
-        write($this->mockClient, 'store-id', 'model-id', $tuples, transactional: false);
+        write($tuples, $this->mockClient, 'store-id', 'model-id', transactional: false);
     });
 
     test('delete() with single tuple defaults to transactional', function (): void {
@@ -120,7 +120,7 @@ describe('Helpers write and delete functions', function (): void {
             )
             ->willReturn(new Success($this->mockResponse));
 
-        delete($this->mockClient, 'store-id', 'model-id', $singleTuple);
+        delete($singleTuple, $this->mockClient, 'store-id', 'model-id');
     });
 
     test('delete() can use non-transactional mode', function (): void {
@@ -143,6 +143,6 @@ describe('Helpers write and delete functions', function (): void {
             )
             ->willReturn(new Success($this->mockResponse));
 
-        delete($this->mockClient, 'store-id', 'model-id', $tuples, transactional: false);
+        delete($tuples, $this->mockClient, 'store-id', 'model-id', transactional: false);
     });
 });

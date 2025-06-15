@@ -441,7 +441,7 @@ describe('Helper Functions', function (): void {
                 ->with('My Test Store')
                 ->willReturn(new Success($response));
 
-            $storeId = store($client, 'My Test Store');
+            $storeId = store('My Test Store', $client);
 
             expect($storeId)->toBe($expectedStoreId);
         });
@@ -455,7 +455,7 @@ describe('Helper Functions', function (): void {
                 ->with('My Test Store')
                 ->willReturn(new Failure($exception));
 
-            store($client, 'My Test Store');
+            store('My Test Store', $client);
         })->throws(Exception::class, 'Store creation failed');
 
         test('handles different store names', function (): void {
@@ -479,7 +479,7 @@ describe('Helper Functions', function (): void {
                     ->with($storeName)
                     ->willReturn(new Success($response));
 
-                $storeId = store($client, $storeName);
+                $storeId = store($storeName, $client);
 
                 expect($storeId)->toBe('store-id');
             }
@@ -507,7 +507,7 @@ type document
                 ->with($dslString)
                 ->willReturn(new Success($authModel));
 
-            $result = dsl($client, $dslString);
+            $result = dsl($dslString, $client);
 
             expect($result)->toBe($authModel);
         });
@@ -522,7 +522,7 @@ type document
                 ->with($dslString)
                 ->willReturn(new Failure($exception));
 
-            dsl($client, $dslString);
+            dsl($dslString, $client);
         })->throws(Exception::class, 'Invalid DSL syntax');
 
         test('handles empty DSL string', function (): void {
@@ -535,7 +535,7 @@ type document
                 ->with($dslString)
                 ->willReturn(new Success($authModel));
 
-            $result = dsl($client, $dslString);
+            $result = dsl($dslString, $client);
 
             expect($result)->toBe($authModel);
         });
@@ -564,7 +564,7 @@ condition condition1(region: string) {
                 ->with($dslString)
                 ->willReturn(new Success($authModel));
 
-            $result = dsl($client, $dslString);
+            $result = dsl($dslString, $client);
 
             expect($result)->toBe($authModel);
         });
@@ -936,7 +936,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            write($client, $storeId, $model, $tuple);
+            write($tuple, $client, $storeId, $model);
 
             // If we get here without throwing, the write was successful
             expect(true)->toBe(true);
@@ -963,7 +963,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            write($client, $storeId, $model, $tuples);
+            write($tuples, $client, $storeId, $model);
 
             // If we get here without throwing, the write was successful
             expect(true)->toBe(true);
@@ -980,7 +980,7 @@ condition condition1(region: string) {
                 ->willReturn(new Success(test()->createMock(WriteTuplesResponseInterface::class)));
 
             // The function doesn't call unwrap() anymore, so it won't throw
-            write($client, $storeId, $model, $tuple);
+            write($tuple, $client, $storeId, $model);
 
             expect(true)->toBe(true);
         });
@@ -1003,7 +1003,7 @@ condition condition1(region: string) {
                     ->method('writeTuples')
                     ->willReturn(new Success($response));
 
-                write($client, $storeId, $model, $testTuple);
+                write($testTuple, $client, $storeId, $model);
             }
 
             expect(true)->toBe(true);
@@ -1029,7 +1029,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            delete($client, $storeId, $modelId, $tuple);
+            delete($tuple, $client, $storeId, $modelId);
 
             // If we get here without throwing, the delete was successful
             expect(true)->toBe(true);
@@ -1056,7 +1056,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            delete($client, $storeId, $modelId, $tuples);
+            delete($tuples, $client, $storeId, $modelId);
 
             // If we get here without throwing, the delete was successful
             expect(true)->toBe(true);
@@ -1073,7 +1073,7 @@ condition condition1(region: string) {
                 ->willReturn(new Success(test()->createMock(WriteTuplesResponseInterface::class)));
 
             // The function doesn't call unwrap() anymore, so it won't throw
-            delete($client, $storeId, $modelId, $tuple);
+            delete($tuple, $client, $storeId, $modelId);
 
             expect(true)->toBe(true);
         });
@@ -1101,7 +1101,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            delete($client, $storeId, $modelId, $tuples);
+            delete($tuples, $client, $storeId, $modelId);
 
             // If we get here without throwing, the batch delete was successful
             expect(true)->toBe(true);
@@ -1131,7 +1131,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $result = allowed($client, $storeId, $modelId, $tuple);
+            $result = allowed($tuple, client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(true);
         });
@@ -1158,7 +1158,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $result = allowed($client, $storeId, $modelId, $tuple);
+            $result = allowed($tuple, client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(false);
         });
@@ -1174,7 +1174,7 @@ condition condition1(region: string) {
                 ->method('check')
                 ->willReturn(new Failure($exception));
 
-            $result = allowed($client, $storeId, $modelId, $tuple);
+            $result = allowed($tuple, client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(false);
         });
@@ -1201,7 +1201,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $result = allowed($client, $storeId, $modelId, $tuple);
+            $result = allowed($tuple, client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(true);
         });
@@ -1228,7 +1228,7 @@ condition condition1(region: string) {
                     ->method('check')
                     ->willReturn(new Success($response));
 
-                $result = allowed($client, $storeId, $modelId, $tuple);
+                $result = allowed($tuple, client: $client, store: $storeId, model: $modelId);
 
                 expect($result)->toBe($expectedResult);
             }
@@ -1258,7 +1258,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $result = allowed($client, $storeId, $modelId, user: 'user:anne', relation: 'viewer', object: 'document:budget');
+            $result = allowed(user: 'user:anne', relation: 'viewer', object: 'document:budget', client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(true);
         });
@@ -1295,7 +1295,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $result = allowed($client, $storeId, $modelId, user: 'user:bob', relation: 'editor', object: 'document:regional', condition: $condition);
+            $result = allowed(user: 'user:bob', relation: 'editor', object: 'document:regional', condition: $condition, client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(true);
         });
@@ -1329,9 +1329,6 @@ condition condition1(region: string) {
                 ->willReturn(new Success($response));
 
             $result = allowed(
-                $client,
-                $storeId,
-                $modelId,
                 user: 'user:charlie',
                 relation: 'owner',
                 object: 'document:secret',
@@ -1339,6 +1336,9 @@ condition condition1(region: string) {
                 context: $context,
                 contextualTuples: $contextualTuples,
                 consistency: Consistency::HIGHER_CONSISTENCY,
+                client: $client,
+                store: $storeId,
+                model: $modelId,
             );
 
             expect($result)->toBe(false);
@@ -1351,7 +1351,7 @@ condition condition1(region: string) {
             $client = test()->createMock(ClientInterface::class);
             $client->expects($this->never())->method('check');
 
-            $result = allowed($client, $storeId, $modelId, user: 'user:anne', object: 'document:budget');
+            $result = allowed(user: 'user:anne', object: 'document:budget', client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(false);
         });
@@ -1363,7 +1363,7 @@ condition condition1(region: string) {
             $client = test()->createMock(ClientInterface::class);
             $client->expects($this->never())->method('check');
 
-            $result = allowed($client, $storeId, $modelId);
+            $result = allowed(client: $client, store: $storeId, model: $modelId);
 
             expect($result)->toBe(false);
         });
@@ -1396,7 +1396,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $modelId = model($client, $storeId, $authModel);
+            $modelId = model($authModel, $client, $storeId);
 
             expect($modelId)->toBe($expectedModelId);
         });
@@ -1418,7 +1418,7 @@ condition condition1(region: string) {
                 ->method('createAuthorizationModel')
                 ->willReturn(new Failure($exception));
 
-            model($client, $storeId, $authModel);
+            model($authModel, $client, $storeId);
         })->throws(Exception::class, 'Model creation failed');
 
         test('handles model without conditions', function (): void {
@@ -1446,7 +1446,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $modelId = model($client, $storeId, $authModel);
+            $modelId = model($authModel, $client, $storeId);
 
             expect($modelId)->toBe($expectedModelId);
         });
@@ -1477,7 +1477,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $modelId = model($client, $storeId, $authModel);
+            $modelId = model($authModel, $client, $storeId);
 
             expect($modelId)->toBe($expectedModelId);
         });
@@ -1507,7 +1507,7 @@ condition condition1(region: string) {
                     ->method('createAuthorizationModel')
                     ->willReturn(new Success($response));
 
-                $modelId = model($client, $storeId, $authModel);
+                $modelId = model($authModel, $client, $storeId);
 
                 expect($modelId)->toBe($expectedModelId);
             }
@@ -1752,8 +1752,8 @@ condition condition1(region: string) {
                 ->method('check')
                 ->willReturn(new Success($checkResponse));
 
-            write($client, $storeId, $model, $tuple);
-            $isAllowed = allowed($client, $storeId, $modelId, $tuple);
+            write($tuple, $client, $storeId, $model);
+            $isAllowed = allowed($tuple, client: $client, store: $storeId, model: $modelId);
 
             expect($isAllowed)->toBe(true);
         });
@@ -1778,8 +1778,8 @@ condition condition1(region: string) {
                 ->method('check')
                 ->willReturn(new Success($checkResponse));
 
-            delete($client, $storeId, $modelId, $tuple);
-            $isAllowed = allowed($client, $storeId, $modelId, $tuple);
+            delete($tuple, $client, $storeId, $modelId);
+            $isAllowed = allowed($tuple, client: $client, store: $storeId, model: $modelId);
 
             expect($isAllowed)->toBe(false);
         });
@@ -1820,7 +1820,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+            $result = \OpenFGA\users($object, $relation, $userFilters, $client, $storeId, $modelId);
 
             expect($result)->toBeArray();
             expect($result)->toHaveCount(3);
@@ -1846,7 +1846,7 @@ condition condition1(region: string) {
                 ->method('listUsers')
                 ->willReturn(new Success($response));
 
-            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+            $result = \OpenFGA\users($object, $relation, $userFilters, $client, $storeId, $modelId);
 
             expect($result)->toBeArray();
             expect($result)->toBeEmpty();
@@ -1866,7 +1866,7 @@ condition condition1(region: string) {
                 ->method('listUsers')
                 ->willReturn(new Failure($exception));
 
-            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+            $result = \OpenFGA\users($object, $relation, $userFilters, $client, $storeId, $modelId);
 
             expect($result)->toBeArray();
             expect($result)->toBeEmpty();
@@ -1906,12 +1906,12 @@ condition condition1(region: string) {
                 ->willReturn(new Success($response));
 
             $result = \OpenFGA\users(
-                $client,
-                $storeId,
-                $modelId,
                 $object,
                 $relation,
                 $userFilters,
+                $client,
+                $storeId,
+                $modelId,
                 $context,
                 $contextualTuples,
                 $consistency,
@@ -1948,7 +1948,7 @@ condition condition1(region: string) {
                 ->method('listUsers')
                 ->willReturn(new Success($response));
 
-            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+            $result = \OpenFGA\users($object, $relation, $userFilters, $client, $storeId, $modelId);
 
             expect($result)->toBeArray();
             expect($result)->toHaveCount(5);
@@ -2133,7 +2133,7 @@ condition condition1(region: string) {
                 )
                 ->willReturn(new Success($response));
 
-            $result = \OpenFGA\users($client, $storeId, $modelId, $object, $relation, $userFilters);
+            $result = \OpenFGA\users($object, $relation, $userFilters, $client, $storeId, $modelId);
 
             expect($result)->toBeArray();
             expect($result)->toHaveCount(2);

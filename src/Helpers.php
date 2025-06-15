@@ -8,13 +8,13 @@ use Closure;
 use Generator;
 use InvalidArgumentException;
 use OpenFGA\Context\Context;
-use OpenFGA\Exceptions\{ClientException, ClientThrowable};
+use OpenFGA\Exceptions\{ClientError, ClientException, ClientThrowable};
 use OpenFGA\Models\{AuthorizationModelInterface, BatchCheckItem, BatchCheckItemInterface, ConditionInterface, StoreInterface, TupleKey, TupleKeyInterface, UserObjectInterface, UserTypeFilter, UserTypeFilterInterface};
 use OpenFGA\Models\Collections\{TupleKeys, TupleKeysInterface, UserTypeFilters, UserTypeFiltersInterface};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Responses\{WriteTuplesResponse, WriteTuplesResponseInterface};
 use OpenFGA\Results\{Failure, FailureInterface, ResultInterface, Success, SuccessInterface};
-use OpenFGA\Translation\Translator;
+use OpenFGA\{Translation\Translator};
 use ReflectionException;
 use Throwable;
 
@@ -143,43 +143,49 @@ function check(
  * success or failure of each chunk. It's designed to work with the non-transaction
  * mode similar to the OpenFGA Go SDK.
  *
- * @param ClientInterface                    $client              The OpenFGA client to use
- * @param StoreInterface|string              $store               The store to operate on
- * @param AuthorizationModelInterface|string $model               The authorization model to use
- * @param TupleKeysInterface|null            $writes              Collection of tuples to write
- * @param TupleKeysInterface|null            $deletes             Collection of tuples to delete
- * @param int                                $maxParallelRequests Maximum concurrent requests (default: 1)
- * @param int                                $maxTuplesPerChunk   Maximum tuples per chunk (default: 100)
- * @param int                                $maxRetries          Maximum retry attempts for failed chunks (default: 0)
- * @param float                              $retryDelaySeconds   Delay between retries in seconds (default: 1.0)
- * @param bool                               $stopOnFirstError    Stop processing remaining chunks on first error (default: false)
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
  *
- * @throws Throwable If the batch operation fails completely
+ * @param ?ClientInterface                        $client              The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null              $store               The store to operate on (optional if in context)
+ * @param AuthorizationModelInterface|string|null $model               The authorization model to use (optional if in context)
+ * @param TupleKeysInterface|null                 $writes              Collection of tuples to write
+ * @param TupleKeysInterface|null                 $deletes             Collection of tuples to delete
+ * @param int                                     $maxParallelRequests Maximum concurrent requests (default: 1)
+ * @param int                                     $maxTuplesPerChunk   Maximum tuples per chunk (default: 100)
+ * @param int                                     $maxRetries          Maximum retry attempts for failed chunks (default: 0)
+ * @param float                                   $retryDelaySeconds   Delay between retries in seconds (default: 1.0)
+ * @param bool                                    $stopOnFirstError    Stop processing remaining chunks on first error (default: false)
+ *
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the batch operation fails completely
  *
  * @return WriteTuplesResponseInterface The result of the batch operation
  *
- * @example Processing a large batch of tuple operations
+ * @example Processing a large batch of tuple operations with explicit parameters
  * $writeTuples = tuples(
  *     tuple('user:anne', 'viewer', 'document:1'),
  *     tuple('user:bob', 'viewer', 'document:2'),
  *     // ... hundreds more tuples
  * );
  *
- * $result = writes(
- *     client: $client,
- *     store: 'store-id',
- *     model: 'model-id',
- *     writes: $writeTuples
- * );
- *
+ * $result = writes($client, $store, $model, writes: $writeTuples);
  * echo "Success rate: " . ($result->getSuccessRate() * 100) . "%\n";
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     $writeTuples = tuples(
+ *         tuple('user:anne', 'viewer', 'document:1'),
+ *         tuple('user:bob', 'viewer', 'document:2')
+ *     );
+ *     return writes(writes: $writeTuples);
+ * }, client: $client, store: $store, model: $model);
  *
  * @see https://openfga.dev/docs/getting-started/update-tuples Working with relationship tuples
  */
 function writes(
-    ClientInterface $client,
-    StoreInterface | string $store,
-    AuthorizationModelInterface | string $model,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
     ?TupleKeysInterface $writes = null,
     ?TupleKeysInterface $deletes = null,
     int $maxParallelRequests = 1,
@@ -188,6 +194,11 @@ function writes(
     float $retryDelaySeconds = 1.0,
     bool $stopOnFirstError = false,
 ): WriteTuplesResponseInterface {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+    $model ??= Context::getModel() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
+
     /** @var WriteTuplesResponse */
     return $client->writeTuples(
         store: $store,
@@ -209,17 +220,31 @@ function writes(
  * Convenience helper for creating a new OpenFGA store. Stores provide data isolation
  * and are the top-level container for authorization models and relationship tuples.
  *
- * @param ClientInterface $client An OpenFGA client instance
- * @param string          $name   The name of the store to create
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client.
  *
- * @throws Throwable If the store creation fails
+ * @param string           $name   The name of the store to create
+ * @param ?ClientInterface $client An OpenFGA client instance (optional if in context)
+ *
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the store creation fails
  *
  * @return string The unique ID of the created store
  *
+ * @example Creating a store with explicit client
+ * $storeId = store('my-app-store', $client);
+ * @example Using with context (no explicit client needed)
+ * context(function() {
+ *     return store('my-app-store');
+ * }, client: $client);
+ *
  * @see https://openfga.dev/docs/getting-started/create-store Creating and managing stores
  */
-function store(ClientInterface $client, string $name): string
+function store(string $name, ?ClientInterface $client = null): string
 {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+
     /** @var Responses\CreateStoreResponseInterface $response */
     $response = $client->createStore(name: $name)
         ->unwrap();
@@ -230,17 +255,31 @@ function store(ClientInterface $client, string $name): string
 /**
  * Define an authorization model using the OpenFGA DSL.
  *
- * @param ClientInterface $client an OpenFGA client
- * @param string          $dsl    the authorization model DSL
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client.
  *
- * @throws Throwable if the authorization model creation fails
+ * @param string           $dsl    The authorization model DSL
+ * @param ?ClientInterface $client An OpenFGA client (optional if in context)
  *
- * @return AuthorizationModelInterface the authorization model
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the authorization model creation fails
+ *
+ * @return AuthorizationModelInterface The authorization model
+ *
+ * @example Creating DSL model with explicit client
+ * $model = dsl($dslString, $client);
+ * @example Using with context (no explicit client needed)
+ * context(function() use ($dslString) {
+ *     return dsl($dslString);
+ * }, client: $client);
  *
  * @see https://openfga.dev/docs/configuration-language
  */
-function dsl(ClientInterface $client, string $dsl): AuthorizationModelInterface
+function dsl(string $dsl, ?ClientInterface $client = null): AuthorizationModelInterface
 {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+
     /** @var AuthorizationModelInterface */
     return $client->dsl($dsl)
         ->unwrap();
@@ -370,33 +409,46 @@ function err(Throwable $error): FailureInterface
  * By default, it uses transactional mode (all-or-nothing). For bulk operations
  * with partial success handling, use the `writes()` helper instead.
  *
- * @param ClientInterface                      $client        The OpenFGA client
- * @param StoreInterface|string                $store         The store to write to
- * @param AuthorizationModelInterface|string   $model         The authorization model to use
- * @param TupleKeyInterface|TupleKeysInterface $tuples        The tuple(s) to write
- * @param bool                                 $transactional Whether to use transactional mode (default: true)
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
  *
- * @throws Throwable If the write operation fails
+ * @param TupleKeyInterface|TupleKeysInterface    $tuples        The tuple(s) to write
+ * @param ?ClientInterface                        $client        The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null              $store         The store to write to (optional if in context)
+ * @param AuthorizationModelInterface|string|null $model         The authorization model to use (optional if in context)
+ * @param bool                                    $transactional Whether to use transactional mode (default: true)
  *
- * @example Writing a single tuple
- * write($client, $store, $model, tuple('user:anne', 'reader', 'document:budget'));
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the write operation fails
+ *
+ * @example Writing a single tuple with explicit parameters
+ * write(tuple('user:anne', 'reader', 'document:budget'), $client, $store, $model);
  * @example Writing multiple tuples transactionally
- * write($client, $store, $model, tuples(
+ * write(tuples(
  *     tuple('user:anne', 'reader', 'document:budget'),
  *     tuple('user:anne', 'reader', 'document:forecast')
- * ));
+ * ), $client, $store, $model);
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     write(tuple('user:bob', 'editor', 'document:proposal'));
+ * }, client: $client, store: $store, model: $model);
  * @example Simple non-transactional write for resilience
- * write($client, $store, $model, $tuples, transactional: false);
+ * write($tuples, $client, $store, $model, transactional: false);
  *
  * @see https://openfga.dev/docs/getting-started/update-tuples Working with relationship tuples
  */
 function write(
-    ClientInterface $client,
-    StoreInterface | string $store,
-    AuthorizationModelInterface | string $model,
     TupleKeyInterface | TupleKeysInterface $tuples,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
     bool $transactional = true,
 ): void {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+    $model ??= Context::getModel() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
+
     if ($tuples instanceof TupleKeyInterface) {
         $tuples = new TupleKeys([$tuples]);
     }
@@ -416,33 +468,46 @@ function write(
  * By default, it uses transactional mode (all-or-nothing). For bulk operations
  * with partial success handling, use the `writes()` helper instead.
  *
- * @param ClientInterface                      $client        The OpenFGA client
- * @param StoreInterface|string                $store         The store to delete from
- * @param AuthorizationModelInterface|string   $model         The authorization model to use
- * @param TupleKeyInterface|TupleKeysInterface $tuples        The tuple(s) to delete
- * @param bool                                 $transactional Whether to use transactional mode (default: true)
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
  *
- * @throws Throwable If the delete operation fails
+ * @param TupleKeyInterface|TupleKeysInterface    $tuples        The tuple(s) to delete
+ * @param ?ClientInterface                        $client        The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null              $store         The store to delete from (optional if in context)
+ * @param AuthorizationModelInterface|string|null $model         The authorization model to use (optional if in context)
+ * @param bool                                    $transactional Whether to use transactional mode (default: true)
  *
- * @example Deleting a single tuple
- * delete($client, $store, $model, tuple('user:anne', 'reader', 'document:budget'));
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the delete operation fails
+ *
+ * @example Deleting a single tuple with explicit parameters
+ * delete(tuple('user:anne', 'reader', 'document:budget'), $client, $store, $model);
  * @example Deleting multiple tuples transactionally
- * delete($client, $store, $model, tuples(
+ * delete(tuples(
  *     tuple('user:anne', 'reader', 'document:budget'),
  *     tuple('user:bob', 'editor', 'document:forecast')
- * ));
+ * ), $client, $store, $model);
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     delete(tuple('user:bob', 'editor', 'document:proposal'));
+ * }, client: $client, store: $store, model: $model);
  * @example Simple non-transactional delete for resilience
- * delete($client, $store, $model, $tuples, transactional: false);
+ * delete($tuples, $client, $store, $model, transactional: false);
  *
  * @see https://openfga.dev/docs/getting-started/update-tuples Working with relationship tuples
  */
 function delete(
-    ClientInterface $client,
-    StoreInterface | string $store,
-    AuthorizationModelInterface | string $model,
     TupleKeyInterface | TupleKeysInterface $tuples,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
     bool $transactional = true,
 ): void {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+    $model ??= Context::getModel() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
+
     if ($tuples instanceof TupleKeyInterface) {
         $tuples = new TupleKeys([$tuples]);
     }
@@ -462,46 +527,58 @@ function delete(
  * condition (network failures, authentication issues, malformed requests, etc.).
  * Use the standard client->check() method if you need detailed error information.
  *
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
+ *
  * You can pass either a TupleKey object or individual user, relation, and object parameters:
  *
- * @param  ClientInterface                    $client           The OpenFGA client
- * @param  StoreInterface|string              $store            The store to use
- * @param  AuthorizationModelInterface|string $model            The authorization model to use
- * @param  ?TupleKeyInterface                 $tuple            Optional pre-built tuple key to check
- * @param  ?string                            $user             Optional user identifier (required if $tuple not provided)
- * @param  ?string                            $relation         Optional relation (required if $tuple not provided)
- * @param  ?string                            $object           Optional object identifier (required if $tuple not provided)
- * @param  ?ConditionInterface                $condition        Optional condition for the tuple
- * @param  ?bool                              $trace            Whether to trace the check
- * @param  ?object                            $context          Context to use for the check
- * @param  ?TupleKeysInterface                $contextualTuples Contextual tuples to use for the check
- * @param  ?Consistency                       $consistency      Consistency level to use for the check
- * @return bool                               True if explicitly allowed, false for denied or any error
+ * @param  ?TupleKeyInterface                      $tuple            Optional pre-built tuple key to check
+ * @param  ?string                                 $user             Optional user identifier (required if $tuple not provided)
+ * @param  ?string                                 $relation         Optional relation (required if $tuple not provided)
+ * @param  ?string                                 $object           Optional object identifier (required if $tuple not provided)
+ * @param  ?ConditionInterface                     $condition        Optional condition for the tuple
+ * @param  ?ClientInterface                        $client           The OpenFGA client (optional if in context)
+ * @param  StoreInterface|string|null              $store            The store to use (optional if in context)
+ * @param  AuthorizationModelInterface|string|null $model            The authorization model to use (optional if in context)
+ * @param  ?bool                                   $trace            Whether to trace the check
+ * @param  ?object                                 $context          Context to use for the check
+ * @param  ?TupleKeysInterface                     $contextualTuples Contextual tuples to use for the check
+ * @param  ?Consistency                            $consistency      Consistency level to use for the check
+ * @return bool                                    True if explicitly allowed, false for denied or any error
  *
- * @example Using with a TupleKey object
- * allowed($client, $store, $model, $tupleKey)
+ * @example Using with a TupleKey object and explicit parameters
+ * allowed($tupleKey, client: $client, store: $store, model: $model)
  * @example Using with individual parameters
- * allowed($client, $store, $model, user: 'user:anne', relation: 'viewer', object: 'document:budget')
+ * allowed(user: 'user:anne', relation: 'viewer', object: 'document:budget', client: $client, store: $store, model: $model)
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     return allowed(tuple: tuple('user:anne', 'viewer', 'document:budget'));
+ * }, client: $client, store: $store, model: $model);
  * @example Using with all options
- * allowed($client, $store, $model, user: 'user:anne', relation: 'viewer', object: 'document:budget', trace: true)
+ * allowed(user: 'user:anne', relation: 'viewer', object: 'document:budget', trace: true, client: $client, store: $store, model: $model)
  *
  * @see https://openfga.dev/docs/getting-started/perform-check#02-calling-check-api Checking permissions
  */
 function allowed(
-    ClientInterface $client,
-    StoreInterface | string $store,
-    AuthorizationModelInterface | string $model,
     ?TupleKeyInterface $tuple = null,
     ?string $user = null,
     ?string $relation = null,
     ?string $object = null,
     ?ConditionInterface $condition = null,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
     ?bool $trace = null,
     ?object $context = null,
     ?TupleKeysInterface $contextualTuples = null,
     ?Consistency $consistency = null,
 ): bool {
     try {
+        // Fall back to context if parameters not provided
+        $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+        $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+        $model ??= Context::getModel() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
+
         // Determine the tuple to use
         if ($tuple instanceof TupleKeyInterface) {
             $tupleKey = $tuple;
@@ -535,18 +612,33 @@ function allowed(
 /**
  * Create an authorization model.
  *
- * @param ClientInterface             $client an OpenFGA client
- * @param StoreInterface|string       $store  the store to use
- * @param AuthorizationModelInterface $model  the authorization model to use
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client and store.
  *
- * @throws Throwable if the model creation fails
+ * @param AuthorizationModelInterface $model  The authorization model to create
+ * @param ?ClientInterface            $client An OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null  $store  The store to use (optional if in context)
  *
- * @return string the authorization model ID
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the model creation fails
+ *
+ * @return string The authorization model ID
+ *
+ * @example Creating a model with explicit parameters
+ * $modelId = model($authModel, $client, $store);
+ * @example Using with context (no explicit client/store needed)
+ * context(function() use ($authModel) {
+ *     return model($authModel);
+ * }, client: $client, store: $store);
  *
  * @see https://openfga.dev/docs/getting-started/configure-model#step-by-step Creating an authorization model
  */
-function model(ClientInterface $client, StoreInterface | string $store, AuthorizationModelInterface $model): string
+function model(AuthorizationModelInterface $model, ?ClientInterface $client = null, StoreInterface | string | null $store = null): string
 {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+
     /** @var Responses\CreateAuthorizationModelResponseInterface $response */
     $response = $client->createAuthorizationModel(
         store: $store,
@@ -568,50 +660,56 @@ function model(ClientInterface $client, StoreInterface | string $store, Authoriz
  * results without pagination limitations and safely returns an empty array for any
  * error condition (network failures, authentication issues, malformed requests, etc.).
  *
- * @param  ClientInterface                    $client           The OpenFGA client
- * @param  StoreInterface|string              $store            The store to query
- * @param  AuthorizationModelInterface|string $model            The authorization model to use
- * @param  string                             $type             The object type to search for (e.g., 'document', 'folder')
- * @param  string                             $relation         The relation to check (e.g., 'viewer', 'owner')
- * @param  string                             $user             The user to check for (e.g., 'user:anne')
- * @param  ?object                            $context          Optional context for condition evaluation
- * @param  ?TupleKeysInterface                $contextualTuples Optional contextual tuples for the query
- * @param  ?Consistency                       $consistency      Optional consistency level for the query
- * @return array<string>                      Array of object IDs the user has the specified relation to, or empty array on any error
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
  *
- * @example Find all documents a user can view
- * $documents = objects($client, $store, $model, 'document', 'viewer', 'user:anne');
+ * @param  string                                  $type             The object type to search for (e.g., 'document', 'folder')
+ * @param  string                                  $relation         The relation to check (e.g., 'viewer', 'owner')
+ * @param  string                                  $user             The user to check for (e.g., 'user:anne')
+ * @param  ?ClientInterface                        $client           The OpenFGA client (optional if in context)
+ * @param  StoreInterface|string|null              $store            The store to query (optional if in context)
+ * @param  AuthorizationModelInterface|string|null $model            The authorization model to use (optional if in context)
+ * @param  ?object                                 $context          Optional context for condition evaluation
+ * @param  ?TupleKeysInterface                     $contextualTuples Optional contextual tuples for the query
+ * @param  ?Consistency                            $consistency      Optional consistency level for the query
+ * @return array<string>                           Array of object IDs the user has the specified relation to, or empty array on any error
+ *
+ * @example Find all documents a user can view with explicit parameters
+ * $documents = objects('document', 'viewer', 'user:anne', $client, $store, $model);
  * // Returns: ['document:budget', 'document:forecast', 'document:report'] or [] on error
  * @example Find all folders a user owns with contextual tuples
- * $ownedFolders = objects(
- *     $client,
- *     $store,
- *     $model,
- *     'folder',
- *     'owner',
- *     'user:bob',
+ * $ownedFolders = objects('folder', 'owner', 'user:bob', $client, $store, $model,
  *     contextualTuples: tuples(
  *         tuple('user:bob', 'owner', 'folder:temp')
  *     )
  * );
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     return objects('document', 'viewer', 'user:anne');
+ * }, client: $client, store: $store, model: $model);
  * @example Safe to use even with network issues, invalid stores, etc.
- * $userDocs = objects($client, $storeId, $modelId, 'document', 'viewer', 'user:anne');
+ * $userDocs = objects('document', 'viewer', 'user:anne', $client, $store, $model);
  * // Will return [] if there are any errors (network, auth, validation, etc.)
  *
  * @see https://openfga.dev/docs/getting-started/perform-list-objects Listing objects
  */
 function objects(
-    ClientInterface $client,
-    StoreInterface | string $store,
-    AuthorizationModelInterface | string $model,
     string $type,
     string $relation,
     string $user,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
     ?object $context = null,
     ?TupleKeysInterface $contextualTuples = null,
     ?Consistency $consistency = null,
 ): array {
     try {
+        // Fall back to context if parameters not provided
+        $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+        $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+        $model ??= Context::getModel() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
+
         /** @var Generator<int, Responses\StreamedListObjectsResponseInterface> $generator */
         $generator = $client->streamedListObjects(
             store: $store,
@@ -644,18 +742,27 @@ function objects(
  * automatically handling pagination to collect all available models. Unlike the regular
  * listAuthorizationModels method, this continues fetching until all models are retrieved.
  *
- * @param ClientInterface       $client The OpenFGA client
- * @param StoreInterface|string $store  The store to list models from
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client and store.
  *
- * @throws Throwable If the operation fails
+ * @param ?ClientInterface           $client The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null $store  The store to list models from (optional if in context)
+ *
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the operation fails
  *
  * @return array<AuthorizationModelInterface> Array of all authorization models in the store
  *
- * @example Get all authorization models in a store
+ * @example Get all authorization models in a store with explicit parameters
  * $allModels = models($client, $storeId);
  * foreach ($allModels as $model) {
  *     echo "Model: {$model->getId()}\n";
  * }
+ * @example Using with context (no explicit client/store needed)
+ * context(function() {
+ *     $allModels = models();
+ *     return end($allModels); // Get latest model
+ * }, client: $client, store: $store);
  * @example Find the latest authorization model
  * $allModels = models($client, $store);
  * $latestModel = end($allModels); // Models are typically returned in chronological order
@@ -663,9 +770,13 @@ function objects(
  * @see https://openfga.dev/docs/getting-started/immutable-models#viewing-all-the-authorization-models Listing models
  */
 function models(
-    ClientInterface $client,
-    StoreInterface | string $store,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
 ): array {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+
     $allModels = [];
     $continuationToken = null;
 
@@ -695,11 +806,15 @@ function models(
  * in a single request using BatchCheckItem instances. It automatically handles
  * BatchCheckItems collection creation, making batch checks more approachable.
  *
- * @param ClientInterface                    $client    The OpenFGA client
- * @param StoreInterface|string              $store     The store to check against
- * @param AuthorizationModelInterface|string $model     The authorization model to use
- * @param BatchCheckItemInterface            ...$checks Variable number of BatchCheckItem instances
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
  *
+ * @param ?ClientInterface                        $client    The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null              $store     The store to check against (optional if in context)
+ * @param AuthorizationModelInterface|string|null $model     The authorization model to use (optional if in context)
+ * @param BatchCheckItemInterface                 ...$checks Variable number of BatchCheckItem instances
+ *
+ * @throws ClientException          If required parameters are missing and not available in context
  * @throws ClientThrowable          If batch item validation fails
  * @throws InvalidArgumentException If check specification is invalid
  * @throws ReflectionException      If schema reflection fails
@@ -707,35 +822,35 @@ function models(
  *
  * @return array<string, bool> Map of correlation ID to allowed/denied result
  *
- * @example Simple batch check with BatchCheckItem instances
- * $results = checks($client, $store, $model,
+ * @example Simple batch check with explicit parameters
+ * $results = checks(
+ *     $client, $store, $model,
  *     new BatchCheckItem(tuple('user:anne', 'viewer', 'document:budget'), 'anne-check'),
- *     new BatchCheckItem(tuple('user:bob', 'editor', 'document:budget'), 'bob-check'),
- *     new BatchCheckItem(tuple('user:charlie', 'owner', 'document:budget'), 'charlie-check')
+ *     new BatchCheckItem(tuple('user:bob', 'editor', 'document:budget'), 'bob-check')
  * );
- * // Returns: ['anne-check' => true, 'bob-check' => false, 'charlie-check' => true]
- * @example Batch check with context and contextual tuples
- * $results = checks($client, $store, $model,
- *     new BatchCheckItem(
- *         tupleKey: tuple('user:anne', 'viewer', 'document:budget'),
- *         correlationId: 'anne-budget-view'
- *     ),
- *     new BatchCheckItem(
- *         tupleKey: tuple('user:bob', 'editor', 'document:budget'),
- *         correlationId: 'bob-budget-edit',
- *         context: (object)['time' => '10:00']
- *     )
- * );
- * // Returns: ['anne-budget-view' => true, 'bob-budget-edit' => false]
+ * // Returns: ['anne-check' => true, 'bob-check' => false]
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     return checks(
+ *         null, null, null,
+ *         new BatchCheckItem(tuple('user:anne', 'viewer', 'document:budget'), 'anne-check'),
+ *         new BatchCheckItem(tuple('user:bob', 'editor', 'document:budget'), 'bob-check')
+ *     );
+ * }, client: $client, store: $store, model: $model);
  *
  * @see https://openfga.dev/docs/getting-started/perform-check#03-calling-batch-check-api Batch checking permissions
  */
 function checks(
-    ClientInterface $client,
-    StoreInterface | string $store,
-    AuthorizationModelInterface | string $model,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
     BatchCheckItemInterface ...$checks,
 ): array {
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+    $model ??= Context::getModel() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
+
     $batchCheckItems = new Models\Collections\BatchCheckItems($checks);
 
     /** @var Responses\BatchCheckResponseInterface $response */
@@ -763,33 +878,36 @@ function checks(
  * this object?", it asks "which users can access this object?". Results are streamed
  * automatically with pagination handled internally.
  *
- * @param  ClientInterface                                  $client           The OpenFGA client
- * @param  StoreInterface|string                            $store            The store to query
- * @param  AuthorizationModelInterface|string               $model            The authorization model to use
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
+ *
  * @param  string                                           $object           The object to check relationships for (e.g., 'document:budget')
  * @param  string                                           $relation         The relationship to check (e.g., 'viewer', 'editor', 'owner')
  * @param  UserTypeFilterInterface|UserTypeFiltersInterface $filters          Filters for user types to include
+ * @param  ?ClientInterface                                 $client           The OpenFGA client (optional if in context)
+ * @param  StoreInterface|string|null                       $store            The store to query (optional if in context)
+ * @param  AuthorizationModelInterface|string|null          $model            The authorization model to use (optional if in context)
  * @param  ?object                                          $context          Optional additional context for evaluation
  * @param  ?TupleKeysInterface                              $contextualTuples Optional contextual tuples for the query
  * @param  ?Consistency                                     $consistency      Optional consistency level for the query
  * @return array<string>                                    Array of user identifiers who have the specified relationship, or empty array on error
  *
- * @example Find all users who can view a document
- * $viewers = users($client, $store, $model, 'document:budget', 'viewer',
- *     new UserTypeFilter('user')
- * );
+ * @example Find all users who can view a document with explicit parameters
+ * $viewers = users('document:budget', 'viewer', filter('user'), $client, $store, $model);
  * // Returns: ['user:anne', 'user:bob', 'user:charlie']
  * @example Find both users and groups with edit access
- * $editors = users($client, $store, $model, 'document:budget', 'editor',
- *     new UserTypeFilters([
- *         new UserTypeFilter('user'),
- *         new UserTypeFilter('group')
- *     ])
+ * $editors = users('document:budget', 'editor',
+ *     filters(filter('user'), filter('group')),
+ *     $client, $store, $model
  * );
  * // Returns: ['user:anne', 'group:engineering', 'user:david']
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     return users('document:budget', 'viewer', filter('user'));
+ * }, client: $client, store: $store, model: $model);
  * @example Find users with contextual tuples
- * $editors = users($client, $store, $model, 'document:technical-spec', 'editor',
- *     new UserTypeFilters([new UserTypeFilter('user')]),
+ * $editors = users('document:technical-spec', 'editor', filter('user'),
+ *     $client, $store, $model,
  *     contextualTuples: tuples(
  *         tuple('user:anne', 'member', 'team:engineering')
  *     )
@@ -798,17 +916,22 @@ function checks(
  * @see https://openfga.dev/docs/getting-started/perform-list-users Listing users
  */
 function users(
-    ClientInterface $client,
-    StoreInterface | string $store,
-    AuthorizationModelInterface | string $model,
     string $object,
     string $relation,
     UserTypeFiltersInterface | UserTypeFilterInterface $filters,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
     ?object $context = null,
     ?TupleKeysInterface $contextualTuples = null,
     ?Consistency $consistency = null,
 ): array {
     try {
+        // Fall back to context if parameters not provided
+        $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+        $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+        $model ??= Context::getModel() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_MODEL_ID_EMPTY)]);
+
         if ($filters instanceof UserTypeFilterInterface) {
             $filters = new UserTypeFilters([$filters]);
         }
@@ -984,6 +1107,60 @@ function trans(Messages $message, array $parameters = [], ?Language $language = 
     return Translator::trans($message, $parameters, $language);
 }
 
+// ==============================================================================
+// Context Helpers
+// ==============================================================================
+
+/**
+ * Execute a callable within an ambient context.
+ *
+ * This helper provides a convenient way to set client, store, and model values
+ * that can be used implicitly by other helper functions within the callable.
+ * Contexts support inheritance - child contexts automatically inherit values
+ * from their parent context unless explicitly overridden.
+ *
+ * @param callable                                $fn     The callable to execute within the context
+ * @param ?ClientInterface                        $client Optional client for the context
+ * @param StoreInterface|string|null              $store  Optional store for the context
+ * @param AuthorizationModelInterface|string|null $model  Optional model for the context
+ *
+ * @throws Throwable Re-throws any exception from the callable
+ *
+ * @return mixed The result of the callable execution
+ *
+ * @example Basic usage with all parameters
+ * $result = context(function() {
+ *     // All helper functions can now omit client/store/model parameters
+ *     $allowed = allowed(tuple: tuple('user:anne', 'viewer', 'doc:1'));
+ *     $users = users('doc:1', 'viewer', filter('user'));
+ *     write(tuple('user:bob', 'editor', 'doc:1'));
+ *     return $allowed;
+ * }, client: $client, store: $store, model: $model);
+ * @example Nested contexts with inheritance
+ * context(function() {
+ *     // Uses outer context's client and store
+ *     $users1 = users('doc:1', 'viewer', filter('user')); // Uses model1
+ *
+ *     context(function() {
+ *         // Inherits client/store, but uses different model
+ *         $users2 = users('doc:2', 'editor', filter('user')); // Uses model2
+ *     }, model: $model2);
+ *
+ * }, client: $client, store: $store, model: $model1);
+ * @example Partial context override
+ * context(function() {
+ *     // Set base client and store
+ *     context(function() {
+ *         // Override just the store for this operation
+ *         $allowed = allowed(tuple: tuple('user:anne', 'admin', 'store:settings'));
+ *     }, store: $adminStore);
+ * }, client: $client, store: $userStore, model: $model);
+ */
+/**
+ * @param callable(): mixed $fn
+ *
+ * @throws Throwable
+ */
 function context(
     callable $fn,
     ?ClientInterface $client = null,

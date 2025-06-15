@@ -1,5 +1,84 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- **Context Management**<br />
+  This release introduces a new `context` helper function that provides a way to manage ambient context.
+  This allows you to set a client, store, and model once and use them implicitly by helper functions.
+
+  ```php
+  use function OpenFGA\{context, objects};
+
+  $userId = 'user:alice';
+
+  context(function() use ($userId) {
+    // Uses ambient context
+    $editable = objects(
+      user: "user:{$userId}",
+      relation: 'editor',
+      type: 'document',
+    );
+
+    print_r($editable);
+  }, client: $client, store: 'my-store', model: 'my-model');
+  ```
+
+- **New Helper Functions**<br />
+
+  - **`users` - Identify who has a particular permission with a resource**<br />
+    There's also new `filters` and `filter` helpers that provide a more concise way to create `UserTypeFilters` collections and `UserTypeFilter` objects for `listUsers` requests.
+
+    ```php
+    use function OpenFGA\{users, filter, filters};
+
+    $result = users(
+      object: 'document:roadmap',
+      relation: 'viewer',
+      filters: filters(
+        filter('user'),
+        filter('group', 'member'),
+      ),
+    );
+    ```
+
+  - **`objects` - Retrieve a list of objects a particular user has access to.**<br />
+
+    ```php
+    use function OpenFGA\objects;
+
+    $result = objects(
+      type: 'document',
+      relation: 'viewer',
+      user: 'user:anne',
+    );
+    ```
+
+  - **`checks` - Check multiple permissions at once**<br />
+    There's also a new `check` helper that provides a more concise way to create `BatchCheckItem` objects for `batchCheck` requests.
+
+    ```php
+    use function OpenFGA\{check, checks};
+
+    $result = checks(
+      checks: check(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:roadmap',
+      ),
+    );
+    ```
+
+### Changed
+
+- All helper functions now support omitting `client`, `store`, and `model` parameters when using the `context()` helper.
+- The `batch` helper has been renamed to `writes`.
+- The `allowed` helper now supports omitting `tuple` parameter.
+  It now directly accepts user, relation, object and condition as optional parameters.
+  When no tuple is provided, it will create a tuple for you based on the parameters.
+  It will throw an exception if no tuple is provided and no parameters are provided.
+
 ## [1.4.0] - June 14, 2025
 
 > _New languages spread love, twelve brand new,<br />

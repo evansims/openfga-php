@@ -31,12 +31,17 @@ interface ContextInterface
     /**
      * Get the current authorization model.
      */
-    public static function getModel(): ?AuthorizationModelInterface;
+    public static function getModel(): AuthorizationModelInterface | string | null;
+
+    /**
+     * Get the previous context in the stack.
+     */
+    public static function getPrevious(): ?self;
 
     /**
      * Get the current store.
      */
-    public static function getStore(): ?StoreInterface;
+    public static function getStore(): StoreInterface | string | null;
 
     /**
      * Check if an ambient context is currently active.
@@ -48,16 +53,14 @@ interface ContextInterface
      *
      * @template T
      *
-     * @param callable(): T                                $callback
-     * @param array<string, mixed>                         $context
-     * @param callable                                     $fn
-     * @param ?ClientInterface                             $client
-     * @param StoreInterface|string|null|null              $store
-     * @param AuthorizationModelInterface|string|null|null $model
+     * @param callable(): T                           $fn     The callable to execute within the context
+     * @param ?ClientInterface                        $client Optional client for the context
+     * @param StoreInterface|string|null              $store  Optional store for the context
+     * @param AuthorizationModelInterface|string|null $model  Optional model for the context
      *
-     * @throws Throwable Re-throws any exception from the callback
+     * @throws Throwable Re-throws any exception from the callable
      *
-     * @return T
+     * @return T The result of the callable execution
      */
     public static function with(
         callable $fn,
