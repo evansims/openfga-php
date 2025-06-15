@@ -6,9 +6,6 @@ Before working with assertions, ensure you have the following setup:
 
 ```php
 use OpenFGA\Client;
-use OpenFGA\Models\Assertion;
-use OpenFGA\Collections\{Assertions, AssertionsInterface};
-use function OpenFGA\{tuple, tuples};
 
 // Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
@@ -27,6 +24,10 @@ Assertions are test cases that specify expected outcomes for permission checks. 
 Let's say you're building a document management system. You want to test that owners can edit documents but viewers cannot:
 
 ```php
+use OpenFGA\Models\Assertion;
+use OpenFGA\Collections\Assertions;
+use function OpenFGA\tuple;
+
 // Test: Document owners can edit
 $ownerCanEdit = new Assertion(
     tupleKey: tuple(
@@ -61,6 +62,10 @@ $client->writeAssertions(
 Complex authorization models often have inherited permissions. Test these relationships to ensure they work as expected:
 
 ```php
+use OpenFGA\Models\Assertion;
+use OpenFGA\Collections\Assertions;
+use function OpenFGA\tuple;
+
 // In a team workspace, team members inherit folder permissions
 $teamFolderAccess = new Assertions(
     // Direct team member access
@@ -88,6 +93,10 @@ $teamFolderAccess = new Assertions(
 Test boundary conditions and special cases in your permission model:
 
 ```php
+use OpenFGA\Models\Assertion;
+use OpenFGA\Collections\Assertions;
+use function OpenFGA\tuple;
+
 $edgeCases = new Assertions(
     // Public documents should be readable by anyone
     new Assertion(
@@ -120,6 +129,10 @@ $edgeCases = new Assertions(
 Organize your assertions logically and keep them maintainable:
 
 ```php
+use OpenFGA\Models\Assertion;
+use OpenFGA\Collections\{Assertions, AssertionsInterface};
+use function OpenFGA\tuple;
+
 class DocumentPermissionTests
 {
     public static function getBasicPermissions(): AssertionsInterface
@@ -341,7 +354,7 @@ exit($success ? 0 : 1);
 // authorization-models/document-system.assertions.php
 
 use OpenFGA\Models\Assertion;
-use function OpenFGA\{tuple};
+use function OpenFGA\tuple;
 
 return [
     // Document ownership tests
