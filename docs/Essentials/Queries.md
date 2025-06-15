@@ -205,7 +205,7 @@ $documents = $client->streamedListObjects(
 Use the `users` helper to retrieve a list of users who have a specific permission on an object.
 
 ```php
-use function OpenFGA\users;
+use function OpenFGA\{users, filters, filter};
 
 // *Who* can edit the "roadmap" document?
 $editors = users(
@@ -213,7 +213,11 @@ $editors = users(
     store: $storeId,
     model: $modelId,
     object: 'document:roadmap',
-    relation: 'editor'
+    relation: 'editor',
+    filters: filters(
+        filter('user'),
+        filter('group'),
+    ),
 );
 
 foreach ($editors as $editor) {
@@ -232,6 +236,8 @@ foreach ($editors as $editor) {
 
 ```php
 use OpenFGA\Responses\ListUsersResponseInterface;
+use OpenFGA\Models\Collections\UserTypeFilters;
+use OpenFGA\Models\UserTypeFilter;
 use Throwable;
 
 // *Who* can edit the "roadmap" document?
@@ -239,7 +245,11 @@ $editors = $client->listUsers(
     store: $storeId,
     model: $modelId,
     object: 'document:roadmap',
-    relation: 'editor'
+    relation: 'editor',
+    userFilters: new UserTypeFilters([
+        new UserTypeFilter('user'),
+        new UserTypeFilter('group'),
+    ]),
 )
     ->failure(fn(Throwable $error) => logError($error)) // ex: log error, send alert, etc.
     ->success(fn(ListUsersResponseInterface $response) => logSuccess($response)) // ex: log success, etc.
