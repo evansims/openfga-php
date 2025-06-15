@@ -167,7 +167,9 @@ type document
 Define conditions when creating your model:
 
 ```php
-use OpenFGA\Models\{Condition, ConditionParameters, Conditions};
+use OpenFGA\Models\{Condition, ConditionParameter};
+use OpenFGA\Models\Collections\{Conditions, ConditionParameters};
+use OpenFGA\Responses\CreateAuthorizationModelResponse;
 
 $conditions = new Conditions([
     new Condition(
