@@ -6,8 +6,6 @@ The examples in this guide assume you have the following setup:
 
 ```php
 use OpenFGA\Client;
-use OpenFGA\Models\{Condition, ConditionMetadata, ConditionParameter};
-use OpenFGA\Models\Collections\{Conditions, ConditionParameters};
 
 // Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
@@ -169,6 +167,8 @@ type document
 Define conditions when creating your model:
 
 ```php
+use OpenFGA\Models\{Condition, ConditionParameters, Conditions};
+
 $conditions = new Conditions([
     new Condition(
         name: 'valid_ip',
@@ -232,12 +232,12 @@ $result = $client->check(
     )
 );
 
-success($result, function ($value) use (&$canView) {
-    $canView = $value->getAllowed();
-});
-
 failure($result, function ($error) {
     echo "Error: " . $error->getMessage() . "\n";
+});
+
+success($result, function ($value) use (&$canView) {
+    $canView = $value->getAllowed();
 });
 
 if ($canView) {
@@ -282,12 +282,12 @@ $result = $client->streamedListObjects(
     user: 'user:alice',
 );
 
-success($result, function ($value) use (&$objects) {
-    $objects = $value->getObjects();
-});
-
 failure($result, function ($error) {
     echo "Error: " . $error->getMessage() . "\n";
+});
+
+success($result, function ($value) use (&$objects) {
+    $objects = $value->getObjects();
 });
 
 echo "Alice can view the following documents:\n";
