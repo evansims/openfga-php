@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Unit;
 
+use DateTimeImmutable;
 use Exception;
 use InvalidArgumentException;
 use OpenFGA\{ClientInterface, Language};
@@ -13,11 +14,13 @@ use OpenFGA\Models\Collections\{
     ConditionParameters,
     Conditions,
     TupleKeys,
+    Tuples,
     TypeDefinitions
 };
 use OpenFGA\Models\Collections\{TupleKeysInterface, UserTypeFiltersInterface, Users};
 use OpenFGA\Models\Collections\UserTypeFilters;
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion, TypeName};
+use OpenFGA\Models\Tuple;
 use OpenFGA\Models\{User, UserTypeFilter};
 use OpenFGA\Responses\{
     CheckResponseInterface,
@@ -25,7 +28,7 @@ use OpenFGA\Responses\{
     CreateStoreResponseInterface,
     WriteTuplesResponseInterface
 };
-use OpenFGA\Responses\ListUsersResponseInterface;
+use OpenFGA\Responses\{ListUsersResponseInterface, ReadTuplesResponseInterface};
 use OpenFGA\Results\{Failure, Success};
 use RuntimeException;
 use Throwable;
@@ -42,6 +45,7 @@ use function OpenFGA\{
     lang,
     model,
     ok,
+    read,
     result,
     store,
     success,
@@ -1105,6 +1109,137 @@ condition condition1(region: string) {
 
             // If we get here without throwing, the batch delete was successful
             expect(true)->toBe(true);
+        });
+    });
+
+    describe('read() function', function (): void {
+        test('reads all tuples with automatic pagination', function (): void {
+            $storeId = 'store-read';
+
+            // Mock first page response
+            $firstPageResponse = test()->createMock(ReadTuplesResponseInterface::class);
+            $firstPageResponse->method('getTuples')->willReturn(new Tuples([
+                new Tuple(new TupleKey('user:anne', 'viewer', 'document:1'), new DateTimeImmutable),
+                new Tuple(new TupleKey('user:bob', 'viewer', 'document:2'), new DateTimeImmutable),
+            ]));
+            $firstPageResponse->method('getContinuationToken')->willReturn('page-2-token');
+
+            // Mock second page response
+            $secondPageResponse = test()->createMock(ReadTuplesResponseInterface::class);
+            $secondPageResponse->method('getTuples')->willReturn(new Tuples([
+                new Tuple(new TupleKey('user:charlie', 'viewer', 'document:3'), new DateTimeImmutable),
+            ]));
+            $secondPageResponse->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->exactly(2))
+                ->method('readTuples')
+                ->willReturnOnConsecutiveCalls(
+                    new Success($firstPageResponse),
+                    new Success($secondPageResponse),
+                );
+
+            $allTuples = read($client, $storeId);
+
+            expect($allTuples)->toHaveCount(3);
+            expect($allTuples[0])->toBeInstanceOf(TupleKeyInterface::class);
+            expect($allTuples[0]->getUser())->toBe('user:anne');
+            expect($allTuples[1]->getUser())->toBe('user:bob');
+            expect($allTuples[2]->getUser())->toBe('user:charlie');
+        });
+
+        test('reads tuples with filtering', function (): void {
+            $storeId = 'store-filter';
+            $filterTuple = new TupleKey('user:anne', '', '');
+
+            $response = test()->createMock(ReadTuplesResponseInterface::class);
+            $response->method('getTuples')->willReturn(new Tuples([
+                new Tuple(new TupleKey('user:anne', 'viewer', 'document:1'), new DateTimeImmutable),
+                new Tuple(new TupleKey('user:anne', 'editor', 'document:2'), new DateTimeImmutable),
+            ]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('readTuples')
+                ->with(
+                    store: $storeId,
+                    tupleKey: $filterTuple,
+                    continuationToken: null,
+                    pageSize: 50,
+                    consistency: null,
+                )
+                ->willReturn(new Success($response));
+
+            $allTuples = read($client, $storeId, $filterTuple);
+
+            expect($allTuples)->toHaveCount(2);
+            expect($allTuples[0]->getUser())->toBe('user:anne');
+            expect($allTuples[1]->getUser())->toBe('user:anne');
+        });
+
+        test('handles empty results', function (): void {
+            $storeId = 'store-empty';
+
+            $response = test()->createMock(ReadTuplesResponseInterface::class);
+            $response->method('getTuples')->willReturn(new Tuples([]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('readTuples')
+                ->willReturn(new Success($response));
+
+            $allTuples = read($client, $storeId);
+
+            expect($allTuples)->toHaveCount(0);
+            expect($allTuples)->toBe([]);
+        });
+
+        test('respects custom page size', function (): void {
+            $storeId = 'store-pagesize';
+            $customPageSize = 25;
+
+            $response = test()->createMock(ReadTuplesResponseInterface::class);
+            $response->method('getTuples')->willReturn(new Tuples([]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('readTuples')
+                ->with(
+                    store: $storeId,
+                    tupleKey: null,
+                    continuationToken: null,
+                    pageSize: $customPageSize,
+                    consistency: null,
+                )
+                ->willReturn(new Success($response));
+
+            read($client, $storeId, pageSize: $customPageSize);
+        });
+
+        test('handles consistency parameter', function (): void {
+            $storeId = 'store-consistency';
+            $consistency = Consistency::HIGHER_CONSISTENCY;
+
+            $response = test()->createMock(ReadTuplesResponseInterface::class);
+            $response->method('getTuples')->willReturn(new Tuples([]));
+            $response->method('getContinuationToken')->willReturn(null);
+
+            $client = test()->createMock(ClientInterface::class);
+            $client->expects($this->once())
+                ->method('readTuples')
+                ->with(
+                    store: $storeId,
+                    tupleKey: null,
+                    continuationToken: null,
+                    pageSize: 50,
+                    consistency: $consistency,
+                )
+                ->willReturn(new Success($response));
+
+            read($client, $storeId, consistency: $consistency);
         });
     });
 

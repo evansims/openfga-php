@@ -495,7 +495,7 @@ interface ClientInterface
      * Reads relationship tuples from a store with optional filtering and pagination.
      *
      * @param StoreInterface|string $store             The store to read from
-     * @param TupleKeyInterface     $tupleKey          Filter tuples by this key (return all if null)
+     * @param ?TupleKeyInterface    $tupleKey          Filter tuples by this key (return all if null)
      * @param string|null           $continuationToken Token for pagination
      * @param positive-int|null     $pageSize          Maximum number of tuples to return
      * @param Consistency|null      $consistency       Override the default consistency level
@@ -506,7 +506,7 @@ interface ClientInterface
      */
     public function readTuples(
         StoreInterface | string $store,
-        TupleKeyInterface $tupleKey,
+        ?TupleKeyInterface $tupleKey = null,
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,

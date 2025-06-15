@@ -544,7 +544,7 @@ final class Client implements ClientInterface
     #[Override]
     public function readTuples(
         StoreInterface | string $store,
-        TupleKeyInterface $tupleKey,
+        ?TupleKeyInterface $tupleKey = null,
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,

@@ -521,6 +521,85 @@ function delete(
 }
 
 /**
+ * Read relationship tuples with automatic pagination.
+ *
+ * This helper provides a simplified way to read tuples from OpenFGA with automatic
+ * pagination to collect all results. It continues fetching pages until all tuples
+ * matching the query are retrieved, making it easy to work with large datasets
+ * without manual pagination handling.
+ *
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client and store.
+ *
+ * @param ?ClientInterface           $client      The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null $store       The store to read from (optional if in context)
+ * @param ?TupleKeyInterface         $tupleKey    Optional tuple key to filter results (null reads all tuples)
+ * @param int                        $pageSize    Number of tuples per page (default: 50, max: 1000)
+ * @param ?Consistency               $consistency Optional consistency level for the query
+ *
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the read operation fails
+ *
+ * @return array<TupleKeyInterface> Array of all tuples matching the query
+ *
+ * @example Reading all tuples with explicit parameters
+ * $allTuples = read($client, $store);
+ * foreach ($allTuples as $tuple) {
+ *     echo "{$tuple->getUser()} {$tuple->getRelation()} {$tuple->getObject()}\n";
+ * }
+ * @example Reading tuples with filtering
+ * $userTuples = read($client, $store, tuple('user:anne', '', ''));
+ * @example Using with context (no explicit client/store needed)
+ * context(function() {
+ *     $allTuples = read();
+ *     return count($allTuples);
+ * }, client: $client, store: $store);
+ * @example Reading with specific page size and consistency
+ * $tuples = read($client, $store, pageSize: 100, consistency: Consistency::HigherConsistency);
+ *
+ * @see https://openfga.dev/docs/getting-started/reading-tuples Reading relationship tuples
+ */
+function read(
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    ?TupleKeyInterface $tupleKey = null,
+    int $pageSize = 50,
+    ?Consistency $consistency = null,
+): array {
+    // Ensure pageSize is positive
+    if (0 >= $pageSize) {
+        $pageSize = 50;
+    }
+    // Fall back to context if parameters not provided
+    $client ??= Context::getClient() ?? throw new ClientException(ClientError::Configuration);
+    $store ??= Context::getStore() ?? throw new ClientException(ClientError::Validation, context: ['message' => trans(Messages::REQUEST_STORE_ID_EMPTY)]);
+
+    $allTuples = [];
+    $continuationToken = null;
+
+    do {
+        /** @var Responses\ReadTuplesResponseInterface $response */
+        $response = $client->readTuples(
+            store: $store,
+            tupleKey: $tupleKey,
+            pageSize: $pageSize,
+            continuationToken: $continuationToken,
+            consistency: $consistency,
+        )->unwrap();
+
+        // Add tuples from this page to our collection
+        foreach ($response->getTuples() as $tuple) {
+            $allTuples[] = $tuple->getKey();
+        }
+
+        // Get continuation token for next page
+        $continuationToken = $response->getContinuationToken();
+    } while (null !== $continuationToken);
+
+    return $allTuples;
+}
+
+/**
  * Check for a relationship with guaranteed boolean result.
  *
  * This helper safely checks permissions and returns false for any error

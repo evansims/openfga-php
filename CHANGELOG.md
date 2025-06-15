@@ -70,6 +70,28 @@
     );
     ```
 
+  - **`read` - Retrieves all tuples for a particular object.**<br />
+
+    ```php
+    use function OpenFGA\read;
+
+    $result = read(
+      object: 'document:roadmap',
+      relation: 'viewer',
+    );
+    ```
+
+  - **`changes` - Retrieves all tuple changes.**<br />
+
+    ```php
+    use function OpenFGA\changes;
+
+    $result = changes(
+      store: 'my-store',
+      startTime: new DateTimeImmutable('-1 hour'),
+    );
+    ```
+
 ### Changed
 
 - All helper functions now support omitting `client`, `store`, and `model` parameters when using the `context()` helper.
