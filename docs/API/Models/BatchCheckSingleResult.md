@@ -2,7 +2,8 @@
 
 Represents the result of a single check within a batch check response. Each result contains whether the check was allowed and any error information if the check failed to complete successfully.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,15 +12,13 @@ Represents the result of a single check within a batch check response. Each resu
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
-  - [`getAllowed()`](#getallowed)
-- [List Operations](#list-operations)
+- [`getAllowed()`](#getallowed)
   - [`getError()`](#geterror)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
   - [`toArray()`](#toarray)
+
+</details>
 
 ## Namespace
 
@@ -47,9 +46,7 @@ Represents the result of a single check within a batch check response. Each resu
 
 ## Methods
 
-### Authorization
-
-#### getAllowed
+### getAllowed
 
 ```php
 public function getAllowed(): ?bool
@@ -64,9 +61,7 @@ Get whether this check was allowed. Returns true if the user has the specified r
 
 `bool` &#124; `null`
 
-### List Operations
-
-#### getError
+### getError
 
 ```php
 public function getError(): ?object
@@ -81,9 +76,20 @@ Get any error that occurred during this check. Returns error information if the 
 
 `object` &#124; `null`
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array<string, mixed>
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L111)
+
+#### Returns
+
+`array&lt;`string`, `mixed`&gt;`
+
+### schema
 
 *<small>Implements Models\BatchCheckSingleResultInterface</small>*
 
@@ -100,22 +106,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array<string, mixed>
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckSingleResult.php#L111)
-
-#### Returns
-
-`array&lt;`string`, `mixed`&gt;`
-
-#### toArray
+### toArray
 
 ```php
 public function toArray(): array<string, mixed>

@@ -2,7 +2,8 @@
 
 Request for listing all available stores with pagination support. This request retrieves a paginated list of stores accessible to the authenticated user or application. It&#039;s useful for store selection interfaces, administrative dashboards, and multi-tenant applications.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,11 @@ Request for listing all available stores with pagination support. This request r
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getPageSize()`](#getpagesize)
   - [`getRequest()`](#getrequest)
+
+</details>
 
 ## Namespace
 
@@ -35,7 +37,7 @@ Request for listing all available stores with pagination support. This request r
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): ?string
@@ -50,7 +52,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 
-#### getPageSize
+### getPageSize
 
 ```php
 public function getPageSize(): ?int
@@ -65,7 +67,7 @@ Get the maximum number of stores to return per page. Specifies the page size for
 
 `int` &#124; `null` — The maximum number of stores to return per page, or null to use the default page size
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext

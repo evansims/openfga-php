@@ -2,20 +2,21 @@
 
 Token-based authentication strategy for OpenFGA client. This authentication strategy uses a pre-shared token (such as a Bearer token or API key) for authentication with the OpenFGA API. The token is provided during construction and used as-is for all requests. This strategy is suitable for scenarios where you have a long-lived token or when implementing custom token refresh logic externally. The strategy accepts either a string token or an AccessTokenInterface instance for maximum flexibility.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getAuthenticationRequest()`](#getauthenticationrequest)
+- [`getAuthenticationRequest()`](#getauthenticationrequest)
   - [`getAuthorizationHeader()`](#getauthorizationheader)
   - [`getToken()`](#gettoken)
-- [Other](#other)
   - [`handleAuthenticationResponse()`](#handleauthenticationresponse)
   - [`requiresAuthentication()`](#requiresauthentication)
+
+</details>
 
 ## Namespace
 
@@ -31,9 +32,7 @@ Token-based authentication strategy for OpenFGA client. This authentication stra
 
 ## Methods
 
-### List Operations
-
-#### getAuthenticationRequest
+### getAuthenticationRequest
 
 ```php
 public function getAuthenticationRequest(
@@ -56,7 +55,7 @@ Get an authentication request context if this strategy requires token acquisitio
 
 [`RequestContext`](Network/RequestContext.md) &#124; `null` — The authentication request context, or null if not needed
 
-#### getAuthorizationHeader
+### getAuthorizationHeader
 
 ```php
 public function getAuthorizationHeader(): ?string
@@ -71,7 +70,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 `string` &#124; `null` — The authorization header value, or null if no authentication is needed
 
-#### getToken
+### getToken
 
 ```php
 public function getToken(): AccessTokenInterface|string
@@ -86,9 +85,7 @@ Get the current authentication token. Returns the token that was provided during
 
 [`AccessTokenInterface`](AccessTokenInterface.md) &#124; `string` — The authentication token used by this strategy
 
-### Other
-
-#### handleAuthenticationResponse
+### handleAuthenticationResponse
 
 ```php
 public function handleAuthenticationResponse(Psr\Http\Message\ResponseInterface $response): void
@@ -109,7 +106,7 @@ Handle the authentication response and update internal state. This method is cal
 
 `void`
 
-#### requiresAuthentication
+### requiresAuthentication
 
 ```php
 public function requiresAuthentication(): bool

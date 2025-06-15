@@ -2,7 +2,8 @@
 
 Validates and transforms data according to registered JSON schemas. This validator ensures that API response data conforms to expected schemas and transforms raw arrays into strongly typed model objects. It handles nested objects, collections, and complex validation rules while providing detailed error reporting for schema violations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,11 @@ Validates and transforms data according to registered JSON schemas. This validat
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
-  - [`validateAndTransform()`](#validateandtransform)
-- [List Operations](#list-operations)
-  - [`getSchemas()`](#getschemas)
-- [Model Management](#model-management)
+- [`getSchemas()`](#getschemas)
   - [`registerSchema()`](#registerschema)
+  - [`validateAndTransform()`](#validateandtransform)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +35,43 @@ Validates and transforms data according to registered JSON schemas. This validat
 
 ## Methods
 
-### Authorization
+### getSchemas
 
-#### validateAndTransform
+```php
+public function getSchemas(): array
+
+```
+
+Get all currently registered schemas. Returns a comprehensive map of all schemas that have been registered with this validator, keyed by their associated class names. This is useful for debugging, introspection, and understanding which schemas are available for validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaValidator.php#L72)
+
+#### Returns
+
+`array` — Map of class names to their schema definitions
+
+### registerSchema
+
+```php
+public function registerSchema(OpenFGA\Schemas\SchemaInterface $schema): self
+
+```
+
+Register a schema for validation use. Adds a schema to the validator&#039;s registry, making it available for use in validation and transformation operations. Schemas must be registered before they can be used to validate data for their associated class.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaValidator.php#L81)
+
+#### Parameters
+
+| Name      | Type                                    | Description                       |
+| --------- | --------------------------------------- | --------------------------------- |
+| `$schema` | [`SchemaInterface`](SchemaInterface.md) | The schema definition to register |
+
+#### Returns
+
+`self` — Returns the validator instance for method chaining
+
+### validateAndTransform
 
 ```php
 public function validateAndTransform(mixed $data, string $className): object
@@ -58,43 +92,3 @@ Validate data against a registered schema and transform it into the target class
 #### Returns
 
 `object` — The validated and transformed object instance
-
-### List Operations
-
-#### getSchemas
-
-```php
-public function getSchemas(): array
-
-```
-
-Get all currently registered schemas. Returns a comprehensive map of all schemas that have been registered with this validator, keyed by their associated class names. This is useful for debugging, introspection, and understanding which schemas are available for validation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaValidator.php#L72)
-
-#### Returns
-
-`array` — Map of class names to their schema definitions
-
-### Model Management
-
-#### registerSchema
-
-```php
-public function registerSchema(OpenFGA\Schemas\SchemaInterface $schema): self
-
-```
-
-Register a schema for validation use. Adds a schema to the validator&#039;s registry, making it available for use in validation and transformation operations. Schemas must be registered before they can be used to validate data for their associated class.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaValidator.php#L81)
-
-#### Parameters
-
-| Name      | Type                                    | Description                       |
-| --------- | --------------------------------------- | --------------------------------- |
-| `$schema` | [`SchemaInterface`](SchemaInterface.md) | The schema definition to register |
-
-#### Returns
-
-`self` — Returns the validator instance for method chaining

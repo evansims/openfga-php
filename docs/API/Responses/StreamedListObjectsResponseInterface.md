@@ -2,15 +2,17 @@
 
 Response interface for streaming objects that a user has a specific relationship with. This response provides a Generator that yields object identifiers as they are streamed from the server. This allows for memory-efficient processing of large result sets without loading the entire dataset into memory at once.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getObject()`](#getobject)
+- [`getObject()`](#getobject)
+
+</details>
 
 ## Namespace
 
@@ -27,7 +29,7 @@ Response interface for streaming objects that a user has a specific relationship
 
 ## Methods
 
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string

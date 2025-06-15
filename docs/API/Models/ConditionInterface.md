@@ -2,7 +2,8 @@
 
 Represents a condition that enables dynamic authorization in OpenFGA. Conditions allow OpenFGA to make authorization decisions based on runtime context and parameters, enabling attribute-based access control (ABAC) patterns. Rather than relying solely on static relationships, conditions evaluate expressions against dynamic data to determine if access should be granted. Conditions consist of: - **Expression**: A logical expression that evaluates to true or false - **Parameters**: Typed parameters that can be passed at evaluation time - **Name**: A unique identifier for referencing the condition - **Metadata**: Optional information about the condition definition Common condition use cases: - Time-based access (business hours, expiration dates) - Location-based restrictions (IP address, geographic region) - Resource attributes (document classification, owner validation) - User context (department, clearance level, current project) - Environmental factors (device type, authentication method) Conditions are defined in authorization models and can be referenced by relationship tuples to create dynamic permission rules. When OpenFGA evaluates a conditional relationship, it passes the current context parameters to the condition expression for evaluation. This enables sophisticated authorization patterns like &quot;allow read access to documents during business hours&quot; or &quot;grant edit permissions only to users in the same department as the resource owner.&quot;
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,14 +11,14 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContext()`](#getcontext)
+- [`getContext()`](#getcontext)
   - [`getExpression()`](#getexpression)
   - [`getMetadata()`](#getmetadata)
   - [`getName()`](#getname)
   - [`getParameters()`](#getparameters)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -38,9 +39,7 @@ Represents a condition that enables dynamic authorization in OpenFGA. Conditions
 
 ## Methods
 
-### List Operations
-
-#### getContext
+### getContext
 
 ```php
 public function getContext(): array<string, mixed>|null
@@ -55,7 +54,7 @@ Get the context for the condition. This provides additional runtime data that ca
 
 `array&lt;`string`, `mixed`&gt;` &#124; `null` — the context data, or null if not provided
 
-#### getExpression
+### getExpression
 
 ```php
 public function getExpression(): string
@@ -70,7 +69,7 @@ Get the condition expression. This returns the logical expression that defines w
 
 `string` — The condition expression defining the evaluation logic
 
-#### getMetadata
+### getMetadata
 
 ```php
 public function getMetadata(): ConditionMetadataInterface|null
@@ -85,7 +84,7 @@ Get metadata about the condition definition. This provides additional informatio
 
 [`ConditionMetadataInterface`](ConditionMetadataInterface.md) &#124; `null` — The condition metadata, or null if not provided
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -100,7 +99,7 @@ Get the name of the condition. This is a unique identifier for the condition wit
 
 `string` — The unique name identifying this condition
 
-#### getParameters
+### getParameters
 
 ```php
 public function getParameters(): ConditionParametersInterface|null
@@ -115,9 +114,7 @@ Get the parameters available to the condition expression. These parameters defin
 
 [`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null` — The condition parameters, or null if the condition uses no parameters
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

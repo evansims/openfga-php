@@ -2,7 +2,8 @@
 
 Represents a parameter type definition for ABAC conditions. ConditionParameter defines the type structure for parameters used in attribute-based access control conditions. It specifies the data type (string, int, list, map, etc.) and any generic type parameters for complex types like collections. Use this when defining the expected parameter types for conditions in your authorization model.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,13 +12,12 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getGenericTypes()`](#getgenerictypes)
+- [`getGenericTypes()`](#getgenerictypes)
   - [`getTypeName()`](#gettypename)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Represents a parameter type definition for ABAC conditions. ConditionParameter d
 
 ## Methods
 
-### List Operations
-
-#### getGenericTypes
+### getGenericTypes
 
 ```php
 public function getGenericTypes(): ?OpenFGA\Models\Collections\ConditionParametersInterface
@@ -63,7 +61,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 [`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null`
 
-#### getTypeName
+### getTypeName
 
 ```php
 public function getTypeName(): OpenFGA\Models\Enums\TypeName
@@ -78,9 +76,20 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 [`TypeName`](Models/Enums/TypeName.md) — The type name enum value for this parameter
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameter.php#L76)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\ConditionParameterInterface</small>*
 
@@ -96,18 +105,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ConditionParameter.php#L76)
-
-#### Returns
-
-`array`

@@ -2,7 +2,8 @@
 
 Request for writing test assertions to validate authorization model behavior. This request stores test assertions that define expected authorization outcomes for specific scenarios. Assertions are used to validate that authorization models behave correctly and can be run as part of testing and validation workflows.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,12 @@ Request for writing test assertions to validate authorization model behavior. Th
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getAssertions()`](#getassertions)
+- [`getAssertions()`](#getassertions)
   - [`getModel()`](#getmodel)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -36,7 +38,7 @@ Request for writing test assertions to validate authorization model behavior. Th
 
 ## Methods
 
-#### getAssertions
+### getAssertions
 
 ```php
 public function getAssertions(): OpenFGA\Models\Collections\AssertionsInterface
@@ -51,7 +53,7 @@ Get the test assertions to write to the authorization model. Returns a collectio
 
 [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) — Collection of test assertions to validate authorization model behavior
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -66,7 +68,7 @@ Get the authorization model ID to associate assertions with. Specifies which ver
 
 `string` — The authorization model ID that these assertions will test
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -87,7 +89,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

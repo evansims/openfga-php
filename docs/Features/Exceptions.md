@@ -5,8 +5,6 @@ This guide explains how to properly handle errors in the OpenFGA PHP SDK using o
 The examples in this guide assume you have the following imports and setup:
 
 ```php
-<?php
-
 declare(strict_types=1);
 
 use OpenFGA\{Client, ClientInterface, Messages};
@@ -172,7 +170,7 @@ The SDK uses enum-backed exceptions for type-safe error handling. Each exception
 
 ### Exception Hierarchy
 
-````
+```
 ClientThrowable (interface)
 ├── ClientException
 │   └── Backed by ClientError enum:
@@ -210,7 +208,7 @@ ClientThrowable (interface)
         ├── UndefinedItemType
         ├── EmptyCollection
         └── CouldNotAddItems
-````
+```
 
 ### When to Use Each Exception Type
 

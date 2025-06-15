@@ -2,7 +2,8 @@
 
 Maps exception error enums to their default message keys. This class provides the concrete implementation for mapping various error enum types to their corresponding translation message keys. It maintains comprehensive mappings for all error categories in the OpenFGA SDK, enabling consistent and translatable error messages. The class uses static arrays to maintain mappings between error enum values and message keys, providing fast lookup performance while keeping the mappings centralized and maintainable. Each error category has its own mapping array and corresponding method for type-safe access. Error categories supported: - Authentication errors: Token expiration, invalid credentials - Client errors: General validation and usage failures - Configuration errors: Missing PSR components, setup issues - Network errors: HTTP failures, timeouts, connectivity issues - Serialization errors: JSON parsing, schema validation failures
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Maps exception error enums to their default message keys. This class provides th
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`forAuthenticationError()`](#forauthenticationerror)
+- [`forAuthenticationError()`](#forauthenticationerror)
   - [`forClientError()`](#forclienterror)
   - [`forConfigurationError()`](#forconfigurationerror)
   - [`forError()`](#forerror)
   - [`forNetworkError()`](#fornetworkerror)
   - [`forSerializationError()`](#forserializationerror)
+
+</details>
 
 ## Namespace
 
@@ -36,7 +38,7 @@ Maps exception error enums to their default message keys. This class provides th
 
 ## Methods
 
-#### forAuthenticationError
+### forAuthenticationError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
@@ -59,7 +61,7 @@ Get the default message key for an authentication error. Maps authentication-rel
 
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 
-#### forClientError
+### forClientError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
@@ -82,7 +84,7 @@ Get the default message key for a general client error. Maps high-level client e
 
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 
-#### forConfigurationError
+### forConfigurationError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
@@ -105,7 +107,7 @@ Get the default message key for a configuration error. Maps configuration-relate
 
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 
-#### forError
+### forError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
@@ -130,7 +132,7 @@ Get the default message key for any supported error type. Generic method that ac
 
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 
-#### forNetworkError
+### forNetworkError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*
 
@@ -153,7 +155,7 @@ Get the default message key for a network error. Maps network and HTTP-related e
 
 [`Messages`](Messages.md) — The corresponding message enum case for translation
 
-#### forSerializationError
+### forSerializationError
 
 *<small>Implements Exceptions\DefaultMessagesInterface</small>*
 

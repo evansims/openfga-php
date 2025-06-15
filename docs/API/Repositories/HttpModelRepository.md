@@ -2,18 +2,19 @@
 
 HTTP implementation of the model repository. This repository handles authorization model operations via HTTP requests to the OpenFGA API. It converts domain objects to API requests, sends them via the HTTP service, and transforms responses back to domain objects. Supports creating, retrieving, and listing authorization models within a store. Authorization models define the permission structure for your application - the types of objects, the relationships between them, and the rules that govern access. Models are immutable once created; to update permissions, you create a new model version.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`create()`](#create)
-- [List Operations](#list-operations)
+- [`create()`](#create)
   - [`get()`](#get)
   - [`list()`](#list)
+
+</details>
 
 ## Namespace
 
@@ -29,9 +30,7 @@ HTTP implementation of the model repository. This repository handles authorizati
 
 ## Methods
 
-### CRUD Operations
-
-#### create
+### create
 
 ```php
 public function create(
@@ -58,9 +57,7 @@ Create a new authorization model in the store. Creates an immutable authorizatio
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the created AuthorizationModelInterface, or Failure with error details
 
-### List Operations
-
-#### get
+### get
 
 ```php
 public function get(string $modelId): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
@@ -81,7 +78,7 @@ Get a specific authorization model by ID. Retrieves the complete authorization m
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the AuthorizationModelInterface, or Failure with error details
 
-#### list
+### list
 
 ```php
 public function list(

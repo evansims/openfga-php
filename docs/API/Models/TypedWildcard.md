@@ -2,7 +2,8 @@
 
 Represents a wildcard that matches all users of a specific type. In authorization models, you sometimes want to grant permissions to all users of a certain type rather than specific individuals. TypedWildcard lets you specify &quot;all users of type X&quot; in your authorization rules. For example, you might want to grant read access to &quot;all employees&quot; or &quot;all customers&quot; without having to list each individual user.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getType()`](#gettype)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
+- [`getType()`](#gettype)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -45,9 +45,7 @@ Represents a wildcard that matches all users of a specific type. In authorizatio
 
 ## Methods
 
-### List Operations
-
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -62,9 +60,20 @@ Get the object type that this wildcard represents. This returns the type name fo
 
 `string` — The object type that this wildcard represents
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcard.php#L90)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\TypedWildcardInterface</small>*
 
@@ -80,18 +89,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypedWildcard.php#L90)
-
-#### Returns
-
-`array`

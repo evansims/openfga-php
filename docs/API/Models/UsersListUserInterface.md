@@ -2,7 +2,8 @@
 
 Represents a user in a list context for authorization operations. UsersListUser provides a simple wrapper around user identifiers, ensuring they conform to the expected format and can be properly serialized for API operations. This is commonly used in list operations where user identifiers need to be processed in bulk. Use this interface when working with lists of users in authorization contexts, such as batch operations or user enumeration.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Represents a user in a list context for authorization operations. UsersListUser 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getUser()`](#getuser)
-- [Other](#other)
+- [`getUser()`](#getuser)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Represents a user in a list context for authorization operations. UsersListUser 
 
 ## Methods
 
-### List Operations
-
-#### getUser
+### getUser
 
 ```php
 public function getUser(): string
@@ -52,9 +51,7 @@ Get the user identifier string. This returns the user identifier in the format e
 
 `string` — The user identifier string
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): string

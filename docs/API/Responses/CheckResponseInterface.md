@@ -2,7 +2,8 @@
 
 Interface for permission check response objects. This interface defines the contract for responses returned when performing permission checks in OpenFGA. A check response indicates whether a specific user has a particular permission on a given object, based on the authorization model and current relationship data. Permission checking is the core operation of OpenFGA, allowing applications to make authorization decisions by evaluating user permissions against the defined relationship model and stored tuples.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Interface for permission check response objects. This interface defines the cont
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
-  - [`getAllowed()`](#getallowed)
-- [List Operations](#list-operations)
+- [`getAllowed()`](#getallowed)
   - [`getResolution()`](#getresolution)
+
+</details>
 
 ## Namespace
 
@@ -34,9 +35,7 @@ Interface for permission check response objects. This interface defines the cont
 
 ## Methods
 
-### Authorization
-
-#### getAllowed
+### getAllowed
 
 ```php
 public function getAllowed(): bool|null
@@ -51,9 +50,7 @@ Get whether the permission check was allowed. This is the primary result of the 
 
 `bool` &#124; `null` — True if permission is granted, false if denied, or null if the result is indeterminate
 
-### List Operations
-
-#### getResolution
+### getResolution
 
 ```php
 public function getResolution(): string|null

@@ -2,7 +2,8 @@
 
 Request for listing users who have a specific relationship with an object. This request finds all users (or usersets) that have the specified relationship with a given object, filtered by user type. It&#039;s useful for building access management interfaces, member lists, and permission auditing tools.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,7 @@ Request for listing users who have a specific relationship with an object. This 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConsistency()`](#getconsistency)
+- [`getConsistency()`](#getconsistency)
   - [`getContext()`](#getcontext)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getModel()`](#getmodel)
@@ -20,6 +20,8 @@ Request for listing users who have a specific relationship with an object. This 
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
   - [`getUserFilters()`](#getuserfilters)
+
+</details>
 
 ## Namespace
 
@@ -41,7 +43,7 @@ Request for listing users who have a specific relationship with an object. This 
 
 ## Methods
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -56,7 +58,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 
-#### getContext
+### getContext
 
 ```php
 public function getContext(): ?object
@@ -71,7 +73,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 `object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -86,7 +88,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -101,7 +103,7 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 
 `string` — The authorization model ID for evaluating user relationships
 
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string
@@ -116,7 +118,7 @@ Get the object to list users for. Specifies the target object for which users wi
 
 `string` — The object identifier to list users for
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -131,7 +133,7 @@ Get the relation to check for user access. Specifies the relationship type to ev
 
 `string` — The relation name to check for user access
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -152,7 +154,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -167,7 +169,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 `string` — The store ID containing the authorization data
 
-#### getUserFilters
+### getUserFilters
 
 ```php
 public function getUserFilters(): OpenFGA\Models\Collections\UserTypeFiltersInterface

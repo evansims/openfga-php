@@ -2,7 +2,8 @@
 
 Interface for authorization model creation response objects. This interface defines the contract for responses returned when creating new authorization models in OpenFGA. An authorization model creation response contains the unique identifier of the newly created model, which can be used for subsequent operations. Authorization models define the relationship types, object types, and permission logic that govern how authorization decisions are made within a store. They are versioned, allowing you to evolve your permission structure over time.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,9 @@ Interface for authorization model creation response objects. This interface defi
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModel()`](#getmodel)
+- [`getModel()`](#getmodel)
+
+</details>
 
 ## Namespace
 
@@ -32,7 +34,7 @@ Interface for authorization model creation response objects. This interface defi
 
 ## Methods
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string

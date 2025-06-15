@@ -2,7 +2,8 @@
 
 Represents a leaf node in authorization evaluation trees containing specific users. A Leaf is a terminal node in the authorization evaluation tree that contains a concrete set of users rather than further computation rules. It represents the final resolved users at the end of an authorization evaluation path. Use this when you need to represent the actual users that result from authorization rule evaluation, as opposed to computed or derived usersets.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ Represents a leaf node in authorization evaluation trees containing specific use
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getComputed()`](#getcomputed)
+- [`getComputed()`](#getcomputed)
   - [`getTupleToUserset()`](#gettupletouserset)
   - [`getUsers()`](#getusers)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Represents a leaf node in authorization evaluation trees containing specific use
 
 ## Methods
 
-### List Operations
-
-#### getComputed
+### getComputed
 
 ```php
 public function getComputed(): ?OpenFGA\Models\ComputedInterface
@@ -63,7 +61,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 [`ComputedInterface`](ComputedInterface.md) &#124; `null` — The computed userset specification, or null if not used
 
-#### getTupleToUserset
+### getTupleToUserset
 
 ```php
 public function getTupleToUserset(): ?OpenFGA\Models\UsersetTreeTupleToUsersetInterface
@@ -78,7 +76,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 [`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md) &#124; `null` — The tuple-to-userset operation, or null if not used
 
-#### getUsers
+### getUsers
 
 ```php
 public function getUsers(): ?OpenFGA\Models\Collections\UsersListInterface
@@ -93,9 +91,20 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 [`UsersListInterface`](Models/Collections/UsersListInterface.md) &#124; `null` — The list of users with direct access, or null if not used
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Leaf.php#L98)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\LeafInterface</small>*
 
@@ -111,18 +120,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Leaf.php#L98)
-
-#### Returns
-
-`array`

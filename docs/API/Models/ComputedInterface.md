@@ -2,7 +2,8 @@
 
 Represents a computed userset in OpenFGA authorization models. Computed usersets allow you to define relationships that are calculated dynamically based on other relationships. Instead of storing direct relationships, computed usersets reference other relations that should be evaluated to determine the effective permissions. For example, if you want &quot;viewers&quot; of a document to include everyone who is an &quot;editor&quot; of that document, you could use a computed userset that references the &quot;editor&quot; relation. Common userset reference formats: - &quot;#relation&quot; - References a relation on the same object - &quot;object#relation&quot; - References a relation on a specific object
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Represents a computed userset in OpenFGA authorization models. Computed usersets
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getUserset()`](#getuserset)
-- [Other](#other)
+- [`getUserset()`](#getuserset)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -34,9 +35,7 @@ Represents a computed userset in OpenFGA authorization models. Computed usersets
 
 ## Methods
 
-### List Operations
-
-#### getUserset
+### getUserset
 
 ```php
 public function getUserset(): string
@@ -51,9 +50,7 @@ Get the userset reference string that defines a computed relationship. This repr
 
 `string` — The userset reference string defining the computed relationship
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

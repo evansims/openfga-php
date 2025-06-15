@@ -2,21 +2,21 @@
 
 Circuit breaker interface for preventing cascade failures in distributed systems. This interface defines the contract for circuit breaker implementations that temporarily disable requests to failing endpoints, preventing resource exhaustion and allowing time for recovery. Circuit breakers track failures per endpoint and automatically open/close based on failure thresholds and cooldown periods. The circuit breaker operates in three states: - Closed: Normal operation, requests are allowed - Open: Failures exceeded threshold, requests are blocked - Half-Open: After cooldown, limited requests allowed to test recovery
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getFailureCount()`](#getfailurecount)
-- [Utility](#utility)
+- [`getFailureCount()`](#getfailurecount)
   - [`isOpen()`](#isopen)
-- [Other](#other)
   - [`recordFailure()`](#recordfailure)
   - [`recordSuccess()`](#recordsuccess)
   - [`shouldRetry()`](#shouldretry)
+
+</details>
 
 ## Namespace
 
@@ -32,9 +32,7 @@ Circuit breaker interface for preventing cascade failures in distributed systems
 
 ## Methods
 
-### List Operations
-
-#### getFailureCount
+### getFailureCount
 
 ```php
 public function getFailureCount(string $endpoint): int
@@ -55,9 +53,7 @@ Get the current failure count for an endpoint. Returns the number of consecutive
 
 `int` — The current failure count (0 if no failures recorded)
 
-### Utility
-
-#### isOpen
+### isOpen
 
 ```php
 public function isOpen(string $endpoint): bool
@@ -78,9 +74,7 @@ Check if the circuit is currently open for an endpoint. Returns true if the circ
 
 `bool` — True if the circuit is open (blocking requests), false otherwise
 
-### Other
-
-#### recordFailure
+### recordFailure
 
 ```php
 public function recordFailure(string $endpoint): void
@@ -101,7 +95,7 @@ Record a failure for the specified endpoint. Increments the failure count for th
 
 `void`
 
-#### recordSuccess
+### recordSuccess
 
 ```php
 public function recordSuccess(string $endpoint): void
@@ -122,7 +116,7 @@ Record a successful request for the specified endpoint. Resets the failure state
 
 `void`
 
-#### shouldRetry
+### shouldRetry
 
 ```php
 public function shouldRetry(string $endpoint): bool

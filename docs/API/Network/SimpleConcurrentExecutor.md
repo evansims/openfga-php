@@ -2,18 +2,19 @@
 
 Simple concurrent executor implementation. This implementation provides a fallback for environments without Fiber support. It executes tasks sequentially while maintaining the same interface as the fiber-based implementation.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`executeParallel()`](#executeparallel)
   - [`getMaxRecommendedConcurrency()`](#getmaxrecommendedconcurrency)
-- [Other](#other)
-  - [`executeParallel()`](#executeparallel)
   - [`supportsConcurrency()`](#supportsconcurrency)
+
+</details>
 
 ## Namespace
 
@@ -29,26 +30,7 @@ Simple concurrent executor implementation. This implementation provides a fallba
 
 ## Methods
 
-### List Operations
-
-#### getMaxRecommendedConcurrency
-
-```php
-public function getMaxRecommendedConcurrency(): int
-
-```
-
-Get the maximum recommended concurrency for the current environment. This provides a hint about the optimal concurrency level based on system resources and implementation constraints.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/SimpleConcurrentExecutor.php#L52)
-
-#### Returns
-
-`int` — Maximum recommended concurrent tasks
-
-### Other
-
-#### executeParallel
+### executeParallel
 
 ```php
 public function executeParallel(array $tasks, int $maxConcurrent = 10, bool $stopOnFirstError = false): array
@@ -71,7 +53,22 @@ Execute multiple tasks in parallel. Executes the provided tasks concurrently up 
 
 `array` — Array of results or exceptions in the same order as tasks
 
-#### supportsConcurrency
+### getMaxRecommendedConcurrency
+
+```php
+public function getMaxRecommendedConcurrency(): int
+
+```
+
+Get the maximum recommended concurrency for the current environment. This provides a hint about the optimal concurrency level based on system resources and implementation constraints.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/SimpleConcurrentExecutor.php#L52)
+
+#### Returns
+
+`int` — Maximum recommended concurrent tasks
+
+### supportsConcurrency
 
 ```php
 public function supportsConcurrency(): bool

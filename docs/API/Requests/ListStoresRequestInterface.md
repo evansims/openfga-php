@@ -2,7 +2,8 @@
 
 Interface for listing available OpenFGA stores. This interface defines the contract for requests that retrieve a paginated list of all OpenFGA stores accessible to the current authentication context. This is typically used for administrative purposes, allowing users to browse and manage multiple authorization domains. Store listing is essential for: - Administrative dashboards and management interfaces - Store discovery and selection workflows - Monitoring and auditing store usage across an organization - Implementing multi-tenant authorization architectures - Backup and migration tooling that needs to enumerate stores The operation supports pagination to handle large numbers of stores efficiently, ensuring good performance even in environments with hundreds or thousands of authorization domains.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,11 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getPageSize()`](#getpagesize)
   - [`getRequest()`](#getrequest)
+
+</details>
 
 ## Namespace
 
@@ -34,7 +36,7 @@ Interface for listing available OpenFGA stores. This interface defines the contr
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null
@@ -49,7 +51,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 
-#### getPageSize
+### getPageSize
 
 ```php
 public function getPageSize(): int|null
@@ -64,7 +66,7 @@ Get the maximum number of stores to return per page. Specifies the page size for
 
 `int` &#124; `null` — The maximum number of stores to return per page, or null to use the default page size
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

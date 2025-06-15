@@ -2,7 +2,8 @@
 
 Response containing streaming objects that a user has a specific relationship with. This response processes a streaming HTTP response and yields object identifiers as they are received from the server. This allows for memory-efficient processing of large result sets without loading the entire dataset into memory.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Response containing streaming objects that a user has a specific relationship wi
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`fromResponse()`](#fromresponse)
   - [`getObject()`](#getobject)
-- [Other](#other)
-  - [`fromResponse()`](#fromresponse)
+
+</details>
 
 ## Namespace
 
@@ -34,26 +35,7 @@ Response containing streaming objects that a user has a specific relationship wi
 
 ## Methods
 
-### List Operations
-
-#### getObject
-
-```php
-public function getObject(): string
-
-```
-
-Get a single object identifier from a streamed response chunk.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponse.php#L128)
-
-#### Returns
-
-`string` — The object identifier
-
-### Other
-
-#### fromResponse
+### fromResponse
 
 *<small>Implements Responses\StreamedListObjectsResponseInterface</small>*
 
@@ -81,3 +63,18 @@ Create a streaming response from an HTTP response. Processes the streaming HTTP 
 #### Returns
 
 `Generator`&lt;`int`, [`StreamedListObjectsResponseInterface`](StreamedListObjectsResponseInterface.md)&gt; — Generator yielding response objects
+
+### getObject
+
+```php
+public function getObject(): string
+
+```
+
+Get a single object identifier from a streamed response chunk.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/StreamedListObjectsResponse.php#L128)
+
+#### Returns
+
+`string` — The object identifier

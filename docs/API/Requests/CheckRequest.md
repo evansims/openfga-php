@@ -2,7 +2,8 @@
 
 Request for performing authorization checks in OpenFGA. This request determines whether a user has a specific relationship with an object based on the configured authorization model and relationship tuples. It&#039;s the core operation for making authorization decisions in your application. The check operation supports contextual tuples, custom contexts, and tracing to provide comprehensive authorization decisions with detailed debugging information.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,7 @@ Request for performing authorization checks in OpenFGA. This request determines 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getAuthorizationModel()`](#getauthorizationmodel)
+- [`getAuthorizationModel()`](#getauthorizationmodel)
   - [`getConsistency()`](#getconsistency)
   - [`getContext()`](#getcontext)
   - [`getContextualTuples()`](#getcontextualtuples)
@@ -19,6 +19,8 @@ Request for performing authorization checks in OpenFGA. This request determines 
   - [`getStore()`](#getstore)
   - [`getTrace()`](#gettrace)
   - [`getTupleKey()`](#gettuplekey)
+
+</details>
 
 ## Namespace
 
@@ -40,7 +42,7 @@ Request for performing authorization checks in OpenFGA. This request determines 
 
 ## Methods
 
-#### getAuthorizationModel
+### getAuthorizationModel
 
 ```php
 public function getAuthorizationModel(): string
@@ -55,7 +57,7 @@ Get the authorization model ID to use for the check. This specifies which versio
 
 `string` — The authorization model ID for permission evaluation
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -70,7 +72,7 @@ Get the consistency level for the check operation. This determines the read cons
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level, or null to use the default consistency setting
 
-#### getContext
+### getContext
 
 ```php
 public function getContext(): ?object
@@ -85,7 +87,7 @@ Get additional context data for conditional evaluation. This provides contextual
 
 `object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -100,7 +102,7 @@ Get additional tuples to consider during the check. These contextual tuples are 
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -121,7 +123,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -136,7 +138,7 @@ Get the store ID containing the authorization data. This identifies which OpenFG
 
 `string` — The store ID containing the authorization data
 
-#### getTrace
+### getTrace
 
 ```php
 public function getTrace(): ?bool
@@ -151,7 +153,7 @@ Get whether to include evaluation trace in the response. When enabled, the respo
 
 `bool` &#124; `null` — Whether to include trace information, or null to use the default setting
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface

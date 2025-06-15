@@ -2,22 +2,23 @@
 
 Service interface for high-level store operations. This interface provides a business-focused abstraction over store management, offering convenience methods and enhanced validation beyond basic CRUD operations. It simplifies common store workflows while maintaining the Result pattern for consistent error handling across the SDK.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`createStore()`](#createstore)
+- [`createStore()`](#createstore)
   - [`deleteStore()`](#deletestore)
-  - [`getOrCreateStore()`](#getorcreatestore)
-- [List Operations](#list-operations)
   - [`findStore()`](#findstore)
   - [`findStoresByName()`](#findstoresbyname)
+  - [`getOrCreateStore()`](#getorcreatestore)
   - [`listAllStores()`](#listallstores)
   - [`listStores()`](#liststores)
+
+</details>
 
 ## Namespace
 
@@ -33,9 +34,7 @@ Service interface for high-level store operations. This interface provides a bus
 
 ## Methods
 
-### CRUD Operations
-
-#### createStore
+### createStore
 
 ```php
 public function createStore(string $name): FailureInterface|SuccessInterface
@@ -56,7 +55,7 @@ Creates a new store with validation. This method creates a new OpenFGA store aft
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success containing the created Store, or Failure with error details
 
-#### deleteStore
+### deleteStore
 
 ```php
 public function deleteStore(string $storeId, bool $confirmExists = true): FailureInterface|SuccessInterface
@@ -78,30 +77,7 @@ Deletes a store with optional confirmation. This method deletes a store after op
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with null value, or Failure with error details
 
-#### getOrCreateStore
-
-```php
-public function getOrCreateStore(string $name): FailureInterface|SuccessInterface
-
-```
-
-Gets an existing store or creates a new one with the given name. This convenience method first attempts to find a store by name among existing stores. If no store with the given name exists, it creates a new one. This is useful for idempotent store setup in development or testing scenarios. Note: This method lists all stores to find matches by name, which may be inefficient with large numbers of stores.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/StoreServiceInterface.php#L90)
-
-#### Parameters
-
-| Name    | Type     | Description                             |
-| ------- | -------- | --------------------------------------- |
-| `$name` | `string` | The name of the store to find or create |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success containing the Store (existing or new), or Failure with error details
-
-### List Operations
-
-#### findStore
+### findStore
 
 ```php
 public function findStore(string $storeId): FailureInterface|SuccessInterface
@@ -122,7 +98,7 @@ Finds a store by ID with enhanced error handling. This method retrieves a store 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success containing the Store, or Failure with detailed error context
 
-#### findStoresByName
+### findStoresByName
 
 ```php
 public function findStoresByName(string $pattern, int|null $maxItems = NULL): FailureInterface|SuccessInterface
@@ -144,7 +120,28 @@ Finds stores by name pattern. This method searches for stores whose names match 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success containing Stores collection of matches, or Failure with error details
 
-#### listAllStores
+### getOrCreateStore
+
+```php
+public function getOrCreateStore(string $name): FailureInterface|SuccessInterface
+
+```
+
+Gets an existing store or creates a new one with the given name. This convenience method first attempts to find a store by name among existing stores. If no store with the given name exists, it creates a new one. This is useful for idempotent store setup in development or testing scenarios. Note: This method lists all stores to find matches by name, which may be inefficient with large numbers of stores.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/StoreServiceInterface.php#L90)
+
+#### Parameters
+
+| Name    | Type     | Description                             |
+| ------- | -------- | --------------------------------------- |
+| `$name` | `string` | The name of the store to find or create |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success containing the Store (existing or new), or Failure with error details
+
+### listAllStores
 
 ```php
 public function listAllStores(int|null $maxItems = NULL): FailureInterface|SuccessInterface
@@ -165,7 +162,7 @@ Lists all stores with simplified pagination. This method retrieves all accessibl
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success containing Stores collection, or Failure with error details
 
-#### listStores
+### listStores
 
 ```php
 public function listStores(

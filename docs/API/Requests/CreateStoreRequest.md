@@ -2,7 +2,8 @@
 
 Request for creating a new OpenFGA store. Stores provide data isolation for different applications or environments, maintaining separate authorization models, relationship tuples, and providing complete separation from other stores.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getName()`](#getname)
+- [`getName()`](#getname)
   - [`getRequest()`](#getrequest)
+
+</details>
 
 ## Namespace
 
@@ -34,7 +36,7 @@ Request for creating a new OpenFGA store. Stores provide data isolation for diff
 
 ## Methods
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -49,7 +51,7 @@ Get the name for the new store. Returns the human-readable name that will be ass
 
 `string` — The descriptive name for the new authorization store
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext

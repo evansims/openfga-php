@@ -2,15 +2,17 @@
 
 Service for filtering and deduplicating tuple operations. This service encapsulates the business logic for handling duplicate tuples in write and delete operations, ensuring that: - No duplicate tuples exist within writes or deletes - Delete operations take precedence over writes when conflicts occur - Order is preserved based on first occurrence
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`filterDuplicates()`](#filterduplicates)
+- [`filterDuplicates()`](#filterduplicates)
+
+</details>
 
 ## Namespace
 
@@ -26,7 +28,7 @@ Service for filtering and deduplicating tuple operations. This service encapsula
 
 ## Methods
 
-#### filterDuplicates
+### filterDuplicates
 
 ```php
 public function filterDuplicates(TupleKeysInterface|null $writes, TupleKeysInterface|null $deletes): array

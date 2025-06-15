@@ -2,7 +2,8 @@
 
 Implementation of request context for OpenFGA API operations. This class provides a concrete implementation of the RequestContextInterface, encapsulating all the information needed to construct and execute HTTP requests to the OpenFGA API. It stores request metadata including HTTP method, URL, headers, body content, and routing configuration in an immutable structure. The RequestContext serves as a data transfer object that carries request information from the high-level API operations down to the HTTP transport layer, ensuring that all necessary context is preserved throughout the request processing pipeline.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,13 @@ Implementation of request context for OpenFGA API operations. This class provide
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getBody()`](#getbody)
+- [`getBody()`](#getbody)
   - [`getHeaders()`](#getheaders)
   - [`getMethod()`](#getmethod)
   - [`getUrl()`](#geturl)
-- [Other](#other)
   - [`useApiUrl()`](#useapiurl)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Implementation of request context for OpenFGA API operations. This class provide
 
 ## Methods
 
-### List Operations
-
-#### getBody
+### getBody
 
 ```php
 public function getBody(): ?Psr\Http\Message\StreamInterface
@@ -53,7 +52,7 @@ Get the request body stream. Returns the PSR-7 stream containing the request bod
 
 `Psr\Http\Message\StreamInterface` &#124; `null` — The request body stream containing JSON data, or null for operations without body content
 
-#### getHeaders
+### getHeaders
 
 ```php
 public function getHeaders(): array
@@ -68,7 +67,7 @@ Get the request headers. Returns an associative array of HTTP headers that shoul
 
 `array` — Associative array mapping header names to their values
 
-#### getMethod
+### getMethod
 
 ```php
 public function getMethod(): OpenFGA\Network\RequestMethod
@@ -83,7 +82,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 [`RequestMethod`](RequestMethod.md) — The HTTP method enum value indicating the request type
 
-#### getUrl
+### getUrl
 
 ```php
 public function getUrl(): string
@@ -98,9 +97,7 @@ Get the URL for the request. Returns the target URL path for this API operation.
 
 `string` — The target URL path for the API operation
 
-### Other
-
-#### useApiUrl
+### useApiUrl
 
 ```php
 public function useApiUrl(): bool

@@ -2,7 +2,8 @@
 
 Interface for retrieving a specific authorization model. This interface defines the contract for requests that fetch a complete authorization model from an OpenFGA store. Authorization models define the relationship types, object types, and access control rules that govern permission evaluation in your application. Retrieving authorization models is essential for: - Inspecting current authorization schema and rules - Building administrative interfaces for model management - Implementing model comparison and diff functionality - Backing up and versioning authorization configurations - Understanding inheritance and relationship patterns - Debugging authorization behavior and rule conflicts The retrieved model includes all type definitions, conditions, and schema information needed to understand how permissions are evaluated.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,11 @@ Interface for retrieving a specific authorization model. This interface defines 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModel()`](#getmodel)
+- [`getModel()`](#getmodel)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -34,7 +36,7 @@ Interface for retrieving a specific authorization model. This interface defines 
 
 ## Methods
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -49,7 +51,7 @@ Get the authorization model ID to retrieve. Specifies which version of the autho
 
 `string` — The unique identifier of the authorization model to retrieve
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -70,7 +72,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

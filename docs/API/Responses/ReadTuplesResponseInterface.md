@@ -2,7 +2,8 @@
 
 Interface for tuple reading response objects. This interface defines the contract for responses returned when reading relationship tuples from OpenFGA. The response includes a collection of tuples matching the query criteria and pagination support for handling large result sets efficiently. Tuple reading is essential for querying existing relationships, auditing authorization data, and implementing administrative interfaces for relationship management.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for tuple reading response objects. This interface defines the contrac
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getTuples()`](#gettuples)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for tuple reading response objects. This interface defines the contrac
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null
@@ -48,7 +50,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 `string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 
-#### getTuples
+### getTuples
 
 ```php
 public function getTuples(): TuplesInterface

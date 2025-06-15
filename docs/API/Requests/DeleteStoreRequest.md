@@ -2,7 +2,8 @@
 
 Request for permanently deleting a store and all its data. This request removes the entire store, including all authorization models, relationship tuples, and associated metadata. This operation is irreversible and should be used with extreme caution in production environments.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Request for permanently deleting a store and all its data. This request removes 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getRequest()`](#getrequest)
+- [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -34,7 +36,7 @@ Request for permanently deleting a store and all its data. This request removes 
 
 ## Methods
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -55,7 +57,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

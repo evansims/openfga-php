@@ -2,15 +2,17 @@
 
 Repository interface for managing OpenFGA authorization model assertions. This interface provides data access operations for working with assertions, which are test cases that validate the behavior of authorization models. Implementations handle the underlying storage and retrieval mechanisms.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`read()`](#read)
+- [`read()`](#read)
   - [`write()`](#write)
+
+</details>
 
 ## Namespace
 
@@ -22,7 +24,7 @@ Repository interface for managing OpenFGA authorization model assertions. This i
 
 ## Methods
 
-#### read
+### read
 
 ```php
 public function read(string $authorizationModelId): FailureInterface|SuccessInterface
@@ -43,7 +45,7 @@ Read assertions from an authorization model. Retrieves all test assertions defin
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with assertions collection, or Failure with error details
 
-#### write
+### write
 
 ```php
 public function write(string $authorizationModelId, AssertionsInterface $assertions): FailureInterface|SuccessInterface

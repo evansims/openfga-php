@@ -1,6 +1,7 @@
 # UsersListInterface
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -8,31 +9,30 @@
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`get()`](#get)
-  - [`offsetGet()`](#offsetget)
-- [Utility](#utility)
-  - [`isEmpty()`](#isempty)
-  - [`offsetExists()`](#offsetexists)
-  - [`offsetSet()`](#offsetset)
-  - [`offsetUnset()`](#offsetunset)
-- [Other](#other)
-  - [`add()`](#add)
+- [`add()`](#add)
   - [`clear()`](#clear)
   - [`count()`](#count)
   - [`current()`](#current)
   - [`every()`](#every)
   - [`filter()`](#filter)
   - [`first()`](#first)
+  - [`get()`](#get)
+  - [`isEmpty()`](#isempty)
   - [`jsonSerialize()`](#jsonserialize)
   - [`key()`](#key)
   - [`next()`](#next)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetGet()`](#offsetget)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
   - [`reduce()`](#reduce)
   - [`rewind()`](#rewind)
   - [`some()`](#some)
   - [`toArray()`](#toarray)
   - [`valid()`](#valid)
   - [`withItems()`](#withitems)
+
+</details>
 
 ## Namespace
 
@@ -57,128 +57,7 @@
 
 ## Methods
 
-### List Operations
-
-#### get
-
-```php
-public function get(int $offset): T|null
-
-```
-
-Get an item by its position in the collection. This method retrieves the item at the specified index position. Returns null if the index is out of bounds.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L161)
-
-#### Parameters
-
-| Name      | Type  | Description                                |
-| --------- | ----- | ------------------------------------------ |
-| `$offset` | `int` | The index position of the item to retrieve |
-
-#### Returns
-
-`T` &#124; `null` — The item at the specified position, or null if not found
-
-#### offsetGet
-
-```php
-public function offsetGet(mixed $offset): T|null
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L217)
-
-#### Parameters
-
-| Name      | Type    | Description |
-| --------- | ------- | ----------- |
-| `$offset` | `mixed` |             |
-
-#### Returns
-
-`T` &#124; `null`
-
-### Utility
-
-#### isEmpty
-
-```php
-public function isEmpty(): bool
-
-```
-
-Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L171)
-
-#### Returns
-
-`bool` — True if the collection is empty, false otherwise
-
-#### offsetExists
-
-```php
-public function offsetExists(mixed $offset): bool
-
-```
-
-Check if an offset exists in the collection. This method determines whether the collection contains an item at the specified offset position.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L209)
-
-#### Parameters
-
-| Name      | Type    | Description                       |
-| --------- | ------- | --------------------------------- |
-| `$offset` | `mixed` | The offset to check for existence |
-
-#### Returns
-
-`bool` — True if the offset exists, false otherwise
-
-#### offsetSet
-
-```php
-public function offsetSet(int|string|null $offset, T $value): void
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L226)
-
-#### Parameters
-
-| Name      | Type                                | Description |
-| --------- | ----------------------------------- | ----------- |
-| `$offset` | `int` &#124; `string` &#124; `null` |             |
-| `$value`  | `T`                                 |             |
-
-#### Returns
-
-`void`
-
-#### offsetUnset
-
-```php
-public function offsetUnset(mixed $offset): void
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L232)
-
-#### Parameters
-
-| Name      | Type    | Description |
-| --------- | ------- | ----------- |
-| `$offset` | `mixed` |             |
-
-#### Returns
-
-`void`
-
-### Other
-
-#### add
+### add
 
 ```php
 public function add(T $item): static
@@ -199,7 +78,7 @@ Add an item to the end of the collection. This method appends a new model object
 
 `static`
 
-#### clear
+### clear
 
 ```php
 public function clear(): void
@@ -214,7 +93,7 @@ Remove all items from the collection. This method empties the collection, resett
 
 `void`
 
-#### count
+### count
 
 ```php
 public function count(): int<0, max>
@@ -227,7 +106,7 @@ public function count(): int<0, max>
 
 `int&lt;`0`, `max`&gt;`
 
-#### current
+### current
 
 ```php
 public function current(): T
@@ -240,7 +119,7 @@ public function current(): T
 
 `T`
 
-#### every
+### every
 
 ```php
 public function every(callable $callback): bool
@@ -261,7 +140,7 @@ Check if all items in the collection match the given condition. This method test
 
 `bool` — True if all items match the condition, false otherwise
 
-#### filter
+### filter
 
 ```php
 public function filter(callable $callback): static
@@ -282,7 +161,7 @@ Create a new collection containing only items that match the condition. This met
 
 `static` — A new collection containing only the matching items
 
-#### first
+### first
 
 ```php
 public function first(?callable $callback = NULL): T|null
@@ -303,7 +182,43 @@ Get the first item in the collection, optionally matching a condition. When call
 
 `T` &#124; `null` — The first matching item, or null if none found
 
-#### jsonSerialize
+### get
+
+```php
+public function get(int $offset): T|null
+
+```
+
+Get an item by its position in the collection. This method retrieves the item at the specified index position. Returns null if the index is out of bounds.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L161)
+
+#### Parameters
+
+| Name      | Type  | Description                                |
+| --------- | ----- | ------------------------------------------ |
+| `$offset` | `int` | The index position of the item to retrieve |
+
+#### Returns
+
+`T` &#124; `null` — The item at the specified position, or null if not found
+
+### isEmpty
+
+```php
+public function isEmpty(): bool
+
+```
+
+Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L171)
+
+#### Returns
+
+`bool` — True if the collection is empty, false otherwise
+
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<int, string>
@@ -316,7 +231,7 @@ public function jsonSerialize(): array<int, string>
 
 `array&lt;`int`, `string`&gt;`
 
-#### key
+### key
 
 ```php
 public function key(): int
@@ -331,7 +246,7 @@ Get the current iterator key. This method returns the current position in the co
 
 `int` — The current iterator position
 
-#### next
+### next
 
 ```php
 public function next(): void
@@ -346,7 +261,86 @@ Move the iterator to the next position. This method advances the internal iterat
 
 `void`
 
-#### reduce
+### offsetExists
+
+```php
+public function offsetExists(mixed $offset): bool
+
+```
+
+Check if an offset exists in the collection. This method determines whether the collection contains an item at the specified offset position.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L209)
+
+#### Parameters
+
+| Name      | Type    | Description                       |
+| --------- | ------- | --------------------------------- |
+| `$offset` | `mixed` | The offset to check for existence |
+
+#### Returns
+
+`bool` — True if the offset exists, false otherwise
+
+### offsetGet
+
+```php
+public function offsetGet(mixed $offset): T|null
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L217)
+
+#### Parameters
+
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
+
+#### Returns
+
+`T` &#124; `null`
+
+### offsetSet
+
+```php
+public function offsetSet(int|string|null $offset, T $value): void
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L226)
+
+#### Parameters
+
+| Name      | Type                                | Description |
+| --------- | ----------------------------------- | ----------- |
+| `$offset` | `int` &#124; `string` &#124; `null` |             |
+| `$value`  | `T`                                 |             |
+
+#### Returns
+
+`void`
+
+### offsetUnset
+
+```php
+public function offsetUnset(mixed $offset): void
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/IndexedCollectionInterface.php#L232)
+
+#### Parameters
+
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
+
+#### Returns
+
+`void`
+
+### reduce
 
 ```php
 public function reduce(U $initial, callable $callback): U
@@ -368,7 +362,7 @@ Reduce the collection to a single value using a callback function. This method i
 
 `U` — The final accumulated value
 
-#### rewind
+### rewind
 
 ```php
 public function rewind(): void
@@ -383,7 +377,7 @@ Reset the iterator to the beginning of the collection. This method moves the int
 
 `void`
 
-#### some
+### some
 
 ```php
 public function some(callable $callback): bool
@@ -404,7 +398,7 @@ Check if at least one item in the collection matches the given condition. This m
 
 `bool` — True if any item matches the condition, false otherwise
 
-#### toArray
+### toArray
 
 ```php
 public function toArray(): array<int|string, T>
@@ -419,7 +413,7 @@ Convert the collection to a standard PHP array. This method creates a native PHP
 
 `array&lt;int` &#124; `string, T&gt;` — A standard PHP array containing all collection items
 
-#### valid
+### valid
 
 ```php
 public function valid(): bool
@@ -434,7 +428,7 @@ Check if the current iterator position is valid. This method determines whether 
 
 `bool` — True if the current position is valid, false otherwise
 
-#### withItems
+### withItems
 
 ```php
 public function withItems(mixed $items): static

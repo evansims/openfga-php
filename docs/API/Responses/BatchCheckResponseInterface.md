@@ -2,7 +2,8 @@
 
 Response containing the results of a batch authorization check. This response contains a map of correlation IDs to check results, allowing you to match each result back to the original check request using the correlation ID that was provided in the batch request.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Response containing the results of a batch authorization check. This response co
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getResult()`](#getresult)
+- [`getResult()`](#getresult)
   - [`getResultForCorrelationId()`](#getresultforcorrelationid)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Response containing the results of a batch authorization check. This response co
 
 ## Methods
 
-#### getResult
+### getResult
 
 ```php
 public function getResult(): array<string, BatchCheckSingleResultInterface>
@@ -48,7 +50,7 @@ Get the results map from correlation IDs to check results. Each key in the map i
 
 `array&lt;`string`, [`BatchCheckSingleResultInterface`](Models/BatchCheckSingleResultInterface.md)&gt;` — Map of correlation ID to check result
 
-#### getResultForCorrelationId
+### getResultForCorrelationId
 
 ```php
 public function getResultForCorrelationId(string $correlationId): ?OpenFGA\Models\BatchCheckSingleResultInterface

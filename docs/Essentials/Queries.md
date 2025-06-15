@@ -1,4 +1,4 @@
-Once you've set up your [authorization model](Models.md) and [relationship tuples](Tuples.md), it's time to actually put them to use.
+**Queries are how your application enforces access control.** With an [authorization model](Models.md) and [relationship tuples](Tuples.md) in place, it's time to put them to use.
 
 ## Prerequisites
 
@@ -6,13 +6,16 @@ Before diving into the examples, make sure you have the necessary setup:
 
 ```php
 use OpenFGA\{Client, ClientInterface};
-use OpenFGA\Models\{TupleKey, Enums\Consistency};
+use OpenFGA\Enums\Consistency;
+use OpenFGA\Models\TupleKey;
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
 
+// Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 
-$storeId = 'your-store-id'; // From creating a store
-$modelId = 'your-model-id'; // From creating an authorization model
+// Store and model identifiers from your configuration
+$storeId = 'your-store-id';
+$modelId = 'your-model-id';
 ```
 
 ## Queries
@@ -30,14 +33,12 @@ Queries let you ask OpenFGA about permissions. There are four types:
 
 ### Check permissions
 
-This is the query your application will make most often, and how you'll enforce access control.
-
-You can use the `allowed` [helper](../Features/Helpers.md) to check permissions and return a boolean value:
+This is the query your application will make most often. Use the `allowed` [helper](../Features/Helpers.md) to check permissions and return a boolean value:
 
 ```php
 use function OpenFGA\{allowed, tuple};
 
-// Can user:alice view document:roadmap?
+// Can Alice view the "roadmap" document?
 $canView = allowed(
     client: $client,
     store: $storeId,
@@ -51,15 +52,18 @@ echo match($canView) {
 };
 ```
 
-This helper is a convenience wrapper around the `check` method. It will silently ignore errors. If you need to handle errors gracefully, use the Client `check` method with the [`Result` pattern](../Features/Results.md):
+> The `allowed` helper wraps the Client `check` method, and is intended for situations where graceful degradation is preferred over exception handling. It will silently ignore errors and return `false` if the request fails.
+
+<details>
+<summary>Use the Client <code>check</code> method if you need more control over the operation…</summary>
 
 ```php
 use OpenFGA\Results\{SuccessInterface, FailureInterface};
 use OpenFGA\Models\{CheckResponse, CheckResponseInterface};
-use function OpenFGA\tuple;
 use Throwable;
+use function OpenFGA\tuple;
 
-// Can user:alice view document:roadmap?
+// *Can* Alice view the "roadmap" document?
 $canView = $client->check(
     store: $storeId,
     model: $modelId,
@@ -77,36 +81,86 @@ echo match($canView) {
 };
 ```
 
-#### Checking multiple permissions at once
+</details>
 
-If you need to check multiple permissions at once, use batch checks:
+#### Check multiple permissions at once
+
+Use the `checks` helper to check multiple permissions at once:
+
+```php
+use OpenFGA\{checks, check};
+
+// *Can* Alice or Bob view the "roadmap" document?
+$results = checks(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    check(
+      correlation: 'alice-check',
+      user: 'user:alice',
+      relation: 'viewer',
+      object: 'document:roadmap',
+    ),
+    check(
+      correlation: 'bob-check',
+      tuple: tuple('user:bob', 'viewer', 'document:roadmap'),
+    ),
+);
+
+// $results = [
+//   'alice-check' => true,
+//   'bob-check' => false,
+// ]
+```
+
+> The `checks` helper wraps the Client `batchCheck` method, and is intended for situations where graceful degradation is preferred over exception handling. It will silently ignore errors.
+
+<details>
+<summary>Use the Client <code>batchCheck</code> method directly if you need more control over the operation…</summary>
 
 ```php
 use OpenFGA\Models\{BatchCheckItem, BatchCheckItems};
 
-$results = $client->batchCheck(
-  store: $storeId,
-  model: $modelId,
-  checks: new BatchCheckItems([
-    new BatchCheckItem(
-      tupleKey: tuple('user:alice', 'viewer', 'document:roadmap'),
-      trace: true,
-    ),
-    new BatchCheckItem(
-      tupleKey: tuple('user:bob', 'viewer', 'document:roadmap'),
-      trace: true,
-    ),
-  ])
+// *Can* Alice or Bob view the "roadmap" document?
+
+$checks = new BatchCheckItems(
+  new BatchCheckItem(
+    tupleKey: tuple('user:alice', 'viewer', 'document:roadmap'),
+    correlationId: 'alice-check',
+  ),
+  new BatchCheckItem(
+    tupleKey: tuple('user:bob', 'viewer', 'document:roadmap'),
+    correlationId: 'bob-check',
+  ),
+);
+
+$result = $client->batchCheck(
+    store: $storeId,
+    model: $modelId,
+    checks: $checks
 )
+    ->failure(fn(Throwable $error) => logError($error)) // ex: log error, send alert, etc.
+    ->success(fn(BatchCheckResponseInterface $response) => logSuccess($response)) // ex: log success, etc.
+    ->then(fn(BatchCheckResponseInterface $response) => $response?->getResult()) // ex: return result
+    ->recover(fn(Throwable $error) => []) // ex: ignore errors; fallback to empty array
+    ->unwrap();
+
+// $results = [
+//   'alice-check' => true,
+//   'bob-check' => false,
+// ]
 ```
+
+</details>
 
 ### List accessible objects
 
-Perfect for building dashboards and filtered lists. Shows what a user can access.
+Use the `objects` helper to retrieve a list of objects a user can access.
 
 ```php
-// What documents can alice edit?
-$result = $client->listObjects(
+// *What* documents can Alice edit?
+$documents = objects(
+    client: $client,
     store: $storeId,
     model: $modelId,
     user: 'user:alice',
@@ -114,82 +168,114 @@ $result = $client->listObjects(
     type: 'document'
 );
 
-$documentIds = $result->unwrap()->getObjects();
-// Returns: ['roadmap', 'budget', 'proposal']
+// $documents = ['roadmap', 'budget', 'proposal']
 ```
 
-#### Building a document list
+> The `objects` helper wraps the Client `streamedListObjects` method and is intended for situations where graceful degradation is preferred over exception handling. It will silently ignore errors.
+
+<details>
+<summary>Use the Client <code>streamedListObjects</code> or <code>listObjects</code> methods directly if you need more control over the operation…</summary>
 
 ```php
-function getEditableDocuments(string $userId): array
-{
-    $result = $client->listObjects(
-        user: "user:{$userId}",
-        relation: 'editor',
-        type: 'document'
-    );
+// *What* documents can Alice edit?
+$documents = $client->streamedListObjects(
+    store: $storeId,
+    model: $modelId,
+    type: 'document',
+    relation: 'editor',
+    user: 'user:alice',
+)
+    ->failure(fn(Throwable $error) => logError($error)) // ex: log error, send alert, etc.
+    ->success(fn(StreamedListObjectsResponseInterface $response) => logSuccess($response)) // ex: log success, etc.
+    ->then(fn(StreamedListObjectsResponseInterface $response) => $response?->getObject()) // ex: return result
+    ->recover(fn(Throwable $error) => []) // ex: ignore errors; fallback to empty array
+    ->unwrap();
 
-    $documentIds = $result->unwrap()->getObjects();
-
-    // Fetch full document details from your database
-    return Document::whereIn('id', $documentIds)->get();
-}
+// $documents = ['roadmap', 'budget', 'proposal']
 ```
+
+</details>
 
 ### Find users with permission
 
-Great for admin interfaces and sharing features. Shows who has access to something.
+Use the `users` helper to retrieve a list of users who have a specific permission on an object.
 
 ```php
-// Who can edit document:roadmap?
-$result = $client->listUsers(
+// *Who* can edit the "roadmap" document?
+$editors = users(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
     object: 'document:roadmap',
     relation: 'editor'
 );
 
-$users = $result->unwrap()->getUsers();
-
-foreach ($users as $user) {
-    if ($user->isUser()) {
-        echo "User: " . $user->getUserId() . "\n";
-    } elseif ($user->isUserset()) {
-        echo "Group: " . $user->getUsersetObject() . "\n";
+foreach ($editors as $editor) {
+    if ($editor->isUser()) {
+        echo "User: " . $editor->getUserId() . "\n";
+    } elseif ($editor->isUserset()) {
+        echo "Group: " . $editor->getUsersetObject() . "\n";
     }
 }
 ```
 
-#### Building a sharing interface
+> The `users` helper wraps the Client `listUsers` method and is intended for situations where graceful degradation is preferred over exception handling. It will silently ignore errors.
+
+<details>
+<summary>Use the Client <code>listUsers</code> method directly if you need more control over the operation…</summary>
 
 ```php
-function getDocumentEditors(string $documentId): array
-{
-    $result = $client->listUsers(
-        object: "document:{$documentId}",
-        relation: 'editor'
-    );
+// *Who* can edit the "roadmap" document?
+$editors = $client->listUsers(
+    store: $storeId,
+    model: $modelId,
+    object: 'document:roadmap',
+    relation: 'editor'
+)
+    ->failure(fn(Throwable $error) => logError($error)) // ex: log error, send alert, etc.
+    ->success(fn(ListUsersResponseInterface $response) => logSuccess($response)) // ex: log success, etc.
+    ->then(fn(ListUsersResponseInterface $response) => $response->getUsers())
+    ->recover(fn(Throwable $error) => []) // ex: ignore errors; fallback to empty array
+    ->unwrap();
 
-    $editors = [];
-    foreach ($result->unwrap()->getUsers() as $user) {
-        if ($user->isUser()) {
-            $editors[] = [
-                'type' => 'user',
-                'id' => $user->getUserId(),
-                'name' => User::find($user->getUserId())->name
-            ];
-        }
+foreach ($editors as $editor) {
+    if ($editor->isUser()) {
+        echo "User: " . $editor->getUserId() . "\n";
+    } elseif ($editor->isUserset()) {
+        echo "Group: " . $editor->getUsersetObject() . "\n";
     }
-
-    return $editors;
 }
 ```
+
+</details>
 
 ### Expand relationships
 
-When permissions aren't working as expected, use expand to see why. It shows the complete relationship tree.
+When permissions aren't working as expected, use the `expand` helper to discovery why. It returns the complete relationship tree, and is useful for debugging complex permission structures or understanding why a user has (or doesn't have) access.
 
 ```php
-// How can anyone be a viewer of document:roadmap?
-$result = $client->expand(
+use function OpenFGA\expand;
+
+// *How* can a user be considered a viewer of the "roadmap" document?
+$tree = expand(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    relation: 'viewer',
+    object: 'document:roadmap',
+);
+
+print_r($tree);
+```
+
+The `expand` helper wraps the Client `expand` method and is intended for situations where graceful degradation is preferred over exception handling. It will silently ignore errors.
+
+<details>
+<summary>Use the Client <code>expand</code> method directly if you need more control over the operation…</summary>
+
+```php
+// *How* can a user be considered a viewer of the "roadmap" document?
+$tree = $client->expand(
     store: $storeId,
     model: $modelId,
     tupleKey: tuple(
@@ -197,13 +283,17 @@ $result = $client->expand(
         relation: 'viewer',
         object: 'document:roadmap'
     )
-);
+)
+    ->failure(fn(Throwable $error) => logError($error)) // ex: log error, send alert, etc.
+    ->success(fn(ExpandResponseInterface $response) => logSuccess($response)) // ex: log success, etc.
+    ->then(fn(ExpandResponseInterface $response) => $response?->getTree()) // ex: return result
+    ->recover(fn(Throwable $error) => null) // ex: ignore errors; fallback to null
+    ->unwrap();
 
-$tree = $result->unwrap()->getTree();
-print_r($tree->toArray()); // Shows the complete permission tree
+print_r($tree);
 ```
 
-This is mainly useful for debugging complex permission structures or understanding why a user has (or doesn't have) access.
+</details>
 
 ## Advanced patterns
 
@@ -212,6 +302,8 @@ This is mainly useful for debugging complex permission structures or understandi
 Test "what-if" scenarios without permanently saving relationships. Perfect for previewing permission changes.
 
 ```php
+use OpenFGA\{tuple, tuples, allowed};
+
 // What if alice joins the engineering team?
 $contextualTuple = tuple(
     user: 'user:alice',
@@ -219,17 +311,22 @@ $contextualTuple = tuple(
     object: 'team:engineering'
 );
 
-$result = $client->check(
-    tupleKey: tuple(
+$wouldHaveAccess = allowed(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuple: tuple(
         user: 'user:alice',
         relation: 'viewer',
         object: 'document:technical-specs'
     ),
-    contextualTuples: tuples($contextualTuple)
+    contextualTuples: tuples($contextualTuple),
 );
 
-// This check includes the temporary relationship
-$wouldHaveAccess = $result->unwrap()->getIsAllowed();
+echo match ($wouldHaveAccess) {
+    true => 'Alice WOULD have access',
+    false => 'Alice WOULD NOT have access',
+};
 ```
 
 ### Consistency levels
@@ -237,8 +334,14 @@ $wouldHaveAccess = $result->unwrap()->getIsAllowed();
 For read-after-write scenarios, you might need stronger consistency:
 
 ```php
-$result = $client->check(
-    tupleKey: tuple(
+use OpenFGA\Enums\Consistency;
+use OpenFGA\{tuple, tuples, allowed};
+
+$result = allowed(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuple: tuple(
         user: 'user:alice',
         relation: 'viewer',
         object: 'document:roadmap'
@@ -247,30 +350,7 @@ $result = $client->check(
 );
 ```
 
-### Error handling
-
-All query methods return Result objects. Handle errors gracefully using the Result pattern and helper functions:
-
-```php
-// Basic error handling
-$result = $client->check(
-    tupleKey: tuple(
-        user: 'user:alice',
-        relation: 'viewer',
-        object: 'document:roadmap'
-    )
-);
-
-$result
-    ->success(fn($response) => echo "Check succeeded: " . ($response->getAllowed() ? 'Allowed' : 'Denied'))
-    ->failure(fn($error) => logger()->error("Permission check failed", [
-        'error_type' => $error::class,
-        'error_detail' => $error instanceof ClientException ? $error->getError()->name : 'unknown'
-    ]))
-    ->unwrap(); // Throws on failure
-```
-
-#### Advanced error handling with enum-based exceptions
+#### Advanced error handling
 
 Use enum-based exceptions for more precise error handling with i18n support:
 
@@ -383,8 +463,12 @@ class FgaAuthMiddleware
         $user = $request->user();
         $resource = $request->route('document'); // or extract from URL
 
-        if (!allowed($this->client, $this->store, $this->model,
-                     tuple("user:{$user->id}", $relation, "document:{$resource}"))) {
+        if (! allowed(
+            client: $this->client,
+            store: $this->store,
+            model: $this->model,
+            tuple: tuple("user:{$user->id}", $relation, "document:{$resource}"),
+        )) {
             abort(403, "You don't have {$relation} access to this resource");
         }
 
@@ -396,8 +480,11 @@ class FgaAuthMiddleware
 ### Efficient data filtering
 
 ```php
+use OpenFGA\ClientInterface;
+use function OpenFGA\objects;
+
 // Instead of checking each item individually
-function getEditableDocuments(string $userId): Collection
+function getEditableDocuments(ClientInterface $client, string $storeId, string $modelId, string $userId): Collection
 {
     // ❌ Don't do this - N+1 problem
     // return Document::all()->filter(fn($doc) =>
@@ -405,44 +492,61 @@ function getEditableDocuments(string $userId): Collection
     // );
 
     // ✅ Do this - single API call
-    $editableIds = $client->listObjects(
+    $editableDocuments = objects(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
         user: "user:{$userId}",
         relation: 'editor',
         type: 'document'
-    )->unwrap()->getObjects();
+    );
 
-    return Document::whereIn('id', $editableIds)->get();
+    return Document::whereIn('id', $editableDocuments)->get();
 }
 ```
 
 ### Debugging permission issues
 
 ```php
+use OpenFGA\ClientInterface;
+use function OpenFGA\{allowed, expand, tuple, read};
+
 // When "why doesn't this user have access?" questions arise
-function debugUserAccess(string $userId, string $documentId): void
+function debugUserAccess(ClientInterface $client, string $storeId, string $modelId, string $userId, string $documentId): void
 {
     // Check direct permission
-    $canEdit = $client->check(
-        tupleKey: tuple($userId, 'editor', $documentId)
-    )->unwrap();
+    $canEdit = allowed(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
+        tuple: tuple($userId, 'editor', $documentId)
+    );
 
-    echo "Can edit: " . ($canEdit->getAllowed() ? 'Yes' : 'No') . "\n";
+    echo 'Can edit: ' . ($canEdit === true ? 'Yes' : 'No') . "\n";
 
     // Show the permission tree
-    $tree = $client->expand(
-        tupleKey: new TupleKey(relation: 'editor', object: $documentId)
-    )->unwrap();
+    $tree = expand(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
+        relation: 'editor',
+        object: $documentId
+    );
 
     echo "Permission structure:\n";
     print_r($tree->toArray());
 
     // List all relationships for this document
-    $allTuples = $client->readTuples(
-        tupleKey: new TupleKey(object: $documentId)
-    )->unwrap();
+    $allTuples = read(
+        client: $client,
+        store: $storeId,
+        model: $modelId,
+        tuple: tuple($documentId)
+    );
 
     echo "All permissions:\n";
-    foreach ($allTuples->getTuples() as $tuple) {
+
+    foreach ($allTuples as $tuple) {
         echo "- {$tuple->getUser()} {$tuple->getRelation()}\n";
     }
 }

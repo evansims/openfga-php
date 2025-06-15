@@ -2,17 +2,18 @@
 
 Repository contract for authorization model operations. This interface defines the contract for managing authorization models within an OpenFGA store. Authorization models define the permission structure for your application - the types of objects, the relationships between them, and the rules that govern access. Models are immutable once created; to update permissions, you create a new model version. All methods return Result objects following the Result pattern, allowing for consistent error handling without exceptions.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`create()`](#create)
-- [List Operations](#list-operations)
+- [`create()`](#create)
   - [`get()`](#get)
   - [`list()`](#list)
+
+</details>
 
 ## Namespace
 
@@ -24,9 +25,7 @@ Repository contract for authorization model operations. This interface defines t
 
 ## Methods
 
-### CRUD Operations
-
-#### create
+### create
 
 ```php
 public function create(
@@ -53,9 +52,7 @@ Create a new authorization model in the store. Creates an immutable authorizatio
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the created AuthorizationModelInterface, or Failure with error details
 
-### List Operations
-
-#### get
+### get
 
 ```php
 public function get(string $modelId): FailureInterface|SuccessInterface
@@ -76,7 +73,7 @@ Get a specific authorization model by ID. Retrieves the complete authorization m
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the AuthorizationModelInterface, or Failure with error details
 
-#### list
+### list
 
 ```php
 public function list(

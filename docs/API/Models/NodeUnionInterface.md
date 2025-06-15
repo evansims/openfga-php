@@ -2,7 +2,8 @@
 
 Represents a union operation between multiple nodes in a userset tree. A node union combines multiple authorization nodes where users from any of the constituent nodes are included in the result set. This implements the logical OR operation in authorization evaluation.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getNodes()`](#getnodes)
-- [Other](#other)
+- [`getNodes()`](#getnodes)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -34,9 +35,7 @@ Represents a union operation between multiple nodes in a userset tree. A node un
 
 ## Methods
 
-### List Operations
-
-#### getNodes
+### getNodes
 
 ```php
 public function getNodes(): array<int, NodeInterface>
@@ -51,9 +50,7 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 `array&lt;`int`, [`NodeInterface`](NodeInterface.md)&gt;` — The array of nodes in the union
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

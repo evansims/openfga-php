@@ -2,18 +2,19 @@
 
 Repository interface for store operations. This interface defines the contract for store repository implementations, providing a domain-focused abstraction for store management operations. All methods follow the Result pattern, returning either Success or Failure objects to enable safe error handling without exceptions for control flow. Implementations should handle all infrastructure concerns such as HTTP communication, data persistence, or caching while presenting a clean domain interface to the application layer.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`create()`](#create)
+- [`create()`](#create)
   - [`delete()`](#delete)
-- [List Operations](#list-operations)
   - [`get()`](#get)
   - [`list()`](#list)
+
+</details>
 
 ## Namespace
 
@@ -25,9 +26,7 @@ Repository interface for store operations. This interface defines the contract f
 
 ## Methods
 
-### CRUD Operations
-
-#### create
+### create
 
 ```php
 public function create(string $name): ResultInterface
@@ -48,7 +47,7 @@ Create a new store with the specified name. Creates a new OpenFGA store which se
 
 [`ResultInterface`](Results/ResultInterface.md) — Success containing the created Store, or Failure with error details
 
-#### delete
+### delete
 
 ```php
 public function delete(string $storeId): ResultInterface
@@ -69,9 +68,7 @@ Delete an existing store by ID. Permanently removes a store and all its associat
 
 [`ResultInterface`](Results/ResultInterface.md) — Success with null value, or Failure with error details
 
-### List Operations
-
-#### get
+### get
 
 ```php
 public function get(string $storeId): ResultInterface
@@ -92,7 +89,7 @@ Get a store by ID. Retrieves the details of an existing store including its name
 
 [`ResultInterface`](Results/ResultInterface.md) — Success containing the Store, or Failure with error details
 
-#### list
+### list
 
 ```php
 public function list(string|null $continuationToken = NULL, int|null $pageSize = NULL): ResultInterface

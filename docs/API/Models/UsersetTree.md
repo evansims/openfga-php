@@ -2,7 +2,8 @@
 
 Represents the evaluation tree for determining user access. When OpenFGA evaluates whether a user has access to an object, it builds a tree structure showing all the authorization paths that were considered. The UsersetTree contains this evaluation tree with a root node that represents the starting point of the access evaluation. This is primarily used for debugging authorization decisions and understanding why access was granted or denied in complex permission scenarios.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getRoot()`](#getroot)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
+- [`getRoot()`](#getroot)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -44,9 +44,7 @@ Represents the evaluation tree for determining user access. When OpenFGA evaluat
 
 ## Methods
 
-### List Operations
-
-#### getRoot
+### getRoot
 
 ```php
 public function getRoot(): OpenFGA\Models\NodeInterface
@@ -61,9 +59,20 @@ Get the root node of the userset tree structure. This returns the top-level node
 
 [`NodeInterface`](NodeInterface.md) — The root node of the userset tree
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTree.php#L62)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\UsersetTreeInterface</small>*
 
@@ -79,18 +88,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetTree.php#L62)
-
-#### Returns
-
-`array`

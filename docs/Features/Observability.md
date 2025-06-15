@@ -48,8 +48,6 @@ All examples in this guide assume the following setup:
 **Common imports and setup code:**
 
 ```php
-<?php
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 // OpenFGA SDK imports
@@ -143,7 +141,7 @@ Every HTTP request to the OpenFGA API is automatically instrumented:
 
 **Example span attributes:**
 
-````
+```
 http.method: POST
 http.url: https://api.fga.example/stores/123/check
 http.scheme: https
@@ -152,7 +150,7 @@ http.status_code: 200
 http.response.size: 1024
 openfga.sdk.name: openfga-php
 openfga.sdk.version: 1.0.0
-````
+```
 
 ### OpenFGA Operation Telemetry
 
@@ -171,13 +169,13 @@ Business-level operations provide higher-level observability:
 
 **Example operation span:**
 
-````
+```
 openfga.operation: check
 openfga.store_id: store_01H1234567890ABCDEF
 openfga.model_id: model_01H1234567890ABCDEF
 openfga.sdk.name: openfga-php
 openfga.sdk.version: 1.0.0
-````
+```
 
 ### Retry and Reliability Telemetry
 
@@ -408,7 +406,6 @@ try {
    - Ensure your OTLP endpoint is reachable
    - Verify authentication if required
    - Check firewall and network settings
-
 
 ### Performance Impact
 
@@ -857,7 +854,7 @@ final class CircuitBreakerEventListener
     {
         // Check if the failure rate indicates circuit breaker activation
         $failureRate = $this->calculateFailureRate($event->getStoreId());
-        
+
         if ($failureRate > 0.5) { // 50% failure threshold
             $this->alertCircuitBreakerRisk([
                 'store_id' => $event->getStoreId(),
@@ -971,7 +968,7 @@ class TelemetryIntegrationTest extends TestCase
         // Configure test tracer
         $spanProcessor = new InMemorySpanProcessor();
         $tracerProvider = new TracerProvider([$spanProcessor]);
-        
+
         $telemetry = TelemetryFactory::createWithCustomProviders(
             $tracerProvider->getTracer('test'),
             null

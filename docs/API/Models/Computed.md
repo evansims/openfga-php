@@ -2,7 +2,8 @@
 
 Represents a computed userset reference in authorization evaluation trees. A Computed defines a userset that is calculated based on relationships or other dynamic criteria rather than being explicitly defined. This is used in authorization evaluation trees to represent usersets that are derived through computation during the authorization check process. Use this when working with complex authorization patterns that involve computed or derived user groups.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getUserset()`](#getuserset)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
+- [`getUserset()`](#getuserset)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -45,9 +45,7 @@ Represents a computed userset reference in authorization evaluation trees. A Com
 
 ## Methods
 
-### List Operations
-
-#### getUserset
+### getUserset
 
 ```php
 public function getUserset(): string
@@ -62,9 +60,20 @@ Get the userset reference string that defines a computed relationship. This repr
 
 `string` — The userset reference string defining the computed relationship
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Computed.php#L62)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\ComputedInterface</small>*
 
@@ -80,18 +89,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Computed.php#L62)
-
-#### Returns
-
-`array`

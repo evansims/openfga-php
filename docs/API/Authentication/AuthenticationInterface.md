@@ -2,18 +2,19 @@
 
 Interface for OpenFGA authentication strategies. This interface defines the contract for different authentication methods that can be used with the OpenFGA client. Authentication strategies handle the generation and management of authorization headers for API requests.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getAuthenticationRequest()`](#getauthenticationrequest)
+- [`getAuthenticationRequest()`](#getauthenticationrequest)
   - [`getAuthorizationHeader()`](#getauthorizationheader)
-- [Other](#other)
   - [`handleAuthenticationResponse()`](#handleauthenticationresponse)
   - [`requiresAuthentication()`](#requiresauthentication)
+
+</details>
 
 ## Namespace
 
@@ -25,9 +26,7 @@ Interface for OpenFGA authentication strategies. This interface defines the cont
 
 ## Methods
 
-### List Operations
-
-#### getAuthenticationRequest
+### getAuthenticationRequest
 
 ```php
 public function getAuthenticationRequest(StreamFactoryInterface $streamFactory): RequestContext|null
@@ -48,7 +47,7 @@ Get an authentication request context if this strategy requires token acquisitio
 
 `RequestContext` &#124; `null` — The authentication request context, or null if not needed
 
-#### getAuthorizationHeader
+### getAuthorizationHeader
 
 ```php
 public function getAuthorizationHeader(): string|null
@@ -63,9 +62,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 `string` &#124; `null` — The authorization header value, or null if no authentication is needed
 
-### Other
-
-#### handleAuthenticationResponse
+### handleAuthenticationResponse
 
 ```php
 public function handleAuthenticationResponse(ResponseInterface $response): void
@@ -86,7 +83,7 @@ Handle the authentication response and update internal state. This method is cal
 
 `void`
 
-#### requiresAuthentication
+### requiresAuthentication
 
 ```php
 public function requiresAuthentication(): bool

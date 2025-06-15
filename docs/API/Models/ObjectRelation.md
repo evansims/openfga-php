@@ -2,7 +2,8 @@
 
 Represents a reference to a specific relation on an object. In authorization models, you often need to reference relationships between objects. An ObjectRelation identifies both the target object and the specific relation you&#039;re interested in, like &quot;the owner of document:budget&quot; or &quot;editors of folder:reports.&quot; This is commonly used in authorization rules where permissions depend on relationships with other objects in your system.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,13 +12,12 @@ Represents a reference to a specific relation on an object. In authorization mod
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getObject()`](#getobject)
+- [`getObject()`](#getobject)
   - [`getRelation()`](#getrelation)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -45,9 +45,7 @@ Represents a reference to a specific relation on an object. In authorization mod
 
 ## Methods
 
-### List Operations
-
-#### getObject
+### getObject
 
 ```php
 public function getObject(): ?string
@@ -62,7 +60,7 @@ Get the object identifier in an object-relation pair. The object represents the 
 
 `string` &#124; `null`
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -77,9 +75,20 @@ Get the relation name that defines the type of relationship to the object. The r
 
 `string` — The non-empty relation name
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L80)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\ObjectRelationInterface</small>*
 
@@ -95,18 +104,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/ObjectRelation.php#L80)
-
-#### Returns
-
-`array`

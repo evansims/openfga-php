@@ -1,4 +1,4 @@
-Build your first authorization system in under 10 minutes. You'll install the SDK, connect to OpenFGA, and check your first permission.
+This guide takes you through building your first authorization. You'll install the SDK, connect to OpenFGA, and check your first permission.
 
 ## Prerequisites
 
@@ -45,12 +45,10 @@ In some cases you may need to [install additional dependencies](Installation.md)
 Begin integrating the SDK by initializing an SDK Client in your application:
 
 ```php
-<?php
-
 use OpenFGA\Client;
 use function OpenFGA\{store, dsl, model, tuple, tuples, write, allowed};
 
-$client = new Client(url: 'http://localhost:8080');
+$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ```
 
 In a production environment you'll want [authentication](Authentication.md) and [error handling](Results.md).
@@ -119,6 +117,3 @@ echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
 1. Make sure your OpenFGA server is running
 2. Save the code as `example.php`
 3. Run `php example.php`
-
-
-

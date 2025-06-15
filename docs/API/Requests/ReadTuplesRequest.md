@@ -2,7 +2,8 @@
 
 Request for reading relationship tuples that match specified criteria. This request retrieves tuples from a store based on filtering criteria, with support for pagination and consistency levels. It&#039;s essential for querying existing relationships, debugging authorization data, and building administrative interfaces.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Request for reading relationship tuples that match specified criteria. This requ
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConsistency()`](#getconsistency)
+- [`getConsistency()`](#getconsistency)
   - [`getContinuationToken()`](#getcontinuationtoken)
   - [`getPageSize()`](#getpagesize)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
   - [`getTupleKey()`](#gettuplekey)
+
+</details>
 
 ## Namespace
 
@@ -38,7 +40,7 @@ Request for reading relationship tuples that match specified criteria. This requ
 
 ## Methods
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -53,7 +55,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): ?string
@@ -68,7 +70,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 `string` &#124; `null` — The continuation token from a previous read operation, or null for the first page
 
-#### getPageSize
+### getPageSize
 
 ```php
 public function getPageSize(): ?int
@@ -83,7 +85,7 @@ Get the maximum number of tuples to return. Specifies the page size for paginate
 
 `int` &#124; `null` — The maximum number of tuples to return per page, or null to use the default page size
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -104,7 +106,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -119,7 +121,7 @@ Get the store ID containing the tuples to read. Identifies which OpenFGA store c
 
 `string` — The store ID containing the relationship tuples to read
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface

@@ -2,7 +2,8 @@
 
 Request for writing and deleting relationship tuples in OpenFGA. This request enables batch creation and deletion of relationship tuples, supporting both transactional (all-or-nothing) and non-transactional (independent operations) modes. Transactional mode ensures atomic changes, while non-transactional mode allows for parallel processing with detailed success/failure tracking.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,8 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
+- [`chunk()`](#chunk)
   - [`getDeletes()`](#getdeletes)
-  - [`getWrites()`](#getwrites)
-- [List Operations](#list-operations)
   - [`getMaxParallelRequests()`](#getmaxparallelrequests)
   - [`getMaxRetries()`](#getmaxretries)
   - [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
@@ -23,11 +22,11 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
   - [`getStopOnFirstError()`](#getstoponfirsterror)
   - [`getStore()`](#getstore)
   - [`getTotalOperations()`](#gettotaloperations)
-- [Utility](#utility)
+  - [`getWrites()`](#getwrites)
   - [`isEmpty()`](#isempty)
   - [`isTransactional()`](#istransactional)
-- [Other](#other)
-  - [`chunk()`](#chunk)
+
+</details>
 
 ## Namespace
 
@@ -49,9 +48,28 @@ Request for writing and deleting relationship tuples in OpenFGA. This request en
 
 ## Methods
 
-### CRUD Operations
+### chunk
 
-#### getDeletes
+```php
+public function chunk(int $chunkSize): array<WriteTuplesRequest>
+
+```
+
+Split this request into smaller chunks for non-transactional processing.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequest.php#L95)
+
+#### Parameters
+
+| Name         | Type  | Description                      |
+| ------------ | ----- | -------------------------------- |
+| `$chunkSize` | `int` | Maximum tuples per chunk (1-100) |
+
+#### Returns
+
+`array&lt;[`WriteTuplesRequest`](WriteTuplesRequest.md)&gt;` — Array of chunked requests
+
+### getDeletes
 
 ```php
 public function getDeletes(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -66,24 +84,7 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to remove, or null if no deletions are requested
 
-#### getWrites
-
-```php
-public function getWrites(): ?OpenFGA\Models\Collections\TupleKeysInterface
-
-```
-
-Get the relationship tuples to write to the store. Returns a collection of relationship tuples that should be added to the authorization store. Each tuple represents a new permission or relationship that will be granted. The write operation is atomic with any delete operations specified in the same request.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequest.php#L273)
-
-#### Returns
-
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to add, or null if no writes are requested
-
-### List Operations
-
-#### getMaxParallelRequests
+### getMaxParallelRequests
 
 ```php
 public function getMaxParallelRequests(): int
@@ -98,7 +99,7 @@ Get the maximum number of parallel requests for non-transactional mode.
 
 `int` — Maximum parallel requests (1 for sequential processing)
 
-#### getMaxRetries
+### getMaxRetries
 
 ```php
 public function getMaxRetries(): int
@@ -113,7 +114,7 @@ Get the maximum number of retries for failed chunks in non-transactional mode.
 
 `int` — Maximum retry attempts
 
-#### getMaxTuplesPerChunk
+### getMaxTuplesPerChunk
 
 ```php
 public function getMaxTuplesPerChunk(): int
@@ -128,7 +129,7 @@ Get the maximum number of tuples per chunk for non-transactional mode.
 
 `int` — Maximum tuples per chunk (up to 100)
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -143,7 +144,7 @@ Get the authorization model ID to use for tuple validation. Specifies which vers
 
 `string` — The authorization model ID for validating tuple operations
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -164,7 +165,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getRetryDelaySeconds
+### getRetryDelaySeconds
 
 ```php
 public function getRetryDelaySeconds(): float
@@ -179,7 +180,7 @@ Get the retry delay in seconds for non-transactional mode.
 
 `float` — Retry delay in seconds
 
-#### getStopOnFirstError
+### getStopOnFirstError
 
 ```php
 public function getStopOnFirstError(): bool
@@ -194,7 +195,7 @@ Check if non-transactional processing should stop on first error.
 
 `bool` — True to stop on first error, false to continue
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -209,7 +210,7 @@ Get the store ID where tuples will be written. Identifies the OpenFGA store that
 
 `string` — The store ID containing the authorization data to modify
 
-#### getTotalOperations
+### getTotalOperations
 
 ```php
 public function getTotalOperations(): int
@@ -224,9 +225,22 @@ Get the total number of tuple operations in this request.
 
 `int` — Total count of write and delete operations
 
-### Utility
+### getWrites
 
-#### isEmpty
+```php
+public function getWrites(): ?OpenFGA\Models\Collections\TupleKeysInterface
+
+```
+
+Get the relationship tuples to write to the store. Returns a collection of relationship tuples that should be added to the authorization store. Each tuple represents a new permission or relationship that will be granted. The write operation is atomic with any delete operations specified in the same request.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequest.php#L273)
+
+#### Returns
+
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to add, or null if no writes are requested
+
+### isEmpty
 
 ```php
 public function isEmpty(): bool
@@ -241,7 +255,7 @@ Check if this request contains any operations.
 
 `bool` — True if the request has no operations
 
-#### isTransactional
+### isTransactional
 
 ```php
 public function isTransactional(): bool
@@ -255,26 +269,3 @@ Check if this request should be executed in transactional mode.
 #### Returns
 
 `bool` — True for transactional mode, false for non-transactional
-
-### Other
-
-#### chunk
-
-```php
-public function chunk(int $chunkSize): array<WriteTuplesRequest>
-
-```
-
-Split this request into smaller chunks for non-transactional processing.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequest.php#L95)
-
-#### Parameters
-
-| Name         | Type  | Description                      |
-| ------------ | ----- | -------------------------------- |
-| `$chunkSize` | `int` | Maximum tuples per chunk (1-100) |
-
-#### Returns
-
-`array&lt;[`WriteTuplesRequest`](WriteTuplesRequest.md)&gt;` — Array of chunked requests

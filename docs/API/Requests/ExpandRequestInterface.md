@@ -2,7 +2,8 @@
 
 Interface for expanding relationship graphs in OpenFGA. This interface defines the contract for requests that expand authorization relationships to show the complete graph of users that have access to a resource through various relationship paths. The expand operation traces all possible authorization paths and returns a tree structure showing how permissions are derived. Expand operations are particularly useful for: - Understanding complex authorization chains and inheritance - Debugging permission issues and unexpected access grants - Auditing who has access to sensitive resources and why - Visualizing the authorization graph for administrative purposes - Analyzing the impact of relationship changes before applying them The expansion can include direct relationships, inherited permissions, and computed relationships through complex authorization model rules.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Interface for expanding relationship graphs in OpenFGA. This interface defines t
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConsistency()`](#getconsistency)
+- [`getConsistency()`](#getconsistency)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getModel()`](#getmodel)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
   - [`getTupleKey()`](#gettuplekey)
+
+</details>
 
 ## Namespace
 
@@ -37,7 +39,7 @@ Interface for expanding relationship graphs in OpenFGA. This interface defines t
 
 ## Methods
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): Consistency|null
@@ -52,7 +54,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): TupleKeysInterface|null
@@ -67,7 +69,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string|null
@@ -82,7 +84,7 @@ Get the authorization model ID to use for the expansion. Specifies which version
 
 `string` &#124; `null` — The authorization model ID for evaluation, or null to use the latest model version
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -103,7 +105,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -118,7 +120,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 `string` — The store ID containing the authorization data
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): TupleKeyInterface

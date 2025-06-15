@@ -2,7 +2,8 @@
 
 Service implementation for managing authentication in OpenFGA operations. This service encapsulates all authentication-related logic, providing a clean abstraction over the underlying authentication strategies. It handles token management, authentication request flows, and integrates with telemetry for monitoring authentication performance and failures. The service supports multiple authentication strategies through the AuthenticationInterface, automatically handling token refresh and error recovery patterns. It provides consistent error handling and telemetry integration across all authentication operations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Service implementation for managing authentication in OpenFGA operations. This s
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getAuthorizationHeader()`](#getauthorizationheader)
-- [Other](#other)
+- [`getAuthorizationHeader()`](#getauthorizationheader)
   - [`sendAuthenticationRequest()`](#sendauthenticationrequest)
+
+</details>
 
 ## Namespace
 
@@ -33,9 +34,7 @@ Service implementation for managing authentication in OpenFGA operations. This s
 
 ## Methods
 
-### List Operations
-
-#### getAuthorizationHeader
+### getAuthorizationHeader
 
 ```php
 public function getAuthorizationHeader(
@@ -60,9 +59,7 @@ Get the authorization header for API requests. Retrieves the current authorizati
 
 `string` &#124; `null` — The authorization header value, or null if no authentication configured
 
-### Other
-
-#### sendAuthenticationRequest
+### sendAuthenticationRequest
 
 ```php
 public function sendAuthenticationRequest(

@@ -2,14 +2,15 @@
 
 Serialization-related exception for the OpenFGA SDK. Thrown when data serialization, deserialization, or validation errors occur while processing API requests and responses. This includes JSON parsing failures, schema validation errors, and data type conversion issues. Provides detailed context about the serialization failure.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`context()`](#context)
   - [`getCode()`](#getcode)
   - [`getFile()`](#getfile)
   - [`getLine()`](#getline)
@@ -17,12 +18,12 @@ Serialization-related exception for the OpenFGA SDK. Thrown when data serializat
   - [`getPrevious()`](#getprevious)
   - [`getTrace()`](#gettrace)
   - [`getTraceAsString()`](#gettraceasstring)
-- [Other](#other)
-  - [`context()`](#context)
   - [`kind()`](#kind)
   - [`previous()`](#previous)
   - [`request()`](#request)
   - [`response()`](#response)
+
+</details>
 
 ## Namespace
 
@@ -40,84 +41,7 @@ Serialization-related exception for the OpenFGA SDK. Thrown when data serializat
 
 ## Methods
 
-### List Operations
-
-#### getCode
-
-```php
-public function getCode()
-
-```
-
-#### getFile
-
-```php
-public function getFile(): string
-
-```
-
-#### Returns
-
-`string`
-
-#### getLine
-
-```php
-public function getLine(): int
-
-```
-
-#### Returns
-
-`int`
-
-#### getMessage
-
-```php
-public function getMessage(): string
-
-```
-
-#### Returns
-
-`string`
-
-#### getPrevious
-
-```php
-public function getPrevious(): ?Throwable
-
-```
-
-#### Returns
-
-`Throwable` &#124; `null`
-
-#### getTrace
-
-```php
-public function getTrace(): array
-
-```
-
-#### Returns
-
-`array`
-
-#### getTraceAsString
-
-```php
-public function getTraceAsString(): string
-
-```
-
-#### Returns
-
-`string`
-
-### Other
-
-#### context
+### context
 
 ```php
 public function context(): array<string, mixed>
@@ -132,7 +56,80 @@ Get additional context information about the exception. Provides access to conte
 
 `array&lt;`string`, `mixed`&gt;` — Associative array of context data including parameter values, error details, and debugging information
 
-#### kind
+### getCode
+
+```php
+public function getCode()
+
+```
+
+### getFile
+
+```php
+public function getFile(): string
+
+```
+
+#### Returns
+
+`string`
+
+### getLine
+
+```php
+public function getLine(): int
+
+```
+
+#### Returns
+
+`int`
+
+### getMessage
+
+```php
+public function getMessage(): string
+
+```
+
+#### Returns
+
+`string`
+
+### getPrevious
+
+```php
+public function getPrevious(): ?Throwable
+
+```
+
+#### Returns
+
+`Throwable` &#124; `null`
+
+### getTrace
+
+```php
+public function getTrace(): array
+
+```
+
+#### Returns
+
+`array`
+
+### getTraceAsString
+
+```php
+public function getTraceAsString(): string
+
+```
+
+#### Returns
+
+`string`
+
+### kind
 
 ```php
 public function kind(): OpenFGA\Exceptions\ClientError|OpenFGA\Exceptions\AuthenticationError|OpenFGA\Exceptions\ConfigurationError|OpenFGA\Exceptions\NetworkError|OpenFGA\Exceptions\SerializationError
@@ -147,7 +144,7 @@ Get the specific error category for this exception. Returns the error classifica
 
 [`ClientError`](ClientError.md) &#124; [`AuthenticationError`](AuthenticationError.md) &#124; [`ConfigurationError`](ConfigurationError.md) &#124; [`NetworkError`](NetworkError.md) &#124; [`SerializationError`](SerializationError.md) — The error category enum indicating the type of failure
 
-#### previous
+### previous
 
 ```php
 public function previous(): ?Throwable
@@ -162,7 +159,7 @@ Get the previous exception that caused this one. Provides access to the exceptio
 
 `Throwable` &#124; `null` — The previous exception in the chain, or null if this is the root exception
 
-#### request
+### request
 
 ```php
 public function request(): ?Psr\Http\Message\RequestInterface
@@ -177,7 +174,7 @@ Get the HTTP request associated with this exception. Returns the PSR-7 HTTP requ
 
 `Psr\Http\Message\RequestInterface` &#124; `null` — The PSR-7 HTTP request that triggered the exception, or null if not applicable
 
-#### response
+### response
 
 ```php
 public function response(): ?Psr\Http\Message\ResponseInterface

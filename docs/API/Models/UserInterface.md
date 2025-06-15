@@ -2,7 +2,8 @@
 
 Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexible entities that can represent various types of subjects in authorization relationships. The user concept extends beyond individual people to include groups, roles, services, or any entity that can be granted permissions. OpenFGA supports multiple user representation patterns to accommodate complex authorization scenarios: Direct User Objects**: Simple user identifiers in &quot;type:id&quot; format, such as &quot;user:alice&quot; or &quot;service:backup-agent.&quot; These represent concrete entities with specific identities that can be directly assigned permissions. Usersets**: Dynamic user groups defined through relationships, such as &quot;all editors of document:readme&quot; or &quot;all members of group:engineering.&quot; Usersets enable permissions that automatically adapt as relationships change. Wildcards**: Type-based user groups that match all users of a specific type, such as &quot;all users of type employee.&quot; Wildcards enable broad, organization-wide permissions without enumerating individual users. Difference Operations**: Complex user definitions that include some users while excluding others, such as &quot;all editors except contractors.&quot; This enables fine-grained access control with exception handling. This flexible user model enables OpenFGA to handle sophisticated authorization patterns while maintaining performance and simplicity in common use cases.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,13 @@ Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexi
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDifference()`](#getdifference)
+- [`getDifference()`](#getdifference)
   - [`getObject()`](#getobject)
   - [`getUserset()`](#getuserset)
   - [`getWildcard()`](#getwildcard)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -37,9 +38,7 @@ Represents a user in an OpenFGA authorization model. In OpenFGA, users are flexi
 
 ## Methods
 
-### List Operations
-
-#### getDifference
+### getDifference
 
 ```php
 public function getDifference(): DifferenceV1Interface|null
@@ -54,7 +53,7 @@ Get the difference operation for this user. Difference operations enable sophist
 
 [`DifferenceV1Interface`](DifferenceV1Interface.md) &#124; `null` — The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string|UserObjectInterface|null
@@ -69,7 +68,7 @@ Get the user object representation. User objects represent direct, concrete user
 
 `string` &#124; [`UserObjectInterface`](UserObjectInterface.md) &#124; `null` — The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
-#### getUserset
+### getUserset
 
 ```php
 public function getUserset(): UsersetUserInterface|null
@@ -84,7 +83,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 
 [`UsersetUserInterface`](UsersetUserInterface.md) &#124; `null` — The userset definition specifying users through relationships, or null if this is not a userset-based user
 
-#### getWildcard
+### getWildcard
 
 ```php
 public function getWildcard(): TypedWildcardInterface|null
@@ -99,9 +98,7 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 
 [`TypedWildcardInterface`](TypedWildcardInterface.md) &#124; `null` — The wildcard definition specifying the user type, or null if this is not a wildcard user
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

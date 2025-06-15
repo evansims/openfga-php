@@ -2,7 +2,8 @@
 
 Request for retrieving a specific authorization model by its ID. This request fetches the complete definition of an authorization model, including all type definitions, relations, and conditions. It&#039;s useful for inspecting model configurations, debugging, and model management.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,11 @@ Request for retrieving a specific authorization model by its ID. This request fe
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModel()`](#getmodel)
+- [`getModel()`](#getmodel)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -35,7 +37,7 @@ Request for retrieving a specific authorization model by its ID. This request fe
 
 ## Methods
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -50,7 +52,7 @@ Get the authorization model ID to retrieve. Specifies which version of the autho
 
 `string` — The unique identifier of the authorization model to retrieve
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -71,7 +73,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

@@ -2,7 +2,8 @@
 
 Serialization error types for the OpenFGA SDK. Defines specific serialization and data processing failures that can occur when converting between different data formats (JSON, objects, etc.) or when validating data structures. Each case provides a factory method to create the corresponding SerializationException. Serialization errors typically occur during data transformation between JSON and PHP objects, schema validation, or when processing API responses. These errors often indicate data format mismatches, missing required fields, or type conversion failures that prevent proper object construction.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,11 +12,11 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [Utility](#utility)
+- [`exception()`](#exception)
   - [`isCollectionError()`](#iscollectionerror)
   - [`isTypeValidationError()`](#istypevalidationerror)
-- [Other](#other)
-  - [`exception()`](#exception)
+
+</details>
 
 ## Namespace
 
@@ -54,41 +55,7 @@ Serialization error types for the OpenFGA SDK. Defines specific serialization an
 
 ## Methods
 
-### Utility
-
-#### isCollectionError
-
-```php
-public function isCollectionError(): bool
-
-```
-
-Check if this serialization error is related to collection operations. Useful for identifying errors that occur during collection manipulation and providing appropriate error handling strategies.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/SerializationError.php#L86)
-
-#### Returns
-
-`bool` — True if the error is collection-related, false otherwise
-
-#### isTypeValidationError
-
-```php
-public function isTypeValidationError(): bool
-
-```
-
-Check if this serialization error indicates a data type validation failure. Useful for distinguishing between validation errors and structural errors during serialization processes.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/SerializationError.php#L106)
-
-#### Returns
-
-`bool` — True if the error is type-related, false otherwise
-
-### Other
-
-#### exception
+### exception
 
 ```php
 public function exception(
@@ -116,3 +83,33 @@ Create a new SerializationException for this error type. Factory method that cre
 #### Returns
 
 [`SerializationException`](SerializationException.md) — The newly created SerializationException instance with comprehensive error context
+
+### isCollectionError
+
+```php
+public function isCollectionError(): bool
+
+```
+
+Check if this serialization error is related to collection operations. Useful for identifying errors that occur during collection manipulation and providing appropriate error handling strategies.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/SerializationError.php#L86)
+
+#### Returns
+
+`bool` — True if the error is collection-related, false otherwise
+
+### isTypeValidationError
+
+```php
+public function isTypeValidationError(): bool
+
+```
+
+Check if this serialization error indicates a data type validation failure. Useful for distinguishing between validation errors and structural errors during serialization processes.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/SerializationError.php#L106)
+
+#### Returns
+
+`bool` — True if the error is type-related, false otherwise

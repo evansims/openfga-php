@@ -2,7 +2,8 @@
 
 Data types supported in OpenFGA condition parameters. This enum defines the available data types that can be used for parameters in OpenFGA authorization model conditions. These types enable type-safe evaluation of conditional logic within authorization rules.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,13 +12,13 @@ Data types supported in OpenFGA condition parameters. This enum defines the avai
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getPhpType()`](#getphptype)
-- [Utility](#utility)
+- [`getPhpType()`](#getphptype)
   - [`isCollection()`](#iscollection)
   - [`isFlexible()`](#isflexible)
   - [`isNumeric()`](#isnumeric)
   - [`isTemporal()`](#istemporal)
+
+</details>
 
 ## Namespace
 
@@ -68,9 +69,7 @@ Data types supported in OpenFGA condition parameters. This enum defines the avai
 
 ## Methods
 
-### List Operations
-
-#### getPhpType
+### getPhpType
 
 ```php
 public function getPhpType(): string
@@ -85,9 +84,7 @@ Get the corresponding PHP type for this OpenFGA type. Returns the equivalent PHP
 
 `string` — The PHP type name
 
-### Utility
-
-#### isCollection
+### isCollection
 
 ```php
 public function isCollection(): bool
@@ -102,7 +99,7 @@ Check if this type represents a collection of values. Useful for determining if 
 
 `bool` — True if the type is a collection, false otherwise
 
-#### isFlexible
+### isFlexible
 
 ```php
 public function isFlexible(): bool
@@ -117,7 +114,7 @@ Check if this type accepts flexible or dynamic values. Useful for determining if
 
 `bool` — True if the type is flexible, false otherwise
 
-#### isNumeric
+### isNumeric
 
 ```php
 public function isNumeric(): bool
@@ -132,7 +129,7 @@ Check if this type represents a numeric value. Useful for validation and type ch
 
 `bool` — True if the type is numeric, false otherwise
 
-#### isTemporal
+### isTemporal
 
 ```php
 public function isTemporal(): bool

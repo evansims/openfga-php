@@ -2,7 +2,8 @@
 
 Defines the contract for typed wildcard specifications. A typed wildcard represents &quot;all users of a specific type&quot; in authorization rules. Instead of listing individual users, you can grant permissions to all members of a user type (like &quot;all employees&quot; or &quot;all customers&quot;). Use this when you want to create broad permission grants that automatically apply to all users of a particular type without explicit enumeration.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getType()`](#gettype)
-- [Other](#other)
+- [`getType()`](#gettype)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Defines the contract for typed wildcard specifications. A typed wildcard represe
 
 ## Methods
 
-### List Operations
-
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -52,9 +51,7 @@ Get the object type that this wildcard represents. This returns the type name fo
 
 `string` — The object type that this wildcard represents
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

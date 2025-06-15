@@ -2,7 +2,8 @@
 
 Represents a user object in OpenFGA authorization model. User objects are typed entities that can be subjects in authorization relationships. They consist of a type (for example &#039;user&#039;, &#039;group&#039;) and a unique identifier within that type.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getId()`](#getid)
+- [`getId()`](#getid)
   - [`getType()`](#gettype)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Represents a user object in OpenFGA authorization model. User objects are typed 
 
 ## Methods
 
-### List Operations
-
-#### getId
+### getId
 
 ```php
 public function getId(): string
@@ -53,7 +52,7 @@ Get the unique identifier of the user object. The ID is unique within the contex
 
 `string` — The object identifier
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -68,9 +67,7 @@ Get the type of the user object. The type defines the category or class of the o
 
 `string` — The object type
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

@@ -2,7 +2,8 @@
 
 Operations that can be performed on relationship tuples in OpenFGA. This enum defines the available operations for managing relationship tuples through the OpenFGA write API. Tuples represent the actual relationships between users, objects, and relations that form the foundation of all authorization decisions. These operations enable dynamic management of authorization data by adding and removing relationships as your system evolves. Tuple operations are atomic and transactional, ensuring consistency in authorization data. They can be batched together in write requests to perform multiple relationship changes simultaneously, maintaining referential integrity across related permissions. These operations support: - Dynamic permission assignment and revocation - User lifecycle management (onboarding/offboarding) - Role-based access control updates - Temporary access grants and restrictions - Organizational structure changes
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,12 @@ Operations that can be performed on relationship tuples in OpenFGA. This enum de
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDescription()`](#getdescription)
-- [Utility](#utility)
+- [`getDescription()`](#getdescription)
   - [`grantsPermissions()`](#grantspermissions)
   - [`isIdempotent()`](#isidempotent)
   - [`revokesPermissions()`](#revokespermissions)
+
+</details>
 
 ## Namespace
 
@@ -47,9 +48,7 @@ Operations that can be performed on relationship tuples in OpenFGA. This enum de
 
 ## Methods
 
-### List Operations
-
-#### getDescription
+### getDescription
 
 ```php
 public function getDescription(): string
@@ -64,9 +63,7 @@ Get a user-friendly description of what this operation does. Provides a clear ex
 
 `string` — A descriptive explanation of the operation
 
-### Utility
-
-#### grantsPermissions
+### grantsPermissions
 
 ```php
 public function grantsPermissions(): bool
@@ -81,7 +78,7 @@ Check if this operation adds permissions to the authorization store. Useful for 
 
 `bool` — True if the operation adds permissions, false otherwise
 
-#### isIdempotent
+### isIdempotent
 
 ```php
 public function isIdempotent(): true
@@ -96,7 +93,7 @@ Check if this operation is safe to retry in case of failures. Idempotent operati
 
 `true` — True if the operation is idempotent, false otherwise
 
-#### revokesPermissions
+### revokesPermissions
 
 ```php
 public function revokesPermissions(): bool

@@ -2,20 +2,22 @@
 
 Service interface for managing telemetry and observability in OpenFGA operations. This service provides a higher-level abstraction over the telemetry infrastructure, handling the creation, management, and coordination of telemetry spans, metrics, and events. It simplifies telemetry usage by providing business-focused methods that handle common patterns like operation timing and error tracking. ## Core Functionality The service manages the lifecycle of telemetry data for: - HTTP requests and responses with automatic span management - Business operations with timing and success/failure tracking - Error and exception handling with contextual information - Performance metrics and operational insights ## Usage Example ```php $telemetryService = new TelemetryService($telemetryProvider); Track a complete operation $context = $telemetryService-&gt;startOperation(&#039;check&#039;, $store, $model); try { $result = $businessLogic(); $telemetryService-&gt;recordSuccess($context, $result); return $result; } catch (Throwable $error) { $telemetryService-&gt;recordFailure($context, $error); throw $error; } ```
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`recordAuthenticationEvent()`](#recordauthenticationevent)
+- [`recordAuthenticationEvent()`](#recordauthenticationevent)
   - [`recordFailure()`](#recordfailure)
   - [`recordHttpRequest()`](#recordhttprequest)
   - [`recordOperationMetrics()`](#recordoperationmetrics)
   - [`recordSuccess()`](#recordsuccess)
   - [`startOperation()`](#startoperation)
+
+</details>
 
 ## Namespace
 
@@ -31,7 +33,7 @@ Service interface for managing telemetry and observability in OpenFGA operations
 
 ## Methods
 
-#### recordAuthenticationEvent
+### recordAuthenticationEvent
 
 ```php
 public function recordAuthenticationEvent(
@@ -60,7 +62,7 @@ Record an authentication event with duration and outcome. Tracks authentication-
 
 `void`
 
-#### recordFailure
+### recordFailure
 
 ```php
 public function recordFailure(TelemetryContext $context, Throwable $exception, mixed $result = NULL): void
@@ -83,7 +85,7 @@ Record a failed operation with error details. Completes an operation context wit
 
 `void`
 
-#### recordHttpRequest
+### recordHttpRequest
 
 ```php
 public function recordHttpRequest(
@@ -112,7 +114,7 @@ Record an HTTP request/response pair with automatic span management. Handles the
 
 `void`
 
-#### recordOperationMetrics
+### recordOperationMetrics
 
 ```php
 public function recordOperationMetrics(
@@ -143,7 +145,7 @@ Record operational metrics for performance monitoring. Tracks operation-level me
 
 `void`
 
-#### recordSuccess
+### recordSuccess
 
 ```php
 public function recordSuccess(TelemetryContext $context, mixed $result = NULL): void
@@ -165,7 +167,7 @@ Record a successful operation with results. Completes an operation context with 
 
 `void`
 
-#### startOperation
+### startOperation
 
 ```php
 public function startOperation(

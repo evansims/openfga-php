@@ -1,11 +1,10 @@
-Most OpenFGA servers require authentication, especially in production. This guide shows you how to configure the SDK for various authentication methods and use cases.
+This guide shows you how to configure the SDK for various authentication methods and use cases.
 
 ## Prerequisites
 
-- The examples in this guide assume you have the following imports available:
+The examples in this guide assume you have the following imports available:
 
 ```php
-<?php
 use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Authentication\{ClientCredentialAuthentication, TokenAuthentication};
 ```
@@ -18,7 +17,7 @@ This is the recommended authentication method when using the SDK with [Auth0 FGA
 
 ```php
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
     authentication: new ClientCredentialAuthentication(
         clientId: $_ENV['FGA_CLIENT_ID'],
         clientSecret: $_ENV['FGA_CLIENT_SECRET'],
@@ -44,7 +43,7 @@ For simpler setups or self-hosted OpenFGA instances that support API tokens:
 
 ```php
 $client = new Client(
-    url: $_ENV['FGA_API_URL'],
+    url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
     authentication: new TokenAuthentication($_ENV['FGA_API_TOKEN']),
 );
 ```
@@ -97,7 +96,6 @@ For comprehensive error handling patterns including authentication failures, see
 Use a package like `vlucas/phpdotenv` for development:
 
 ```php
-// Load .env file in development
 if (file_exists(__DIR__ . '/.env')) {
     $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
     $dotenv->load();

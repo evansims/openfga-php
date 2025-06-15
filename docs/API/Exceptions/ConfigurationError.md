@@ -2,7 +2,8 @@
 
 Configuration error types for the OpenFGA SDK. Defines specific configuration-related failures that can occur when setting up or using the SDK, typically related to missing required PSR HTTP components or invalid configuration parameters. Each case provides a factory method to create the corresponding ConfigurationException. Configuration errors usually occur during SDK initialization when required dependencies are missing or improperly configured. These errors indicate that the SDK cannot operate properly due to missing PSR-7/PSR-17/PSR-18 components or invalid configuration settings.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`exception()`](#exception)
   - [`getRequiredPsrInterface()`](#getrequiredpsrinterface)
-- [Utility](#utility)
   - [`isHttpComponentMissing()`](#ishttpcomponentmissing)
-- [Other](#other)
-  - [`exception()`](#exception)
+
+</details>
 
 ## Namespace
 
@@ -57,43 +57,7 @@ Configuration error types for the OpenFGA SDK. Defines specific configuration-re
 
 ## Methods
 
-### List Operations
-
-#### getRequiredPsrInterface
-
-```php
-public function getRequiredPsrInterface(): string
-
-```
-
-Get the recommended PSR interface for this configuration error. Provides the specific PSR interface name that should be implemented to resolve this configuration error, useful for error messages and documentation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L88)
-
-#### Returns
-
-`string` — The PSR interface name
-
-### Utility
-
-#### isHttpComponentMissing
-
-```php
-public function isHttpComponentMissing(): bool
-
-```
-
-Check if this configuration error is related to missing PSR HTTP components. Useful for providing specific error handling and setup guidance when PSR HTTP dependencies are not properly configured.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L109)
-
-#### Returns
-
-`bool` — True if the error is related to missing HTTP components, false otherwise
-
-### Other
-
-#### exception
+### exception
 
 ```php
 public function exception(
@@ -121,3 +85,33 @@ Create a new ConfigurationException for this error type. Factory method that cre
 #### Returns
 
 [`ConfigurationException`](ConfigurationException.md) — The newly created ConfigurationException instance with comprehensive error context
+
+### getRequiredPsrInterface
+
+```php
+public function getRequiredPsrInterface(): string
+
+```
+
+Get the recommended PSR interface for this configuration error. Provides the specific PSR interface name that should be implemented to resolve this configuration error, useful for error messages and documentation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L88)
+
+#### Returns
+
+`string` — The PSR interface name
+
+### isHttpComponentMissing
+
+```php
+public function isHttpComponentMissing(): bool
+
+```
+
+Check if this configuration error is related to missing PSR HTTP components. Useful for providing specific error handling and setup guidance when PSR HTTP dependencies are not properly configured.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/ConfigurationError.php#L109)
+
+#### Returns
+
+`bool` — True if the error is related to missing HTTP components, false otherwise

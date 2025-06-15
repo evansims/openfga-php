@@ -2,18 +2,19 @@
 
 Service for handling HTTP communication. This service abstracts HTTP operations from the Client class, providing a clean interface for sending requests and managing HTTP-related state like last request/response tracking.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getLastRequest()`](#getlastrequest)
+- [`getLastRequest()`](#getlastrequest)
   - [`getLastResponse()`](#getlastresponse)
-- [Other](#other)
   - [`send()`](#send)
+
+</details>
 
 ## Namespace
 
@@ -29,9 +30,7 @@ Service for handling HTTP communication. This service abstracts HTTP operations 
 
 ## Methods
 
-### List Operations
-
-#### getLastRequest
+### getLastRequest
 
 ```php
 public function getLastRequest(): HttpRequestInterface|null
@@ -46,7 +45,7 @@ Get the last HTTP request sent. Returns the most recent HTTP request sent by thi
 
 `HttpRequestInterface` &#124; `null` — The last request, or null if no requests sent
 
-#### getLastResponse
+### getLastResponse
 
 ```php
 public function getLastResponse(): HttpResponseInterface|null
@@ -61,9 +60,7 @@ Get the last HTTP response received. Returns the most recent HTTP response recei
 
 `HttpResponseInterface` &#124; `null` — The last response, or null if no responses received
 
-### Other
-
-#### send
+### send
 
 ```php
 public function send(RequestInterface $request): HttpResponseInterface

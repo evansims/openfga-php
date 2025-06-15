@@ -2,7 +2,8 @@
 
 Service for validating data against schemas. This service encapsulates validation logic, separating it from object construction concerns in SchemaValidator. It provides validation for both complete data structures and individual properties, with detailed error reporting.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Service for validating data against schemas. This service encapsulates validatio
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
+- [`hasSchema()`](#hasschema)
+  - [`registerSchema()`](#registerschema)
   - [`validate()`](#validate)
   - [`validateProperty()`](#validateproperty)
-- [Model Management](#model-management)
-  - [`hasSchema()`](#hasschema)
-  - [`registerSchema()`](#registerschema)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,49 @@ Service for validating data against schemas. This service encapsulates validatio
 
 ## Methods
 
-### Authorization
+### hasSchema
 
-#### validate
+```php
+public function hasSchema(string $className): bool
+
+```
+
+Check if a schema is registered for a class.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/ValidationService.php#L41)
+
+#### Parameters
+
+| Name         | Type     | Description             |
+| ------------ | -------- | ----------------------- |
+| `$className` | `string` | The class name to check |
+
+#### Returns
+
+`bool` — True if schema is registered
+
+### registerSchema
+
+```php
+public function registerSchema(OpenFGA\Schemas\SchemaInterface $schema): self
+
+```
+
+Register a schema for validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/ValidationService.php#L50)
+
+#### Parameters
+
+| Name      | Type                                    | Description            |
+| --------- | --------------------------------------- | ---------------------- |
+| `$schema` | [`SchemaInterface`](SchemaInterface.md) | The schema to register |
+
+#### Returns
+
+`self` — For method chaining
+
+### validate
 
 ```php
 public function validate(mixed $data, string $className): array<string, mixed>
@@ -59,7 +100,7 @@ Validate data against a schema. Validates the provided data against the schema f
 
 `array&lt;`string`, `mixed`&gt;` — The validated data (may be normalized/cleaned)
 
-#### validateProperty
+### validateProperty
 
 ```php
 public function validateProperty(mixed $value, OpenFGA\Schemas\SchemaPropertyInterface $property, string $path): mixed
@@ -81,47 +122,3 @@ Validate a property value against its schema definition.
 #### Returns
 
 `mixed` — The validated value
-
-### Model Management
-
-#### hasSchema
-
-```php
-public function hasSchema(string $className): bool
-
-```
-
-Check if a schema is registered for a class.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/ValidationService.php#L41)
-
-#### Parameters
-
-| Name         | Type     | Description             |
-| ------------ | -------- | ----------------------- |
-| `$className` | `string` | The class name to check |
-
-#### Returns
-
-`bool` — True if schema is registered
-
-#### registerSchema
-
-```php
-public function registerSchema(OpenFGA\Schemas\SchemaInterface $schema): self
-
-```
-
-Register a schema for validation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/ValidationService.php#L50)
-
-#### Parameters
-
-| Name      | Type                                    | Description            |
-| --------- | --------------------------------------- | ---------------------- |
-| `$schema` | [`SchemaInterface`](SchemaInterface.md) | The schema to register |
-
-#### Returns
-
-`self` — For method chaining

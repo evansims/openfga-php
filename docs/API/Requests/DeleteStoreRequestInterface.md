@@ -2,7 +2,8 @@
 
 Interface for deleting an OpenFGA store. This interface defines the contract for requests that permanently remove an authorization store from OpenFGA. Deleting a store is an irreversible operation that removes all associated data including relationship tuples, authorization models, assertions, and configuration. Store deletion is typically used for: - Cleaning up test or development environments - Removing stores for discontinued projects or applications - Implementing data retention policies and compliance requirements - Freeing up resources and reducing storage costs Warning:** This operation is permanent and cannot be undone. All authorization data within the store will be lost, including relationship tuples, authorization models, and any custom configurations. Ensure you have proper backups and authorization before performing this operation.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getRequest()`](#getrequest)
+- [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for deleting an OpenFGA store. This interface defines the contract for
 
 ## Methods
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -54,7 +56,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

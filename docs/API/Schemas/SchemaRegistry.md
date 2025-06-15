@@ -2,7 +2,8 @@
 
 Centralized registry for managing schema definitions across the OpenFGA system. This registry provides a static, global repository for schema definitions that can be accessed throughout the application lifecycle. It serves as the primary mechanism for storing, retrieving, and creating schema definitions for OpenFGA model objects. The registry supports both programmatic schema creation through the builder pattern and direct schema registration for pre-defined schemas. This centralized approach ensures consistent schema validation across all model objects and eliminates the need for redundant schema definitions. Schemas registered here are used by the SchemaValidator for object validation and transformation during API response processing and data serialization operations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,11 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`create()`](#create)
-- [List Operations](#list-operations)
+- [`create()`](#create)
   - [`get()`](#get)
-- [Utility](#utility)
   - [`register()`](#register)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +35,7 @@ Centralized registry for managing schema definitions across the OpenFGA system. 
 
 ## Methods
 
-### CRUD Operations
-
-#### create
+### create
 
 *<small>Implements Schemas\SchemaRegistryInterface</small>*
 
@@ -60,9 +58,7 @@ Create a new schema builder for the specified class.
 
 [`SchemaBuilder`](SchemaBuilder.md) — A new schema builder instance
 
-### List Operations
-
-#### get
+### get
 
 *<small>Implements Schemas\SchemaRegistryInterface</small>*
 
@@ -85,9 +81,7 @@ Retrieve a registered schema by class name.
 
 [`Schema`](Schema.md) &#124; `null`
 
-### Utility
-
-#### register
+### register
 
 *<small>Implements Schemas\SchemaRegistryInterface</small>*
 

@@ -2,7 +2,8 @@
 
 Represents a change to a relationship tuple in your authorization store. When you modify relationships in OpenFGA (adding or removing tuples), each change is tracked as a TupleChange. This allows you to see the history of authorization changes, audit permissions over time, and understand when relationships were established or removed. Use this when you need to track or review the history of relationship changes in your application, such as for compliance auditing or debugging permission issues.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ Represents a change to a relationship tuple in your authorization store. When yo
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getOperation()`](#getoperation)
+- [`getOperation()`](#getoperation)
   - [`getTimestamp()`](#gettimestamp)
   - [`getTupleKey()`](#gettuplekey)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -47,9 +47,7 @@ Represents a change to a relationship tuple in your authorization store. When yo
 
 ## Methods
 
-### List Operations
-
-#### getOperation
+### getOperation
 
 ```php
 public function getOperation(): OpenFGA\Models\Enums\TupleOperation
@@ -64,7 +62,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 [`TupleOperation`](Models/Enums/TupleOperation.md) — The operation type (write or delete)
 
-#### getTimestamp
+### getTimestamp
 
 ```php
 public function getTimestamp(): DateTimeImmutable
@@ -79,7 +77,7 @@ Get the timestamp when this tuple change occurred. Timestamps help track the chr
 
 `DateTimeImmutable` — The change timestamp
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
@@ -94,9 +92,20 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key that was modified
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L107)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\TupleChangeInterface</small>*
 
@@ -112,18 +121,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleChange.php#L107)
-
-#### Returns
-
-`array`

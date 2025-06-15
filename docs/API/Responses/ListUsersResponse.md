@@ -2,7 +2,8 @@
 
 Response containing a list of users that have a specific relationship with an object. This response provides a collection of users (including user objects, usersets, and typed wildcards) that have the specified relationship with the target object. Use this to discover who has access to resources in your authorization system.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,11 @@ Response containing a list of users that have a specific relationship with an ob
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`fromResponse()`](#fromresponse)
   - [`getUsers()`](#getusers)
-- [Model Management](#model-management)
   - [`schema()`](#schema)
-- [Other](#other)
-  - [`fromResponse()`](#fromresponse)
+
+</details>
 
 ## Namespace
 
@@ -37,45 +37,7 @@ Response containing a list of users that have a specific relationship with an ob
 
 ## Methods
 
-### List Operations
-
-#### getUsers
-
-```php
-public function getUsers(): OpenFGA\Models\Collections\UsersInterface
-
-```
-
-Get the collection of users with the specified relationship. Returns a type-safe collection containing the user objects that have the queried relationship with the specified object. Each user represents an entity that has been granted the specified permission or relationship.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponse.php#L97)
-
-#### Returns
-
-[`UsersInterface`](Models/Collections/UsersInterface.md) — The collection of users with the relationship
-
-### Model Management
-
-#### schema
-
-*<small>Implements Responses\ListUsersResponseInterface</small>*
-
-```php
-public function schema(): SchemaInterface
-
-```
-
-Get the schema definition for this response. Returns the schema that defines the structure and validation rules for user listing response data, ensuring consistent parsing and validation of API responses.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponseInterface.php#L35)
-
-#### Returns
-
-`SchemaInterface` — The schema definition for response validation
-
-### Other
-
-#### fromResponse
+### fromResponse
 
 *<small>Implements Responses\ListUsersResponseInterface</small>*
 
@@ -103,3 +65,35 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 
 `static` — The parsed and validated response instance containing the API response data
+
+### getUsers
+
+```php
+public function getUsers(): OpenFGA\Models\Collections\UsersInterface
+
+```
+
+Get the collection of users with the specified relationship. Returns a type-safe collection containing the user objects that have the queried relationship with the specified object. Each user represents an entity that has been granted the specified permission or relationship.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponse.php#L97)
+
+#### Returns
+
+[`UsersInterface`](Models/Collections/UsersInterface.md) — The collection of users with the relationship
+
+### schema
+
+*<small>Implements Responses\ListUsersResponseInterface</small>*
+
+```php
+public function schema(): SchemaInterface
+
+```
+
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for user listing response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListUsersResponseInterface.php#L35)
+
+#### Returns
+
+`SchemaInterface` — The schema definition for response validation

@@ -1,4 +1,4 @@
-Authorization models are your permission blueprint. They define what types of things exist in your system and how they relate to each other. Think database schema, but for permissions.
+**Authorization models are your permission blueprint.** They define what types of things exist in your system and how they relate to each other. Think database schema, but for permissions.
 
 ## Prerequisites
 
@@ -9,10 +9,12 @@ use OpenFGA\Client;
 use OpenFGA\Models\{Condition, ConditionMetadata, ConditionParameter};
 use OpenFGA\Models\Collections\{Conditions, ConditionParameters};
 
+// Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 
-$storeId = 'your-store-id'; // From creating a store
-$modelId = 'your-model-id'; // From creating an authorization model
+// Store and model identifiers from your configuration
+$storeId = 'your-store-id';
+$modelId = 'your-model-id';
 ```
 
 ## Building your first model
@@ -186,7 +188,7 @@ $modelId = $client->createAuthorizationModel(
     conditions: $conditions
 )
   ->rethrow()
-  ->unwrap(fn($model) => $model->getId());
+  ->unwrap(fn(CreateAuthorizationModelResponse $response) => $response->getModel());
 ```
 
 ## Using models in your application

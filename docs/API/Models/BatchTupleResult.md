@@ -2,7 +2,8 @@
 
 Represents the result of a batch tuple operation. This model tracks the results of processing a batch of tuple operations, including successful chunks, failed chunks, and overall statistics. It provides methods to analyze the success rate and retrieve details about any failures that occurred during processing.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,8 +12,7 @@ Represents the result of a batch tuple operation. This model tracks the results 
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getErrors()`](#geterrors)
+- [`getErrors()`](#geterrors)
   - [`getFailedChunks()`](#getfailedchunks)
   - [`getFirstError()`](#getfirsterror)
   - [`getResponses()`](#getresponses)
@@ -20,15 +20,14 @@ Represents the result of a batch tuple operation. This model tracks the results 
   - [`getSuccessfulChunks()`](#getsuccessfulchunks)
   - [`getTotalChunks()`](#gettotalchunks)
   - [`getTotalOperations()`](#gettotaloperations)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Utility](#utility)
   - [`isCompleteFailure()`](#iscompletefailure)
   - [`isCompleteSuccess()`](#iscompletesuccess)
   - [`isPartialSuccess()`](#ispartialsuccess)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
   - [`throwOnFailure()`](#throwonfailure)
+
+</details>
 
 ## Namespace
 
@@ -56,9 +55,7 @@ Represents the result of a batch tuple operation. This model tracks the results 
 
 ## Methods
 
-### List Operations
-
-#### getErrors
+### getErrors
 
 ```php
 public function getErrors(): array
@@ -73,7 +70,7 @@ Get all errors from failed chunks.
 
 `array` — Errors from failed API calls
 
-#### getFailedChunks
+### getFailedChunks
 
 ```php
 public function getFailedChunks(): int
@@ -88,7 +85,7 @@ Get the number of chunks that failed.
 
 `int` — Number of failed API requests
 
-#### getFirstError
+### getFirstError
 
 ```php
 public function getFirstError(): ?Throwable
@@ -103,7 +100,7 @@ Get the first error that occurred.
 
 `Throwable` &#124; `null` — The first error, or null if no errors occurred
 
-#### getResponses
+### getResponses
 
 ```php
 public function getResponses(): array
@@ -118,7 +115,7 @@ Get all successful responses from completed chunks.
 
 `array` — Responses from successful API calls
 
-#### getSuccessRate
+### getSuccessRate
 
 ```php
 public function getSuccessRate(): float
@@ -133,7 +130,7 @@ Calculate the success rate as a percentage.
 
 `float` — Success rate from 0.0 to 1.0
 
-#### getSuccessfulChunks
+### getSuccessfulChunks
 
 ```php
 public function getSuccessfulChunks(): int
@@ -148,7 +145,7 @@ Get the number of chunks that completed successfully.
 
 `int` — Number of successful API requests
 
-#### getTotalChunks
+### getTotalChunks
 
 ```php
 public function getTotalChunks(): int
@@ -163,7 +160,7 @@ Get the total number of chunks that were processed.
 
 `int` — Number of API requests made
 
-#### getTotalOperations
+### getTotalOperations
 
 ```php
 public function getTotalOperations(): int
@@ -178,9 +175,65 @@ Get the total number of tuple operations that were requested.
 
 `int` — Total operations across all chunks
 
-### Model Management
+### isCompleteFailure
 
-#### schema
+```php
+public function isCompleteFailure(): bool
+
+```
+
+Check if all chunks failed.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L154)
+
+#### Returns
+
+`bool` — True if no chunks succeeded
+
+### isCompleteSuccess
+
+```php
+public function isCompleteSuccess(): bool
+
+```
+
+Check if all chunks completed successfully.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L163)
+
+#### Returns
+
+`bool` — True if no chunks failed
+
+### isPartialSuccess
+
+```php
+public function isPartialSuccess(): bool
+
+```
+
+Check if some chunks succeeded and some failed.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L172)
+
+#### Returns
+
+`bool` — True if there were both successes and failures
+
+### jsonSerialize
+
+```php
+public function jsonSerialize(): array<string, mixed>
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L183)
+
+#### Returns
+
+`array&lt;`string`, `mixed`&gt;`
+
+### schema
 
 *<small>Implements Models\BatchTupleResultInterface</small>*
 
@@ -197,69 +250,7 @@ Get the JSON schema for this model.
 
 `SchemaInterface` — The schema definition
 
-### Utility
-
-#### isCompleteFailure
-
-```php
-public function isCompleteFailure(): bool
-
-```
-
-Check if all chunks failed.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L154)
-
-#### Returns
-
-`bool` — True if no chunks succeeded
-
-#### isCompleteSuccess
-
-```php
-public function isCompleteSuccess(): bool
-
-```
-
-Check if all chunks completed successfully.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L163)
-
-#### Returns
-
-`bool` — True if no chunks failed
-
-#### isPartialSuccess
-
-```php
-public function isPartialSuccess(): bool
-
-```
-
-Check if some chunks succeeded and some failed.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L172)
-
-#### Returns
-
-`bool` — True if there were both successes and failures
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array<string, mixed>
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchTupleResult.php#L183)
-
-#### Returns
-
-`array&lt;`string`, `mixed`&gt;`
-
-#### throwOnFailure
+### throwOnFailure
 
 ```php
 public function throwOnFailure(): void

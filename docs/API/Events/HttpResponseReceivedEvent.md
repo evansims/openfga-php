@@ -2,15 +2,15 @@
 
 Event fired when an HTTP response is received from the OpenFGA API. This event contains both the request and response for complete telemetry tracking.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getEventId()`](#geteventid)
+- [`getEventId()`](#geteventid)
   - [`getEventType()`](#geteventtype)
   - [`getException()`](#getexception)
   - [`getModelId()`](#getmodelid)
@@ -20,11 +20,11 @@ Event fired when an HTTP response is received from the OpenFGA API. This event c
   - [`getRequest()`](#getrequest)
   - [`getResponse()`](#getresponse)
   - [`getStoreId()`](#getstoreid)
-- [Utility](#utility)
   - [`isPropagationStopped()`](#ispropagationstopped)
   - [`isSuccessful()`](#issuccessful)
-- [Other](#other)
   - [`stopPropagation()`](#stoppropagation)
+
+</details>
 
 ## Namespace
 
@@ -40,9 +40,7 @@ Event fired when an HTTP response is received from the OpenFGA API. This event c
 
 ## Methods
 
-### List Operations
-
-#### getEventId
+### getEventId
 
 ```php
 public function getEventId(): string
@@ -57,7 +55,7 @@ Get the unique identifier for this event.
 
 `string` — A unique identifier for the event instance
 
-#### getEventType
+### getEventType
 
 ```php
 public function getEventType(): string
@@ -72,7 +70,7 @@ Get the name/type of this event.
 
 `string` — The event type identifier
 
-#### getException
+### getException
 
 ```php
 public function getException(): ?Throwable
@@ -85,7 +83,7 @@ public function getException(): ?Throwable
 
 `Throwable` &#124; `null`
 
-#### getModelId
+### getModelId
 
 ```php
 public function getModelId(): ?string
@@ -98,7 +96,7 @@ public function getModelId(): ?string
 
 `string` &#124; `null`
 
-#### getOccurredAt
+### getOccurredAt
 
 ```php
 public function getOccurredAt(): DateTimeImmutable
@@ -113,7 +111,7 @@ Get when this event occurred.
 
 `DateTimeImmutable` — The timestamp when the event was created
 
-#### getOperation
+### getOperation
 
 ```php
 public function getOperation(): string
@@ -126,7 +124,7 @@ public function getOperation(): string
 
 `string`
 
-#### getPayload
+### getPayload
 
 ```php
 public function getPayload(): array
@@ -141,7 +139,7 @@ Get the event payload data.
 
 `array` — The event data
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(): Psr\Http\Message\RequestInterface
@@ -154,7 +152,7 @@ public function getRequest(): Psr\Http\Message\RequestInterface
 
 `Psr\Http\Message\RequestInterface`
 
-#### getResponse
+### getResponse
 
 ```php
 public function getResponse(): ?Psr\Http\Message\ResponseInterface
@@ -167,7 +165,7 @@ public function getResponse(): ?Psr\Http\Message\ResponseInterface
 
 `Psr\Http\Message\ResponseInterface` &#124; `null`
 
-#### getStoreId
+### getStoreId
 
 ```php
 public function getStoreId(): ?string
@@ -180,9 +178,7 @@ public function getStoreId(): ?string
 
 `string` &#124; `null`
 
-### Utility
-
-#### isPropagationStopped
+### isPropagationStopped
 
 ```php
 public function isPropagationStopped(): bool
@@ -197,7 +193,7 @@ Check if event propagation should be stopped.
 
 `bool` — True if propagation should be stopped
 
-#### isSuccessful
+### isSuccessful
 
 ```php
 public function isSuccessful(): bool
@@ -210,9 +206,7 @@ public function isSuccessful(): bool
 
 `bool`
 
-### Other
-
-#### stopPropagation
+### stopPropagation
 
 ```php
 public function stopPropagation(): void

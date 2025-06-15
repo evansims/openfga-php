@@ -2,7 +2,8 @@
 
 Request for reading test assertions associated with an authorization model. This request retrieves the test assertions that have been defined for an authorization model. These assertions help validate model behavior and ensure authorization logic works as expected in different scenarios.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,11 @@ Request for reading test assertions associated with an authorization model. This
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModel()`](#getmodel)
+- [`getModel()`](#getmodel)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -35,7 +37,7 @@ Request for reading test assertions associated with an authorization model. This
 
 ## Methods
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -50,7 +52,7 @@ Get the authorization model ID to read assertions from. Specifies which version 
 
 `string` — The authorization model ID whose assertions should be retrieved
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -71,7 +73,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

@@ -2,7 +2,8 @@
 
 Service implementation for managing OpenFGA authorization models. Provides business-focused operations for working with authorization models, including validation, convenience methods, and enhanced error handling. This service abstracts the underlying repository implementation and adds value through additional functionality.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,16 +11,14 @@ Service implementation for managing OpenFGA authorization models. Provides busin
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
-  - [`validateModel()`](#validatemodel)
-- [CRUD Operations](#crud-operations)
+- [`cloneModel()`](#clonemodel)
   - [`createModel()`](#createmodel)
-- [List Operations](#list-operations)
   - [`findModel()`](#findmodel)
   - [`getLatestModel()`](#getlatestmodel)
   - [`listAllModels()`](#listallmodels)
-- [Model Management](#model-management)
-  - [`cloneModel()`](#clonemodel)
+  - [`validateModel()`](#validatemodel)
+
+</details>
 
 ## Namespace
 
@@ -39,36 +38,28 @@ Service implementation for managing OpenFGA authorization models. Provides busin
 
 ## Methods
 
-### Authorization
-
-#### validateModel
+### cloneModel
 
 ```php
-public function validateModel(
-    OpenFGA\Models\Collections\TypeDefinitionsInterface $typeDefinitions,
-    OpenFGA\Models\Enums\SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function cloneModel(string $modelId): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 
 ```
 
-Validate type definitions before creating a model. Performs validation on type definitions to catch errors before attempting to create a model. This is useful for providing immediate feedback in user interfaces or validation pipelines.
+Clone an authorization model to another store. Copies a model from one store to another, useful for multi-tenant scenarios where you want to replicate a permission structure. The cloned model gets a new ID in the target store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L160)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L52)
 
 #### Parameters
 
-| Name               | Type                                                                         | Description                            |
-| ------------------ | ---------------------------------------------------------------------------- | -------------------------------------- |
-| `$typeDefinitions` | [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) | The type definitions to validate       |
-| `$schemaVersion`   | [`SchemaVersion`](Models/Enums/SchemaVersion.md)                             | The schema version to validate against |
+| Name       | Type     | Description                  |
+| ---------- | -------- | ---------------------------- |
+| `$modelId` | `string` | The ID of the model to clone |
 
 #### Returns
 
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success if valid, or Failure with validation errors
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the cloned model, or Failure with error details
 
-### CRUD Operations
-
-#### createModel
+### createModel
 
 ```php
 public function createModel(
@@ -95,9 +86,7 @@ Create a new authorization model with validation. Creates an immutable authoriza
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the created model, or Failure with validation/creation errors
 
-### List Operations
-
-#### findModel
+### findModel
 
 ```php
 public function findModel(string $modelId): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
@@ -118,7 +107,7 @@ Find a specific authorization model by ID. Retrieves a model with enhanced error
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the model, or Failure with detailed error information
 
-#### getLatestModel
+### getLatestModel
 
 ```php
 public function getLatestModel(OpenFGA\Models\StoreInterface|string $store): FailureInterface|Success
@@ -139,7 +128,7 @@ Get the most recent authorization model for a store. Retrieves the latest model 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`Success`](Results/Success.md) — Success with the latest model, or Failure if no models exist
 
-#### listAllModels
+### listAllModels
 
 ```php
 public function listAllModels(
@@ -164,25 +153,27 @@ List all authorization models for a store. Retrieves all models with automatic p
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the models collection, or Failure with error details
 
-### Model Management
-
-#### cloneModel
+### validateModel
 
 ```php
-public function cloneModel(string $modelId): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+public function validateModel(
+    OpenFGA\Models\Collections\TypeDefinitionsInterface $typeDefinitions,
+    OpenFGA\Models\Enums\SchemaVersion $schemaVersion = OpenFGA\Models\Enums\SchemaVersion::V1_1,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
 
 ```
 
-Clone an authorization model to another store. Copies a model from one store to another, useful for multi-tenant scenarios where you want to replicate a permission structure. The cloned model gets a new ID in the target store.
+Validate type definitions before creating a model. Performs validation on type definitions to catch errors before attempting to create a model. This is useful for providing immediate feedback in user interfaces or validation pipelines.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L52)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/ModelService.php#L160)
 
 #### Parameters
 
-| Name       | Type     | Description                  |
-| ---------- | -------- | ---------------------------- |
-| `$modelId` | `string` | The ID of the model to clone |
+| Name               | Type                                                                         | Description                            |
+| ------------------ | ---------------------------------------------------------------------------- | -------------------------------------- |
+| `$typeDefinitions` | [`TypeDefinitionsInterface`](Models/Collections/TypeDefinitionsInterface.md) | The type definitions to validate       |
+| `$schemaVersion`   | [`SchemaVersion`](Models/Enums/SchemaVersion.md)                             | The schema version to validate against |
 
 #### Returns
 
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with the cloned model, or Failure with error details
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success if valid, or Failure with validation errors

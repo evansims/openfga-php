@@ -2,7 +2,8 @@
 
 Represents a type definition in an OpenFGA authorization model. Type definitions are the building blocks of authorization models that define the types of objects in your system and the relationships that can exist between them. Each type definition specifies: - The type name (for example &quot;document,&quot; &quot;user,&quot; &quot;organization&quot;) - The relations that objects of this type can have (for example &quot;viewer,&quot; &quot;editor,&quot; &quot;owner&quot;) - Optional metadata for additional context and configuration Type definitions form the schema that OpenFGA uses to understand your permission model and validate authorization queries.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getMetadata()`](#getmetadata)
+- [`getMetadata()`](#getmetadata)
   - [`getRelations()`](#getrelations)
   - [`getType()`](#gettype)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Represents a type definition in an OpenFGA authorization model. Type definitions
 
 ## Methods
 
-### List Operations
-
-#### getMetadata
+### getMetadata
 
 ```php
 public function getMetadata(): MetadataInterface|null
@@ -53,7 +52,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 [`MetadataInterface`](MetadataInterface.md) &#124; `null` — The metadata, or null if not specified
 
-#### getRelations
+### getRelations
 
 ```php
 public function getRelations(): ?OpenFGA\Models\Collections\TypeDefinitionRelationsInterface
@@ -68,7 +67,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 [`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md) &#124; `null`
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -83,9 +82,7 @@ Get the name of this type. The type name uniquely identifies this type definitio
 
 `string` — The unique type name
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

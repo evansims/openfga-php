@@ -5,8 +5,6 @@ Ready to integrate OpenFGA into your existing application? This guide shows you 
 Before integrating with your framework, you'll need these common OpenFGA imports and setup patterns used throughout the examples:
 
 ```php
-<?php
-
 // Core OpenFGA imports used across all framework integrations
 use OpenFGA\Client;
 use OpenFGA\ClientInterface;
@@ -31,7 +29,7 @@ $storeId = $config['store_id'];
 $modelId = $config['model_id'];
 ```
 
-**Environment Variables:**  
+**Environment Variables:**
 All examples assume these environment variables are configured:
 
 - `OPENFGA_URL` - Your OpenFGA server URL
@@ -49,8 +47,6 @@ All examples assume these environment variables are configured:
 Create a service provider to configure OpenFGA:
 
 ```php
-<?php
-
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
@@ -77,8 +73,6 @@ class OpenFgaServiceProvider extends ServiceProvider
 Add to your `config/openfga.php`:
 
 ```php
-<?php
-
 return [
     'url' => env('OPENFGA_URL', 'http://localhost:8080'),
     'store_id' => env('OPENFGA_STORE_ID'),
@@ -95,8 +89,6 @@ return [
 Create middleware for route-level authorization:
 
 ```php
-<?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -194,8 +186,6 @@ Route::middleware(['auth', 'permission:viewer,document'])->group(function () {
 Add authorization helpers to your models:
 
 ```php
-<?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -234,8 +224,6 @@ class Document extends Model
 Usage in controllers:
 
 ```php
-<?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Document;
@@ -296,8 +284,6 @@ parameters:
 Create a custom voter for authorization decisions:
 
 ```php
-<?php
-
 namespace App\Security\Voter;
 
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -358,8 +344,6 @@ class OpenFgaVoter extends Voter
 Use in your controllers:
 
 ```php
-<?php
-
 namespace App\Controller;
 
 use App\Entity\Document;
@@ -399,8 +383,6 @@ class DocumentController extends AbstractController
 For frameworks without built-in DI, create a simple service:
 
 ```php
-<?php
-
 namespace App\Services;
 
 class AuthorizationService
@@ -471,8 +453,6 @@ class AuthorizationService
 Usage:
 
 ```php
-<?php
-
 // Bootstrap
 $config = [
     'url' => $_ENV['OPENFGA_URL'],
@@ -507,8 +487,6 @@ $editableDocuments = $auth->listUserResources($currentUserId, 'editor', 'documen
 Add caching to improve performance:
 
 ```php
-<?php
-
 use Psr\SimpleCache\CacheInterface;
 
 class CachedAuthorizationService
@@ -577,8 +555,6 @@ class CachedAuthorizationService
 Create reusable middleware for different frameworks:
 
 ```php
-<?php
-
 class AuthorizationMiddlewareFactory
 {
     public static function createLaravelMiddleware(AuthorizationService $auth): \Closure
@@ -620,8 +596,6 @@ class AuthorizationMiddlewareFactory
 Create a mock authorization service for testing:
 
 ```php
-<?php
-
 class MockAuthorizationService implements AuthorizationInterface
 {
     private array $permissions = [];
@@ -659,8 +633,6 @@ class MockAuthorizationService implements AuthorizationInterface
 Use in your tests:
 
 ```php
-<?php
-
 class DocumentControllerTest extends TestCase
 {
     private MockAuthorizationService $auth;

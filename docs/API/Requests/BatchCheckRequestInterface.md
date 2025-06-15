@@ -2,7 +2,8 @@
 
 Request for performing multiple authorization checks in a single batch. This request allows checking multiple user-object relationships simultaneously for better performance when multiple authorization decisions are needed. Each check in the batch has a correlation ID to map results back to the original requests. The batch check operation supports the same features as individual checks: contextual tuples, custom contexts, and detailed error information.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,10 @@ Request for performing multiple authorization checks in a single batch. This req
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
-  - [`getChecks()`](#getchecks)
-- [List Operations](#list-operations)
+- [`getChecks()`](#getchecks)
   - [`getRequest()`](#getrequest)
+
+</details>
 
 ## Namespace
 
@@ -34,9 +35,7 @@ Request for performing multiple authorization checks in a single batch. This req
 
 ## Methods
 
-### Authorization
-
-#### getChecks
+### getChecks
 
 ```php
 public function getChecks(): BatchCheckItemsInterface
@@ -51,9 +50,7 @@ Get the collection of checks to perform in this batch. Each item contains a tupl
 
 [`BatchCheckItemsInterface`](Models/Collections/BatchCheckItemsInterface.md) — The batch check items
 
-### List Operations
-
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

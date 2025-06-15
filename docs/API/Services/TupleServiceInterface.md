@@ -2,24 +2,24 @@
 
 Service interface for managing OpenFGA relationship tuples. This service provides business-focused operations for working with relationship tuples, which represent the core relationships in your authorization model. Tuples define who has what relationship to which objects, forming the foundation of your permission system. ## Core Operations The service supports tuple management with enhanced functionality: - Write tuples with validation and duplicate filtering - Read tuples with flexible filtering and pagination - Delete tuples safely with existence checking - Track tuple changes over time for auditing ## Batch Operations For high-throughput scenarios, the service provides: - Batch writes for multiple tuples in a single operation - Transaction support for atomicity guarantees - Automatic chunking to respect API limits - Duplicate filtering to optimize performance ## Usage Example ```php $tupleService = new TupleService($tupleRepository); Write a single tuple $result = $tupleService-&gt;write( $store, &#039;user:anne&#039;, &#039;reader&#039;, &#039;document:budget-2024&#039; ); Read tuples with filters $tuples = $tupleService-&gt;read( $store, user: &#039;user:anne&#039;, relation: &#039;reader&#039; )-&gt;unwrap(); Write multiple tuples $batch = $tupleService-&gt;writeBatch($store, $tupleKeys)-&gt;unwrap(); ```
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`delete()`](#delete)
+- [`delete()`](#delete)
   - [`deleteBatch()`](#deletebatch)
+  - [`exists()`](#exists)
+  - [`getStatistics()`](#getstatistics)
+  - [`listChanges()`](#listchanges)
   - [`read()`](#read)
   - [`write()`](#write)
   - [`writeBatch()`](#writebatch)
-- [List Operations](#list-operations)
-  - [`getStatistics()`](#getstatistics)
-  - [`listChanges()`](#listchanges)
-- [Utility](#utility)
-  - [`exists()`](#exists)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +35,7 @@ Service interface for managing OpenFGA relationship tuples. This service provide
 
 ## Methods
 
-### CRUD Operations
-
-#### delete
+### delete
 
 ```php
 public function delete(
@@ -68,7 +66,7 @@ Delete a single relationship tuple. Removes the specified relationship, with opt
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success if deleted, or Failure with error details
 
-#### deleteBatch
+### deleteBatch
 
 ```php
 public function deleteBatch(
@@ -97,7 +95,88 @@ Delete multiple relationship tuples in a batch operation. Efficiently removes mu
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success if all deleted, or Failure with error details
 
-#### read
+### exists
+
+```php
+public function exists(
+    StoreInterface|string $store,
+    string $user,
+    string $relation,
+    string $object,
+): FailureInterface|SuccessInterface
+
+```
+
+Check if a specific tuple exists in the store. Efficiently verifies tuple existence without retrieving all matching tuples. Useful for validation before operations or conditional logic.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleServiceInterface.php#L118)
+
+#### Parameters
+
+| Name        | Type                                                         | Description           |
+| ----------- | ------------------------------------------------------------ | --------------------- |
+| `$store`    | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to check    |
+| `$user`     | `string`                                                     | The user identifier   |
+| `$relation` | `string`                                                     | The relationship type |
+| `$object`   | `string`                                                     | The object identifier |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with true/false, or Failure with error details
+
+### getStatistics
+
+```php
+public function getStatistics(StoreInterface|string $store): FailureInterface|SuccessInterface
+
+```
+
+Get statistics about tuples in the store. Provides insights into the tuple distribution and counts by type and relation, useful for monitoring and capacity planning.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleServiceInterface.php#L134)
+
+#### Parameters
+
+| Name     | Type                                                         | Description          |
+| -------- | ------------------------------------------------------------ | -------------------- |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to analyze |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with statistics array, or Failure with error details
+
+### listChanges
+
+```php
+public function listChanges(
+    StoreInterface|string $store,
+    string|null $type = NULL,
+    DateTimeImmutable|null $startTime = NULL,
+    string|null $continuationToken = NULL,
+    int|null $pageSize = NULL,
+): FailureInterface|SuccessInterface
+
+```
+
+List changes to tuples over time for auditing purposes. Retrieves a chronological log of tuple changes (writes and deletes) within the specified time range, useful for compliance and debugging.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleServiceInterface.php#L151)
+
+#### Parameters
+
+| Name                 | Type                                                         | Description                                          |
+| -------------------- | ------------------------------------------------------------ | ---------------------------------------------------- |
+| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list changes from                       |
+| `$type`              | `string` &#124; `null`                                       | Filter by object type (optional)                     |
+| `$startTime`         | `DateTimeImmutable` &#124; `null`                            | Start time for changes (optional)                    |
+| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination (optional)                      |
+| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of changes to retrieve (default: 100) |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with changes collection, or Failure with error details
+
+### read
 
 ```php
 public function read(
@@ -128,7 +207,7 @@ Read relationship tuples with optional filtering. Retrieves tuples matching the 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with tuples collection, or Failure with error details
 
-#### write
+### write
 
 ```php
 public function write(
@@ -157,7 +236,7 @@ Write a single relationship tuple. Creates a relationship between a user and an 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success if written, or Failure with error details
 
-#### writeBatch
+### writeBatch
 
 ```php
 public function writeBatch(
@@ -197,88 +276,3 @@ Write multiple relationship tuples in a batch operation. Efficiently writes mult
 #### Returns
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success if all written, or Failure with error details
-
-### List Operations
-
-#### getStatistics
-
-```php
-public function getStatistics(StoreInterface|string $store): FailureInterface|SuccessInterface
-
-```
-
-Get statistics about tuples in the store. Provides insights into the tuple distribution and counts by type and relation, useful for monitoring and capacity planning.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleServiceInterface.php#L134)
-
-#### Parameters
-
-| Name     | Type                                                         | Description          |
-| -------- | ------------------------------------------------------------ | -------------------- |
-| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to analyze |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with statistics array, or Failure with error details
-
-#### listChanges
-
-```php
-public function listChanges(
-    StoreInterface|string $store,
-    string|null $type = NULL,
-    DateTimeImmutable|null $startTime = NULL,
-    string|null $continuationToken = NULL,
-    int|null $pageSize = NULL,
-): FailureInterface|SuccessInterface
-
-```
-
-List changes to tuples over time for auditing purposes. Retrieves a chronological log of tuple changes (writes and deletes) within the specified time range, useful for compliance and debugging.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleServiceInterface.php#L151)
-
-#### Parameters
-
-| Name                 | Type                                                         | Description                                          |
-| -------------------- | ------------------------------------------------------------ | ---------------------------------------------------- |
-| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list changes from                       |
-| `$type`              | `string` &#124; `null`                                       | Filter by object type (optional)                     |
-| `$startTime`         | `DateTimeImmutable` &#124; `null`                            | Start time for changes (optional)                    |
-| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination (optional)                      |
-| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of changes to retrieve (default: 100) |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with changes collection, or Failure with error details
-
-### Utility
-
-#### exists
-
-```php
-public function exists(
-    StoreInterface|string $store,
-    string $user,
-    string $relation,
-    string $object,
-): FailureInterface|SuccessInterface
-
-```
-
-Check if a specific tuple exists in the store. Efficiently verifies tuple existence without retrieving all matching tuples. Useful for validation before operations or conditional logic.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Services/TupleServiceInterface.php#L118)
-
-#### Parameters
-
-| Name        | Type                                                         | Description           |
-| ----------- | ------------------------------------------------------------ | --------------------- |
-| `$store`    | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to check    |
-| `$user`     | `string`                                                     | The user identifier   |
-| `$relation` | `string`                                                     | The relationship type |
-| `$object`   | `string`                                                     | The object identifier |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with true/false, or Failure with error details

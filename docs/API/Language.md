@@ -2,7 +2,8 @@
 
 Supported languages for OpenFGA SDK internationalization. This enum represents all available languages for SDK messages and error translations, providing type-safe language selection with rich metadata about each supported locale including native names, ISO codes, and text directionality.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,17 +12,17 @@ Supported languages for OpenFGA SDK internationalization. This enum represents a
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [Utility](#utility)
+- [`apply()`](#apply)
   - [`displayName()`](#displayname)
   - [`isActive()`](#isactive)
   - [`isRightToLeft()`](#isrighttoleft)
   - [`isoCode()`](#isocode)
-- [Other](#other)
-  - [`apply()`](#apply)
   - [`locale()`](#locale)
   - [`nativeName()`](#nativename)
   - [`regionCode()`](#regioncode)
   - [`withLocale()`](#withlocale)
+
+</details>
 
 ## Namespace
 
@@ -76,71 +77,7 @@ Supported languages for OpenFGA SDK internationalization. This enum represents a
 
 ## Methods
 
-### Utility
-
-#### displayName
-
-```php
-public function displayName(): string
-
-```
-
-Get the display name of the language in English. Returns the English name of the language for UI display and documentation purposes.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L150)
-
-#### Returns
-
-`string` — The English name of the language
-
-#### isActive
-
-```php
-public function isActive(): bool
-
-```
-
-Check if this language is the currently active locale. Determines whether this language is currently set as the default locale for translation operations.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L178)
-
-#### Returns
-
-`bool` — True if this is the active language
-
-#### isRightToLeft
-
-```php
-public function isRightToLeft(): bool
-
-```
-
-Check if this language uses right-to-left text direction. Useful for UI implementations that need to adjust layout direction based on the selected language.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L209)
-
-#### Returns
-
-`bool` — True if the language is RTL
-
-#### isoCode
-
-```php
-public function isoCode(): string
-
-```
-
-Get the ISO 639-1 two-letter language code. Returns the base language code without region specifier. For regional variants, this returns the primary language code.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L191)
-
-#### Returns
-
-`string` — The ISO 639-1 language code
-
-### Other
-
-#### apply
+### apply
 
 ```php
 public function apply(): void
@@ -155,7 +92,67 @@ Apply this language as the active translation locale. Sets this language as the 
 
 `void`
 
-#### locale
+### displayName
+
+```php
+public function displayName(): string
+
+```
+
+Get the display name of the language in English. Returns the English name of the language for UI display and documentation purposes.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L150)
+
+#### Returns
+
+`string` — The English name of the language
+
+### isActive
+
+```php
+public function isActive(): bool
+
+```
+
+Check if this language is the currently active locale. Determines whether this language is currently set as the default locale for translation operations.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L178)
+
+#### Returns
+
+`bool` — True if this is the active language
+
+### isRightToLeft
+
+```php
+public function isRightToLeft(): bool
+
+```
+
+Check if this language uses right-to-left text direction. Useful for UI implementations that need to adjust layout direction based on the selected language.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L209)
+
+#### Returns
+
+`bool` — True if the language is RTL
+
+### isoCode
+
+```php
+public function isoCode(): string
+
+```
+
+Get the ISO 639-1 two-letter language code. Returns the base language code without region specifier. For regional variants, this returns the primary language code.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L191)
+
+#### Returns
+
+`string` — The ISO 639-1 language code
+
+### locale
 
 ```php
 public function locale(): string
@@ -170,7 +167,7 @@ Get the locale code for this language. Returns the full locale identifier includ
 
 `string` — The locale code
 
-#### nativeName
+### nativeName
 
 ```php
 public function nativeName(): string
@@ -185,7 +182,7 @@ Get the native name of the language. Returns the language name as written in tha
 
 `string` — The native language name
 
-#### regionCode
+### regionCode
 
 ```php
 public function regionCode(): string|null
@@ -200,7 +197,7 @@ Get the region code if this is a regional language variant. Returns the ISO 3166
 
 `string` &#124; `null` — The region code or null
 
-#### withLocale
+### withLocale
 
 ```php
 public function withLocale(callable $callback): T

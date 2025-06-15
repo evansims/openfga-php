@@ -2,7 +2,8 @@
 
 Interface for retrieving information about an OpenFGA store. This interface defines the contract for requests that fetch metadata and configuration information for a specific OpenFGA store. Store information includes details such as the store name, creation time, and other administrative metadata. Getting store information is useful for: - Administrative interfaces and dashboards - Verifying store existence before performing operations - Displaying store metadata to users - Auditing and monitoring store usage - Implementing store management workflows
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for retrieving information about an OpenFGA store. This interface defi
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getRequest()`](#getrequest)
+- [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for retrieving information about an OpenFGA store. This interface defi
 
 ## Methods
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -54,7 +56,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

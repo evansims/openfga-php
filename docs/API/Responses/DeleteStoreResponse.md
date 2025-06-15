@@ -2,7 +2,8 @@
 
 Response confirming successful deletion of a store. This response is returned when a store has been successfully deleted from the OpenFGA service. The response contains no additional data as the store has been permanently removed.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,9 @@ Response confirming successful deletion of a store. This response is returned wh
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`fromResponse()`](#fromresponse)
+- [`fromResponse()`](#fromresponse)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Response confirming successful deletion of a store. This response is returned wh
 
 ## Methods
 
-#### fromResponse
+### fromResponse
 
 *<small>Implements Responses\DeleteStoreResponseInterface</small>*
 

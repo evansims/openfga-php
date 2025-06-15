@@ -2,7 +2,8 @@
 
 Default implementation of HttpServiceInterface. This implementation delegates to RequestManager for actual HTTP operations, providing a clean abstraction layer between the Client and network concerns. It emits events for telemetry and observability without direct coupling.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Default implementation of HttpServiceInterface. This implementation delegates to
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getLastRequest()`](#getlastrequest)
+- [`getLastRequest()`](#getlastrequest)
   - [`getLastResponse()`](#getlastresponse)
-- [Other](#other)
   - [`send()`](#send)
+
+</details>
 
 ## Namespace
 
@@ -34,9 +35,7 @@ Default implementation of HttpServiceInterface. This implementation delegates to
 
 ## Methods
 
-### List Operations
-
-#### getLastRequest
+### getLastRequest
 
 ```php
 public function getLastRequest(): ?Psr\Http\Message\RequestInterface
@@ -51,7 +50,7 @@ Get the last HTTP request sent. Returns the most recent HTTP request sent by thi
 
 `Psr\Http\Message\RequestInterface` &#124; `null` — The last request, or null if no requests sent
 
-#### getLastResponse
+### getLastResponse
 
 ```php
 public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
@@ -66,9 +65,7 @@ Get the last HTTP response received. Returns the most recent HTTP response recei
 
 `Psr\Http\Message\ResponseInterface` &#124; `null` — The last response, or null if no responses received
 
-### Other
-
-#### send
+### send
 
 ```php
 public function send(OpenFGA\Requests\RequestInterface $request): Psr\Http\Message\ResponseInterface

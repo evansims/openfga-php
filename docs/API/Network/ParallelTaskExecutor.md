@@ -2,14 +2,16 @@
 
 Executes tasks in parallel using the RequestManager infrastructure. This class provides a clean abstraction for parallel task execution, leveraging the existing Fiber-based implementation in RequestManager.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`execute()`](#execute)
+- [`execute()`](#execute)
+
+</details>
 
 ## Namespace
 
@@ -21,7 +23,7 @@ Executes tasks in parallel using the RequestManager infrastructure. This class p
 
 ## Methods
 
-#### execute
+### execute
 
 ```php
 public function execute(

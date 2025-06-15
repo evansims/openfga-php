@@ -2,24 +2,25 @@
 
 Interface for building schema definitions using the builder pattern. This interface provides a fluent API for constructing schema definitions that describe the structure and validation rules for OpenFGA model objects. The builder pattern allows for easy, readable schema creation with method chaining. Schema builders support all common data types including strings, integers, booleans, dates, arrays, and complex objects. Each property can be configured with validation rules such as required status, default values, format constraints, and enumeration restrictions. Example usage: ```php $schema = $builder -&gt;string(&#039;name&#039;, required: true) -&gt;integer(&#039;age&#039;, required: false, default: 0) -&gt;object(&#039;address&#039;, Address::class, required: true) -&gt;register(); ``` The built schemas are automatically registered in the SchemaRegistry for use during validation and object transformation throughout the OpenFGA system.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Utility](#utility)
-  - [`register()`](#register)
-- [Other](#other)
-  - [`array()`](#array)
+- [`array()`](#array)
   - [`boolean()`](#boolean)
   - [`date()`](#date)
   - [`datetime()`](#datetime)
   - [`integer()`](#integer)
   - [`number()`](#number)
   - [`object()`](#object)
+  - [`register()`](#register)
   - [`string()`](#string)
+
+</details>
 
 ## Namespace
 
@@ -35,26 +36,7 @@ Interface for building schema definitions using the builder pattern. This interf
 
 ## Methods
 
-### Utility
-
-#### register
-
-```php
-public function register(): Schema
-
-```
-
-Build and register the schema. Creates a Schema instance with all defined properties and registers it in the SchemaRegistry for use in validation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaBuilderInterface.php#L116)
-
-#### Returns
-
-[`Schema`](Schema.md) — The built and registered schema
-
-### Other
-
-#### array
+### array
 
 ```php
 public function array(
@@ -83,7 +65,7 @@ Add an array property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### boolean
+### boolean
 
 ```php
 public function boolean(string $name, bool $required = false, mixed|null $default = NULL): self
@@ -106,7 +88,7 @@ Add a boolean property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### date
+### date
 
 ```php
 public function date(string $name, bool $required = false, mixed|null $default = NULL): self
@@ -129,7 +111,7 @@ Add a date property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### datetime
+### datetime
 
 ```php
 public function datetime(string $name, bool $required = false, mixed|null $default = NULL): self
@@ -152,7 +134,7 @@ Add a datetime property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### integer
+### integer
 
 ```php
 public function integer(string $name, bool $required = false, mixed|null $default = NULL): self
@@ -175,7 +157,7 @@ Add an integer property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### number
+### number
 
 ```php
 public function number(string $name, bool $required = false, mixed|null $default = NULL): self
@@ -198,7 +180,7 @@ Add a number (float) property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### object
+### object
 
 ```php
 public function object(string $name, string $className, bool $required = false): self
@@ -221,7 +203,22 @@ Add an object property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### string
+### register
+
+```php
+public function register(): Schema
+
+```
+
+Build and register the schema. Creates a Schema instance with all defined properties and registers it in the SchemaRegistry for use in validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaBuilderInterface.php#L116)
+
+#### Returns
+
+[`Schema`](Schema.md) — The built and registered schema
+
+### string
 
 ```php
 public function string(

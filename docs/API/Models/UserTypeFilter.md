@@ -2,7 +2,8 @@
 
 Represents a filter for limiting users by type and optional relation. UserTypeFilter allows you to constrain authorization queries to specific user types, optionally including only users that have a particular relation. This is useful for filtering results when listing users or performing authorization checks on specific user categories. Use this when you need to limit authorization operations to specific types of users in your system.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,13 +12,12 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getRelation()`](#getrelation)
+- [`getRelation()`](#getrelation)
   - [`getType()`](#gettype)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -45,9 +45,7 @@ Represents a filter for limiting users by type and optional relation. UserTypeFi
 
 ## Methods
 
-### List Operations
-
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): ?string
@@ -62,7 +60,7 @@ Get the optional relation filter for limiting user types. When specified, this f
 
 `string` &#124; `null`
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -77,9 +75,20 @@ Get the object type to filter by. This specifies the type of objects that users 
 
 `string` — The object type to filter by
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilter.php#L74)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\UserTypeFilterInterface</small>*
 
@@ -95,18 +104,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserTypeFilter.php#L74)
-
-#### Returns
-
-`array`

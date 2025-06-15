@@ -2,7 +2,8 @@
 
 Interface for reading test assertions from an authorization model. This interface defines the contract for requests that retrieve test assertions associated with a specific authorization model. Assertions are automated tests that verify authorization model behavior by checking specific permission scenarios against expected outcomes. Reading assertions is essential for: - **Test Execution**: Running automated tests to verify model behavior - **Model Validation**: Ensuring authorization logic works as expected - **Debugging**: Understanding test scenarios when troubleshooting issues - **Documentation**: Reviewing examples of how permissions should work - **Continuous Integration**: Automating authorization model testing - **Regression Testing**: Verifying that model changes don&#039;t break existing behavior The retrieved assertions include the test scenarios, expected outcomes, and any contextual data needed to execute the tests. This provides a complete test suite that can be run to validate the authorization model&#039;s correctness.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,11 @@ Interface for reading test assertions from an authorization model. This interfac
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModel()`](#getmodel)
+- [`getModel()`](#getmodel)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -34,7 +36,7 @@ Interface for reading test assertions from an authorization model. This interfac
 
 ## Methods
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -49,7 +51,7 @@ Get the authorization model ID to read assertions from. Specifies which version 
 
 `string` — The authorization model ID whose assertions should be retrieved
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -70,7 +72,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

@@ -2,7 +2,8 @@
 
 Represents source file information for debugging and development tools. SourceInfo provides metadata about where elements of your authorization model were originally defined, including file paths. This information is valuable for development tools, error reporting, and debugging authorization model issues. Use this when you need to trace authorization model elements back to their source definitions for debugging or tooling purposes.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Represents source file information for debugging and development tools. SourceIn
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getFile()`](#getfile)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
+- [`getFile()`](#getfile)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -44,9 +44,7 @@ Represents source file information for debugging and development tools. SourceIn
 
 ## Methods
 
-### List Operations
-
-#### getFile
+### getFile
 
 ```php
 public function getFile(): string
@@ -61,9 +59,20 @@ Get the source file path where the model element was defined. This provides debu
 
 `string` — The source file path where the element was defined
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfo.php#L74)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\SourceInfoInterface</small>*
 
@@ -79,18 +88,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/SourceInfo.php#L74)
-
-#### Returns
-
-`array`

@@ -2,15 +2,17 @@
 
 PSR-18 compliant HTTP client implementation. This implementation wraps any PSR-18 compatible HTTP client, providing automatic discovery if no client is provided. It ensures compatibility with various HTTP client libraries while maintaining a consistent interface for the OpenFGA SDK.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`send()`](#send)
+- [`send()`](#send)
+
+</details>
 
 ## Namespace
 
@@ -26,7 +28,7 @@ PSR-18 compliant HTTP client implementation. This implementation wraps any PSR-1
 
 ## Methods
 
-#### send
+### send
 
 ```php
 public function send(Psr\Http\Message\RequestInterface $request): Psr\Http\Message\ResponseInterface

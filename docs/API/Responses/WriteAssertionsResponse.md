@@ -2,7 +2,8 @@
 
 Response confirming successful writing of test assertions. This response indicates that test assertions have been successfully stored for an authorization model. The assertions can now be used to validate that the model behaves correctly in various authorization scenarios.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,9 @@ Response confirming successful writing of test assertions. This response indicat
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`fromResponse()`](#fromresponse)
+- [`fromResponse()`](#fromresponse)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Response confirming successful writing of test assertions. This response indicat
 
 ## Methods
 
-#### fromResponse
+### fromResponse
 
 *<small>Implements Responses\WriteAssertionsResponseInterface</small>*
 

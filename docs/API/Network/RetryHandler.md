@@ -2,7 +2,8 @@
 
 Concrete implementation of the retry handler using standard sleep delays. This final class provides the default implementation of the retry handler that uses actual sleep delays for production use. For testing or custom delay implementations, extend AbstractRetryHandler instead.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,9 @@ Concrete implementation of the retry handler using standard sleep delays. This f
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`executeWithRetry()`](#executewithretry)
+- [`executeWithRetry()`](#executewithretry)
+
+</details>
 
 ## Namespace
 
@@ -31,7 +33,7 @@ Concrete implementation of the retry handler using standard sleep delays. This f
 
 ## Methods
 
-#### executeWithRetry
+### executeWithRetry
 
 ```php
 public function executeWithRetry(

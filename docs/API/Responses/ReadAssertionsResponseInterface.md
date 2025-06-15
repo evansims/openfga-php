@@ -2,7 +2,8 @@
 
 Interface for assertions reading response objects. This interface defines the contract for responses returned when reading assertions from an OpenFGA authorization model. Assertions are test cases that validate the behavior of an authorization model by specifying expected permission check results. Assertion reading is used for testing authorization models, validating model behavior, and ensuring that permission logic works as expected during development and deployment.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for assertions reading response objects. This interface defines the co
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getAssertions()`](#getassertions)
+- [`getAssertions()`](#getassertions)
   - [`getModel()`](#getmodel)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for assertions reading response objects. This interface defines the co
 
 ## Methods
 
-#### getAssertions
+### getAssertions
 
 ```php
 public function getAssertions(): AssertionsInterface|null
@@ -48,7 +50,7 @@ Get the collection of assertions from the authorization model. Returns a type-sa
 
 [`AssertionsInterface`](Models/Collections/AssertionsInterface.md) &#124; `null` — The collection of assertions, or null if no assertions are defined
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string

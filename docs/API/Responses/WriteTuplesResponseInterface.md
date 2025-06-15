@@ -2,7 +2,8 @@
 
 Interface for tuple writing response objects. This interface defines the contract for responses returned when writing relationship tuples to an OpenFGA store. The response handles both transactional and non-transactional write modes, providing appropriate feedback for each operation type. In transactional mode, all changes succeed or fail together. In non-transactional mode, operations are processed independently with detailed success/failure tracking.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,21 +11,20 @@ Interface for tuple writing response objects. This interface defines the contrac
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getErrors()`](#geterrors)
+- [`getErrors()`](#geterrors)
   - [`getFailedChunks()`](#getfailedchunks)
   - [`getFirstError()`](#getfirsterror)
   - [`getSuccessRate()`](#getsuccessrate)
   - [`getSuccessfulChunks()`](#getsuccessfulchunks)
   - [`getTotalChunks()`](#gettotalchunks)
   - [`getTotalOperations()`](#gettotaloperations)
-- [Utility](#utility)
   - [`isCompleteFailure()`](#iscompletefailure)
   - [`isCompleteSuccess()`](#iscompletesuccess)
   - [`isPartialSuccess()`](#ispartialsuccess)
   - [`isTransactional()`](#istransactional)
-- [Other](#other)
   - [`throwOnFailure()`](#throwonfailure)
+
+</details>
 
 ## Namespace
 
@@ -45,9 +45,7 @@ Interface for tuple writing response objects. This interface defines the contrac
 
 ## Methods
 
-### List Operations
-
-#### getErrors
+### getErrors
 
 ```php
 public function getErrors(): array<Throwable>
@@ -62,7 +60,7 @@ Get all errors that occurred during processing.
 
 `array&lt;`Throwable`&gt;` — Array of exceptions from failed operations
 
-#### getFailedChunks
+### getFailedChunks
 
 ```php
 public function getFailedChunks(): int
@@ -77,7 +75,7 @@ Get the number of failed chunks.
 
 `int` — The number of failed chunks
 
-#### getFirstError
+### getFirstError
 
 ```php
 public function getFirstError(): Throwable|null
@@ -92,7 +90,7 @@ Get the first error that occurred.
 
 `Throwable` &#124; `null` — The first error, or null if no errors
 
-#### getSuccessRate
+### getSuccessRate
 
 ```php
 public function getSuccessRate(): float
@@ -107,7 +105,7 @@ Calculate the success rate of the operation.
 
 `float` — Success rate between 0.0 and 1.0
 
-#### getSuccessfulChunks
+### getSuccessfulChunks
 
 ```php
 public function getSuccessfulChunks(): int
@@ -122,7 +120,7 @@ Get the number of successfully processed chunks.
 
 `int` — The number of successful chunks
 
-#### getTotalChunks
+### getTotalChunks
 
 ```php
 public function getTotalChunks(): int
@@ -137,7 +135,7 @@ Get the total number of chunks processed (non-transactional mode).
 
 `int` — The number of chunks, or 1 for transactional mode
 
-#### getTotalOperations
+### getTotalOperations
 
 ```php
 public function getTotalOperations(): int
@@ -152,9 +150,7 @@ Get the total number of tuple operations processed.
 
 `int` — The total number of write and delete operations
 
-### Utility
-
-#### isCompleteFailure
+### isCompleteFailure
 
 ```php
 public function isCompleteFailure(): bool
@@ -169,7 +165,7 @@ Check if all operations failed.
 
 `bool` — True if all operations failed
 
-#### isCompleteSuccess
+### isCompleteSuccess
 
 ```php
 public function isCompleteSuccess(): bool
@@ -184,7 +180,7 @@ Check if all operations completed successfully.
 
 `bool` — True if all operations succeeded
 
-#### isPartialSuccess
+### isPartialSuccess
 
 ```php
 public function isPartialSuccess(): bool
@@ -199,7 +195,7 @@ Check if some operations succeeded and some failed.
 
 `bool` — True if partial success (non-transactional mode only)
 
-#### isTransactional
+### isTransactional
 
 ```php
 public function isTransactional(): bool
@@ -214,9 +210,7 @@ Check if the operation was executed in transactional mode.
 
 `bool` — True if transactional, false if non-transactional
 
-### Other
-
-#### throwOnFailure
+### throwOnFailure
 
 ```php
 public function throwOnFailure(): void

@@ -2,7 +2,8 @@
 
 Represents a collection that is indexed by a string, like a JSON object.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,25 +11,24 @@ Represents a collection that is indexed by a string, like a JSON object.
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`get()`](#get)
-  - [`offsetGet()`](#offsetget)
-- [Utility](#utility)
-  - [`has()`](#has)
-  - [`isEmpty()`](#isempty)
-  - [`offsetExists()`](#offsetexists)
-  - [`offsetSet()`](#offsetset)
-  - [`offsetUnset()`](#offsetunset)
-- [Other](#other)
-  - [`add()`](#add)
+- [`add()`](#add)
   - [`count()`](#count)
   - [`current()`](#current)
+  - [`get()`](#get)
+  - [`has()`](#has)
+  - [`isEmpty()`](#isempty)
   - [`jsonSerialize()`](#jsonserialize)
   - [`key()`](#key)
   - [`next()`](#next)
+  - [`offsetExists()`](#offsetexists)
+  - [`offsetGet()`](#offsetget)
+  - [`offsetSet()`](#offsetset)
+  - [`offsetUnset()`](#offsetunset)
   - [`rewind()`](#rewind)
   - [`toArray()`](#toarray)
   - [`valid()`](#valid)
+
+</details>
 
 ## Namespace
 
@@ -52,151 +52,7 @@ Represents a collection that is indexed by a string, like a JSON object.
 
 ## Methods
 
-### List Operations
-
-#### get
-
-```php
-public function get(string $key): T|null
-
-```
-
-Get an item by its string key. This method retrieves the item associated with the specified key. Returns null if no item is found with the given key.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L78)
-
-#### Parameters
-
-| Name   | Type     | Description                     |
-| ------ | -------- | ------------------------------- |
-| `$key` | `string` | The key of the item to retrieve |
-
-#### Returns
-
-`T` &#124; `null` — The item associated with the key, or null if not found
-
-#### offsetGet
-
-```php
-public function offsetGet(mixed $offset): T|null
-
-```
-
-Get an item by its offset key.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L149)
-
-#### Parameters
-
-| Name      | Type    | Description |
-| --------- | ------- | ----------- |
-| `$offset` | `mixed` |             |
-
-#### Returns
-
-`T` &#124; `null`
-
-### Utility
-
-#### has
-
-```php
-public function has(string $key): bool
-
-```
-
-Check if a key exists in the collection. This method determines whether the collection contains an item associated with the specified key.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L89)
-
-#### Parameters
-
-| Name   | Type     | Description                    |
-| ------ | -------- | ------------------------------ |
-| `$key` | `string` | The key to check for existence |
-
-#### Returns
-
-`bool` — True if the key exists, false otherwise
-
-#### isEmpty
-
-```php
-public function isEmpty(): bool
-
-```
-
-Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L99)
-
-#### Returns
-
-`bool` — True if the collection is empty, false otherwise
-
-#### offsetExists
-
-```php
-public function offsetExists(mixed $offset): bool
-
-```
-
-Check if an offset exists in the collection. This method determines whether the collection contains an item with the specified key.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L139)
-
-#### Parameters
-
-| Name      | Type    | Description                    |
-| --------- | ------- | ------------------------------ |
-| `$offset` | `mixed` | The key to check for existence |
-
-#### Returns
-
-`bool` — True if the key exists, false otherwise
-
-#### offsetSet
-
-```php
-public function offsetSet(string|null $offset, T $value): void
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L158)
-
-#### Parameters
-
-| Name      | Type                   | Description |
-| --------- | ---------------------- | ----------- |
-| `$offset` | `string` &#124; `null` |             |
-| `$value`  | `T`                    |             |
-
-#### Returns
-
-`void`
-
-#### offsetUnset
-
-```php
-public function offsetUnset(mixed $offset): void
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L164)
-
-#### Parameters
-
-| Name      | Type    | Description |
-| --------- | ------- | ----------- |
-| `$offset` | `mixed` |             |
-
-#### Returns
-
-`void`
-
-### Other
-
-#### add
+### add
 
 ```php
 public function add(string $key, T $item): static
@@ -218,7 +74,7 @@ Add an item to the collection with the specified key. This method associates an 
 
 `static`
 
-#### count
+### count
 
 ```php
 public function count(): int<0, max>
@@ -231,7 +87,7 @@ public function count(): int<0, max>
 
 `int&lt;`0`, `max`&gt;`
 
-#### current
+### current
 
 ```php
 public function current(): T
@@ -244,7 +100,64 @@ public function current(): T
 
 `T`
 
-#### jsonSerialize
+### get
+
+```php
+public function get(string $key): T|null
+
+```
+
+Get an item by its string key. This method retrieves the item associated with the specified key. Returns null if no item is found with the given key.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L78)
+
+#### Parameters
+
+| Name   | Type     | Description                     |
+| ------ | -------- | ------------------------------- |
+| `$key` | `string` | The key of the item to retrieve |
+
+#### Returns
+
+`T` &#124; `null` — The item associated with the key, or null if not found
+
+### has
+
+```php
+public function has(string $key): bool
+
+```
+
+Check if a key exists in the collection. This method determines whether the collection contains an item associated with the specified key.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L89)
+
+#### Parameters
+
+| Name   | Type     | Description                    |
+| ------ | -------- | ------------------------------ |
+| `$key` | `string` | The key to check for existence |
+
+#### Returns
+
+`bool` — True if the key exists, false otherwise
+
+### isEmpty
+
+```php
+public function isEmpty(): bool
+
+```
+
+Check if the collection contains no items. This method provides a convenient way to test whether the collection is empty without needing to check the count.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L99)
+
+#### Returns
+
+`bool` — True if the collection is empty, false otherwise
+
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>
@@ -257,7 +170,7 @@ public function jsonSerialize(): array<string, mixed>
 
 `array&lt;`string`, `mixed`&gt;`
 
-#### key
+### key
 
 ```php
 public function key(): string
@@ -272,7 +185,7 @@ Get the current iterator key. This method returns the current string key in the 
 
 `string` — The current iterator key
 
-#### next
+### next
 
 ```php
 public function next(): void
@@ -287,7 +200,88 @@ Move the iterator to the next position. This method advances the internal iterat
 
 `void`
 
-#### rewind
+### offsetExists
+
+```php
+public function offsetExists(mixed $offset): bool
+
+```
+
+Check if an offset exists in the collection. This method determines whether the collection contains an item with the specified key.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L139)
+
+#### Parameters
+
+| Name      | Type    | Description                    |
+| --------- | ------- | ------------------------------ |
+| `$offset` | `mixed` | The key to check for existence |
+
+#### Returns
+
+`bool` — True if the key exists, false otherwise
+
+### offsetGet
+
+```php
+public function offsetGet(mixed $offset): T|null
+
+```
+
+Get an item by its offset key.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L149)
+
+#### Parameters
+
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
+
+#### Returns
+
+`T` &#124; `null`
+
+### offsetSet
+
+```php
+public function offsetSet(string|null $offset, T $value): void
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L158)
+
+#### Parameters
+
+| Name      | Type                   | Description |
+| --------- | ---------------------- | ----------- |
+| `$offset` | `string` &#124; `null` |             |
+| `$value`  | `T`                    |             |
+
+#### Returns
+
+`void`
+
+### offsetUnset
+
+```php
+public function offsetUnset(mixed $offset): void
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Collections/KeyedCollectionInterface.php#L164)
+
+#### Parameters
+
+| Name      | Type    | Description |
+| --------- | ------- | ----------- |
+| `$offset` | `mixed` |             |
+
+#### Returns
+
+`void`
+
+### rewind
 
 ```php
 public function rewind(): void
@@ -302,7 +296,7 @@ Reset the iterator to the beginning of the collection. This method moves the int
 
 `void`
 
-#### toArray
+### toArray
 
 ```php
 public function toArray(): array<string, T>
@@ -317,7 +311,7 @@ Convert the collection to a standard PHP associative array. This method creates 
 
 `array&lt;`string`, `T`&gt;` — An associative array containing all collection items
 
-#### valid
+### valid
 
 ```php
 public function valid(): bool

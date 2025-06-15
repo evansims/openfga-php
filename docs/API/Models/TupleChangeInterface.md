@@ -2,7 +2,8 @@
 
 Represents a change event for a relationship tuple in OpenFGA. Tuple changes capture the history of relationship modifications in the authorization store. Each change records whether a tuple was written (created) or deleted, along with the timestamp and the specific tuple that was affected. These change events are essential for: - Auditing relationship modifications - Implementing consistency across distributed systems - Debugging authorization issues - Maintaining change history for compliance
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getOperation()`](#getoperation)
+- [`getOperation()`](#getoperation)
   - [`getTimestamp()`](#gettimestamp)
   - [`getTupleKey()`](#gettuplekey)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Represents a change event for a relationship tuple in OpenFGA. Tuple changes cap
 
 ## Methods
 
-### List Operations
-
-#### getOperation
+### getOperation
 
 ```php
 public function getOperation(): TupleOperation
@@ -53,7 +52,7 @@ Get the type of operation performed on the tuple. Operations indicate whether th
 
 [`TupleOperation`](Models/Enums/TupleOperation.md) — The operation type (write or delete)
 
-#### getTimestamp
+### getTimestamp
 
 ```php
 public function getTimestamp(): DateTimeImmutable
@@ -68,7 +67,7 @@ Get the timestamp when this tuple change occurred. Timestamps help track the chr
 
 `DateTimeImmutable` — The change timestamp
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): TupleKeyInterface
@@ -83,9 +82,7 @@ Get the tuple key that was affected by this change. The tuple key identifies whi
 
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key that was modified
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

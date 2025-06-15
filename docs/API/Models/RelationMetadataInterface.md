@@ -2,7 +2,8 @@
 
 Represents metadata associated with a relation in OpenFGA authorization models. Relation metadata provides additional context and constraints for relations defined in type definitions. This metadata helps with: - Type safety by defining which user types can be directly related - Development tooling by providing source file information - Model organization through module names - Validation and error reporting The metadata is particularly important for: - Ensuring that only appropriate user types can be assigned to relations - Providing helpful error messages when model validation fails - Supporting development tools that work with authorization models - Organizing complex models across multiple modules or files
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
+- [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
   - [`getModule()`](#getmodule)
   - [`getSourceInfo()`](#getsourceinfo)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Represents metadata associated with a relation in OpenFGA authorization models. 
 
 ## Methods
 
-### List Operations
-
-#### getDirectlyRelatedUserTypes
+### getDirectlyRelatedUserTypes
 
 ```php
 public function getDirectlyRelatedUserTypes(): RelationReferencesInterface|null
@@ -53,7 +52,7 @@ Get the user types that can be directly related through this relation. This defi
 
 [`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md) &#124; `null` — The directly related user types, or null if not specified
 
-#### getModule
+### getModule
 
 ```php
 public function getModule(): string|null
@@ -68,7 +67,7 @@ Get the optional module name for organization. This provides organizational info
 
 `string` &#124; `null` — The module name, or null if not specified
 
-#### getSourceInfo
+### getSourceInfo
 
 ```php
 public function getSourceInfo(): SourceInfoInterface|null
@@ -83,9 +82,7 @@ Get optional source file information for debugging and tooling. This provides in
 
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source file information, or null if not available
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

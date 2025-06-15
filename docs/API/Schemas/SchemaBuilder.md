@@ -2,7 +2,8 @@
 
 Fluent builder for creating JSON schemas for data validation and transformation. This builder provides a fluent API for defining validation schemas for model classes, supporting various data types, formats, and validation constraints. It&#039;s used internally by the SDK to validate API responses and ensure data integrity.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,17 +11,17 @@ Fluent builder for creating JSON schemas for data validation and transformation.
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Utility](#utility)
-  - [`register()`](#register)
-- [Other](#other)
-  - [`array()`](#array)
+- [`array()`](#array)
   - [`boolean()`](#boolean)
   - [`date()`](#date)
   - [`datetime()`](#datetime)
   - [`integer()`](#integer)
   - [`number()`](#number)
   - [`object()`](#object)
+  - [`register()`](#register)
   - [`string()`](#string)
+
+</details>
 
 ## Namespace
 
@@ -40,26 +41,7 @@ Fluent builder for creating JSON schemas for data validation and transformation.
 
 ## Methods
 
-### Utility
-
-#### register
-
-```php
-public function register(): OpenFGA\Schemas\Schema
-
-```
-
-Build and register the schema. Creates a Schema instance with all defined properties and registers it in the SchemaRegistry for use in validation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaBuilder.php#L154)
-
-#### Returns
-
-[`Schema`](Schema.md) — The built and registered schema
-
-### Other
-
-#### array
+### array
 
 ```php
 public function array(
@@ -88,7 +70,7 @@ Add an array property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### boolean
+### boolean
 
 ```php
 public function boolean(string $name, bool $required = false, mixed $default = NULL): self
@@ -111,7 +93,7 @@ Add a boolean property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### date
+### date
 
 ```php
 public function date(string $name, bool $required = false, mixed $default = NULL): self
@@ -134,7 +116,7 @@ Add a date property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### datetime
+### datetime
 
 ```php
 public function datetime(string $name, bool $required = false, mixed $default = NULL): self
@@ -157,7 +139,7 @@ Add a datetime property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### integer
+### integer
 
 ```php
 public function integer(string $name, bool $required = false, mixed $default = NULL): self
@@ -180,7 +162,7 @@ Add an integer property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### number
+### number
 
 ```php
 public function number(string $name, bool $required = false, mixed $default = NULL): self
@@ -203,7 +185,7 @@ Add a number (float) property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### object
+### object
 
 ```php
 public function object(string $name, string $className, bool $required = false): self
@@ -226,7 +208,22 @@ Add an object property to the schema.
 
 `self` — Returns the builder instance for method chaining
 
-#### string
+### register
+
+```php
+public function register(): OpenFGA\Schemas\Schema
+
+```
+
+Build and register the schema. Creates a Schema instance with all defined properties and registers it in the SchemaRegistry for use in validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Schemas/SchemaBuilder.php#L154)
+
+#### Returns
+
+[`Schema`](Schema.md) — The built and registered schema
+
+### string
 
 ```php
 public function string(

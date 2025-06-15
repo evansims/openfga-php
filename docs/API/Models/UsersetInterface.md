@@ -2,7 +2,8 @@
 
 Defines the contract for userset specifications in authorization models. A userset represents a collection of users that can be computed through various means: direct assignment, computed relationships, unions, intersections, or complex tuple-to-userset operations. This interface provides the foundation for all userset types used in OpenFGA authorization models. Use this when defining how groups of users are identified and computed in your authorization system.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,15 +11,15 @@ Defines the contract for userset specifications in authorization models. A users
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getComputedUserset()`](#getcomputeduserset)
+- [`getComputedUserset()`](#getcomputeduserset)
   - [`getDifference()`](#getdifference)
   - [`getDirect()`](#getdirect)
   - [`getIntersection()`](#getintersection)
   - [`getTupleToUserset()`](#gettupletouserset)
   - [`getUnion()`](#getunion)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -39,9 +40,7 @@ Defines the contract for userset specifications in authorization models. A users
 
 ## Methods
 
-### List Operations
-
-#### getComputedUserset
+### getComputedUserset
 
 ```php
 public function getComputedUserset(): ObjectRelationInterface|null
@@ -56,7 +55,7 @@ Get the computed userset specification for this userset. A computed userset defi
 
 [`ObjectRelationInterface`](ObjectRelationInterface.md) &#124; `null` — The computed userset specification, or null if not used
 
-#### getDifference
+### getDifference
 
 ```php
 public function getDifference(): DifferenceV1Interface|null
@@ -71,7 +70,7 @@ Get the difference operation specification for this userset. A difference operat
 
 [`DifferenceV1Interface`](DifferenceV1Interface.md) &#124; `null` — The difference operation specification, or null if not used
 
-#### getDirect
+### getDirect
 
 ```php
 public function getDirect(): object|null
@@ -86,7 +85,7 @@ Get the direct userset value for this userset. A direct userset represents an im
 
 `object` &#124; `null` — The direct userset value, or null if not used
 
-#### getIntersection
+### getIntersection
 
 ```php
 public function getIntersection(): UsersetsInterface|null
@@ -101,7 +100,7 @@ Get the intersection operation specification for this userset. An intersection o
 
 [`UsersetsInterface`](Models/Collections/UsersetsInterface.md) &#124; `null` — The collection of usersets to intersect, or null if not used
 
-#### getTupleToUserset
+### getTupleToUserset
 
 ```php
 public function getTupleToUserset(): TupleToUsersetV1Interface|null
@@ -116,7 +115,7 @@ Get the tuple-to-userset operation specification for this userset. A tuple-to-us
 
 [`TupleToUsersetV1Interface`](TupleToUsersetV1Interface.md) &#124; `null` — The tuple-to-userset operation specification, or null if not used
 
-#### getUnion
+### getUnion
 
 ```php
 public function getUnion(): UsersetsInterface|null
@@ -131,9 +130,7 @@ Get the union operation specification for this userset. A union operation repres
 
 [`UsersetsInterface`](Models/Collections/UsersetsInterface.md) &#124; `null` — The collection of usersets to unite, or null if not used
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

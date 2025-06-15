@@ -2,21 +2,21 @@
 
 Base interface for all domain events. Events represent something significant that happened in the domain. They are immutable value objects that capture the facts about what occurred.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getEventId()`](#geteventid)
+- [`getEventId()`](#geteventid)
   - [`getEventType()`](#geteventtype)
   - [`getOccurredAt()`](#getoccurredat)
   - [`getPayload()`](#getpayload)
-- [Utility](#utility)
   - [`isPropagationStopped()`](#ispropagationstopped)
-- [Other](#other)
   - [`stopPropagation()`](#stoppropagation)
+
+</details>
 
 ## Namespace
 
@@ -28,9 +28,7 @@ Base interface for all domain events. Events represent something significant tha
 
 ## Methods
 
-### List Operations
-
-#### getEventId
+### getEventId
 
 ```php
 public function getEventId(): string
@@ -45,7 +43,7 @@ Get the unique identifier for this event.
 
 `string` — A unique identifier for the event instance
 
-#### getEventType
+### getEventType
 
 ```php
 public function getEventType(): string
@@ -60,7 +58,7 @@ Get the name/type of this event.
 
 `string` — The event type identifier
 
-#### getOccurredAt
+### getOccurredAt
 
 ```php
 public function getOccurredAt(): DateTimeImmutable
@@ -75,7 +73,7 @@ Get when this event occurred.
 
 `DateTimeImmutable` — The timestamp when the event was created
 
-#### getPayload
+### getPayload
 
 ```php
 public function getPayload(): array<string, mixed>
@@ -90,9 +88,7 @@ Get the event payload data.
 
 `array&lt;`string`, `mixed`&gt;` — The event data
 
-### Utility
-
-#### isPropagationStopped
+### isPropagationStopped
 
 ```php
 public function isPropagationStopped(): bool
@@ -107,9 +103,7 @@ Check if event propagation should be stopped.
 
 `bool` — True if propagation should be stopped
 
-### Other
-
-#### stopPropagation
+### stopPropagation
 
 ```php
 public function stopPropagation(): void

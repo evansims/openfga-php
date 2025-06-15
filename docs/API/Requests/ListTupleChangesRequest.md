@@ -2,7 +2,8 @@
 
 Request for listing changes to relationship tuples over time. This request retrieves a chronological list of tuple modifications (creates, updates, deletes) within a store. It&#039;s essential for auditing, change tracking, and building event-driven authorization systems that react to permission changes.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Request for listing changes to relationship tuples over time. This request retri
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getPageSize()`](#getpagesize)
   - [`getRequest()`](#getrequest)
   - [`getStartTime()`](#getstarttime)
   - [`getStore()`](#getstore)
   - [`getType()`](#gettype)
+
+</details>
 
 ## Namespace
 
@@ -38,7 +40,7 @@ Request for listing changes to relationship tuples over time. This request retri
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): ?string
@@ -53,7 +55,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 
-#### getPageSize
+### getPageSize
 
 ```php
 public function getPageSize(): ?int
@@ -68,7 +70,7 @@ Get the maximum number of changes to return per page. Specifies the page size fo
 
 `int` &#124; `null` — The maximum number of changes to return per page, or null to use the default page size
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -89,7 +91,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStartTime
+### getStartTime
 
 ```php
 public function getStartTime(): ?DateTimeImmutable
@@ -104,7 +106,7 @@ Get the earliest time to include in the change history. Specifies the starting p
 
 `DateTimeImmutable` &#124; `null` — The earliest timestamp to include in results, or null to include all changes from the beginning
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -119,7 +121,7 @@ Get the store ID containing the tuple changes to list. Identifies which OpenFGA 
 
 `string` — The store ID containing the tuple change history to retrieve
 
-#### getType
+### getType
 
 ```php
 public function getType(): ?string

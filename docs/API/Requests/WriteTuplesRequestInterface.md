@@ -2,7 +2,8 @@
 
 Interface for writing relationship tuples to an OpenFGA store. This interface defines the contract for requests that modify relationship data in OpenFGA stores. It supports both adding new relationships (writes) and removing existing relationships (deletes) in a single atomic operation. Write operations are transactional, meaning either all changes succeed or all changes are rolled back. This ensures data consistency when making multiple related changes to the authorization graph. The request allows you to: - Add new relationship tuples to establish permissions - Remove existing relationship tuples to revoke permissions - Perform both operations atomically in a single request - Specify which authorization model version to use for validation
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,7 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`getDeletes()`](#getdeletes)
-  - [`getWrites()`](#getwrites)
-- [List Operations](#list-operations)
+- [`getDeletes()`](#getdeletes)
   - [`getMaxParallelRequests()`](#getmaxparallelrequests)
   - [`getMaxRetries()`](#getmaxretries)
   - [`getMaxTuplesPerChunk()`](#getmaxtuplesperchunk)
@@ -22,8 +20,10 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
   - [`getRetryDelaySeconds()`](#getretrydelayseconds)
   - [`getStopOnFirstError()`](#getstoponfirsterror)
   - [`getStore()`](#getstore)
-- [Utility](#utility)
+  - [`getWrites()`](#getwrites)
   - [`isTransactional()`](#istransactional)
+
+</details>
 
 ## Namespace
 
@@ -44,9 +44,7 @@ Interface for writing relationship tuples to an OpenFGA store. This interface de
 
 ## Methods
 
-### CRUD Operations
-
-#### getDeletes
+### getDeletes
 
 ```php
 public function getDeletes(): TupleKeysInterface|null
@@ -61,24 +59,7 @@ Get the relationship tuples to delete from the store. Returns a collection of re
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to remove, or null if no deletions are requested
 
-#### getWrites
-
-```php
-public function getWrites(): TupleKeysInterface|null
-
-```
-
-Get the relationship tuples to write to the store. Returns a collection of relationship tuples that should be added to the authorization store. Each tuple represents a new permission or relationship that will be granted. The write operation is atomic with any delete operations specified in the same request.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L113)
-
-#### Returns
-
-[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to add, or null if no writes are requested
-
-### List Operations
-
-#### getMaxParallelRequests
+### getMaxParallelRequests
 
 ```php
 public function getMaxParallelRequests(): int
@@ -93,7 +74,7 @@ Get the maximum number of parallel requests for non-transactional mode.
 
 `int` — Maximum parallel requests (1 for sequential processing)
 
-#### getMaxRetries
+### getMaxRetries
 
 ```php
 public function getMaxRetries(): int
@@ -108,7 +89,7 @@ Get the maximum number of retries for failed chunks in non-transactional mode.
 
 `int` — Maximum retry attempts
 
-#### getMaxTuplesPerChunk
+### getMaxTuplesPerChunk
 
 ```php
 public function getMaxTuplesPerChunk(): int
@@ -123,7 +104,7 @@ Get the maximum number of tuples per chunk for non-transactional mode.
 
 `int` — Maximum tuples per chunk (up to 100)
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -138,7 +119,7 @@ Get the authorization model ID to use for tuple validation. Specifies which vers
 
 `string` — The authorization model ID for validating tuple operations
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -159,7 +140,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getRetryDelaySeconds
+### getRetryDelaySeconds
 
 ```php
 public function getRetryDelaySeconds(): float
@@ -174,7 +155,7 @@ Get the retry delay in seconds for non-transactional mode.
 
 `float` — Retry delay in seconds
 
-#### getStopOnFirstError
+### getStopOnFirstError
 
 ```php
 public function getStopOnFirstError(): bool
@@ -189,7 +170,7 @@ Check if non-transactional processing should stop on first error.
 
 `bool` — True to stop on first error, false to continue
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -204,9 +185,22 @@ Get the store ID where tuples will be written. Identifies the OpenFGA store that
 
 `string` — The store ID containing the authorization data to modify
 
-### Utility
+### getWrites
 
-#### isTransactional
+```php
+public function getWrites(): TupleKeysInterface|null
+
+```
+
+Get the relationship tuples to write to the store. Returns a collection of relationship tuples that should be added to the authorization store. Each tuple represents a new permission or relationship that will be granted. The write operation is atomic with any delete operations specified in the same request.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/WriteTuplesRequestInterface.php#L113)
+
+#### Returns
+
+[`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Collection of relationship tuples to add, or null if no writes are requested
+
+### isTransactional
 
 ```php
 public function isTransactional(): bool

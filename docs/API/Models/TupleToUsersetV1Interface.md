@@ -2,7 +2,8 @@
 
 Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 represents an authorization operation that computes usersets by following relationships from one object type to usersets on related objects. This enables complex authorization patterns like &quot;users who can view a document are the editors of the parent folder&quot; or &quot;viewers of a resource are the members of the associated organization&quot;. Use this interface when implementing authorization models that involve indirect relationships through tuple-to-userset operations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getComputedUserset()`](#getcomputeduserset)
+- [`getComputedUserset()`](#getcomputeduserset)
   - [`getTupleset()`](#gettupleset)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Defines a tuple-to-userset operation in authorization models. TupleToUsersetV1 r
 
 ## Methods
 
-### List Operations
-
-#### getComputedUserset
+### getComputedUserset
 
 ```php
 public function getComputedUserset(): ObjectRelationInterface
@@ -52,7 +51,7 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the computed userset
 
-#### getTupleset
+### getTupleset
 
 ```php
 public function getTupleset(): ObjectRelationInterface
@@ -67,9 +66,7 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the tupleset
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

@@ -2,7 +2,8 @@
 
 Consistency levels for OpenFGA authorization queries. This enum defines the available consistency levels that control the trade-off between data consistency and query performance in OpenFGA operations. Different consistency levels affect how fresh the data needs to be when processing authorization checks.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDescription()`](#getdescription)
-- [Utility](#utility)
+- [`getDescription()`](#getdescription)
   - [`prioritizesConsistency()`](#prioritizesconsistency)
-- [Other](#other)
   - [`prioritizesPerformance()`](#prioritizesperformance)
+
+</details>
 
 ## Namespace
 
@@ -49,9 +49,7 @@ Consistency levels for OpenFGA authorization queries. This enum defines the avai
 
 ## Methods
 
-### List Operations
-
-#### getDescription
+### getDescription
 
 ```php
 public function getDescription(): string
@@ -66,9 +64,7 @@ Get a user-friendly description of this consistency level. Provides a descriptiv
 
 `string` — A descriptive explanation of the consistency level
 
-### Utility
-
-#### prioritizesConsistency
+### prioritizesConsistency
 
 ```php
 public function prioritizesConsistency(): bool
@@ -83,9 +79,7 @@ Check if this consistency level prioritizes data freshness. Useful for determini
 
 `bool` — True if consistency is prioritized over performance, false otherwise
 
-### Other
-
-#### prioritizesPerformance
+### prioritizesPerformance
 
 ```php
 public function prioritizesPerformance(): bool

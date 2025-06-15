@@ -2,7 +2,8 @@
 
 Authentication error types for the OpenFGA SDK. Defines specific authentication failure scenarios that can occur when interacting with the OpenFGA API, such as expired or invalid tokens. Each case provides a factory method to create the corresponding AuthenticationException with appropriate context. Authentication errors typically occur during the OAuth 2.0 flow or when using access tokens with OpenFGA API requests. These errors indicate that the provided credentials are no longer valid or were never valid, requiring token refresh or re-authentication.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`exception()`](#exception)
   - [`getUserMessage()`](#getusermessage)
-- [Utility](#utility)
   - [`isTokenRefreshable()`](#istokenrefreshable)
-- [Other](#other)
-  - [`exception()`](#exception)
+
+</details>
 
 ## Namespace
 
@@ -47,49 +47,7 @@ Authentication error types for the OpenFGA SDK. Defines specific authentication 
 
 ## Methods
 
-### List Operations
-
-#### getUserMessage
-
-```php
-public function getUserMessage(string|null $locale = NULL): string
-
-```
-
-Get a user-friendly error message for this authentication error. Provides appropriate messaging for different authentication failures that can be displayed to end users or used in error logs. Messages are localized using the translation system.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php#L93)
-
-#### Parameters
-
-| Name      | Type                   | Description                                      |
-| --------- | ---------------------- | ------------------------------------------------ |
-| `$locale` | `string` &#124; `null` | Optional locale override for message translation |
-
-#### Returns
-
-`string` — A descriptive, localized error message
-
-### Utility
-
-#### isTokenRefreshable
-
-```php
-public function isTokenRefreshable(): bool
-
-```
-
-Check if this authentication error indicates the token should be refreshed. Useful for implementing automatic token refresh logic in OAuth flows.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php#L110)
-
-#### Returns
-
-`bool` — True if token refresh should be attempted, false otherwise
-
-### Other
-
-#### exception
+### exception
 
 ```php
 public function exception(
@@ -117,3 +75,39 @@ Create a new AuthenticationException for this error type. Factory method that cr
 #### Returns
 
 [`AuthenticationException`](AuthenticationException.md) — The newly created AuthenticationException instance with comprehensive error context
+
+### getUserMessage
+
+```php
+public function getUserMessage(string|null $locale = NULL): string
+
+```
+
+Get a user-friendly error message for this authentication error. Provides appropriate messaging for different authentication failures that can be displayed to end users or used in error logs. Messages are localized using the translation system.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php#L93)
+
+#### Parameters
+
+| Name      | Type                   | Description                                      |
+| --------- | ---------------------- | ------------------------------------------------ |
+| `$locale` | `string` &#124; `null` | Optional locale override for message translation |
+
+#### Returns
+
+`string` — A descriptive, localized error message
+
+### isTokenRefreshable
+
+```php
+public function isTokenRefreshable(): bool
+
+```
+
+Check if this authentication error indicates the token should be refreshed. Useful for implementing automatic token refresh logic in OAuth flows.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Exceptions/AuthenticationError.php#L110)
+
+#### Returns
+
+`bool` — True if token refresh should be attempted, false otherwise

@@ -2,7 +2,8 @@
 
 Defines metadata information for conditions in OpenFGA authorization models. ConditionMetadata provides organizational and debugging information about conditions, including the module where they&#039;re defined and source file information. This helps with model analysis, debugging, and development tooling when working with complex authorization conditions. Use this interface when building tools that need to inspect or manipulate condition metadata in authorization models.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModule()`](#getmodule)
+- [`getModule()`](#getmodule)
   - [`getSourceInfo()`](#getsourceinfo)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Defines metadata information for conditions in OpenFGA authorization models. Con
 
 ## Methods
 
-### List Operations
-
-#### getModule
+### getModule
 
 ```php
 public function getModule(): string
@@ -52,7 +51,7 @@ Get the module name where the condition is defined. This provides organizational
 
 `string` — The module name containing the condition
 
-#### getSourceInfo
+### getSourceInfo
 
 ```php
 public function getSourceInfo(): SourceInfoInterface
@@ -67,9 +66,7 @@ Get source file information for debugging and tooling. This provides information
 
 [`SourceInfoInterface`](SourceInfoInterface.md) — The source file information
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

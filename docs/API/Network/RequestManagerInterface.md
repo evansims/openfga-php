@@ -2,21 +2,22 @@
 
 Manages HTTP requests and responses for OpenFGA API communication. This interface defines the core HTTP communication layer for the OpenFGA SDK, responsible for translating high-level API operations into HTTP requests and processing the responses. It handles all aspects of HTTP communication including request construction, authentication, error handling, and response processing. The RequestManager serves as the bridge between the OpenFGA client&#039;s domain-specific operations and the underlying HTTP transport layer. It abstracts away the complexities of HTTP communication while providing a clean, testable interface for API interactions. Key responsibilities include: - Converting OpenFGA requests to PSR-7 HTTP requests - Managing HTTP client configuration and PSR component integration - Handling authentication headers and API credentials - Executing HTTP requests with retry logic and timeout management - Processing HTTP responses and converting errors to appropriate exceptions - Providing comprehensive error context for debugging and monitoring The implementation uses PSR-7 HTTP message interfaces for maximum compatibility with existing PHP HTTP ecosystems and follows PSR-18 HTTP client standards for pluggable HTTP transport implementations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getHttpClient()`](#gethttpclient)
+- [`getHttpClient()`](#gethttpclient)
   - [`getHttpRequestFactory()`](#gethttprequestfactory)
   - [`getHttpResponseFactory()`](#gethttpresponsefactory)
   - [`getHttpStreamFactory()`](#gethttpstreamfactory)
-- [Other](#other)
   - [`request()`](#request)
   - [`send()`](#send)
+
+</details>
 
 ## Namespace
 
@@ -32,9 +33,7 @@ Manages HTTP requests and responses for OpenFGA API communication. This interfac
 
 ## Methods
 
-### List Operations
-
-#### getHttpClient
+### getHttpClient
 
 ```php
 public function getHttpClient(): ClientInterface
@@ -49,7 +48,7 @@ Get the configured PSR-18 HTTP client. Returns the HTTP client instance used for
 
 [`ClientInterface`](ClientInterface.md) — The PSR-18 HTTP client instance for executing requests
 
-#### getHttpRequestFactory
+### getHttpRequestFactory
 
 ```php
 public function getHttpRequestFactory(): RequestFactoryInterface
@@ -64,7 +63,7 @@ Get the configured PSR-17 HTTP request factory. Returns the factory used for cre
 
 `RequestFactoryInterface` — The PSR-17 factory for creating HTTP request objects
 
-#### getHttpResponseFactory
+### getHttpResponseFactory
 
 ```php
 public function getHttpResponseFactory(): ResponseFactoryInterface
@@ -79,7 +78,7 @@ Get the configured PSR-17 HTTP response factory. Returns the factory used for cr
 
 `ResponseFactoryInterface` — The PSR-17 factory for creating HTTP response objects
 
-#### getHttpStreamFactory
+### getHttpStreamFactory
 
 ```php
 public function getHttpStreamFactory(): StreamFactoryInterface
@@ -94,9 +93,7 @@ Get the configured PSR-17 HTTP stream factory. Returns the factory used for crea
 
 `StreamFactoryInterface` — The PSR-17 factory for creating HTTP message body streams
 
-### Other
-
-#### request
+### request
 
 ```php
 public function request(RequestInterface $request): HttpRequestInterface
@@ -117,7 +114,7 @@ Convert an OpenFGA request into a PSR-7 HTTP request. Transforms high-level Open
 
 `HttpRequestInterface` — The PSR-7 HTTP request ready for execution
 
-#### send
+### send
 
 ```php
 public function send(HttpRequestInterface $request): ResponseInterface

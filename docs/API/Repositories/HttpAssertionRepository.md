@@ -2,16 +2,18 @@
 
 HTTP implementation of assertion repository for OpenFGA API communication. This repository handles assertion operations by communicating with the OpenFGA HTTP API. It transforms business operations into HTTP requests and responses, handling serialization, deserialization, and error management.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`read()`](#read)
+- [`read()`](#read)
   - [`write()`](#write)
+
+</details>
 
 ## Namespace
 
@@ -27,7 +29,7 @@ HTTP implementation of assertion repository for OpenFGA API communication. This 
 
 ## Methods
 
-#### read
+### read
 
 ```php
 public function read(
@@ -50,7 +52,7 @@ Read assertions from an authorization model. Retrieves all test assertions defin
 
 [`Failure`](Results/Failure.md) &#124; [`Success`](Results/Success.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with assertions collection, or Failure with error details
 
-#### write
+### write
 
 ```php
 public function write(

@@ -2,7 +2,8 @@
 
 Request for streaming objects that a user has a specific relationship with. This request finds all objects of a given type where the specified user has the requested relationship, returning results as a stream for efficient processing of large datasets. It&#039;s useful for building resource lists, dashboards, or any interface that shows what a user can access when dealing with thousands of objects.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,7 @@ Request for streaming objects that a user has a specific relationship with. This
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConsistency()`](#getconsistency)
+- [`getConsistency()`](#getconsistency)
   - [`getContext()`](#getcontext)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getModel()`](#getmodel)
@@ -20,6 +20,8 @@ Request for streaming objects that a user has a specific relationship with. This
   - [`getStore()`](#getstore)
   - [`getType()`](#gettype)
   - [`getUser()`](#getuser)
+
+</details>
 
 ## Namespace
 
@@ -41,7 +43,7 @@ Request for streaming objects that a user has a specific relationship with. This
 
 ## Methods
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -56,7 +58,7 @@ Get the consistency requirement for this request.
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency requirement, or null if not specified
 
-#### getContext
+### getContext
 
 ```php
 public function getContext(): ?object
@@ -71,7 +73,7 @@ Get the context object for this request.
 
 `object` &#124; `null` — The context object, or null if not specified
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -86,7 +88,7 @@ Get the contextual tuples for this request.
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — The contextual tuples collection, or null if not specified
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): ?string
@@ -101,7 +103,7 @@ Get the authorization model ID for this request.
 
 `string` &#124; `null` — The authorization model ID, or null if not specified
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -116,7 +118,7 @@ Get the relation name for this request.
 
 `string` — The relation name to check
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -137,7 +139,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -152,7 +154,7 @@ Get the store ID for this request.
 
 `string` — The store ID
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -167,7 +169,7 @@ Get the object type for this request.
 
 `string` — The object type to list
 
-#### getUser
+### getUser
 
 ```php
 public function getUser(): string

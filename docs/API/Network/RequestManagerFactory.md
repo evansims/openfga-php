@@ -2,16 +2,18 @@
 
 Factory for creating RequestManager instances. This factory encapsulates the creation of RequestManager instances with the appropriate configuration for different use cases (normal requests vs batch operations).
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`create()`](#create)
+- [`create()`](#create)
   - [`createForBatch()`](#createforbatch)
   - [`createWithRetries()`](#createwithretries)
+
+</details>
 
 ## Namespace
 
@@ -23,7 +25,7 @@ Factory for creating RequestManager instances. This factory encapsulates the cre
 
 ## Methods
 
-#### create
+### create
 
 ```php
 public function create(): OpenFGA\Network\RequestManager
@@ -38,7 +40,7 @@ Create a RequestManager for normal operations.
 
 [`RequestManager`](RequestManager.md)
 
-#### createForBatch
+### createForBatch
 
 ```php
 public function createForBatch(): OpenFGA\Network\RequestManager
@@ -53,7 +55,7 @@ Create a RequestManager for batch operations (no HTTP retries).
 
 [`RequestManager`](RequestManager.md)
 
-#### createWithRetries
+### createWithRetries
 
 ```php
 public function createWithRetries(int $maxRetries): OpenFGA\Network\RequestManager

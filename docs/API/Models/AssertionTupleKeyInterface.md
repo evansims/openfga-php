@@ -2,7 +2,8 @@
 
 Defines the contract for assertion tuple keys used in authorization model testing. An assertion tuple key specifies the user, relation, and object combination that should be tested in authorization model assertions. This is used to verify that your authorization model behaves correctly for specific scenarios. Use this when creating test cases to validate your authorization rules and ensure your permission model works as expected.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Defines the contract for assertion tuple keys used in authorization model testin
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getObject()`](#getobject)
+- [`getObject()`](#getobject)
   - [`getRelation()`](#getrelation)
   - [`getUser()`](#getuser)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Defines the contract for assertion tuple keys used in authorization model testin
 
 ## Methods
 
-### List Operations
-
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string
@@ -53,7 +52,7 @@ Get the object being tested in the assertion. This represents the resource or en
 
 `string` — The object identifier being tested
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -68,7 +67,7 @@ Get the relation being tested in the assertion. This represents the type of rela
 
 `string` — The relation name being tested
 
-#### getUser
+### getUser
 
 ```php
 public function getUser(): string
@@ -83,9 +82,7 @@ Get the user being tested in the assertion. This represents the subject (user, g
 
 `string` — The user identifier being tested
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

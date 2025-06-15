@@ -2,14 +2,16 @@
 
 HTTP client interface for sending HTTP requests. This interface abstracts the HTTP client implementation, allowing different HTTP clients to be used interchangeably. It follows the PSR-18 HTTP Client standard for compatibility.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`send()`](#send)
+- [`send()`](#send)
+
+</details>
 
 ## Namespace
 
@@ -21,7 +23,7 @@ HTTP client interface for sending HTTP requests. This interface abstracts the HT
 
 ## Methods
 
-#### send
+### send
 
 ```php
 public function send(RequestInterface $request): ResponseInterface

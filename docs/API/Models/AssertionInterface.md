@@ -2,7 +2,8 @@
 
 Represents an assertion used to test authorization model correctness. Assertions are test cases that verify whether specific authorization decisions should be allowed or denied. They are essential for validating authorization models and ensuring they behave as expected. Each assertion includes a tuple key to test, the expected result, and optional contextual information for complex scenarios.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,13 @@ Represents an assertion used to test authorization model correctness. Assertions
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContext()`](#getcontext)
+- [`getContext()`](#getcontext)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getExpectation()`](#getexpectation)
   - [`getTupleKey()`](#gettuplekey)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -37,9 +38,7 @@ Represents an assertion used to test authorization model correctness. Assertions
 
 ## Methods
 
-### List Operations
-
-#### getContext
+### getContext
 
 ```php
 public function getContext(): ?array
@@ -54,7 +53,7 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 
 `array` &#124; `null`
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -69,7 +68,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 
-#### getExpectation
+### getExpectation
 
 ```php
 public function getExpectation(): bool
@@ -84,7 +83,7 @@ Get the expected result for this assertion. The expectation defines whether the 
 
 `bool` — True if access should be granted, false if access should be denied
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): AssertionTupleKeyInterface
@@ -99,9 +98,7 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md) — The tuple key defining the authorization question
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

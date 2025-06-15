@@ -2,21 +2,22 @@
 
 OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This authentication strategy implements the OAuth 2.0 Client Credentials flow for authenticating with the OpenFGA API. It automatically handles token acquisition, caching, and refresh when tokens expire. The strategy requires client credentials (client ID and secret) along with the OAuth issuer and audience parameters. It automatically requests new tokens when the current token expires.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`clearToken()`](#cleartoken)
   - [`getAuthenticationRequest()`](#getauthenticationrequest)
   - [`getAuthorizationHeader()`](#getauthorizationheader)
   - [`getToken()`](#gettoken)
-- [Other](#other)
-  - [`clearToken()`](#cleartoken)
   - [`handleAuthenticationResponse()`](#handleauthenticationresponse)
   - [`requiresAuthentication()`](#requiresauthentication)
+
+</details>
 
 ## Namespace
 
@@ -32,9 +33,22 @@ OAuth 2.0 Client Credentials authentication strategy for OpenFGA client. This au
 
 ## Methods
 
-### List Operations
+### clearToken
 
-#### getAuthenticationRequest
+```php
+public function clearToken(): void
+
+```
+
+Clear the current access token and force re-authentication. Removes the stored access token, forcing the authentication strategy to request a new token on the next API call. This is useful for handling authentication errors or forcing token refresh.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L75)
+
+#### Returns
+
+`void`
+
+### getAuthenticationRequest
 
 ```php
 public function getAuthenticationRequest(
@@ -57,7 +71,7 @@ Get an authentication request context if this strategy requires token acquisitio
 
 [`RequestContext`](Network/RequestContext.md) &#124; `null` — The authentication request context, or null if not needed
 
-#### getAuthorizationHeader
+### getAuthorizationHeader
 
 ```php
 public function getAuthorizationHeader(): ?string
@@ -72,7 +86,7 @@ Get the authorization header value for API requests. Returns the authorization h
 
 `string` &#124; `null` — The authorization header value, or null if no authentication is needed
 
-#### getToken
+### getToken
 
 ```php
 public function getToken(): AccessTokenInterface|null
@@ -87,24 +101,7 @@ Get the current access token if available. Returns the stored access token, whic
 
 [`AccessTokenInterface`](AccessTokenInterface.md) &#124; `null` — The current access token, or null if not authenticated
 
-### Other
-
-#### clearToken
-
-```php
-public function clearToken(): void
-
-```
-
-Clear the current access token and force re-authentication. Removes the stored access token, forcing the authentication strategy to request a new token on the next API call. This is useful for handling authentication errors or forcing token refresh.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Authentication/ClientCredentialAuthentication.php#L75)
-
-#### Returns
-
-`void`
-
-#### handleAuthenticationResponse
+### handleAuthenticationResponse
 
 ```php
 public function handleAuthenticationResponse(ResponseInterface $response): void
@@ -125,7 +122,7 @@ Handle the authentication response and update the stored token. Processes the OA
 
 `void`
 
-#### requiresAuthentication
+### requiresAuthentication
 
 ```php
 public function requiresAuthentication(): bool

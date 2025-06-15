@@ -2,7 +2,8 @@
 
 Service implementation for authorization operations. This service handles all authorization-related queries including permission checks, relationship expansions, and object/user listing. It delegates HTTP communication to the HttpServiceInterface and uses the Result pattern for consistent error handling. The service supports various consistency levels and contextual tuple evaluation for dynamic authorization scenarios. All operations are performed against a specific store and authorization model.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,14 +11,14 @@ Service implementation for authorization operations. This service handles all au
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
-  - [`batchCheck()`](#batchcheck)
+- [`batchCheck()`](#batchcheck)
   - [`check()`](#check)
   - [`expand()`](#expand)
-- [List Operations](#list-operations)
   - [`listObjects()`](#listobjects)
   - [`listUsers()`](#listusers)
   - [`streamedListObjects()`](#streamedlistobjects)
+
+</details>
 
 ## Namespace
 
@@ -37,9 +38,7 @@ Service implementation for authorization operations. This service handles all au
 
 ## Methods
 
-### Authorization
-
-#### batchCheck
+### batchCheck
 
 ```php
 public function batchCheck(
@@ -66,7 +65,7 @@ Performs multiple authorization checks in a single batch request. This method al
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with BatchCheckResponse, or Failure with error details
 
-#### check
+### check
 
 ```php
 public function check(
@@ -101,7 +100,7 @@ Checks if a user has a specific relationship with an object. This method verifie
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with CheckResponse, or Failure with error details
 
-#### expand
+### expand
 
 ```php
 public function expand(
@@ -132,9 +131,7 @@ Expands a relationship tuple to show all users that have the relationship. This 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with ExpandResponse, or Failure with error details
 
-### List Operations
-
-#### listObjects
+### listObjects
 
 ```php
 public function listObjects(
@@ -171,7 +168,7 @@ Lists objects that have a specific relationship with a user. This method finds a
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with ListObjectsResponse, or Failure with error details
 
-#### listUsers
+### listUsers
 
 ```php
 public function listUsers(
@@ -208,7 +205,7 @@ Lists users that have a specific relationship with an object. This method finds 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with ListUsersResponse, or Failure with error details
 
-#### streamedListObjects
+### streamedListObjects
 
 ```php
 public function streamedListObjects(

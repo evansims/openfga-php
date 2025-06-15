@@ -2,7 +2,8 @@
 
 Interface for listing users who have a specific relation to an object. This interface defines the contract for requests that query which users have a specific relationship to a given object. This is similar to the expand operation but focuses specifically on returning the users rather than the complete relationship graph structure. List users operations are particularly useful for: - Building user interfaces that show who has access to a resource - Implementing sharing and collaboration features - Auditing and compliance reporting for access control - Sending notifications to users with specific permissions - Managing team membership and role assignments The operation supports: - Filtering by user types to control result scope - Contextual evaluation with additional runtime data - Temporary relationship tuples for scenario testing - Configurable read consistency levels for performance optimization - Authorization model versioning for consistent results This provides the inverse perspective to list objects - instead of asking &quot;what can this user access?,&quot; it asks &quot;who can access this object?&quot;
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,7 @@ Interface for listing users who have a specific relation to an object. This inte
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConsistency()`](#getconsistency)
+- [`getConsistency()`](#getconsistency)
   - [`getContext()`](#getcontext)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getModel()`](#getmodel)
@@ -20,6 +20,8 @@ Interface for listing users who have a specific relation to an object. This inte
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
   - [`getUserFilters()`](#getuserfilters)
+
+</details>
 
 ## Namespace
 
@@ -40,7 +42,7 @@ Interface for listing users who have a specific relation to an object. This inte
 
 ## Methods
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): Consistency|null
@@ -55,7 +57,7 @@ Get the read consistency level for the list operation. Determines the consistenc
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 
-#### getContext
+### getContext
 
 ```php
 public function getContext(): object|null
@@ -70,7 +72,7 @@ Get additional context data for conditional evaluation. Provides contextual info
 
 `object` &#124; `null` — The context object containing additional data for evaluation, or null if no context is provided
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): TupleKeysInterface|null
@@ -85,7 +87,7 @@ Get additional tuples to consider during the list operation. Returns a collectio
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): string
@@ -100,7 +102,7 @@ Get the authorization model ID to use for the list operation. Specifies which ve
 
 `string` — The authorization model ID for evaluating user relationships
 
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string
@@ -115,7 +117,7 @@ Get the object to list users for. Specifies the target object for which users wi
 
 `string` — The object identifier to list users for
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -130,7 +132,7 @@ Get the relation to check for user access. Specifies the relationship type to ev
 
 `string` — The relation name to check for user access
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -151,7 +153,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -166,7 +168,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 `string` — The store ID containing the authorization data
 
-#### getUserFilters
+### getUserFilters
 
 ```php
 public function getUserFilters(): UserTypeFiltersInterface

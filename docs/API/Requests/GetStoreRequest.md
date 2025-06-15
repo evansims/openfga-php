@@ -2,7 +2,8 @@
 
 Request for retrieving store information by its ID. This request fetches the details of a specific store, including its name and metadata. It&#039;s useful for store management, displaying store information, and validating store existence before performing operations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Request for retrieving store information by its ID. This request fetches the det
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getRequest()`](#getrequest)
+- [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -34,7 +36,7 @@ Request for retrieving store information by its ID. This request fetches the det
 
 ## Methods
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -55,7 +57,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

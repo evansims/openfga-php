@@ -2,7 +2,8 @@
 
 Interface for store retrieval response objects. This interface defines the contract for responses returned when retrieving store information from OpenFGA. A store retrieval response contains comprehensive metadata about the store including its identifier, name, timestamps, and full store object. Store retrieval is useful for administrative operations, auditing, and displaying store information in management interfaces.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,14 +11,14 @@ Interface for store retrieval response objects. This interface defines the contr
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`getCreatedAt()`](#getcreatedat)
+- [`getCreatedAt()`](#getcreatedat)
   - [`getDeletedAt()`](#getdeletedat)
-  - [`getUpdatedAt()`](#getupdatedat)
-- [List Operations](#list-operations)
   - [`getId()`](#getid)
   - [`getName()`](#getname)
   - [`getStore()`](#getstore)
+  - [`getUpdatedAt()`](#getupdatedat)
+
+</details>
 
 ## Namespace
 
@@ -38,9 +39,7 @@ Interface for store retrieval response objects. This interface defines the contr
 
 ## Methods
 
-### CRUD Operations
-
-#### getCreatedAt
+### getCreatedAt
 
 ```php
 public function getCreatedAt(): DateTimeImmutable
@@ -55,7 +54,7 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 
 `DateTimeImmutable` — The creation timestamp of the store
 
-#### getDeletedAt
+### getDeletedAt
 
 ```php
 public function getDeletedAt(): DateTimeImmutable|null
@@ -70,24 +69,7 @@ Get the timestamp when the store was deleted, if applicable. Returns the deletio
 
 `DateTimeImmutable` &#124; `null` — The deletion timestamp, or null if the store is not deleted
 
-#### getUpdatedAt
-
-```php
-public function getUpdatedAt(): DateTimeImmutable
-
-```
-
-Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata or configuration. This is updated whenever store properties are changed.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L96)
-
-#### Returns
-
-`DateTimeImmutable` — The last update timestamp of the store
-
-### List Operations
-
-#### getId
+### getId
 
 ```php
 public function getId(): string
@@ -102,7 +84,7 @@ Get the unique identifier of the store. Returns the system-generated unique iden
 
 `string` — The unique store identifier
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -117,7 +99,7 @@ Get the human-readable name of the store. Returns the descriptive name that was 
 
 `string` — The descriptive name of the store
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): StoreInterface
@@ -131,3 +113,18 @@ Get the complete store object. Returns the full store object containing all stor
 #### Returns
 
 [`StoreInterface`](Models/StoreInterface.md) — The complete store object
+
+### getUpdatedAt
+
+```php
+public function getUpdatedAt(): DateTimeImmutable
+
+```
+
+Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata or configuration. This is updated whenever store properties are changed.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetStoreResponseInterface.php#L96)
+
+#### Returns
+
+`DateTimeImmutable` — The last update timestamp of the store

@@ -2,7 +2,8 @@
 
 Interface for tuple changes listing response objects. This interface defines the contract for responses returned when listing changes to relationship tuples in OpenFGA. The response includes a collection of tuple changes and pagination support for handling large change sets efficiently. Tuple change listing is essential for auditing authorization modifications, implementing change feeds, and tracking the evolution of relationship data over time.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for tuple changes listing response objects. This interface defines the
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getChanges()`](#getchanges)
+- [`getChanges()`](#getchanges)
   - [`getContinuationToken()`](#getcontinuationtoken)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for tuple changes listing response objects. This interface defines the
 
 ## Methods
 
-#### getChanges
+### getChanges
 
 ```php
 public function getChanges(): TupleChangesInterface
@@ -48,7 +50,7 @@ Get the collection of tuple changes. Returns a type-safe collection containing t
 
 [`TupleChangesInterface`](Models/Collections/TupleChangesInterface.md) — The collection of tuple changes
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null

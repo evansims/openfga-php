@@ -2,7 +2,8 @@
 
 HTTP request methods supported by the OpenFGA API. This enum defines the specific HTTP methods used for communicating with the OpenFGA service, following standard HTTP semantics for different types of operations. Each method corresponds to specific types of API operations based on their intended semantic meaning and expected behavior. The OpenFGA API uses different HTTP methods to indicate the nature of the operation being performed, following RESTful principles: - GET for retrieving data without side effects - POST for creating resources or performing operations with side effects - PUT for updating or replacing existing resources - DELETE for removing resources from the system Using the appropriate HTTP method ensures proper caching behavior, idempotency characteristics, and compatibility with HTTP infrastructure components like proxies, load balancers, and CDNs.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,10 +12,11 @@ HTTP request methods supported by the OpenFGA API. This enum defines the specifi
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [Utility](#utility)
-  - [`hasRequestBody()`](#hasrequestbody)
+- [`hasRequestBody()`](#hasrequestbody)
   - [`isIdempotent()`](#isidempotent)
   - [`isSafe()`](#issafe)
+
+</details>
 
 ## Namespace
 
@@ -49,7 +51,7 @@ HTTP request methods supported by the OpenFGA API. This enum defines the specifi
 
 ## Methods
 
-#### hasRequestBody
+### hasRequestBody
 
 ```php
 public function hasRequestBody(): bool
@@ -64,7 +66,7 @@ Check if this HTTP method typically expects a request body. Useful for client im
 
 `bool` — True if the method typically has a request body, false otherwise
 
-#### isIdempotent
+### isIdempotent
 
 ```php
 public function isIdempotent(): bool
@@ -79,7 +81,7 @@ Check if this HTTP method is idempotent. Idempotent methods can be called multip
 
 `bool` — True if the method is idempotent, false otherwise
 
-#### isSafe
+### isSafe
 
 ```php
 public function isSafe(): bool

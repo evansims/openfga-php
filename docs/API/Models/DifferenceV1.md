@@ -2,7 +2,8 @@
 
 Represents a set difference operation between two usersets. In authorization models, you sometimes need to grant access to one group of users while explicitly excluding another group. DifferenceV1 calculates the difference between a base userset and a subtract userset, effectively giving you &quot;all users in base except those in subtract.&quot; For example, you might want to grant access to all employees except those in a specific department, or all document viewers except the document owner.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,13 +12,12 @@ Represents a set difference operation between two usersets. In authorization mod
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getBase()`](#getbase)
+- [`getBase()`](#getbase)
   - [`getSubtract()`](#getsubtract)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -45,9 +45,7 @@ Represents a set difference operation between two usersets. In authorization mod
 
 ## Methods
 
-### List Operations
-
-#### getBase
+### getBase
 
 ```php
 public function getBase(): OpenFGA\Models\UsersetInterface
@@ -62,7 +60,7 @@ Get the base userset from which users will be subtracted. This represents the in
 
 [`UsersetInterface`](UsersetInterface.md) — The base userset for the difference operation
 
-#### getSubtract
+### getSubtract
 
 ```php
 public function getSubtract(): OpenFGA\Models\UsersetInterface
@@ -77,9 +75,20 @@ Get the userset of users to subtract from the base userset. This represents the 
 
 [`UsersetInterface`](UsersetInterface.md) — The userset to subtract from the base
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1.php#L74)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\DifferenceV1Interface</small>*
 
@@ -95,18 +104,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/DifferenceV1.php#L74)
-
-#### Returns
-
-`array`

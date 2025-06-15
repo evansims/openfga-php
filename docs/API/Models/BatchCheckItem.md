@@ -2,7 +2,8 @@
 
 Represents a single item in a batch check request. Each batch check item contains a tuple key to check, an optional context, optional contextual tuples, and a correlation ID to map the result back to this specific check.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,16 +12,15 @@ Represents a single item in a batch check request. Each batch check item contain
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContext()`](#getcontext)
+- [`getContext()`](#getcontext)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getCorrelationId()`](#getcorrelationid)
   - [`getTupleKey()`](#gettuplekey)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
   - [`toArray()`](#toarray)
+
+</details>
 
 ## Namespace
 
@@ -49,9 +49,7 @@ Represents a single item in a batch check request. Each batch check item contain
 
 ## Methods
 
-### List Operations
-
-#### getContext
+### getContext
 
 ```php
 public function getContext(): ?object
@@ -66,7 +64,7 @@ Get the context object for this check. This provides additional context data tha
 
 `object` &#124; `null`
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -81,7 +79,7 @@ Get the contextual tuples for this check. These are additional tuples that are e
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 
-#### getCorrelationId
+### getCorrelationId
 
 ```php
 public function getCorrelationId(): string
@@ -96,7 +94,7 @@ Get the correlation ID for this batch check item. This unique identifier maps th
 
 `string` — The correlation ID
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
@@ -111,9 +109,20 @@ Get the tuple key to be checked. This defines the user, relation, and object for
 
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key for this check
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array<string, mixed>
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L233)
+
+#### Returns
+
+`array&lt;`string`, `mixed`&gt;`
+
+### schema
 
 *<small>Implements Models\BatchCheckItemInterface</small>*
 
@@ -130,22 +139,7 @@ Get the schema definition for this model. This method returns the schema that de
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
 
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array<string, mixed>
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/BatchCheckItem.php#L233)
-
-#### Returns
-
-`array&lt;`string`, `mixed`&gt;`
-
-#### toArray
+### toArray
 
 ```php
 public function toArray(): array<string, mixed>

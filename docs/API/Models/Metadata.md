@@ -2,7 +2,8 @@
 
 Contains metadata information about type definitions in your authorization model. Metadata provides additional context about how your authorization types behave, including module information, relation constraints, and source details. This information helps with model validation, debugging, and understanding the structure of your authorization system. Use this when you need insights into the properties and constraints of your authorization model&#039;s type definitions.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ Contains metadata information about type definitions in your authorization model
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModule()`](#getmodule)
+- [`getModule()`](#getmodule)
   - [`getRelations()`](#getrelations)
   - [`getSourceInfo()`](#getsourceinfo)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Contains metadata information about type definitions in your authorization model
 
 ## Methods
 
-### List Operations
-
-#### getModule
+### getModule
 
 ```php
 public function getModule(): ?string
@@ -63,7 +61,7 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 `string` &#124; `null` — The module name, or null if not specified
 
-#### getRelations
+### getRelations
 
 ```php
 public function getRelations(): ?OpenFGA\Models\Collections\RelationMetadataCollection
@@ -78,7 +76,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 [`RelationMetadataCollection`](Models/Collections/RelationMetadataCollection.md) &#124; `null` — The relation metadata collection, or null if not specified
 
-#### getSourceInfo
+### getSourceInfo
 
 ```php
 public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
@@ -93,9 +91,20 @@ Get the source code information for this metadata. Source information provides d
 
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source information, or null if not available
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L89)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\MetadataInterface</small>*
 
@@ -111,18 +120,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Metadata.php#L89)
-
-#### Returns
-
-`array`

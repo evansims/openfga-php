@@ -2,20 +2,22 @@
 
 Event-aware telemetry service that emits domain events. This service extends the base TelemetryService functionality by emitting domain events for operation lifecycle, enabling decoupled observability.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`recordAuthenticationEvent()`](#recordauthenticationevent)
+- [`recordAuthenticationEvent()`](#recordauthenticationevent)
   - [`recordFailure()`](#recordfailure)
   - [`recordHttpRequest()`](#recordhttprequest)
   - [`recordOperationMetrics()`](#recordoperationmetrics)
   - [`recordSuccess()`](#recordsuccess)
   - [`startOperation()`](#startoperation)
+
+</details>
 
 ## Namespace
 
@@ -31,7 +33,7 @@ Event-aware telemetry service that emits domain events. This service extends the
 
 ## Methods
 
-#### recordAuthenticationEvent
+### recordAuthenticationEvent
 
 ```php
 public function recordAuthenticationEvent(
@@ -60,7 +62,7 @@ Record an authentication event with duration and outcome. Tracks authentication-
 
 `void`
 
-#### recordFailure
+### recordFailure
 
 ```php
 public function recordFailure(
@@ -87,7 +89,7 @@ Record a failed operation with error details. Completes an operation context wit
 
 `void`
 
-#### recordHttpRequest
+### recordHttpRequest
 
 ```php
 public function recordHttpRequest(
@@ -116,7 +118,7 @@ Record an HTTP request/response pair with automatic span management. Handles the
 
 `void`
 
-#### recordOperationMetrics
+### recordOperationMetrics
 
 ```php
 public function recordOperationMetrics(
@@ -147,7 +149,7 @@ Record operational metrics for performance monitoring. Tracks operation-level me
 
 `void`
 
-#### recordSuccess
+### recordSuccess
 
 ```php
 public function recordSuccess(OpenFGA\Services\TelemetryContext $context, mixed $result = NULL): void
@@ -169,7 +171,7 @@ Record a successful operation with results. Completes an operation context with 
 
 `void`
 
-#### startOperation
+### startOperation
 
 ```php
 public function startOperation(

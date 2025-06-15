@@ -2,7 +2,8 @@
 
 Represents a tuple key used for testing authorization model assertions. An AssertionTupleKey defines the specific user, relation, and object combination that should be tested in authorization model assertions. This is used to verify that your authorization model behaves correctly by testing whether specific authorization questions return the expected results. Use this when creating test cases to validate your authorization rules and ensure your permission model works as intended.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getObject()`](#getobject)
+- [`getObject()`](#getobject)
   - [`getRelation()`](#getrelation)
   - [`getUser()`](#getuser)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Represents a tuple key used for testing authorization model assertions. An Asser
 
 ## Methods
 
-### List Operations
-
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string
@@ -63,7 +61,7 @@ Get the object being tested in the assertion. This represents the resource or en
 
 `string` — The object identifier being tested
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -78,7 +76,7 @@ Get the relation being tested in the assertion. This represents the type of rela
 
 `string` — The relation name being tested
 
-#### getUser
+### getUser
 
 ```php
 public function getUser(): string
@@ -93,9 +91,20 @@ Get the user being tested in the assertion. This represents the subject (user, g
 
 `string` — The user identifier being tested
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L86)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\AssertionTupleKeyInterface</small>*
 
@@ -111,18 +120,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/AssertionTupleKey.php#L86)
-
-#### Returns
-
-`array`

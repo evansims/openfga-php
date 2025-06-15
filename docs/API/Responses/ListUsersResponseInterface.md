@@ -2,7 +2,8 @@
 
 Interface for user listing response objects. This interface defines the contract for responses returned when listing users that have a specific relationship with an object in OpenFGA. This is the inverse of permission checking - instead of asking &quot;can this user access this object?,&quot; it asks &quot;which users can access this object?&quot; User listing is particularly useful for building administrative interfaces, access reports, and user management features that need to display who has access to specific resources.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,9 @@ Interface for user listing response objects. This interface defines the contract
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getUsers()`](#getusers)
+- [`getUsers()`](#getusers)
+
+</details>
 
 ## Namespace
 
@@ -32,7 +34,7 @@ Interface for user listing response objects. This interface defines the contract
 
 ## Methods
 
-#### getUsers
+### getUsers
 
 ```php
 public function getUsers(): UsersInterface

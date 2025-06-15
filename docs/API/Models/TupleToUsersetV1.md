@@ -2,7 +2,8 @@
 
 Represents a tuple-to-userset relationship that derives permissions from related objects. This enables complex authorization patterns where permissions on one object are determined by relationships with other objects. For example, &quot;users who can edit a document are those who are owners of the folder containing it&quot;. The tupleset defines which related objects to look at, and computedUserset specifies which relationship on those objects grants the permission.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,13 +12,12 @@ Represents a tuple-to-userset relationship that derives permissions from related
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getComputedUserset()`](#getcomputeduserset)
+- [`getComputedUserset()`](#getcomputeduserset)
   - [`getTupleset()`](#gettupleset)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -45,9 +45,7 @@ Represents a tuple-to-userset relationship that derives permissions from related
 
 ## Methods
 
-### List Operations
-
-#### getComputedUserset
+### getComputedUserset
 
 ```php
 public function getComputedUserset(): OpenFGA\Models\ObjectRelationInterface
@@ -62,7 +60,7 @@ Get the userset that will be computed based on the tupleset. This represents the
 
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the computed userset
 
-#### getTupleset
+### getTupleset
 
 ```php
 public function getTupleset(): OpenFGA\Models\ObjectRelationInterface
@@ -77,9 +75,20 @@ Get the tupleset (object-relation pair) that defines which tuples to use for com
 
 [`ObjectRelationInterface`](ObjectRelationInterface.md) — The object-relation pair defining the tupleset
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1.php#L73)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\TupleToUsersetV1Interface</small>*
 
@@ -95,18 +104,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleToUsersetV1.php#L73)
-
-#### Returns
-
-`array`

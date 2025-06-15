@@ -2,7 +2,8 @@
 
 Default implementation of TupleFilterServiceInterface. Provides efficient duplicate filtering for tuple operations using hash-based lookups to ensure O(n) complexity.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,9 @@ Default implementation of TupleFilterServiceInterface. Provides efficient duplic
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`filterDuplicates()`](#filterduplicates)
+- [`filterDuplicates()`](#filterduplicates)
+
+</details>
 
 ## Namespace
 
@@ -31,7 +33,7 @@ Default implementation of TupleFilterServiceInterface. Provides efficient duplic
 
 ## Methods
 
-#### filterDuplicates
+### filterDuplicates
 
 ```php
 public function filterDuplicates(

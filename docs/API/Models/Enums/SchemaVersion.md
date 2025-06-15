@@ -2,7 +2,8 @@
 
 OpenFGA authorization model schema versions. This enum defines the supported schema versions for authorization models in OpenFGA, ensuring compatibility between client libraries and the OpenFGA service. Each schema version represents a specific format and feature set for authorization models, with newer versions introducing enhanced capabilities while maintaining backward compatibility wherever possible. Schema versioning enables: - Gradual migration between OpenFGA versions - Feature availability validation - Compatibility checking between clients and servers - Forward and backward compatibility planning When creating authorization models, choose the appropriate schema version based on the features you need and the OpenFGA service version you&#039;re targeting. Newer schema versions provide access to the latest OpenFGA capabilities but may require minimum service versions.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`compareTo()`](#compareto)
   - [`getNumericVersion()`](#getnumericversion)
-- [Utility](#utility)
   - [`isLatest()`](#islatest)
   - [`isLegacy()`](#islegacy)
-- [Other](#other)
-  - [`compareTo()`](#compareto)
   - [`supportsConditions()`](#supportsconditions)
+
+</details>
 
 ## Namespace
 
@@ -49,58 +49,7 @@ OpenFGA authorization model schema versions. This enum defines the supported sch
 
 ## Methods
 
-### List Operations
-
-#### getNumericVersion
-
-```php
-public function getNumericVersion(): float
-
-```
-
-Get the numeric version as a float for comparison operations. Useful for version comparison logic and feature detection.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L93)
-
-#### Returns
-
-`float` — The numeric representation of the schema version
-
-### Utility
-
-#### isLatest
-
-```php
-public function isLatest(): bool
-
-```
-
-Check if this is the latest schema version. Useful for determining if an authorization model is using the most current feature set and capabilities.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L106)
-
-#### Returns
-
-`bool` — True if this is the latest schema version, false otherwise
-
-#### isLegacy
-
-```php
-public function isLegacy(): bool
-
-```
-
-Check if this is a legacy schema version. Legacy versions are still supported but may lack features available in newer versions. Consider upgrading for better functionality.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L119)
-
-#### Returns
-
-`bool` — True if this is a legacy version, false otherwise
-
-### Other
-
-#### compareTo
+### compareTo
 
 ```php
 public function compareTo(SchemaVersion $other): int
@@ -121,7 +70,52 @@ Compare this schema version with another version. Returns negative, zero, or pos
 
 `int` — Comparison result (-1, 0, or 1)
 
-#### supportsConditions
+### getNumericVersion
+
+```php
+public function getNumericVersion(): float
+
+```
+
+Get the numeric version as a float for comparison operations. Useful for version comparison logic and feature detection.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L93)
+
+#### Returns
+
+`float` — The numeric representation of the schema version
+
+### isLatest
+
+```php
+public function isLatest(): bool
+
+```
+
+Check if this is the latest schema version. Useful for determining if an authorization model is using the most current feature set and capabilities.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L106)
+
+#### Returns
+
+`bool` — True if this is the latest schema version, false otherwise
+
+### isLegacy
+
+```php
+public function isLegacy(): bool
+
+```
+
+Check if this is a legacy schema version. Legacy versions are still supported but may lack features available in newer versions. Consider upgrading for better functionality.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Enums/SchemaVersion.php#L119)
+
+#### Returns
+
+`bool` — True if this is a legacy version, false otherwise
+
+### supportsConditions
 
 ```php
 public function supportsConditions(): bool

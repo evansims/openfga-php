@@ -2,7 +2,8 @@
 
 Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are terminal nodes in the authorization evaluation tree that define the actual users or user resolution methods. They represent the final step in determining who has access to a particular resource through a specific relation. A leaf can specify users through one of three mechanisms: 1. **Direct users**: An explicit list of user identifiers 2. **Computed userset**: A reference to another userset to be evaluated 3. **Tuple-to-userset**: A complex resolution that follows tuple relationships Only one of these mechanisms should be active in any given leaf node, as they represent different strategies for determining the final user set.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getComputed()`](#getcomputed)
+- [`getComputed()`](#getcomputed)
   - [`getTupleToUserset()`](#gettupletouserset)
   - [`getUsers()`](#getusers)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Represents a leaf node in OpenFGA&#039;s userset tree structure. Leaf nodes are 
 
 ## Methods
 
-### List Operations
-
-#### getComputed
+### getComputed
 
 ```php
 public function getComputed(): ComputedInterface|null
@@ -53,7 +52,7 @@ Get the computed userset specification for this leaf. When present, this defines
 
 [`ComputedInterface`](ComputedInterface.md) &#124; `null` — The computed userset specification, or null if not used
 
-#### getTupleToUserset
+### getTupleToUserset
 
 ```php
 public function getTupleToUserset(): UsersetTreeTupleToUsersetInterface|null
@@ -68,7 +67,7 @@ Get the tuple-to-userset operation for this leaf. When present, this defines how
 
 [`UsersetTreeTupleToUsersetInterface`](UsersetTreeTupleToUsersetInterface.md) &#124; `null` — The tuple-to-userset operation, or null if not used
 
-#### getUsers
+### getUsers
 
 ```php
 public function getUsers(): UsersListInterface|null
@@ -83,9 +82,7 @@ Get the direct list of users for this leaf node. When present, this provides an 
 
 [`UsersListInterface`](Models/Collections/UsersListInterface.md) &#124; `null` — The list of users with direct access, or null if not used
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

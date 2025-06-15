@@ -2,7 +2,8 @@
 
 Represents a specific user object with type and identifier. A UserObject provides a structured way to represent users in your authorization system with both a type (like &quot;user,&quot; &quot;service,&quot; &quot;bot&quot;) and a unique identifier. This allows for clear categorization of different kinds of entities that can have permissions in your system. Use this when you need to represent users in a structured format rather than simple string identifiers.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,13 +12,12 @@ Represents a specific user object with type and identifier. A UserObject provide
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getId()`](#getid)
+- [`getId()`](#getid)
   - [`getType()`](#gettype)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Represents a specific user object with type and identifier. A UserObject provide
 
 ## Methods
 
-### List Operations
-
-#### getId
+### getId
 
 ```php
 public function getId(): string
@@ -63,7 +61,7 @@ Get the unique identifier of the user object. The ID is unique within the contex
 
 `string` — The object identifier
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -78,9 +76,22 @@ Get the type of the user object. The type defines the category or class of the o
 
 `string` — The object type
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+Serialize the user object to its JSON representation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L87)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\UserObjectInterface</small>*
 
@@ -96,20 +107,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-Serialize the user object to its JSON representation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UserObject.php#L87)
-
-#### Returns
-
-`array`

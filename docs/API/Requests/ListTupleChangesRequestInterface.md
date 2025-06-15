@@ -2,7 +2,8 @@
 
 Interface for listing historical changes to relationship tuples. This interface defines the contract for requests that query the change history of relationship tuples within an OpenFGA store. It provides a chronological audit trail of all tuple modifications, including writes and deletes, allowing you to track how relationships have evolved over time. Tuple change history is essential for: - **Auditing**: Track who made changes and when for compliance - **Debugging**: Understand how authorization state reached its current condition - **Synchronization**: Keep external systems in sync with authorization changes - **Analytics**: Analyze access patterns and permission trends over time - **Rollback**: Understand what changes need to be reversed The operation supports: - Time-based filtering to focus on specific periods - Object type filtering to track changes for specific resource types - Pagination for handling large change histories efficiently - Chronological ordering to understand the sequence of changes Each change entry includes the tuple that was modified, the type of operation (write or delete), and the timestamp when the change occurred.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Interface for listing historical changes to relationship tuples. This interface 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getPageSize()`](#getpagesize)
   - [`getRequest()`](#getrequest)
   - [`getStartTime()`](#getstarttime)
   - [`getStore()`](#getstore)
   - [`getType()`](#gettype)
+
+</details>
 
 ## Namespace
 
@@ -37,7 +39,7 @@ Interface for listing historical changes to relationship tuples. This interface 
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null
@@ -52,7 +54,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 
-#### getPageSize
+### getPageSize
 
 ```php
 public function getPageSize(): int|null
@@ -67,7 +69,7 @@ Get the maximum number of changes to return per page. Specifies the page size fo
 
 `int` &#124; `null` — The maximum number of changes to return per page, or null to use the default page size
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -88,7 +90,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStartTime
+### getStartTime
 
 ```php
 public function getStartTime(): DateTimeImmutable|null
@@ -103,7 +105,7 @@ Get the earliest time to include in the change history. Specifies the starting p
 
 `DateTimeImmutable` &#124; `null` — The earliest timestamp to include in results, or null to include all changes from the beginning
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -118,7 +120,7 @@ Get the store ID containing the tuple changes to list. Identifies which OpenFGA 
 
 `string` — The store ID containing the tuple change history to retrieve
 
-#### getType
+### getType
 
 ```php
 public function getType(): string|null

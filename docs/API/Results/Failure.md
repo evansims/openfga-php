@@ -2,7 +2,8 @@
 
 Concrete implementation of a failed result containing an error. This class represents the failed outcome of an operation, storing the error that caused the failure and providing safe access through the Result pattern&#039;s fluent interface.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,7 @@ Concrete implementation of a failed result containing an error. This class repre
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`err()`](#err)
+- [`err()`](#err)
   - [`failed()`](#failed)
   - [`failure()`](#failure)
   - [`recover()`](#recover)
@@ -21,6 +21,8 @@ Concrete implementation of a failed result containing an error. This class repre
   - [`then()`](#then)
   - [`unwrap()`](#unwrap)
   - [`val()`](#val)
+
+</details>
 
 ## Namespace
 
@@ -41,7 +43,7 @@ Concrete implementation of a failed result containing an error. This class repre
 
 ## Methods
 
-#### err
+### err
 
 ```php
 public function err(): Throwable
@@ -56,7 +58,7 @@ Retrieves the error from a failed result. This method should only be called on F
 
 `Throwable` — The error that caused the failure
 
-#### failed
+### failed
 
 ```php
 public function failed(): bool
@@ -71,7 +73,7 @@ Determines if this result represents a failure.
 
 `bool` — True if this is a Failure result, false if it&#039;s a Success
 
-#### failure
+### failure
 
 ```php
 public function failure(callable $fn): OpenFGA\Results\ResultInterface
@@ -92,7 +94,7 @@ Executes a callback when the result is a failure and continues the chain. The ca
 
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 
-#### recover
+### recover
 
 ```php
 public function recover(callable $fn): OpenFGA\Results\ResultInterface
@@ -113,7 +115,7 @@ Recovers from a failure by transforming it into a success or different failure. 
 
 [`ResultInterface`](ResultInterface.md) — The recovered result or original success
 
-#### rethrow
+### rethrow
 
 ```php
 public function rethrow(?Throwable $throwable = NULL): OpenFGA\Results\ResultInterface
@@ -134,7 +136,7 @@ Throws the contained error or continues the chain. For Failure results, this thr
 
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 
-#### succeeded
+### succeeded
 
 ```php
 public function succeeded(): bool
@@ -149,7 +151,7 @@ Determines if this result represents a success.
 
 `bool` — True if this is a Success result, false if it&#039;s a Failure
 
-#### success
+### success
 
 ```php
 public function success(callable $fn): OpenFGA\Results\ResultInterface
@@ -170,7 +172,7 @@ Executes a callback when the result is a success and continues the chain. The ca
 
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 
-#### then
+### then
 
 ```php
 public function then(callable $fn): OpenFGA\Results\ResultInterface
@@ -191,7 +193,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 
 [`ResultInterface`](ResultInterface.md) — The transformed result or original failure
 
-#### unwrap
+### unwrap
 
 ```php
 public function unwrap(?callable $fn = NULL): mixed
@@ -212,7 +214,7 @@ Extracts the value from the result or applies a transformation. Without a callba
 
 `mixed` — The response interface, callback result, or throws the error
 
-#### val
+### val
 
 ```php
 public function val(): never

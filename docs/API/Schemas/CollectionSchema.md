@@ -2,7 +2,8 @@
 
 Schema definition specifically for validating and transforming collection data structures. This specialized schema handles arrays of objects, providing validation rules for collections while ensuring each item conforms to the specified item type. It supports wrapper keys for nested collection data and optional item requirements.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,14 +11,14 @@ Schema definition specifically for validating and transforming collection data s
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getClassName()`](#getclassname)
+- [`getClassName()`](#getclassname)
   - [`getItemType()`](#getitemtype)
   - [`getProperties()`](#getproperties)
   - [`getProperty()`](#getproperty)
   - [`getWrapperKey()`](#getwrapperkey)
-- [Other](#other)
   - [`requiresItems()`](#requiresitems)
+
+</details>
 
 ## Namespace
 
@@ -39,9 +40,7 @@ Schema definition specifically for validating and transforming collection data s
 
 ## Methods
 
-### List Operations
-
-#### getClassName
+### getClassName
 
 ```php
 public function getClassName(): string
@@ -56,7 +55,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 
 `string` — The fully qualified class name for the model this schema defines
 
-#### getItemType
+### getItemType
 
 ```php
 public function getItemType(): string
@@ -71,7 +70,7 @@ Get the type of each item in the collection.
 
 `string`
 
-#### getProperties
+### getProperties
 
 ```php
 public function getProperties(): array
@@ -86,7 +85,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 `array` — An associative array of property names to their schema property definitions
 
-#### getProperty
+### getProperty
 
 ```php
 public function getProperty(string $name): ?OpenFGA\Schemas\SchemaProperty
@@ -107,7 +106,7 @@ Get a specific property definition by name. This method retrieves the schema def
 
 [`SchemaProperty`](SchemaProperty.md) &#124; `null` — The property definition if it exists, or null if the property is not defined in this schema
 
-#### getWrapperKey
+### getWrapperKey
 
 ```php
 public function getWrapperKey(): ?string
@@ -122,9 +121,7 @@ Get the wrapper key for the collection data if any. Some collections expect data
 
 `string` &#124; `null` — The wrapper key or null if data is not wrapped
 
-### Other
-
-#### requiresItems
+### requiresItems
 
 ```php
 public function requiresItems(): bool

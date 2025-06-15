@@ -2,15 +2,15 @@
 
 Event fired when a high-level operation completes. This event tracks the completion of business operations with success/failure information.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContext()`](#getcontext)
+- [`getContext()`](#getcontext)
   - [`getEventId()`](#geteventid)
   - [`getEventType()`](#geteventtype)
   - [`getException()`](#getexception)
@@ -20,11 +20,11 @@ Event fired when a high-level operation completes. This event tracks the complet
   - [`getPayload()`](#getpayload)
   - [`getResult()`](#getresult)
   - [`getStoreId()`](#getstoreid)
-- [Utility](#utility)
   - [`isPropagationStopped()`](#ispropagationstopped)
   - [`isSuccessful()`](#issuccessful)
-- [Other](#other)
   - [`stopPropagation()`](#stoppropagation)
+
+</details>
 
 ## Namespace
 
@@ -40,9 +40,7 @@ Event fired when a high-level operation completes. This event tracks the complet
 
 ## Methods
 
-### List Operations
-
-#### getContext
+### getContext
 
 ```php
 public function getContext(): array<string, mixed>
@@ -55,7 +53,7 @@ public function getContext(): array<string, mixed>
 
 `array&lt;`string`, `mixed`&gt;`
 
-#### getEventId
+### getEventId
 
 ```php
 public function getEventId(): string
@@ -70,7 +68,7 @@ Get the unique identifier for this event.
 
 `string` — A unique identifier for the event instance
 
-#### getEventType
+### getEventType
 
 ```php
 public function getEventType(): string
@@ -85,7 +83,7 @@ Get the name/type of this event.
 
 `string` — The event type identifier
 
-#### getException
+### getException
 
 ```php
 public function getException(): ?Throwable
@@ -98,7 +96,7 @@ public function getException(): ?Throwable
 
 `Throwable` &#124; `null`
 
-#### getModelId
+### getModelId
 
 ```php
 public function getModelId(): ?string
@@ -111,7 +109,7 @@ public function getModelId(): ?string
 
 `string` &#124; `null`
 
-#### getOccurredAt
+### getOccurredAt
 
 ```php
 public function getOccurredAt(): DateTimeImmutable
@@ -126,7 +124,7 @@ Get when this event occurred.
 
 `DateTimeImmutable` — The timestamp when the event was created
 
-#### getOperation
+### getOperation
 
 ```php
 public function getOperation(): string
@@ -139,7 +137,7 @@ public function getOperation(): string
 
 `string`
 
-#### getPayload
+### getPayload
 
 ```php
 public function getPayload(): array
@@ -154,7 +152,7 @@ Get the event payload data.
 
 `array` — The event data
 
-#### getResult
+### getResult
 
 ```php
 public function getResult(): mixed
@@ -167,7 +165,7 @@ public function getResult(): mixed
 
 `mixed`
 
-#### getStoreId
+### getStoreId
 
 ```php
 public function getStoreId(): ?string
@@ -180,9 +178,7 @@ public function getStoreId(): ?string
 
 `string` &#124; `null`
 
-### Utility
-
-#### isPropagationStopped
+### isPropagationStopped
 
 ```php
 public function isPropagationStopped(): bool
@@ -197,7 +193,7 @@ Check if event propagation should be stopped.
 
 `bool` — True if propagation should be stopped
 
-#### isSuccessful
+### isSuccessful
 
 ```php
 public function isSuccessful(): bool
@@ -210,9 +206,7 @@ public function isSuccessful(): bool
 
 `bool`
 
-### Other
-
-#### stopPropagation
+### stopPropagation
 
 ```php
 public function stopPropagation(): void

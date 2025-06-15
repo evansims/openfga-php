@@ -2,7 +2,8 @@
 
 Interface for reading relationship tuples from an OpenFGA store. This interface defines the contract for requests that query relationship tuples stored in OpenFGA. It supports filtering by tuple patterns and provides pagination for handling large result sets efficiently. Read operations allow you to: - Query existing relationships using tuple key patterns - Filter by specific objects, users, or relations - Use wildcard patterns to match multiple tuples - Configure read consistency for performance optimization - Paginate through large result sets with continuation tokens This is essential for auditing permissions, syncing data to external systems, building administrative interfaces, and implementing custom authorization logic that needs to inspect the relationship graph.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConsistency()`](#getconsistency)
+- [`getConsistency()`](#getconsistency)
   - [`getContinuationToken()`](#getcontinuationtoken)
   - [`getPageSize()`](#getpagesize)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
   - [`getTupleKey()`](#gettuplekey)
+
+</details>
 
 ## Namespace
 
@@ -37,7 +39,7 @@ Interface for reading relationship tuples from an OpenFGA store. This interface 
 
 ## Methods
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): Consistency|null
@@ -52,7 +54,7 @@ Get the read consistency level for the read operation. Determines the consistenc
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null
@@ -67,7 +69,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 `string` &#124; `null` — The continuation token from a previous read operation, or null for the first page
 
-#### getPageSize
+### getPageSize
 
 ```php
 public function getPageSize(): int|null
@@ -82,7 +84,7 @@ Get the maximum number of tuples to return. Specifies the page size for paginate
 
 `int` &#124; `null` — The maximum number of tuples to return per page, or null to use the default page size
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -103,7 +105,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -118,7 +120,7 @@ Get the store ID containing the tuples to read. Identifies which OpenFGA store c
 
 `string` — The store ID containing the relationship tuples to read
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): TupleKeyInterface

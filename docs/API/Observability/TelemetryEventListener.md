@@ -2,7 +2,8 @@
 
 Event listener that forwards domain events to the telemetry provider. This decouples business logic from telemetry by using events to communicate what happened without the business logic needing to know about telemetry.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,12 @@ Event listener that forwards domain events to the telemetry provider. This decou
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`onHttpRequestSent()`](#onhttprequestsent)
+- [`onHttpRequestSent()`](#onhttprequestsent)
   - [`onHttpResponseReceived()`](#onhttpresponsereceived)
   - [`onOperationCompleted()`](#onoperationcompleted)
   - [`onOperationStarted()`](#onoperationstarted)
+
+</details>
 
 ## Namespace
 
@@ -34,7 +36,7 @@ Event listener that forwards domain events to the telemetry provider. This decou
 
 ## Methods
 
-#### onHttpRequestSent
+### onHttpRequestSent
 
 ```php
 public function onHttpRequestSent(OpenFGA\Events\HttpRequestSentEvent $event): void
@@ -55,7 +57,7 @@ Handle HTTP request sent events. Records telemetry data when an HTTP request is 
 
 `void`
 
-#### onHttpResponseReceived
+### onHttpResponseReceived
 
 ```php
 public function onHttpResponseReceived(OpenFGA\Events\HttpResponseReceivedEvent $event): void
@@ -76,7 +78,7 @@ Handle HTTP response received events. Records telemetry data when an HTTP respon
 
 `void`
 
-#### onOperationCompleted
+### onOperationCompleted
 
 ```php
 public function onOperationCompleted(OpenFGA\Events\OperationCompletedEvent $event): void
@@ -97,7 +99,7 @@ Handle operation completed events. Records telemetry data when an OpenFGA operat
 
 `void`
 
-#### onOperationStarted
+### onOperationStarted
 
 ```php
 public function onOperationStarted(OpenFGA\Events\OperationStartedEvent $event): void

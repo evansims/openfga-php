@@ -2,7 +2,8 @@
 
 Interface for authorization models listing response objects. This interface defines the contract for responses returned when listing authorization models from an OpenFGA store. The response includes a collection of authorization models and pagination support for handling large numbers of models efficiently. Authorization model listing is useful for administrative operations, model versioning management, and allowing users to select from available model versions.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for authorization models listing response objects. This interface defi
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getModels()`](#getmodels)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for authorization models listing response objects. This interface defi
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null
@@ -48,7 +50,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 `string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 
-#### getModels
+### getModels
 
 ```php
 public function getModels(): AuthorizationModelsInterface

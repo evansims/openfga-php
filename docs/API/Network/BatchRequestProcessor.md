@@ -2,17 +2,18 @@
 
 Handles batch processing of write tuple requests. This class encapsulates the logic for processing write tuple requests in both transactional and non-transactional modes. It handles chunking, parallel execution, retries, and error aggregation.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getLastRequest()`](#getlastrequest)
+- [`getLastRequest()`](#getlastrequest)
   - [`getLastResponse()`](#getlastresponse)
-- [Other](#other)
   - [`process()`](#process)
+
+</details>
 
 ## Namespace
 
@@ -24,9 +25,7 @@ Handles batch processing of write tuple requests. This class encapsulates the lo
 
 ## Methods
 
-### List Operations
-
-#### getLastRequest
+### getLastRequest
 
 ```php
 public function getLastRequest(): ?Psr\Http\Message\RequestInterface
@@ -41,7 +40,7 @@ Get the last HTTP request made.
 
 `Psr\Http\Message\RequestInterface` &#124; `null`
 
-#### getLastResponse
+### getLastResponse
 
 ```php
 public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
@@ -56,9 +55,7 @@ Get the last HTTP response received.
 
 `Psr\Http\Message\ResponseInterface` &#124; `null`
 
-### Other
-
-#### process
+### process
 
 ```php
 public function process(WriteTuplesRequest $request): SuccessInterface

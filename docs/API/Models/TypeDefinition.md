@@ -2,7 +2,8 @@
 
 Represents a type definition in your authorization model. A TypeDefinition defines an object type (like &quot;document,&quot; &quot;folder,&quot; &quot;user&quot;) and specifies the relations that can exist for objects of this type. Each relation defines how users can be related to objects, such as &quot;owner,&quot; &quot;editor,&quot; or &quot;viewer&quot; relationships. Use this when defining the schema of object types and their allowed relationships in your authorization model.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getMetadata()`](#getmetadata)
+- [`getMetadata()`](#getmetadata)
   - [`getRelations()`](#getrelations)
   - [`getType()`](#gettype)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -47,9 +47,7 @@ Represents a type definition in your authorization model. A TypeDefinition defin
 
 ## Methods
 
-### List Operations
-
-#### getMetadata
+### getMetadata
 
 ```php
 public function getMetadata(): ?OpenFGA\Models\MetadataInterface
@@ -64,7 +62,7 @@ Get the metadata associated with this type definition. Metadata provides additio
 
 [`MetadataInterface`](MetadataInterface.md) &#124; `null` — The metadata, or null if not specified
 
-#### getRelations
+### getRelations
 
 ```php
 public function getRelations(): ?OpenFGA\Models\Collections\TypeDefinitionRelationsInterface
@@ -79,7 +77,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 [`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md) &#124; `null`
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -94,9 +92,20 @@ Get the name of this type. The type name uniquely identifies this type definitio
 
 `string` — The unique type name
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinition.php#L88)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\TypeDefinitionInterface</small>*
 
@@ -112,18 +121,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinition.php#L88)
-
-#### Returns
-
-`array`

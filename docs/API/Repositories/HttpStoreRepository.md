@@ -2,19 +2,20 @@
 
 HTTP implementation of the store repository. This repository provides a domain-focused abstraction for store operations, handling all HTTP communication through the injected HttpService. It converts domain objects to API requests, sends them via HTTP, and transforms responses back to domain objects while maintaining proper error handling. The repository encapsulates all HTTP-specific concerns including request/response transformation, pagination handling, and API error mapping. It follows the SDK&#039;s Result pattern to provide safe error handling without exceptions for control flow. ## Implementation Details - Uses HttpService for all HTTP operations - Validates responses using SchemaValidator - Transforms API responses to domain objects - Handles pagination for list operations - Provides consistent error handling via Result pattern
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`create()`](#create)
+- [`create()`](#create)
   - [`delete()`](#delete)
-- [List Operations](#list-operations)
   - [`get()`](#get)
   - [`list()`](#list)
+
+</details>
 
 ## Namespace
 
@@ -30,9 +31,7 @@ HTTP implementation of the store repository. This repository provides a domain-f
 
 ## Methods
 
-### CRUD Operations
-
-#### create
+### create
 
 ```php
 public function create(string $name): OpenFGA\Results\ResultInterface
@@ -53,7 +52,7 @@ Create a new store with the specified name. Creates a new OpenFGA store which se
 
 [`ResultInterface`](Results/ResultInterface.md) — Success containing the created Store, or Failure with error details
 
-#### delete
+### delete
 
 ```php
 public function delete(string $storeId): OpenFGA\Results\ResultInterface
@@ -74,9 +73,7 @@ Delete an existing store by ID. Permanently removes a store and all its associat
 
 [`ResultInterface`](Results/ResultInterface.md) — Success with null value, or Failure with error details
 
-### List Operations
-
-#### get
+### get
 
 ```php
 public function get(string $storeId): OpenFGA\Results\ResultInterface
@@ -97,7 +94,7 @@ Get a store by ID. Retrieves the details of an existing store including its name
 
 [`ResultInterface`](Results/ResultInterface.md) — Success containing the Store, or Failure with error details
 
-#### list
+### list
 
 ```php
 public function list(?string $continuationToken = NULL, ?int $pageSize = NULL): OpenFGA\Results\ResultInterface

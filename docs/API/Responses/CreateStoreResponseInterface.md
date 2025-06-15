@@ -2,7 +2,8 @@
 
 Interface for store creation response objects. This interface defines the contract for responses returned when creating new authorization stores in OpenFGA. A store creation response contains the newly created store&#039;s metadata including its unique identifier, name, and timestamps. Store creation is the foundational operation for establishing an authorization domain where you can define relationship models, write authorization tuples, and perform permission checks.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Interface for store creation response objects. This interface defines the contra
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`getCreatedAt()`](#getcreatedat)
-  - [`getUpdatedAt()`](#getupdatedat)
-- [List Operations](#list-operations)
+- [`getCreatedAt()`](#getcreatedat)
   - [`getId()`](#getid)
   - [`getName()`](#getname)
+  - [`getUpdatedAt()`](#getupdatedat)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Interface for store creation response objects. This interface defines the contra
 
 ## Methods
 
-### CRUD Operations
-
-#### getCreatedAt
+### getCreatedAt
 
 ```php
 public function getCreatedAt(): DateTimeImmutable
@@ -53,24 +52,7 @@ Get the timestamp when the store was created. Returns the exact moment when the 
 
 `DateTimeImmutable` — The creation timestamp of the store
 
-#### getUpdatedAt
-
-```php
-public function getUpdatedAt(): DateTimeImmutable
-
-```
-
-Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata. For newly created stores, this will typically match the creation timestamp.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L72)
-
-#### Returns
-
-`DateTimeImmutable` — The last update timestamp of the store
-
-### List Operations
-
-#### getId
+### getId
 
 ```php
 public function getId(): string
@@ -85,7 +67,7 @@ Get the unique identifier of the created store. Returns the system-generated uni
 
 `string` — The unique store identifier
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -99,3 +81,18 @@ Get the human-readable name of the created store. Returns the descriptive name t
 #### Returns
 
 `string` — The descriptive name of the store
+
+### getUpdatedAt
+
+```php
+public function getUpdatedAt(): DateTimeImmutable
+
+```
+
+Get the timestamp when the store was last updated. Returns the timestamp of the most recent modification to the store&#039;s metadata. For newly created stores, this will typically match the creation timestamp.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CreateStoreResponseInterface.php#L72)
+
+#### Returns
+
+`DateTimeImmutable` — The last update timestamp of the store

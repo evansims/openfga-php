@@ -2,7 +2,8 @@
 
 Response containing the result of an authorization check. This response indicates whether a user has a specific relationship with an object, along with optional resolution details explaining how the decision was reached. Use this to make authorization decisions in your application.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,14 +11,12 @@ Response containing the result of an authorization check. This response indicate
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
+- [`fromResponse()`](#fromresponse)
   - [`getAllowed()`](#getallowed)
-- [List Operations](#list-operations)
   - [`getResolution()`](#getresolution)
-- [Model Management](#model-management)
   - [`schema()`](#schema)
-- [Other](#other)
-  - [`fromResponse()`](#fromresponse)
+
+</details>
 
 ## Namespace
 
@@ -39,62 +38,7 @@ Response containing the result of an authorization check. This response indicate
 
 ## Methods
 
-### Authorization
-
-#### getAllowed
-
-```php
-public function getAllowed(): ?bool
-
-```
-
-Get whether the permission check was allowed. This is the primary result of the permission check operation, indicating whether the specified user has the requested permission on the given object according to the authorization model and current relationship data.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L88)
-
-#### Returns
-
-`bool` &#124; `null` — True if permission is granted, false if denied, or null if the result is indeterminate
-
-### List Operations
-
-#### getResolution
-
-```php
-public function getResolution(): ?string
-
-```
-
-Get the resolution details for the permission decision. This provides additional information about how the permission decision was reached, which can be useful for understanding complex authorization logic or debugging permission issues.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L97)
-
-#### Returns
-
-`string` &#124; `null` — The resolution details explaining the permission decision, or null if not provided
-
-### Model Management
-
-#### schema
-
-*<small>Implements Responses\CheckResponseInterface</small>*
-
-```php
-public function schema(): SchemaInterface
-
-```
-
-Get the schema definition for this response. This method returns the schema that defines the structure and validation rules for check response data, ensuring consistent parsing and validation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponseInterface.php#L32)
-
-#### Returns
-
-`SchemaInterface` — The schema definition for check response validation
-
-### Other
-
-#### fromResponse
+### fromResponse
 
 *<small>Implements Responses\CheckResponseInterface</small>*
 
@@ -122,3 +66,50 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 
 `static` — The parsed and validated response instance containing the API response data
+
+### getAllowed
+
+```php
+public function getAllowed(): ?bool
+
+```
+
+Get whether the permission check was allowed. This is the primary result of the permission check operation, indicating whether the specified user has the requested permission on the given object according to the authorization model and current relationship data.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L88)
+
+#### Returns
+
+`bool` &#124; `null` — True if permission is granted, false if denied, or null if the result is indeterminate
+
+### getResolution
+
+```php
+public function getResolution(): ?string
+
+```
+
+Get the resolution details for the permission decision. This provides additional information about how the permission decision was reached, which can be useful for understanding complex authorization logic or debugging permission issues.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponse.php#L97)
+
+#### Returns
+
+`string` &#124; `null` — The resolution details explaining the permission decision, or null if not provided
+
+### schema
+
+*<small>Implements Responses\CheckResponseInterface</small>*
+
+```php
+public function schema(): SchemaInterface
+
+```
+
+Get the schema definition for this response. This method returns the schema that defines the structure and validation rules for check response data, ensuring consistent parsing and validation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/CheckResponseInterface.php#L32)
+
+#### Returns
+
+`SchemaInterface` — The schema definition for check response validation

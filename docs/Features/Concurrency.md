@@ -1,14 +1,12 @@
-Learn how to leverage the OpenFGA PHP SDK's powerful concurrency features to dramatically improve performance when working with large-scale authorization operations. This guide covers async patterns, fiber-based parallelism, and batch operations that can speed up your authorization workflows by orders of magnitude.
+Learn how to leverage the OpenFGA PHP SDK's powerful concurrency features to dramatically improve performance when working with large-scale authorization operations. This guide covers async patterns, fiber-based parallelism, and bulk write operations that can speed up your authorization workflows by orders of magnitude.
 
 ## Prerequisites
 
 All examples in this guide assume you have the following setup:
 
 ```php
-<?php
-
 use OpenFGA\Client;
-use function OpenFGA\{batch, tuples, tuple, store, model};
+use function OpenFGA\{writes, tuples, tuple, store, model};
 
 // Basic client setup
 $client = new Client(url: 'http://localhost:8080');
@@ -45,7 +43,7 @@ $tuplesToWrite = tuples(
 );
 
 // Sequential: ~10 seconds for 1000 tuples
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -54,7 +52,7 @@ $result = batch(
 );
 
 // Parallel: ~2 seconds for 1000 tuples (5x faster!)
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -78,11 +76,11 @@ When managing thousands or millions of authorization tuples, sequential processi
 
 The SDK uses PHP 8.1+ Fibers to provide true concurrency without the complexity of promises or callbacks. Fibers allow cooperative multitasking where operations yield control when waiting for I/O, enabling other operations to proceed.
 
-## Batch Operations
+## Bulk Write Operations
 
-### Basic Batch Usage
+### Basic Bulk Usage
 
-The batch helper function and `batchTuples` method process large sets of tuple operations efficiently:
+The writes helper function and `batchTuples` method process large sets of tuple operations efficiently:
 
 ```php
 // Prepare your tuple operations using helper functions
@@ -92,8 +90,8 @@ for ($i = 0; $i < 1000; $i++) {
 }
 $writeTuples = tuples(...$writes);
 
-// Execute batch operation using the helper function
-$result = batch(
+// Execute batch operation using the writes helper function
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -107,10 +105,10 @@ echo "Total operations: {$result->getTotalOperations()}\n";
 
 ### Configuration Options
 
-Fine-tune batch behavior for your specific needs:
+Fine-tune bulk write behavior for your specific needs:
 
 ```php
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -124,9 +122,9 @@ $result = batch(
 );
 ```
 
-### Using the Batch Helper Function
+### Using the Writes Helper Function
 
-The SDK provides a convenient batch helper function for non-transactional writes with full configuration:
+The SDK provides a convenient writes helper function for non-transactional writes with full configuration:
 
 ```php
 // Prepare tuples for writing and deleting
@@ -141,8 +139,8 @@ $deletes = tuples(
     // ... hundreds more
 );
 
-// Execute batch operation with full configuration
-$result = batch(
+// Execute bulk write operation with full configuration
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -173,7 +171,7 @@ Choose parallelism based on your infrastructure and requirements:
 
 ```php
 // Conservative: Good for shared environments
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -182,7 +180,7 @@ $result = batch(
 );
 
 // Moderate: Balanced performance
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -191,7 +189,7 @@ $result = batch(
 );
 
 // Aggressive: Maximum throughput
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -214,7 +212,7 @@ $tuplesToWrite = tuples(...$testTuples);
 
 // Sequential processing
 $start = microtime(true);
-$sequentialResult = batch(
+$sequentialResult = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -225,7 +223,7 @@ $sequentialTime = microtime(true) - $start;
 
 // Parallel processing
 $start = microtime(true);
-$parallelResult = batch(
+$parallelResult = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -246,7 +244,7 @@ echo "Speedup: " . round($sequentialTime / $parallelTime, 2) . "x faster\n";
 The SDK continues processing even when some operations fail:
 
 ```php
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -274,7 +272,7 @@ if ($result->hasErrors()) {
 Configure retry behavior for transient failures:
 
 ```php
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -305,7 +303,7 @@ function batchTuplesAsync($client, $storeId, $modelId, $writes, $deletes, $optio
     return new Promise(function ($resolve, $reject) use ($client, $storeId, $modelId, $writes, $deletes, $options) {
         Loop::futureTick(function () use ($resolve, $reject, $client, $storeId, $modelId, $writes, $deletes, $options) {
             try {
-                $result = batch(
+                $result = writes(
                     client: $client,
                     store: $storeId,
                     model: $modelId,
@@ -337,11 +335,11 @@ Integrate with Swoole coroutines:
 
 ```php
 use Swoole\Coroutine;
-use function OpenFGA\batch;
+use function OpenFGA\writes;
 
 Coroutine\run(function () use ($client, $storeId, $modelId, $tuplesToWrite) {
     $result = Coroutine::create(function () use ($client, $storeId, $modelId, $tuplesToWrite) {
-        return batch(
+        return writes(
             client: $client,
             store: $storeId,
             model: $modelId,
@@ -375,7 +373,7 @@ $results = [];
 foreach ($chunkSizes as $chunkSize) {
     $start = microtime(true);
 
-    $result = batch(
+    $result = writes(
         client: $client,
         store: $storeId,
         model: $modelId,
@@ -408,7 +406,7 @@ Handle large datasets efficiently:
 
 ```php
 
-// Process large datasets in batches to manage memory
+// Process large datasets in chunks to manage memory
 function processLargeTupleSet($client, $storeId, $modelId, $totalTuples) {
     $batchSize = 10000;  // Process 10k at a time
     $processed = 0;
@@ -429,7 +427,7 @@ function processLargeTupleSet($client, $storeId, $modelId, $totalTuples) {
         $tuplesToWrite = tuples(...$batchTuples);
 
         // Process batch with high parallelism
-        $result = batch(
+        $result = writes(
             client: $client,
             store: $storeId,
             model: $modelId,
@@ -461,7 +459,7 @@ class BatchMetrics {
         $start = microtime(true);
         $startMemory = memory_get_usage(true);
 
-        $result = batch(
+        $result = writes(
             client: $client,
             store: $storeId,
             model: $modelId,
@@ -543,7 +541,7 @@ $parallelism = 10;
 Implement backoff when hitting rate limits:
 
 ```php
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -565,7 +563,7 @@ Keep an eye on system resources:
 $cpuBefore = sys_getloadavg()[0];
 $memBefore = memory_get_usage(true);
 
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -607,7 +605,7 @@ class BatchCircuitBreaker {
         }
 
         try {
-            $result = batch(
+            $result = writes(
                 client: $client,
                 store: $storeId,
                 model: $modelId,

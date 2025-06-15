@@ -2,15 +2,15 @@
 
 Represents the result of an operation that can either succeed or fail. The Result pattern provides a safe and composable way to handle operations that might fail without using exceptions for control flow. Results can be chained together using fluent methods, making error handling explicit and predictable. ## Working with Result Types Each Result contains either a success value (specific response interface) or a failure error (Throwable). The specific types are documented in each method&#039;s @return annotation. ## Common Usage Patterns ### Simple Value Extraction ```php $result = $client-&gt;check($store, $model, $tupleKey); if ($result-&gt;succeeded()) { $response = $result-&gt;val(); // Returns CheckResponseInterface $allowed = $response-&gt;getAllowed(); } ``` ### Fluent Error Handling ```php $allowed = $client-&gt;check($store, $model, $tupleKey) -&gt;success(fn($response) =&gt; logger()-&gt;info(&#039;Check succeeded&#039;)) -&gt;failure(fn($error) =&gt; logger()-&gt;error(&#039;Check failed: &#039; . $error-&gt;getMessage())) -&gt;then(fn($response) =&gt; $response-&gt;getAllowed()) -&gt;recover(fn($error) =&gt; false) // Default to not allowed on error -&gt;unwrap(); ``` ### Safe Unwrapping with Default Values ```php $store = $client-&gt;getStore($storeId) -&gt;unwrap(fn($result) =&gt; $result instanceof StoreInterface ? $result : null); ``` ### Transforming Results ```php $storeNames = $client-&gt;listStores() -&gt;then(fn($response) =&gt; array_map( fn($store) =&gt; $store-&gt;getName(), $response-&gt;getStores()-&gt;toArray() )) -&gt;unwrap(); ```
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`err()`](#err)
+- [`err()`](#err)
   - [`failed()`](#failed)
   - [`failure()`](#failure)
   - [`recover()`](#recover)
@@ -20,6 +20,8 @@ Represents the result of an operation that can either succeed or fail. The Resul
   - [`then()`](#then)
   - [`unwrap()`](#unwrap)
   - [`val()`](#val)
+
+</details>
 
 ## Namespace
 
@@ -35,7 +37,7 @@ Represents the result of an operation that can either succeed or fail. The Resul
 
 ## Methods
 
-#### err
+### err
 
 ```php
 public function err(): Throwable
@@ -50,7 +52,7 @@ Retrieves the error from a failed result. This method should only be called on F
 
 `Throwable` — The error that caused the failure
 
-#### failed
+### failed
 
 ```php
 public function failed(): bool
@@ -65,7 +67,7 @@ Determines if this result represents a failure.
 
 `bool` — True if this is a Failure result, false if it&#039;s a Success
 
-#### failure
+### failure
 
 ```php
 public function failure(callable $fn): ResultInterface
@@ -86,7 +88,7 @@ Executes a callback when the result is a failure and continues the chain. The ca
 
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 
-#### recover
+### recover
 
 ```php
 public function recover(callable $fn): ResultInterface
@@ -107,7 +109,7 @@ Recovers from a failure by transforming it into a success or different failure. 
 
 [`ResultInterface`](ResultInterface.md) — The recovered result or original success
 
-#### rethrow
+### rethrow
 
 ```php
 public function rethrow(Throwable|null $throwable = NULL): ResultInterface
@@ -128,7 +130,7 @@ Throws the contained error or continues the chain. For Failure results, this thr
 
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 
-#### succeeded
+### succeeded
 
 ```php
 public function succeeded(): bool
@@ -143,7 +145,7 @@ Determines if this result represents a success.
 
 `bool` — True if this is a Success result, false if it&#039;s a Failure
 
-#### success
+### success
 
 ```php
 public function success(callable $fn): ResultInterface
@@ -164,7 +166,7 @@ Executes a callback when the result is a success and continues the chain. The ca
 
 [`ResultInterface`](ResultInterface.md) — The original result for method chaining
 
-#### then
+### then
 
 ```php
 public function then(callable $fn): ResultInterface
@@ -185,7 +187,7 @@ Transforms a successful result using a callback and continues the chain. The cal
 
 [`ResultInterface`](ResultInterface.md) — The transformed result or original failure
 
-#### unwrap
+### unwrap
 
 ```php
 public function unwrap(?callable $fn = NULL): mixed
@@ -206,7 +208,7 @@ Extracts the value from the result or applies a transformation. Without a callba
 
 `mixed` — The response interface, callback result, or throws the error
 
-#### val
+### val
 
 ```php
 public function val(): mixed

@@ -2,7 +2,8 @@
 
 Interface for stores listing response objects. This interface defines the contract for responses returned when listing authorization stores in OpenFGA. The response includes a collection of stores and pagination support for handling large numbers of stores efficiently. Store listing is useful for administrative operations, allowing you to discover and manage all stores within your OpenFGA instance.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for stores listing response objects. This interface defines the contra
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getStores()`](#getstores)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for stores listing response objects. This interface defines the contra
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null
@@ -48,7 +50,7 @@ Get the continuation token for pagination. Returns a token that can be used to r
 
 `string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
 
-#### getStores
+### getStores
 
 ```php
 public function getStores(): StoresInterface

@@ -2,7 +2,8 @@
 
 Contains metadata information about a relation in your authorization model. RelationMetadata provides additional context about how a relation behaves, including which user types can be directly assigned to it and source information for debugging. This helps with model validation and provides insights into your authorization structure. Use this when you need to understand the constraints and properties of specific relations in your authorization model.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ Contains metadata information about a relation in your authorization model. Rela
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
+- [`getDirectlyRelatedUserTypes()`](#getdirectlyrelatedusertypes)
   - [`getModule()`](#getmodule)
   - [`getSourceInfo()`](#getsourceinfo)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Contains metadata information about a relation in your authorization model. Rela
 
 ## Methods
 
-### List Operations
-
-#### getDirectlyRelatedUserTypes
+### getDirectlyRelatedUserTypes
 
 ```php
 public function getDirectlyRelatedUserTypes(): ?OpenFGA\Models\Collections\RelationReferencesInterface
@@ -63,7 +61,7 @@ Get the user types that can be directly related through this relation. This defi
 
 [`RelationReferencesInterface`](Models/Collections/RelationReferencesInterface.md) &#124; `null` — The directly related user types, or null if not specified
 
-#### getModule
+### getModule
 
 ```php
 public function getModule(): ?string
@@ -78,7 +76,7 @@ Get the optional module name for organization. This provides organizational info
 
 `string` &#124; `null` — The module name, or null if not specified
 
-#### getSourceInfo
+### getSourceInfo
 
 ```php
 public function getSourceInfo(): ?OpenFGA\Models\SourceInfoInterface
@@ -93,9 +91,20 @@ Get optional source file information for debugging and tooling. This provides in
 
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source file information, or null if not available
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L87)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\RelationMetadataInterface</small>*
 
@@ -111,18 +120,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/RelationMetadata.php#L87)
-
-#### Returns
-
-`array`

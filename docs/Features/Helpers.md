@@ -5,18 +5,16 @@ The OpenFGA PHP SDK provides a collection of helper functions that dramatically 
 All examples in this guide assume the following setup:
 
 ```php
-<?php
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 use OpenFGA\Client;
-use OpenFGA\Models\{Store, AuthorizationModel, Condition, TupleKey};
+use OpenFGA\Models\{BatchCheckItem, Store, AuthorizationModel, Condition, TupleKey};
 use OpenFGA\Models\Collections\{TupleKeys, TypeDefinitions};
 use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
 use OpenFGA\Results\{Success, Failure};
 
 // Import helper functions
-use function OpenFGA\{allowed, batch, checks, delete, dsl, err, failure, model, models, objects, ok, result, store, success, tuple, tuples, unwrap, write};
+use function OpenFGA\{allowed, check, checks, delete, dsl, err, failure, model, models, objects, ok, result, store, success, tuple, tuples, unwrap, write, writes};
 
 // Basic client setup
 $client = new Client(url: 'http://localhost:8080');
@@ -78,6 +76,62 @@ $tupleCollection = new TupleKeys([
     new TupleKey('user:bob', 'editor', 'document:budget'),
     new TupleKey('user:charlie', 'owner', 'document:budget')
 ]);
+```
+
+### Creating batch check items
+
+The `check()` helper creates BatchCheckItem instances for batch authorization checks. If no correlation ID is provided, one is automatically generated based on the tuple key:
+
+**Helper usage (with auto-generated correlation ID):**
+
+```php
+$checkItem = check(
+    tupleKey: tuple('user:anne', 'viewer', 'document:budget')
+);
+```
+
+**Helper usage (with explicit correlation ID):**
+
+```php
+$checkItem = check(
+    tupleKey: tuple('user:anne', 'viewer', 'document:budget'),
+    correlation: 'anne-budget-check'
+);
+```
+
+**Standard long-form:**
+
+```php
+$checkItem = new BatchCheckItem(
+    tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
+    correlationId: 'anne-budget-check'
+);
+```
+
+**With context and contextual tuples:**
+
+```php
+$checkItem = check(
+    tupleKey: tuple('user:bob', 'editor', 'document:budget'),
+    correlation: 'bob-budget-edit',
+    contextualTuples: tuples(
+        tuple('user:bob', 'member', 'team:finance')
+    ),
+    context: (object)['time' => '10:00', 'department' => 'finance']
+);
+```
+
+**Standard long-form (with context and contextual tuples):**
+
+```php
+$checkItem = new BatchCheckItem(
+    tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
+    correlationId: 'bob-budget-edit',
+    contextualTuples: new TupleKeys([
+        new TupleKey('user:bob', 'member', 'team:finance')
+    ]),
+    context: (object)['time' => '10:00', 'department' => 'finance']
+);
 ```
 
 ### Creating stores
@@ -205,7 +259,7 @@ $client->writeTuples(
 // Helper - allows partial success
 write($client, $storeId, $modelId, $tuples, transactional: false);
 
-// Standard - allows partial success  
+// Standard - allows partial success
 $client->writeTuples(
     store: $storeId,
     model: $modelId,
@@ -279,9 +333,9 @@ try {
 ```php
 // Helper with all options - still error-safe
 $hasAccess = allowed(
-    $client, 
-    $storeId, 
-    $modelId, 
+    $client,
+    $storeId,
+    $modelId,
     tuple('user:anne', 'viewer', 'document:budget'),
     trace: true,
     context: (object)['time' => '2024-01-15T10:00:00Z'],
@@ -314,40 +368,52 @@ try {
 
 ### Finding accessible objects
 
-The `objects()` helper simplifies finding all objects a user has access to:
+The `objects()` helper simplifies finding all objects a user has access to with guaranteed error-safe behavior:
 
 **Helper usage:**
 
 ```php
-// Find all documents Anne can view
+// Find all documents Anne can view - returns empty array on any error
 $documents = objects($client, $storeId, $modelId, 'document', 'viewer', 'user:anne');
-// Returns: ['document:budget', 'document:forecast', 'document:report']
+// Returns: ['document:budget', 'document:forecast', 'document:report'] or [] on error
 
-// Find all folders Bob owns
+// Find all folders Bob owns - safe to use even with network issues
 $folders = objects($client, $storeId, $modelId, 'folder', 'owner', 'user:bob');
+// Returns: ['folder:shared', 'folder:personal'] or [] on error
+
+// Safe to use even with invalid stores, authentication failures, etc.
+$userDocs = objects($client, $invalidStore, $modelId, 'document', 'viewer', 'user:anne');
+// Will return [] instead of throwing an exception
 ```
 
 **Standard long-form:**
 
 ```php
-$generator = $client->streamedListObjects(
-    store: $storeId,
-    model: $modelId,
-    type: 'document',
-    relation: 'viewer',
-    user: 'user:anne'
-)->unwrap();
+// Standard approach requires explicit error handling
+try {
+    $generator = $client->streamedListObjects(
+        store: $storeId,
+        model: $modelId,
+        type: 'document',
+        relation: 'viewer',
+        user: 'user:anne'
+    )->unwrap();
 
-$documents = [];
-foreach ($generator as $streamedResponse) {
-    $documents[] = $streamedResponse->getObject();
+    $documents = [];
+    foreach ($generator as $streamedResponse) {
+        $documents[] = $streamedResponse->getObject();
+    }
+} catch (Throwable $error) {
+    // Handle network issues, authentication failures, etc.
+    // Must decide what to do with errors
+    $documents = []; // or throw, or log, etc.
 }
 ```
 
 **With advanced options:**
 
 ```php
-// Helper with contextual tuples and consistency
+// Helper with contextual tuples and consistency - still error-safe
 $accessibleDocs = objects(
     $client,
     $storeId,
@@ -359,26 +425,32 @@ $accessibleDocs = objects(
     contextualTuples: tuples(
         tuple('user:anne', 'member', 'team:engineering')
     ),
-    consistency: Consistency::FULL
+    consistency: Consistency::HIGHER_CONSISTENCY
 );
+// Returns array of accessible documents or [] on any error
 
-// Standard long-form equivalent
-$generator = $client->streamedListObjects(
-    store: $storeId,
-    model: $modelId,
-    type: 'document',
-    relation: 'viewer',
-    user: 'user:anne',
-    context: (object)['department' => 'engineering'],
-    contextualTuples: new TupleKeys([
-        new TupleKey('user:anne', 'member', 'team:engineering')
-    ]),
-    consistency: Consistency::FULL
-)->unwrap();
+// Standard long-form equivalent - requires error handling
+try {
+    $generator = $client->streamedListObjects(
+        store: $storeId,
+        model: $modelId,
+        type: 'document',
+        relation: 'viewer',
+        user: 'user:anne',
+        context: (object)['department' => 'engineering'],
+        contextualTuples: new TupleKeys([
+            new TupleKey('user:anne', 'member', 'team:engineering')
+        ]),
+        consistency: Consistency::HIGHER_CONSISTENCY
+    )->unwrap();
 
-$accessibleDocs = [];
-foreach ($generator as $streamedResponse) {
-    $accessibleDocs[] = $streamedResponse->getObject();
+    $accessibleDocs = [];
+    foreach ($generator as $streamedResponse) {
+        $accessibleDocs[] = $streamedResponse->getObject();
+    }
+} catch (Throwable $error) {
+    // Handle errors explicitly
+    $accessibleDocs = []; // or throw, or log, etc.
 }
 ```
 
@@ -426,14 +498,14 @@ foreach ($allModels as $model) {
 }
 ```
 
-### Batch operations
+### Batch write operations
 
-The `batch()` helper handles large-scale tuple operations with automatic chunking:
+The `writes()` helper handles large-scale tuple operations with automatic chunking:
 
 **Helper usage:**
 
 ```php
-$result = batch(
+$result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
@@ -477,37 +549,53 @@ echo "Success rate: " . ($result->getSuccessRate() * 100) . "%\n";
 
 The `checks()` helper simplifies performing multiple authorization checks in a single request:
 
-**Helper usage (simple):**
+**Helper usage (with auto-generated correlation IDs):**
 
 ```php
-// Check multiple permissions with automatic correlation IDs
-$results = checks($client, $storeId, $modelId, [
-    tuple('user:anne', 'viewer', 'document:budget'),
-    tuple('user:bob', 'editor', 'document:budget'),
-    tuple('user:charlie', 'owner', 'document:budget')
-]);
-// Returns: ['check-0' => true, 'check-1' => false, 'check-2' => true]
+// Check multiple permissions using the check() helper with auto-generated correlation IDs
+$results = checks($client, $storeId, $modelId,
+    check(tuple('user:anne', 'viewer', 'document:budget')),
+    check(tuple('user:bob', 'editor', 'document:budget')),
+    check(tuple('user:charlie', 'owner', 'document:budget'))
+);
+// Returns: ['8a2c3e4f5d6...' => true, '9b3d4f5e6c7...' => false, 'a4e5f6d7c8...' => true]
 
 foreach ($results as $correlationId => $allowed) {
     echo "$correlationId: " . ($allowed ? 'allowed' : 'denied') . "\n";
 }
 ```
 
-**Standard long-form (simple):**
+**Helper usage (with explicit correlation IDs):**
+
+```php
+// Check multiple permissions using the check() helper with explicit correlation IDs
+$results = checks($client, $storeId, $modelId,
+    check(tuple('user:anne', 'viewer', 'document:budget'), 'anne-check'),
+    check(tuple('user:bob', 'editor', 'document:budget'), 'bob-check'),
+    check(tuple('user:charlie', 'owner', 'document:budget'), 'charlie-check')
+);
+// Returns: ['anne-check' => true, 'bob-check' => false, 'charlie-check' => true]
+
+foreach ($results as $correlationId => $allowed) {
+    echo "$correlationId: " . ($allowed ? 'allowed' : 'denied') . "\n";
+}
+```
+
+**Standard long-form:**
 
 ```php
 $batchItems = [
     new BatchCheckItem(
         tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
-        correlationId: 'check-0'
+        correlationId: 'anne-check'
     ),
     new BatchCheckItem(
         tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
-        correlationId: 'check-1'
+        correlationId: 'bob-check'
     ),
     new BatchCheckItem(
         tupleKey: new TupleKey('user:charlie', 'owner', 'document:budget'),
-        correlationId: 'check-2'
+        correlationId: 'charlie-check'
     )
 ];
 
@@ -528,29 +616,32 @@ foreach ($results as $correlationId => $allowed) {
 }
 ```
 
-**Helper usage (advanced):**
+**Helper usage (with context and contextual tuples):**
 
 ```php
-// Check with custom correlation IDs and context
-$results = checks($client, $storeId, $modelId, [
-    ['tuple' => tuple('user:anne', 'viewer', 'document:budget'), 'id' => 'anne-budget-view'],
-    [
-        'tuple' => tuple('user:bob', 'editor', 'document:budget'), 
-        'id' => 'bob-budget-edit',
-        'context' => (object)['time' => '10:00', 'ip' => '192.168.1.1']
-    ],
-    [
-        'tuple' => tuple('user:charlie', 'owner', 'document:budget'), 
-        'id' => 'charlie-budget-own',
-        'contextualTuples' => tuples(
+// Check with context and contextual tuples using check() helper
+$results = checks($client, $storeId, $modelId,
+    check(
+        tupleKey: tuple('user:anne', 'viewer', 'document:budget'),
+        correlation: 'anne-budget-view'
+    ),
+    check(
+        tupleKey: tuple('user:bob', 'editor', 'document:budget'),
+        correlation: 'bob-budget-edit',
+        context: (object)['time' => '10:00', 'ip' => '192.168.1.1']
+    ),
+    check(
+        tupleKey: tuple('user:charlie', 'owner', 'document:budget'),
+        correlation: 'charlie-budget-own',
+        contextualTuples: tuples(
             tuple('user:charlie', 'member', 'team:finance')
         )
-    ]
-]);
+    )
+);
 // Returns: ['anne-budget-view' => true, 'bob-budget-edit' => false, 'charlie-budget-own' => true]
 ```
 
-**Standard long-form (advanced):**
+**Standard long-form (with context and contextual tuples):**
 
 ```php
 $batchItems = [
@@ -696,13 +787,13 @@ $storeId = store($client, 'document-sharing-app');
 $authModel = dsl($client, '
     model
       schema 1.1
-    
+
     type user
-    
+
     type team
       relations
         define member: [user]
-    
+
     type document
       relations
         define owner: [user]
@@ -718,11 +809,11 @@ write($client, $storeId, $modelId, tuples(
     // Direct permissions
     tuple('user:alice', 'owner', 'document:budget'),
     tuple('user:bob', 'editor', 'document:budget'),
-    
+
     // Team membership
     tuple('user:charlie', 'member', 'team:finance'),
     tuple('user:david', 'member', 'team:finance'),
-    
+
     // Team permissions
     tuple('team:finance#member', 'viewer', 'document:budget')
 ));
@@ -751,13 +842,13 @@ $storeId = $storeResponse->getId();
 $authModel = $client->dsl('
     model
       schema 1.1
-    
+
     type user
-    
+
     type team
       relations
         define member: [user]
-    
+
     type document
       relations
         define owner: [user]
@@ -782,11 +873,11 @@ $client->writeTuples(
         // Direct permissions
         new TupleKey('user:alice', 'owner', 'document:budget'),
         new TupleKey('user:bob', 'editor', 'document:budget'),
-        
+
         // Team membership
         new TupleKey('user:charlie', 'member', 'team:finance'),
         new TupleKey('user:david', 'member', 'team:finance'),
-        
+
         // Team permissions
         new TupleKey('team:finance#member', 'viewer', 'document:budget')
     ]),
@@ -804,7 +895,7 @@ foreach ($users as $user) {
             model: $modelId,
             tupleKey: new TupleKey("user:$user", $relation, 'document:budget')
         )->unwrap();
-        
+
         if ($checkResponse->getAllowed()) {
             echo "$user can $relation document:budget\n";
         }
@@ -848,13 +939,13 @@ Helpers have minimal overhead - they're thin wrappers around the standard method
 
 - `tuple()` and `tuples()` are simple constructors
 - `write()`, `delete()` add one function call
-- `allowed()` adds one function call plus try-catch overhead (negligible)
-- `batch()` and `checks()` delegate directly to the client's batch processing
+- `allowed()` and `objects()` add one function call plus try-catch overhead (negligible)
+- `writes()` and `checks()` delegate directly to the client's batch processing
 - Result helpers add negligible overhead for error handling
 
 For performance-critical paths, both approaches perform identically after PHP's optimizer runs.
 
-**Note**: The `allowed()` helper's error-safe behavior does add a try-catch block, but this has no performance impact when no exceptions occur, which is the common case.
+**Note**: The `allowed()` and `objects()` helpers' error-safe behavior does add a try-catch block, but this has no performance impact when no exceptions occur, which is the common case.
 
 ## Next steps
 

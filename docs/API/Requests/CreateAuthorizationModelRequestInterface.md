@@ -2,7 +2,8 @@
 
 Interface for creating new authorization models in OpenFGA. This interface defines the contract for requests that create new authorization models within an OpenFGA store. Authorization models define the relationship types, object types, and access control rules that govern how permissions are evaluated in your application. An authorization model consists of: - **Type definitions**: Define object types and their allowed relationships - **Conditions**: Define conditional logic for dynamic authorization - **Schema version**: Specifies the model definition language version Authorization models are versioned, allowing you to evolve your permission system over time while maintaining compatibility. Each new model receives a unique ID that can be used to ensure consistent permission evaluation even as the model evolves. Key capabilities include: - Defining object types (documents, folders, organizations, etc.) - Specifying relationship types (owner, editor, viewer, member, etc.) - Creating inheritance and permission hierarchies - Implementing conditional authorization with runtime context - Supporting complex authorization patterns like RBAC, ABAC, and ReBAC
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,13 @@ Interface for creating new authorization models in OpenFGA. This interface defin
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConditions()`](#getconditions)
+- [`getConditions()`](#getconditions)
   - [`getRequest()`](#getrequest)
   - [`getSchemaVersion()`](#getschemaversion)
   - [`getStore()`](#getstore)
   - [`getTypeDefinitions()`](#gettypedefinitions)
+
+</details>
 
 ## Namespace
 
@@ -36,7 +38,7 @@ Interface for creating new authorization models in OpenFGA. This interface defin
 
 ## Methods
 
-#### getConditions
+### getConditions
 
 ```php
 public function getConditions(): ConditionsInterface|null
@@ -51,7 +53,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 [`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` — Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -72,7 +74,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getSchemaVersion
+### getSchemaVersion
 
 ```php
 public function getSchemaVersion(): SchemaVersion
@@ -87,7 +89,7 @@ Get the schema version for the authorization model. Specifies which version of t
 
 [`SchemaVersion`](Models/Enums/SchemaVersion.md) — The modeling language schema version for this authorization model
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -102,7 +104,7 @@ Get the store ID where the authorization model will be created. Identifies the O
 
 `string` — The store ID where the authorization model will be created
 
-#### getTypeDefinitions
+### getTypeDefinitions
 
 ```php
 public function getTypeDefinitions(): TypeDefinitionsInterface

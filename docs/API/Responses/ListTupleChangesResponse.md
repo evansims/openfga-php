@@ -2,7 +2,8 @@
 
 Response containing a paginated list of tuple changes from the store. This response provides a collection of tuple changes (additions, deletions) along with pagination information for retrieving additional pages of results. Use this to track the history of relationship changes in your authorization store.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,12 @@ Response containing a paginated list of tuple changes from the store. This respo
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`fromResponse()`](#fromresponse)
   - [`getChanges()`](#getchanges)
   - [`getContinuationToken()`](#getcontinuationtoken)
-- [Model Management](#model-management)
   - [`schema()`](#schema)
-- [Other](#other)
-  - [`fromResponse()`](#fromresponse)
+
+</details>
 
 ## Namespace
 
@@ -38,60 +38,7 @@ Response containing a paginated list of tuple changes from the store. This respo
 
 ## Methods
 
-### List Operations
-
-#### getChanges
-
-```php
-public function getChanges(): OpenFGA\Models\Collections\TupleChangesInterface
-
-```
-
-Get the collection of tuple changes. Returns a type-safe collection containing the tuple change objects from the current page of results. Each change represents a modification (insert or delete) to the relationship data, including timestamps and operation details.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L94)
-
-#### Returns
-
-[`TupleChangesInterface`](Models/Collections/TupleChangesInterface.md) — The collection of tuple changes
-
-#### getContinuationToken
-
-```php
-public function getContinuationToken(): ?string
-
-```
-
-Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of tuple changes exceeds the page size limit. If null, there are no more results to fetch.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L103)
-
-#### Returns
-
-`string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
-
-### Model Management
-
-#### schema
-
-*<small>Implements Responses\ListTupleChangesResponseInterface</small>*
-
-```php
-public function schema(): SchemaInterface
-
-```
-
-Get the schema definition for this response. Returns the schema that defines the structure and validation rules for tuple changes listing response data, ensuring consistent parsing and validation of API responses.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L34)
-
-#### Returns
-
-`SchemaInterface` — The schema definition for response validation
-
-### Other
-
-#### fromResponse
+### fromResponse
 
 *<small>Implements Responses\ListTupleChangesResponseInterface</small>*
 
@@ -119,3 +66,50 @@ Create a response instance from an HTTP response. This method transforms a raw H
 #### Returns
 
 `static` — The parsed and validated response instance containing the API response data
+
+### getChanges
+
+```php
+public function getChanges(): OpenFGA\Models\Collections\TupleChangesInterface
+
+```
+
+Get the collection of tuple changes. Returns a type-safe collection containing the tuple change objects from the current page of results. Each change represents a modification (insert or delete) to the relationship data, including timestamps and operation details.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L94)
+
+#### Returns
+
+[`TupleChangesInterface`](Models/Collections/TupleChangesInterface.md) — The collection of tuple changes
+
+### getContinuationToken
+
+```php
+public function getContinuationToken(): ?string
+
+```
+
+Get the continuation token for pagination. Returns a token that can be used to retrieve the next page of results when the total number of tuple changes exceeds the page size limit. If null, there are no more results to fetch.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponse.php#L103)
+
+#### Returns
+
+`string` &#124; `null` — The continuation token for fetching more results, or null if no more pages exist
+
+### schema
+
+*<small>Implements Responses\ListTupleChangesResponseInterface</small>*
+
+```php
+public function schema(): SchemaInterface
+
+```
+
+Get the schema definition for this response. Returns the schema that defines the structure and validation rules for tuple changes listing response data, ensuring consistent parsing and validation of API responses.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/ListTupleChangesResponseInterface.php#L34)
+
+#### Returns
+
+`SchemaInterface` — The schema definition for response validation

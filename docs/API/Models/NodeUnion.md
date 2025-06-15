@@ -2,7 +2,8 @@
 
 Represents a union of multiple nodes in an authorization model tree. When OpenFGA evaluates complex authorization rules, it often needs to combine results from multiple authorization paths. A NodeUnion contains a collection of nodes that should be evaluated together, typically representing an OR relationship where access is granted if any of the contained nodes grants access. This is commonly used in authorization model structures where a user can have access through multiple different permission paths.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,12 +12,11 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getNodes()`](#getnodes)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
+- [`getNodes()`](#getnodes)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -44,9 +44,7 @@ Represents a union of multiple nodes in an authorization model tree. When OpenFG
 
 ## Methods
 
-### List Operations
-
-#### getNodes
+### getNodes
 
 ```php
 public function getNodes(): array<int, NodeInterface>
@@ -61,9 +59,22 @@ Get the collection of nodes that participate in this union. Returns all the node
 
 `array&lt;`int`, [`NodeInterface`](NodeInterface.md)&gt;` — The array of nodes in the union
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+Serialize the node union to its JSON representation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnion.php#L64)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\NodeUnionInterface</small>*
 
@@ -79,20 +90,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-Serialize the node union to its JSON representation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/NodeUnion.php#L64)
-
-#### Returns
-
-`array`

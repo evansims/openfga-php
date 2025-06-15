@@ -2,7 +2,8 @@
 
 Defines a difference operation between two usersets in authorization models. DifferenceV1 represents a set operation that computes &quot;base minus subtract,&quot; effectively granting access to users in the base userset while explicitly denying access to users in the subtract userset. This enables complex authorization patterns like &quot;all employees except contractors&quot; or &quot;organization members except suspended users.&quot; Use this interface when implementing authorization logic that requires explicit exclusion of certain users from a broader permission set.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Defines a difference operation between two usersets in authorization models. Dif
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getBase()`](#getbase)
+- [`getBase()`](#getbase)
   - [`getSubtract()`](#getsubtract)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Defines a difference operation between two usersets in authorization models. Dif
 
 ## Methods
 
-### List Operations
-
-#### getBase
+### getBase
 
 ```php
 public function getBase(): UsersetInterface
@@ -52,7 +51,7 @@ Get the base userset from which users will be subtracted. This represents the in
 
 [`UsersetInterface`](UsersetInterface.md) — The base userset for the difference operation
 
-#### getSubtract
+### getSubtract
 
 ```php
 public function getSubtract(): UsersetInterface
@@ -67,9 +66,7 @@ Get the userset of users to subtract from the base userset. This represents the 
 
 [`UsersetInterface`](UsersetInterface.md) — The userset to subtract from the base
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

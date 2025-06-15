@@ -2,7 +2,8 @@
 
 Interface for batch tuple operation results. Defines the contract for tracking and analyzing the results of batch tuple operations, including success rates, responses, and error handling.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,8 +11,7 @@ Interface for batch tuple operation results. Defines the contract for tracking a
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getErrors()`](#geterrors)
+- [`getErrors()`](#geterrors)
   - [`getFailedChunks()`](#getfailedchunks)
   - [`getFirstError()`](#getfirsterror)
   - [`getResponses()`](#getresponses)
@@ -19,13 +19,13 @@ Interface for batch tuple operation results. Defines the contract for tracking a
   - [`getSuccessfulChunks()`](#getsuccessfulchunks)
   - [`getTotalChunks()`](#gettotalchunks)
   - [`getTotalOperations()`](#gettotaloperations)
-- [Utility](#utility)
   - [`isCompleteFailure()`](#iscompletefailure)
   - [`isCompleteSuccess()`](#iscompletesuccess)
   - [`isPartialSuccess()`](#ispartialsuccess)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
   - [`throwOnFailure()`](#throwonfailure)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Interface for batch tuple operation results. Defines the contract for tracking a
 
 ## Methods
 
-### List Operations
-
-#### getErrors
+### getErrors
 
 ```php
 public function getErrors(): array<Throwable>
@@ -63,7 +61,7 @@ Get all errors from failed chunks.
 
 `array&lt;`Throwable`&gt;` — Errors from failed API calls
 
-#### getFailedChunks
+### getFailedChunks
 
 ```php
 public function getFailedChunks(): int
@@ -78,7 +76,7 @@ Get the number of chunks that failed.
 
 `int` — Number of failed API requests
 
-#### getFirstError
+### getFirstError
 
 ```php
 public function getFirstError(): Throwable|null
@@ -93,7 +91,7 @@ Get the first error that occurred.
 
 `Throwable` &#124; `null` — The first error, or null if no errors occurred
 
-#### getResponses
+### getResponses
 
 ```php
 public function getResponses(): array<mixed>
@@ -108,7 +106,7 @@ Get all successful responses from completed chunks.
 
 `array&lt;`mixed`&gt;` — Responses from successful API calls
 
-#### getSuccessRate
+### getSuccessRate
 
 ```php
 public function getSuccessRate(): float
@@ -123,7 +121,7 @@ Calculate the success rate as a percentage.
 
 `float` — Success rate from 0.0 to 1.0
 
-#### getSuccessfulChunks
+### getSuccessfulChunks
 
 ```php
 public function getSuccessfulChunks(): int
@@ -138,7 +136,7 @@ Get the number of chunks that completed successfully.
 
 `int` — Number of successful API requests
 
-#### getTotalChunks
+### getTotalChunks
 
 ```php
 public function getTotalChunks(): int
@@ -153,7 +151,7 @@ Get the total number of chunks that were processed.
 
 `int` — Number of API requests made
 
-#### getTotalOperations
+### getTotalOperations
 
 ```php
 public function getTotalOperations(): int
@@ -168,9 +166,7 @@ Get the total number of tuple operations that were requested.
 
 `int` — Total operations across all chunks
 
-### Utility
-
-#### isCompleteFailure
+### isCompleteFailure
 
 ```php
 public function isCompleteFailure(): bool
@@ -185,7 +181,7 @@ Check if all chunks failed.
 
 `bool` — True if no chunks succeeded
 
-#### isCompleteSuccess
+### isCompleteSuccess
 
 ```php
 public function isCompleteSuccess(): bool
@@ -200,7 +196,7 @@ Check if all chunks completed successfully.
 
 `bool` — True if no chunks failed
 
-#### isPartialSuccess
+### isPartialSuccess
 
 ```php
 public function isPartialSuccess(): bool
@@ -215,16 +211,14 @@ Check if some chunks succeeded and some failed.
 
 `bool` — True if there were both successes and failures
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize()
 
 ```
 
-#### throwOnFailure
+### throwOnFailure
 
 ```php
 public function throwOnFailure(): void

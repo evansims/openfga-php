@@ -2,20 +2,21 @@
 
 Represents the context for an HTTP request to the OpenFGA API. This interface encapsulates all the essential components needed to construct and execute HTTP requests to the OpenFGA service. It provides a structured way to manage request metadata including HTTP method, target URL, request body, headers, and routing configurations that determine how the request is processed. The request context serves as an abstraction layer between the high-level OpenFGA operations (like authorization checks, relationship writes, etc.) and the low-level HTTP communication details. This separation enables: - Consistent request formatting across different API operations - Centralized management of authentication and headers - Flexible URL routing and API endpoint resolution - Testable and mockable HTTP communication layer Request contexts are typically created by the OpenFGA client during API operations and passed to the RequestManager for actual HTTP execution. The context includes both required elements (method, URL) and optional elements (body, custom headers) that may vary depending on the specific API operation being performed.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getBody()`](#getbody)
+- [`getBody()`](#getbody)
   - [`getHeaders()`](#getheaders)
   - [`getMethod()`](#getmethod)
   - [`getUrl()`](#geturl)
-- [Other](#other)
   - [`useApiUrl()`](#useapiurl)
+
+</details>
 
 ## Namespace
 
@@ -31,9 +32,7 @@ Represents the context for an HTTP request to the OpenFGA API. This interface en
 
 ## Methods
 
-### List Operations
-
-#### getBody
+### getBody
 
 ```php
 public function getBody(): StreamInterface|null
@@ -48,7 +47,7 @@ Get the request body stream. Returns the PSR-7 stream containing the request bod
 
 `StreamInterface` &#124; `null` — The request body stream containing JSON data, or null for operations without body content
 
-#### getHeaders
+### getHeaders
 
 ```php
 public function getHeaders(): array<string, string>
@@ -63,7 +62,7 @@ Get the request headers. Returns an associative array of HTTP headers that shoul
 
 `array&lt;`string`, `string`&gt;` — Associative array mapping header names to their values
 
-#### getMethod
+### getMethod
 
 ```php
 public function getMethod(): RequestMethod
@@ -78,7 +77,7 @@ Get the HTTP method for the request. Returns the HTTP method that should be used
 
 [`RequestMethod`](RequestMethod.md) — The HTTP method enum value indicating the request type
 
-#### getUrl
+### getUrl
 
 ```php
 public function getUrl(): string
@@ -93,9 +92,7 @@ Get the URL for the request. Returns the target URL path for this API operation.
 
 `string` — The target URL path for the API operation
 
-### Other
-
-#### useApiUrl
+### useApiUrl
 
 ```php
 public function useApiUrl(): bool

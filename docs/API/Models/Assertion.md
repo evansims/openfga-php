@@ -2,7 +2,8 @@
 
 Tests whether your authorization model behaves correctly for specific scenarios. Assertions are test cases that verify your authorization rules work as expected. Each assertion checks if a specific authorization question (like &quot;can user:anne read document:budget&quot;) returns the expected result (true for granted, false for denied). Use assertions to validate your authorization model during development and catch permission logic errors before they reach production. They&#039;re especially valuable when making changes to complex authorization rules.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,15 +12,14 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContext()`](#getcontext)
+- [`getContext()`](#getcontext)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getExpectation()`](#getexpectation)
   - [`getTupleKey()`](#gettuplekey)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -47,9 +47,7 @@ Tests whether your authorization model behaves correctly for specific scenarios.
 
 ## Methods
 
-### List Operations
-
-#### getContext
+### getContext
 
 ```php
 public function getContext(): ?array
@@ -64,7 +62,7 @@ Get the context data for evaluating ABAC conditions. Context provides additional
 
 `array` &#124; `null`
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -79,7 +77,7 @@ Get the contextual tuples for this assertion. Contextual tuples provide addition
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`
 
-#### getExpectation
+### getExpectation
 
 ```php
 public function getExpectation(): bool
@@ -94,7 +92,7 @@ Get the expected result for this assertion. The expectation defines whether the 
 
 `bool` — True if access should be granted, false if access should be denied
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): OpenFGA\Models\AssertionTupleKeyInterface
@@ -109,9 +107,20 @@ Get the tuple key that defines what to test. The tuple key specifies the exact a
 
 [`AssertionTupleKeyInterface`](AssertionTupleKeyInterface.md) — The tuple key defining the authorization question
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L212)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\AssertionInterface</small>*
 
@@ -127,18 +136,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Assertion.php#L212)
-
-#### Returns
-
-`array`

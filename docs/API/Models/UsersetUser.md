@@ -2,7 +2,8 @@
 
 Represents a user reference through a userset relationship. UsersetUser defines a user specification in the format &quot;object#relation&quot; where users are identified through their relationship to an object rather than direct user identifiers. This enables dynamic user groups based on relationships. Use this when you need to reference users through relationship-based groups rather than explicit user lists.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,14 +12,13 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getId()`](#getid)
+- [`getId()`](#getid)
   - [`getRelation()`](#getrelation)
   - [`getType()`](#gettype)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -46,9 +46,7 @@ Represents a user reference through a userset relationship. UsersetUser defines 
 
 ## Methods
 
-### List Operations
-
-#### getId
+### getId
 
 ```php
 public function getId(): string
@@ -63,7 +61,7 @@ Get the object identifier in the userset reference. This represents the specific
 
 `string` — The object identifier
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -78,7 +76,7 @@ Get the relation name in the userset reference. This represents the specific rel
 
 `string` — The relation name
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -93,9 +91,20 @@ Get the object type in the userset reference. This represents the type of object
 
 `string` — The object type
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUser.php#L86)
+
+#### Returns
+
+`array`
+
+### schema
 
 *<small>Implements Models\UsersetUserInterface</small>*
 
@@ -111,18 +120,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/UsersetUser.php#L86)
-
-#### Returns
-
-`array`

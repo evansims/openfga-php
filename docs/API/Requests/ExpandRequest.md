@@ -2,7 +2,8 @@
 
 Request for expanding a relationship to show all users who have that relationship. This request returns the complete set of users and usersets that have the specified relationship with an object. It&#039;s useful for debugging authorization models, auditing permissions, and understanding the complete authorization tree.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Request for expanding a relationship to show all users who have that relationshi
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConsistency()`](#getconsistency)
+- [`getConsistency()`](#getconsistency)
   - [`getContextualTuples()`](#getcontextualtuples)
   - [`getModel()`](#getmodel)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
   - [`getTupleKey()`](#gettuplekey)
+
+</details>
 
 ## Namespace
 
@@ -38,7 +40,7 @@ Request for expanding a relationship to show all users who have that relationshi
 
 ## Methods
 
-#### getConsistency
+### getConsistency
 
 ```php
 public function getConsistency(): ?OpenFGA\Models\Enums\Consistency
@@ -53,7 +55,7 @@ Get the read consistency level for the expand operation. Determines the consiste
 
 [`Consistency`](Models/Enums/Consistency.md) &#124; `null` — The consistency level for the operation, or null to use the default consistency setting
 
-#### getContextualTuples
+### getContextualTuples
 
 ```php
 public function getContextualTuples(): ?OpenFGA\Models\Collections\TupleKeysInterface
@@ -68,7 +70,7 @@ Get additional tuples to consider during the expansion. Returns a collection of 
 
 [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null` — Additional relationship tuples for evaluation, or null if none provided
 
-#### getModel
+### getModel
 
 ```php
 public function getModel(): ?string
@@ -83,7 +85,7 @@ Get the authorization model ID to use for the expansion. Specifies which version
 
 `string` &#124; `null` — The authorization model ID for evaluation, or null to use the latest model version
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -104,7 +106,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -119,7 +121,7 @@ Get the store ID containing the authorization data. Identifies which OpenFGA sto
 
 `string` — The store ID containing the authorization data
 
-#### getTupleKey
+### getTupleKey
 
 ```php
 public function getTupleKey(): OpenFGA\Models\TupleKeyInterface

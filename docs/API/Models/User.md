@@ -2,7 +2,8 @@
 
 Represents a user or user specification in authorization contexts. A User can represent different types of entities in your authorization system: a specific user object, a userset (group of users), a wildcard (all users of a type), or a complex difference operation between user groups. This flexible model allows OpenFGA to handle various user identification patterns, from simple &quot;user:alice&quot; references to complex computed user groups based on relationships and rules.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,15 +12,14 @@ Represents a user or user specification in authorization contexts. A User can re
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDifference()`](#getdifference)
+- [`getDifference()`](#getdifference)
   - [`getObject()`](#getobject)
   - [`getUserset()`](#getuserset)
   - [`getWildcard()`](#getwildcard)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -47,9 +47,7 @@ Represents a user or user specification in authorization contexts. A User can re
 
 ## Methods
 
-### List Operations
-
-#### getDifference
+### getDifference
 
 ```php
 public function getDifference(): ?OpenFGA\Models\DifferenceV1Interface
@@ -64,7 +62,7 @@ Get the difference operation for this user. Difference operations enable sophist
 
 [`DifferenceV1Interface`](DifferenceV1Interface.md) &#124; `null` — The difference operation defining included and excluded user sets, or null if this is not a difference-based user
 
-#### getObject
+### getObject
 
 ```php
 public function getObject(): ?OpenFGA\Models\UserObjectInterface|string|null
@@ -79,7 +77,7 @@ Get the user object representation. User objects represent direct, concrete user
 
 [`UserObjectInterface`](UserObjectInterface.md) &#124; `null` &#124; `string` &#124; `null` — The direct user identifier as a structured object or string, or null if this is not a direct user reference
 
-#### getUserset
+### getUserset
 
 ```php
 public function getUserset(): ?OpenFGA\Models\UsersetUserInterface
@@ -94,7 +92,7 @@ Get the userset reference for this user. Usersets define dynamic user groups thr
 
 [`UsersetUserInterface`](UsersetUserInterface.md) &#124; `null` — The userset definition specifying users through relationships, or null if this is not a userset-based user
 
-#### getWildcard
+### getWildcard
 
 ```php
 public function getWildcard(): ?OpenFGA\Models\TypedWildcardInterface
@@ -109,9 +107,22 @@ Get the wildcard definition for this user. Wildcards represent all users of a sp
 
 [`TypedWildcardInterface`](TypedWildcardInterface.md) &#124; `null` — The wildcard definition specifying the user type, or null if this is not a wildcard user
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array<string, mixed>
+
+```
+
+Serialize the user for JSON encoding. This method prepares the user data for API communication with the OpenFGA service, converting the user representation into the format expected by the OpenFGA API. The serialization handles all user types (direct objects, usersets, wildcards, and difference operations) and ensures the resulting structure matches the OpenFGA API specification. Only the appropriate user type fields are included in the output: - Direct users include object field with type:id or structured object - Usersets include userset field with type, id, and relation - Wildcards include wildcard field with type specification - Difference operations include difference field with base and subtract sets
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L152)
+
+#### Returns
+
+`array&lt;`string`, `mixed`&gt;` — User data formatted for JSON encoding with the appropriate user type representation
+
+### schema
 
 *<small>Implements Models\UserInterface</small>*
 
@@ -127,20 +138,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array<string, mixed>
-
-```
-
-Serialize the user for JSON encoding. This method prepares the user data for API communication with the OpenFGA service, converting the user representation into the format expected by the OpenFGA API. The serialization handles all user types (direct objects, usersets, wildcards, and difference operations) and ensures the resulting structure matches the OpenFGA API specification. Only the appropriate user type fields are included in the output: - Direct users include object field with type:id or structured object - Usersets include userset field with type, id, and relation - Wildcards include wildcard field with type specification - Difference operations include difference field with base and subtract sets
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/User.php#L152)
-
-#### Returns
-
-`array&lt;`string`, `mixed`&gt;` — User data formatted for JSON encoding with the appropriate user type representation

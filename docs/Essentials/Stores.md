@@ -1,14 +1,14 @@
-Think of a store as your authorization database. It contains your permission rules, user relationships, and everything needed to answer "can this user do that?" Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
+**Stores can be thought of as your authorization database.** Store contain your permission rules, user relationships, and everything needed to answer "can this user do that?" Every OpenFGA operation happens within a store, making them the foundation of your authorization system.
 
 ## Prerequisites
 
 The examples in this guide assume you have the following setup:
 
 ```php
-<?php
 use OpenFGA\Client;
 use function OpenFGA\store;
 
+// Initialize the client
 $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 ```
 

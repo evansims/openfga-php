@@ -2,7 +2,8 @@
 
 Defines a parameter type for use in authorization conditions. ConditionParameter represents the type definition for parameters that can be passed to conditions during authorization evaluation. This includes simple types like strings and integers, as well as complex types like lists and maps with their own generic type parameters. Use this interface when defining conditions that accept typed parameters, ensuring type safety during authorization evaluation.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getGenericTypes()`](#getgenerictypes)
+- [`getGenericTypes()`](#getgenerictypes)
   - [`getTypeName()`](#gettypename)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Defines a parameter type for use in authorization conditions. ConditionParameter
 
 ## Methods
 
-### List Operations
-
-#### getGenericTypes
+### getGenericTypes
 
 ```php
 public function getGenericTypes(): ?OpenFGA\Models\Collections\ConditionParametersInterface
@@ -52,7 +51,7 @@ Get the generic type parameters for complex types like maps and lists. This prov
 
 [`ConditionParametersInterface`](Models/Collections/ConditionParametersInterface.md) &#124; `null`
 
-#### getTypeName
+### getTypeName
 
 ```php
 public function getTypeName(): TypeName
@@ -67,9 +66,7 @@ Get the primary type name of the parameter. This returns the fundamental type of
 
 [`TypeName`](Models/Enums/TypeName.md) — The type name enum value for this parameter
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

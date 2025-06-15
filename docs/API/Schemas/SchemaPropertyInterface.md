@@ -2,15 +2,15 @@
 
 Interface for schema property definitions. This interface defines the contract for schema property objects that specify validation rules, type information, and metadata for individual properties of OpenFGA model objects. Each property defines how a field should be validated, transformed, and mapped during object creation. Properties support various data types including primitives (string, int, bool), complex objects, arrays, and collections, with optional validation constraints such as required status, default values, format restrictions, and enumeration limits.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getClassName()`](#getclassname)
+- [`getClassName()`](#getclassname)
   - [`getDefault()`](#getdefault)
   - [`getEnum()`](#getenum)
   - [`getFormat()`](#getformat)
@@ -18,8 +18,9 @@ Interface for schema property definitions. This interface defines the contract f
   - [`getName()`](#getname)
   - [`getParameterName()`](#getparametername)
   - [`getType()`](#gettype)
-- [Utility](#utility)
   - [`isRequired()`](#isrequired)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Interface for schema property definitions. This interface defines the contract f
 
 ## Methods
 
-### List Operations
-
-#### getClassName
+### getClassName
 
 ```php
 public function getClassName(): ?string
@@ -52,7 +51,7 @@ Get the fully qualified class name for object types.
 
 `string` &#124; `null`
 
-#### getDefault
+### getDefault
 
 ```php
 public function getDefault(): mixed
@@ -67,7 +66,7 @@ Get the default value to use when property is missing.
 
 `mixed` — Default value for optional properties
 
-#### getEnum
+### getEnum
 
 ```php
 public function getEnum(): array<string>|null
@@ -82,7 +81,7 @@ Get the array of allowed values for enumeration validation.
 
 `array&lt;`string`&gt;` &#124; `null` — Array of allowed values or null if not an enumeration
 
-#### getFormat
+### getFormat
 
 ```php
 public function getFormat(): string|null
@@ -97,7 +96,7 @@ Get the additional format constraint for this property.
 
 `string` &#124; `null` — Format constraint (for example &#039;date&#039;, &#039;datetime&#039;) or null if none
 
-#### getItems
+### getItems
 
 ```php
 public function getItems(): ?array
@@ -112,7 +111,7 @@ Get the type specification for array items.
 
 `array` &#124; `null`
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -127,7 +126,7 @@ Get the property name as it appears in the data.
 
 `string` — The property name
 
-#### getParameterName
+### getParameterName
 
 ```php
 public function getParameterName(): string|null
@@ -142,7 +141,7 @@ Get the alternative parameter name for constructor mapping.
 
 `string` &#124; `null` — Alternative parameter name or null if using default mapping
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -157,9 +156,7 @@ Get the data type for this property.
 
 `string` — The data type (string, integer, boolean, array, object, etc.)
 
-### Utility
-
-#### isRequired
+### isRequired
 
 ```php
 public function isRequired(): bool

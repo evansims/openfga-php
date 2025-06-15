@@ -2,7 +2,8 @@
 
 Represents a filter for limiting users by their relationships to specific object types. User type filters are used in queries to narrow down the set of users based on their relationships to objects of particular types. This is particularly useful when you want to find users who have specific permissions or roles related to certain categories of resources. The filter can specify: - A required object type that users must be related to - An optional relation that further constrains the relationship type Examples: - Find all users related to &quot;document&quot; objects - Find all users who are &quot;viewers&quot; of &quot;folder&quot; objects - Find all users who are &quot;members&quot; of &quot;organization&quot; objects
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Represents a filter for limiting users by their relationships to specific object
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getRelation()`](#getrelation)
+- [`getRelation()`](#getrelation)
   - [`getType()`](#gettype)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Represents a filter for limiting users by their relationships to specific object
 
 ## Methods
 
-### List Operations
-
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): ?string
@@ -52,7 +51,7 @@ Get the optional relation filter for limiting user types. When specified, this f
 
 `string` &#124; `null`
 
-#### getType
+### getType
 
 ```php
 public function getType(): string
@@ -67,9 +66,7 @@ Get the object type to filter by. This specifies the type of objects that users 
 
 `string` — The object type to filter by
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<'relation'|'type', string>

@@ -2,7 +2,8 @@
 
 Service implementation for managing telemetry and observability in OpenFGA operations. Provides a higher-level abstraction over the telemetry infrastructure, simplifying the creation and management of telemetry spans, metrics, and events. This service handles common telemetry patterns and provides business-focused methods for tracking operations, performance, and errors.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,14 @@ Service implementation for managing telemetry and observability in OpenFGA opera
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`recordAuthenticationEvent()`](#recordauthenticationevent)
+- [`recordAuthenticationEvent()`](#recordauthenticationevent)
   - [`recordFailure()`](#recordfailure)
   - [`recordHttpRequest()`](#recordhttprequest)
   - [`recordOperationMetrics()`](#recordoperationmetrics)
   - [`recordSuccess()`](#recordsuccess)
   - [`startOperation()`](#startoperation)
+
+</details>
 
 ## Namespace
 
@@ -36,7 +38,7 @@ Service implementation for managing telemetry and observability in OpenFGA opera
 
 ## Methods
 
-#### recordAuthenticationEvent
+### recordAuthenticationEvent
 
 ```php
 public function recordAuthenticationEvent(
@@ -65,7 +67,7 @@ Record an authentication event with duration and outcome. Tracks authentication-
 
 `void`
 
-#### recordFailure
+### recordFailure
 
 ```php
 public function recordFailure(
@@ -92,7 +94,7 @@ Record a failed operation with error details. Completes an operation context wit
 
 `void`
 
-#### recordHttpRequest
+### recordHttpRequest
 
 ```php
 public function recordHttpRequest(
@@ -121,7 +123,7 @@ Record an HTTP request/response pair with automatic span management. Handles the
 
 `void`
 
-#### recordOperationMetrics
+### recordOperationMetrics
 
 ```php
 public function recordOperationMetrics(
@@ -152,7 +154,7 @@ Record operational metrics for performance monitoring. Tracks operation-level me
 
 `void`
 
-#### recordSuccess
+### recordSuccess
 
 ```php
 public function recordSuccess(OpenFGA\Services\TelemetryContext $context, mixed $result = NULL): void
@@ -174,7 +176,7 @@ Record a successful operation with results. Completes an operation context with 
 
 `void`
 
-#### startOperation
+### startOperation
 
 ```php
 public function startOperation(

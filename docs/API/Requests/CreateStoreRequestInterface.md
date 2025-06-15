@@ -2,7 +2,8 @@
 
 Interface for creating a new OpenFGA store. This interface defines the contract for requests that create new authorization stores in OpenFGA. A store is an isolated container for authorization data, including relationship tuples, authorization models, and configuration. Each store provides: - Complete isolation of authorization data from other stores - Independent versioning of authorization models - Separate configuration and access controls - Dedicated API endpoints for all operations Creating a store establishes a new authorization domain where you can define relationship models, write authorization tuples, and perform permission checks. The store name serves as a human-readable identifier for administrative purposes.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,9 +11,10 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getName()`](#getname)
+- [`getName()`](#getname)
   - [`getRequest()`](#getrequest)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ Interface for creating a new OpenFGA store. This interface defines the contract 
 
 ## Methods
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -48,7 +50,7 @@ Get the name for the new store. Returns the human-readable name that will be ass
 
 `string` — The descriptive name for the new authorization store
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext

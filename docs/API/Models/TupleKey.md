@@ -2,7 +2,8 @@
 
 Represents a relationship tuple key defining a connection between user, relation, and object. A TupleKey is the fundamental unit of authorization in OpenFGA, representing a specific relationship like &quot;user:anne is reader of document:budget.&quot; It consists of three parts: user (who), relation (what type of access), and object (what resource), optionally with conditions for attribute-based access. Use this when creating, querying, or managing specific relationships in your authorization system.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,15 +12,14 @@ Represents a relationship tuple key defining a connection between user, relation
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getCondition()`](#getcondition)
+- [`getCondition()`](#getcondition)
   - [`getObject()`](#getobject)
   - [`getRelation()`](#getrelation)
   - [`getUser()`](#getuser)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -48,9 +48,7 @@ Represents a relationship tuple key defining a connection between user, relation
 
 ## Methods
 
-### List Operations
-
-#### getCondition
+### getCondition
 
 ```php
 public function getCondition(): ?OpenFGA\Models\ConditionInterface
@@ -65,7 +63,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 [`ConditionInterface`](ConditionInterface.md) &#124; `null` — The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string
@@ -80,7 +78,7 @@ Get the object in this relationship tuple. The object represents the resource or
 
 `string` — The object identifier
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -95,7 +93,7 @@ Get the relation that defines the type of relationship. The relation describes w
 
 `string` — The relation name defining the type of relationship
 
-#### getUser
+### getUser
 
 ```php
 public function getUser(): string
@@ -110,9 +108,22 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 `string` — The user identifier
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L116)
+
+#### Returns
+
+`array` — The serialized tuple key data ready for JSON encoding
+
+### schema
 
 *<small>Implements Models\TupleKeyInterface</small>*
 
@@ -128,20 +139,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-Serialize the tuple key for JSON encoding. This method prepares the tuple key data for API requests or storage, ensuring all components (user, relation, object, and optional condition) are properly formatted according to the OpenFGA API specification.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TupleKey.php#L116)
-
-#### Returns
-
-`array` — The serialized tuple key data ready for JSON encoding

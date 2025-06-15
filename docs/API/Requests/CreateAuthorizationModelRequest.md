@@ -2,7 +2,8 @@
 
 Request for creating a new authorization model in OpenFGA. Authorization models define the permission structure for your application, including object types, relationships, and how permissions are computed. Models are immutable once created and identified by a unique ID.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,13 @@ Request for creating a new authorization model in OpenFGA. Authorization models 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getConditions()`](#getconditions)
+- [`getConditions()`](#getconditions)
   - [`getRequest()`](#getrequest)
   - [`getSchemaVersion()`](#getschemaversion)
   - [`getStore()`](#getstore)
   - [`getTypeDefinitions()`](#gettypedefinitions)
+
+</details>
 
 ## Namespace
 
@@ -37,7 +39,7 @@ Request for creating a new authorization model in OpenFGA. Authorization models 
 
 ## Methods
 
-#### getConditions
+### getConditions
 
 ```php
 public function getConditions(): ?OpenFGA\Models\Collections\ConditionsInterface
@@ -52,7 +54,7 @@ Get the conditional rules for the authorization model. Returns a collection of c
 
 [`ConditionsInterface`](Models/Collections/ConditionsInterface.md) &#124; `null` — Collection of conditional rules for dynamic authorization, or null if no conditions are defined
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(Psr\Http\Message\StreamFactoryInterface $streamFactory): OpenFGA\Network\RequestContext
@@ -73,7 +75,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 [`RequestContext`](Network/RequestContext.md) — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getSchemaVersion
+### getSchemaVersion
 
 ```php
 public function getSchemaVersion(): OpenFGA\Models\Enums\SchemaVersion
@@ -88,7 +90,7 @@ Get the schema version for the authorization model. Specifies which version of t
 
 [`SchemaVersion`](Models/Enums/SchemaVersion.md) — The modeling language schema version for this authorization model
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string
@@ -103,7 +105,7 @@ Get the store ID where the authorization model will be created. Identifies the O
 
 `string` — The store ID where the authorization model will be created
 
-#### getTypeDefinitions
+### getTypeDefinitions
 
 ```php
 public function getTypeDefinitions(): OpenFGA\Models\Collections\TypeDefinitionsInterface

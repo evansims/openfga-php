@@ -2,7 +2,8 @@
 
 Network error types for the OpenFGA SDK. Defines specific network and HTTP-related failures that can occur when communicating with the OpenFGA API, including HTTP status code errors, request failures, and timeouts. Each case provides a factory method to create the corresponding NetworkException. Network errors represent failures in HTTP communication with the OpenFGA service, ranging from client-side request errors to server-side failures. These errors often contain valuable debugging information in the HTTP response, including error messages and suggested remediation steps.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,8 +12,9 @@ Network error types for the OpenFGA SDK. Defines specific network and HTTP-relat
 - [Cases](#cases)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`exception()`](#exception)
+- [`exception()`](#exception)
+
+</details>
 
 ## Namespace
 
@@ -57,7 +59,7 @@ Network error types for the OpenFGA SDK. Defines specific network and HTTP-relat
 
 ## Methods
 
-#### exception
+### exception
 
 ```php
 public function exception(

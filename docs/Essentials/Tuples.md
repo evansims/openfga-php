@@ -1,23 +1,14 @@
-Relationship tuples are where the rubber meets the road. They're the actual permissions in your system - who can do what to which resource.
-
-A tuple is simply: `(user, relation, object)`
-
-For example: `(user:anne, editor, document:roadmap)` means "Anne can edit the roadmap document."
+**Relationship tuples are where the rubber meets the road.** They're the actual permissions in your system - they define who can do what to which resource.
 
 ## Prerequisites
 
 The examples in this guide assume you have the following setup:
 
 ```php
-<?php
-
 use OpenFGA\Client;
-use OpenFGA\Exceptions\{ClientError, ClientException};
-use OpenFGA\Models\{ConditionParameter, ConditionParameters, RelationshipCondition, TupleKey, TupleKeys};
-use function OpenFGA\{tuple, tuples, write, delete, allowed, store, model, dsl, result, success, failure, unwrap};
 
-// Client initialization - see Getting Started for full details
-$client = new Client(url: 'http://localhost:8080');
+// Initialize the client
+$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 
 // Store and model identifiers from your configuration
 $storeId = 'your-store-id';
@@ -26,10 +17,12 @@ $modelId = 'your-model-id';
 
 ## Granting Permissions
 
-Give someone access by writing a tuple:
+Use the `write` helper to give someone access:
 
 ```php
-// Give Anne editor access to a document
+use function OpenFGA\{write, tuple};
+
+// Give Anne editor access to the "roadmap" document
 write(
     client: $client,
     store: $storeId,
@@ -40,10 +33,12 @@ write(
 
 ## Removing Permissions
 
-Take away access by deleting a tuple:
+Use the `delete` helper to take away access:
 
 ```php
-// Remove Anne's editor access
+use function OpenFGA\{delete, tuple};
+
+// Remove Anne's editor access to the "roadmap" document
 delete(
     client: $client,
     store: $storeId,
@@ -54,87 +49,81 @@ delete(
 
 ## Bulk Operations
 
-Handle multiple permission changes in one transaction:
+Use the `writes` helper to handle multiple permission changes in one transaction:
 
 ```php
-// Grant access to multiple users
-write(
+use function OpenFGA\{writes, tuple, tuples};
+
+writes(
     client: $client,
     store: $storeId,
     model: $modelId,
-    tuples: tuples(
+    writes: tuples(
         tuple('user:bob', 'viewer', 'document:roadmap'),
         tuple('user:charlie', 'editor', 'document:roadmap'),
         tuple('team:marketing#member', 'viewer', 'folder:campaigns')
+    ),
+    deletes: tuples(
+        tuple('user:anne', 'owner', 'document:old-spec')
     )
-);
-
-// Revoke old permissions
-delete(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuple('user:anne', 'owner', 'document:old-spec')
 );
 ```
 
 ## Reading Existing Permissions
 
-Check what permissions exist by reading tuples:
+Use the `read` helper to check what permissions exist:
 
 ```php
+use function OpenFGA\{read, tuple};
+
 // Find all permissions for a specific document
-$response = $client->readTuples(
+$tuples = read(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    tupleKey: new TupleKey(object: 'document:roadmap')
-)->unwrap();
+    tuples: tuple(object: 'document:roadmap')
+);
 
-foreach ($response->getTuples() as $tuple) {
+foreach ($tuples as $tuple) {
     echo "{$tuple->getUser()} has {$tuple->getRelation()} on {$tuple->getObject()}\n";
 }
 ```
 
 ```php
+use function OpenFGA\{read, tuple};
+
 // Find all documents Anne can edit
-$response = $client->readTuples(
+$tuples = read(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    tupleKey: new TupleKey(user: 'user:anne', relation: 'editor')
-)->unwrap();
+    tuples: tuple(user: 'user:anne', relation: 'editor')
+);
 
-foreach ($response->getTuples() as $tuple) {
-    echo "Anne can edit: {$tuple->getObject()}\n";
+echo "Anne can edit:\n";
+
+foreach ($tuples as $tuple) {
+    echo "{$tuple->getObject()}\n";
 }
-```
-
-```php
-// Paginate through all tuples
-$continuationToken = null;
-
-do {
-    $response = $client->readTuples(
-        store: $storeId,
-        model: $modelId,
-        pageSize: 100,
-        continuationToken: $continuationToken
-    )->unwrap();
-
-    foreach ($response->getTuples() as $tuple) {
-        // Process each tuple...
-    }
-
-    $continuationToken = $response->getContinuationToken();
-} while ($continuationToken !== null);
 ```
 
 ## Advanced Patterns
 
 ### Conditional Tuples
 
-Add conditions to make permissions context-dependent:
+Use conditions to make permissions context-dependent:
 
 ```php
+use OpenFga\Models\RelationshipCondition;
+use function OpenFGA\{write, tuple};
+
+$businessHoursCondition = new RelationshipCondition(
+    name: 'business_hours',
+    context: [
+        'timezone' => 'America/Chicago'
+    ]
+);
+
 // Only allow access during business hours
 write(
     client: $client,
@@ -144,32 +133,32 @@ write(
         user: 'user:contractor',
         relation: 'viewer',
         object: 'document:sensitive',
-        condition: new RelationshipCondition(
-            name: 'business_hours',
-            context: [
-                'timezone' => 'America/New_York'
-            ]
-        )
+        condition: $businessHoursCondition
     )
 );
 ```
 
-### Tracking Changes
+### Auditing Changes
 
 Monitor permission changes over time for auditing:
 
 ```php
-// Get all permission changes for documents in the last hour
+use DateTimeImmutable;
+use DateInterval;
+use function OpenFGA\changes;
+
+// Get all changes for documents in the last hour
 $startTime = (new DateTimeImmutable())->sub(new DateInterval('PT1H'));
 
-$response = $client->listTupleChanges(
+$changes = changes(
+    client: $client,
     store: $storeId,
     model: $modelId,
     type: 'document',
     startTime: $startTime
-)->unwrap();
+);
 
-foreach ($response->getChanges() as $change) {
+foreach ($changes as $change) {
     $tuple = $change->getTupleKey();
     echo "{$change->getOperation()->value}: {$tuple->getUser()} {$tuple->getRelation()} {$tuple->getObject()}\n";
 }
@@ -177,40 +166,36 @@ foreach ($response->getChanges() as $change) {
 
 ### Working with Groups
 
-Grant permissions to groups instead of individual users:
+Use the `write` helper to grant permissions to groups instead of individual users:
 
 ```php
-// Add user to a group
 write(
     client: $client,
     store: $storeId,
     model: $modelId,
-    tuples: tuple('user:anne', 'member', 'team:engineering')
-);
-
-// Grant permission to the entire group
-write(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuple('team:engineering#member', 'editor', 'document:technical-specs')
+    tuples: tuples(
+        // Add user to a group
+        tuple('user:anne', 'member', 'team:engineering'),
+        // Grant permission to the entire group
+        tuple('team:engineering#member', 'editor', 'document:technical-specs')
+    )
 );
 ```
 
 Now Anne can edit the technical specs because she's a member of the engineering team.
 
-For checking permissions and querying relationships, see Queries.
+For checking permissions and querying relationships, see [Queries](Queries.md).
 
 ## Error Handling with Tuples
 
-When working with tuples, it's important to handle errors properly using the SDK's enum-based exception handling:
+The SDK has a powerful enum-based exception handling system that allows you to handle errors in a type-safe way.
 
 ```php
 // Example: Writing tuples with robust error handling
 function addUserToDocument(string $userId, string $documentId, string $role = 'viewer'): bool
 {
     global $client, $storeId, $modelId;
-    
+
     // Use result helper for cleaner error handling
     return result(function() use ($client, $storeId, $modelId, $userId, $documentId, $role) {
         return write(
@@ -270,10 +255,13 @@ function addUserToDocument(string $userId, string $documentId, string $role = 'v
 The error messages from tuple operations will automatically use the language configured in your client:
 
 ```php
+use OpenFGA\{Client, Language};
+use function OpenFGA\{write, tuple};
+
 // Create a client with Spanish error messages
 $client = new Client(
     url: 'https://api.openfga.example',
-    language: 'es' // Spanish
+    language: Language::Spanish
 );
 
 try {
@@ -297,4 +285,4 @@ try {
 
 ## What's Next?
 
-After writing tuples to grant permissions, you'll want to verify those permissions are working correctly. The **Queries** guide covers how to check permissions, list user access, and discover relationships using the tuples you've created.
+After writing tuples to grant permissions, you'll want to verify those permissions are working correctly. The [Queries](Queries.md) guide covers how to check permissions, list user access, and discover relationships using the tuples you've created.

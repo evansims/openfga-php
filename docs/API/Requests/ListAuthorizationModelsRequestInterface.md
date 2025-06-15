@@ -2,7 +2,8 @@
 
 Interface for listing authorization models in a store. This interface defines the contract for requests that retrieve a paginated list of all authorization model versions within a specific OpenFGA store. Authorization models are versioned, and this operation allows you to browse through the evolution of your authorization schema over time. Listing authorization models is useful for: - Administrative interfaces showing model version history - Implementing model rollback and comparison functionality - Auditing changes to authorization schemas over time - Building deployment and migration tools for authorization models - Understanding the evolution of permission structures - Debugging authorization issues by examining model versions Each model in the list includes metadata such as creation time and model ID, allowing you to understand when changes were made and select specific versions for detailed inspection or operational use.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,12 @@ Interface for listing authorization models in a store. This interface defines th
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getContinuationToken()`](#getcontinuationtoken)
+- [`getContinuationToken()`](#getcontinuationtoken)
   - [`getPageSize()`](#getpagesize)
   - [`getRequest()`](#getrequest)
   - [`getStore()`](#getstore)
+
+</details>
 
 ## Namespace
 
@@ -35,7 +37,7 @@ Interface for listing authorization models in a store. This interface defines th
 
 ## Methods
 
-#### getContinuationToken
+### getContinuationToken
 
 ```php
 public function getContinuationToken(): string|null
@@ -50,7 +52,7 @@ Get the continuation token for paginated results. Returns the pagination token f
 
 `string` &#124; `null` — The continuation token from a previous operation, or null for the first page
 
-#### getPageSize
+### getPageSize
 
 ```php
 public function getPageSize(): int|null
@@ -65,7 +67,7 @@ Get the maximum number of models to return per page. Specifies the page size for
 
 `int` &#124; `null` — The maximum number of models to return per page, or null to use the default page size
 
-#### getRequest
+### getRequest
 
 ```php
 public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
@@ -86,7 +88,7 @@ Build a request context for HTTP execution. Transforms the request object into a
 
 `RequestContext` — The prepared request context containing HTTP method, URL, headers, and body ready for execution
 
-#### getStore
+### getStore
 
 ```php
 public function getStore(): string

@@ -2,7 +2,8 @@
 
 Represents a relationship tuple in the OpenFGA authorization system. Tuples are the fundamental building blocks of OpenFGA that define actual relationships between users, objects, and relations. They represent concrete facts about your system, such as &quot;user:alice has editor relation to document:doc1&quot; or &quot;group:engineering has member relation to user:bob.&quot; These relationships form the data foundation that OpenFGA uses during authorization checks to determine access permissions and evaluate complex authorization policies. Each tuple consists of: - A tuple key that defines the relationship (user, relation, object, optional condition) - A timestamp that tracks when the relationship was established or last modified Tuples can be unconditional (always valid) or conditional (valid only when specific runtime conditions are met). Conditional tuples enable dynamic authorization based on context such as time of day, resource attributes, or environmental factors. The tuple system supports OpenFGA&#039;s core authorization model by providing the actual relationship data that authorization queries evaluate against. Tuples are managed through write operations and queried during check operations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getKey()`](#getkey)
+- [`getKey()`](#getkey)
   - [`getTimestamp()`](#gettimestamp)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Represents a relationship tuple in the OpenFGA authorization system. Tuples are 
 
 ## Methods
 
-### List Operations
-
-#### getKey
+### getKey
 
 ```php
 public function getKey(): TupleKeyInterface
@@ -52,7 +51,7 @@ Get the tuple key that identifies the relationship. The tuple key contains the e
 
 [`TupleKeyInterface`](TupleKeyInterface.md) — The tuple key defining this relationship with user, relation, object, and optional condition
 
-#### getTimestamp
+### getTimestamp
 
 ```php
 public function getTimestamp(): DateTimeImmutable
@@ -67,9 +66,7 @@ Get the timestamp when this tuple was created or last modified. Timestamps provi
 
 `DateTimeImmutable` — The creation or last modification timestamp in UTC timezone
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

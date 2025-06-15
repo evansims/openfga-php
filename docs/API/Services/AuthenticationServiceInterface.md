@@ -2,17 +2,18 @@
 
 Service interface for managing authentication in OpenFGA operations. This service abstracts authentication concerns from the Client class, handling the complexities of token management, authentication flows, and authorization header generation. It provides a clean interface for different authentication strategies while encapsulating the details of token refresh and error handling. ## Core Functionality The service manages the complete authentication lifecycle: - Authorization header generation with automatic token refresh - Authentication request handling with proper error management - Support for multiple authentication strategies (OAuth2, pre-shared keys) - Integration with telemetry for authentication monitoring ## Usage Example ```php $authService = new AuthenticationService($authentication, $telemetryService); Get authorization header (with automatic refresh if needed) $authHeader = $authService-&gt;getAuthorizationHeader($streamFactory); Handle authentication requests $response = $authService-&gt;sendAuthenticationRequest($context, $requestManager); ```
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getAuthorizationHeader()`](#getauthorizationheader)
-- [Other](#other)
+- [`getAuthorizationHeader()`](#getauthorizationheader)
   - [`sendAuthenticationRequest()`](#sendauthenticationrequest)
+
+</details>
 
 ## Namespace
 
@@ -28,9 +29,7 @@ Service interface for managing authentication in OpenFGA operations. This servic
 
 ## Methods
 
-### List Operations
-
-#### getAuthorizationHeader
+### getAuthorizationHeader
 
 ```php
 public function getAuthorizationHeader(
@@ -55,9 +54,7 @@ Get the authorization header for API requests. Retrieves the current authorizati
 
 `string` &#124; `null` — The authorization header value, or null if no authentication configured
 
-### Other
-
-#### sendAuthenticationRequest
+### sendAuthenticationRequest
 
 ```php
 public function sendAuthenticationRequest(RequestContext $context, callable $requestSender): HttpResponseInterface

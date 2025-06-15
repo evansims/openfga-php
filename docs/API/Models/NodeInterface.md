@@ -2,7 +2,8 @@
 
 Represents a node in a userset tree structure. Nodes are fundamental building blocks in OpenFGA&#039;s authorization model that represent different types of relationships and operations within the access control evaluation tree.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,14 +11,14 @@ Represents a node in a userset tree structure. Nodes are fundamental building bl
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDifference()`](#getdifference)
+- [`getDifference()`](#getdifference)
   - [`getIntersection()`](#getintersection)
   - [`getLeaf()`](#getleaf)
   - [`getName()`](#getname)
   - [`getUnion()`](#getunion)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -38,9 +39,7 @@ Represents a node in a userset tree structure. Nodes are fundamental building bl
 
 ## Methods
 
-### List Operations
-
-#### getDifference
+### getDifference
 
 ```php
 public function getDifference(): ?OpenFGA\Models\UsersetTreeDifferenceInterface
@@ -55,7 +54,7 @@ Get the difference operation for this node. The difference operation represents 
 
 [`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md) &#124; `null`
 
-#### getIntersection
+### getIntersection
 
 ```php
 public function getIntersection(): NodeUnionInterface|self|null
@@ -70,7 +69,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 [`NodeUnionInterface`](NodeUnionInterface.md) &#124; `self` &#124; `null` — The intersection node or null if not applicable
 
-#### getLeaf
+### getLeaf
 
 ```php
 public function getLeaf(): ?OpenFGA\Models\LeafInterface
@@ -85,7 +84,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 [`LeafInterface`](LeafInterface.md) &#124; `null`
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -100,7 +99,7 @@ Get the name identifier for this node. The name is used to identify the node wit
 
 `string` — The node name
 
-#### getUnion
+### getUnion
 
 ```php
 public function getUnion(): NodeUnionInterface|self|null
@@ -115,9 +114,7 @@ Get the union operation for this node. The union operation represents the combin
 
 [`NodeUnionInterface`](NodeUnionInterface.md) &#124; `self` &#124; `null` — The union node or null if not applicable
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

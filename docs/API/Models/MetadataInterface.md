@@ -2,7 +2,8 @@
 
 Represents metadata associated with OpenFGA authorization model components. Metadata provides additional context and configuration information for authorization model elements. This includes module organization, relation-specific metadata, and source code information for debugging and development purposes. Metadata helps with model organization, documentation, and tooling support for complex authorization models.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,12 +11,12 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getModule()`](#getmodule)
+- [`getModule()`](#getmodule)
   - [`getRelations()`](#getrelations)
   - [`getSourceInfo()`](#getsourceinfo)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -36,9 +37,7 @@ Represents metadata associated with OpenFGA authorization model components. Meta
 
 ## Methods
 
-### List Operations
-
-#### getModule
+### getModule
 
 ```php
 public function getModule(): string|null
@@ -53,7 +52,7 @@ Get the module name for this metadata. Modules provide a way to organize and nam
 
 `string` &#124; `null` — The module name, or null if not specified
 
-#### getRelations
+### getRelations
 
 ```php
 public function getRelations(): RelationMetadataCollection|null
@@ -68,7 +67,7 @@ Get the collection of relation metadata. Relation metadata provides additional c
 
 [`RelationMetadataCollection`](Models/Collections/RelationMetadataCollection.md) &#124; `null` — The relation metadata collection, or null if not specified
 
-#### getSourceInfo
+### getSourceInfo
 
 ```php
 public function getSourceInfo(): SourceInfoInterface|null
@@ -83,9 +82,7 @@ Get the source code information for this metadata. Source information provides d
 
 [`SourceInfoInterface`](SourceInfoInterface.md) &#124; `null` — The source information, or null if not available
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

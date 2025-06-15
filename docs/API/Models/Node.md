@@ -2,7 +2,8 @@
 
 Represents a node in the authorization evaluation tree structure. When OpenFGA evaluates complex authorization rules, it builds a tree of nodes representing different evaluation paths. Each node can contain unions, intersections, differences, or leaf computations that contribute to the final authorization decision. This is the fundamental building block for representing how authorization decisions are computed and provides insight into the evaluation process.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,16 +12,15 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getDifference()`](#getdifference)
+- [`getDifference()`](#getdifference)
   - [`getIntersection()`](#getintersection)
   - [`getLeaf()`](#getleaf)
   - [`getName()`](#getname)
   - [`getUnion()`](#getunion)
-- [Model Management](#model-management)
-  - [`schema()`](#schema)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+  - [`schema()`](#schema)
+
+</details>
 
 ## Namespace
 
@@ -49,9 +49,7 @@ Represents a node in the authorization evaluation tree structure. When OpenFGA e
 
 ## Methods
 
-### List Operations
-
-#### getDifference
+### getDifference
 
 ```php
 public function getDifference(): ?OpenFGA\Models\UsersetTreeDifferenceInterface
@@ -66,7 +64,7 @@ Get the difference operation for this node. The difference operation represents 
 
 [`UsersetTreeDifferenceInterface`](UsersetTreeDifferenceInterface.md) &#124; `null`
 
-#### getIntersection
+### getIntersection
 
 ```php
 public function getIntersection(): ?OpenFGA\Models\NodeInterface|OpenFGA\Models\NodeUnionInterface|null
@@ -81,7 +79,7 @@ Get the intersection operation for this node. The intersection operation represe
 
 [`NodeInterface`](NodeInterface.md) &#124; `null` &#124; [`NodeUnionInterface`](NodeUnionInterface.md) &#124; `null` — The intersection node or null if not applicable
 
-#### getLeaf
+### getLeaf
 
 ```php
 public function getLeaf(): ?OpenFGA\Models\LeafInterface
@@ -96,7 +94,7 @@ Get the leaf node if this is a terminal node. Leaf nodes represent the actual us
 
 [`LeafInterface`](LeafInterface.md) &#124; `null`
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -111,7 +109,7 @@ Get the name identifier for this node. The name is used to identify the node wit
 
 `string` — The node name
 
-#### getUnion
+### getUnion
 
 ```php
 public function getUnion(): ?OpenFGA\Models\NodeInterface|OpenFGA\Models\NodeUnionInterface|null
@@ -126,9 +124,22 @@ Get the union operation for this node. The union operation represents the combin
 
 [`NodeInterface`](NodeInterface.md) &#124; `null` &#124; [`NodeUnionInterface`](NodeUnionInterface.md) &#124; `null` — The union node or null if not applicable
 
-### Model Management
+### jsonSerialize
 
-#### schema
+```php
+public function jsonSerialize(): array
+
+```
+
+Serialize the node to its JSON representation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Node.php#L109)
+
+#### Returns
+
+`array` — The serialized node data
+
+### schema
 
 *<small>Implements Models\NodeInterface</small>*
 
@@ -144,20 +155,3 @@ Get the schema definition for this model. This method returns the schema that de
 #### Returns
 
 `SchemaInterface` — The schema definition containing validation rules and property specifications for this model
-
-### Other
-
-#### jsonSerialize
-
-```php
-public function jsonSerialize(): array
-
-```
-
-Serialize the node to its JSON representation.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/Node.php#L109)
-
-#### Returns
-
-`array` — The serialized node data

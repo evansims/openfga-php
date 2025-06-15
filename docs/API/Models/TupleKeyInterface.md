@@ -2,7 +2,8 @@
 
 Represents a tuple key that defines the components of a relationship in OpenFGA. Tuple keys are the core data structure that defines relationships in the OpenFGA authorization system. They specify the essential components that together describe an authorization relationship: who (user), what (relation), and where (object), with optional conditional logic (condition). The tuple key structure follows the pattern: - **User**: The subject of the relationship (who has the permission) - **Relation**: The type of permission or relationship being defined - **Object**: The resource or entity the permission applies to - **Condition**: Optional runtime constraints that must be satisfied Examples of tuple keys: - `user:alice` has `editor` relation to `document:readme` - `group:engineering` has `member` relation to `user:bob` - `user:contractor` has `read` relation to `file:confidential` when `time_constraint` is met Tuple keys are used throughout OpenFGA operations: - Writing relationships (creating authorization facts) - Reading relationships (querying existing permissions) - Authorization checks (evaluating access requests) - Relationship expansion (understanding permission inheritance) The flexible tuple key design enables OpenFGA to represent complex authorization patterns while maintaining efficient query performance and clear relationship semantics.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,13 +11,13 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getCondition()`](#getcondition)
+- [`getCondition()`](#getcondition)
   - [`getObject()`](#getobject)
   - [`getRelation()`](#getrelation)
   - [`getUser()`](#getuser)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -37,9 +38,7 @@ Represents a tuple key that defines the components of a relationship in OpenFGA.
 
 ## Methods
 
-### List Operations
-
-#### getCondition
+### getCondition
 
 ```php
 public function getCondition(): ConditionInterface|null
@@ -54,7 +53,7 @@ Get the condition that constrains this relationship. Conditions enable dynamic a
 
 [`ConditionInterface`](ConditionInterface.md) &#124; `null` — The condition that must be satisfied for this relationship to be valid, or null for an unconditional relationship
 
-#### getObject
+### getObject
 
 ```php
 public function getObject(): string
@@ -69,7 +68,7 @@ Get the object in this relationship tuple. The object represents the resource or
 
 `string` — The object identifier
 
-#### getRelation
+### getRelation
 
 ```php
 public function getRelation(): string
@@ -84,7 +83,7 @@ Get the relation that defines the type of relationship. The relation describes w
 
 `string` — The relation name defining the type of relationship
 
-#### getUser
+### getUser
 
 ```php
 public function getUser(): string
@@ -99,9 +98,7 @@ Get the user (subject) in this relationship tuple. The user represents the entit
 
 `string` — The user identifier
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<string, mixed>

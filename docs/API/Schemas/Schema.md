@@ -2,7 +2,8 @@
 
 JSON schema definition for validating and transforming data structures. This schema defines validation rules and transformation logic for converting raw API response data into strongly typed model objects. It specifies property types, validation constraints, and mapping rules for accurate data processing.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,10 +11,11 @@ JSON schema definition for validating and transforming data structures. This sch
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getClassName()`](#getclassname)
+- [`getClassName()`](#getclassname)
   - [`getProperties()`](#getproperties)
   - [`getProperty()`](#getproperty)
+
+</details>
 
 ## Namespace
 
@@ -33,7 +35,7 @@ JSON schema definition for validating and transforming data structures. This sch
 
 ## Methods
 
-#### getClassName
+### getClassName
 
 ```php
 public function getClassName(): string
@@ -48,7 +50,7 @@ Get the fully qualified class name this schema defines. This method returns the 
 
 `string` — The fully qualified class name for the model this schema defines
 
-#### getProperties
+### getProperties
 
 ```php
 public function getProperties(): array
@@ -63,7 +65,7 @@ Get all properties defined in this schema. This method returns a comprehensive c
 
 `array` — An associative array of property names to their schema property definitions
 
-#### getProperty
+### getProperty
 
 ```php
 public function getProperty(string $name): ?OpenFGA\Schemas\SchemaProperty

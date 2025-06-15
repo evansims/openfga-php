@@ -2,7 +2,8 @@
 
 Defines a tuple-to-userset operation node in authorization evaluation trees. UsersetTreeTupleToUserset represents a node in the userset evaluation tree that resolves users through tuple-to-userset mappings. This enables complex authorization patterns where access is determined by following relationships from one object to usersets on related objects. Use this interface when working with authorization evaluation trees that contain tuple-to-userset operations, typically returned from expand operations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,11 +11,11 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
-  - [`getComputed()`](#getcomputed)
+- [`getComputed()`](#getcomputed)
   - [`getTupleset()`](#gettupleset)
-- [Other](#other)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -35,9 +36,7 @@ Defines a tuple-to-userset operation node in authorization evaluation trees. Use
 
 ## Methods
 
-### List Operations
-
-#### getComputed
+### getComputed
 
 ```php
 public function getComputed(): array<int, ComputedInterface>
@@ -52,7 +51,7 @@ Get the array of computed usersets for the tuple-to-userset operation. This retu
 
 `array&lt;`int`, [`ComputedInterface`](ComputedInterface.md)&gt;` — Array of computed userset references
 
-#### getTupleset
+### getTupleset
 
 ```php
 public function getTupleset(): string
@@ -67,9 +66,7 @@ Get the tupleset string identifying which tuples to use for computation. This st
 
 `string` — The tupleset identifier string
 
-### Other
-
-#### jsonSerialize
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array

@@ -2,7 +2,8 @@
 
 Represents an OpenFGA store that contains authorization models and relationship tuples. A store is a logical container for all authorization data in OpenFGA, serving as the fundamental organizational unit for authorization systems. Each store contains: - Authorization models that define the permission structure for your application - Relationship tuples that establish actual relationships between users and resources - Configuration and metadata for authorization behavior Stores provide complete isolation between different authorization contexts, making them ideal for multi-tenant applications where different customers, organizations, or environments need separate authorization domains. Each store operates independently with its own set of models, tuples, and access patterns. The store lifecycle includes creation, updates, and optional soft deletion, with comprehensive timestamp tracking for audit and debugging purposes. Stores can be managed through the OpenFGA management API and serve as the target for all authorization queries and relationship operations.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -10,15 +11,14 @@ Represents an OpenFGA store that contains authorization models and relationship 
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`getCreatedAt()`](#getcreatedat)
+- [`getCreatedAt()`](#getcreatedat)
   - [`getDeletedAt()`](#getdeletedat)
-  - [`getUpdatedAt()`](#getupdatedat)
-- [List Operations](#list-operations)
   - [`getId()`](#getid)
   - [`getName()`](#getname)
-- [Other](#other)
+  - [`getUpdatedAt()`](#getupdatedat)
   - [`jsonSerialize()`](#jsonserialize)
+
+</details>
 
 ## Namespace
 
@@ -39,9 +39,7 @@ Represents an OpenFGA store that contains authorization models and relationship 
 
 ## Methods
 
-### CRUD Operations
-
-#### getCreatedAt
+### getCreatedAt
 
 ```php
 public function getCreatedAt(): DateTimeInterface
@@ -56,7 +54,7 @@ Get the timestamp when the store was created. The creation timestamp provides es
 
 `DateTimeInterface` — The creation timestamp in UTC timezone
 
-#### getDeletedAt
+### getDeletedAt
 
 ```php
 public function getDeletedAt(): DateTimeInterface|null
@@ -71,24 +69,7 @@ Get the timestamp when the store was deleted, if applicable. OpenFGA supports so
 
 `DateTimeInterface` &#124; `null` — The deletion timestamp in UTC timezone, or null if the store is active
 
-#### getUpdatedAt
-
-```php
-public function getUpdatedAt(): DateTimeInterface
-
-```
-
-Get the timestamp when the store was last updated. The update timestamp tracks when any changes were made to the store&#039;s metadata, such as name changes or configuration updates. This timestamp is automatically maintained by the OpenFGA service and provides important audit information for tracking store modifications over time.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L92)
-
-#### Returns
-
-`DateTimeInterface` — The last update timestamp in UTC timezone
-
-### List Operations
-
-#### getId
+### getId
 
 ```php
 public function getId(): string
@@ -103,7 +84,7 @@ Get the unique identifier of the store. The store ID is a globally unique identi
 
 `string` — The store&#039;s unique identifier
 
-#### getName
+### getName
 
 ```php
 public function getName(): string
@@ -118,9 +99,22 @@ Get the human-readable name of the store. The store name provides a user-friendl
 
 `string` — The store&#039;s display name
 
-### Other
+### getUpdatedAt
 
-#### jsonSerialize
+```php
+public function getUpdatedAt(): DateTimeInterface
+
+```
+
+Get the timestamp when the store was last updated. The update timestamp tracks when any changes were made to the store&#039;s metadata, such as name changes or configuration updates. This timestamp is automatically maintained by the OpenFGA service and provides important audit information for tracking store modifications over time.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/StoreInterface.php#L92)
+
+#### Returns
+
+`DateTimeInterface` — The last update timestamp in UTC timezone
+
+### jsonSerialize
 
 ```php
 public function jsonSerialize(): array<'created_at'|'deleted_at'|'id'|'name'|'updated_at', string>

@@ -2,19 +2,20 @@
 
 Repository contract for relationship tuple operations. This interface defines the contract for managing relationship tuples within an OpenFGA store. Tuples represent relationships between users and objects (for example &quot;user:anne is reader of document:budget&quot;), forming the core data that drives authorization decisions. The repository supports both transactional and non-transactional operations for different scale and consistency requirements. All methods return Result objects following the Result pattern, allowing for consistent error handling without exceptions.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Methods](#methods)
 
-- [CRUD Operations](#crud-operations)
-  - [`delete()`](#delete)
+- [`delete()`](#delete)
+  - [`listChanges()`](#listchanges)
   - [`read()`](#read)
   - [`write()`](#write)
   - [`writeAndDelete()`](#writeanddelete)
-- [List Operations](#list-operations)
-  - [`listChanges()`](#listchanges)
+
+</details>
 
 ## Namespace
 
@@ -26,9 +27,7 @@ Repository contract for relationship tuple operations. This interface defines th
 
 ## Methods
 
-### CRUD Operations
-
-#### delete
+### delete
 
 ```php
 public function delete(
@@ -59,7 +58,38 @@ Delete relationship tuples from the store. Removes existing relationship tuples 
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with WriteTuplesResponse containing operation results, or Failure with error details
 
-#### read
+### listChanges
+
+```php
+public function listChanges(
+    StoreInterface $store,
+    string|null $type = NULL,
+    DateTimeImmutable|null $startTime = NULL,
+    string|null $continuationToken = NULL,
+    int|null $pageSize = NULL,
+): FailureInterface|SuccessInterface
+
+```
+
+List changes to relationship tuples over time. Retrieves a chronological log of tuple changes (writes and deletes) within the store. Useful for auditing, synchronization, or understanding how relationships evolved. Results can be filtered by object type and time range.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Repositories/TupleRepositoryInterface.php#L67)
+
+#### Parameters
+
+| Name                 | Type                                         | Description                                              |
+| -------------------- | -------------------------------------------- | -------------------------------------------------------- |
+| `$store`             | [`StoreInterface`](Models/StoreInterface.md) | The store to query                                       |
+| `$type`              | `string` &#124; `null`                       | Filter by object type (for example &quot;document&quot;) |
+| `$startTime`         | `DateTimeImmutable` &#124; `null`            | Filter changes after this time                           |
+| `$continuationToken` | `string` &#124; `null`                       | Token from previous response for pagination              |
+| `$pageSize`          | `int` &#124; `null`                          | Maximum number of changes to return                      |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with ListTupleChangesResponse containing change history, or Failure with error details
+
+### read
 
 ```php
 public function read(
@@ -88,7 +118,7 @@ Read relationship tuples from the store. Retrieves tuples matching the specified
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with ReadTuplesResponse containing matching tuples, or Failure with error details
 
-#### write
+### write
 
 ```php
 public function write(
@@ -119,7 +149,7 @@ Write relationship tuples to the store. Creates new relationship tuples in the s
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with WriteTuplesResponse containing operation results, or Failure with error details
 
-#### writeAndDelete
+### writeAndDelete
 
 ```php
 public function writeAndDelete(
@@ -151,36 +181,3 @@ Write and delete relationship tuples in a single operation. Combines write and d
 #### Returns
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with WriteTuplesResponse containing operation results, or Failure with error details
-
-### List Operations
-
-#### listChanges
-
-```php
-public function listChanges(
-    StoreInterface $store,
-    string|null $type = NULL,
-    DateTimeImmutable|null $startTime = NULL,
-    string|null $continuationToken = NULL,
-    int|null $pageSize = NULL,
-): FailureInterface|SuccessInterface
-
-```
-
-List changes to relationship tuples over time. Retrieves a chronological log of tuple changes (writes and deletes) within the store. Useful for auditing, synchronization, or understanding how relationships evolved. Results can be filtered by object type and time range.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Repositories/TupleRepositoryInterface.php#L67)
-
-#### Parameters
-
-| Name                 | Type                                         | Description                                              |
-| -------------------- | -------------------------------------------- | -------------------------------------------------------- |
-| `$store`             | [`StoreInterface`](Models/StoreInterface.md) | The store to query                                       |
-| `$type`              | `string` &#124; `null`                       | Filter by object type (for example &quot;document&quot;) |
-| `$startTime`         | `DateTimeImmutable` &#124; `null`            | Filter changes after this time                           |
-| `$continuationToken` | `string` &#124; `null`                       | Token from previous response for pagination              |
-| `$pageSize`          | `int` &#124; `null`                          | Maximum number of changes to return                      |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success with ListTupleChangesResponse containing change history, or Failure with error details

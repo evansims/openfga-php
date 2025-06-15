@@ -2,14 +2,15 @@
 
 Base interface for all OpenFGA SDK exceptions. Extends the standard PHP Throwable interface with additional methods to provide detailed context about SDK-specific errors including HTTP request/response information and categorized error types. This interface ensures consistent error handling across all exception types in the OpenFGA SDK, enabling developers to access rich context information for debugging and error reporting. All OpenFGA exceptions implement this interface to provide a unified error handling experience. OpenFGA exceptions are categorized into specific types: - Authentication errors (token expired, invalid credentials) - Configuration errors (missing PSR components, invalid setup) - Network errors (HTTP failures, timeouts, API unavailability) - Serialization errors (JSON parsing, schema validation failures) - Client errors (general validation and usage errors)
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Implements](#implements)
 - [Methods](#methods)
 
-- [List Operations](#list-operations)
+- [`context()`](#context)
   - [`getCode()`](#getcode)
   - [`getFile()`](#getfile)
   - [`getLine()`](#getline)
@@ -17,12 +18,12 @@ Base interface for all OpenFGA SDK exceptions. Extends the standard PHP Throwabl
   - [`getPrevious()`](#getprevious)
   - [`getTrace()`](#gettrace)
   - [`getTraceAsString()`](#gettraceasstring)
-- [Other](#other)
-  - [`context()`](#context)
   - [`kind()`](#kind)
   - [`previous()`](#previous)
   - [`request()`](#request)
   - [`response()`](#response)
+
+</details>
 
 ## Namespace
 
@@ -39,84 +40,7 @@ Base interface for all OpenFGA SDK exceptions. Extends the standard PHP Throwabl
 
 ## Methods
 
-### List Operations
-
-#### getCode
-
-```php
-public function getCode()
-
-```
-
-#### getFile
-
-```php
-public function getFile(): string
-
-```
-
-#### Returns
-
-`string`
-
-#### getLine
-
-```php
-public function getLine(): int
-
-```
-
-#### Returns
-
-`int`
-
-#### getMessage
-
-```php
-public function getMessage(): string
-
-```
-
-#### Returns
-
-`string`
-
-#### getPrevious
-
-```php
-public function getPrevious(): ?Throwable
-
-```
-
-#### Returns
-
-`Throwable` &#124; `null`
-
-#### getTrace
-
-```php
-public function getTrace(): array
-
-```
-
-#### Returns
-
-`array`
-
-#### getTraceAsString
-
-```php
-public function getTraceAsString(): string
-
-```
-
-#### Returns
-
-`string`
-
-### Other
-
-#### context
+### context
 
 ```php
 public function context(): array<string, mixed>
@@ -131,7 +55,80 @@ Get additional context information about the exception. Provides access to conte
 
 `array&lt;`string`, `mixed`&gt;` — Associative array of context data including parameter values, error details, and debugging information
 
-#### kind
+### getCode
+
+```php
+public function getCode()
+
+```
+
+### getFile
+
+```php
+public function getFile(): string
+
+```
+
+#### Returns
+
+`string`
+
+### getLine
+
+```php
+public function getLine(): int
+
+```
+
+#### Returns
+
+`int`
+
+### getMessage
+
+```php
+public function getMessage(): string
+
+```
+
+#### Returns
+
+`string`
+
+### getPrevious
+
+```php
+public function getPrevious(): ?Throwable
+
+```
+
+#### Returns
+
+`Throwable` &#124; `null`
+
+### getTrace
+
+```php
+public function getTrace(): array
+
+```
+
+#### Returns
+
+`array`
+
+### getTraceAsString
+
+```php
+public function getTraceAsString(): string
+
+```
+
+#### Returns
+
+`string`
+
+### kind
 
 ```php
 public function kind(): AuthenticationError|ClientError|ConfigurationError|NetworkError|SerializationError
@@ -146,7 +143,7 @@ Get the specific error category for this exception. Returns the error classifica
 
 [`AuthenticationError`](AuthenticationError.md) &#124; [`ClientError`](ClientError.md) &#124; [`ConfigurationError`](ConfigurationError.md) &#124; [`NetworkError`](NetworkError.md) &#124; [`SerializationError`](SerializationError.md) — The error category enum indicating the type of failure
 
-#### previous
+### previous
 
 ```php
 public function previous(): Throwable|null
@@ -161,7 +158,7 @@ Get the previous exception that caused this one. Provides access to the exceptio
 
 `Throwable` &#124; `null` — The previous exception in the chain, or null if this is the root exception
 
-#### request
+### request
 
 ```php
 public function request(): RequestInterface|null
@@ -176,7 +173,7 @@ Get the HTTP request associated with this exception. Returns the PSR-7 HTTP requ
 
 [`RequestInterface`](Requests/RequestInterface.md) &#124; `null` — The PSR-7 HTTP request that triggered the exception, or null if not applicable
 
-#### response
+### response
 
 ```php
 public function response(): ResponseInterface|null

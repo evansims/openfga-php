@@ -2,15 +2,17 @@
 
 Retry handler interface for advanced HTTP request retry strategies. This interface defines the contract for retry handler implementations that provide sophisticated retry logic for HTTP requests, including exponential backoff, jitter, circuit breaker integration, and server-header-aware delays. Retry handlers categorize errors and apply appropriate retry strategies: - Network errors: Fast initial retry with exponential backoff - Rate limits (429): Honor server timing headers exactly - Server errors (5xx): Standard exponential backoff - Maintenance (503): Extended delays for service recovery The implementation should respect server-provided timing via Retry-After and rate limit headers while providing fallback logic for cases where such headers are unavailable.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
 - [Related Classes](#related-classes)
 - [Methods](#methods)
 
-- [Other](#other)
-  - [`executeWithRetry()`](#executewithretry)
+- [`executeWithRetry()`](#executewithretry)
+
+</details>
 
 ## Namespace
 
@@ -26,7 +28,7 @@ Retry handler interface for advanced HTTP request retry strategies. This interfa
 
 ## Methods
 
-#### executeWithRetry
+### executeWithRetry
 
 ```php
 public function executeWithRetry(

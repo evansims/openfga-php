@@ -2,7 +2,8 @@
 
 OpenFGA Client implementation for relationship-based access control operations. This client provides a complete implementation of the OpenFGA API, supporting all core operations including store management, authorization model configuration, relationship tuple operations, and authorization checks. The client uses PSR-7, PSR-17 and PSR-18 HTTP standards and implements the Result pattern for error handling. The client supports multiple authentication methods including OAuth 2.0 Client Credentials flow and pre-shared key authentication, with automatic token management and retry capabilities for reliable operation.
 
-## Table of Contents
+<details>
+<summary><strong>Table of Contents</strong></summary>
 
 - [Namespace](#namespace)
 - [Source](#source)
@@ -11,19 +12,13 @@ OpenFGA Client implementation for relationship-based access control operations. 
 - [Constants](#constants)
 - [Methods](#methods)
 
-- [Authorization](#authorization)
-  - [`batchCheck()`](#batchcheck)
+- [`batchCheck()`](#batchcheck)
   - [`check()`](#check)
-  - [`expand()`](#expand)
-- [CRUD Operations](#crud-operations)
   - [`createAuthorizationModel()`](#createauthorizationmodel)
   - [`createStore()`](#createstore)
   - [`deleteStore()`](#deletestore)
-  - [`readAssertions()`](#readassertions)
-  - [`readTuples()`](#readtuples)
-  - [`writeAssertions()`](#writeassertions)
-  - [`writeTuples()`](#writetuples)
-- [List Operations](#list-operations)
+  - [`dsl()`](#dsl)
+  - [`expand()`](#expand)
   - [`getAuthorizationModel()`](#getauthorizationmodel)
   - [`getLanguage()`](#getlanguage)
   - [`getLanguageEnum()`](#getlanguageenum)
@@ -35,9 +30,13 @@ OpenFGA Client implementation for relationship-based access control operations. 
   - [`listStores()`](#liststores)
   - [`listTupleChanges()`](#listtuplechanges)
   - [`listUsers()`](#listusers)
+  - [`readAssertions()`](#readassertions)
+  - [`readTuples()`](#readtuples)
   - [`streamedListObjects()`](#streamedlistobjects)
-- [Other](#other)
-  - [`dsl()`](#dsl)
+  - [`writeAssertions()`](#writeassertions)
+  - [`writeTuples()`](#writetuples)
+
+</details>
 
 ## Namespace
 
@@ -63,9 +62,7 @@ OpenFGA Client implementation for relationship-based access control operations. 
 
 ## Methods
 
-### Authorization
-
-#### batchCheck
+### batchCheck
 
 ```php
 public function batchCheck(
@@ -126,7 +123,7 @@ if ($result->success()) {
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — The batch check results
 
-#### check
+### check
 
 ```php
 public function check(
@@ -195,40 +192,7 @@ $result = $client->check(
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CheckResponseInterface, Failure contains Throwable
 
-#### expand
-
-```php
-public function expand(
-    OpenFGA\Models\StoreInterface|string $store,
-    OpenFGA\Models\TupleKeyInterface $tupleKey,
-    ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL,
-    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
-    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Expands a relationship tuple to show all users that have the relationship.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L275)
-
-#### Parameters
-
-| Name                | Type                                                                                                               | Description                                 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                       | The store containing the tuple              |
-| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                                 | The tuple to expand                         |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` &#124; `string` &#124; `null` | The authorization model to use              |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`                                     | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                         | Override the default consistency level      |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ExpandResponseInterface, Failure contains Throwable
-
-### CRUD Operations
-
-#### createAuthorizationModel
+### createAuthorizationModel
 
 ```php
 public function createAuthorizationModel(
@@ -287,7 +251,7 @@ if ($result->success()) {
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateAuthorizationModelResponseInterface, Failure contains Throwable
 
-#### createStore
+### createStore
 
 ```php
 public function createStore(string $name): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
@@ -308,7 +272,7 @@ Creates a new store with the given name. Stores provide data isolation for diffe
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains CreateStoreResponseInterface, Failure contains Throwable
 
-#### deleteStore
+### deleteStore
 
 ```php
 public function deleteStore(
@@ -331,7 +295,438 @@ Deletes a store.
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains DeleteStoreResponseInterface, Failure contains Throwable
 
-#### readAssertions
+### dsl
+
+```php
+public function dsl(string $dsl): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Parses a DSL string and returns an AuthorizationModel. The Domain Specific Language (DSL) provides a human-readable way to define authorization models using intuitive syntax for relationships and permissions. This method converts DSL text into a structured authorization model object.
+
+**Parse a complete authorization model from DSL:**
+
+```php
+$dsl = '
+    model
+      schema 1.1
+
+    type user
+
+    type organization
+      relations
+        define member: [user]
+
+    type document
+      relations
+        define owner: [user]
+        define editor: [user, organization#member] or owner
+        define viewer: [user, organization#member] or editor
+';
+
+$result = $client->dsl($dsl);
+
+if ($result->success()) {
+    $authModel = $result->value();
+    echo "Parsed model with " . count($authModel->getTypeDefinitions()) . " types";
+}
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L235)
+
+#### Parameters
+
+| Name   | Type     | Description             |
+| ------ | -------- | ----------------------- |
+| `$dsl` | `string` | The DSL string to parse |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains AuthorizationModelInterface, Failure contains Throwable
+
+### expand
+
+```php
+public function expand(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\TupleKeyInterface $tupleKey,
+    ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Expands a relationship tuple to show all users that have the relationship.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L275)
+
+#### Parameters
+
+| Name                | Type                                                                                                               | Description                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                       | The store containing the tuple              |
+| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                                 | The tuple to expand                         |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` &#124; `string` &#124; `null` | The authorization model to use              |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`                                     | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                         | Override the default consistency level      |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ExpandResponseInterface, Failure contains Throwable
+
+### getAuthorizationModel
+
+```php
+public function getAuthorizationModel(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Retrieves an authorization model by ID.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L301)
+
+#### Parameters
+
+| Name     | Type                                                                                   | Description                    |
+| -------- | -------------------------------------------------------------------------------------- | ------------------------------ |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store containing the model |
+| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to retrieve          |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
+
+### getLanguage
+
+```php
+public function getLanguage(): string
+
+```
+
+Get the configured language for i18n translations.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L320)
+
+#### Returns
+
+`string` — The configured language code
+
+### getLanguageEnum
+
+```php
+public function getLanguageEnum(): Language
+
+```
+
+Get the configured language enum for type-safe access. Returns the Language enum representing the currently configured language, providing access to language metadata and type-safe operations.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L333)
+
+#### Returns
+
+[`Language`](Language.md) — The configured language enum
+
+### getLastRequest
+
+```php
+public function getLastRequest(): ?Psr\Http\Message\RequestInterface
+
+```
+
+Retrieves the last HTTP request made by the client.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L344)
+
+#### Returns
+
+`Psr\Http\Message\RequestInterface` &#124; `null`
+
+### getLastResponse
+
+```php
+public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
+
+```
+
+Retrieves the last HTTP response received by the client.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L357)
+
+#### Returns
+
+`Psr\Http\Message\ResponseInterface` &#124; `null`
+
+### getStore
+
+```php
+public function getStore(
+    OpenFGA\Models\StoreInterface|string $store,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Retrieves store details by ID.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L370)
+
+#### Parameters
+
+| Name     | Type                                                         | Description           |
+| -------- | ------------------------------------------------------------ | --------------------- |
+| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to retrieve |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetStoreResponseInterface, Failure contains Throwable
+
+### listAuthorizationModels
+
+```php
+public function listAuthorizationModels(
+    OpenFGA\Models\StoreInterface|string $store,
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Lists authorization models in a store with pagination.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L389)
+
+#### Parameters
+
+| Name                 | Type                                                         | Description                                           |
+| -------------------- | ------------------------------------------------------------ | ----------------------------------------------------- |
+| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from                         |
+| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination                                  |
+| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of models to return (must be positive) |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
+
+### listObjects
+
+```php
+public function listObjects(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    string $type,
+    string $relation,
+    string $user,
+    ?object $context = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Lists objects that have a specific relationship with a user.
+
+**List all documents a user can view:**
+
+```php
+$result = $client->listObjects(
+    store: 'store-id',
+    model: 'model-id',
+    type: 'document',
+    relation: 'viewer',
+    user: 'user:anne'
+);
+
+if ($result->success()) {
+    $objects = $result->value()->getObjects();
+    echo "Anne can view " . count($objects) . " documents:\n";
+    foreach ($objects as $object) {
+        echo "- {$object}\n";
+    }
+}
+
+```
+
+**List objects with contextual evaluation:**
+
+```php
+// Check what documents anne can edit, considering her team membership
+$contextualTuples = new TupleKeys([
+    new TupleKey('user:anne', 'member', 'team:engineering')
+]);
+
+$result = $client->listObjects(
+    store: 'store-id',
+    model: 'model-id',
+    type: 'document',
+    relation: 'editor',
+    user: 'user:anne',
+    contextualTuples: $contextualTuples
+);
+/
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L414)
+
+#### Parameters
+
+| Name                | Type                                                                                   | Description                                 |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
+| `$type`             | `string`                                                                               | The type of objects to list                 |
+| `$relation`         | `string`                                                                               | The relationship to check                   |
+| `$user`             | `string`                                                                               | The user to check relationships for         |
+| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListObjectsResponseInterface, Failure contains Throwable
+
+### listStores
+
+```php
+public function listStores(
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Lists all stores with pagination.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L446)
+
+#### Parameters
+
+| Name                 | Type                   | Description                        |
+| -------------------- | ---------------------- | ---------------------------------- |
+| `$continuationToken` | `string` &#124; `null` | Token for pagination               |
+| `$pageSize`          | `int` &#124; `null`    | Maximum number of stores to return |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListStoresResponseInterface, Failure contains Throwable
+
+### listTupleChanges
+
+```php
+public function listTupleChanges(
+    OpenFGA\Models\StoreInterface|string $store,
+    ?string $continuationToken = NULL,
+    ?int $pageSize = NULL,
+    ?string $type = NULL,
+    ?DateTimeImmutable $startTime = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Lists changes to relationship tuples in a store.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L467)
+
+#### Parameters
+
+| Name                 | Type                                                         | Description                                            |
+| -------------------- | ------------------------------------------------------------ | ------------------------------------------------------ |
+| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list changes for                          |
+| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination                                   |
+| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of changes to return                    |
+| `$type`              | `string` &#124; `null`                                       | Filter changes by type                                 |
+| `$startTime`         | `DateTimeImmutable` &#124; `null`                            | Only include changes at or after this time (inclusive) |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListTupleChangesResponseInterface, Failure contains Throwable
+
+### listUsers
+
+```php
+public function listUsers(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    string $object,
+    string $relation,
+    OpenFGA\Models\Collections\UserTypeFiltersInterface $userFilters,
+    ?object $context = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Lists users that have a specific relationship with an object.
+
+**List all users who can view a document:**
+
+```php
+$userFilters = new UserTypeFilters([
+    new UserTypeFilter('user') // Only include direct users, not groups
+]);
+
+$result = $client->listUsers(
+    store: 'store-id',
+    model: 'model-id',
+    object: 'document:budget',
+    relation: 'viewer',
+    userFilters: $userFilters
+);
+
+if ($result->success()) {
+    $users = $result->value()->getUsers();
+    echo "Users who can view the budget document:\n";
+    foreach ($users as $user) {
+        echo "- {$user}\n";
+    }
+}
+
+```
+
+**Find both users and groups with access:**
+
+```php
+$userFilters = new UserTypeFilters([
+    new UserTypeFilter('user'),
+    new UserTypeFilter('group')
+]);
+
+$result = $client->listUsers(
+    store: 'store-id',
+    model: 'model-id',
+    object: 'document:sensitive',
+    relation: 'editor',
+    userFilters: $userFilters
+);
+/
+
+```
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L493)
+
+#### Parameters
+
+| Name                | Type                                                                                   | Description                                 |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
+| `$object`           | `string`                                                                               | The object to check relationships for       |
+| `$relation`         | `string`                                                                               | The relationship to check                   |
+| `$userFilters`      | [`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md)           | Filters for user types to include           |
+| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListUsersResponseInterface, Failure contains Throwable
+
+### readAssertions
 
 ```php
 public function readAssertions(
@@ -356,7 +751,7 @@ Retrieves assertions for an authorization model.
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadAssertionsResponseInterface, Failure contains Throwable
 
-#### readTuples
+### readTuples
 
 ```php
 public function readTuples(
@@ -387,7 +782,44 @@ Reads relationship tuples from a store with optional filtering and pagination.
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ReadTuplesResponseInterface, Failure contains Throwable
 
-#### writeAssertions
+### streamedListObjects
+
+```php
+public function streamedListObjects(
+    OpenFGA\Models\StoreInterface|string $store,
+    OpenFGA\Models\AuthorizationModelInterface|string $model,
+    string $type,
+    string $relation,
+    string $user,
+    ?object $context = NULL,
+    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
+    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
+): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
+
+```
+
+Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L571)
+
+#### Parameters
+
+| Name                | Type                                                                                   | Description                                 |
+| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
+| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
+| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
+| `$type`             | `string`                                                                               | The object type to find                     |
+| `$relation`         | `string`                                                                               | The relationship to check                   |
+| `$user`             | `string`                                                                               | The user to check relationships for         |
+| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
+| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
+| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
+
+#### Returns
+
+[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
+
+### writeAssertions
 
 ```php
 public function writeAssertions(
@@ -414,7 +846,7 @@ Creates or updates assertions for an authorization model.
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains WriteAssertionsResponseInterface, Failure contains Throwable
 
-#### writeTuples
+### writeTuples
 
 ```php
 public function writeTuples(
@@ -528,444 +960,3 @@ $client->writeTuples(
 #### Returns
 
 [`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains WriteTuplesResponseInterface, Failure contains Throwable
-
-### List Operations
-
-#### getAuthorizationModel
-
-```php
-public function getAuthorizationModel(
-    OpenFGA\Models\StoreInterface|string $store,
-    OpenFGA\Models\AuthorizationModelInterface|string $model,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Retrieves an authorization model by ID.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L301)
-
-#### Parameters
-
-| Name     | Type                                                                                   | Description                    |
-| -------- | -------------------------------------------------------------------------------------- | ------------------------------ |
-| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store containing the model |
-| `$model` | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The model to retrieve          |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetAuthorizationModelResponseInterface, Failure contains Throwable
-
-#### getLanguage
-
-```php
-public function getLanguage(): string
-
-```
-
-Get the configured language for i18n translations.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L320)
-
-#### Returns
-
-`string` — The configured language code
-
-#### getLanguageEnum
-
-```php
-public function getLanguageEnum(): Language
-
-```
-
-Get the configured language enum for type-safe access. Returns the Language enum representing the currently configured language, providing access to language metadata and type-safe operations.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L333)
-
-#### Returns
-
-[`Language`](Language.md) — The configured language enum
-
-#### getLastRequest
-
-```php
-public function getLastRequest(): ?Psr\Http\Message\RequestInterface
-
-```
-
-Retrieves the last HTTP request made by the client.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L344)
-
-#### Returns
-
-`Psr\Http\Message\RequestInterface` &#124; `null`
-
-#### getLastResponse
-
-```php
-public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
-
-```
-
-Retrieves the last HTTP response received by the client.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L357)
-
-#### Returns
-
-`Psr\Http\Message\ResponseInterface` &#124; `null`
-
-#### getStore
-
-```php
-public function getStore(
-    OpenFGA\Models\StoreInterface|string $store,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Retrieves store details by ID.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L370)
-
-#### Parameters
-
-| Name     | Type                                                         | Description           |
-| -------- | ------------------------------------------------------------ | --------------------- |
-| `$store` | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to retrieve |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains GetStoreResponseInterface, Failure contains Throwable
-
-#### listAuthorizationModels
-
-```php
-public function listAuthorizationModels(
-    OpenFGA\Models\StoreInterface|string $store,
-    ?string $continuationToken = NULL,
-    ?int $pageSize = NULL,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Lists authorization models in a store with pagination.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L389)
-
-#### Parameters
-
-| Name                 | Type                                                         | Description                                           |
-| -------------------- | ------------------------------------------------------------ | ----------------------------------------------------- |
-| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list models from                         |
-| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination                                  |
-| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of models to return (must be positive) |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListAuthorizationModelsResponseInterface, Failure contains Throwable
-
-#### listObjects
-
-```php
-public function listObjects(
-    OpenFGA\Models\StoreInterface|string $store,
-    OpenFGA\Models\AuthorizationModelInterface|string $model,
-    string $type,
-    string $relation,
-    string $user,
-    ?object $context = NULL,
-    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
-    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Lists objects that have a specific relationship with a user.
-
-**List all documents a user can view:**
-
-```php
-$result = $client->listObjects(
-    store: 'store-id',
-    model: 'model-id',
-    type: 'document',
-    relation: 'viewer',
-    user: 'user:anne'
-);
-
-if ($result->success()) {
-    $objects = $result->value()->getObjects();
-    echo "Anne can view " . count($objects) . " documents:\n";
-    foreach ($objects as $object) {
-        echo "- {$object}\n";
-    }
-}
-
-```
-
-**List objects with contextual evaluation:**
-
-```php
-// Check what documents anne can edit, considering her team membership
-$contextualTuples = new TupleKeys([
-    new TupleKey('user:anne', 'member', 'team:engineering')
-]);
-
-$result = $client->listObjects(
-    store: 'store-id',
-    model: 'model-id',
-    type: 'document',
-    relation: 'editor',
-    user: 'user:anne',
-    contextualTuples: $contextualTuples
-);
-/
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L414)
-
-#### Parameters
-
-| Name                | Type                                                                                   | Description                                 |
-| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
-| `$type`             | `string`                                                                               | The type of objects to list                 |
-| `$relation`         | `string`                                                                               | The relationship to check                   |
-| `$user`             | `string`                                                                               | The user to check relationships for         |
-| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListObjectsResponseInterface, Failure contains Throwable
-
-#### listStores
-
-```php
-public function listStores(
-    ?string $continuationToken = NULL,
-    ?int $pageSize = NULL,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Lists all stores with pagination.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L446)
-
-#### Parameters
-
-| Name                 | Type                   | Description                        |
-| -------------------- | ---------------------- | ---------------------------------- |
-| `$continuationToken` | `string` &#124; `null` | Token for pagination               |
-| `$pageSize`          | `int` &#124; `null`    | Maximum number of stores to return |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListStoresResponseInterface, Failure contains Throwable
-
-#### listTupleChanges
-
-```php
-public function listTupleChanges(
-    OpenFGA\Models\StoreInterface|string $store,
-    ?string $continuationToken = NULL,
-    ?int $pageSize = NULL,
-    ?string $type = NULL,
-    ?DateTimeImmutable $startTime = NULL,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Lists changes to relationship tuples in a store.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L467)
-
-#### Parameters
-
-| Name                 | Type                                                         | Description                                            |
-| -------------------- | ------------------------------------------------------------ | ------------------------------------------------------ |
-| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to list changes for                          |
-| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination                                   |
-| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of changes to return                    |
-| `$type`              | `string` &#124; `null`                                       | Filter changes by type                                 |
-| `$startTime`         | `DateTimeImmutable` &#124; `null`                            | Only include changes at or after this time (inclusive) |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListTupleChangesResponseInterface, Failure contains Throwable
-
-#### listUsers
-
-```php
-public function listUsers(
-    OpenFGA\Models\StoreInterface|string $store,
-    OpenFGA\Models\AuthorizationModelInterface|string $model,
-    string $object,
-    string $relation,
-    OpenFGA\Models\Collections\UserTypeFiltersInterface $userFilters,
-    ?object $context = NULL,
-    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
-    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Lists users that have a specific relationship with an object.
-
-**List all users who can view a document:**
-
-```php
-$userFilters = new UserTypeFilters([
-    new UserTypeFilter('user') // Only include direct users, not groups
-]);
-
-$result = $client->listUsers(
-    store: 'store-id',
-    model: 'model-id',
-    object: 'document:budget',
-    relation: 'viewer',
-    userFilters: $userFilters
-);
-
-if ($result->success()) {
-    $users = $result->value()->getUsers();
-    echo "Users who can view the budget document:\n";
-    foreach ($users as $user) {
-        echo "- {$user}\n";
-    }
-}
-
-```
-
-**Find both users and groups with access:**
-
-```php
-$userFilters = new UserTypeFilters([
-    new UserTypeFilter('user'),
-    new UserTypeFilter('group')
-]);
-
-$result = $client->listUsers(
-    store: 'store-id',
-    model: 'model-id',
-    object: 'document:sensitive',
-    relation: 'editor',
-    userFilters: $userFilters
-);
-/
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L493)
-
-#### Parameters
-
-| Name                | Type                                                                                   | Description                                 |
-| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
-| `$object`           | `string`                                                                               | The object to check relationships for       |
-| `$relation`         | `string`                                                                               | The relationship to check                   |
-| `$userFilters`      | [`UserTypeFiltersInterface`](Models/Collections/UserTypeFiltersInterface.md)           | Filters for user types to include           |
-| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains ListUsersResponseInterface, Failure contains Throwable
-
-#### streamedListObjects
-
-```php
-public function streamedListObjects(
-    OpenFGA\Models\StoreInterface|string $store,
-    OpenFGA\Models\AuthorizationModelInterface|string $model,
-    string $type,
-    string $relation,
-    string $user,
-    ?object $context = NULL,
-    ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
-    ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
-): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L571)
-
-#### Parameters
-
-| Name                | Type                                                                                   | Description                                 |
-| ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
-| `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to query                          |
-| `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
-| `$type`             | `string`                                                                               | The object type to find                     |
-| `$relation`         | `string`                                                                               | The relationship to check                   |
-| `$user`             | `string`                                                                               | The user to check relationships for         |
-| `$context`          | `object` &#124; `null`                                                                 | Additional context for evaluation           |
-| `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
-| `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                             | Override the default consistency level      |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains Generator&lt;StreamedListObjectsResponseInterface&gt;, Failure contains Throwable
-
-### Other
-
-#### dsl
-
-```php
-public function dsl(string $dsl): OpenFGA\Results\FailureInterface|OpenFGA\Results\SuccessInterface
-
-```
-
-Parses a DSL string and returns an AuthorizationModel. The Domain Specific Language (DSL) provides a human-readable way to define authorization models using intuitive syntax for relationships and permissions. This method converts DSL text into a structured authorization model object.
-
-**Parse a complete authorization model from DSL:**
-
-```php
-$dsl = '
-    model
-      schema 1.1
-
-    type user
-
-    type organization
-      relations
-        define member: [user]
-
-    type document
-      relations
-        define owner: [user]
-        define editor: [user, organization#member] or owner
-        define viewer: [user, organization#member] or editor
-';
-
-$result = $client->dsl($dsl);
-
-if ($result->success()) {
-    $authModel = $result->value();
-    echo "Parsed model with " . count($authModel->getTypeDefinitions()) . " types";
-}
-
-```
-
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L235)
-
-#### Parameters
-
-| Name   | Type     | Description             |
-| ------ | -------- | ----------------------- |
-| `$dsl` | `string` | The DSL string to parse |
-
-#### Returns
-
-[`FailureInterface`](Results/FailureInterface.md) &#124; [`SuccessInterface`](Results/SuccessInterface.md) — Success contains AuthorizationModelInterface, Failure contains Throwable
