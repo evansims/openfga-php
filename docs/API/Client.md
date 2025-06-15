@@ -756,7 +756,7 @@ Retrieves assertions for an authorization model.
 ```php
 public function readTuples(
     OpenFGA\Models\StoreInterface|string $store,
-    OpenFGA\Models\TupleKeyInterface $tupleKey,
+    ?OpenFGA\Models\TupleKeyInterface $tupleKey = NULL,
     ?string $continuationToken = NULL,
     ?int $pageSize = NULL,
     ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
@@ -770,13 +770,13 @@ Reads relationship tuples from a store with optional filtering and pagination.
 
 #### Parameters
 
-| Name                 | Type                                                         | Description                                    |
-| -------------------- | ------------------------------------------------------------ | ---------------------------------------------- |
-| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string` | The store to read from                         |
-| `$tupleKey`          | [`TupleKeyInterface`](Models/TupleKeyInterface.md)           | Filter tuples by this key (return all if null) |
-| `$continuationToken` | `string` &#124; `null`                                       | Token for pagination                           |
-| `$pageSize`          | `int` &#124; `null`                                          | Maximum number of tuples to return             |
-| `$consistency`       | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`   | Override the default consistency level         |
+| Name                 | Type                                                             | Description                                    |
+| -------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
+| `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`     | The store to read from                         |
+| `$tupleKey`          | [`TupleKeyInterface`](Models/TupleKeyInterface.md) &#124; `null` | Filter tuples by this key (return all if null) |
+| `$continuationToken` | `string` &#124; `null`                                           | Token for pagination                           |
+| `$pageSize`          | `int` &#124; `null`                                              | Maximum number of tuples to return             |
+| `$consistency`       | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`       | Override the default consistency level         |
 
 #### Returns
 
