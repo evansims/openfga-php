@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\{Authentication, Client};
 use OpenFGA\Models\Enums\Consistency;
 use Psr\Http\Message\{RequestInterface, ResponseInterface};
@@ -15,19 +13,7 @@ use function OpenFGA\{tuple, tuples};
 
 describe('Utility Methods', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
 
         $name = 'utility-test-' . bin2hex(random_bytes(5));
         $this->store = $this->client->createStore(name: $name)
@@ -102,12 +88,8 @@ describe('Utility Methods', function (): void {
         $token = 'Bearer test-token-' . uniqid();
 
         $authClient = new Client(
-            url: $this->url,
+            url: getOpenFgaUrl(),
             authentication: new Authentication\TokenAuthentication($token),
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
         );
 
         $authClient->listStores();
@@ -167,7 +149,7 @@ describe('Utility Methods', function (): void {
         $this->client->check(
             store: $this->storeId,
             model: 'latest',
-            tupleKey: tuple('user:alice', 'viewer', 'document:doc1'),
+            tuple: tuple('user:alice', 'viewer', 'document:doc1'),
             consistency: Consistency::HIGHER_CONSISTENCY,
         );
 
@@ -195,11 +177,7 @@ describe('Utility Methods', function (): void {
 
     test('null returned when no requests made', function (): void {
         $freshClient = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
+            url: getOpenFgaUrl(),
         );
 
         expect($freshClient->getLastRequest())->toBeNull();

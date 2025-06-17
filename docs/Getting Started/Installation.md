@@ -81,16 +81,7 @@ composer require guzzlehttp/guzzle
 
 **Error:** `Your PHP version (8.x.x) does not satisfy requirements`
 
-**Solution:** Upgrade to PHP 8.3 or higher:
-
-```bash
-# Ubuntu/Debian
-sudo apt update
-sudo apt install php8.3
-
-# macOS with Homebrew
-brew install php@8.3
-```
+**Solution:** Upgrade to PHP 8.3 or higher (e.g. `sudo apt update && sudo apt install php8.3` on Ubuntu or `brew install php@8.3` on macOS).
 
 ### Memory Limit Exceeded
 
@@ -107,14 +98,9 @@ COMPOSER_MEMORY_LIMIT=-1 composer require evansims/openfga-php
 For contributing to the SDK or running tests:
 
 ```bash
-# Clone the repository
 git clone https://github.com/evansims/openfga-php.git
 cd openfga-php
-
-# Install dependencies including dev dependencies
 composer install
-
-# Run tests to verify everything works
 composer test
 ```
 
@@ -213,4 +199,3 @@ composer diagnose
 ```bash
 composer require evansims/openfga-php -vvv
 ```
-

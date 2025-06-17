@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 use OpenFGA\Models\Enums\Consistency;
 
@@ -14,19 +12,7 @@ use function sprintf;
 
 describe('Tuple Management', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
 
         $name = 'tuple-test-' . bin2hex(random_bytes(5));
         $this->store = $this->client->createStore(name: $name)
@@ -80,7 +66,7 @@ describe('Tuple Management', function (): void {
 
         $readResponse1 = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('', '', 'document:readme'),
+            tuple: tuple('', '', 'document:readme'),
             consistency: Consistency::HIGHER_CONSISTENCY,
         )->rethrow()->unwrap();
 
@@ -88,7 +74,7 @@ describe('Tuple Management', function (): void {
 
         $readResponse2 = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('', '', 'document:spec'),
+            tuple: tuple('', '', 'document:spec'),
         )->rethrow()->unwrap();
 
         expect($readResponse2->getTuples()->count())->toBe(1); // charlie as writer
@@ -137,7 +123,7 @@ describe('Tuple Management', function (): void {
 
         $readResponse = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('', '', 'document:test'),
+            tuple: tuple('', '', 'document:test'),
         )->rethrow()->unwrap();
 
         expect($readResponse->getTuples()->count())->toBe(2);
@@ -152,7 +138,7 @@ describe('Tuple Management', function (): void {
 
         $readAfterDelete = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('', '', 'document:test'),
+            tuple: tuple('', '', 'document:test'),
         )->rethrow()->unwrap();
 
         expect($readAfterDelete->getTuples()->count())->toBe(1);
@@ -181,28 +167,28 @@ describe('Tuple Management', function (): void {
 
         $readByObject = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('', '', 'document:doc1'),
+            tuple: tuple('', '', 'document:doc1'),
         )->rethrow()->unwrap();
 
         expect($readByObject->getTuples()->count())->toBe(2); // alice as owner, bob as reader
 
         $readByUserAndObject = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('user:alice', '', 'document:doc1'),
+            tuple: tuple('user:alice', '', 'document:doc1'),
         )->rethrow()->unwrap();
 
         expect($readByUserAndObject->getTuples()->count())->toBe(1); // alice as owner
 
         $readByRelationAndObject = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('', 'reader', 'document:doc1'),
+            tuple: tuple('', 'reader', 'document:doc1'),
         )->rethrow()->unwrap();
 
         expect($readByRelationAndObject->getTuples()->count())->toBe(1); // bob as reader
 
         $readByAllFilters = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('user:bob', 'writer', 'document:doc2'),
+            tuple: tuple('user:bob', 'writer', 'document:doc2'),
         )->rethrow()->unwrap();
 
         expect($readByAllFilters->getTuples()->count())->toBe(1); // exact match

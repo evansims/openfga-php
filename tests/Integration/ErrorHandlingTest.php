@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\{Authentication, Client};
 use OpenFGA\Exceptions\{ClientException, NetworkException, SerializationException};
 
@@ -13,19 +11,7 @@ use function OpenFGA\{tuple, tuples};
 
 describe('Error Handling', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
     });
 
     test('rejects invalid store ID', function (): void {
@@ -158,7 +144,7 @@ describe('Error Handling', function (): void {
         $result = $this->client->check(
             store: $store->getId(),
             model: $createModelResponse->getModel(),
-            tupleKey: tuple('invalid-user-format', 'reader', 'document:test'), // Should be user:id format
+            tuple: tuple('invalid-user-format', 'reader', 'document:test'), // Should be user:id format
         );
 
         expect($result->failed())->toBeTrue();
@@ -173,10 +159,6 @@ describe('Error Handling', function (): void {
     test('network errors', function (): void {
         $invalidClient = new Client(
             url: 'http://nonexistent-server:9999',
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
         );
 
         $previousHandler = set_error_handler(fn ($errno, $errstr) => (bool) (str_contains($errstr, 'php_network_getaddresses')
@@ -242,7 +224,7 @@ describe('Error Handling', function (): void {
 
         $readResponse = $this->client->readTuples(
             store: $store->getId(),
-            tupleKey: tuple('user:alice', 'reader', 'document:concurrent'),
+            tuple: tuple('user:alice', 'reader', 'document:concurrent'),
         )->rethrow()->unwrap();
 
         expect($readResponse->getTuples()->count())->toBe(0);
@@ -291,7 +273,7 @@ describe('Error Handling', function (): void {
 
         $readResponse = $this->client->readTuples(
             store: $store->getId(),
-            tupleKey: tuple('', '', 'document:large-doc'),
+            tuple: tuple('', '', 'document:large-doc'),
             pageSize: 10,
         )->rethrow()->unwrap();
 
@@ -300,7 +282,7 @@ describe('Error Handling', function (): void {
         if ($readResponse->getContinuationToken()) {
             $nextPageResponse = $this->client->readTuples(
                 store: $store->getId(),
-                tupleKey: tuple('', '', 'document:large-doc'),
+                tuple: tuple('', '', 'document:large-doc'),
                 pageSize: 10,
                 continuationToken: $readResponse->getContinuationToken(),
             )->rethrow()->unwrap();
@@ -319,11 +301,7 @@ describe('Error Handling', function (): void {
         }
 
         $invalidClient = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
+            url: getOpenFgaUrl(),
             authentication: Authentication::CLIENT_CREDENTIALS,
             clientId: 'invalid-client-id',
             clientSecret: 'invalid-client-secret',
@@ -367,7 +345,7 @@ describe('Error Handling', function (): void {
         $result = $this->client->check(
             store: $store->getId(),
             model: $createModelResponse->getModel(),
-            tupleKey: tuple('user:alice', 'reader', ':doc1'), // Empty type
+            tuple: tuple('user:alice', 'reader', ':doc1'), // Empty type
         );
 
         expect($result->failed())->toBeTrue();
@@ -451,7 +429,7 @@ describe('Error Handling', function (): void {
         $result = $this->client->check(
             store: $store->getId(),
             model: $createModelResponse->getModel(),
-            tupleKey: tuple('user:alice', '', 'document:doc1'), // Empty relation
+            tuple: tuple('user:alice', '', 'document:doc1'), // Empty relation
         );
 
         expect($result->failed())->toBeTrue();
@@ -471,7 +449,7 @@ describe('Error Handling', function (): void {
 
         $result = $this->client->readTuples(
             store: $store->getId(),
-            tupleKey: tuple('', '', ''),
+            tuple: tuple('', '', ''),
             continuationToken: 'invalid-continuation-token-abc123',
         );
 
@@ -557,7 +535,7 @@ describe('Error Handling', function (): void {
         $result = $this->client->expand(
             store: $store->getId(),
             model: $createModelResponse->getModel(),
-            tupleKey: tuple('', 'reader', 'document:nonexistent'),
+            tuple: tuple('', 'reader', 'document:nonexistent'),
         );
 
         expect($result->succeeded())->toBeTrue();

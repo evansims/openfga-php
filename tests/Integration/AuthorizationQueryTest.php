@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 use OpenFGA\Models\Collections\UserTypeFilters;
 use OpenFGA\Models\Enums\Consistency;
@@ -16,19 +14,7 @@ use function OpenFGA\{tuple, tuples};
 
 describe('Authorization Queries', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
 
         $name = 'auth-query-test-' . bin2hex(random_bytes(5));
         $this->store = $this->client->createStore(name: $name)
@@ -110,7 +96,7 @@ describe('Authorization Queries', function (): void {
         $checkAliceOwnsReadme = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:alice', 'owner', 'document:readme'),
+            tuple: tuple('user:alice', 'owner', 'document:readme'),
         )->rethrow()->unwrap();
 
         expect($checkAliceOwnsReadme->getAllowed())->toBeTrue();
@@ -118,7 +104,7 @@ describe('Authorization Queries', function (): void {
         $checkBobOwnsReadme = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:bob', 'owner', 'document:readme'),
+            tuple: tuple('user:bob', 'owner', 'document:readme'),
         )->rethrow()->unwrap();
 
         expect($checkBobOwnsReadme->getAllowed())->toBeFalse();
@@ -126,7 +112,7 @@ describe('Authorization Queries', function (): void {
         $checkAliceWritesReadme = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:alice', 'writer', 'document:readme'),
+            tuple: tuple('user:alice', 'writer', 'document:readme'),
         )->rethrow()->unwrap();
 
         expect($checkAliceWritesReadme->getAllowed())->toBeTrue();
@@ -136,7 +122,7 @@ describe('Authorization Queries', function (): void {
         $checkAliceViewsProjectAlpha = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:alice', 'viewer', 'folder:project-alpha'),
+            tuple: tuple('user:alice', 'viewer', 'folder:project-alpha'),
         )->rethrow()->unwrap();
 
         expect($checkAliceViewsProjectAlpha->getAllowed())->toBeTrue();
@@ -144,7 +130,7 @@ describe('Authorization Queries', function (): void {
         $checkAliceReadsDesign = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:alice', 'reader', 'document:design'),
+            tuple: tuple('user:alice', 'reader', 'document:design'),
         )->rethrow()->unwrap();
 
         expect($checkAliceReadsDesign->getAllowed())->toBeTrue();
@@ -154,7 +140,7 @@ describe('Authorization Queries', function (): void {
         $checkBobReadsHandbook = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:bob', 'reader', 'document:handbook'),
+            tuple: tuple('user:bob', 'reader', 'document:handbook'),
         )->rethrow()->unwrap();
 
         expect($checkBobReadsHandbook->getAllowed())->toBeTrue();
@@ -162,7 +148,7 @@ describe('Authorization Queries', function (): void {
         $checkCharlieReadsHandbook = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:charlie', 'reader', 'document:handbook'),
+            tuple: tuple('user:charlie', 'reader', 'document:handbook'),
         )->rethrow()->unwrap();
 
         expect($checkCharlieReadsHandbook->getAllowed())->toBeTrue();
@@ -171,7 +157,7 @@ describe('Authorization Queries', function (): void {
     test('expands permissions', function (): void {
         $expandResponse = $this->client->expand(
             store: $this->storeId,
-            tupleKey: tuple('', 'reader', 'document:design'),
+            tuple: tuple('', 'reader', 'document:design'),
             model: $this->modelId,
         )->rethrow()->unwrap();
 
@@ -234,7 +220,7 @@ describe('Authorization Queries', function (): void {
         $checkResponse = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:alice', 'owner', 'document:readme'),
+            tuple: tuple('user:alice', 'owner', 'document:readme'),
             consistency: Consistency::MINIMIZE_LATENCY,
         )->rethrow()->unwrap();
 
@@ -243,7 +229,7 @@ describe('Authorization Queries', function (): void {
         $strongCheckResponse = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:alice', 'owner', 'document:readme'),
+            tuple: tuple('user:alice', 'owner', 'document:readme'),
             consistency: Consistency::HIGHER_CONSISTENCY,
         )->rethrow()->unwrap();
 

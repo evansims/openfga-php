@@ -4,16 +4,7 @@
 
 The examples in this guide assume you have the following setup:
 
-```php
-use OpenFGA\Client;
-
-// Initialize the client
-$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
-
-// Store and model identifiers from your configuration
-$storeId = 'your-store-id';
-$modelId = 'your-model-id';
-```
+[Snippet](../../examples/snippets/models-setup.php)
 
 ## Building your first model
 
@@ -45,35 +36,7 @@ The `or` keyword creates inheritance - owners automatically become editors, and 
 
 Use the SDK's `dsl` [helper](../Features/Helpers.md) to create a model, then use the `model` [helper](../Features/Helpers.md) to commit the model to the OpenFGA server:
 
-```php
-use function OpenFGA\{dsl, model};
-
-$dsl = <<<DSL
-model
-  schema 1.1
-
-type user
-
-type document
-  relations
-    define owner: [user]
-    define editor: [user] or owner
-    define viewer: [user] or editor
-DSL;
-
-// Transform DSL to model object using the dsl() helper
-$model = dsl(
-  client: $client,
-  dsl: $dsl,
-);
-
-// Commit the model to the server using the model() helper
-$modelId = model(
-  client: $client,
-  store $storeId,
-  model: $model,
-);
-```
+[Snippet](../../examples/snippets/models-dsl.php#dsl)
 
 Save that returned `$modelId` — you'll need it for future API calls.
 
@@ -166,32 +129,7 @@ type document
 
 Define conditions when creating your model:
 
-```php
-use OpenFGA\Models\{Condition, ConditionParameter};
-use OpenFGA\Models\Collections\{Conditions, ConditionParameters};
-use OpenFGA\Responses\CreateAuthorizationModelResponse;
-
-$conditions = new Conditions([
-    new Condition(
-        name: 'valid_ip',
-        expression: 'ip_address in allowed_ips',
-        parameters: new ConditionParameters([
-            new ConditionParameter(
-                name: 'allowed_ips',
-                typeName: 'list'
-            )
-        ])
-    )
-]);
-
-$modelId = $client->createAuthorizationModel(
-    store: $storeId,
-    typeDefinitions: $model->getTypeDefinitions(),
-    conditions: $conditions
-)
-  ->rethrow()
-  ->unwrap(fn(CreateAuthorizationModelResponse $response) => $response->getModel());
-```
+[Snippet](../../examples/snippets/models-conditions.php#conditions)
 
 ## Using models in your application
 
@@ -199,105 +137,21 @@ $modelId = $client->createAuthorizationModel(
 
 The `allowed` [helper](../Features/Helpers.md#checking-permissions) provides a convenient shorthand for checking permissions, and returns a boolean:
 
-```php
-use function OpenFGA\{allowed, tuple};
-
-$canView = allowed(
-  client: $client,
-  store: $storeId,
-  model: $modelId,
-  tuple: tuple(
-    user: 'user:alice',
-    relation: 'viewer',
-    object: 'document:readme',
-  ),
-);
-
-if ($canView) {
-  echo 'Alice can view the readme';
-}
-```
+[Snippet](../../examples/snippets/models-permissions.php#allowed)
 
 If you need greater control over the operation, use the Client `check` method directly:
 
-```php
-use function OpenFGA\{success, failure, tuple};
-
-$canView = false;
-$result = $client->check(
-    store: $storeId,
-    model: $modelId,
-    tuple: tuple(
-        user: 'user:alice',
-        relation: 'viewer',
-        object: 'document:readme',
-    )
-);
-
-failure($result, function ($error) {
-    echo "Error: " . $error->getMessage() . "\n";
-});
-
-success($result, function ($value) use (&$canView) {
-    $canView = $value->getAllowed();
-});
-
-if ($canView) {
-    echo 'Alice can view the readme';
-}
-```
+[Snippet](../../examples/snippets/models-permissions.php#client)
 
 ### List user's objects
 
 The `objects` [helper](../Features/Helpers.md#listing-objects) provides a convenient shorthand for listing user's objects, and returns an array of object identifiers:
 
-```php
-use function OpenFGA\objects;
-
-$objects = objects(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    type: 'document',
-    relation: 'viewer',
-    user: 'user:alice',
-);
-
-echo "Alice can view the following documents:\n";
-
-foreach ($objects as $object) {
-    echo $object . "\n";
-}
-```
+[Snippet](../../examples/snippets/models-list-objects.php#helper)
 
 If you need greater control over the operation, use the Client `streamedListObjects` or `listObjects` methods directly:
 
-```php
-use function OpenFGA\{success, failure};
-
-$objects = [];
-$result = $client->streamedListObjects(
-    store: $storeId,
-    model: $modelId,
-    type: 'document',
-    relation: 'viewer',
-    user: 'user:alice',
-);
-
-failure($result, function ($error) {
-    echo "Error: " . $error->getMessage() . "\n";
-});
-
-success($result, function ($value) use (&$objects) {
-    $objects = $value->getObjects();
-});
-
-echo "Alice can view the following documents:\n";
-
-foreach ($objects as $object) {
-    echo $object . "\n";
-}
-```
+[Snippet](../../examples/snippets/models-list-objects.php#client)
 
 ## Advanced patterns
 
@@ -374,51 +228,15 @@ type document
 
 The `models` helper provides a convenient, self-paginated method for retrieving all the authorization models in a store:
 
-```php
-use function OpenFGA\models;
-
-$models = models(client: $client, store: $storeId);
-
-foreach ($models as $model) {
-    echo "Model ID: " . $model->getId() . "\n";
-}
-```
+[Snippet](../../examples/snippets/models-list-all.php#helper)
 
 Alternatively you can call the Client `listAuthorizationModels` method directly:
 
-```php
-$models = [];
-$continuationToken = null;
-do {
-    $response = $client->listAuthorizationModels(
-        store: $storeId,
-        pageSize: 10,
-        continuationToken: $continuationToken,
-    )->unwrap();
-
-    foreach ($response->getModels() as $model) {
-        $models[] = $model;
-    }
-
-    $continuationToken = $response->getContinuationToken();
-} while (null !== $continuationToken);
-
-foreach ($models as $model) {
-    echo "Model ID: " . $model->getId() . "\n";
-}
-```
+[Snippet](../../examples/snippets/models-list-all.php#client)
 
 ### Get a specific model
 
-```php
-$model = $client->getAuthorizationModel(
-    store: $storeId,
-    model: $modelId
-)->unwrap()->getModel();
-
-// Convert back to DSL
-echo $model->dsl();
-```
+[Snippet](../../examples/snippets/models-list-all.php#specific)
 
 ## Troubleshooting Common Issues
 

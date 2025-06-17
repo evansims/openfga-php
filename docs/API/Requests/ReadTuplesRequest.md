@@ -115,7 +115,7 @@ public function getStore(): string
 
 Get the store ID containing the tuples to read. Identifies which OpenFGA store contains the relationship tuples to query. All read operations will be performed within the context of this specific store, ensuring data isolation from other stores.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequest.php#L122)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequest.php#L128)
 
 #### Returns
 
@@ -130,7 +130,7 @@ public function getTupleKey(): OpenFGA\Models\TupleKeyInterface
 
 Get the tuple key pattern for filtering results. Specifies the relationship pattern to match when reading tuples. This can include specific values for object, user, and relation, or use partial patterns with wildcards to match multiple tuples. Empty or null values in the tuple key act as wildcards.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequest.php#L131)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Requests/ReadTuplesRequest.php#L137)
 
 #### Returns
 

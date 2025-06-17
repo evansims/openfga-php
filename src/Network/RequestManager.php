@@ -9,6 +9,7 @@ use const JSON_THROW_ON_ERROR;
 use Exception;
 use InvalidArgumentException;
 use OpenFGA\{Client, Messages};
+use OpenFGA\Exceptions\ClientThrowable;
 use OpenFGA\Exceptions\{ConfigurationError, NetworkError, NetworkException};
 use OpenFGA\Observability\TelemetryInterface;
 use OpenFGA\Requests\RequestInterface as ClientRequestInterface;
@@ -22,7 +23,9 @@ use PsrDiscovery\Discover;
 use ReflectionException;
 use Throwable;
 
+use function constant;
 use function count;
+use function defined;
 use function is_string;
 use function sprintf;
 
@@ -58,14 +61,14 @@ final class RequestManager implements RequestManagerInterface
     private readonly ConcurrentExecutorInterface $concurrentExecutor;
 
     /**
-     * HTTP client wrapper for making requests.
-     */
-    private readonly HttpClientInterface $httpClientWrapper;
-
-    /**
      * Retry strategy for handling failures.
      */
     private readonly RetryStrategyInterface $retryStrategy;
+
+    /**
+     * HTTP client wrapper for making requests.
+     */
+    private ?HttpClientInterface $httpClientWrapper = null;
 
     /**
      * Create a new RequestManager for OpenFGA API communication.
@@ -102,7 +105,9 @@ final class RequestManager implements RequestManagerInterface
         private readonly ?AuthenticationServiceInterface $authenticationService = null,
     ) {
         // Initialize new interface implementations
-        $this->httpClientWrapper = $httpClientWrapper ?? new PsrHttpClient($this->httpClient);
+        if ($httpClientWrapper instanceof HttpClientInterface) {
+            $this->httpClientWrapper = $httpClientWrapper;
+        }
         $this->retryStrategy = $retryStrategy ?? new ExponentialBackoffRetryStrategy($this->maxRetries);
         $this->concurrentExecutor = $concurrentExecutor ?? new FiberConcurrentExecutor;
     }
@@ -187,6 +192,18 @@ final class RequestManager implements RequestManagerInterface
     public function getHttpClient(): ClientInterface
     {
         if (! $this->httpClient instanceof ClientInterface) {
+            // Check for integration test override
+            if (defined('OPENFGA_TEST_HTTP_CLIENT')) {
+                /** @var mixed $testClient */
+                $testClient = constant('OPENFGA_TEST_HTTP_CLIENT');
+
+                if ($testClient instanceof ClientInterface) {
+                    $this->httpClient = $testClient;
+
+                    return $this->httpClient;
+                }
+            }
+
             $httpClient = Discover::httpClient();
 
             if (null === $httpClient) {
@@ -209,6 +226,18 @@ final class RequestManager implements RequestManagerInterface
     public function getHttpRequestFactory(): RequestFactoryInterface
     {
         if (! $this->httpRequestFactory instanceof RequestFactoryInterface) {
+            // Check for integration test override
+            if (defined('OPENFGA_TEST_HTTP_REQUEST_FACTORY')) {
+                /** @var mixed $testFactory */
+                $testFactory = constant('OPENFGA_TEST_HTTP_REQUEST_FACTORY');
+
+                if ($testFactory instanceof RequestFactoryInterface) {
+                    $this->httpRequestFactory = $testFactory;
+
+                    return $this->httpRequestFactory;
+                }
+            }
+
             $httpRequestFactory = Discover::httpRequestFactory();
 
             if (null === $httpRequestFactory) {
@@ -231,6 +260,18 @@ final class RequestManager implements RequestManagerInterface
     public function getHttpResponseFactory(): ResponseFactoryInterface
     {
         if (! $this->httpResponseFactory instanceof ResponseFactoryInterface) {
+            // Check for integration test override
+            if (defined('OPENFGA_TEST_HTTP_RESPONSE_FACTORY')) {
+                /** @var mixed $testFactory */
+                $testFactory = constant('OPENFGA_TEST_HTTP_RESPONSE_FACTORY');
+
+                if ($testFactory instanceof ResponseFactoryInterface) {
+                    $this->httpResponseFactory = $testFactory;
+
+                    return $this->httpResponseFactory;
+                }
+            }
+
             $httpResponseFactory = Discover::httpResponseFactory();
 
             if (null === $httpResponseFactory) {
@@ -253,6 +294,18 @@ final class RequestManager implements RequestManagerInterface
     public function getHttpStreamFactory(): StreamFactoryInterface
     {
         if (! $this->httpStreamFactory instanceof StreamFactoryInterface) {
+            // Check for integration test override
+            if (defined('OPENFGA_TEST_HTTP_STREAM_FACTORY')) {
+                /** @var mixed $testFactory */
+                $testFactory = constant('OPENFGA_TEST_HTTP_STREAM_FACTORY');
+
+                if ($testFactory instanceof StreamFactoryInterface) {
+                    $this->httpStreamFactory = $testFactory;
+
+                    return $this->httpStreamFactory;
+                }
+            }
+
             $httpStreamFactory = Discover::httpStreamFactory();
 
             if (null === $httpStreamFactory) {
@@ -404,7 +457,10 @@ final class RequestManager implements RequestManagerInterface
      *
      * @param RequestInterface $request The HTTP request to execute
      *
-     * @throws Throwable When the HTTP request fails
+     * @throws ClientThrowable
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     * @throws Throwable                When the HTTP request fails
      *
      * @return ResponseInterface The HTTP response
      */
@@ -413,7 +469,7 @@ final class RequestManager implements RequestManagerInterface
         $span = $this->telemetry?->startHttpRequest($request);
 
         try {
-            $response = $this->httpClientWrapper->send($request);
+            $response = $this->getHttpClientWrapper()->send($request);
             $this->telemetry?->endHttpRequest($span, $response);
 
             return $response;
@@ -465,8 +521,12 @@ final class RequestManager implements RequestManagerInterface
      *
      * @param RequestInterface $request The HTTP request to execute
      *
-     * @throws NetworkException If the request fails after all retries
-     * @throws Throwable        For any other errors during execution
+     * @throws ClientThrowable
+     * @throws InvalidArgumentException
+     * @throws NetworkException
+     * @throws NetworkException         If the request fails after all retries
+     * @throws ReflectionException
+     * @throws Throwable                For any other errors during execution
      *
      * @return ResponseInterface The HTTP response
      */
@@ -479,7 +539,7 @@ final class RequestManager implements RequestManagerInterface
             $span = $this->telemetry?->startHttpRequest($request);
 
             try {
-                $response = $this->httpClientWrapper->send($request);
+                $response = $this->getHttpClientWrapper()->send($request);
                 $this->telemetry?->endHttpRequest($span, $response);
 
                 return $response;
@@ -505,5 +565,23 @@ final class RequestManager implements RequestManagerInterface
         } catch (Throwable $throwable) {
             throw NetworkError::Request->exception(request: $request, context: ['message' => Translator::trans(Messages::NETWORK_ERROR, ['message' => $throwable->getMessage()])], prev: $throwable);
         }
+    }
+
+    /**
+     * Get the HTTP client wrapper, creating it lazily if needed.
+     *
+     * @throws ClientThrowable
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
+     *
+     * @return HttpClientInterface The HTTP client wrapper
+     */
+    private function getHttpClientWrapper(): HttpClientInterface
+    {
+        if (! $this->httpClientWrapper instanceof HttpClientInterface) {
+            $this->httpClientWrapper = new PsrHttpClient($this->getHttpClient());
+        }
+
+        return $this->httpClientWrapper;
     }
 }

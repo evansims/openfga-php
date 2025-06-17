@@ -5,40 +5,35 @@ Ready to integrate OpenFGA into your existing application? This guide shows you 
 Before integrating with your framework, you'll need these common OpenFGA imports and setup patterns used throughout the examples:
 
 ```php
-// Core OpenFGA imports used across all framework integrations
-use OpenFGA\Client;
-use OpenFGA\ClientInterface;
+use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Authentication\ClientCredentialAuthentication;
 
-// Helper functions for cleaner syntax
 use function OpenFGA\{tuple, tuples, allowed, write, delete};
 
-// Basic client configuration pattern
 $client = new Client(
-    url: $config['url'],
+    url: $_ENV['FGA_API_URL'],
     authentication: new ClientCredentialAuthentication(
-        clientId: $config['client_id'],
-        clientSecret: $config['client_secret'],
-        issuer: $config['issuer'],
-        audience: $config['audience'],
+        clientId: $_ENV['FGA_CLIENT_ID'],
+        clientSecret: $_ENV['FGA_CLIENT_SECRET'],
+        issuer: $_ENV['FGA_ISSUER'],
+        audience: $_ENV['FGA_AUDIENCE'],
     ),
 );
 
-// Configuration values referenced in examples
-$storeId = $config['store_id'];
-$modelId = $config['model_id'];
+$storeId = $_ENV['FGA_STORE_ID'];
+$modelId = $_ENV['FGA_MODEL_ID'];
 ```
 
 **Environment Variables:**
 All examples assume these environment variables are configured:
 
-- `OPENFGA_URL` - Your OpenFGA server URL
-- `OPENFGA_STORE_ID` - Your store identifier
-- `OPENFGA_MODEL_ID` - Your authorization model ID
-- `OPENFGA_CLIENT_ID` - Client credentials ID
-- `OPENFGA_CLIENT_SECRET` - Client credentials secret
-- `OPENFGA_ISSUER` - Token issuer URL
-- `OPENFGA_AUDIENCE` - Token audience
+- `FGA_API_URL` - Your OpenFGA server URL
+- `FGA_CLIENT_ID` - Client credentials ID
+- `FGA_CLIENT_SECRET` - Client credentials secret
+- `FGA_ISSUER` - Token issuer URL
+- `FGA_AUDIENCE` - Token audience
+- `FGA_STORE_ID` - Your store identifier
+- `FGA_MODEL_ID` - Your authorization model ID
 
 ## Laravel Integration
 
@@ -74,13 +69,13 @@ Add to your `config/openfga.php`:
 
 ```php
 return [
-    'url' => env('OPENFGA_URL', 'http://localhost:8080'),
-    'store_id' => env('OPENFGA_STORE_ID'),
-    'model_id' => env('OPENFGA_MODEL_ID'),
-    'client_id' => env('OPENFGA_CLIENT_ID'),
-    'client_secret' => env('OPENFGA_CLIENT_SECRET'),
-    'issuer' => env('OPENFGA_ISSUER'),
-    'audience' => env('OPENFGA_AUDIENCE'),
+    'url' => env('FGA_API_URL', 'http://localhost:8080'),
+    'store_id' => env('FGA_STORE_ID'),
+    'model_id' => env('FGA_MODEL_ID'),
+    'client_id' => env('FGA_CLIENT_ID'),
+    'client_secret' => env('FGA_CLIENT_SECRET'),
+    'issuer' => env('FGA_ISSUER'),
+    'audience' => env('FGA_AUDIENCE'),
 ];
 ```
 
@@ -263,20 +258,20 @@ services:
   OpenFGA\ClientInterface:
     class: OpenFGA\Client
     arguments:
-      $url: "%env(OPENFGA_URL)%"
+      $url: "%env(FGA_API_URL)%"
       $authentication: "@openfga.authentication"
 
   openfga.authentication:
     class: OpenFGA\Authentication\ClientCredentialAuthentication
     arguments:
-      $clientId: "%env(OPENFGA_CLIENT_ID)%"
-      $clientSecret: "%env(OPENFGA_CLIENT_SECRET)%"
-      $issuer: "%env(OPENFGA_ISSUER)%"
-      $audience: "%env(OPENFGA_AUDIENCE)%"
+      $clientId: "%env(FGA_CLIENT_ID)%"
+      $clientSecret: "%env(FGA_CLIENT_SECRET)%"
+      $issuer: "%env(FGA_ISSUER)%"
+      $audience: "%env(FGA_AUDIENCE)%"
 
 parameters:
-  openfga.store_id: "%env(OPENFGA_STORE_ID)%"
-  openfga.model_id: "%env(OPENFGA_MODEL_ID)%"
+  openfga.store_id: "%env(FGA_STORE_ID)%"
+  openfga.model_id: "%env(FGA_MODEL_ID)%"
 ```
 
 ### Voter Implementation
@@ -455,13 +450,13 @@ Usage:
 ```php
 // Bootstrap
 $config = [
-    'url' => $_ENV['OPENFGA_URL'],
-    'store_id' => $_ENV['OPENFGA_STORE_ID'],
-    'model_id' => $_ENV['OPENFGA_MODEL_ID'],
-    'client_id' => $_ENV['OPENFGA_CLIENT_ID'],
-    'client_secret' => $_ENV['OPENFGA_CLIENT_SECRET'],
-    'issuer' => $_ENV['OPENFGA_ISSUER'],
-    'audience' => $_ENV['OPENFGA_AUDIENCE'],
+    'url' => $_ENV['FGA_API_URL'],
+    'store_id' => $_ENV['FGA_STORE_ID'],
+    'model_id' => $_ENV['FGA_MODEL_ID'],
+    'client_id' => $_ENV['FGA_CLIENT_ID'],
+    'client_secret' => $_ENV['FGA_CLIENT_SECRET'],
+    'issuer' => $_ENV['FGA_ISSUER'],
+    'audience' => $_ENV['FGA_AUDIENCE'],
 ];
 
 $auth = new AuthorizationService($config);

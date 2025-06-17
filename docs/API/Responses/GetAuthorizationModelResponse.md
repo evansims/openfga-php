@@ -75,7 +75,7 @@ public function getModel(): ?OpenFGA\Models\AuthorizationModelInterface
 
 Get the retrieved authorization model. Returns the complete authorization model including its type definitions, schema version, and any conditions. The model defines the relationship types and permission logic that govern authorization decisions within the store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponse.php#L100)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Responses/GetAuthorizationModelResponse.php#L101)
 
 #### Returns
 

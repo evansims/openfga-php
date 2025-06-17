@@ -4,25 +4,11 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 
 describe('Store Management', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
     });
 
     test('creates and deletes a store', function (): void {

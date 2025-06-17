@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace OpenFGA\Models\Collections;
 
 use OpenFGA\Models\{ModelInterface, RelationMetadata, RelationMetadataInterface};
+use OpenFGA\Schemas\{CollectionSchema, CollectionSchemaInterface};
+use Override;
 
 /**
  * Collection implementation for OpenFGA relation metadata objects.
@@ -29,4 +31,19 @@ final class RelationMetadataCollection extends KeyedCollection implements Relati
      * @var class-string<ModelInterface>
      */
     protected static string $itemType = RelationMetadata::class;
+
+    private static ?CollectionSchemaInterface $schema = null;
+
+    /**
+     * @inheritDoc
+     */
+    #[Override]
+    public static function schema(): CollectionSchemaInterface
+    {
+        return self::$schema ??= new CollectionSchema(
+            className: self::class,
+            itemType: /** @var class-string */ self::$itemType,
+            requireItems: false,
+        );
+    }
 }

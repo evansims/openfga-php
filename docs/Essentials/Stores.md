@@ -4,127 +4,37 @@
 
 The examples in this guide assume you have the following setup:
 
-```php
-use OpenFGA\Client;
-
-// Initialize the client
-$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
-```
-
-## What are stores
-
-A store holds three things:
-
-- [Authorization models](Models.md) - your permission rules
-- [Relationship tuples](Tuples.md) - who can do what
-- [Assertions](Assertions.md) - tests to verify everything works
+[Snippet](../../examples/snippets/stores-setup.php)
 
 ## Single application setup
 
 For a typical application, create one store per environment:
 
-```php
-use function OpenFGA\store;
+[Snippet](../../examples/snippets/stores-basic.php#usage)
 
-// Create your production store
-$storeId = store($client, 'myapp-production'); // Save this!
-
-// Configure your client to use this store
-$client = $client->withStore(store: $storeId);
-```
-
-Save that `$storeId` in your environment configuration. You'll need it for future API calls.
+Save the store ID in your environment configuration. You'll need it for future API calls.
 
 ## Multi-tenant patterns
 
 For SaaS applications, create a store per customer to ensure complete data isolation:
 
-```php
-final readonly class TenantStoreManager
-{
-    public function __construct(private Client $client) {}
-
-    public function createTenantStore(string $customerId): string
-    {
-        $store = $this->client
-            ->createStore(name: "customer-{$customerId}")
-            ->unwrap();
-
-        return $store->getId();
-    }
-
-    public function getClientForTenant(string $customerId): Client
-    {
-        $storeId = $this->lookupStoreId($customerId);
-        return $this->client->withStore(store: $storeId);
-    }
-}
-
-// Usage
-$manager = new TenantStoreManager($client);
-$storeId = $manager->createTenantStore('acme-corp');
-```
+[Snippet](../../examples/snippets/stores-multi-tenant.php#usage)
 
 ## Environment separation
 
 Keep your environments completely isolated:
 
-```php
-enum Environment: string
-{
-    case Development = 'dev';
-    case Staging = 'staging';
-    case Production = 'prod';
-}
-
-function createEnvironmentStore(Client $client, Environment $env, string $appName): string
-{
-    $store = $client->createStore(name: "{$appName}-{$env->value}")->unwrap();
-    return $store->getId();
-}
-
-// Create stores for each environment
-$devStoreId = createEnvironmentStore($client, Environment::Development, 'myapp');
-$prodStoreId = createEnvironmentStore($client, Environment::Production, 'myapp');
-```
+[Snippet](../../examples/snippets/stores-management.php#seperation)
 
 ## Store management
 
 Finding and managing existing stores:
 
-```php
-// List all stores
-$stores = $client->listStores(pageSize: 20)->unwrap();
-
-foreach ($stores->getStores() as $store) {
-    echo "{$store->getName()}: {$store->getId()}\n";
-}
-
-// Get specific store details (using store ID from previous examples)
-$store = $client->getStore(store: $storeId)->unwrap();
-echo "Created: {$store->getCreatedAt()->format('Y-m-d H:i:s')}\n";
-
-// Delete a store (careful - this is permanent!)
-$client->deleteStore(store: $storeId)->unwrap();
-```
+[Snippet](../../examples/snippets/stores-management.php#management)
 
 For pagination with many stores:
 
-```php
-$continuationToken = null;
-do {
-    $response = $client->listStores(
-        pageSize: 10,
-        continuationToken: $continuationToken
-    )->unwrap();
-
-    foreach ($response->getStores() as $store) {
-        // Process each store
-    }
-
-    $continuationToken = $response->getContinuationToken();
-} while ($continuationToken !== null);
-```
+[Snippet](../../examples/snippets/stores-management.php#pagination)
 
 ## Best practices
 

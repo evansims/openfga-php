@@ -1,0 +1,26 @@
+# docker-compose.test.yml
+version: "3.8"
+
+services:
+  openfga:
+    image: openfga/openfga:latest
+    command: run --playground-enabled
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENFGA_DATASTORE_ENGINE=memory
+
+  php-tests:
+    build: .
+    depends_on:
+      - openfga
+    environment:
+      - FGA_API_URL=http://openfga:8080
+    volumes:
+      - ./authorization-models:/app/authorization-models
+      - ./tests:/app/tests
+    command: |
+      sh -c "
+        composer install --no-interaction &&
+        vendor/bin/phpunit tests/Unit/AuthorizationModelTest.php
+      "

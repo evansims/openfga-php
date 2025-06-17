@@ -145,19 +145,19 @@ final class Client implements ClientInterface
     public function check(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
-        TupleKeyInterface $tupleKey,
+        TupleKeyInterface $tuple,
         ?bool $trace = null,
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(function () use ($store, $model, $tupleKey, $trace, $context, $contextualTuples, $consistency) {
+        return $this->withLanguageContext(function () use ($store, $model, $tuple, $trace, $context, $contextualTuples, $consistency) {
             $authorizationService = $this->getAuthorizationService();
 
             return $authorizationService->check(
                 store: $store,
                 model: $model,
-                tupleKey: $tupleKey,
+                tupleKey: $tuple,
                 trace: $trace,
                 context: $context,
                 contextualTuples: $contextualTuples,
@@ -238,24 +238,6 @@ final class Client implements ClientInterface
             try {
                 $validator = $this->getSchemaValidator();
 
-                $validator
-                    ->registerSchema(AuthorizationModel::schema())
-                    ->registerSchema(TypeDefinitions::schema())
-                    ->registerSchema(TypeDefinition::schema())
-                    ->registerSchema(TypeDefinitionRelations::schema())
-                    ->registerSchema(Userset::schema())
-                    ->registerSchema(Usersets::schema())
-                    ->registerSchema(ObjectRelation::schema())
-                    ->registerSchema(TupleToUsersetV1::schema())
-                    ->registerSchema(DifferenceV1::schema())
-                    ->registerSchema(Metadata::schema())
-                    ->registerSchema(RelationMetadata::schema())
-                    ->registerSchema(RelationReferences::schema())
-                    ->registerSchema(RelationReference::schema())
-                    ->registerSchema(SourceInfo::schema())
-                    ->registerSchema(Conditions::schema())
-                    ->registerSchema(RelationMetadataCollection::schema());
-
                 return new Success(value: Transformer::fromDsl(
                     dsl: $dsl,
                     validator: $validator,
@@ -274,17 +256,17 @@ final class Client implements ClientInterface
     #[Override]
     public function expand(
         StoreInterface | string $store,
-        TupleKeyInterface $tupleKey,
+        TupleKeyInterface $tuple,
         AuthorizationModelInterface | string | null $model = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(function () use ($store, $tupleKey, $model, $contextualTuples, $consistency) {
+        return $this->withLanguageContext(function () use ($store, $tuple, $model, $contextualTuples, $consistency) {
             $authorizationService = $this->getAuthorizationService();
 
             return $authorizationService->expand(
                 store: $store,
-                tupleKey: $tupleKey,
+                tupleKey: $tuple,
                 model: $model,
                 contextualTuples: $contextualTuples,
                 consistency: $consistency,
@@ -544,17 +526,17 @@ final class Client implements ClientInterface
     #[Override]
     public function readTuples(
         StoreInterface | string $store,
-        ?TupleKeyInterface $tupleKey = null,
+        ?TupleKeyInterface $tuple = null,
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,
     ): FailureInterface | SuccessInterface {
-        return $this->withLanguageContext(function () use ($store, $tupleKey, $continuationToken, $pageSize, $consistency) {
+        return $this->withLanguageContext(function () use ($store, $tuple, $continuationToken, $pageSize, $consistency) {
             $tupleService = $this->getTupleServiceForStore($store);
 
             return $tupleService->read(
                 store: $store,
-                tupleKey: $tupleKey,
+                tupleKey: $tuple,
                 continuationToken: $continuationToken,
                 pageSize: $pageSize,
                 consistency: $consistency,
@@ -749,7 +731,9 @@ final class Client implements ClientInterface
     /**
      * Create store repository.
      *
-     * @throws LogicException If required services are not available
+     * @throws ClientThrowable
+     * @throws LogicException      If required services are not available
+     * @throws ReflectionException
      */
     private function createStoreRepository(): HttpStoreRepository
     {
@@ -824,7 +808,9 @@ final class Client implements ClientInterface
     /**
      * Create tuple repository.
      *
-     * @throws LogicException If required services are not available
+     * @throws ClientThrowable
+     * @throws LogicException      If required services are not available
+     * @throws ReflectionException
      */
     private function createTupleRepository(): HttpTupleRepository
     {
@@ -840,7 +826,9 @@ final class Client implements ClientInterface
      *
      * @param StoreInterface|string $store The store to get the service for
      *
-     * @throws LogicException If the service is not available
+     * @throws ClientThrowable
+     * @throws LogicException      If the service is not available
+     * @throws ReflectionException
      */
     private function getAssertionServiceForStore(StoreInterface | string $store): AssertionService
     {
@@ -961,10 +949,39 @@ final class Client implements ClientInterface
 
     /**
      * Get the schema validator instance.
+     *
+     * @throws ClientThrowable
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     private function getSchemaValidator(): SchemaValidatorInterface
     {
-        return $this->schemaValidator ??= new SchemaValidator;
+        if (! $this->schemaValidator instanceof SchemaValidatorInterface) {
+            $validator = new SchemaValidator;
+
+            // Register all required schemas
+            $validator
+                ->registerSchema(AuthorizationModel::schema())
+                ->registerSchema(TypeDefinitions::schema())
+                ->registerSchema(TypeDefinition::schema())
+                ->registerSchema(TypeDefinitionRelations::schema())
+                ->registerSchema(Userset::schema())
+                ->registerSchema(Usersets::schema())
+                ->registerSchema(ObjectRelation::schema())
+                ->registerSchema(TupleToUsersetV1::schema())
+                ->registerSchema(DifferenceV1::schema())
+                ->registerSchema(Metadata::schema())
+                ->registerSchema(RelationMetadata::schema())
+                ->registerSchema(RelationReferences::schema())
+                ->registerSchema(RelationReference::schema())
+                ->registerSchema(SourceInfo::schema())
+                ->registerSchema(Conditions::schema())
+                ->registerSchema(RelationMetadataCollection::schema());
+
+            $this->schemaValidator = $validator;
+        }
+
+        return $this->schemaValidator;
     }
 
     /**

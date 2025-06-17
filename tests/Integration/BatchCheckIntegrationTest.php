@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\{BatchCheckItem, Store};
@@ -23,13 +21,7 @@ use function OpenFGA\{tuple, tuples};
  */
 it('performs batch authorization checks successfully', function (): void {
     // Create OpenFGA client
-    $client = new Client(
-        url: getOpenFgaUrl(),
-        httpClient: new FileGetContents(new Psr17Factory),
-        httpResponseFactory: new Psr17Factory,
-        httpStreamFactory: new Psr17Factory,
-        httpRequestFactory: new Psr17Factory,
-    );
+    $client = new Client(url: getOpenFgaUrl());
 
     // Create a store
     $storeResult = $client->createStore(name: 'batch-check-test-store');
@@ -140,13 +132,7 @@ it('performs batch authorization checks successfully', function (): void {
 
 it('handles batch check with contextual tuples', function (): void {
     // Create OpenFGA client
-    $client = new Client(
-        url: getOpenFgaUrl(),
-        httpClient: new FileGetContents(new Psr17Factory),
-        httpResponseFactory: new Psr17Factory,
-        httpStreamFactory: new Psr17Factory,
-        httpRequestFactory: new Psr17Factory,
-    );
+    $client = new Client(url: getOpenFgaUrl());
 
     // Create a store
     $storeResult = $client->createStore(name: 'batch-check-contextual-test-store');

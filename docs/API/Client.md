@@ -129,7 +129,7 @@ if ($result->success()) {
 public function check(
     OpenFGA\Models\StoreInterface|string $store,
     OpenFGA\Models\AuthorizationModelInterface|string $model,
-    OpenFGA\Models\TupleKeyInterface $tupleKey,
+    OpenFGA\Models\TupleKeyInterface $tuple,
     ?bool $trace = NULL,
     ?object $context = NULL,
     ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
@@ -146,7 +146,7 @@ Checks if a user has a specific relationship with an object. Performs an authori
 $result = $client->check(
     store: 'store-id',
     model: 'model-id',
-    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget')
+    tuple: new TupleKey('user:anne', 'reader', 'document:budget')
 );
 
 if ($result->success()) {
@@ -168,7 +168,7 @@ $contextualTuples = new TupleKeys([
 $result = $client->check(
     store: 'store-id',
     model: 'model-id',
-    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget'),
+    tuple: new TupleKey('user:anne', 'reader', 'document:budget'),
     contextualTuples: $contextualTuples
 );
 
@@ -182,7 +182,7 @@ $result = $client->check(
 | ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to check against                  |
 | `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
-| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                     | The relationship to check                   |
+| `$tuple`            | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                     | The relationship to check                   |
 | `$trace`            | `bool` &#124; `null`                                                                   | Whether to include a trace in the response  |
 | `$context`          | `object` &#124; `null`                                                                 | Additional context for the check            |
 | `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
@@ -350,7 +350,7 @@ if ($result->success()) {
 ```php
 public function expand(
     OpenFGA\Models\StoreInterface|string $store,
-    OpenFGA\Models\TupleKeyInterface $tupleKey,
+    OpenFGA\Models\TupleKeyInterface $tuple,
     ?OpenFGA\Models\AuthorizationModelInterface|string|null $model = NULL,
     ?OpenFGA\Models\Collections\TupleKeysInterface $contextualTuples = NULL,
     ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
@@ -360,14 +360,14 @@ public function expand(
 
 Expands a relationship tuple to show all users that have the relationship.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L275)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L257)
 
 #### Parameters
 
 | Name                | Type                                                                                                               | Description                                 |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                                       | The store containing the tuple              |
-| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                                 | The tuple to expand                         |
+| `$tuple`            | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                                 | The tuple to expand                         |
 | `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` &#124; `string` &#124; `null` | The authorization model to use              |
 | `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`                                     | Additional tuples for contextual evaluation |
 | `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                                         | Override the default consistency level      |
@@ -388,7 +388,7 @@ public function getAuthorizationModel(
 
 Retrieves an authorization model by ID.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L301)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L283)
 
 #### Parameters
 
@@ -410,7 +410,7 @@ public function getLanguage(): string
 
 Get the configured language for i18n translations.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L320)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L302)
 
 #### Returns
 
@@ -425,7 +425,7 @@ public function getLanguageEnum(): Language
 
 Get the configured language enum for type-safe access. Returns the Language enum representing the currently configured language, providing access to language metadata and type-safe operations.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L333)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L315)
 
 #### Returns
 
@@ -440,7 +440,7 @@ public function getLastRequest(): ?Psr\Http\Message\RequestInterface
 
 Retrieves the last HTTP request made by the client.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L344)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L326)
 
 #### Returns
 
@@ -455,7 +455,7 @@ public function getLastResponse(): ?Psr\Http\Message\ResponseInterface
 
 Retrieves the last HTTP response received by the client.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L357)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L339)
 
 #### Returns
 
@@ -472,7 +472,7 @@ public function getStore(
 
 Retrieves store details by ID.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L370)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L352)
 
 #### Parameters
 
@@ -497,7 +497,7 @@ public function listAuthorizationModels(
 
 Lists authorization models in a store with pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L389)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L371)
 
 #### Parameters
 
@@ -570,7 +570,7 @@ $result = $client->listObjects(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L414)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L396)
 
 #### Parameters
 
@@ -601,7 +601,7 @@ public function listStores(
 
 Lists all stores with pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L446)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L428)
 
 #### Parameters
 
@@ -629,7 +629,7 @@ public function listTupleChanges(
 
 Lists changes to relationship tuples in a store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L467)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L449)
 
 #### Parameters
 
@@ -707,7 +707,7 @@ $result = $client->listUsers(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L493)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L475)
 
 #### Parameters
 
@@ -738,7 +738,7 @@ public function readAssertions(
 
 Retrieves assertions for an authorization model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L525)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L507)
 
 #### Parameters
 
@@ -756,7 +756,7 @@ Retrieves assertions for an authorization model.
 ```php
 public function readTuples(
     OpenFGA\Models\StoreInterface|string $store,
-    ?OpenFGA\Models\TupleKeyInterface $tupleKey = NULL,
+    ?OpenFGA\Models\TupleKeyInterface $tuple = NULL,
     ?string $continuationToken = NULL,
     ?int $pageSize = NULL,
     ?OpenFGA\Models\Enums\Consistency $consistency = NULL,
@@ -766,14 +766,14 @@ public function readTuples(
 
 Reads relationship tuples from a store with optional filtering and pagination.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L545)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L527)
 
 #### Parameters
 
 | Name                 | Type                                                             | Description                                    |
 | -------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
 | `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`     | The store to read from                         |
-| `$tupleKey`          | [`TupleKeyInterface`](Models/TupleKeyInterface.md) &#124; `null` | Filter tuples by this key (return all if null) |
+| `$tuple`             | [`TupleKeyInterface`](Models/TupleKeyInterface.md) &#124; `null` | Filter tuples by this key (return all if null) |
 | `$continuationToken` | `string` &#124; `null`                                           | Token for pagination                           |
 | `$pageSize`          | `int` &#124; `null`                                              | Maximum number of tuples to return             |
 | `$consistency`       | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`       | Override the default consistency level         |
@@ -800,7 +800,7 @@ public function streamedListObjects(
 
 Streams objects that a user has a specific relationship with. Returns all objects of a given type that the specified user has a relationship with, using a streaming response for memory-efficient processing of large result sets. This is ideal for handling thousands of objects without loading them all into memory.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L571)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L553)
 
 #### Parameters
 
@@ -832,7 +832,7 @@ public function writeAssertions(
 
 Creates or updates assertions for an authorization model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L603)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L585)
 
 #### Parameters
 
@@ -940,7 +940,7 @@ $client->writeTuples(
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L625)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Client.php#L607)
 
 #### Parameters
 

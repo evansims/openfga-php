@@ -98,7 +98,7 @@ interface ClientInterface
      *
      * @param  StoreInterface|string              $store            The store to check against
      * @param  AuthorizationModelInterface|string $model            The authorization model to use
-     * @param  TupleKeyInterface                  $tupleKey         The relationship to check
+     * @param  TupleKeyInterface                  $tuple            The relationship to check
      * @param  bool|null                          $trace            Whether to include a trace in the response
      * @param  object|null                        $context          Additional context for the check
      * @param  TupleKeysInterface|null            $contextualTuples Additional tuples for contextual evaluation
@@ -109,7 +109,7 @@ interface ClientInterface
      * $result = $client->check(
      *     store: 'store-id',
      *     model: 'model-id',
-     *     tupleKey: new TupleKey('user:anne', 'reader', 'document:budget')
+     *     tuple: new TupleKey('user:anne', 'reader', 'document:budget')
      * );
      *
      * if ($result->success()) {
@@ -126,7 +126,7 @@ interface ClientInterface
      * $result = $client->check(
      *     store: 'store-id',
      *     model: 'model-id',
-     *     tupleKey: new TupleKey('user:anne', 'reader', 'document:budget'),
+     *     tuple: new TupleKey('user:anne', 'reader', 'document:budget'),
      *     contextualTuples: $contextualTuples
      * );
      *
@@ -135,7 +135,7 @@ interface ClientInterface
     public function check(
         StoreInterface | string $store,
         AuthorizationModelInterface | string $model,
-        TupleKeyInterface $tupleKey,
+        TupleKeyInterface $tuple,
         ?bool $trace = null,
         ?object $context = null,
         ?TupleKeysInterface $contextualTuples = null,
@@ -263,7 +263,7 @@ interface ClientInterface
      * Expands a relationship tuple to show all users that have the relationship.
      *
      * @param  StoreInterface|string                   $store            The store containing the tuple
-     * @param  TupleKeyInterface                       $tupleKey         The tuple to expand
+     * @param  TupleKeyInterface                       $tuple            The tuple to expand
      * @param  AuthorizationModelInterface|string|null $model            The authorization model to use
      * @param  TupleKeysInterface|null                 $contextualTuples Additional tuples for contextual evaluation
      * @param  Consistency|null                        $consistency      Override the default consistency level
@@ -271,7 +271,7 @@ interface ClientInterface
      */
     public function expand(
         StoreInterface | string $store,
-        TupleKeyInterface $tupleKey,
+        TupleKeyInterface $tuple,
         AuthorizationModelInterface | string | null $model = null,
         ?TupleKeysInterface $contextualTuples = null,
         ?Consistency $consistency = null,
@@ -495,7 +495,7 @@ interface ClientInterface
      * Reads relationship tuples from a store with optional filtering and pagination.
      *
      * @param StoreInterface|string $store             The store to read from
-     * @param ?TupleKeyInterface    $tupleKey          Filter tuples by this key (return all if null)
+     * @param ?TupleKeyInterface    $tuple             Filter tuples by this key (return all if null)
      * @param string|null           $continuationToken Token for pagination
      * @param positive-int|null     $pageSize          Maximum number of tuples to return
      * @param Consistency|null      $consistency       Override the default consistency level
@@ -506,7 +506,7 @@ interface ClientInterface
      */
     public function readTuples(
         StoreInterface | string $store,
-        ?TupleKeyInterface $tupleKey = null,
+        ?TupleKeyInterface $tuple = null,
         ?string $continuationToken = null,
         ?int $pageSize = null,
         ?Consistency $consistency = null,

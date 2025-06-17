@@ -7,7 +7,7 @@ namespace OpenFGA\Responses;
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
 use OpenFGA\Models\{AuthorizationModel, Metadata, Node, RelationMetadata, TypeDefinition, Userset};
-use OpenFGA\Models\Collections\{AuthorizationModels, AuthorizationModelsInterface, Conditions, Nodes, TypeDefinitionRelations, TypeDefinitions, Usersets};
+use OpenFGA\Models\Collections\{AuthorizationModels, AuthorizationModelsInterface, Conditions, Nodes, RelationMetadataCollection, TypeDefinitionRelations, TypeDefinitions, Usersets};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
@@ -62,6 +62,7 @@ final class ListAuthorizationModelsResponse extends Response implements ListAuth
             $validator->registerSchema(Userset::schema());
             $validator->registerSchema(Usersets::schema());
             $validator->registerSchema(RelationMetadata::schema());
+            $validator->registerSchema(RelationMetadataCollection::schema());
             $validator->registerSchema(Metadata::schema());
             $validator->registerSchema(TypeDefinitionRelations::schema());
             $validator->registerSchema(TypeDefinition::schema());

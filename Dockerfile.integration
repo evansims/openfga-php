@@ -75,6 +75,8 @@ RUN set -eux; \
     # Configure PCOV
     echo "pcov.enabled=1" >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini; \
     echo "pcov.directory=/app/src" >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini; \
+    # Set memory limit
+    echo "memory_limit=2G" >> /usr/local/etc/php/conf.d/memory-limit.ini; \
     # Clean up
     docker-php-source delete; \
     rm -rf /tmp/* \

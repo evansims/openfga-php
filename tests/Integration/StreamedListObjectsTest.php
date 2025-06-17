@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
 use Generator;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Models\Enums\Consistency;
 use OpenFGA\Models\{Store};
@@ -19,19 +17,7 @@ use function OpenFGA\{tuple, tuples};
 
 describe('StreamedListObjects Integration', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
 
         // Create a temporary store for testing
         $storeResult = $this->client->createStore('integration-test-streamed-list-objects');
@@ -193,6 +179,7 @@ describe('StreamedListObjects Integration', function (): void {
             type: 'document',
             relation: 'viewer',
             user: 'user:alice',
+            context: null,
             contextualTuples: $contextualTuples,
         );
 
@@ -266,6 +253,8 @@ describe('StreamedListObjects Integration', function (): void {
                 type: 'document',
                 relation: 'reader',
                 user: 'user:alice',
+                context: null,
+                contextualTuples: null,
                 consistency: $consistency,
             );
 

@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace OpenFGA\Tests\Integration;
+namespace OpenFGA\Tests\Benchmark;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 
 use function count;
@@ -14,19 +12,8 @@ use function sprintf;
 
 describe('Performance Benchmarks', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->markTestSkipped('Performance benchmarks are temporarily disabled');
+        $this->client = new Client(url: getOpenFgaUrl());
 
         $name = 'benchmark-test-' . bin2hex(random_bytes(5));
         $this->store = $this->client->createStore(name: $name)

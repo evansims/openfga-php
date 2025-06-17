@@ -99,8 +99,14 @@ final readonly class ReadTuplesRequest implements ReadTuplesRequestInterface
     #[Override]
     public function getRequest(StreamFactoryInterface $streamFactory): RequestContext
     {
+        // Only include tuple_key if it has meaningful values
+        $tupleKeyData = $this->tupleKey->jsonSerialize();
+        $hasMeaningfulTupleKey = (isset($tupleKeyData['user']) && '' !== $tupleKeyData['user'])
+            || (isset($tupleKeyData['relation']) && '' !== $tupleKeyData['relation'])
+            || (isset($tupleKeyData['object']) && '' !== $tupleKeyData['object']);
+
         $body = array_filter([
-            'tuple_key' => $this->tupleKey->jsonSerialize(),
+            'tuple_key' => $hasMeaningfulTupleKey ? $tupleKeyData : null,
             'consistency' => $this->consistency?->value,
             'page_size' => $this->pageSize,
             'continuation_token' => $this->continuationToken,

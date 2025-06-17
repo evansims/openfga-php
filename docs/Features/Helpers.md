@@ -5,19 +5,75 @@ The OpenFGA PHP SDK provides a collection of helper functions that dramatically 
 All examples in this guide assume the following setup:
 
 ```php
-require_once __DIR__ . '/vendor/autoload.php';
+<?php
+
+declare(strict_types=1);
 
 use OpenFGA\Client;
-use OpenFGA\Models\{BatchCheckItem, Store, AuthorizationModel, Condition, TupleKey};
-use OpenFGA\Models\Collections\{TupleKeys, TypeDefinitions};
-use OpenFGA\Models\Enums\{Consistency, SchemaVersion};
-use OpenFGA\Results\{Success, Failure};
 
-// Import helper functions
-use function OpenFGA\{allowed, check, checks, delete, dsl, err, failure, model, models, objects, ok, result, store, success, tuple, tuples, unwrap, write, writes};
+$client = new Client(
+    url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
+);
+```
 
-// Basic client setup
-$client = new Client(url: 'http://localhost:8080');
+## Context helper
+
+The `context()` helper sets ambient values that other helpers can use implicitly, eliminating the need to pass client, store, and model parameters to every function call. This is especially powerful when combined with other helpers.
+
+### Basic usage
+
+```php
+use function OpenFGA\{context, allowed, write, tuple};
+
+$result = context(function() {
+    // All helpers within this context can omit client/store/model parameters
+    $canView = allowed(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:budget'
+    );
+    
+    if (!$canView) {
+        write(tuple('user:anne', 'viewer', 'document:budget'));
+    }
+    
+    return $canView;
+}, client: $client, store: $storeId, model: $modelId);
+```
+
+### Nested contexts with inheritance
+
+Child contexts automatically inherit values from their parent context unless explicitly overridden:
+
+```php
+use function OpenFGA\{context, users, filter};
+
+context(function() {
+    // Uses outer context's client and store
+    $viewers = users('document:public', 'viewer', filter('user'));
+    
+    context(function() {
+        // Inherits client/store from parent, but uses different model
+        $editors = users('document:private', 'editor', filter('user'));
+    }, model: $privateModelId);
+    
+}, client: $client, store: $storeId, model: $publicModelId);
+```
+
+### Partial context overrides
+
+```php
+use function OpenFGA\{context, allowed, tuple};
+
+context(function() {
+    // Set base client and store for user operations
+    
+    context(function() {
+        // Override just the store for admin operations
+        $isAdmin = allowed(tuple: tuple('user:anne', 'admin', 'system:settings'));
+    }, store: $adminStoreId);
+    
+}, client: $client, store: $userStoreId, model: $modelId);
 ```
 
 ## Model helpers
@@ -26,521 +82,327 @@ $client = new Client(url: 'http://localhost:8080');
 
 The `tuple()` helper simplifies creating relationship tuples:
 
-**Helper usage:**
-
 ```php
-$tuple = tuple('user:anne', 'viewer', 'document:budget');
-```
+use function OpenFGA\tuple;
 
-**Standard long-form:**
-
-```php
-$tuple = new TupleKey('user:anne', 'viewer', 'document:budget');
+$tuple = tuple(
+    user: 'user:anne',
+    relation: 'viewer',
+    object: 'document:budget',
+);
 ```
 
 With conditions:
 
-**Helper usage:**
-
 ```php
-$condition = new Condition(name: 'in_office_hours');
-$tuple = tuple('user:anne', 'viewer', 'document:budget', $condition);
-```
+use OpenFGA\Models\Condition;
+use function OpenFGA\tuple;
 
-**Standard long-form:**
-
-```php
-$condition = new Condition(name: 'in_office_hours');
-$tuple = new TupleKey('user:anne', 'viewer', 'document:budget', $condition);
+$tuple = tuple(
+    user: 'user:anne',
+    relation: 'viewer',
+    object: 'document:budget',
+    condition: new Condition(name: 'in_office_hours', expression: /* ... */),
+);
 ```
 
 ### Creating tuple collections
 
 The `tuples()` helper creates collections for batch operations:
 
-**Helper usage:**
-
 ```php
+use function OpenFGA\{tuple, tuples};
+
 $tupleCollection = tuples(
-    tuple('user:anne', 'viewer', 'document:budget'),
-    tuple('user:bob', 'editor', 'document:budget'),
-    tuple('user:charlie', 'owner', 'document:budget')
+    tuple(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:budget',
+    ),
+    tuple(
+        user: 'user:bob',
+        relation: 'editor',
+        object: 'document:budget',
+    ),
+    tuple(
+        user: 'user:charlie',
+        relation: 'owner',
+        object: 'document:budget',
+    ),
 );
-```
-
-**Standard long-form:**
-
-```php
-$tupleCollection = new TupleKeys([
-    new TupleKey('user:anne', 'viewer', 'document:budget'),
-    new TupleKey('user:bob', 'editor', 'document:budget'),
-    new TupleKey('user:charlie', 'owner', 'document:budget')
-]);
 ```
 
 ### Creating batch check items
 
-The `check()` helper creates BatchCheckItem instances for batch authorization checks. If no correlation ID is provided, one is automatically generated based on the tuple key:
-
-**Helper usage (with auto-generated correlation ID):**
+The `check()` helper creates BatchCheckItem instances for batch authorization checks:
 
 ```php
+use function OpenFGA\{check, tuple};
+
 $checkItem = check(
-    tupleKey: tuple('user:anne', 'viewer', 'document:budget')
-);
-```
-
-**Helper usage (with explicit correlation ID):**
-
-```php
-$checkItem = check(
-    tupleKey: tuple('user:anne', 'viewer', 'document:budget'),
-    correlation: 'anne-budget-check'
-);
-```
-
-**Standard long-form:**
-
-```php
-$checkItem = new BatchCheckItem(
-    tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
-    correlationId: 'anne-budget-check'
-);
-```
-
-**With context and contextual tuples:**
-
-```php
-$checkItem = check(
-    tupleKey: tuple('user:bob', 'editor', 'document:budget'),
-    correlation: 'bob-budget-edit',
-    contextualTuples: tuples(
-        tuple('user:bob', 'member', 'team:finance')
+    tuple: tuple(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:budget',
     ),
-    context: (object)['time' => '10:00', 'department' => 'finance']
+    // correlation: 'anne-budget-check', // Optional
 );
 ```
 
-**Standard long-form (with context and contextual tuples):**
-
-```php
-$checkItem = new BatchCheckItem(
-    tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
-    correlationId: 'bob-budget-edit',
-    contextualTuples: new TupleKeys([
-        new TupleKey('user:bob', 'member', 'team:finance')
-    ]),
-    context: (object)['time' => '10:00', 'department' => 'finance']
-);
-```
+If no correlation ID is provided, one is automatically generated based on the tuple key.
 
 ### Creating stores
 
 The `store()` helper creates a store and returns its ID directly:
 
-**Helper usage:**
-
 ```php
-$storeId = store($client, 'my-application');
-```
+use function OpenFGA\store;
 
-**Standard long-form:**
-
-```php
-$response = $client->createStore(name: 'my-application')->unwrap();
-$storeId = $response->getId();
+$storeId = store(
+    name: 'my-application-store',
+    client: $client,
+);
 ```
 
 ### Creating authorization models from DSL
 
-The `dsl()` helper parses DSL strings into authorization models:
+The `dsl()` helper transforms DSL strings into authorization models:
 
-**Helper usage:**
-
-```php
-$model = dsl($client, '
-    model
-      schema 1.1
-    type user
-    type document
-      relations
-        define viewer: [user]
-        define editor: [user]
-        define owner: [user]
-');
+```yaml
+model
+schema 1.1
+type user
+type document
+relations
+    define viewer: [user]
+    define editor: [user]
+    define owner: [user]
 ```
 
-**Standard long-form:**
-
 ```php
-$model = $client->dsl('
-    model
-      schema 1.1
-    type user
-    type document
-      relations
-        define viewer: [user]
-        define editor: [user]
-        define owner: [user]
-')->unwrap();
+use function OpenFGA\dsl;
+
+$model = dsl(
+    dsl: file_get_contents('path/to/dsl.fga')
+    client: $client,
+);
 ```
 
 ### Creating models in a store
 
 The `model()` helper creates an authorization model and returns its ID:
 
-**Helper usage:**
-
 ```php
-$modelId = model($client, $storeId, $authModel);
-```
+use function OpenFGA\model;
 
-**Standard long-form:**
-
-```php
-$response = $client->createAuthorizationModel(
+$modelId = model(
+    model: $model,
+    client: $client,
     store: $storeId,
-    typeDefinitions: $authModel->getTypeDefinitions(),
-    conditions: $authModel->getConditions(),
-    schemaVersion: $authModel->getSchemaVersion()
-)->unwrap();
-$modelId = $response->getModel();
+);
 ```
 
 ## Request helpers
 
 ### Writing tuples
 
-The `write()` helper provides the simplest way to write tuples:
-
-**Helper usage (single tuple):**
+The `write()` helper provides the simplest way to write a tuple:
 
 ```php
-write($client, $storeId, $modelId, tuple('user:anne', 'viewer', 'document:budget'));
-```
+use function OpenFGA\{tuple, write};
 
-**Standard long-form (single tuple):**
-
-```php
-$client->writeTuples(
+write(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    writes: new TupleKeys([new TupleKey('user:anne', 'viewer', 'document:budget')]),
-    transactional: true
-)->unwrap();
+    tuples: tuple(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:budget',
+    ),
+);
 ```
 
-**Helper usage (multiple tuples):**
+The helper also supports writing multiple tuples at once:
 
 ```php
-write($client, $storeId, $modelId, tuples(
-    tuple('user:anne', 'viewer', 'document:budget'),
-    tuple('user:bob', 'editor', 'document:forecast')
-));
-```
+use function OpenFGA\{tuple, tuples, write};
 
-**Standard long-form (multiple tuples):**
-
-```php
-$client->writeTuples(
+write(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    writes: new TupleKeys([
-        new TupleKey('user:anne', 'viewer', 'document:budget'),
-        new TupleKey('user:bob', 'editor', 'document:forecast')
-    ]),
-    transactional: true
-)->unwrap();
-```
-
-**Non-transactional mode:**
-
-```php
-// Helper - allows partial success
-write($client, $storeId, $modelId, $tuples, transactional: false);
-
-// Standard - allows partial success
-$client->writeTuples(
-    store: $storeId,
-    model: $modelId,
-    writes: $tuples,
-    transactional: false
-)->unwrap();
+    tuples: tuples(
+        tuple(
+            user: 'user:anne',
+            relation: 'viewer',
+            object: 'document:budget',
+        ),
+        tuple(
+            user: 'user:bob',
+            relation: 'editor',
+            object: 'document:forecast',
+        ),
+    ),
+);
 ```
 
 ### Deleting tuples
 
 The `delete()` helper simplifies tuple deletion:
 
-**Helper usage:**
-
 ```php
-delete($client, $storeId, $modelId, tuple('user:anne', 'viewer', 'document:budget'));
-```
+use function OpenFGA\{tuple, delete};
 
-**Standard long-form:**
-
-```php
-$client->writeTuples(
+delete(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    deletes: new TupleKeys([new TupleKey('user:anne', 'viewer', 'document:budget')]),
-    transactional: true
-)->unwrap();
+    tuples: tuple(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:budget',
+    ),
+);
 ```
 
 ### Checking permissions
 
-The `allowed()` helper returns a boolean directly with guaranteed error-safe behavior:
-
-**Helper usage:**
+The `allowed()` helper returns a boolean directly with guaranteed error-safe behavior. It will return true only when explicitly allowed, and false when denied or any error occurs.
 
 ```php
-// Returns true only if explicitly allowed, false for denied or any error
-if (allowed($client, $storeId, $modelId, tuple('user:anne', 'viewer', 'document:budget'))) {
+use function OpenFGA\{tuple, allowed};
+
+if (allowed(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    user: 'user:anne',
+    relation: 'viewer',
+    object: 'document:budget',
+)) {
     // User has access
 }
-
-// Safe to use even with network issues, invalid stores, etc.
-$canRead = allowed($client, $storeId, $modelId, tuple('user:anne', 'reader', 'document:budget'));
-$canEdit = allowed($client, $storeId, $modelId, tuple('user:anne', 'editor', 'document:budget'));
-
-// Both will return false if there are any errors (network, auth, validation, etc.)
 ```
 
-**Standard long-form:**
+The helper supports a number of options:
 
 ```php
-// Standard approach requires explicit error handling
-try {
-    $response = $client->check(
-        store: $storeId,
-        model: $modelId,
-        tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget')
-    )->unwrap();
+use OpenFGA\Models\Enums\Consistency;
+use function OpenFGA\{tuple, allowed};
 
-    if ($response->getAllowed()) {
-        // User has access
-    }
-} catch (Throwable $error) {
-    // Handle network issues, authentication failures, etc.
-    // Must decide what to do with errors
-}
-```
-
-**With advanced options:**
-
-```php
-// Helper with all options - still error-safe
-$hasAccess = allowed(
-    $client,
-    $storeId,
-    $modelId,
-    tuple('user:anne', 'viewer', 'document:budget'),
-    trace: true,
+if (allowed(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuple: tuple(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:budget',
+    ),
     context: (object)['time' => '2024-01-15T10:00:00Z'],
     contextualTuples: tuples(
-        tuple('user:anne', 'member', 'team:engineering')
+        tuple(
+            user: 'user:anne',
+            relation: 'member',
+            object: 'team:engineering',
+        )
     ),
-    consistency: Consistency::FULL
-);
-// Returns false for any error, true only if explicitly allowed
-
-// Standard long-form - requires error handling
-try {
-    $response = $client->check(
-        store: $storeId,
-        model: $modelId,
-        tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
-        trace: true,
-        context: (object)['time' => '2024-01-15T10:00:00Z'],
-        contextualTuples: new TupleKeys([
-            new TupleKey('user:anne', 'member', 'team:engineering')
-        ]),
-        consistency: Consistency::FULL
-    )->unwrap();
-    $hasAccess = $response->getAllowed();
-} catch (Throwable $error) {
-    // Handle errors explicitly
-    $hasAccess = false; // or throw, or log, etc.
+    consistency: Consistency::HIGHER_CONSISTENCY
+)) {
+    // User has access
 }
 ```
 
 ### Finding accessible objects
 
-The `objects()` helper simplifies finding all objects a user has access to with guaranteed error-safe behavior:
-
-**Helper usage:**
+The `objects()` helper simplifies finding all objects a user has access to with guaranteed error-safe behavior. It returns an empty array on any error.
 
 ```php
-// Find all documents Anne can view - returns empty array on any error
-$documents = objects($client, $storeId, $modelId, 'document', 'viewer', 'user:anne');
-// Returns: ['document:budget', 'document:forecast', 'document:report'] or [] on error
+use function OpenFGA\objects;
 
-// Find all folders Bob owns - safe to use even with network issues
-$folders = objects($client, $storeId, $modelId, 'folder', 'owner', 'user:bob');
-// Returns: ['folder:shared', 'folder:personal'] or [] on error
+$documents = objects(
+    type: 'document',
+    relation: 'viewer',
+    user: 'user:anne',
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+);
 
-// Safe to use even with invalid stores, authentication failures, etc.
-$userDocs = objects($client, $invalidStore, $modelId, 'document', 'viewer', 'user:anne');
-// Will return [] instead of throwing an exception
+// Returns array of accessible documents or [] on any error
 ```
 
-**Standard long-form:**
+The helper supports a number of options:
 
 ```php
-// Standard approach requires explicit error handling
-try {
-    $generator = $client->streamedListObjects(
-        store: $storeId,
-        model: $modelId,
-        type: 'document',
-        relation: 'viewer',
-        user: 'user:anne'
-    )->unwrap();
+use function OpenFGA\{objects, tuple, tuples};
 
-    $documents = [];
-    foreach ($generator as $streamedResponse) {
-        $documents[] = $streamedResponse->getObject();
-    }
-} catch (Throwable $error) {
-    // Handle network issues, authentication failures, etc.
-    // Must decide what to do with errors
-    $documents = []; // or throw, or log, etc.
-}
-```
-
-**With advanced options:**
-
-```php
-// Helper with contextual tuples and consistency - still error-safe
-$accessibleDocs = objects(
-    $client,
-    $storeId,
-    $modelId,
-    'document',
-    'viewer',
-    'user:anne',
+$documents = objects(
+    type: 'document',
+    relation: 'viewer',
+    user: 'user:anne',
+    client: $client,
+    store: $storeId,
+    model: $modelId,
     context: (object)['department' => 'engineering'],
     contextualTuples: tuples(
-        tuple('user:anne', 'member', 'team:engineering')
+        tuple(
+            user: 'user:anne',
+            relation: 'member',
+            object: 'team:engineering',
+        )
     ),
     consistency: Consistency::HIGHER_CONSISTENCY
 );
-// Returns array of accessible documents or [] on any error
-
-// Standard long-form equivalent - requires error handling
-try {
-    $generator = $client->streamedListObjects(
-        store: $storeId,
-        model: $modelId,
-        type: 'document',
-        relation: 'viewer',
-        user: 'user:anne',
-        context: (object)['department' => 'engineering'],
-        contextualTuples: new TupleKeys([
-            new TupleKey('user:anne', 'member', 'team:engineering')
-        ]),
-        consistency: Consistency::HIGHER_CONSISTENCY
-    )->unwrap();
-
-    $accessibleDocs = [];
-    foreach ($generator as $streamedResponse) {
-        $accessibleDocs[] = $streamedResponse->getObject();
-    }
-} catch (Throwable $error) {
-    // Handle errors explicitly
-    $accessibleDocs = []; // or throw, or log, etc.
-}
 ```
 
 ### Listing authorization models
 
-The `models()` helper simplifies retrieving all authorization models with automatic pagination:
-
-**Helper usage:**
+The `models()` helper simplifies retrieving authorization models with automatic pagination:
 
 ```php
-// Get all authorization models in a store
-$allModels = models($client, $storeId);
-foreach ($allModels as $model) {
-    echo "Model: {$model->getId()}\n";
-}
+use function OpenFGA\models;
 
-// Find the latest authorization model
-$allModels = models($client, $store);
-$latestModel = end($allModels); // Models are typically returned in chronological order
-```
+$models = models(
+    client: $client,
+    store: $storeId,
+);
 
-**Standard long-form:**
-
-```php
-$allModels = [];
-$continuationToken = null;
-
-do {
-    $response = $client->listAuthorizationModels(
-        store: $storeId,
-        continuationToken: $continuationToken
-    )->unwrap();
-
-    // Add models from current page to collection
-    foreach ($response->getModels() as $model) {
-        $allModels[] = $model;
-    }
-
-    // Get continuation token for next page
-    $continuationToken = $response->getContinuationToken();
-} while (null !== $continuationToken);
-
-foreach ($allModels as $model) {
+foreach ($models as $model) {
     echo "Model: {$model->getId()}\n";
 }
 ```
 
 ### Batch write operations
 
-The `writes()` helper handles large-scale tuple operations with automatic chunking:
-
-**Helper usage:**
+The `writes()` helper handles large tuple operations with automatic chunking:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
+
 $result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
     writes: tuples(
-        tuple('user:anne', 'viewer', 'document:1'),
-        tuple('user:bob', 'viewer', 'document:2'),
-        // ... hundreds more tuples
+        tuple(
+            user: 'user:anne',
+            relation: 'viewer',
+            object: 'document:1',
+        ),
+        tuple(
+            user: 'user:bob',
+            relation: 'viewer',
+            object: 'document:2',
+        ),
+        // ...
     ),
     maxParallelRequests: 10,
     maxTuplesPerChunk: 100,
     maxRetries: 3,
     stopOnFirstError: false
 );
-
-echo "Success rate: " . ($result->getSuccessRate() * 100) . "%\n";
-```
-
-**Standard long-form:**
-
-```php
-$result = $client->writeTuples(
-    store: $storeId,
-    model: $modelId,
-    writes: new TupleKeys([
-        new TupleKey('user:anne', 'viewer', 'document:1'),
-        new TupleKey('user:bob', 'viewer', 'document:2'),
-        // ... hundreds more tuples
-    ]),
-    transactional: false,
-    maxParallelRequests: 10,
-    maxTuplesPerChunk: 100,
-    maxRetries: 3,
-    retryDelaySeconds: 1.0,
-    stopOnFirstError: false
-)->unwrap();
 
 echo "Success rate: " . ($result->getSuccessRate() * 100) . "%\n";
 ```
@@ -549,130 +411,20 @@ echo "Success rate: " . ($result->getSuccessRate() * 100) . "%\n";
 
 The `checks()` helper simplifies performing multiple authorization checks in a single request:
 
-**Helper usage (with auto-generated correlation IDs):**
-
 ```php
-// Check multiple permissions using the check() helper with auto-generated correlation IDs
-$results = checks($client, $storeId, $modelId,
-    check(tuple('user:anne', 'viewer', 'document:budget')),
-    check(tuple('user:bob', 'editor', 'document:budget')),
-    check(tuple('user:charlie', 'owner', 'document:budget'))
-);
-// Returns: ['8a2c3e4f5d6...' => true, '9b3d4f5e6c7...' => false, 'a4e5f6d7c8...' => true]
+use function OpenFGA\{checks, check};
 
-foreach ($results as $correlationId => $allowed) {
-    echo "$correlationId: " . ($allowed ? 'allowed' : 'denied') . "\n";
-}
-```
-
-**Helper usage (with explicit correlation IDs):**
-
-```php
-// Check multiple permissions using the check() helper with explicit correlation IDs
-$results = checks($client, $storeId, $modelId,
-    check(tuple('user:anne', 'viewer', 'document:budget'), 'anne-check'),
-    check(tuple('user:bob', 'editor', 'document:budget'), 'bob-check'),
-    check(tuple('user:charlie', 'owner', 'document:budget'), 'charlie-check')
-);
-// Returns: ['anne-check' => true, 'bob-check' => false, 'charlie-check' => true]
-
-foreach ($results as $correlationId => $allowed) {
-    echo "$correlationId: " . ($allowed ? 'allowed' : 'denied') . "\n";
-}
-```
-
-**Standard long-form:**
-
-```php
-$batchItems = [
-    new BatchCheckItem(
-        tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
-        correlationId: 'anne-check'
-    ),
-    new BatchCheckItem(
-        tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
-        correlationId: 'bob-check'
-    ),
-    new BatchCheckItem(
-        tupleKey: new TupleKey('user:charlie', 'owner', 'document:budget'),
-        correlationId: 'charlie-check'
-    )
-];
-
-$batchCheckItems = new BatchCheckItems($batchItems);
-$response = $client->batchCheck(
+$results = checks(
+    client: $client,
     store: $storeId,
     model: $modelId,
-    checks: $batchCheckItems
-)->unwrap();
-
-$results = [];
-foreach ($response->getResult() as $correlationId => $result) {
-    $results[$correlationId] = $result->getAllowed();
-}
+    check(user: 'user:anne', relation: 'viewer', object: 'document:budget'),
+    check(user: 'user:bob', relation: 'editor', object: 'document:budget'),
+    check(user: 'user:charlie', relation: 'owner', object: 'document:budget')
+);
 
 foreach ($results as $correlationId => $allowed) {
     echo "$correlationId: " . ($allowed ? 'allowed' : 'denied') . "\n";
-}
-```
-
-**Helper usage (with context and contextual tuples):**
-
-```php
-// Check with context and contextual tuples using check() helper
-$results = checks($client, $storeId, $modelId,
-    check(
-        tupleKey: tuple('user:anne', 'viewer', 'document:budget'),
-        correlation: 'anne-budget-view'
-    ),
-    check(
-        tupleKey: tuple('user:bob', 'editor', 'document:budget'),
-        correlation: 'bob-budget-edit',
-        context: (object)['time' => '10:00', 'ip' => '192.168.1.1']
-    ),
-    check(
-        tupleKey: tuple('user:charlie', 'owner', 'document:budget'),
-        correlation: 'charlie-budget-own',
-        contextualTuples: tuples(
-            tuple('user:charlie', 'member', 'team:finance')
-        )
-    )
-);
-// Returns: ['anne-budget-view' => true, 'bob-budget-edit' => false, 'charlie-budget-own' => true]
-```
-
-**Standard long-form (with context and contextual tuples):**
-
-```php
-$batchItems = [
-    new BatchCheckItem(
-        tupleKey: new TupleKey('user:anne', 'viewer', 'document:budget'),
-        correlationId: 'anne-budget-view'
-    ),
-    new BatchCheckItem(
-        tupleKey: new TupleKey('user:bob', 'editor', 'document:budget'),
-        correlationId: 'bob-budget-edit',
-        context: (object)['time' => '10:00', 'ip' => '192.168.1.1']
-    ),
-    new BatchCheckItem(
-        tupleKey: new TupleKey('user:charlie', 'owner', 'document:budget'),
-        correlationId: 'charlie-budget-own',
-        contextualTuples: new TupleKeys([
-            new TupleKey('user:charlie', 'member', 'team:finance')
-        ])
-    )
-];
-
-$batchCheckItems = new BatchCheckItems($batchItems);
-$response = $client->batchCheck(
-    store: $storeId,
-    model: $modelId,
-    checks: $batchCheckItems
-)->unwrap();
-
-$results = [];
-foreach ($response->getResult() as $correlationId => $result) {
-    $results[$correlationId] = $result->getAllowed();
 }
 ```
 
@@ -680,9 +432,9 @@ foreach ($response->getResult() as $correlationId => $result) {
 
 ### Creating results
 
-**Helper usage:**
-
 ```php
+use function OpenFGA\{ok, err};
+
 // Create a Success
 $success = ok('Operation completed');
 
@@ -690,23 +442,13 @@ $success = ok('Operation completed');
 $failure = err(new Exception('Operation failed'));
 ```
 
-**Standard long-form:**
-
-```php
-// Create a Success
-$success = new Success('Operation completed');
-
-// Create a Failure
-$failure = new Failure(new Exception('Operation failed'));
-```
-
 ### Working with results
 
 The `result()` helper provides unified handling:
 
-**Helper usage:**
-
 ```php
+use function OpenFGA\result;
+
 // Execute a closure safely
 $result = result(function () {
     // Some operation that might throw
@@ -717,29 +459,13 @@ $result = result(function () {
 $value = result($someResult);
 ```
 
-**Standard long-form:**
-
-```php
-// Execute a closure safely
-try {
-    $value = performRiskyOperation();
-    $result = new Success($value);
-} catch (Throwable $e) {
-    $result = new Failure($e);
-}
-
-// Unwrap a Result
-if ($someResult->failed()) {
-    throw $someResult->err();
-}
-$value = $someResult->val();
-```
-
 ### Handling success and failure
 
 **Helper usage:**
 
 ```php
+use function OpenFGA\{success, failure, unwrap};
+
 // Handle success
 success($result, function ($value) {
     echo "Success: $value\n";
@@ -754,198 +480,198 @@ failure($result, function ($error) {
 $value = unwrap($result, fn() => 'default value');
 ```
 
-**Standard long-form:**
+## Reading tuples
+
+The `read()` helper provides a simplified way to read tuples with automatic pagination:
 
 ```php
-// Handle success
-if ($result->succeeded()) {
-    $value = $result->val();
-    echo "Success: $value\n";
-}
+use function OpenFGA\{read, tuple};
 
-// Handle failure
-if ($result->failed()) {
-    $error = $result->err();
-    echo "Error: " . $error->getMessage() . "\n";
-}
+// Read all tuples in a store
+$allTuples = read(
+    client: $client,
+    store: $storeId
+);
 
-// Unwrap with fallback
-$value = $result->unwrap(fn() => 'default value');
-```
-
-## Complete example: Building an authorization system
-
-Here's how helpers simplify building a complete authorization system:
-
-**Using helpers:**
-
-```php
-// 1. Create a store
-$storeId = store($client, 'document-sharing-app');
-
-// 2. Define the authorization model
-$authModel = dsl($client, '
-    model
-      schema 1.1
-
-    type user
-
-    type team
-      relations
-        define member: [user]
-
-    type document
-      relations
-        define owner: [user]
-        define editor: [user, team#member]
-        define viewer: [user, team#member] or editor
-');
-
-// 3. Create the model in the store
-$modelId = model($client, $storeId, $authModel);
-
-// 4. Write relationships
-write($client, $storeId, $modelId, tuples(
-    // Direct permissions
-    tuple('user:alice', 'owner', 'document:budget'),
-    tuple('user:bob', 'editor', 'document:budget'),
-
-    // Team membership
-    tuple('user:charlie', 'member', 'team:finance'),
-    tuple('user:david', 'member', 'team:finance'),
-
-    // Team permissions
-    tuple('team:finance#member', 'viewer', 'document:budget')
-));
-
-// 5. Check permissions
-$users = ['alice', 'bob', 'charlie', 'david', 'eve'];
-$relations = ['owner', 'editor', 'viewer'];
-
-foreach ($users as $user) {
-    foreach ($relations as $relation) {
-        if (allowed($client, $storeId, $modelId, tuple("user:$user", $relation, 'document:budget'))) {
-            echo "$user can $relation document:budget\n";
-        }
-    }
-}
-```
-
-**Standard long-form equivalent:**
-
-```php
-// 1. Create a store
-$storeResponse = $client->createStore(name: 'document-sharing-app')->unwrap();
-$storeId = $storeResponse->getId();
-
-// 2. Define the authorization model
-$authModel = $client->dsl('
-    model
-      schema 1.1
-
-    type user
-
-    type team
-      relations
-        define member: [user]
-
-    type document
-      relations
-        define owner: [user]
-        define editor: [user, team#member]
-        define viewer: [user, team#member] or editor
-')->unwrap();
-
-// 3. Create the model in the store
-$modelResponse = $client->createAuthorizationModel(
+// Read tuples filtered by user
+$userTuples = read(
+    client: $client,
     store: $storeId,
-    typeDefinitions: $authModel->getTypeDefinitions(),
-    conditions: $authModel->getConditions(),
-    schemaVersion: $authModel->getSchemaVersion()
-)->unwrap();
-$modelId = $modelResponse->getModel();
+    tuple: tuple('user:anne', '', '')  // Empty relation and object act as wildcards
+);
 
-// 4. Write relationships
-$client->writeTuples(
+// Read with custom page size and consistency
+use OpenFGA\Models\Enums\Consistency;
+
+$tuples = read(
+    client: $client,
     store: $storeId,
-    model: $modelId,
-    writes: new TupleKeys([
-        // Direct permissions
-        new TupleKey('user:alice', 'owner', 'document:budget'),
-        new TupleKey('user:bob', 'editor', 'document:budget'),
+    pageSize: 100,
+    consistency: Consistency::HigherConsistency
+);
 
-        // Team membership
-        new TupleKey('user:charlie', 'member', 'team:finance'),
-        new TupleKey('user:david', 'member', 'team:finance'),
-
-        // Team permissions
-        new TupleKey('team:finance#member', 'viewer', 'document:budget')
-    ]),
-    transactional: true
-)->unwrap();
-
-// 5. Check permissions
-$users = ['alice', 'bob', 'charlie', 'david', 'eve'];
-$relations = ['owner', 'editor', 'viewer'];
-
-foreach ($users as $user) {
-    foreach ($relations as $relation) {
-        $checkResponse = $client->check(
-            store: $storeId,
-            model: $modelId,
-            tupleKey: new TupleKey("user:$user", $relation, 'document:budget')
-        )->unwrap();
-
-        if ($checkResponse->getAllowed()) {
-            echo "$user can $relation document:budget\n";
-        }
+// Using with context
+context(function() {
+    $allTuples = read();  // Uses ambient client/store from context
+    foreach ($allTuples as $tuple) {
+        echo "{$tuple->getUser()} {$tuple->getRelation()} {$tuple->getObject()}\n";
     }
-}
+}, client: $client, store: $storeId);
 ```
 
-## When to use helpers vs standard methods
+## Listing tuple changes
 
-### Use helpers when:
+The `changes()` helper retrieves all tuple changes with automatic pagination:
 
-- You want concise, readable code
-- You're prototyping or exploring the API
-- You're writing scripts or simple applications
-- You prefer functional-style programming
-- You want to reduce boilerplate in tests
-- You want fail-safe behavior where errors default to "false/denied"
-- You're building UI components that need graceful degradation
+```php
+use function OpenFGA\changes;
 
-### Use standard methods when:
+// Get all changes in a store
+$allChanges = changes(
+    client: $client,
+    store: $storeId
+);
 
-- You need fine-grained control over error handling
-- You're building complex error recovery logic
-- You want to access all response metadata (like trace information)
-- You need to distinguish between "permission denied" and "error occurred"
-- You're building abstractions on top of the SDK
-- Your team prefers explicit object construction
-- You want to handle different types of errors differently
+foreach ($allChanges as $change) {
+    echo "Change: {$change->getOperation()->value} at {$change->getTimestamp()->format('Y-m-d H:i:s')}\n";
+}
 
-## Benefits of using helpers
+// Filter changes by object type
+$documentChanges = changes(
+    client: $client,
+    store: $storeId,
+    type: 'document'
+);
 
-1. **Reduced Boilerplate**: Helpers eliminate repetitive code patterns
-2. **Improved Readability**: Authorization logic becomes more declarative
-3. **Faster Development**: Less typing means faster prototyping
-4. **Fewer Errors**: Less code means fewer opportunities for mistakes
-5. **Consistent Patterns**: Helpers enforce best practices by default
+// Get recent changes since yesterday
+$recentChanges = changes(
+    client: $client,
+    store: $storeId,
+    startTime: new DateTimeImmutable('-1 day')
+);
 
-## Performance considerations
+// Using with context and custom page size
+context(function() {
+    $changes = changes(pageSize: 100);
+    echo "Total changes: " . count($changes) . "\n";
+}, client: $client, store: $storeId);
+```
 
-Helpers have minimal overhead - they're thin wrappers around the standard methods:
+## Finding users with access
 
-- `tuple()` and `tuples()` are simple constructors
-- `write()`, `delete()` add one function call
-- `allowed()` and `objects()` add one function call plus try-catch overhead (negligible)
-- `writes()` and `checks()` delegate directly to the client's batch processing
-- Result helpers add negligible overhead for error handling
+The `users()` helper lists all users who have a specific relationship with an object:
 
-For performance-critical paths, both approaches perform identically after PHP's optimizer runs.
+```php
+use function OpenFGA\{users, filter, filters};
 
-**Note**: The `allowed()` and `objects()` helpers' error-safe behavior does add a try-catch block, but this has no performance impact when no exceptions occur, which is the common case.
+// Find all users who can view a document
+$viewers = users(
+    object: 'document:budget',
+    relation: 'viewer',
+    filters: filter('user'),
+    client: $client,
+    store: $storeId,
+    model: $modelId
+);
+// Returns: ['user:anne', 'user:bob', 'user:charlie']
+
+// Find both users and groups with edit access
+$editors = users(
+    object: 'document:budget',
+    relation: 'editor',
+    filters: filters(
+        filter('user'),
+        filter('group')
+    ),
+    client: $client,
+    store: $storeId,
+    model: $modelId
+);
+// Returns: ['user:anne', 'group:engineering', 'user:david']
+
+// Filter by relation type
+$teamMembers = users(
+    object: 'document:technical-spec',
+    relation: 'editor',
+    filters: filter('team', 'member'),  // Only team members
+    client: $client,
+    store: $storeId,
+    model: $modelId
+);
+
+// Using with context and contextual tuples
+context(function() {
+    use function OpenFGA\{tuple, tuples};
+    
+    $editors = users(
+        object: 'document:technical-spec',
+        relation: 'editor',
+        filters: filter('user'),
+        contextualTuples: tuples(
+            tuple('user:anne', 'member', 'team:engineering')
+        )
+    );
+}, client: $client, store: $storeId, model: $modelId);
+```
+
+## User type filters
+
+The `filter()` and `filters()` helpers create user type filters for queries:
+
+```php
+use function OpenFGA\{filter, filters};
+
+// Single user type filter
+$userFilter = filter('user');
+
+// Filter with relation
+$groupMemberFilter = filter('group', 'member');
+
+// Multiple filters collection
+$mixedFilters = filters(
+    filter('user'),
+    filter('group'),
+    filter('service_account'),
+    filter('team', 'member')
+);
+```
+
+## Language helpers
+
+The `lang()` and `trans()` helpers simplify working with internationalization:
+
+```php
+use OpenFGA\Language;
+use OpenFGA\Messages;
+use function OpenFGA\{lang, trans};
+
+// Get language enum by locale
+$german = lang('de');           // Returns Language::German
+$portuguese = lang('pt_BR');    // Returns Language::PortugueseBrazilian
+$default = lang();              // Returns Language::English (default)
+
+// Translate messages
+$message = trans(Messages::NO_LAST_REQUEST_FOUND);
+
+// Translate with parameters
+$error = trans(
+    Messages::NETWORK_ERROR,
+    ['message' => 'Connection timeout']
+);
+
+// Translate with specific language
+$germanError = trans(
+    Messages::AUTH_USER_MESSAGE_TOKEN_EXPIRED,
+    [],
+    Language::German
+);
+
+// Using in client configuration
+$client = new Client(
+    url: $url,
+    language: lang('de')
+);
+```
 
 ## Next steps
 

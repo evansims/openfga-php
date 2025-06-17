@@ -115,7 +115,7 @@ if ($result->success()) {
 public function check(
     StoreInterface|string $store,
     AuthorizationModelInterface|string $model,
-    TupleKeyInterface $tupleKey,
+    TupleKeyInterface $tuple,
     bool|null $trace = NULL,
     object|null $context = NULL,
     TupleKeysInterface|null $contextualTuples = NULL,
@@ -132,7 +132,7 @@ Checks if a user has a specific relationship with an object. Performs an authori
 $result = $client->check(
     store: 'store-id',
     model: 'model-id',
-    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget')
+    tuple: new TupleKey('user:anne', 'reader', 'document:budget')
 );
 
 if ($result->success()) {
@@ -154,7 +154,7 @@ $contextualTuples = new TupleKeys([
 $result = $client->check(
     store: 'store-id',
     model: 'model-id',
-    tupleKey: new TupleKey('user:anne', 'reader', 'document:budget'),
+    tuple: new TupleKey('user:anne', 'reader', 'document:budget'),
     contextualTuples: $contextualTuples
 );
 
@@ -168,7 +168,7 @@ $result = $client->check(
 | ------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                           | The store to check against                  |
 | `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` | The authorization model to use              |
-| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                     | The relationship to check                   |
+| `$tuple`            | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                     | The relationship to check                   |
 | `$trace`            | `bool` &#124; `null`                                                                   | Whether to include a trace in the response  |
 | `$context`          | `object` &#124; `null`                                                                 | Additional context for the check            |
 | `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`         | Additional tuples for contextual evaluation |
@@ -334,7 +334,7 @@ if ($result->success()) {
 ```php
 public function expand(
     StoreInterface|string $store,
-    TupleKeyInterface $tupleKey,
+    TupleKeyInterface $tuple,
     AuthorizationModelInterface|string|null $model = NULL,
     TupleKeysInterface|null $contextualTuples = NULL,
     Consistency|null $consistency = NULL,
@@ -351,7 +351,7 @@ Expands a relationship tuple to show all users that have the relationship.
 | Name                | Type                                                                                                 | Description                                 |
 | ------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------- |
 | `$store`            | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`                                         | The store containing the tuple              |
-| `$tupleKey`         | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                   | The tuple to expand                         |
+| `$tuple`            | [`TupleKeyInterface`](Models/TupleKeyInterface.md)                                                   | The tuple to expand                         |
 | `$model`            | [`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null` | The authorization model to use              |
 | `$contextualTuples` | [`TupleKeysInterface`](Models/Collections/TupleKeysInterface.md) &#124; `null`                       | Additional tuples for contextual evaluation |
 | `$consistency`      | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`                                           | Override the default consistency level      |
@@ -708,7 +708,7 @@ Retrieves assertions for an authorization model.
 ```php
 public function readTuples(
     StoreInterface|string $store,
-    ?OpenFGA\Models\TupleKeyInterface $tupleKey = NULL,
+    ?OpenFGA\Models\TupleKeyInterface $tuple = NULL,
     string|null $continuationToken = NULL,
     ?int $pageSize = NULL,
     Consistency|null $consistency = NULL,
@@ -725,7 +725,7 @@ Reads relationship tuples from a store with optional filtering and pagination.
 | Name                 | Type                                                             | Description                                    |
 | -------------------- | ---------------------------------------------------------------- | ---------------------------------------------- |
 | `$store`             | [`StoreInterface`](Models/StoreInterface.md) &#124; `string`     | The store to read from                         |
-| `$tupleKey`          | [`TupleKeyInterface`](Models/TupleKeyInterface.md) &#124; `null` | Filter tuples by this key (return all if null) |
+| `$tuple`             | [`TupleKeyInterface`](Models/TupleKeyInterface.md) &#124; `null` | Filter tuples by this key (return all if null) |
 | `$continuationToken` | `string` &#124; `null`                                           | Token for pagination                           |
 | `$pageSize`          | `int` &#124; `null`                                              | Maximum number of tuples to return             |
 | `$consistency`       | [`Consistency`](Models/Enums/Consistency.md) &#124; `null`       | Override the default consistency level         |

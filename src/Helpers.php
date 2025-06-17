@@ -99,7 +99,7 @@ function tuples(TupleKey ...$tuples): TupleKeysInterface
  * @return BatchCheckItemInterface The created batch check item
  *
  * @example Using with a TupleKey object
- * check('correlation-id', $tupleKey, contextualTuples: $contextualTuples, context: $context)
+ * check('correlation-id', $tuple, contextualTuples: $contextualTuples, context: $context)
  * @example Using with individual parameters
  * check('correlation-id', user: 'user:anne', relation: 'viewer', object: 'document:budget')
  * @example Using with auto-generated correlation
@@ -535,7 +535,7 @@ function delete(
  *
  * @param ?ClientInterface           $client      The OpenFGA client (optional if in context)
  * @param StoreInterface|string|null $store       The store to read from (optional if in context)
- * @param ?TupleKeyInterface         $tupleKey    Optional tuple key to filter results (null reads all tuples)
+ * @param ?TupleKeyInterface         $tuple       Optional tuple key to filter results (null reads all tuples)
  * @param int                        $pageSize    Number of tuples per page (default: 50, max: 1000)
  * @param ?Consistency               $consistency Optional consistency level for the query
  *
@@ -564,7 +564,7 @@ function delete(
 function read(
     ?ClientInterface $client = null,
     StoreInterface | string | null $store = null,
-    ?TupleKeyInterface $tupleKey = null,
+    ?TupleKeyInterface $tuple = null,
     int $pageSize = 50,
     ?Consistency $consistency = null,
 ): array {
@@ -583,20 +583,20 @@ function read(
         /** @var Responses\ReadTuplesResponseInterface $response */
         $response = $client->readTuples(
             store: $store,
-            tupleKey: $tupleKey,
+            tuple: $tuple,
             pageSize: $pageSize,
             continuationToken: $continuationToken,
             consistency: $consistency,
         )->unwrap();
 
         // Add tuples from this page to our collection
-        foreach ($response->getTuples() as $tuple) {
-            $allTuples[] = $tuple->getKey();
+        foreach ($response->getTuples() as $responseTuple) {
+            $allTuples[] = $responseTuple->getKey();
         }
 
         // Get continuation token for next page
         $continuationToken = $response->getContinuationToken();
-    } while (null !== $continuationToken);
+    } while (null !== $continuationToken && '' !== $continuationToken);
 
     return $allTuples;
 }
@@ -678,7 +678,7 @@ function changes(
 
         // Get continuation token for next page
         $continuationToken = $response->getContinuationToken();
-    } while (null !== $continuationToken);
+    } while (null !== $continuationToken && '' !== $continuationToken);
 
     return $allChanges;
 }
@@ -710,7 +710,7 @@ function changes(
  * @return bool                                    True if explicitly allowed, false for denied or any error
  *
  * @example Using with a TupleKey object and explicit parameters
- * allowed($tupleKey, client: $client, store: $store, model: $model)
+ * allowed($tuple, client: $client, store: $store, model: $model)
  * @example Using with individual parameters
  * allowed(user: 'user:anne', relation: 'viewer', object: 'document:budget', client: $client, store: $store, model: $model)
  * @example Using with context (no explicit client/store/model needed)
@@ -758,7 +758,7 @@ function allowed(
         $response = $client->check(
             store: $store,
             model: $model,
-            tupleKey: $tupleKey,
+            tuple: $tupleKey,
             trace: $trace,
             context: $context,
             contextualTuples: $contextualTuples,
@@ -957,7 +957,7 @@ function models(
 
         // Get continuation token for next page
         $continuationToken = $response->getContinuationToken();
-    } while (null !== $continuationToken);
+    } while (null !== $continuationToken && '' !== $continuationToken);
 
     return $allModels;
 }

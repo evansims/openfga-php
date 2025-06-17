@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\{Client};
 use OpenFGA\Models\Store;
 use OpenFGA\Responses\{CreateAuthorizationModelResponse, WriteTuplesResponse};
@@ -15,19 +13,7 @@ use function OpenFGA\{tuple, tuples};
 
 describe('WriteTuples Non-Transactional Integration', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
 
         // Create a temporary store for testing
         $storeResult = $this->client->createStore('integration-test-non-transactional-writes');
@@ -105,7 +91,7 @@ describe('WriteTuples Non-Transactional Integration', function (): void {
         // Verify tuples were written
         $tupleResult = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('user:alice', 'reader', 'document:1'),
+            tuple: tuple('user:alice', 'reader', 'document:1'),
         );
 
         expect($tupleResult)->toBeInstanceOf(SuccessInterface::class);
@@ -181,14 +167,14 @@ describe('WriteTuples Non-Transactional Integration', function (): void {
         // Verify bob's tuple was deleted
         $bobResult = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('user:bob', 'reader', 'document:2'),
+            tuple: tuple('user:bob', 'reader', 'document:2'),
         );
         expect($bobResult->unwrap()->getTuples())->toHaveCount(0);
 
         // Verify new tuples were written
         $davidResult = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('user:david', 'reader', 'document:4'),
+            tuple: tuple('user:david', 'reader', 'document:4'),
         );
         expect($davidResult->unwrap()->getTuples())->toHaveCount(1);
     });

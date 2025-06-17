@@ -4,23 +4,11 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 
 describe('Method Coverage', function (): void {
     test('all client methods exist and are callable', function (): void {
-        $responseFactory = new Psr17Factory;
-        $httpClient = new FileGetContents($responseFactory);
-        $url = getOpenFgaUrl();
-
-        $client = new Client(
-            url: $url,
-            httpClient: $httpClient,
-            httpResponseFactory: $responseFactory,
-            httpStreamFactory: $responseFactory,
-            httpRequestFactory: $responseFactory,
-        );
+        $client = new Client(url: getOpenFgaUrl());
 
         $methods = [
             'check',
@@ -50,17 +38,7 @@ describe('Method Coverage', function (): void {
     });
 
     test('result pattern methods', function (): void {
-        $responseFactory = new Psr17Factory;
-        $httpClient = new FileGetContents($responseFactory);
-        $url = getOpenFgaUrl();
-
-        $client = new Client(
-            url: $url,
-            httpClient: $httpClient,
-            httpResponseFactory: $responseFactory,
-            httpStreamFactory: $responseFactory,
-            httpRequestFactory: $responseFactory,
-        );
+        $client = new Client(url: getOpenFgaUrl());
 
         $result = $client->listStores();
 

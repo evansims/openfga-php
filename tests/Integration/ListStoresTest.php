@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
 use DateTimeInterface;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\{Client, Messages};
 use OpenFGA\Exceptions\ClientException;
 
@@ -16,19 +14,7 @@ use function sprintf;
 
 describe('List Stores', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
 
         $this->createdStoreIds = [];
         $timestamp = time();

@@ -6,24 +6,21 @@ The examples in this guide assume you have the following setup:
 use OpenFGA\{Client, ClientInterface};
 use OpenFGA\Models\{Store, AuthorizationModel};
 use OpenFGA\Exceptions\{ClientError, ClientException, NetworkError, NetworkException};
+
 use function OpenFGA\{result, ok, err, unwrap, success, failure, tuple, allowed};
 
-// Initialize client
 $client = new Client(url: 'http://localhost:8080');
 
-// These values are typically from your configuration or previous operations
-$storeId = 'your-store-id';
-$modelId = 'your-model-id';
+$storeId = $_ENV['FGA_STORE_ID'] ?? 'your-store-id';
+$modelId = $_ENV['FGA_MODEL_ID'] ?? 'your-model-id';
+
 $store = $client->getStore($storeId)->unwrap();
 $model = $client->getAuthorizationModel($storeId, $modelId)->unwrap();
-
-// For Laravel users - the collect() function is available
-// For non-Laravel users, you can use array_map/array_filter or similar
 ```
 
 ## Why use Results
 
-Tired of wrapping every API call in try-catch blocks? The OpenFGA SDK uses Results to make error handling explicit and chainable:
+The OpenFGA SDK uses Results to make error handling explicit and chainable:
 
 ```php
 // Instead of this mess:
@@ -46,7 +43,7 @@ $client->getStore($storeId)
     ->failure(fn($error) => $this->logError($error));
 ```
 
-All SDK methods return either `Success` or `Failure` objects instead of throwing exceptions for expected failures like "not found" or validation errors.
+All SDK methods return either [`Success`](../API/Results/Success.md) or [`Failure`](../API/Results/Failure.md) objects instead of throwing exceptions for expected failures like "not found" or validation errors.
 
 ## Basic usage
 
@@ -59,9 +56,7 @@ The most common patterns you'll need:
 $store = $client->getStore($storeId)->unwrap();
 
 // Get the value with a fallback
-$store = $client->getStore($storeId)->unwrap(
-    fn($error) => Store::default()
-);
+$store = $client->getStore($storeId)->unwrap(fn($error) => /* fallback */);
 ```
 
 ### Handle success and failure

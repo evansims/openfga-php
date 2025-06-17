@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 use OpenFGA\Exceptions\ClientException;
 use OpenFGA\Models\Collections\UserTypeFilters;
@@ -15,19 +13,7 @@ use function OpenFGA\{tuple, tuples};
 
 describe('Edge Cases', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
 
         $name = 'edge-case-test-' . bin2hex(random_bytes(5));
         $this->store = $this->client->createStore(name: $name)
@@ -67,7 +53,7 @@ describe('Edge Cases', function (): void {
     test('empty results for readTuples', function (): void {
         $result = $this->client->readTuples(
             store: $this->storeId,
-            tupleKey: tuple('', '', 'document:nonexistent'),
+            tuple: tuple('', '', 'document:nonexistent'),
         )->rethrow()->unwrap();
 
         expect($result->getTuples())->not->toBeNull();
@@ -140,7 +126,7 @@ describe('Edge Cases', function (): void {
         foreach ($writtenTuples as $tuple) {
             $readResult = $this->client->readTuples(
                 store: $this->storeId,
-                tupleKey: tuple($tuple->getUser(), $tuple->getRelation(), $tuple->getObject()),
+                tuple: tuple($tuple->getUser(), $tuple->getRelation(), $tuple->getObject()),
             );
 
             if ($readResult->succeeded()) {
@@ -198,7 +184,7 @@ describe('Edge Cases', function (): void {
         $checkResult = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple($longId, 'owner', 'document:test'),
+            tuple: tuple($longId, 'owner', 'document:test'),
         )->rethrow()->unwrap();
 
         expect($checkResult->getAllowed())->toBeTrue();
@@ -222,7 +208,7 @@ describe('Edge Cases', function (): void {
         foreach ($pageSizes as $pageSize) {
             $result = $this->client->readTuples(
                 store: $this->storeId,
-                tupleKey: tuple('', '', 'document:test'),
+                tuple: tuple('', '', 'document:test'),
                 pageSize: $pageSize,
             )->rethrow()->unwrap();
 
@@ -238,7 +224,7 @@ describe('Edge Cases', function (): void {
         $result = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:nobody', 'owner', 'document:nothing'),
+            tuple: tuple('user:nobody', 'owner', 'document:nothing'),
         )->rethrow()->unwrap();
 
         expect($result->getAllowed())->toBeFalse();
@@ -298,14 +284,14 @@ describe('Edge Cases', function (): void {
         $daveCheck = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:dave', 'viewer', 'document:doc1'),
+            tuple: tuple('user:dave', 'viewer', 'document:doc1'),
         )->rethrow()->unwrap();
         expect($daveCheck->getAllowed())->toBeTrue();
 
         $charlieCheck = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:charlie', 'editor', 'document:doc1'),
+            tuple: tuple('user:charlie', 'editor', 'document:doc1'),
         )->rethrow()->unwrap();
         expect($charlieCheck->getAllowed())->toBeFalse();
     });
@@ -334,14 +320,14 @@ describe('Edge Cases', function (): void {
         $upperCheck = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:Alice', 'owner', 'document:Test'),
+            tuple: tuple('user:Alice', 'owner', 'document:Test'),
         )->rethrow()->unwrap();
         expect($upperCheck->getAllowed())->toBeTrue();
 
         $lowerCheck = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:alice', 'owner', 'document:Test'),
+            tuple: tuple('user:alice', 'owner', 'document:Test'),
         )->rethrow()->unwrap();
         expect($lowerCheck->getAllowed())->toBeFalse();
     });

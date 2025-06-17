@@ -4,62 +4,15 @@ Learn how to leverage the OpenFGA PHP SDK's powerful concurrency features to dra
 
 All examples in this guide assume you have the following setup:
 
-```php
-use OpenFGA\Client;
-use function OpenFGA\{writes, tuples, tuple, store, model};
-
-// Basic client setup
-$client = new Client(url: 'http://localhost:8080');
-
-// Store and model (replace with your actual IDs, or use the helper functions)
-$storeId = 'your-store-id';  // or: $storeId = store($client, 'My Store');
-$modelId = 'your-model-id';  // or: $modelId = model($client, $storeId, $authorizationModel);
-```
+[Snippet](../../examples/snippets/concurrency-setup.php)
 
 With this setup established, the examples below focus on the concurrency features without repetitive boilerplate.
-
-## Table of Contents
-
-- Quick Start
-- Core Concepts
-- Batch Operations
-- Parallel Processing Patterns
-- Error Handling and Resilience
-- Integration with Async Frameworks
-- Performance Optimization
-- Monitoring and Debugging
-- Best Practices
 
 ## Quick Start
 
 Transform slow sequential operations into blazing-fast parallel executions with just a few configuration changes:
 
-```php
-// Create some sample tuples
-$tuplesToWrite = tuples(
-    tuple('user:anne', 'reader', 'document:budget'),
-    tuple('user:beth', 'writer', 'document:budget'),
-    // ... more tuples
-);
-
-// Sequential: ~10 seconds for 1000 tuples
-$result = writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: $tuplesToWrite,
-    maxParallelRequests: 1
-);
-
-// Parallel: ~2 seconds for 1000 tuples (5x faster!)
-$result = writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: $tuplesToWrite,
-    maxParallelRequests: 10
-);
-```
+[Snippet](../../examples/snippets/concurrency-parallel.php#parallelism)
 
 ## Core Concepts
 
@@ -78,90 +31,17 @@ The SDK uses PHP 8.1+ Fibers to provide true concurrency without the complexity 
 
 ## Bulk Write Operations
 
-### Basic Bulk Usage
+Use the `writes` helper function or `writeTuples` method to process large sets of tuple operations efficiently:
 
-The writes helper function and `batchTuples` method process large sets of tuple operations efficiently:
+[Snippet](../../examples/snippets/concurrency-bulk-basic.php#helper)
 
-```php
-// Prepare your tuple operations using helper functions
-$writes = [];
-for ($i = 0; $i < 1000; $i++) {
-    $writes[] = tuple("user:user_{$i}", 'reader', "document:doc_{$i}");
-}
-$writeTuples = tuples(...$writes);
-
-// Execute batch operation using the writes helper function
-$result = writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: $writeTuples
-);
-
-echo "Successful: {$result->getSuccessfulChunks()}\n";
-echo "Failed: {$result->getFailedChunks()}\n";
-echo "Total operations: {$result->getTotalOperations()}\n";
-```
+[Snippet](../../examples/snippets/concurrency-bulk-basic.php#api)
 
 ### Configuration Options
 
 Fine-tune bulk write behavior for your specific needs:
 
-```php
-$result = writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: $writes,
-    deletes: $deletes,
-    maxParallelRequests: 10,      // Concurrent requests (default: 1)
-    maxTuplesPerChunk: 50,        // Tuples per request (max: 100)
-    maxRetries: 3,                // Retry attempts per chunk
-    retryDelaySeconds: 1.0,       // Initial retry delay
-    stopOnFirstError: false       // Continue on failures
-);
-```
-
-### Using the Writes Helper Function
-
-The SDK provides a convenient writes helper function for non-transactional writes with full configuration:
-
-```php
-// Prepare tuples for writing and deleting
-$writes = tuples(
-    tuple('user:anne', 'reader', 'document:budget'),
-    tuple('user:beth', 'writer', 'document:budget'),
-    // ... hundreds more
-);
-
-$deletes = tuples(
-    tuple('user:carl', 'reader', 'document:old-doc'),
-    // ... hundreds more
-);
-
-// Execute bulk write operation with full configuration
-$result = writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: $writes,
-    deletes: $deletes,
-    maxParallelRequests: 10,
-    maxTuplesPerChunk: 50,
-    maxRetries: 3,
-    retryDelaySeconds: 1.0,
-    stopOnFirstError: false  // Don't stop on first failure
-);
-
-// Detailed results
-echo "Chunks processed: {$result->getSuccessfulChunks()}/{$result->getTotalChunks()}\n";
-echo "Operations successful: {$result->getSuccessfulOperations()}/{$result->getTotalOperations()}\n";
-
-// Handle any errors
-foreach ($result->getErrors() as $error) {
-    echo "Error in chunk: {$error->getMessage()}\n";
-}
-```
+[Snippet](../../examples/snippets/concurrency-bulk-config.php#config)
 
 ## Parallel Processing Patterns
 
@@ -170,6 +50,8 @@ foreach ($result->getErrors() as $error) {
 Choose parallelism based on your infrastructure and requirements:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
+
 // Conservative: Good for shared environments
 $result = writes(
     client: $client,
@@ -198,70 +80,29 @@ $result = writes(
 );
 ```
 
-### Performance Comparison Example
-
-Here's a real-world example showing the performance benefits:
-
-```php
-// Generate test data
-$testTuples = [];
-for ($i = 0; $i < 1000; $i++) {
-    $testTuples[] = tuple("user:employee_{$i}", 'member', 'team:engineering');
-}
-$tuplesToWrite = tuples(...$testTuples);
-
-// Sequential processing
-$start = microtime(true);
-$sequentialResult = writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: $tuplesToWrite,
-    maxParallelRequests: 1
-);
-$sequentialTime = microtime(true) - $start;
-
-// Parallel processing
-$start = microtime(true);
-$parallelResult = writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: $tuplesToWrite,
-    maxParallelRequests: 10
-);
-$parallelTime = microtime(true) - $start;
-
-echo "Sequential: {$sequentialTime}s\n";
-echo "Parallel: {$parallelTime}s\n";
-echo "Speedup: " . round($sequentialTime / $parallelTime, 2) . "x faster\n";
-```
-
 ## Error Handling and Resilience
 
 ### Partial Success Handling
 
-The SDK continues processing even when some operations fail:
+In non-transactional mode (which the `writes` helper defaults to) the SDK will continue processing even when some operations fail:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
+
 $result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
     writes: $tuplesToWrite,
-    maxRetries: 3,           // Retry failed chunks
-    stopOnFirstError: false  // Don't stop on first failure
+    maxRetries: 3, // Retry failed chunks
+    stopOnFirstError: false // Don't stop on first failure
 );
 
 if ($result->hasErrors()) {
     echo "Completed with {$result->getFailedChunks()} failed chunks\n";
-
-    // Process successful operations
     echo "Successfully processed: {$result->getSuccessfulOperations()} tuples\n";
 
-    // Handle failures
     foreach ($result->getErrors() as $error) {
-        // Log or retry failed chunks
         error_log("Chunk failed: " . $error->getMessage());
     }
 }
@@ -272,13 +113,15 @@ if ($result->hasErrors()) {
 Configure retry behavior for transient failures:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
+
 $result = writes(
     client: $client,
     store: $storeId,
     model: $modelId,
     writes: $tuplesToWrite,
-    maxRetries: 3,               // Retry up to 3 times
-    retryDelaySeconds: 1.0,      // Start with 1 second delay
+    maxRetries: 3, // Retry up to 3 times
+    retryDelaySeconds: 1.0, // Start with 1 second delay
     maxParallelRequests: 5
 );
 
@@ -295,6 +138,8 @@ $result = writes(
 While the SDK uses native PHP Fibers, you can integrate it with async frameworks:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
+
 use React\EventLoop\Loop;
 use React\Promise\Promise;
 
@@ -359,6 +204,8 @@ Coroutine\run(function () use ($client, $storeId, $modelId, $tuplesToWrite) {
 Find the optimal chunk size for your use case:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
+
 // Generate test tuples
 $testTuples = [];
 for ($i = 0; $i < 1000; $i++) {
@@ -405,6 +252,7 @@ echo "Optimal chunk size: {$optimal} (throughput: {$results[$optimal]['throughpu
 Handle large datasets efficiently:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
 
 // Process large datasets in chunks to manage memory
 function processLargeTupleSet($client, $storeId, $modelId, $totalTuples) {
@@ -452,6 +300,7 @@ function processLargeTupleSet($client, $storeId, $modelId, $totalTuples) {
 Track performance metrics for optimization:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
 
 // Note: This is an example helper class and not part of the SDK.
 class BatchMetrics {
@@ -526,6 +375,8 @@ class BatchLogger {
 Begin with lower parallelism and increase based on monitoring:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
+
 // Development environment
 $parallelism = 2;
 
@@ -547,9 +398,9 @@ $result = writes(
     model: $modelId,
     writes: $tuplesToWrite,
     maxParallelRequests: 5,
-    maxRetries: 5,              // More retries for rate limits
-    retryDelaySeconds: 2.0,     // Longer initial delay
-    stopOnFirstError: false     // Continue on error
+    maxRetries: 5, // More retries for rate limits
+    retryDelaySeconds: 2.0, // Longer initial delay
+    stopOnFirstError: false // Continue on error
 );
 ```
 
@@ -558,6 +409,7 @@ $result = writes(
 Keep an eye on system resources:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
 
 // Monitor CPU and memory during batch operations
 $cpuBefore = sys_getloadavg()[0];
@@ -592,6 +444,7 @@ Balance between API limits and efficiency:
 Protect against cascading failures:
 
 ```php
+use function OpenFGA\{tuple, tuples, writes};
 
 // Note: This is an example helper class and not part of the SDK.
 class BatchCircuitBreaker {
@@ -611,7 +464,7 @@ class BatchCircuitBreaker {
                 model: $modelId,
                 writes: $tuplesToWrite
             );
-            $this->failures = 0;  // Reset on success
+            $this->failures = 0; // Reset on success
             return $result;
         } catch (\Exception $e) {
             $this->failures++;

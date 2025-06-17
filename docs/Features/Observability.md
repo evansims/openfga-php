@@ -4,22 +4,6 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 
 **Already using OpenTelemetry?** The SDK integrates seamlessly with your existing setup - just configure your telemetry provider and start getting insights into your OpenFGA operations automatically.
 
-## Table of Contents
-
-- What You Get
-- Prerequisites
-- Quick Start
-- Telemetry Data Collected
-- Configuration Options
-- Common Integration Patterns
-- Example: Complete Authorization Workflow with Tracing
-- Viewing Your Telemetry Data
-- Troubleshooting
-- Event-Driven Telemetry
-- Advanced OpenTelemetry Integration
-- Advanced Monitoring Patterns
-- Testing Advanced Observability
-
 ## What You Get
 
 The SDK automatically instruments and provides telemetry for:
@@ -76,8 +60,8 @@ use function OpenFGA\{allowed, dsl, model, store, tuple, tuples, write};
 
 // Basic client configuration (customize for your environment)
 $apiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
-$storeId = 'your-store-id';
-$modelId = 'your-model-id';
+$storeId =  $_ENV['FGA_STORE_ID'] ?? 'your-store-id';
+$modelId = $_ENV['FGA_MODEL_ID'] ?? 'your-model-id';
 ```
 
 ## Quick Start

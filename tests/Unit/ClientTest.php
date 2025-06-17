@@ -151,7 +151,7 @@ describe('Client', function (): void {
         $result = $client->check(
             store: $store,
             model: $model,
-            tupleKey: $tupleKey,
+            tuple: $tupleKey,
             trace: true,
             context: (object) ['time' => '2024-01-01T10:00:00Z'],
             contextualTuples: $contextualTuples,
@@ -611,7 +611,7 @@ type document
 
         $result = $client->expand(
             store: $store,
-            tupleKey: $tupleKey,
+            tuple: $tupleKey,
             model: $model,
             contextualTuples: $contextualTuples,
             consistency: Consistency::MINIMIZE_LATENCY,
@@ -628,7 +628,7 @@ type document
 
         $result = $client->readTuples(
             store: $store,
-            tupleKey: $tupleKey,
+            tuple: $tupleKey,
             continuationToken: 'token-123',
             pageSize: 100,
             consistency: Consistency::MINIMIZE_LATENCY,

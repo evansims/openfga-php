@@ -1133,9 +1133,8 @@ condition condition1(region: string) {
             ]));
             $secondPageResponse->method('getContinuationToken')->willReturn(null);
 
-            $client = test()->createMock(ClientInterface::class);
-            $client->expects($this->exactly(2))
-                ->method('readTuples')
+            $client = test()->createStub(ClientInterface::class);
+            $client->method('readTuples')
                 ->willReturnOnConsecutiveCalls(
                     new Success($firstPageResponse),
                     new Success($secondPageResponse),
@@ -1166,7 +1165,7 @@ condition condition1(region: string) {
                 ->method('readTuples')
                 ->with(
                     store: $storeId,
-                    tupleKey: $filterTuple,
+                    tuple: $filterTuple,
                     continuationToken: null,
                     pageSize: 50,
                     consistency: null,

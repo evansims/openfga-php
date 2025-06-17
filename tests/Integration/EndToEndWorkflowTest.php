@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 use OpenFGA\Models\{Collections\UserTypeFilters, UserTypeFilter};
 
@@ -14,19 +12,7 @@ use function OpenFGA\{tuple, tuples};
 
 describe('End-to-End Workflow', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
-        $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
-        );
+        $this->client = new Client(url: getOpenFgaUrl());
     });
 
     test('complete document management workflow', function (): void {
@@ -92,21 +78,21 @@ describe('End-to-End Workflow', function (): void {
         $aliceCanEditApiSpec = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:alice', 'editor', 'document:api-spec'),
+            tuple: tuple('user:alice', 'editor', 'document:api-spec'),
         )->rethrow()->unwrap();
         expect($aliceCanEditApiSpec->getAllowed())->toBeTrue();
 
         $bobCanViewApiSpec = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:bob', 'viewer', 'document:api-spec'),
+            tuple: tuple('user:bob', 'viewer', 'document:api-spec'),
         )->rethrow()->unwrap();
         expect($bobCanViewApiSpec->getAllowed())->toBeTrue();
 
         $carolCannotViewApiSpec = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:carol', 'viewer', 'document:api-spec'),
+            tuple: tuple('user:carol', 'viewer', 'document:api-spec'),
         )->rethrow()->unwrap();
 
         expect($carolCannotViewApiSpec->getAllowed())->toBeFalse(
@@ -116,14 +102,14 @@ describe('End-to-End Workflow', function (): void {
         $bobCanEditUserGuide = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:bob', 'editor', 'document:user-guide'),
+            tuple: tuple('user:bob', 'editor', 'document:user-guide'),
         )->rethrow()->unwrap();
         expect($bobCanEditUserGuide->getAllowed())->toBeTrue();
 
         $aliceCanEditUserGuide = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:alice', 'editor', 'document:user-guide'),
+            tuple: tuple('user:alice', 'editor', 'document:user-guide'),
         )->rethrow()->unwrap();
         expect($aliceCanEditUserGuide->getAllowed())->toBeTrue();
 
@@ -140,7 +126,7 @@ describe('End-to-End Workflow', function (): void {
         $carolCanNowViewApiSpec = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:carol', 'viewer', 'document:api-spec'),
+            tuple: tuple('user:carol', 'viewer', 'document:api-spec'),
         )->rethrow()->unwrap();
         expect($carolCanNowViewApiSpec->getAllowed())->toBeTrue();
 
@@ -189,7 +175,7 @@ describe('End-to-End Workflow', function (): void {
         $carolCannotViewApiSpecAgain = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:carol', 'viewer', 'document:api-spec'),
+            tuple: tuple('user:carol', 'viewer', 'document:api-spec'),
         )->rethrow()->unwrap();
 
         expect($carolCannotViewApiSpecAgain->getAllowed())->toBeFalse(
@@ -215,14 +201,14 @@ describe('End-to-End Workflow', function (): void {
         $aliceOwnsWireframes = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:alice', 'owner', 'document:wireframes'),
+            tuple: tuple('user:alice', 'owner', 'document:wireframes'),
         )->rethrow()->unwrap();
         expect($aliceOwnsWireframes->getAllowed())->toBeTrue();
 
         $carolNoLongerOwnsWireframes = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:carol', 'owner', 'document:wireframes'),
+            tuple: tuple('user:carol', 'owner', 'document:wireframes'),
         )->rethrow()->unwrap();
 
         expect($carolNoLongerOwnsWireframes->getAllowed())->toBeFalse(
@@ -290,28 +276,28 @@ describe('End-to-End Workflow', function (): void {
         $aliceCanViewProject = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:alice', 'viewer', 'project:web-app'),
+            tuple: tuple('user:alice', 'viewer', 'project:web-app'),
         )->rethrow()->unwrap();
         expect($aliceCanViewProject->getAllowed())->toBeTrue();
 
         $dianaCanViewProject = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:diana', 'viewer', 'project:web-app'),
+            tuple: tuple('user:diana', 'viewer', 'project:web-app'),
         )->rethrow()->unwrap();
         expect($dianaCanViewProject->getAllowed())->toBeTrue();
 
         $dianaCanViewBug = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:diana', 'viewer', 'issue:bug-123'),
+            tuple: tuple('user:diana', 'viewer', 'issue:bug-123'),
         )->rethrow()->unwrap();
         expect($dianaCanViewBug->getAllowed())->toBeTrue();
 
         $bobCanViewBug = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:bob', 'viewer', 'issue:bug-123'),
+            tuple: tuple('user:bob', 'viewer', 'issue:bug-123'),
         )->rethrow()->unwrap();
         expect($bobCanViewBug->getAllowed())->toBeTrue();
 
@@ -370,7 +356,7 @@ describe('End-to-End Workflow', function (): void {
         $charlieStillCanView = $this->client->check(
             store: $storeId,
             model: $modelId,
-            tupleKey: tuple('user:charlie', 'viewer', 'project:web-app'),
+            tuple: tuple('user:charlie', 'viewer', 'project:web-app'),
         )->rethrow()->unwrap();
         expect($charlieStillCanView->getAllowed())->toBeTrue();
 

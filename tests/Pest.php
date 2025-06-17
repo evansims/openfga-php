@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Buzz\Client\FileGetContents;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\{Language, Messages};
 use OpenFGA\Translation\Translator;
 use PHPUnit\Framework\TestCase;
@@ -19,6 +21,11 @@ beforeEach(function (): void {
     // Reset translator to ensure consistent state for tests
     Translator::reset();
 });
+
+// Setup integration test factories for all tests in Integration directory
+uses()->beforeEach(function (): void {
+    setupIntegrationTestFactories();
+})->in('Integration');
 
 /**
  * Helper function to get translated messages in tests.
@@ -57,4 +64,22 @@ function getOpenFgaUrl(): string
 function getOtelCollectorUrl(): string
 {
     return getenv('OTEL_COLLECTOR_URL') ?: 'http://127.0.0.1:8889';
+}
+
+/**
+ * Setup integration test PSR factories globally.
+ *
+ * This function defines constants that the RequestManager will check for
+ * before falling back to auto-discovery. This ensures consistent PSR
+ * implementations across all integration tests.
+ */
+function setupIntegrationTestFactories(): void
+{
+    if (! defined('OPENFGA_TEST_HTTP_CLIENT')) {
+        $factory = new Psr17Factory;
+        define('OPENFGA_TEST_HTTP_CLIENT', new FileGetContents($factory));
+        define('OPENFGA_TEST_HTTP_REQUEST_FACTORY', $factory);
+        define('OPENFGA_TEST_HTTP_RESPONSE_FACTORY', $factory);
+        define('OPENFGA_TEST_HTTP_STREAM_FACTORY', $factory);
+    }
 }

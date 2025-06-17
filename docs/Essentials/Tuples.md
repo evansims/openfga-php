@@ -4,108 +4,35 @@
 
 The examples in this guide assume you have the following setup:
 
-```php
-use OpenFGA\Client;
-
-// Initialize the client
-$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
-
-// Store and model identifiers from your configuration
-$storeId = 'your-store-id';
-$modelId = 'your-model-id';
-```
+[Snippet](../../examples/snippets/tuples-setup.php)
 
 ## Granting Permissions
 
 Use the `write` helper to give someone access:
 
-```php
-use function OpenFGA\{write, tuple};
-
-// Give Anne editor access to the "roadmap" document
-write(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuple('user:anne', 'editor', 'document:roadmap')
-);
-```
+[Snippet](../../examples/snippets/tuples-basic.php#write)
 
 ## Removing Permissions
 
 Use the `delete` helper to take away access:
 
-```php
-use function OpenFGA\{delete, tuple};
-
-// Remove Anne's editor access to the "roadmap" document
-delete(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuple('user:anne', 'editor', 'document:roadmap')
-);
-```
+[Snippet](../../examples/snippets/tuples-basic.php#delete)
 
 ## Bulk Operations
 
 Use the `writes` helper to handle multiple permission changes in one transaction:
 
-```php
-use function OpenFGA\{writes, tuple, tuples};
-
-writes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    writes: tuples(
-        tuple('user:bob', 'viewer', 'document:roadmap'),
-        tuple('user:charlie', 'editor', 'document:roadmap'),
-        tuple('team:marketing#member', 'viewer', 'folder:campaigns')
-    ),
-    deletes: tuples(
-        tuple('user:anne', 'owner', 'document:old-spec')
-    )
-);
-```
+[Snippet](../../examples/snippets/tuples-bulk.php#helper)
 
 ## Reading Existing Permissions
 
-Use the `read` helper to check what permissions exist:
+Use the `read` [helper](../Features/Helpers.md) to check what permissions exist:
 
-```php
-use function OpenFGA\{read, tuple};
+[Snippet](../../examples/snippets/tuples-reading.php#helper)
 
-// Find all permissions for a specific document
-$tuples = read(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuple(object: 'document:roadmap')
-);
+Alternatively, use the Client's `readTuples` method for more control:
 
-foreach ($tuples as $tuple) {
-    echo "{$tuple->getUser()} has {$tuple->getRelation()} on {$tuple->getObject()}\n";
-}
-```
-
-```php
-use function OpenFGA\{read, tuple};
-
-// Find all documents Anne can edit
-$tuples = read(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuple(user: 'user:anne', relation: 'editor')
-);
-
-echo "Anne can edit:\n";
-
-foreach ($tuples as $tuple) {
-    echo "{$tuple->getObject()}\n";
-}
-```
+[Snippet](../../examples/snippets/tuples-reading.php#client)
 
 ## Advanced Patterns
 
@@ -113,74 +40,21 @@ foreach ($tuples as $tuple) {
 
 Use conditions to make permissions context-dependent:
 
-```php
-use OpenFga\Models\RelationshipCondition;
-use function OpenFGA\{write, tuple};
+[Snippet](../../examples/snippets/tuples-conditions.php#write)
 
-$businessHoursCondition = new RelationshipCondition(
-    name: 'business_hours',
-    context: [
-        'timezone' => 'America/Chicago'
-    ]
-);
-
-// Only allow access during business hours
-write(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuple(
-        user: 'user:contractor',
-        relation: 'viewer',
-        object: 'document:sensitive',
-        condition: $businessHoursCondition
-    )
-);
-```
+[Snippet](../../examples/snippets/tuples-conditions.php#check)
 
 ### Auditing Changes
 
 Monitor permission changes over time for auditing:
 
-```php
-use DateTimeImmutable;
-use DateInterval;
-use function OpenFGA\changes;
-
-// Get all changes for documents in the last hour
-$startTime = (new DateTimeImmutable())->sub(new DateInterval('PT1H'));
-
-$changes = changes(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    type: 'document',
-    startTime: $startTime
-);
-
-foreach ($changes as $change) {
-    $tuple = $change->getTupleKey();
-    echo "{$change->getOperation()->value}: {$tuple->getUser()} {$tuple->getRelation()} {$tuple->getObject()}\n";
-}
-```
+[Snippet](../../examples/snippets/tuples-auditing.php#auditing)
 
 ### Working with Groups
 
 Use the `write` helper to grant permissions to groups instead of individual users:
 
-```php
-write(
-    client: $client,
-    store: $storeId,
-    model: $modelId,
-    tuples: tuples(
-        // Add user to a group
-        tuple('user:anne', 'member', 'team:engineering'),
-        // Grant permission to the entire group
-        tuple('team:engineering#member', 'editor', 'document:technical-specs')
-    )
-);
-```
+[Snippet](../../examples/snippets/tuples-groups.php#groups)
 
 Now Anne can edit the technical specs because she's a member of the engineering team.
 
@@ -190,98 +64,13 @@ For checking permissions and querying relationships, see [Queries](Queries.md).
 
 The SDK has a powerful enum-based exception handling system that allows you to handle errors in a type-safe way.
 
-```php
-// Example: Writing tuples with robust error handling
-function addUserToDocument(string $userId, string $documentId, string $role = 'viewer'): bool
-{
-    global $client, $storeId, $modelId;
-
-    // Use result helper for cleaner error handling
-    return result(function() use ($client, $storeId, $modelId, $userId, $documentId, $role) {
-        return write(
-            client: $client,
-            store: $storeId,
-            model: $modelId,
-            tuples: tuple("user:{$userId}", $role, "document:{$documentId}")
-        );
-    })
-    ->success(function() {
-        logger()->info('Access granted', [
-            'user' => $userId,
-            'document' => $documentId,
-            'role' => $role
-        ]);
-        return true;
-    })
-    ->failure(function(Throwable $error) use ($userId, $documentId, $role) {
-        // Enum-based error handling with match expression
-        if ($error instanceof ClientException) {
-            match($error->getError()) {
-                // Handle validation errors specifically
-                ClientError::Validation => logger()->warning(
-                    'Validation error granting access',
-                    ['context' => $error->getContext()]
-                ),
-
-                // Handle authorization model mismatches
-                ClientError::InvalidConfiguration => logger()->error(
-                    'Model configuration error',
-                    ['message' => $error->getMessage()]
-                ),
-
-                // Default case for other client errors
-                default => logger()->error(
-                    'Failed to grant access',
-                    ['error_type' => $error->getError()->name]
-                )
-            };
-        } else {
-            // Handle unexpected errors
-            logger()->error('Unexpected error granting access', [
-                'error' => $error->getMessage(),
-                'user' => $userId,
-                'document' => $documentId
-            ]);
-        }
-
-        return false;
-    })
-    ->unwrap();
-}
-```
+[Snippet](../../examples/snippets/tuples-error-handling.php#error-handling)
 
 ### Supporting Multiple Languages
 
 The error messages from tuple operations will automatically use the language configured in your client:
 
-```php
-use OpenFGA\{Client, Language};
-use function OpenFGA\{write, tuple};
-
-// Create a client with Spanish error messages
-$client = new Client(
-    url: 'https://api.openfga.example',
-    language: Language::Spanish
-);
-
-try {
-    // Attempt to write an invalid tuple
-    write(
-        client: $client,
-        store: $storeId,
-        model: $modelId,
-        tuples: tuple('', 'viewer', 'document:report')
-    );
-} catch (ClientException $e) {
-    // The error message will be in Spanish
-    echo $e->getMessage(); // "El identificador del usuario no puede estar vacío"
-
-    // But the error enum remains the same for consistent handling
-    if ($e->getError() === ClientError::Validation) {
-        // Handle validation error regardless of language
-    }
-}
-```
+[Snippet](../../examples/snippets/tuples-multilang.php)
 
 ## What's Next?
 

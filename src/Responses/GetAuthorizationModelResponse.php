@@ -6,7 +6,7 @@ namespace OpenFGA\Responses;
 
 use InvalidArgumentException;
 use OpenFGA\Exceptions\{NetworkException, SerializationException};
-use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Collections\Conditions, Collections\Nodes, Collections\TypeDefinitionRelations, Collections\TypeDefinitions, Collections\Usersets, Metadata, Node, RelationMetadata, TypeDefinition, Userset};
+use OpenFGA\Models\{AuthorizationModel, AuthorizationModelInterface, Collections\Conditions, Collections\Nodes, Collections\RelationMetadataCollection, Collections\TypeDefinitionRelations, Collections\TypeDefinitions, Collections\Usersets, Metadata, Node, RelationMetadata, TypeDefinition, Userset};
 use OpenFGA\Network\RequestManager;
 use OpenFGA\Schemas\{Schema, SchemaInterface, SchemaProperty, SchemaValidatorInterface};
 use Override;
@@ -61,6 +61,7 @@ final class GetAuthorizationModelResponse extends Response implements GetAuthori
             $validator->registerSchema(Userset::schema());
             $validator->registerSchema(Usersets::schema());
             $validator->registerSchema(RelationMetadata::schema());
+            $validator->registerSchema(RelationMetadataCollection::schema());
             $validator->registerSchema(Metadata::schema());
             $validator->registerSchema(TypeDefinitionRelations::schema());
             $validator->registerSchema(TypeDefinition::schema());

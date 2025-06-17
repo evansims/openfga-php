@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace OpenFGA\Tests\Integration;
 
-use Buzz\Client\FileGetContents;
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenFGA\Client;
 use OpenFGA\Models\Collections\UserTypeFilters;
 use OpenFGA\Models\Enums\Consistency;
@@ -16,18 +14,8 @@ use function OpenFGA\{tuple, tuples};
 
 describe('Contextual Tuples', function (): void {
     beforeEach(function (): void {
-        $this->responseFactory = new Psr17Factory;
-        $this->httpClient = new FileGetContents($this->responseFactory);
-        $this->httpRequestFactory = $this->responseFactory;
-        $this->httpStreamFactory = $this->responseFactory;
-        $this->url = getOpenFgaUrl();
-
         $this->client = new Client(
-            url: $this->url,
-            httpClient: $this->httpClient,
-            httpResponseFactory: $this->responseFactory,
-            httpStreamFactory: $this->httpStreamFactory,
-            httpRequestFactory: $this->httpRequestFactory,
+            url: getOpenFgaUrl(),
         );
 
         $name = 'contextual-test-' . bin2hex(random_bytes(5));
@@ -92,7 +80,7 @@ describe('Contextual Tuples', function (): void {
         $checkWithoutContext = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:frank', 'viewer', 'document:public-doc'),
+            tuple: tuple('user:frank', 'viewer', 'document:public-doc'),
         )->rethrow()->unwrap();
 
         expect($checkWithoutContext->getAllowed())->toBeFalse();
@@ -104,7 +92,7 @@ describe('Contextual Tuples', function (): void {
         $checkWithContext = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:frank', 'viewer', 'document:public-doc'),
+            tuple: tuple('user:frank', 'viewer', 'document:public-doc'),
             contextualTuples: $contextualTuples,
         )->rethrow()->unwrap();
 
@@ -191,7 +179,7 @@ describe('Contextual Tuples', function (): void {
         $expandResponse = $this->client->expand(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('', 'viewer', 'document:public-doc'),
+            tuple: tuple('', 'viewer', 'document:public-doc'),
         )->rethrow()->unwrap();
 
         $tree = $expandResponse->getTree();
@@ -207,7 +195,7 @@ describe('Contextual Tuples', function (): void {
         $checkView = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:grace', 'viewer', 'document:public-doc'),
+            tuple: tuple('user:grace', 'viewer', 'document:public-doc'),
             contextualTuples: $contextualTuples,
         )->rethrow()->unwrap();
 
@@ -216,7 +204,7 @@ describe('Contextual Tuples', function (): void {
         $checkEdit = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:grace', 'editor', 'document:temp-doc'),
+            tuple: tuple('user:grace', 'editor', 'document:temp-doc'),
             contextualTuples: $contextualTuples,
         )->rethrow()->unwrap();
 
@@ -231,7 +219,7 @@ describe('Contextual Tuples', function (): void {
         $checkMinLatency = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:henry', 'viewer', 'document:public-doc'),
+            tuple: tuple('user:henry', 'viewer', 'document:public-doc'),
             contextualTuples: $contextualTuples,
             consistency: Consistency::MINIMIZE_LATENCY,
         )->rethrow()->unwrap();
@@ -241,7 +229,7 @@ describe('Contextual Tuples', function (): void {
         $checkHighConsistency = $this->client->check(
             store: $this->storeId,
             model: $this->modelId,
-            tupleKey: tuple('user:henry', 'viewer', 'document:public-doc'),
+            tuple: tuple('user:henry', 'viewer', 'document:public-doc'),
             contextualTuples: $contextualTuples,
             consistency: Consistency::HIGHER_CONSISTENCY,
         )->rethrow()->unwrap();

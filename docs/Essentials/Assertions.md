@@ -4,16 +4,7 @@
 
 Before working with assertions, ensure you have the following setup:
 
-```php
-use OpenFGA\Client;
-
-// Initialize the client
-$client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
-
-// Store and model identifiers from your configuration
-$storeId = 'your-store-id';
-$modelId = 'your-model-id';
-```
+[Snippet](../../examples/snippets/assertions-setup.php)
 
 ## What are assertions
 
@@ -23,158 +14,25 @@ Assertions are test cases that specify expected outcomes for permission checks. 
 
 Let's say you're building a document management system. You want to test that owners can edit documents but viewers cannot:
 
-```php
-use OpenFGA\Models\Assertion;
-use OpenFGA\Collections\Assertions;
-use function OpenFGA\tuple;
-
-// Test: Document owners can edit
-$ownerCanEdit = new Assertion(
-    tupleKey: tuple(
-        user: 'user:alice',
-        relation: 'can_edit',
-        object: 'document:quarterly-report',
-    ),
-    expectation: true,
-);
-
-// Test: Viewers cannot edit
-$viewerCannotEdit = new Assertion(
-    tupleKey: tuple(
-        user: 'user:bob',
-        relation: 'can_edit',
-        object: 'document:quarterly-report',
-    ),
-    expectation: false,
-);
-
-$assertions = new Assertions($ownerCanEdit, $viewerCannotEdit);
-
-$client->writeAssertions(
-    store: $storeId,
-    model: $modelId,
-    assertions: $assertions,
-);
-```
+[Snippet](../../examples/snippets/assertions-basic.php#quickstart)
 
 ## Testing permission inheritance
 
 Complex authorization models often have inherited permissions. Test these relationships to ensure they work as expected:
 
-```php
-use OpenFGA\Models\Assertion;
-use OpenFGA\Collections\Assertions;
-use function OpenFGA\tuple;
-
-// In a team workspace, team members inherit folder permissions
-$teamFolderAccess = new Assertions(
-    // Direct team member access
-    new Assertion(
-        tupleKey: tuple('user:sarah', 'can_read', 'folder:team-docs'),
-        expectation: true
-    ),
-
-    // Inherited document access through folder membership
-    new Assertion(
-        tupleKey: tuple('user:sarah', 'can_read', 'document:team-meeting-notes'),
-        expectation: true
-    ),
-
-    // Non-team members should be denied
-    new Assertion(
-        tupleKey: tuple('user:outsider', 'can_read', 'folder:team-docs'),
-        expectation: false
-    ),
-);
-```
+[Snippet](../../examples/snippets/assertions-basic.php#inheritance)
 
 ## Testing edge cases
 
 Test boundary conditions and special cases in your permission model:
 
-```php
-use OpenFGA\Models\Assertion;
-use OpenFGA\Collections\Assertions;
-use function OpenFGA\tuple;
-
-$edgeCases = new Assertions(
-    // Public documents should be readable by anyone
-    new Assertion(
-        tupleKey: tuple('user:*', 'can_read', 'document:company-handbook'),
-        expectation: true
-    ),
-
-    // Deleted users should lose all access
-    new Assertion(
-        tupleKey: tuple('user:former-employee', 'can_read', 'document:confidential'),
-        expectation: false
-    ),
-
-    // Admin override permissions
-    new Assertion(
-        tupleKey: tuple('user:admin', 'can_delete', 'document:any-document'),
-        expectation: true
-    ),
-
-    // Cross-organization access should be blocked
-    new Assertion(
-        tupleKey: tuple('user:competitor', 'can_read', 'document:internal-strategy'),
-        expectation: false
-    ),
-);
-```
+[Snippet](../../examples/snippets/assertions-basic.php#edge-cases)
 
 ## Managing test data
 
 Organize your assertions logically and keep them maintainable:
 
-```php
-use OpenFGA\Models\Assertion;
-use OpenFGA\Collections\{Assertions, AssertionsInterface};
-use function OpenFGA\tuple;
-
-class DocumentPermissionTests
-{
-    public static function getBasicPermissions(): AssertionsInterface
-    {
-        return new Assertions(
-            // Owner permissions
-            new Assertion(tuple('user:owner', 'can_read', 'document:doc1'), true),
-            new Assertion(tuple('user:owner', 'can_edit', 'document:doc1'), true),
-            new Assertion(tuple('user:owner', 'can_delete', 'document:doc1'), true),
-
-            // Editor permissions
-            new Assertion(tuple('user:editor', 'can_read', 'document:doc1'), true),
-            new Assertion(tuple('user:editor', 'can_edit', 'document:doc1'), true),
-            new Assertion(tuple('user:editor', 'can_delete', 'document:doc1'), false),
-
-            // Viewer permissions
-            new Assertion(tuple('user:viewer', 'can_read', 'document:doc1'), true),
-            new Assertion(tuple('user:viewer', 'can_edit', 'document:doc1'), false),
-            new Assertion(tuple('user:viewer', 'can_delete', 'document:doc1'), false),
-        );
-    }
-
-    public static function getInheritanceTests(): AssertionsInterface
-    {
-        return new Assertions(
-            // Team lead inherits team permissions
-            new Assertion(tuple('user:team-lead', 'can_manage', 'team:engineering'), true),
-            new Assertion(tuple('user:team-lead', 'can_read', 'document:team-roadmap'), true),
-        );
-    }
-}
-
-// Write different test suites
-$client->writeAssertions(
-    store: $storeId,
-    model: $modelId,
-    assertions: new Assertions(
-        ...DocumentPermissionTests::getBasicPermissions(),
-        ...DocumentPermissionTests::getInheritanceTests(),
-    )
-);
-```
+[Snippet](../../examples/snippets/assertions-test-class.php#intro)
 
 ## Best practices
 
@@ -187,21 +45,6 @@ $client->writeAssertions(
 **Update tests when models change**: assertions should evolve with your authorization model. Treat them like any other test suite.
 
 **Validate before deployment**: run assertions in your CI/CD pipeline to catch permission regressions before they reach production.
-
-```php
-// Reading existing assertions for review
-$response = $client->readAssertions(
-    store: $storeId,
-    model: $modelId,
-)->unwrap();
-
-foreach ($response->getAssertions() as $assertion) {
-    $key = $assertion->getTupleKey();
-    $expected = $assertion->getExpectation() ? 'CAN' : 'CANNOT';
-
-    echo "{$key->getUser()} {$expected} {$key->getRelation()} {$key->getObject()}\n";
-}
-```
 
 ## CI/CD Integration
 
@@ -257,199 +100,21 @@ jobs:
 
 ### Test Runner Script
 
-```php
-// tests/authorization/run-assertions.php
-
-require_once __DIR__ . '/../../vendor/autoload.php';
-
-use OpenFGA\Client;
-use OpenFGA\Models\Assertions;
-use function OpenFGA\{store, model};
-
-/**
- * Authorization test runner for CI/CD pipelines.
- *
- * This script validates authorization models against assertions to ensure
- * permission logic works correctly before deployment.
- */
-class AuthorizationTestRunner
-{
-    private Client $client;
-
-    public function __construct()
-    {
-        $this->client = new Client(
-            url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080'
-        );
-    }
-
-    public function runAllTests(): bool
-    {
-        $success = true;
-
-        // Test each model file in your project
-        $modelFiles = glob(__DIR__ . '/../../authorization-models/*.fga');
-
-        foreach ($modelFiles as $modelFile) {
-            $modelName = basename($modelFile, '.fga');
-            echo "Testing model: {$modelName}\n";
-
-            $success = $this->testModel($modelFile) && $success;
-        }
-
-        return $success;
-    }
-
-    private function testModel(string $modelFile): bool
-    {
-        try {
-            // Create test store
-            $storeId = store($this->client, "test-{$modelFile}-" . time());
-
-            // Load and create model from DSL file
-            $dsl = file_get_contents($modelFile);
-            $authModel = $this->client->dsl($dsl)->unwrap();
-            $modelId = model($this->client, $storeId, $authModel);
-
-            // Load assertions for this model
-            $assertionsFile = str_replace('.fga', '.assertions.php', $modelFile);
-            if (!file_exists($assertionsFile)) {
-                echo "  Warning: No assertions file found for {$modelFile}\n";
-                return true;
-            }
-
-            $assertions = require $assertionsFile;
-
-            // Write assertions and validate
-            $this->client->writeAssertions(
-                store: $storeId,
-                model: $modelId,
-                assertions: new Assertions($assertions)
-            )->unwrap();
-
-            echo "  ✓ All assertions passed\n";
-
-            // Clean up test store
-            $this->client->deleteStore($storeId)->unwrap();
-
-            return true;
-
-        } catch (Exception $e) {
-            echo "  ✗ Test failed: {$e->getMessage()}\n";
-            return false;
-        }
-    }
-}
-
-// Run tests
-$runner = new AuthorizationTestRunner();
-$success = $runner->runAllTests();
-
-exit($success ? 0 : 1);
-```
+[Snippet](../../examples/snippets/assertions-test-runner.php)
 
 ### Model Assertions File Example
 
-```php
-// authorization-models/document-system.assertions.php
-
-use OpenFGA\Models\Assertion;
-use function OpenFGA\tuple;
-
-return [
-    // Document ownership tests
-    new Assertion(tuple('user:alice', 'owner', 'document:1'), true),
-    new Assertion(tuple('user:bob', 'owner', 'document:1'), false),
-
-    // Inherited permissions tests
-    new Assertion(tuple('user:alice', 'editor', 'document:1'), true), // Owner can edit
-    new Assertion(tuple('user:alice', 'viewer', 'document:1'), true), // Owner can view
-
-    // Team permissions tests
-    new Assertion(tuple('team:engineering#member', 'viewer', 'document:roadmap'), true),
-    new Assertion(tuple('team:marketing#member', 'viewer', 'document:roadmap'), false),
-
-    // Conditional permissions tests
-    new Assertion(tuple('user:contractor', 'viewer', 'document:sensitive'), true),
-    // Note: Conditional assertions require context to be set during testing
-];
-```
+[Snippet](../../examples/snippets/assertions-model-file.php)
 
 ### Integration with Testing Frameworks
 
 #### PHPUnit Integration
 
-```php
-// tests/Unit/AuthorizationModelTest.php
-
-use PHPUnit\Framework\TestCase;
-use OpenFGA\Client;
-use OpenFGA\Models\Assertions;
-
-class AuthorizationModelTest extends TestCase
-{
-    private Client $client;
-    private string $storeId;
-    private string $modelId;
-
-    protected function setUp(): void
-    {
-        $this->client = new Client(url: $_ENV['FGA_API_URL']);
-
-        // Create test store and model
-        $this->storeId = store($this->client, 'test-' . uniqid());
-        $dsl = file_get_contents(__DIR__ . '/../../authorization-models/main.fga');
-        $authModel = $this->client->dsl($dsl)->unwrap();
-        $this->modelId = model($this->client, $this->storeId, $authModel);
-    }
-
-    protected function tearDown(): void
-    {
-        // Clean up test store
-        $this->client->deleteStore($this->storeId);
-    }
-
-    public function testDocumentPermissions(): void
-    {
-        $assertions = require __DIR__ . '/../../authorization-models/document-system.assertions.php';
-
-        $result = $this->client->writeAssertions(
-            store: $this->storeId,
-            model: $this->modelId,
-            assertions: new Assertions($assertions)
-        );
-
-        $this->assertTrue($result->succeeded());
-    }
-}
-```
+[Snippet](../../examples/snippets/assertions-phpunit.php)
 
 ### Docker Compose for Local Testing
 
-```yaml
-# docker-compose.test.yml
-version: "3.8"
-
-services:
-  openfga:
-    image: openfga/openfga:latest
-    command: run --playground-enabled
-    ports:
-      - "8080:8080"
-    environment:
-      - OPENFGA_DATASTORE_ENGINE=memory
-
-  php-tests:
-    build: .
-    depends_on:
-      - openfga
-    environment:
-      - FGA_API_URL=http://openfga:8080
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: php tests/authorization/run-assertions.php
-```
+[Snippet](../../examples/snippets/assertions-docker-compose.yml)
 
 Run with: `docker-compose -f docker-compose.test.yml up --build`
 

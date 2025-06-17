@@ -34,10 +34,6 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
             serviceName: 'openfga-php-sdk-integration-test',
             serviceVersion: 'test',
         ),
-        httpClient: new FileGetContents(new Psr17Factory),
-        httpResponseFactory: new Psr17Factory,
-        httpStreamFactory: new Psr17Factory,
-        httpRequestFactory: new Psr17Factory,
     );
 
     // Create a store (this should generate telemetry)
@@ -94,7 +90,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
     $checkResult1 = $client->check(
         store: $storeId,
         model: $modelId,
-        tupleKey: tuple('user:alice', 'owner', 'document:budget'),
+        tuple: tuple('user:alice', 'owner', 'document:budget'),
     );
     expect($checkResult1->succeeded())->toBeTrue();
     expect($checkResult1->unwrap()->getAllowed())->toBeTrue();
@@ -102,7 +98,7 @@ it('exports telemetry data to OpenTelemetry collector during operations', functi
     $checkResult2 = $client->check(
         store: $storeId,
         model: $modelId,
-        tupleKey: tuple('user:bob', 'writer', 'document:budget'),
+        tuple: tuple('user:bob', 'writer', 'document:budget'),
     );
     expect($checkResult2->succeeded())->toBeTrue();
     expect($checkResult2->unwrap()->getAllowed())->toBeTrue();
@@ -159,10 +155,6 @@ it('handles telemetry gracefully when OpenTelemetry is not configured', function
     // Test that the SDK works without OpenTelemetry configuration
     $client = new Client(
         url: getOpenFgaUrl(),
-        httpClient: new FileGetContents(new Psr17Factory),
-        httpResponseFactory: new Psr17Factory,
-        httpStreamFactory: new Psr17Factory,
-        httpRequestFactory: new Psr17Factory,
     );
 
     // Should work without telemetry
@@ -282,7 +274,7 @@ it('exports detailed span attributes for OpenFGA operations', function (): void 
     $checkResult = $client->check(
         store: $storeId,
         model: $modelId,
-        tupleKey: tuple('user:test', 'reader', 'document:test'),
+        tuple: tuple('user:test', 'reader', 'document:test'),
     );
     expect($checkResult->succeeded())->toBeTrue();
 

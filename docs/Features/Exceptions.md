@@ -5,31 +5,18 @@ This guide explains how to properly handle errors in the OpenFGA PHP SDK using o
 The examples in this guide assume you have the following imports and setup:
 
 ```php
+<?php
+
 declare(strict_types=1);
 
-use OpenFGA\{Client, ClientInterface, Messages};
-use OpenFGA\Exceptions\{
-    AuthenticationError,
-    AuthenticationException,
-    ClientError,
-    ClientException,
-    ConfigurationError,
-    ConfigurationException,
-    NetworkError,
-    NetworkException,
-    SerializationError,
-    SerializationException
-};
-use OpenFGA\Results\{Failure, ResultInterface, Success};
-use OpenFGA\Translation\Translator;
-use function OpenFGA\{tuple, tuples};
+use OpenFGA\Client;
 
-// Basic client setup
-$client = new Client([
-    'url' => 'https://api.openfga.example',
-    'storeId' => 'your-store-id',
-    'authenticationToken' => 'your-token'
-]);
+$client = new Client(
+    url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080',
+);
+
+$storeId = $_ENV['FGA_STORE_ID'];
+$modelId = $_ENV['FGA_MODEL_ID'];
 ```
 
 ## Overview
@@ -49,7 +36,7 @@ Our error handling philosophy is built on three core principles:
 Traditional exception handling has several drawbacks:
 
 ```php
-// ❌ Traditional approach - errors are hidden
+// ❌ Errors are hidden
 try {
     $response = $client->check($user, $relation, $object);
     // How do we know what errors this might throw?
@@ -61,7 +48,7 @@ try {
 Our Result type makes errors explicit:
 
 ```php
-// ✅ Result approach - errors are visible in the type signature
+// ✅ Errors are visible in the type signature
 $result = $client->check(
     user: 'user:anne',
     relation: 'reader',
@@ -73,15 +60,13 @@ $result = $client->check(
 
 ## Using the Result Type
 
-The `Result` type represents either a successful value or a failure. It provides a rich API for handling both cases elegantly.
-
-### Basic Usage
+The `Result` type represents a successful value or a failure, and provides a rich API for handling both cases elegantly.
 
 ```php
-// All SDK methods return Result types
+// All Client methods return Result types
 $result = $client->check(
-    tupleKey: tuple('user:anne', 'reader', 'document:budget')
-);
+    tupleKey: new TupleKey(user: 'user:anne', relation: 'reader', object: 'document:budget')
+)
 
 // Check if the operation succeeded
 if ($result->succeeded()) {
@@ -156,7 +141,7 @@ Use `rethrow()` to convert Result failures back to exceptions when needed:
 public function canUserRead(string $userId, string $documentId): bool
 {
     return $this->client->check(
-        tupleKey: tuple($userId, 'reader', $documentId)
+        tupleKey: new TupleKey(user: $userId, relation: 'reader', object: $documentId)
     )
     ->rethrow() // Throws the underlying exception if failed
     ->unwrap()
@@ -474,14 +459,16 @@ The OpenFGA PHP SDK fully supports internationalization of error messages. This 
 ### Setting the Language
 
 ```php
+use OpenFGA\Language;
+
 // Create a client with Spanish error messages
 $client = new Client(
     url: 'https://api.openfga.example',
-    language: 'es' // Spanish
+    language: Language::Spanish
 );
 
 // Or set the language later
-$client->setLanguage('fr'); // Switch to French
+$client->setLanguage(Language::French); // Switch to French
 ```
 
 ### Example: Same Error in Multiple Languages
@@ -489,9 +476,11 @@ $client->setLanguage('fr'); // Switch to French
 This shows how the same error appears differently based on language context:
 
 ```php
+use OpenFGA\Language;
+
 // Create clients with different languages
-$englishClient = new Client(url: 'https://api.openfga.example', language: 'en');
-$spanishClient = new Client(url: 'https://api.openfga.example', language: 'es');
+$englishClient = new Client(url: 'https://api.openfga.example', language: Language::English);
+$spanishClient = new Client(url: 'https://api.openfga.example', language: Language::Spanish);
 
 try {
     // Try an invalid operation with English client
@@ -548,7 +537,7 @@ class AuthorizationService
     public function checkAccess(string $userId, string $resource): AccessResult
     {
         return $this->client->check(
-            tupleKey: tuple($userId, 'reader', $resource)
+            tupleKey: new TupleKey($userId, 'reader', $resource)
         )
         ->then(function ($response) {
             // Transform successful response
@@ -597,8 +586,8 @@ class AuthorizationService
     public function grantAccess(string $userId, string $resource): void
     {
         $this->client->writeTuples(
-            writes: tuples(
-                tuple($userId, 'reader', $resource)
+            writes: new TupleKeys(
+                new TupleKey($userId, 'reader', $resource)
             )
         )
         ->failure(function ($error) use ($userId, $resource) {
@@ -660,60 +649,6 @@ class AuthorizationServiceTest extends TestCase
         // Should deny on validation errors
         expect($result->allowed)->toBeFalse();
         expect($result->reason)->toBe('UNKNOWN_ERROR');
-    }
-}
-```
-
-### Real SDK Method Example
-
-Here's how the SDK itself handles errors internally:
-
-```php
-namespace OpenFGA;
-
-class Client implements ClientInterface
-{
-    public function check(
-        TupleKeyInterface $tupleKey,
-        ?string $model = null,
-    ): ResultInterface {
-        try {
-            // Build and send request
-            $request = $this->buildCheckRequest($tupleKey, $model);
-            $response = $this->httpClient->sendRequest($request);
-
-            // Handle response
-            return match($response->getStatusCode()) {
-                200 => new Success($this->parseCheckResponse($response)),
-                400 => new Failure(NetworkException::fromResponse(
-                    NetworkError::Invalid,
-                    $request,
-                    $response
-                )),
-                401 => new Failure(NetworkException::fromResponse(
-                    NetworkError::Unauthenticated,
-                    $request,
-                    $response
-                )),
-                default => new Failure(NetworkException::fromResponse(
-                    NetworkError::Unexpected,
-                    $request,
-                    $response
-                )),
-            };
-        } catch (NetworkExceptionInterface $e) {
-            // Network-level failures
-            return new Failure(new NetworkException(
-                kind: NetworkError::Request,
-                request: $request ?? null,
-                previous: $e
-            ));
-        } catch (Throwable $e) {
-            // Unexpected failures
-            return new Failure(ClientError::Network->exception(
-                previous: $e
-            ));
-        }
     }
 }
 ```

@@ -48,6 +48,10 @@ If PEST exits with code 255, it means there is a syntax error in the test or cod
 
 This is an OpenFGA PHP SDK implementing relationship-based access control. Key architectural patterns:
 
+### Helper functions
+
+Many common operations are provided as helper functions from src/Helpers.php.
+
 ### Result pattern
 
 All client methods return `Success`/`Failure` objects instead of throwing exceptions:
@@ -79,7 +83,9 @@ Every major class has a corresponding interface (for example, `Client` implement
 The SDK includes a DSL parser (`Language/DslTransformer`) that converts human-readable authorization models to API objects:
 
 ```php
-$model = $client->dsl($dslString)->unwrap();
+use function OpenFGA\dsl;
+
+$model = dsl($dslString);
 ```
 
 ### PSR compliance
@@ -152,12 +158,63 @@ Our documentation follows these core principles:
    $foo->doSomething($bar);
 
    // GOOD: Contextual example showing real usage
-   $authzClient = new OpenFga\Sdk\Client($configuration);
-   $allowed = $authzClient->check(
-       user: 'user:anne',
-       relation: 'reader',
-       object: 'document:budget-2024'
-   )->unwrap();
+   use OpenFGA\Client;
+
+   use function OpenFGA\{dsl, model, store, tuple, write, allowed};
+
+   $client = new Client(
+       url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080'
+   );
+
+   $storeId = store(
+       name: 'example-document-system',
+       client: $client
+   );
+
+   echo "Created store: {$storeId}\n";
+
+   $dsl = <<<DSL
+   model
+   schema 1.1
+
+   type user
+
+   type document
+   relations
+      define viewer: [user]
+      define editor: [user]
+   DSL;
+
+   $model = dsl(
+       dsl: $dsl,
+       client: $client
+   );
+
+   $modelId = model(
+       model: $model,
+       store: $storeId,
+       client: $client
+   );
+
+   echo "Created model: {$modelId}\n";
+
+   write(
+       client: $client,
+       store: $storeId,
+       model: $modelId,
+       tuples: tuple('user:alice', 'viewer', 'document:readme')
+   );
+
+   echo "Granted alice viewer permission on readme\n";
+
+   $canView = allowed(
+       client: $client,
+       store: $storeId,
+       model: $modelId,
+       tuple: tuple('user:alice', 'viewer', 'document:readme')
+   );
+
+   echo $canView ? "✅ Alice can view readme" : "❌ Access denied";
    ```
 
 #### Interface and class documentation
@@ -219,14 +276,17 @@ Key requirements:
 4. **Include Context in Examples:**
 
    ```php
-   // Checking if a user can read a document
-   $canRead = $client->check(
-       user: 'user:anne',
-       relation: 'reader',
-       object: 'document:budget-2024'
-   )->unwrap();
+   use function OpenFGA\{allowed, tuple};
 
-   if ($canRead->getAllowed()) {
+   // Checking if a user can read a document
+   $canRead = allowed(
+       client: $client,
+       store: $storeId,
+       model: $modelId,
+       tuple: tuple('user:anne', 'reader', 'document:budget-2024')
+   );
+
+   if ($canRead) {
        // User has read access, show the document
    }
    ```
