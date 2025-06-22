@@ -46,7 +46,7 @@ final class Client implements ClientInterface
     /**
      * The version of the OpenFGA PHP SDK.
      */
-    public const string VERSION = '1.4.0';
+    public const string VERSION = '1.5.0';
 
     /**
      * @var array<string, object> Store-specific service instances cache
