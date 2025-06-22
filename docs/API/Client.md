@@ -58,7 +58,7 @@ OpenFGA Client implementation for relationship-based access control operations. 
 
 | Name      | Value   | Description                         |
 | --------- | ------- | ----------------------------------- |
-| `VERSION` | `1.4.0` | The version of the OpenFGA PHP SDK. |
+| `VERSION` | `1.5.0` | The version of the OpenFGA PHP SDK. |
 
 ## Methods
 
