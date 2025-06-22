@@ -119,14 +119,15 @@ final class AuthorizationTestRunner
 }
 
 // Usage in CI/CD
+$apiUrl = $_ENV['FGA_API_URL'] ?? 'http://localhost:8080';
 $runner = new AuthorizationTestRunner(
-    apiUrl: $_ENV['OPENFGA_API_URL'] ?? 'http://localhost:8080',
+    apiUrl: $apiUrl,
     verbose: true, // Set to true for demonstration
 );
 
 // Setup: Create some assertions for demonstration
 if (isset($_ENV['FGA_STORE_ID'], $_ENV['FGA_MODEL_ID'])) {
-    $client = new Client(url: $_ENV['OPENFGA_API_URL'] ?? 'http://localhost:8080');
+    $client = new Client(url: $_ENV['FGA_API_URL'] ?? 'http://localhost:8080');
 
     // Create some sample assertions
     $client->writeAssertions(
