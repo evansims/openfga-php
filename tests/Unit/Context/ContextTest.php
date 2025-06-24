@@ -8,234 +8,190 @@ use OpenFGA\ClientInterface;
 use OpenFGA\Context\Context;
 use OpenFGA\Models\AuthorizationModelInterface;
 use OpenFGA\Models\StoreInterface;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-#[CoversClass(Context::class)]
-final class ContextTest extends TestCase
-{
-    protected function setUp(): void
-    {
-        // Reset the context state before each test
-        while (Context::hasContext()) {
-            Context::with(fn() => null);
-        }
-    }
+/**
+ * @covers \OpenFGA\Context\Context
+ */
 
-    #[Test]
-    public function testHasContextReturnsFalseWhenNoContextIsActive(): void
-    {
-        $this->assertFalse(Context::hasContext());
+// Reset the context state before each test
+beforeEach(function () {
+    while (Context::hasContext()) {
+        Context::with(fn() => null);
     }
+});
 
-    #[Test]
-    public function testHasContextReturnsTrueWhenContextIsActive(): void
-    {
-        Context::with(function () {
-            $this->assertTrue(Context::hasContext());
-        });
-    }
+test('hasContext returns false when no context is active', function () {
+    expect(Context::hasContext())->toBeFalse();
+});
 
-    #[Test]
-    public function testCurrentThrowsExceptionWhenNoContextIsActive(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('No context is currently active. Wrap your code in Context::with() or use the context helper method.');
+test('hasContext returns true when context is active', function () {
+    Context::with(function () {
+        expect(Context::hasContext())->toBeTrue();
+    });
+});
+
+test('current throws exception when no context is active', function () {
+    expect(fn() => Context::current())
+        ->toThrow(RuntimeException::class, 'No context is currently active. Wrap your code in Context::with() or use the context helper method.');
+});
+
+test('depth returns zero when no context is active', function () {
+    expect(Context::depth())->toBe(0);
+});
+
+test('depth increases with nested contexts', function () {
+    Context::with(function () {
+        expect(Context::depth())->toBe(1);
         
-        Context::current();
-    }
-
-    #[Test]
-    public function testDepthReturnsZeroWhenNoContextIsActive(): void
-    {
-        $this->assertSame(0, Context::depth());
-    }
-
-    #[Test]
-    public function testDepthIncreasesWithNestedContexts(): void
-    {
         Context::with(function () {
-            $this->assertSame(1, Context::depth());
+            expect(Context::depth())->toBe(2);
             
             Context::with(function () {
-                $this->assertSame(2, Context::depth());
-                
-                Context::with(function () {
-                    $this->assertSame(3, Context::depth());
-                });
-                
-                $this->assertSame(2, Context::depth());
+                expect(Context::depth())->toBe(3);
             });
             
-            $this->assertSame(1, Context::depth());
+            expect(Context::depth())->toBe(2);
         });
         
-        $this->assertSame(0, Context::depth());
-    }
+        expect(Context::depth())->toBe(1);
+    });
+    
+    expect(Context::depth())->toBe(0);
+});
 
-    #[Test]
-    public function testGetClientReturnsNullWhenNoContextIsActive(): void
-    {
-        $this->assertNull(Context::getClient());
-    }
+test('getClient returns null when no context is active', function () {
+    expect(Context::getClient())->toBeNull();
+});
 
-    #[Test]
-    public function testGetClientReturnsClientFromContext(): void
-    {
-        $client = $this->createMock(ClientInterface::class);
-        
-        Context::with(function () use ($client) {
-            $this->assertSame($client, Context::getClient());
-        }, client: $client);
-    }
+test('getClient returns client from context', function () {
+    $client = $this->createMock(ClientInterface::class);
+    
+    Context::with(function () use ($client) {
+        expect(Context::getClient())->toBe($client);
+    }, client: $client);
+});
 
-    #[Test]
-    public function testGetStoreReturnsNullWhenNoContextIsActive(): void
-    {
-        $this->assertNull(Context::getStore());
-    }
+test('getStore returns null when no context is active', function () {
+    expect(Context::getStore())->toBeNull();
+});
 
-    #[Test]
-    public function testGetStoreReturnsStoreFromContext(): void
-    {
-        $store = $this->createMock(StoreInterface::class);
-        
-        Context::with(function () use ($store) {
-            $this->assertSame($store, Context::getStore());
-        }, store: $store);
-    }
+test('getStore returns store from context', function () {
+    $store = $this->createMock(StoreInterface::class);
+    
+    Context::with(function () use ($store) {
+        expect(Context::getStore())->toBe($store);
+    }, store: $store);
+});
 
-    #[Test]
-    public function testGetStoreReturnsStringStoreFromContext(): void
-    {
-        $store = 'store-id';
-        
-        Context::with(function () use ($store) {
-            $this->assertSame($store, Context::getStore());
-        }, store: $store);
-    }
+test('getStore returns string store from context', function () {
+    $store = 'store-id';
+    
+    Context::with(function () use ($store) {
+        expect(Context::getStore())->toBe($store);
+    }, store: $store);
+});
 
-    #[Test]
-    public function testGetModelReturnsNullWhenNoContextIsActive(): void
-    {
-        $this->assertNull(Context::getModel());
-    }
+test('getModel returns null when no context is active', function () {
+    expect(Context::getModel())->toBeNull();
+});
 
-    #[Test]
-    public function testGetModelReturnsModelFromContext(): void
-    {
-        $model = $this->createMock(AuthorizationModelInterface::class);
-        
-        Context::with(function () use ($model) {
-            $this->assertSame($model, Context::getModel());
-        }, model: $model);
-    }
+test('getModel returns model from context', function () {
+    $model = $this->createMock(AuthorizationModelInterface::class);
+    
+    Context::with(function () use ($model) {
+        expect(Context::getModel())->toBe($model);
+    }, model: $model);
+});
 
-    #[Test]
-    public function testGetModelReturnsStringModelFromContext(): void
-    {
-        $model = 'model-id';
-        
-        Context::with(function () use ($model) {
-            $this->assertSame($model, Context::getModel());
-        }, model: $model);
-    }
+test('getModel returns string model from context', function () {
+    $model = 'model-id';
+    
+    Context::with(function () use ($model) {
+        expect(Context::getModel())->toBe($model);
+    }, model: $model);
+});
 
-    #[Test]
-    public function testGetPreviousReturnsNullWhenNoContextIsActive(): void
-    {
-        $this->assertNull(Context::getPrevious());
-    }
+test('getPrevious returns null when no context is active', function () {
+    expect(Context::getPrevious())->toBeNull();
+});
 
-    #[Test]
-    public function testGetPreviousReturnsNullForTopLevelContext(): void
-    {
-        Context::with(function () {
-            $this->assertNull(Context::getPrevious());
-        });
-    }
+test('getPrevious returns null for top level context', function () {
+    Context::with(function () {
+        expect(Context::getPrevious())->toBeNull();
+    });
+});
 
-    #[Test]
-    public function testNestedContextInheritsValuesFromParent(): void
-    {
-        $client = $this->createMock(ClientInterface::class);
-        $store = $this->createMock(StoreInterface::class);
-        $model = $this->createMock(AuthorizationModelInterface::class);
+test('nested context inherits values from parent', function () {
+    $client = $this->createMock(ClientInterface::class);
+    $store = $this->createMock(StoreInterface::class);
+    $model = $this->createMock(AuthorizationModelInterface::class);
+    
+    Context::with(function () use ($client, $store, $model) {
+        expect(Context::getClient())->toBe($client);
+        expect(Context::getStore())->toBe($store);
+        expect(Context::getModel())->toBe($model);
         
         Context::with(function () use ($client, $store, $model) {
-            $this->assertSame($client, Context::getClient());
-            $this->assertSame($store, Context::getStore());
-            $this->assertSame($model, Context::getModel());
-            
-            Context::with(function () use ($client, $store, $model) {
-                $this->assertSame($client, Context::getClient());
-                $this->assertSame($store, Context::getStore());
-                $this->assertSame($model, Context::getModel());
+            expect(Context::getClient())->toBe($client);
+            expect(Context::getStore())->toBe($store);
+            expect(Context::getModel())->toBe($model);
+        });
+    }, client: $client, store: $store, model: $model);
+});
+
+test('nested context can override parent values', function () {
+    $client1 = $this->createMock(ClientInterface::class);
+    $store1 = $this->createMock(StoreInterface::class);
+    $model1 = $this->createMock(AuthorizationModelInterface::class);
+    
+    $client2 = $this->createMock(ClientInterface::class);
+    $store2 = $this->createMock(StoreInterface::class);
+    $model2 = $this->createMock(AuthorizationModelInterface::class);
+    
+    Context::with(function () use ($client1, $store1, $model1, $client2, $store2, $model2) {
+        expect(Context::getClient())->toBe($client1);
+        expect(Context::getStore())->toBe($store1);
+        expect(Context::getModel())->toBe($model1);
+        
+        Context::with(function () use ($client2, $store2, $model2) {
+            expect(Context::getClient())->toBe($client2);
+            expect(Context::getStore())->toBe($store2);
+            expect(Context::getModel())->toBe($model2);
+        }, client: $client2, store: $store2, model: $model2);
+        
+        // Verify parent context is restored
+        expect(Context::getClient())->toBe($client1);
+        expect(Context::getStore())->toBe($store1);
+        expect(Context::getModel())->toBe($model1);
+    }, client: $client1, store: $store1, model: $model1);
+});
+
+test('with returns callable result', function () {
+    $result = Context::with(fn() => 'test-result');
+    expect($result)->toBe('test-result');
+});
+
+test('with restores context after exception', function () {
+    $client = $this->createMock(ClientInterface::class);
+    
+    Context::with(function () use ($client) {
+        expect(Context::getClient())->toBe($client);
+        
+        try {
+            Context::with(function () {
+                throw new \Exception('Test exception');
             });
-        }, client: $client, store: $store, model: $model);
-    }
-
-    #[Test]
-    public function testNestedContextCanOverrideParentValues(): void
-    {
-        $client1 = $this->createMock(ClientInterface::class);
-        $store1 = $this->createMock(StoreInterface::class);
-        $model1 = $this->createMock(AuthorizationModelInterface::class);
+            fail('Exception should have been thrown');
+        } catch (\Exception $e) {
+            expect($e->getMessage())->toBe('Test exception');
+        }
         
-        $client2 = $this->createMock(ClientInterface::class);
-        $store2 = $this->createMock(StoreInterface::class);
-        $model2 = $this->createMock(AuthorizationModelInterface::class);
-        
-        Context::with(function () use ($client1, $store1, $model1, $client2, $store2, $model2) {
-            $this->assertSame($client1, Context::getClient());
-            $this->assertSame($store1, Context::getStore());
-            $this->assertSame($model1, Context::getModel());
-            
-            Context::with(function () use ($client2, $store2, $model2) {
-                $this->assertSame($client2, Context::getClient());
-                $this->assertSame($store2, Context::getStore());
-                $this->assertSame($model2, Context::getModel());
-            }, client: $client2, store: $store2, model: $model2);
-            
-            // Verify parent context is restored
-            $this->assertSame($client1, Context::getClient());
-            $this->assertSame($store1, Context::getStore());
-            $this->assertSame($model1, Context::getModel());
-        }, client: $client1, store: $store1, model: $model1);
-    }
-
-    #[Test]
-    public function testWithReturnsCallableResult(): void
-    {
-        $result = Context::with(fn() => 'test-result');
-        $this->assertSame('test-result', $result);
-    }
-
-    #[Test]
-    public function testWithRestoresContextAfterException(): void
-    {
-        $client = $this->createMock(ClientInterface::class);
-        
-        Context::with(function () use ($client) {
-            $this->assertSame($client, Context::getClient());
-            
-            try {
-                Context::with(function () {
-                    throw new \Exception('Test exception');
-                });
-                $this->fail('Exception should have been thrown');
-            } catch (\Exception $e) {
-                $this->assertSame('Test exception', $e->getMessage());
-            }
-            
-            // Verify parent context is restored after exception
-            $this->assertSame($client, Context::getClient());
-            $this->assertSame(1, Context::depth());
-        }, client: $client);
-        
-        $this->assertFalse(Context::hasContext());
-        $this->assertSame(0, Context::depth());
-    }
-}
+        // Verify parent context is restored after exception
+        expect(Context::getClient())->toBe($client);
+        expect(Context::depth())->toBe(1);
+    }, client: $client);
+    
+    expect(Context::hasContext())->toBeFalse();
+    expect(Context::depth())->toBe(0);
+});
