@@ -92,7 +92,7 @@ jobs:
         run: |
           # Pull the Slim Docker image
           docker pull dslim/slim:latest
-          
+
           # Run slim to optimize the image using Docker
           docker run --rm \
             -v /var/run/docker.sock:/var/run/docker.sock \
@@ -121,7 +121,7 @@ jobs:
         run: |
           # Get all tags from metadata
           TAGS="${{ steps.meta.outputs.tags }}"
-          
+
           # Tag and push each image
           echo "$TAGS" | while IFS= read -r TAG; do
             # Add platform suffix to tag
@@ -170,25 +170,12 @@ jobs:
         run: |
           # Get all tags from metadata
           TAGS="${{ steps.meta.outputs.tags }}"
-          
+
           # Create manifest for each tag
           echo "$TAGS" | while IFS= read -r TAG; do
             docker manifest create "$TAG" \
               "${TAG}-linux-amd64" \
               "${TAG}-linux-arm64"
-            
+
             docker manifest push "$TAG"
           done
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Update Docker Hub description
-        uses: peter-evans/dockerhub-description@v4
-        with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ env.DOCKERHUB_IMAGE }}
-          short-description: "OpenFGA PHP SDK integration test image (optimized with Slim)"
-          readme-filepath: ./README-DOCKER.md
-        continue-on-error: true
