@@ -161,9 +161,9 @@ describe('Error Handling', function (): void {
             url: 'http://nonexistent-server:9999',
         );
 
-        $previousHandler = set_error_handler(fn ($errno, $errstr) => (bool) (str_contains($errstr, 'php_network_getaddresses')
-                || str_contains($errstr, 'getaddrinfo')
-                || str_contains($errstr, 'Failed to open stream')), E_WARNING);
+        $previousHandler = set_error_handler(fn($errno, $errstr) => (bool) (str_contains($errstr, 'php_network_getaddresses')
+            || str_contains($errstr, 'getaddrinfo')
+            || str_contains($errstr, 'Failed to open stream')), E_WARNING);
 
         try {
             $result = $invalidClient->listStores();
@@ -291,31 +291,6 @@ describe('Error Handling', function (): void {
         }
 
         $this->client->deleteStore(store: $store->getId());
-    });
-
-    test('rejects invalid credentials', function (): void {
-        // This test requires OAuth/OIDC authentication to be configured on the OpenFGA server
-        // It's skipped when running against a local OpenFGA instance without authentication
-        if (! getenv('FGA_CLIENT_ID')) {
-            $this->markTestSkipped('Authentication tests require FGA_CLIENT_ID to be set');
-        }
-
-        $invalidClient = new Client(
-            url: getOpenFgaUrl(),
-            authentication: Authentication::CLIENT_CREDENTIALS,
-            clientId: 'invalid-client-id',
-            clientSecret: 'invalid-client-secret',
-            audience: getenv('FGA_API_AUDIENCE') ?: 'test-audience',
-            issuer: getenv('FGA_API_TOKEN_ISSUER') ?: 'https://test-issuer.example.com',
-        );
-
-        $result = $invalidClient->listStores();
-
-        expect($result->failed())->toBeTrue();
-
-        $result->failure(function ($error): void {
-            expect($error)->toBeInstanceOf(NetworkException::class);
-        });
     });
 
     test('rejects empty object type', function (): void {

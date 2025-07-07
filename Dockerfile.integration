@@ -98,6 +98,9 @@ if [ ! -d "/app/vendor" ] || [ -z "$(ls -A /app/vendor 2>/dev/null)" ]; then
   cp -r /app-vendor/vendor /app/
 fi
 
+# Create PEST temp directory to avoid warnings
+mkdir -p /app/vendor/pestphp/pest/.temp
+
 # Parallel service checks
 check_openfga() {
   echo "Checking OpenFGA..."
@@ -114,17 +117,14 @@ check_openfga() {
 }
 
 check_otel() {
-  echo "Checking OTEL Collector..."
-  timeout=30
-  until curl -sf http://otel-collector:13133/ >/dev/null 2>&1; do
-    timeout=$((timeout - 1))
-    if [ $timeout -le 0 ]; then
-      echo "OTEL Collector timeout (non-critical)"
-      return 0
-    fi
-    sleep 1
-  done
-  echo "OTEL Collector ready"
+  echo "Checking OTEL Collector (optional)..."
+  # Just try once - if it's not there, that's fine
+  if curl -sf http://otel-collector:13133/ >/dev/null 2>&1; then
+    echo "OTEL Collector ready"
+  else
+    echo "OTEL Collector not available (continuing without it)"
+  fi
+  return 0
 }
 
 # Run checks in parallel

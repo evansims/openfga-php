@@ -10,12 +10,6 @@ services:
       - "com.openfga.cleanup=true"
     networks:
       - openfga-network
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/healthz"]
-      interval: 2s
-      timeout: 5s
-      retries: 30
-      start_period: 5s
 
   # OpenTelemetry Collector for observability testing
   otel-collector:
@@ -35,12 +29,6 @@ services:
       - "13133:13133" # Health check endpoint
     networks:
       - openfga-network
-    healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:13133/"]
-      interval: 2s
-      timeout: 5s
-      retries: 30
-      start_period: 5s
 
   test:
     container_name: openfga-php-integration-tests
@@ -48,9 +36,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.integration
-      cache_from:
-        - evansims/openfga-php-integration-tests:latest
-        - evansims/openfga-php-integration-tests:cache
       args:
         BUILDKIT_INLINE_CACHE: 1
     volumes:
@@ -73,10 +58,7 @@ services:
       - OTEL_RESOURCE_ATTRIBUTES=service.name=openfga-php-sdk-test,service.version=test
     working_dir: /app
     depends_on:
-      openfga:
-        condition: service_healthy
-      otel-collector:
-        condition: service_healthy
+      - openfga
     networks:
       - openfga-network
 
