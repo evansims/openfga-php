@@ -72,6 +72,9 @@ RUN echo "pcov.enabled=1" >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini \
     && echo "pcov.directory=/app/src" >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini \
     && echo "memory_limit=512M" >> /usr/local/etc/php/conf.d/memory-limit.ini
 
+# Ensure composer is executable and in PATH
+ENV PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 WORKDIR /app
 
 # Copy dependencies from dependency stage
@@ -83,13 +86,22 @@ COPY . .
 # Copy composer for runtime use
 COPY --from=composer-stage /usr/bin/composer /usr/bin/composer
 
+# Ensure composer is executable
+RUN chmod +x /usr/bin/composer
+
 # Generate optimized autoloader with source files
 RUN cp -r /app-vendor/vendor . \
-    && composer dump-autoload --optimize --classmap-authoritative
+    && /usr/bin/composer dump-autoload --optimize --classmap-authoritative
 
 # Create wait script using printf to avoid heredoc parsing issues
 RUN printf '#!/bin/sh\n\
 set -e\n\
+\n\
+# Debug info\n\
+echo "Container starting..."\n\
+echo "Current directory: $(pwd)"\n\
+echo "PHP version: $(php -v | head -n1)"\n\
+echo "Composer location: $(which composer || echo "composer not in PATH")"\n\
 \n\
 # Restore vendor if needed\n\
 if [ ! -d "/app/vendor" ] || [ -z "$(ls -A /app/vendor 2>/dev/null)" ]; then\n\
@@ -137,6 +149,6 @@ wait $PID1 || exit 1\n\
 wait $PID2\n\
 \n\
 echo "Starting tests..."\n\
-exec composer test:integration:run\n' > /wait-and-test.sh && chmod +x /wait-and-test.sh
+exec /usr/bin/composer test:integration:run\n' > /wait-and-test.sh && chmod +x /wait-and-test.sh
 
 CMD ["/wait-and-test.sh"]
