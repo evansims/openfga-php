@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Run every Monday at 2 AM UTC to automatically incorporate:
+    # - Security patches in base images (PHP, Alpine Linux)
+    # - Updated dependencies from composer
+    # - Latest OpenFGA and OTEL collector images for testing
+    - cron: '0 2 * * 1'
   workflow_dispatch:
 
 env:
