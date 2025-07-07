@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Images
 
 on:
   push:
@@ -7,8 +7,14 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_REGISTRY: docker.io
-  DOCKER_IMAGE: evansims/openfga-php-integration-tests
+  # Docker Hub
+  DOCKERHUB_REGISTRY: docker.io
+  DOCKERHUB_IMAGE: evansims/openfga-php-integration-tests
+  # GitHub Container Registry
+  GHCR_REGISTRY: ghcr.io
+  GHCR_IMAGE: ${{ github.repository }}-integration-tests
+  # Slim configuration
+  SLIM_VERSION: 1.40.11
 
 jobs:
   build-and-push:
@@ -18,9 +24,16 @@ jobs:
       contents: read
       packages: write
 
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -31,41 +44,177 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.DOCKER_REGISTRY }}
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          registry: ${{ env.DOCKERHUB_REGISTRY }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GHCR_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}
+          images: |
+            ${{ env.DOCKERHUB_REGISTRY }}/${{ env.DOCKERHUB_IMAGE }}
+            ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE }}
           tags: |
             type=ref,event=branch
             type=sha,prefix={{branch}}-
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value={{date 'YYYYMMDD'}}-{{sha}}
 
-      - name: Build and push Docker image
+      - name: Get platform tag
+        id: platform
+        run: |
+          PLATFORM_TAG=$(echo "${{ matrix.platform }}" | sed 's/\//-/g')
+          echo "tag=${PLATFORM_TAG}" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile.integration
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          push: false
+          load: true
+          tags: local-image:${{ steps.platform.outputs.tag }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:buildcache
-          cache-to: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_IMAGE }}:buildcache,mode=max
-          platforms: linux/amd64,linux/arm64
+          cache-from: |
+            type=registry,ref=${{ env.DOCKERHUB_REGISTRY }}/${{ env.DOCKERHUB_IMAGE }}:buildcache
+            type=registry,ref=${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE }}:buildcache
+          platforms: ${{ matrix.platform }}
           build-args: |
             BUILDKIT_INLINE_CACHE=1
+
+      - name: Install Slim
+        run: |
+          curl -L -o slim.tar.gz https://github.com/slimtoolkit/slim/releases/download/${{ env.SLIM_VERSION }}/slim_${{ env.SLIM_VERSION }}_linux_amd64.tar.gz
+          tar -xzf slim.tar.gz
+          chmod +x slim
+          sudo mv slim /usr/local/bin/
+          slim --version
+
+      - name: Optimize image with Slim
+        run: |
+          # Create a slim configuration file for PHP applications
+          cat > slim.yaml << EOF
+          # Slim configuration for PHP integration tests
+          continue-after:
+            - probe-http
+            - probe-exec
+          
+          http-probe-cmds:
+            - GET /health
+          
+          exec-probe-cmds:
+            - php --version
+            - composer --version
+          
+          include-paths:
+            - /usr/local/bin/php
+            - /usr/local/lib/php
+            - /app
+            - /tmp
+            - /var/www
+            - /etc/php
+            - /etc/ssl
+            - /etc/ca-certificates
+            - /usr/share/ca-certificates
+            - /lib
+            - /lib64
+            - /usr/lib
+            - /usr/lib64
+          
+          preserve-path-perms:
+            - /app
+            - /tmp
+          EOF
+          
+          # Run slim to optimize the image
+          slim build \
+            --target local-image:${{ steps.platform.outputs.tag }} \
+            --tag local-image-slim:${{ steps.platform.outputs.tag }} \
+            --http-probe-off \
+            --continue-after 10 \
+            --show-clogs \
+            --config slim.yaml
+
+      - name: Tag and push slimmed images
+        run: |
+          # Get all tags from metadata
+          TAGS="${{ steps.meta.outputs.tags }}"
+          
+          # Tag and push each image
+          echo "$TAGS" | while IFS= read -r TAG; do
+            # Add platform suffix to tag
+            PLATFORM_TAG="${TAG}-${{ steps.platform.outputs.tag }}"
+            docker tag local-image-slim:${{ steps.platform.outputs.tag }} "$PLATFORM_TAG"
+            docker push "$PLATFORM_TAG"
+          done
+
+  create-manifest:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: docker-publish
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.DOCKERHUB_REGISTRY }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.GHCR_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.DOCKERHUB_REGISTRY }}/${{ env.DOCKERHUB_IMAGE }}
+            ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value={{date 'YYYYMMDD'}}-{{sha}}
+
+      - name: Create and push manifests
+        run: |
+          # Get all tags from metadata
+          TAGS="${{ steps.meta.outputs.tags }}"
+          
+          # Create manifest for each tag
+          echo "$TAGS" | while IFS= read -r TAG; do
+            docker manifest create "$TAG" \
+              "${TAG}-linux-amd64" \
+              "${TAG}-linux-arm64"
+            
+            docker manifest push "$TAG"
+          done
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Update Docker Hub description
         uses: peter-evans/dockerhub-description@v4
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ env.DOCKER_IMAGE }}
-          short-description: "OpenFGA PHP SDK integration test image"
+          repository: ${{ env.DOCKERHUB_IMAGE }}
+          short-description: "OpenFGA PHP SDK integration test image (optimized with Slim)"
           readme-filepath: ./README-DOCKER.md
         continue-on-error: true
