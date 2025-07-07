@@ -13,8 +13,6 @@ env:
   # GitHub Container Registry
   GHCR_REGISTRY: ghcr.io
   GHCR_IMAGE: ${{ github.repository }}-integration-tests
-  # Slim configuration
-  SLIM_VERSION: 1.40.11
 
 jobs:
   build-and-push:
@@ -90,60 +88,36 @@ jobs:
           build-args: |
             BUILDKIT_INLINE_CACHE=1
 
-      - name: Install Slim
-        run: |
-          curl -L -o dist_linux.tar.gz https://downloads.dockerslim.com/releases/${{ env.SLIM_VERSION }}/dist_linux.tar.gz
-          tar -xzf dist_linux.tar.gz
-          chmod +x dist_linux/slim
-          sudo mv dist_linux/slim /usr/local/bin/
-          sudo mv dist_linux/slim-sensor /usr/local/bin/
-          rm -rf dist_linux dist_linux.tar.gz
-          slim --version
-
       - name: Optimize image with Slim
         run: |
-          # Create a slim configuration file for PHP applications
-          cat > slim.yaml << EOF
-          # Slim configuration for PHP integration tests
-          continue-after:
-            - probe-http
-            - probe-exec
+          # Pull the Slim Docker image
+          docker pull dslim/slim:latest
           
-          http-probe-cmds:
-            - GET /health
-          
-          exec-probe-cmds:
-            - php --version
-            - composer --version
-          
-          include-paths:
-            - /usr/local/bin/php
-            - /usr/local/lib/php
-            - /app
-            - /tmp
-            - /var/www
-            - /etc/php
-            - /etc/ssl
-            - /etc/ca-certificates
-            - /usr/share/ca-certificates
-            - /lib
-            - /lib64
-            - /usr/lib
-            - /usr/lib64
-          
-          preserve-path-perms:
-            - /app
-            - /tmp
-          EOF
-          
-          # Run slim to optimize the image
-          slim build \
+          # Run slim to optimize the image using Docker
+          docker run --rm \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v $(pwd):/workspace \
+            dslim/slim:latest build \
             --target local-image:${{ steps.platform.outputs.tag }} \
             --tag local-image-slim:${{ steps.platform.outputs.tag }} \
             --http-probe-off \
             --continue-after 10 \
             --show-clogs \
-            --config slim.yaml
+            --include-path /usr/local/bin/php \
+            --include-path /usr/local/lib/php \
+            --include-path /app \
+            --include-path /tmp \
+            --include-path /var/www \
+            --include-path /etc/php \
+            --include-path /etc/ssl \
+            --include-path /etc/ca-certificates \
+            --include-path /usr/share/ca-certificates \
+            --include-path /lib \
+            --include-path /lib64 \
+            --include-path /usr/lib \
+            --include-path /usr/lib64 \
+            --preserve-path-perms /app \
+            --preserve-path-perms /tmp
 
       - name: Tag and push slimmed images
         run: |
