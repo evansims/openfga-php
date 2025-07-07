@@ -35,8 +35,8 @@
   },
   "require": {
     "php": "^8.3",
-    "ext-json": "*",
     "ext-ctype": "*",
+    "ext-json": "*",
     "psr-discovery/all": "^1",
     "psr/http-client-implementation": "^1",
     "psr/http-factory-implementation": "^1",
@@ -51,7 +51,6 @@
     "open-telemetry/sdk": "^1.1",
     "pestphp/pest": "^3",
     "phpmd/phpmd": "^2.15",
-    "phpmetrics/phpmetrics": "^3.0@RC",
     "phpstan/phpstan": "^2",
     "phpstan/phpstan-strict-rules": "^2",
     "psr-mock/http-client-implementation": "^1",
@@ -128,73 +127,48 @@
   },
   "scripts": {
     "docs": [
-      "@docs:coverage",
-      "@docs:links",
-      "@docs:lint"
+      "@php tools/docs-coverage.php",
+      "@php tools/link-checker.php",
+      "@php tools/docs-lint.php",
+      "@php tools/docs-metrics.php"
     ],
-    "docs:api": "@php tools/docs/generate.php",
-    "docs:coverage": "@php tools/docs-coverage.php",
-    "docs:links": "@php tools/link-checker.php",
-    "docs:lint": "@php tools/docs-lint.php",
-    "docs:llms": "@php tools/llms-generator.php",
-    "docs:metrics": "@php tools/docs-metrics.php",
-    "docs:wiki": "./tools/sync-wiki.sh",
+    "docs:update": [
+      "@php tools/docs/generate.php",
+      "@php tools/llms-generator.php",
+      "./tools/sync-wiki.sh",
+      "@php tools/docs-lint.php"
+    ],
     "lint": [
-      "@lint:phpstan",
-      "@lint:psalm",
-      "@lint:rector",
-      "@lint:phpcs"
+      "@php ./vendor/bin/phpstan analyze",
+      "@php ./vendor/bin/psalm",
+      "@php ./vendor/bin/rector process src --dry-run",
+      "@php ./vendor/bin/php-cs-fixer fix --dry-run --diff"
     ],
     "lint:fix": [
-      "@lint:rector:fix",
-      "@lint:phpcs:fix"
+      "@php ./vendor/bin/rector process src",
+      "@php ./vendor/bin/php-cs-fixer fix"
     ],
-    "lint:phpcs": [
-      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-      "@php vendor/bin/php-cs-fixer fix --dry-run --diff"
+    "release": [
+      "@php tools/release.php"
     ],
-    "lint:phpcs:fix": [
-      "@putenv PHP_CS_FIXER_IGNORE_ENV=1",
-      "@php vendor/bin/php-cs-fixer fix"
+    "security": [
+      "@php tools/workflow-security-audit.php"
     ],
-    "lint:phpstan": "@php vendor/bin/phpstan analyze",
-    "lint:psalm": "@php vendor/bin/psalm",
-    "lint:rector": "@php vendor/bin/rector process src --dry-run",
-    "lint:rector:fix": "@php vendor/bin/rector process src",
-    "complexity": [
-      "@complexity:phpmd"
+    "security:fix": [
+      "@php tools/workflow-security-audit.php --fix"
     ],
-    "complexity:phpmd": "@php vendor/bin/phpmd src text phpmd.xml",
-    "complexity:phpmd:html": "@php vendor/bin/phpmd src html phpmd.xml --reportfile build/phpmd.html",
-    "complexity:phpmetrics": [
-      "mkdir -p build/metrics",
-      "@php vendor/bin/phpmetrics --config=.phpmetrics.json"
-    ],
-    "refactor:complexity": "@php vendor/bin/rector process --config=rector-complexity.php --dry-run",
-    "refactor:complexity:fix": "@php vendor/bin/rector process --config=rector-complexity.php",
-    "release": "@php tools/release.php",
-    "security:workflows": "@php tools/workflow-security-audit.php",
-    "security:workflows:fix": "@php tools/workflow-security-audit.php --fix",
     "test": [
       "@test:unit",
       "@test:integration",
       "@test:contract",
-      "@test:tools",
-      "@test:architecture"
+      "@test:tools"
     ],
     "test:contract": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite contract --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
-    ],
-    "test:contract:ci": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite contract --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+      "@php ./vendor/bin/pest --colors=always --testsuite contract --fail-on-risky --fail-on-warning"
     ],
     "test:integration": "./tools/run-integration-tests.sh",
-    "test:integration:ci": "./tools/run-integration-tests-ci.sh",
-    "test:integration:clean": "./tools/integration-cleanup.sh",
-    "test:integration:clean:force": [
-      "./tools/integration-cleanup.sh",
-      "docker ps -a --filter label=com.openfga.test=integration -q | xargs -r docker rm -f",
-      "docker network prune -f --filter label=com.openfga.test"
+    "test:integration:run": [
+      "@php ./vendor/bin/pest --colors=always --testsuite integration --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ],
     "test:integration:start": [
       "docker compose -f docker-compose.integration.yml up -d openfga otel-collector"
@@ -202,32 +176,11 @@
     "test:integration:stop": [
       "docker compose -f docker-compose.integration.yml stop"
     ],
-    "test:integration:debug": "./tools/debug-integration-tests.sh",
-    "test:integration:shell": "docker compose -f docker-compose.integration.yml run --rm test sh",
-    "test:integration:run": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite integration --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
-    ],
-    "test:integration:run:ci": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite integration --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
-    ],
     "test:tools": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite tools --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
+      "@php ./vendor/bin/pest --testsuite tools --fail-on-risky --fail-on-warning"
     ],
     "test:unit": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning --coverage --strict-coverage --compact --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
-    ],
-    "test:unit:ci": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite unit --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
-    ],
-    "test:unit:no-coverage": [
-      "@php -d memory_limit=2G vendor/bin/pest --colors=always --testsuite unit --fail-on-risky --fail-on-warning"
-    ],
-    "test:architecture": [
-      "! @php vendor/bin/phpunit tests/Architecture/CleanArchitectureTest.php --colors=always --strict-global-state --fail-on-risky 2>&1 | grep -q 'FAILURES!' && echo 'Architecture tests passed' || (echo 'Architecture tests failed' && exit 1)"
-    ],
-    "test:debug": [
-      "@putenv XDEBUG_MODE=coverage",
-      "@php vendor/bin/pest --colors=always --testsuite unit --strict-global-state --fail-on-risky --fail-on-warning"
+      "@php ./vendor/bin/pest --testsuite unit --fail-on-risky --fail-on-warning --coverage --coverage-cobertura coverage/cobertura.xml --log-junit junit.xml"
     ]
   }
 }

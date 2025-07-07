@@ -107,14 +107,15 @@ final class FiberConcurrentExecutor implements ConcurrentExecutorInterface
     /**
      * Add fiber result to results array.
      *
-     * @param  array<int, mixed> $results The results array
-     * @param  int               $index   The index to store at
-     * @param  Fiber             $fiber   The fiber to execute
-     * @return array<int, mixed> Updated results array
+     * @param array<int, mixed> $results The results array
+     * @param int               $index   The index to store at
+     * @param Fiber             $fiber   The fiber to execute
      *
      * @phpstan-param Fiber<void, void, mixed, void> $fiber
      *
      * @psalm-param Fiber $fiber
+     *
+     * @return array<int, mixed> Updated results array
      *
      * @psalm-suppress MixedAssignment
      */
@@ -151,12 +152,13 @@ final class FiberConcurrentExecutor implements ConcurrentExecutorInterface
     /**
      * Execute a fiber and return its result.
      *
-     * @param  Fiber $fiber The fiber to execute
-     * @return mixed The fiber result or exception
+     * @param Fiber $fiber The fiber to execute
      *
      * @phpstan-param Fiber<void, void, mixed, void> $fiber
      *
      * @psalm-param Fiber $fiber
+     *
+     * @return mixed The fiber result or exception
      */
     private function executeFiber(Fiber $fiber): mixed
     {

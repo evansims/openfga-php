@@ -140,7 +140,7 @@ RUN echo '#!/bin/sh' > /wait-and-test.sh && \
     echo 'done' >> /wait-and-test.sh && \
     echo '' >> /wait-and-test.sh && \
     echo 'echo "All services are ready! Starting tests..."' >> /wait-and-test.sh && \
-    echo 'exec composer test:integration:run:ci' >> /wait-and-test.sh && \
+    echo 'exec composer test:integration:run' >> /wait-and-test.sh && \
     chmod +x /wait-and-test.sh
 
 CMD ["/wait-and-test.sh"]

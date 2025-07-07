@@ -41,7 +41,7 @@ jobs:
         run: docker compose -f docker-compose.integration.yml up -d
 
       - name: Run integration tests
-        run: composer test:integration:ci
+        run: composer test:integration
 
       - name: List generated files
         run: |
