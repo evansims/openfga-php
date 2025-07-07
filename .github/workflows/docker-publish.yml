@@ -115,9 +115,7 @@ jobs:
             --include-path /lib \
             --include-path /lib64 \
             --include-path /usr/lib \
-            --include-path /usr/lib64 \
-            --preserve-path-perms /app \
-            --preserve-path-perms /tmp
+            --include-path /usr/lib64
 
       - name: Tag and push slimmed images
         run: |
