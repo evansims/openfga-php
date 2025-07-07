@@ -1,7 +1,10 @@
 name: "Test: Integration"
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Build and Push Docker Images"]
+    types:
+      - completed
     branches: [main]
   workflow_dispatch:
 
@@ -13,6 +16,7 @@ jobs:
   integration:
     name: "OpenFGA Server"
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Harden the runner (Audit all outbound calls)
@@ -38,8 +42,22 @@ jobs:
       - name: Create coverage directory
         run: mkdir -p coverage
 
+      - name: Determine Docker image tag
+        id: docker-tag
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+            # Use the SHA from the workflow that built the images
+            echo "IMAGE_TAG=main-${{ github.event.workflow_run.head_sha }}" >> $GITHUB_OUTPUT
+          else
+            # Manual trigger, use latest
+            echo "IMAGE_TAG=latest" >> $GITHUB_OUTPUT
+          fi
+
       - name: Start OpenFGA
-        run: docker compose -f docker-compose.integration.yml up -d
+        run: |
+          export IMAGE_TAG="${{ steps.docker-tag.outputs.IMAGE_TAG }}"
+          echo "Using Docker image: ghcr.io/evansims/openfga-php-integration-tests:${IMAGE_TAG}"
+          docker compose -f docker-compose.integration.yml up -d
 
       - name: Run integration tests
         run: composer test:integration

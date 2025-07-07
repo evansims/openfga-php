@@ -17,7 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 If PEST exits with code 255, it means there is a syntax error in the test or codebase that needs fixed. NEVER consider your task complete until this issue is resolved. Think carefully about any recent changes you've made when trying to identify the cause and when considering solutions, as tasks will almost never be given while this issue is in place.
 
-**Note:** Integration tests use pre-built Docker images from `ghcr.io/evansims/openfga-php-integration-tests:latest`. These images are automatically built and published when changes are pushed to the main branch.
+**Note:** Integration tests use pre-built Docker images from GitHub Container Registry. In CI, tests automatically run after the Docker images are built and use the exact image from that commit. Locally, tests use the `latest` tag by default.
 
 ### Code quality
 
