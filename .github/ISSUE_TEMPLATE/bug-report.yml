@@ -1,89 +1,59 @@
 name: Bug Report
-description: Report a bug in the OpenFGA PHP library
+description: Something not working? Let us know!
 labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report a bug in the OpenFGA PHP library!
+        👋 Thanks for helping us improve! We'll get this sorted.
 
   - type: textarea
-    id: description
+    id: what-happened
     attributes:
-      label: Description
-      description: Clear description of the bug
-      placeholder: When I try to...
+      label: What happened?
+      description: Tell us about the bug
+      placeholder: When I try to check permissions, the client throws...
     validations:
       required: true
 
   - type: textarea
-    id: reproduction
+    id: show-me
     attributes:
-      label: Reproduction Steps
-      description: Steps to reproduce the bug with minimal code example
+      label: Show me the code
+      description: A minimal example that reproduces the issue
       placeholder: |
         ```php
-        // Minimal code example that demonstrates the issue
-        $client = new OpenFGA\Client(/* config */);
-        // ...
+        $client = new OpenFGA\Client(/* ... */);
+        // Your code here
         ```
       render: php
     validations:
       required: true
 
   - type: textarea
-    id: expected
+    id: expected-vs-actual
     attributes:
-      label: Expected Behavior
-      description: What should happen?
-      placeholder: The method should return...
-    validations:
-      required: true
-
-  - type: textarea
-    id: actual
-    attributes:
-      label: Actual Behavior
-      description: What happens instead?
-      placeholder: Instead, it throws an error...
-    validations:
-      required: true
-
-  - type: dropdown
-    id: php-version
-    attributes:
-      label: PHP Version
-      description: Which PHP version are you running?
-      options:
-        - PHP 8.3
-        - PHP 8.2
-        - PHP 8.1
-        - Other (specify in additional information)
+      label: Expected vs Actual
+      description: What should happen vs what does happen?
+      placeholder: |
+        Expected: Returns true
+        Actual: Throws ValidationException
     validations:
       required: true
 
   - type: input
-    id: library-version
+    id: versions
     attributes:
-      label: OpenFGA PHP Version
-      description: Which version of this library are you using?
-      placeholder: 1.0.0
+      label: Environment
+      description: PHP and library versions (e.g., "PHP 8.3, openfga-php 1.0.0")
+      placeholder: PHP 8.3, openfga-php 1.0.0
     validations:
       required: true
 
-  - type: dropdown
-    id: openfga-server
-    attributes:
-      label: OpenFGA Server
-      description: Which OpenFGA server are you using?
-      options:
-        - Self-hosted OpenFGA
-        - Auth0 FGA
-        - Other (specify in additional information)
-
   - type: textarea
-    id: additional
+    id: context
     attributes:
-      label: Additional Information
-      description: Any other context about the problem
-      placeholder: Other system information, custom server configuration, etc.
+      label: Anything else?
+      description: Additional context, error logs, server info, etc.
+    validations:
+      required: false
