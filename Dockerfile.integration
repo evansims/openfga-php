@@ -87,60 +87,56 @@ COPY --from=composer-stage /usr/bin/composer /usr/bin/composer
 RUN cp -r /app-vendor/vendor . \
     && composer dump-autoload --optimize --classmap-authoritative
 
-# Create optimized wait script
-RUN cat > /wait-and-test.sh << 'EOF'
-#!/bin/sh
-set -e
-
-# Restore vendor if needed
-if [ ! -d "/app/vendor" ] || [ -z "$(ls -A /app/vendor 2>/dev/null)" ]; then
-  echo "Restoring vendor directory..."
-  cp -r /app-vendor/vendor /app/
-fi
-
-# Create PEST temp directory to avoid warnings
-mkdir -p /app/vendor/pestphp/pest/.temp
-
-# Parallel service checks
-check_openfga() {
-  echo "Checking OpenFGA..."
-  timeout=30
-  until curl -sf http://openfga:8080/healthz >/dev/null 2>&1; do
-    timeout=$((timeout - 1))
-    if [ $timeout -le 0 ]; then
-      echo "OpenFGA failed to start"
-      return 1
-    fi
-    sleep 1
-  done
-  echo "OpenFGA ready"
-}
-
-check_otel() {
-  echo "Checking OTEL Collector (optional)..."
-  # Just try once - if it's not there, that's fine
-  if curl -sf http://otel-collector:13133/ >/dev/null 2>&1; then
-    echo "OTEL Collector ready"
-  else
-    echo "OTEL Collector not available (continuing without it)"
-  fi
-  return 0
-}
-
-# Run checks in parallel
-check_openfga &
-PID1=$!
-check_otel &
-PID2=$!
-
-# Wait for critical service
-wait $PID1 || exit 1
-wait $PID2
-
-echo "Starting tests..."
-exec composer test:integration:run
-EOF
-
-RUN chmod +x /wait-and-test.sh
+# Create wait script using printf to avoid heredoc parsing issues
+RUN printf '#!/bin/sh\n\
+set -e\n\
+\n\
+# Restore vendor if needed\n\
+if [ ! -d "/app/vendor" ] || [ -z "$(ls -A /app/vendor 2>/dev/null)" ]; then\n\
+  echo "Restoring vendor directory..."\n\
+  cp -r /app-vendor/vendor /app/\n\
+fi\n\
+\n\
+# Create PEST temp directory to avoid warnings\n\
+mkdir -p /app/vendor/pestphp/pest/.temp\n\
+\n\
+# Parallel service checks\n\
+check_openfga() {\n\
+  echo "Checking OpenFGA..."\n\
+  timeout=30\n\
+  until curl -sf http://openfga:8080/healthz >/dev/null 2>&1; do\n\
+    timeout=$((timeout - 1))\n\
+    if [ $timeout -le 0 ]; then\n\
+      echo "OpenFGA failed to start"\n\
+      return 1\n\
+    fi\n\
+    sleep 1\n\
+  done\n\
+  echo "OpenFGA ready"\n\
+}\n\
+\n\
+check_otel() {\n\
+  echo "Checking OTEL Collector (optional)..."\n\
+  # Just try once - if it'"'"'s not there, that'"'"'s fine\n\
+  if curl -sf http://otel-collector:13133/ >/dev/null 2>&1; then\n\
+    echo "OTEL Collector ready"\n\
+  else\n\
+    echo "OTEL Collector not available (continuing without it)"\n\
+  fi\n\
+  return 0\n\
+}\n\
+\n\
+# Run checks in parallel\n\
+check_openfga &\n\
+PID1=$!\n\
+check_otel &\n\
+PID2=$!\n\
+\n\
+# Wait for critical service\n\
+wait $PID1 || exit 1\n\
+wait $PID2\n\
+\n\
+echo "Starting tests..."\n\
+exec composer test:integration:run\n' > /wait-and-test.sh && chmod +x /wait-and-test.sh
 
 CMD ["/wait-and-test.sh"]
