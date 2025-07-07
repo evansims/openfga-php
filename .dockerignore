@@ -4,6 +4,7 @@
 .gitattributes
 
 # Dependencies (installed in container)
+vendor/
 composer.local.json
 node_modules/
 
