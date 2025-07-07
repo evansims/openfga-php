@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: "0 9 * * 1" # Run weekly on Mondays at 9 AM UTC
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   psalm-security:
     name: "Psalm Scanner"
