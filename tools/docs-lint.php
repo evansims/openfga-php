@@ -38,7 +38,7 @@ final class ValeLinter
     private const array DEFAULT_PATHS = [
         'README.md',
         'CHANGELOG.md', 
-        'CODE_OF_CONDUCT.md',
+        '.github/CODE_OF_CONDUCT.md',
         'CLAUDE.md',
         'docs/',
         'src/',

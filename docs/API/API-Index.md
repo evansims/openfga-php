@@ -20,8 +20,8 @@ This documentation provides a complete reference for all classes, interfaces, an
 ### Authentication & Security
 
 * **[Authentication](./Authentication/README.md)** - OAuth 2.0 and API key authentication
-  * [`OAuth2ClientCredentials`](./Authentication/OAuth2ClientCredentials.md) - OAuth 2.0 client credentials flow
-  * [`PresharedKeyAuth`](./Authentication/PresharedKeyAuth.md) - Pre-shared key authentication
+  * [`ClientCredentialAuthentication`](./Authentication/ClientCredentialAuthentication.md) - OAuth 2.0 client credentials flow
+  * [`TokenAuthentication`](./Authentication/TokenAuthentication.md) - Token-based authentication
 
 ### Domain Models
 
@@ -55,7 +55,7 @@ This documentation provides a complete reference for all classes, interfaces, an
 ### Advanced Features
 
 * **[Language](./Language/README.md)** - DSL parser for human-readable models
-  * [`DslTransformer`](./Language/DslTransformer.md) - DSL to API model transformer
+  * [`Transformer`](./Transformer.md) - DSL to API model transformer
 * **[Translation](./Translation/README.md)** - Internationalization support
   * [`Messages`](./Messages.md) - All translatable messages in the SDK
 * **[Integration](./Integration/README.md)** - Framework integration helpers

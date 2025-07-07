@@ -361,6 +361,24 @@ final class LinkChecker
             $anchorFound = true;
         }
 
+        // Check for PHP snippet sections marked with comments
+        if (!$anchorFound && str_ends_with($targetFile, '.php')) {
+            // Look for patterns like "// example: helper" or "// start-example: client" or "// intro"
+            $patterns = [
+                '/\/\/\s*example:\s*' . preg_quote($anchor, '/') . '\b/i',
+                '/\/\/\s*start[_-]?example:\s*' . preg_quote($anchor, '/') . '\b/i',
+                '/\/\/\s*begin[_-]?example:\s*' . preg_quote($anchor, '/') . '\b/i',
+                '/\/\/\s*' . preg_quote($anchor, '/') . '\b/i'  // Matches "// intro" or any anchor directly
+            ];
+            
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $content)) {
+                    $anchorFound = true;
+                    break;
+                }
+            }
+        }
+
         if ($anchorFound) {
             $result['status'] = 'valid';
             $this->stats['valid_links']++;

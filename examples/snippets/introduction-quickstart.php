@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// intro
 use OpenFGA\Client;
 
 use function OpenFGA\{allowed, dsl, model, store, tuple, write};

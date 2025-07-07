@@ -46,7 +46,7 @@ Begin integrating the SDK by initializing an SDK Client in your application:
 
 [Snippet](../../examples/snippets/introduction-quickstart.php#intro)
 
-In a production environment you'll want [authentication](Authentication.md) and [error handling](Results.md).
+In a production environment you'll want [authentication](Authentication.md) and [error handling](../Features/Results.md).
 
 #### 3.2. Create a Store
 

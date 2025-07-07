@@ -145,7 +145,7 @@ If you need greater control over the operation, use the Client `check` method di
 
 ### List user's objects
 
-The `objects` [helper](../Features/Helpers.md#listing-objects) provides a convenient shorthand for listing user's objects, and returns an array of object identifiers:
+The `objects` [helper](../Features/Helpers.md) provides a convenient shorthand for listing user's objects, and returns an array of object identifiers:
 
 [Snippet](../../examples/snippets/models-list-objects.php#helper)
 
@@ -242,7 +242,7 @@ Alternatively you can call the Client `listAuthorizationModels` method directly:
 
 ### "My permissions aren't working as expected"
 
-- Use [`expand()`](Queries.md#expand-relationships-debugging) to see the permission tree
+- Use [`expand()`](Queries.md) to see the permission tree
 - Check if you're using the correct model ID in your checks
 - Verify your authorization model DSL syntax
 
