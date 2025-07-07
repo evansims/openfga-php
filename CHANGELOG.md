@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.6.0] - 2025-07-07
+
 ### Added
 
 - **New Helper Functions**<br />
