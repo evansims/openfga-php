@@ -464,6 +464,64 @@ function write(
 }
 
 /**
+ * Grant permissions between users and objects.
+ *
+ * This helper provides a more intuitive way to grant permissions by adding
+ * relationship tuples to OpenFGA. It's functionally equivalent to `write()`
+ * but uses clearer terminology for permission management scenarios.
+ *
+ * By default, it uses transactional mode (all-or-nothing). For bulk operations
+ * with partial success handling, use the `writes()` helper instead.
+ *
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
+ *
+ * @param TupleKeyInterface|TupleKeysInterface    $tuples        The permission(s) to grant
+ * @param ?ClientInterface                        $client        The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null              $store         The store to grant permissions in (optional if in context)
+ * @param AuthorizationModelInterface|string|null $model         The authorization model to use (optional if in context)
+ * @param bool                                    $transactional Whether to use transactional mode (default: true)
+ *
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the grant operation fails
+ *
+ * @example Granting a single permission with explicit parameters
+ * grant(tuple('user:anne', 'viewer', 'document:budget'), $client, $store, $model);
+ * @example Granting multiple permissions transactionally
+ * grant(tuples(
+ *     tuple('user:anne', 'viewer', 'document:budget'),
+ *     tuple('user:anne', 'editor', 'document:forecast')
+ * ), $client, $store, $model);
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     grant(tuple('user:bob', 'editor', 'document:proposal'));
+ * }, client: $client, store: $store, model: $model);
+ * @example Granting permissions based on business logic
+ * if ($user->hasSubscription()) {
+ *     grant(tuple($user->getId(), 'premium_user', 'feature:advanced_analytics'));
+ * }
+ *
+ * @see write() The underlying implementation
+ * @see revoke() To remove permissions
+ * @see https://openfga.dev/docs/getting-started/update-tuples Working with relationship tuples
+ */
+function grant(
+    TupleKeyInterface | TupleKeysInterface $tuples,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
+    bool $transactional = true,
+): void {
+    write(
+        tuples: $tuples,
+        client: $client,
+        store: $store,
+        model: $model,
+        transactional: $transactional,
+    );
+}
+
+/**
  * Delete relationship tuples in the simplest way possible.
  *
  * This helper provides the most straightforward way to delete tuples from OpenFGA.
@@ -520,6 +578,64 @@ function delete(
         deletes: $tuples,
         transactional: $transactional,
     )->unwrap();
+}
+
+/**
+ * Revoke permissions between users and objects.
+ *
+ * This helper provides a more intuitive way to revoke permissions by removing
+ * relationship tuples from OpenFGA. It's functionally equivalent to `delete()`
+ * but uses clearer terminology for permission management scenarios.
+ *
+ * By default, it uses transactional mode (all-or-nothing). For bulk operations
+ * with partial success handling, use the `writes()` helper instead.
+ *
+ * Parameters can be omitted when using the context() helper, which provides
+ * ambient values for client, store, and model.
+ *
+ * @param TupleKeyInterface|TupleKeysInterface    $tuples        The permission(s) to revoke
+ * @param ?ClientInterface                        $client        The OpenFGA client (optional if in context)
+ * @param StoreInterface|string|null              $store         The store to revoke permissions from (optional if in context)
+ * @param AuthorizationModelInterface|string|null $model         The authorization model to use (optional if in context)
+ * @param bool                                    $transactional Whether to use transactional mode (default: true)
+ *
+ * @throws ClientException If required parameters are missing and not available in context
+ * @throws Throwable       If the revoke operation fails
+ *
+ * @example Revoking a single permission with explicit parameters
+ * revoke(tuple('user:anne', 'editor', 'document:budget'), $client, $store, $model);
+ * @example Revoking multiple permissions transactionally
+ * revoke(tuples(
+ *     tuple('user:anne', 'viewer', 'document:budget'),
+ *     tuple('user:anne', 'editor', 'document:forecast')
+ * ), $client, $store, $model);
+ * @example Using with context (no explicit client/store/model needed)
+ * context(function() {
+ *     revoke(tuple('user:bob', 'editor', 'document:proposal'));
+ * }, client: $client, store: $store, model: $model);
+ * @example Revoking permissions based on business logic
+ * if ($user->subscriptionExpired()) {
+ *     revoke(tuple($user->getId(), 'premium_user', 'feature:advanced_analytics'));
+ * }
+ *
+ * @see delete() The underlying implementation
+ * @see grant() To add permissions
+ * @see https://openfga.dev/docs/getting-started/update-tuples Working with relationship tuples
+ */
+function revoke(
+    TupleKeyInterface | TupleKeysInterface $tuples,
+    ?ClientInterface $client = null,
+    StoreInterface | string | null $store = null,
+    AuthorizationModelInterface | string | null $model = null,
+    bool $transactional = true,
+): void {
+    delete(
+        tuples: $tuples,
+        client: $client,
+        store: $store,
+        model: $model,
+        transactional: $transactional,
+    );
 }
 
 /**

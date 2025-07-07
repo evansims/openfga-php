@@ -2,6 +2,27 @@
 
 ## [Unreleased]
 
+### Added
+
+- **New Helper Functions**<br />
+  - **`grant` - Grant permissions between users and objects**<br />
+    A more intuitive alias for `write()` that clearly expresses the intent of granting permissions.
+    
+    ```php
+    use function OpenFGA\{grant, tuple};
+    
+    grant(tuple('user:anne', 'viewer', 'document:budget'));
+    ```
+    
+  - **`revoke` - Revoke permissions between users and objects**<br />
+    A more intuitive alias for `delete()` that clearly expresses the intent of revoking permissions.
+    
+    ```php
+    use function OpenFGA\{revoke, tuple};
+    
+    revoke(tuple('user:anne', 'editor', 'document:budget'));
+    ```
+
 ## [1.5.0] - 2025-06-22
 
 ### Added

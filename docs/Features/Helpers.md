@@ -204,6 +204,52 @@ $modelId = model(
 
 ## Request helpers
 
+### Granting permissions
+
+The `grant()` helper provides an intuitive way to grant permissions. It's functionally equivalent to `write()` but uses clearer terminology for permission management:
+
+```php
+use function OpenFGA\{tuple, grant};
+
+// Grant a single permission
+grant(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuples: tuple(
+        user: 'user:anne',
+        relation: 'viewer',
+        object: 'document:budget',
+    ),
+);
+
+// Grant multiple permissions at once
+use function OpenFGA\{tuples};
+
+grant(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuples: tuples(
+        tuple(
+            user: 'user:anne',
+            relation: 'viewer',
+            object: 'document:budget',
+        ),
+        tuple(
+            user: 'user:anne',
+            relation: 'editor',
+            object: 'document:forecast',
+        ),
+    ),
+);
+
+// Grant permissions based on business logic
+if ($user->hasSubscription()) {
+    grant(tuple($user->getId(), 'premium_user', 'feature:advanced_analytics'));
+}
+```
+
 ### Writing tuples
 
 The `write()` helper provides the simplest way to write a tuple:
@@ -245,6 +291,52 @@ write(
         ),
     ),
 );
+```
+
+### Revoking permissions
+
+The `revoke()` helper provides an intuitive way to revoke permissions. It's functionally equivalent to `delete()` but uses clearer terminology for permission management:
+
+```php
+use function OpenFGA\{tuple, revoke};
+
+// Revoke a single permission
+revoke(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuples: tuple(
+        user: 'user:anne',
+        relation: 'editor',
+        object: 'document:budget',
+    ),
+);
+
+// Revoke multiple permissions at once
+use function OpenFGA\{tuples};
+
+revoke(
+    client: $client,
+    store: $storeId,
+    model: $modelId,
+    tuples: tuples(
+        tuple(
+            user: 'user:anne',
+            relation: 'viewer',
+            object: 'document:budget',
+        ),
+        tuple(
+            user: 'user:anne',
+            relation: 'editor',
+            object: 'document:forecast',
+        ),
+    ),
+);
+
+// Revoke permissions based on business logic
+if ($user->subscriptionExpired()) {
+    revoke(tuple($user->getId(), 'premium_user', 'feature:advanced_analytics'));
+}
 ```
 
 ### Deleting tuples
