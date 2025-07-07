@@ -57,11 +57,9 @@ if [ "$CI_MODE" != "true" ]; then
     $DOCKER_COMPOSE -f "$COMPOSE_FILE" pull --parallel --quiet openfga otel-collector 2>/dev/null || true
 fi
 
-# Build the test container with cache
-echo "🔨 Building test container..."
-$DOCKER_COMPOSE -f "$COMPOSE_FILE" build \
-    --build-arg BUILDKIT_INLINE_CACHE=1 \
-    test
+# Pull the test container
+echo "📥 Pulling test container..."
+$DOCKER_COMPOSE -f "$COMPOSE_FILE" pull test
 
 # Start all services at once (docker-compose will handle dependencies)
 echo "🚀 Starting services..."

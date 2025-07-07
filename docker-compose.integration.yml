@@ -31,17 +31,7 @@ services:
 
   test:
     container_name: openfga-php-integration-tests
-    image: ${DOCKER_REGISTRY:-ghcr.io}/${DOCKER_IMAGE:-evansims/openfga-php-integration-tests}:${DOCKER_TAG:-latest}
-    build:
-      context: .
-      dockerfile: Dockerfile.integration
-      args:
-        BUILDKIT_INLINE_CACHE: 1
-      cache_from:
-        - ghcr.io/evansims/openfga-php-integration-tests:latest
-        - ghcr.io/evansims/openfga-php-integration-tests:buildcache
-        - docker.io/evansims/openfga-php-integration-tests:latest
-        - docker.io/evansims/openfga-php-integration-tests:buildcache
+    image: ghcr.io/evansims/openfga-php-integration-tests:latest
     volumes:
       - .:/app
       - composer-cache:/tmp/composer

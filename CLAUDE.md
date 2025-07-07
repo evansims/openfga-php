@@ -10,12 +10,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `composer test` - Run all our tests (unit, integration, contract)
 - `composer test:unit` - Run unit tests with coverage
-- `composer test:integration` - Run integration tests (requires Docker containers: `composer integration:start`)
+- `composer test:integration` - Run integration tests (requires Docker, uses pre-built images from GitHub Container Registry)
 - `composer test:contract` - Run OpenAPI contract tests
 - `composer test:tools` - Run tools tests
 - Run a single test: `./vendor/bin/pest tests/Unit/Path/To/Test.php --filter="test name"`
 
 If PEST exits with code 255, it means there is a syntax error in the test or codebase that needs fixed. NEVER consider your task complete until this issue is resolved. Think carefully about any recent changes you've made when trying to identify the cause and when considering solutions, as tasks will almost never be given while this issue is in place.
+
+**Note:** Integration tests use pre-built Docker images from `ghcr.io/evansims/openfga-php-integration-tests:latest`. These images are automatically built and published when changes are pushed to the main branch.
 
 ### Code quality
 
