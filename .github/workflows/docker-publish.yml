@@ -92,10 +92,12 @@ jobs:
 
       - name: Install Slim
         run: |
-          curl -L -o slim.tar.gz https://github.com/slimtoolkit/slim/releases/download/${{ env.SLIM_VERSION }}/slim_${{ env.SLIM_VERSION }}_linux_amd64.tar.gz
-          tar -xzf slim.tar.gz
-          chmod +x slim
-          sudo mv slim /usr/local/bin/
+          curl -L -o dist_linux.tar.gz https://downloads.dockerslim.com/releases/${{ env.SLIM_VERSION }}/dist_linux.tar.gz
+          tar -xzf dist_linux.tar.gz
+          chmod +x dist_linux/slim
+          sudo mv dist_linux/slim /usr/local/bin/
+          sudo mv dist_linux/slim-sensor /usr/local/bin/
+          rm -rf dist_linux dist_linux.tar.gz
           slim --version
 
       - name: Optimize image with Slim
