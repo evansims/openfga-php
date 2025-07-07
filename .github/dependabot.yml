@@ -15,6 +15,48 @@ updates:
       include: "scope"
     reviewers:
       - "evansims"
+    # Ignore major version updates for certain critical dependencies
+    ignore:
+      # Keep PHP requirement stable - manual update only
+      - dependency-name: "php"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # Group all production PSR-related dependencies
+      psr-dependencies:
+        dependency-type: "production"
+        patterns:
+          - "psr/*"
+          - "psr-discovery/*"
+      
+      # Group all development testing tools
+      testing-tools:
+        dependency-type: "development"
+        patterns:
+          - "pestphp/*"
+          - "psr-mock/*"
+          - "phpunit/*"
+      
+      # Group all code quality and static analysis tools
+      code-quality:
+        dependency-type: "development"
+        patterns:
+          - "phpstan/*"
+          - "vimeo/psalm"
+          - "rector/*"
+          - "friendsofphp/php-cs-fixer"
+          - "phpmd/phpmd"
+          - "ergebnis/composer-normalize"
+      
+      # Group OpenTelemetry dependencies
+      opentelemetry:
+        patterns:
+          - "open-telemetry/*"
+      
+      # Group HTTP client implementations
+      http-clients:
+        patterns:
+          - "kriswallsmith/buzz"
+          - "nyholm/psr7"
     
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
@@ -28,3 +70,34 @@ updates:
     commit-message:
       prefix: "ci"
       include: "scope"
+    groups:
+      # Group all actions by organization/publisher
+      actions-core:
+        patterns:
+          - "actions/*"
+      
+      # Group security-related actions
+      actions-security:
+        patterns:
+          - "github/codeql-action"
+          - "ossf/*"
+          - "aquasecurity/*"
+          - "anchore/*"
+          - "step-security/*"
+      
+      # Group testing and quality actions
+      actions-testing:
+        patterns:
+          - "codecov/*"
+          - "shivammathur/setup-php"
+      
+      # Group Docker-related actions
+      actions-docker:
+        patterns:
+          - "docker/*"
+      
+      # Group release and deployment actions
+      actions-release:
+        patterns:
+          - "softprops/action-gh-release"
+          - "release-drafter/*"
