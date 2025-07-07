@@ -42,21 +42,9 @@ jobs:
       - name: Create coverage directory
         run: mkdir -p coverage
 
-      - name: Determine Docker image tag
-        id: docker-tag
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_run" ]]; then
-            # Use the SHA from the workflow that built the images
-            echo "IMAGE_TAG=main-${{ github.event.workflow_run.head_sha }}" >> $GITHUB_OUTPUT
-          else
-            # Manual trigger, use latest
-            echo "IMAGE_TAG=latest" >> $GITHUB_OUTPUT
-          fi
-
       - name: Start OpenFGA
         run: |
-          export IMAGE_TAG="${{ steps.docker-tag.outputs.IMAGE_TAG }}"
-          echo "Using Docker image: ghcr.io/evansims/openfga-php-integration-tests:${IMAGE_TAG}"
+          echo "Using Docker image: ghcr.io/evansims/openfga-php-integration-tests:latest"
           docker compose -f docker-compose.integration.yml up -d
 
       - name: Run integration tests

@@ -31,7 +31,7 @@ services:
 
   test:
     container_name: openfga-php-integration-tests
-    image: ghcr.io/evansims/openfga-php-integration-tests:${IMAGE_TAG:-latest}
+    image: ghcr.io/evansims/openfga-php-integration-tests:latest
     volumes:
       - .:/app
       - composer-cache:/tmp/composer
