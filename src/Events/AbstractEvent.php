@@ -33,36 +33,54 @@ abstract class AbstractEvent implements EventInterface
         $this->occurredAt = new DateTimeImmutable;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function getEventId(): string
     {
         return $this->eventId;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function getEventType(): string
     {
         return static::class;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function getOccurredAt(): DateTimeImmutable
     {
         return $this->occurredAt;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function getPayload(): array
     {
         return $this->payload;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function isPropagationStopped(): bool
     {
         return $this->propagationStopped;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function stopPropagation(): void
     {

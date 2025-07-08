@@ -52,31 +52,61 @@ final class OperationCompletedEvent extends AbstractEvent
         return $this->context;
     }
 
+    /**
+     * Get the exception if the operation failed.
+     *
+     * @return Throwable|null The exception or null if the operation succeeded
+     */
     public function getException(): ?Throwable
     {
         return $this->exception;
     }
 
+    /**
+     * Get the model ID for the operation.
+     *
+     * @return string|null The model ID or null if not applicable
+     */
     public function getModelId(): ?string
     {
         return $this->modelId;
     }
 
+    /**
+     * Get the OpenFGA operation name.
+     *
+     * @return string The operation name (for example, 'check', 'write', 'read')
+     */
     public function getOperation(): string
     {
         return $this->operation;
     }
 
+    /**
+     * Get the result of the operation.
+     *
+     * @return mixed The operation result (typically a Response object) or null if failed
+     */
     public function getResult(): mixed
     {
         return $this->result;
     }
 
+    /**
+     * Get the store ID for the operation.
+     *
+     * @return string|null The store ID or null if not applicable
+     */
     public function getStoreId(): ?string
     {
         return $this->storeId;
     }
 
+    /**
+     * Check if the operation completed successfully.
+     *
+     * @return bool True if the operation succeeded, false otherwise
+     */
     public function isSuccessful(): bool
     {
         return $this->success;
