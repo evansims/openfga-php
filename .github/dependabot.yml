@@ -7,9 +7,6 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 10
     versioning-strategy: widen
-    labels:
-      - "dependency"
-      - "php"
     commit-message:
       prefix: "chore"
       include: "scope"
@@ -27,7 +24,7 @@ updates:
         patterns:
           - "psr/*"
           - "psr-discovery/*"
-      
+
       # Group all development testing tools
       testing-tools:
         dependency-type: "development"
@@ -35,7 +32,7 @@ updates:
           - "pestphp/*"
           - "psr-mock/*"
           - "phpunit/*"
-      
+
       # Group all code quality and static analysis tools
       code-quality:
         dependency-type: "development"
@@ -46,27 +43,24 @@ updates:
           - "friendsofphp/php-cs-fixer"
           - "phpmd/phpmd"
           - "ergebnis/composer-normalize"
-      
+
       # Group OpenTelemetry dependencies
       opentelemetry:
         patterns:
           - "open-telemetry/*"
-      
+
       # Group HTTP client implementations
       http-clients:
         patterns:
           - "kriswallsmith/buzz"
           - "nyholm/psr7"
-    
+
   # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 5
-    labels:
-      - "dependency"
-      - "github_actions"
     commit-message:
       prefix: "ci"
       include: "scope"
@@ -75,7 +69,7 @@ updates:
       actions-core:
         patterns:
           - "actions/*"
-      
+
       # Group security-related actions
       actions-security:
         patterns:
@@ -84,18 +78,18 @@ updates:
           - "aquasecurity/*"
           - "anchore/*"
           - "step-security/*"
-      
+
       # Group testing and quality actions
       actions-testing:
         patterns:
           - "codecov/*"
           - "shivammathur/setup-php"
-      
+
       # Group Docker-related actions
       actions-docker:
         patterns:
           - "docker/*"
-      
+
       # Group release and deployment actions
       actions-release:
         patterns:
