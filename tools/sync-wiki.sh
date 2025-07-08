@@ -7,10 +7,6 @@ set -e
 
 echo "🔄 Syncing documentation to GitHub Wiki..."
 
-# Generate fresh documentation
-echo "📖 Generating documentation..."
-composer docs:api
-
 # Prepare wiki content
 echo "🔧 Preparing wiki content..."
 rm -rf wiki-content
@@ -27,26 +23,26 @@ extract_region() {
     local file="$1"
     local region="$2"
     local range="$3"
-    
+
     if [ -z "$region" ]; then
         # No region specified, use extract_lines for entire file
         extract_lines "$file" "$range"
         return
     fi
-    
+
     # Handle special #intro meta-region
     if [ "$region" = "intro" ]; then
         local intro_content=""
         local first_line=true
         local found_first_region=false
-        
+
         while IFS= read -r line; do
             # Check if we've hit the first example region
             if [[ "$line" =~ ^[[:space:]]*(//|#|/\*)[[:space:]]*example:[[:space:]]*[^[:space:]]+[[:space:]]*$ ]]; then
                 found_first_region=true
                 break
             fi
-            
+
             # Collect all lines before the first region
             if [ "$first_line" = true ]; then
                 intro_content="$line"
@@ -55,7 +51,7 @@ extract_region() {
                 intro_content+=$'\n'"$line"
             fi
         done < "$file"
-        
+
         # Output the intro content
         if [ -n "$intro_content" ]; then
             if [ -n "$range" ]; then
@@ -66,25 +62,25 @@ extract_region() {
         fi
         return
     fi
-    
+
     # Extract content within the specified region
     local in_region=false
     local region_content=""
     local line_num=0
     local first_line=true
-    
+
     while IFS= read -r line; do
         # Check for region start marker
         if [[ "$line" =~ ^[[:space:]]*(//|#|/\*)[[:space:]]*example:[[:space:]]*${region}[[:space:]]*$ ]]; then
             in_region=true
             continue
         fi
-        
+
         # Check for region end marker
         if [[ "$line" =~ ^[[:space:]]*(//|#|/\*)[[:space:]]*end-example:[[:space:]]*${region}[[:space:]]*$ ]]; then
             break
         fi
-        
+
         # Collect lines within the region
         if [ "$in_region" = true ]; then
             ((line_num++))
@@ -96,12 +92,12 @@ extract_region() {
             fi
         fi
     done < "$file"
-    
+
     # If no region found, return empty
     if [ -z "$region_content" ]; then
         return
     fi
-    
+
     # Apply line range to the region content if specified
     if [ -n "$range" ]; then
         echo "$region_content" | extract_lines_from_string "$range"
@@ -114,7 +110,7 @@ extract_region() {
 # Function to extract line range from string content
 extract_lines_from_string() {
     local range="$1"
-    
+
     if [ -z "$range" ]; then
         # No range specified, output entire content
         cat
@@ -145,7 +141,7 @@ extract_lines_from_string() {
 extract_lines() {
     local file="$1"
     local range="$2"
-    
+
     if [ -z "$range" ]; then
         # No range specified, output entire file
         cat "$file"
@@ -176,7 +172,7 @@ extract_lines() {
 process_snippets() {
     local file="$1"
     local temp_file="${file}.tmp"
-    
+
     # Process the file line by line
     while IFS= read -r line; do
         # Check for Markdown link snippet pattern: [Snippet](../../examples/snippets/file.php) or with regions/ranges
@@ -199,15 +195,15 @@ process_snippets() {
             # Not a snippet pattern, check other patterns
             snippet_file=""
         fi
-        
+
         # Process snippet if found
         if [ -n "$snippet_file" ]; then
             snippet_path="examples/snippets/$snippet_file"
-            
+
             if [ -f "$snippet_path" ]; then
                 # Determine language from file extension
                 extension="${snippet_file##*.}"
-                
+
                 # Output the code block with appropriate syntax highlighting
                 echo '```'"$extension"
                 if [ -n "$region" ]; then
@@ -233,7 +229,7 @@ process_snippets() {
             echo "$line"
         fi
     done < "$file" > "$temp_file"
-    
+
     # Replace original file with processed content
     mv "$temp_file" "$file"
 }
@@ -242,7 +238,7 @@ process_snippets() {
 find docs -name "*.md" -not -path "docs/README.md" -not -path "docs/API/*" | while read file; do
     filename=$(basename "$file")
     cp "$file" "wiki-content/$filename"
-    
+
     # Process snippet includes for written guides only
     echo "Processing snippets in: $filename"
     process_snippets "wiki-content/$filename"
@@ -437,7 +433,7 @@ find . -name "*.md" -type f -not -name "_Sidebar.md" -not -name "_Footer.md" | w
     # Convert internal markdown links to wiki format
     # First, handle relative paths like ../Essentials/Stores.md -> Stores
     sed -i.bak 's|\](../[^/]*/\([^)]*\)\.md)|\](\1)|g' "$file"
-    
+
     # Handle links with anchors: file.md#anchor -> file#anchor
     sed -i.bak 's/\.md#/#/g' "$file"
 
@@ -459,7 +455,7 @@ add_header_spacing() {
     local last_content_was_header=false
     local line_count=0
     local has_content=false
-    
+
     # First pass: count non-empty lines to detect if H2 is first content
     while IFS= read -r line; do
         if [[ -n "$line" ]] && [[ ! "$line" =~ ^[[:space:]]*$ ]]; then
@@ -470,10 +466,10 @@ add_header_spacing() {
             fi
         fi
     done < "$file"
-    
+
     # Reset for second pass
     last_content_was_header=false
-    
+
     # Second pass: add spacing
     while IFS= read -r line; do
         # Check if current line is any type of header
@@ -510,7 +506,7 @@ add_header_spacing() {
             echo "$line"
         fi
     done < "$file" > "$temp_file"
-    
+
     # Replace original file
     mv "$temp_file" "$file"
 }

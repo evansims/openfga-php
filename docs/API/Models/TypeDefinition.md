@@ -75,7 +75,7 @@ Get the collection of relations defined for this type. Relations define the auth
 
 #### Returns
 
-[`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md) &#124; `null`
+[`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md) &#124; `null` — The relations collection or null if no relations are defined
 
 ### getType
 

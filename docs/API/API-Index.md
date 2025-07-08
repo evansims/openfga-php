@@ -21,7 +21,7 @@ This documentation provides a complete reference for all classes, interfaces, an
 
 * **[Authentication](./Authentication/README.md)** - OAuth 2.0 and API key authentication
   * [`ClientCredentialAuthentication`](./Authentication/ClientCredentialAuthentication.md) - OAuth 2.0 client credentials flow
-  * [`TokenAuthentication`](./Authentication/TokenAuthentication.md) - Token-based authentication
+  * [`TokenAuthentication`](./Authentication/TokenAuthentication.md) - Pre-shared key authentication
 
 ### Domain Models
 
@@ -54,7 +54,7 @@ This documentation provides a complete reference for all classes, interfaces, an
 
 ### Advanced Features
 
-* **[Language](./Language/README.md)** - DSL parser for human-readable models
+* **[Language](./Language.md)** - DSL parser for human-readable models
   * [`Transformer`](./Transformer.md) - DSL to API model transformer
 * **[Translation](./Translation/README.md)** - Internationalization support
   * [`Messages`](./Messages.md) - All translatable messages in the SDK
@@ -102,7 +102,7 @@ This documentation provides a complete reference for all classes, interfaces, an
 | [`ConditionParameterInterface`](./Models/ConditionParameterInterface.md)                                | `Models`             | Defines a parameter type for use in authorization conditions. ConditionParameter represents the type definition for p...           |
 | [`ConditionParametersInterface`](./Models/Collections/ConditionParametersInterface.md)                  | `Models\Collections` |                                                                                                                                    |
 | [`ConditionsInterface`](./Models/Collections/ConditionsInterface.md)                                    | `Models\Collections` | Collection interface for OpenFGA condition objects. This interface defines a collection that holds condition objects ...           |
-| [`ContextInterface`](./Context/ContextInterface.md)                                                     | `Context`            |                                                                                                                                    |
+| [`ContextInterface`](./Context/ContextInterface.md)                                                     | `Context`            | Manages ambient context for OpenFGA operations. This interface provides a way to manage and access contextual informa...           |
 | [`CreateAuthorizationModelRequestInterface`](./Requests/CreateAuthorizationModelRequestInterface.md)    | `Requests`           | Interface for creating new authorization models in OpenFGA. This interface defines the contract for requests that cre...           |
 | [`CreateAuthorizationModelResponseInterface`](./Responses/CreateAuthorizationModelResponseInterface.md) | `Responses`          | Interface for authorization model creation response objects. This interface defines the contract for responses return...           |
 | [`CreateStoreRequestInterface`](./Requests/CreateStoreRequestInterface.md)                              | `Requests`           | Interface for creating a new OpenFGA store. This interface defines the contract for requests that create new authoriz...           |

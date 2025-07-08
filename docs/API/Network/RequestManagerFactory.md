@@ -28,50 +28,50 @@ Factory for creating RequestManager instances. This factory encapsulates the cre
 ### create
 
 ```php
-public function create(): OpenFGA\Network\RequestManager
+public function create(): RequestManager
 
 ```
 
 Create a RequestManager for normal operations.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerFactory.php#L38)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerFactory.php#L55)
 
 #### Returns
 
-[`RequestManager`](RequestManager.md)
+[`RequestManager`](RequestManager.md) — A RequestManager configured with default retry settings
 
 ### createForBatch
 
 ```php
-public function createForBatch(): OpenFGA\Network\RequestManager
+public function createForBatch(): RequestManager
 
 ```
 
 Create a RequestManager for batch operations (no HTTP retries).
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerFactory.php#L58)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerFactory.php#L77)
 
 #### Returns
 
-[`RequestManager`](RequestManager.md)
+[`RequestManager`](RequestManager.md) — A RequestManager configured with retries disabled
 
 ### createWithRetries
 
 ```php
-public function createWithRetries(int $maxRetries): OpenFGA\Network\RequestManager
+public function createWithRetries(int $maxRetries): RequestManager
 
 ```
 
 Create a RequestManager with custom retry configuration.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerFactory.php#L80)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Network/RequestManagerFactory.php#L101)
 
 #### Parameters
 
-| Name          | Type  | Description |
-| ------------- | ----- | ----------- |
-| `$maxRetries` | `int` |             |
+| Name          | Type  | Description                      |
+| ------------- | ----- | -------------------------------- |
+| `$maxRetries` | `int` | Maximum number of retry attempts |
 
 #### Returns
 
-[`RequestManager`](RequestManager.md)
+[`RequestManager`](RequestManager.md) — A RequestManager configured with the specified retry limit

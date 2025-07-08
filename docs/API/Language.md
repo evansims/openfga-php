@@ -159,7 +159,7 @@ public function locale(): string
 
 ```
 
-Get the locale code for this language. Returns the full locale identifier including any region specifier (e.g., &quot;pt_BR&quot; for Brazilian Portuguese).
+Get the locale code for this language. Returns the full locale identifier including any region specifier (for example, &quot;pt_BR&quot; for Brazilian Portuguese).
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Language.php#L224)
 

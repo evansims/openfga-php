@@ -72,7 +72,7 @@ class LlmsGenerator
 This document contains comprehensive information about the OpenFGA PHP SDK for AI assistants and language models. It includes complete guides, API documentation references, and examples to help implement fine-grained authorization in PHP applications.
 
 **Repository:** https://github.com/evansims/openfga-php  
-**Documentation:** https://github.com/evansims/openfga-php/tree/main/docs  
+**Documentation Wiki:** https://github.com/evansims/openfga-php/wiki  
 **OpenFGA Documentation:** https://openfga.dev/docs  
 
 ## Key Information for AI Assistants
@@ -133,7 +133,7 @@ MD;
     {
         $sections = [];
         $sections[] = "## API Reference Documentation";
-        $sections[] = "Complete API documentation is available in the `/docs/API/` directory. Here's the organized structure:";
+        $sections[] = "Complete API documentation is available in the GitHub wiki. Here's the organized structure with direct links:";
         
         // Core classes
         $sections[] = "### Core Classes";
@@ -148,54 +148,54 @@ MD;
         // Authentication
         $sections[] = "### Authentication";
         $sections[] = $this->buildApiLinks([
-            'Authentication/AuthenticationInterface.md' => 'Base authentication interface',
-            'Authentication/TokenAuthentication.md' => 'Pre-shared key authentication',
-            'Authentication/ClientCredentialAuthentication.md' => 'OAuth 2.0 client credentials',
-            'Authentication/AccessToken.md' => 'OAuth access token management',
-            'Authentication/AccessTokenInterface.md' => 'Access token interface',
+            'AuthenticationInterface.md' => 'Base authentication interface',
+            'TokenAuthentication.md' => 'Pre-shared key authentication',
+            'ClientCredentialAuthentication.md' => 'OAuth 2.0 client credentials',
+            'AccessToken.md' => 'OAuth access token management',
+            'AccessTokenInterface.md' => 'Access token interface',
         ], 'Authentication/');
 
         // Models and Data Structures
         $sections[] = "### Models and Data Structures";
         $modelLinks = [
-            'Models/Store.md' => 'Store model for data isolation',
-            'Models/StoreInterface.md' => 'Store interface',
-            'Models/AuthorizationModel.md' => 'Authorization model with type definitions',
-            'Models/AuthorizationModelInterface.md' => 'Authorization model interface',
-            'Models/TupleKey.md' => 'Relationship tuple key (user, relation, object)',
-            'Models/TupleKeyInterface.md' => 'Tuple key interface',
-            'Models/Tuple.md' => 'Complete relationship tuple with metadata',
-            'Models/TupleInterface.md' => 'Tuple interface',
-            'Models/TypeDefinition.md' => 'Type definition with relations',
-            'Models/TypeDefinitionInterface.md' => 'Type definition interface',
-            'Models/Condition.md' => 'Conditional authorization logic',
-            'Models/ConditionInterface.md' => 'Condition interface',
+            'Store.md' => 'Store model for data isolation',
+            'StoreInterface.md' => 'Store interface',
+            'AuthorizationModel.md' => 'Authorization model with type definitions',
+            'AuthorizationModelInterface.md' => 'Authorization model interface',
+            'TupleKey.md' => 'Relationship tuple key (user, relation, object)',
+            'TupleKeyInterface.md' => 'Tuple key interface',
+            'Tuple.md' => 'Complete relationship tuple with metadata',
+            'TupleInterface.md' => 'Tuple interface',
+            'TypeDefinition.md' => 'Type definition with relations',
+            'TypeDefinitionInterface.md' => 'Type definition interface',
+            'Condition.md' => 'Conditional authorization logic',
+            'ConditionInterface.md' => 'Condition interface',
         ];
         $sections[] = $this->buildApiLinks($modelLinks, 'Models/');
 
         // Collections
         $sections[] = "### Collections";
         $collectionLinks = [
-            'Models/Collections/TupleKeys.md' => 'Collection of tuple keys',
-            'Models/Collections/TupleKeysInterface.md' => 'Tuple keys collection interface',
-            'Models/Collections/Tuples.md' => 'Collection of tuples',
-            'Models/Collections/TuplesInterface.md' => 'Tuples collection interface',
-            'Models/Collections/TypeDefinitions.md' => 'Collection of type definitions',
-            'Models/Collections/TypeDefinitionsInterface.md' => 'Type definitions collection interface',
-            'Models/Collections/BatchCheckItems.md' => 'Batch check items collection',
-            'Models/Collections/BatchCheckItemsInterface.md' => 'Batch check items interface',
-            'Models/Collections/Stores.md' => 'Collection of stores',
-            'Models/Collections/StoresInterface.md' => 'Stores collection interface',
+            'TupleKeys.md' => 'Collection of tuple keys',
+            'TupleKeysInterface.md' => 'Tuple keys collection interface',
+            'Tuples.md' => 'Collection of tuples',
+            'TuplesInterface.md' => 'Tuples collection interface',
+            'TypeDefinitions.md' => 'Collection of type definitions',
+            'TypeDefinitionsInterface.md' => 'Type definitions collection interface',
+            'BatchCheckItems.md' => 'Batch check items collection',
+            'BatchCheckItemsInterface.md' => 'Batch check items interface',
+            'Stores.md' => 'Collection of stores',
+            'StoresInterface.md' => 'Stores collection interface',
         ];
         $sections[] = $this->buildApiLinks($collectionLinks, 'Models/Collections/');
 
         // Enums
         $sections[] = "### Enumerations";
         $enumLinks = [
-            'Models/Enums/Consistency.md' => 'Consistency levels for queries',
-            'Models/Enums/SchemaVersion.md' => 'Authorization model schema versions',
-            'Models/Enums/TupleOperation.md' => 'Tuple write operations (write/delete)',
-            'Models/Enums/TypeName.md' => 'Built-in type names',
+            'Consistency.md' => 'Consistency levels for queries',
+            'SchemaVersion.md' => 'Authorization model schema versions',
+            'TupleOperation.md' => 'Tuple write operations (write/delete)',
+            'TypeName.md' => 'Built-in type names',
         ];
         $sections[] = $this->buildApiLinks($enumLinks, 'Models/Enums/');
 
@@ -220,75 +220,75 @@ MD;
         // Results and Error Handling
         $sections[] = "### Results and Error Handling";
         $resultLinks = [
-            'Results/Success.md' => 'Success result wrapper',
-            'Results/SuccessInterface.md' => 'Success interface',
-            'Results/Failure.md' => 'Failure result wrapper',
-            'Results/FailureInterface.md' => 'Failure interface',
-            'Results/ResultInterface.md' => 'Base result interface',
+            'Success.md' => 'Success result wrapper',
+            'SuccessInterface.md' => 'Success interface',
+            'Failure.md' => 'Failure result wrapper',
+            'FailureInterface.md' => 'Failure interface',
+            'ResultInterface.md' => 'Base result interface',
         ];
         $sections[] = $this->buildApiLinks($resultLinks, 'Results/');
 
         // Exceptions
         $sections[] = "### Exceptions";
         $exceptionLinks = [
-            'Exceptions/ClientException.md' => 'Base client exception',
-            'Exceptions/ClientThrowable.md' => 'Client throwable interface',
-            'Exceptions/AuthenticationException.md' => 'Authentication errors',
-            'Exceptions/ConfigurationException.md' => 'Configuration errors',
-            'Exceptions/NetworkException.md' => 'Network and HTTP errors',
-            'Exceptions/SerializationException.md' => 'Serialization errors',
+            'ClientException.md' => 'Base client exception',
+            'ClientThrowable.md' => 'Client throwable interface',
+            'AuthenticationException.md' => 'Authentication errors',
+            'ConfigurationException.md' => 'Configuration errors',
+            'NetworkException.md' => 'Network and HTTP errors',
+            'SerializationException.md' => 'Serialization errors',
         ];
         $sections[] = $this->buildApiLinks($exceptionLinks, 'Exceptions/');
 
         // Network and Infrastructure
         $sections[] = "### Network and Infrastructure";
         $networkLinks = [
-            'Network/RequestManager.md' => 'HTTP request management',
-            'Network/RequestManagerInterface.md' => 'Request manager interface',
-            'Network/RetryHandler.md' => 'Retry logic with exponential backoff',
-            'Network/RetryHandlerInterface.md' => 'Retry handler interface',
-            'Network/CircuitBreaker.md' => 'Circuit breaker for fault tolerance',
-            'Network/CircuitBreakerInterface.md' => 'Circuit breaker interface',
-            'Network/RequestContext.md' => 'Request context and metadata',
-            'Network/RequestContextInterface.md' => 'Request context interface',
+            'RequestManager.md' => 'HTTP request management',
+            'RequestManagerInterface.md' => 'Request manager interface',
+            'RetryHandler.md' => 'Retry logic with exponential backoff',
+            'RetryHandlerInterface.md' => 'Retry handler interface',
+            'CircuitBreaker.md' => 'Circuit breaker for fault tolerance',
+            'CircuitBreakerInterface.md' => 'Circuit breaker interface',
+            'RequestContext.md' => 'Request context and metadata',
+            'RequestContextInterface.md' => 'Request context interface',
         ];
         $sections[] = $this->buildApiLinks($networkLinks, 'Network/');
 
         // Observability
         $sections[] = "### Observability and Monitoring";
         $observabilityLinks = [
-            'Observability/TelemetryInterface.md' => 'Telemetry provider interface',
-            'Observability/OpenTelemetryProvider.md' => 'OpenTelemetry integration',
-            'Observability/NoOpTelemetryProvider.md' => 'No-op telemetry provider',
-            'Observability/TelemetryFactory.md' => 'Telemetry provider factory',
+            'TelemetryInterface.md' => 'Telemetry provider interface',
+            'OpenTelemetryProvider.md' => 'OpenTelemetry integration',
+            'NoOpTelemetryProvider.md' => 'No-op telemetry provider',
+            'TelemetryFactory.md' => 'Telemetry provider factory',
         ];
         $sections[] = $this->buildApiLinks($observabilityLinks, 'Observability/');
 
         // Schema Validation
         $sections[] = "### Schema Validation";
         $schemaLinks = [
-            'Schema/Schema.md' => 'JSON schema definitions',
-            'Schema/SchemaInterface.md' => 'Schema interface',
-            'Schema/SchemaValidator.md' => 'Schema validation logic',
-            'Schema/SchemaValidatorInterface.md' => 'Schema validator interface',
-            'Schema/SchemaBuilder.md' => 'Schema builder for dynamic schemas',
-            'Schema/SchemaBuilderInterface.md' => 'Schema builder interface',
+            'Schema.md' => 'JSON schema definitions',
+            'SchemaInterface.md' => 'Schema interface',
+            'SchemaValidator.md' => 'Schema validation logic',
+            'SchemaValidatorInterface.md' => 'Schema validator interface',
+            'SchemaBuilder.md' => 'Schema builder for dynamic schemas',
+            'SchemaBuilderInterface.md' => 'Schema builder interface',
         ];
-        $sections[] = $this->buildApiLinks($schemaLinks, 'Schema/');
+        $sections[] = $this->buildApiLinks($schemaLinks, 'Schemas/');
 
         // Translation
         $sections[] = "### Translation and Internationalization";
         $translationLinks = [
-            'Translation/Translator.md' => 'Message translation service',
-            'Translation/TranslatorInterface.md' => 'Translator interface',
-            'Translation/YamlParser.md' => 'YAML parser for translation files',
+            'Translator.md' => 'Message translation service',
+            'TranslatorInterface.md' => 'Translator interface',
+            'YamlParser.md' => 'YAML parser for translation files',
         ];
         $sections[] = $this->buildApiLinks($translationLinks, 'Translation/');
 
         // Integration
         $sections[] = "### Framework Integration";
         $integrationLinks = [
-            'Integration/ServiceProvider.md' => 'Laravel service provider',
+            'ServiceProvider.md' => 'Laravel service provider',
         ];
         $sections[] = $this->buildApiLinks($integrationLinks, 'Integration/');
 
@@ -299,8 +299,11 @@ MD;
     {
         $linkList = [];
         foreach ($links as $filename => $description) {
-            $fullPath = 'docs/API/' . $basePath . $filename;
-            $linkList[] = "- [{$description}]({$fullPath})";
+            // Convert filename to wiki page name (remove .md extension and handle subdirectories)
+            $wikiPageName = str_replace(['/', '.md'], ['-', ''], $basePath . $filename);
+            // Add API- prefix for all API documentation pages
+            $wikiUrl = "https://github.com/evansims/openfga-php/wiki/API-{$wikiPageName}";
+            $linkList[] = "- [{$description}]({$wikiUrl})";
         }
         return implode("\n", $linkList);
     }
@@ -509,11 +512,50 @@ MD;
                 
                 $adjustedLines[] = "{$newHeaderPrefix} {$headerText}";
             } else {
-                $adjustedLines[] = $line;
+                // Convert internal documentation links to wiki links
+                $adjustedLines[] = $this->convertInternalLinksToWiki($line);
             }
         }
         
         return implode("\n", $adjustedLines);
+    }
+    
+    /**
+     * Convert internal documentation links to GitHub wiki links.
+     * 
+     * @param string $line The line to process
+     * @return string Line with converted links
+     */
+    private function convertInternalLinksToWiki(string $line): string
+    {
+        // Pattern to match markdown links pointing to .md files
+        $pattern = '/\[([^\]]+)\]\(([^)]+\.md)(?:#[^)]+)?\)/';
+        
+        return preg_replace_callback($pattern, function($matches) {
+            $linkText = $matches[1];
+            $linkPath = $matches[2];
+            
+            // Extract just the filename without path and .md extension
+            $filename = basename($linkPath, '.md');
+            
+            // Special handling for different documentation sections
+            if (strpos($linkPath, '../') !== false || strpos($linkPath, 'Getting Started/') !== false) {
+                // Handle relative paths and Getting Started section
+                $wikiPageName = $filename;
+            } elseif (strpos($linkPath, 'Essentials/') !== false) {
+                // Essentials section pages
+                $wikiPageName = $filename;
+            } elseif (strpos($linkPath, 'Features/') !== false) {
+                // Features section pages
+                $wikiPageName = $filename;
+            } else {
+                // Default handling
+                $wikiPageName = $filename;
+            }
+            
+            $wikiUrl = "https://github.com/evansims/openfga-php/wiki/{$wikiPageName}";
+            return "[{$linkText}]({$wikiUrl})";
+        }, $line);
     }
 }
 

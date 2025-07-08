@@ -62,7 +62,7 @@ public function getEventId(): string
 
 Get the unique identifier for this event.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L37)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L40)
 
 #### Returns
 
@@ -77,7 +77,7 @@ public function getEventType(): string
 
 Get the name/type of this event.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L43)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L49)
 
 #### Returns
 
@@ -86,28 +86,32 @@ Get the name/type of this event.
 ### getException
 
 ```php
-public function getException(): ?Throwable
+public function getException(): Throwable|null
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L55)
-
-#### Returns
-
-`Throwable` &#124; `null`
-
-### getModelId
-
-```php
-public function getModelId(): ?string
-
-```
+Get the exception if the operation failed.
 
 [View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L60)
 
 #### Returns
 
-`string` &#124; `null`
+`Throwable` &#124; `null` — The exception or null if the operation succeeded
+
+### getModelId
+
+```php
+public function getModelId(): string|null
+
+```
+
+Get the model ID for the operation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L70)
+
+#### Returns
+
+`string` &#124; `null` — The model ID or null if not applicable
 
 ### getOccurredAt
 
@@ -118,7 +122,7 @@ public function getOccurredAt(): DateTimeImmutable
 
 Get when this event occurred.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L49)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L58)
 
 #### Returns
 
@@ -131,11 +135,13 @@ public function getOperation(): string
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L65)
+Get the OpenFGA operation name.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L80)
 
 #### Returns
 
-`string`
+`string` — The operation name (for example, &#039;check&#039;, &#039;write&#039;, &#039;read&#039;)
 
 ### getPayload
 
@@ -146,7 +152,7 @@ public function getPayload(): array
 
 Get the event payload data.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L55)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L67)
 
 #### Returns
 
@@ -159,24 +165,28 @@ public function getResult(): mixed
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L70)
+Get the result of the operation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L90)
 
 #### Returns
 
-`mixed`
+`mixed` — The operation result (typically a Response object) or null if failed
 
 ### getStoreId
 
 ```php
-public function getStoreId(): ?string
+public function getStoreId(): string|null
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L75)
+Get the store ID for the operation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L100)
 
 #### Returns
 
-`string` &#124; `null`
+`string` &#124; `null` — The store ID or null if not applicable
 
 ### isPropagationStopped
 
@@ -187,7 +197,7 @@ public function isPropagationStopped(): bool
 
 Check if event propagation should be stopped.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L61)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L76)
 
 #### Returns
 
@@ -200,11 +210,13 @@ public function isSuccessful(): bool
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L80)
+Check if the operation completed successfully.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/OperationCompletedEvent.php#L110)
 
 #### Returns
 
-`bool`
+`bool` — True if the operation succeeded, false otherwise
 
 ### stopPropagation
 
@@ -215,7 +227,7 @@ public function stopPropagation(): void
 
 Stop event propagation to remaining listeners.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L67)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L85)
 
 #### Returns
 

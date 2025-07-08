@@ -46,7 +46,7 @@ public function getEventId(): string
 
 Get the unique identifier for this event.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L37)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L40)
 
 #### Returns
 
@@ -61,7 +61,7 @@ public function getEventType(): string
 
 Get the name/type of this event.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L43)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L49)
 
 #### Returns
 
@@ -70,15 +70,17 @@ Get the name/type of this event.
 ### getModelId
 
 ```php
-public function getModelId(): ?string
+public function getModelId(): string|null
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L33)
+Get the model ID for the operation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L46)
 
 #### Returns
 
-`string` &#124; `null`
+`string` &#124; `null` — The model ID or null if not applicable
 
 ### getOccurredAt
 
@@ -89,7 +91,7 @@ public function getOccurredAt(): DateTimeImmutable
 
 Get when this event occurred.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L49)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L58)
 
 #### Returns
 
@@ -102,11 +104,13 @@ public function getOperation(): string
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L38)
+Get the OpenFGA operation name.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L56)
 
 #### Returns
 
-`string`
+`string` — The operation name (for example, &#039;check&#039;, &#039;write&#039;, &#039;read&#039;)
 
 ### getPayload
 
@@ -117,7 +121,7 @@ public function getPayload(): array
 
 Get the event payload data.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L55)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L67)
 
 #### Returns
 
@@ -126,28 +130,32 @@ Get the event payload data.
 ### getRequest
 
 ```php
-public function getRequest(): Psr\Http\Message\RequestInterface
+public function getRequest(): RequestInterface
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L43)
+Get the HTTP request being sent.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L66)
 
 #### Returns
 
-`Psr\Http\Message\RequestInterface`
+[`RequestInterface`](Requests/RequestInterface.md) — The PSR-7 request object
 
 ### getStoreId
 
 ```php
-public function getStoreId(): ?string
+public function getStoreId(): string|null
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L48)
+Get the store ID for the operation.
+
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/HttpRequestSentEvent.php#L76)
 
 #### Returns
 
-`string` &#124; `null`
+`string` &#124; `null` — The store ID or null if not applicable
 
 ### isPropagationStopped
 
@@ -158,7 +166,7 @@ public function isPropagationStopped(): bool
 
 Check if event propagation should be stopped.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L61)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L76)
 
 #### Returns
 
@@ -173,7 +181,7 @@ public function stopPropagation(): void
 
 Stop event propagation to remaining listeners.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L67)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/AbstractEvent.php#L85)
 
 #### Returns
 
