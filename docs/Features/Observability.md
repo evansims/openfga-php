@@ -4,7 +4,7 @@ The OpenFGA PHP SDK includes comprehensive OpenTelemetry support for observabili
 
 **Already using OpenTelemetry?** The SDK integrates seamlessly with your existing setup - just configure your telemetry provider and start getting insights into your OpenFGA operations automatically.
 
-## What You Get
+## What you get
 
 The SDK automatically instruments and provides telemetry for:
 
@@ -64,7 +64,7 @@ $storeId =  $_ENV['FGA_STORE_ID'] ?? 'your-store-id';
 $modelId = $_ENV['FGA_MODEL_ID'] ?? 'your-model-id';
 ```
 
-## Quick Start
+## Quickstart
 
 For production use with a telemetry backend, install the OpenTelemetry packages and configure them:
 
@@ -106,9 +106,9 @@ $result = $client->listObjects(
 );
 ```
 
-## Telemetry Data Collected
+## Telemetry data collected
 
-### HTTP Request Telemetry
+### HTTP request telemetry
 
 Every HTTP request to the OpenFGA API is automatically instrumented:
 
@@ -136,7 +136,7 @@ openfga.sdk.name: openfga-php
 openfga.sdk.version: 1.0.0
 ```
 
-### OpenFGA Operation Telemetry
+### OpenFGA operation telemetry
 
 Business-level operations provide higher-level observability:
 
@@ -161,7 +161,7 @@ openfga.sdk.name: openfga-php
 openfga.sdk.version: 1.0.0
 ```
 
-### Retry and Reliability Telemetry
+### Retry and reliability telemetry
 
 The SDK automatically tracks retry attempts and circuit breaker behavior:
 
@@ -179,9 +179,9 @@ The SDK automatically tracks retry attempts and circuit breaker behavior:
 - `openfga.auth.events.total` - Counter of authentication events
 - `openfga.auth.duration` - Histogram of authentication operation durations
 
-## Configuration Options
+## Configuration options
 
-### Service Identification
+### Service identification
 
 Configure your service information for better observability:
 
@@ -192,7 +192,7 @@ $telemetry = TelemetryFactory::create(
 );
 ```
 
-### Custom Telemetry Providers
+### Custom telemetry Providers
 
 You can provide your own configured OpenTelemetry tracer and meter:
 
@@ -210,9 +210,9 @@ $client = new Client(
 );
 ```
 
-## Common Integration Patterns
+## Common integration Patterns
 
-### Jaeger (Local Development)
+### Jaeger (Local development)
 
 For local development with Jaeger:
 
@@ -243,7 +243,7 @@ Globals::registerInitializer(function () use ($tracerProvider) {
 $telemetry = TelemetryFactory::create('my-service', '1.0.0');
 ```
 
-### Cloud Providers
+### Cloud providers
 
 For cloud-based observability services:
 
@@ -253,7 +253,7 @@ $exporter = new SpanExporter($_ENV['OTEL_EXPORTER_OTLP_ENDPOINT']);
 // Configure with your cloud provider's specific settings
 ```
 
-### Existing OpenTelemetry Setup
+### Existing openTelemetry Setup
 
 If you already have OpenTelemetry configured in your application:
 
@@ -269,7 +269,7 @@ $client = new Client(
 // Traces will be included in your existing observability setup
 ```
 
-## Example: Complete Authorization Workflow with Tracing
+## Example: Complete authorization workflow with tracing
 
 Here's a complete example showing how telemetry works throughout an authorization workflow:
 
@@ -334,16 +334,16 @@ try {
 }
 ```
 
-## Viewing Your Telemetry Data
+## Viewing your Telemetry Data
 
-### In Jaeger UI
+### In jaeger UI
 
 1. Open http://localhost:16686 in your browser
 2. Select your service name from the dropdown
 3. Click "Find Traces" to see recent authorization operations
 4. Click on a trace to see the detailed span timeline
 
-### Key Things to Look For
+### Key things to Look For
 
 **Performance Analysis:**
 
@@ -365,7 +365,7 @@ try {
 
 ## Troubleshooting
 
-### No Telemetry Data
+### No telemetry Data
 
 1. **Check if OpenTelemetry is properly installed:**
 
@@ -391,7 +391,7 @@ try {
    - Verify authentication if required
    - Check firewall and network settings
 
-### Performance Impact
+### Performance impact
 
 The telemetry overhead is minimal in production:
 
@@ -399,7 +399,7 @@ The telemetry overhead is minimal in production:
 - **OpenTelemetry mode:** Low overhead (~1-2% typically) with async exporters
 - **Graceful degradation:** Continues working even if telemetry backend is unavailable
 
-### Environment Variables
+### Environment variables
 
 Common OpenTelemetry environment variables that work with the SDK:
 
@@ -417,11 +417,11 @@ export OTEL_TRACES_SAMPLER="traceidratio"
 export OTEL_TRACES_SAMPLER_ARG="0.1"  # Sample 10% of traces
 ```
 
-## Event-Driven Telemetry
+## Event-driven telemetry
 
 The SDK provides a powerful event-driven telemetry system that allows you to create custom observability solutions without tight coupling to the main client functionality. This approach lets you build specialized listeners for different concerns like logging, metrics collection, alerting, or custom analytics.
 
-### Available Events
+### Available events
 
 The SDK emits events at key points during operation execution:
 
@@ -430,7 +430,7 @@ The SDK emits events at key points during operation execution:
 - **`HttpRequestSentEvent`** **HttpRequestSentEvent** - When HTTP requests are sent to the OpenFGA API
 - **`HttpResponseReceivedEvent`** **HttpResponseReceivedEvent** - When HTTP responses are received
 
-### Creating Custom Event Listeners
+### Creating custom Event Listeners
 
 Here's how to create and register custom event listeners:
 
@@ -500,7 +500,7 @@ final class MetricsEventListener
 }
 ```
 
-### Registering Event Listeners
+### Registering event Listeners
 
 Register your listeners with the event dispatcher:
 
@@ -524,7 +524,7 @@ $eventDispatcher->addListener(OperationCompletedEvent::class, [$metricsListener,
 // The above example shows the concept for educational purposes
 ```
 
-### Complete Event-Driven Example
+### Complete event-Driven Example
 
 Here's a complete example showing event-driven telemetry in action:
 
@@ -568,7 +568,7 @@ echo "Collected Metrics:\n";
 print_r($metricsListener->getMetrics());
 ```
 
-### Production Use Cases
+### Production use Cases
 
 **Custom Alerting:**
 
@@ -686,7 +686,7 @@ final class PerformanceEventListener
 }
 ```
 
-### Benefits of Event-Driven Telemetry
+### Benefits of event-driven telemetry
 
 - **Decoupling:** Observability logic is separate from business logic
 - **Flexibility:** Add multiple listeners for the same events
@@ -695,7 +695,7 @@ final class PerformanceEventListener
 - **Extensibility:** Add new observability features without changing core code
 - **Custom Integration:** Perfect for integrating with proprietary monitoring systems
 
-### Integration with Dependency Injection
+### Integration with dependency injection
 
 In production applications, register listeners through your DI container:
 
@@ -723,9 +723,9 @@ $container->singleton(Client::class, function ($container) {
 });
 ```
 
-## Advanced OpenTelemetry Integration
+## Advanced openTelemetry Integration
 
-### Custom Attributes
+### Custom attributes
 
 Add custom context to your authorization operations:
 
@@ -748,7 +748,7 @@ $result = $client->check(
 );
 ```
 
-### Correlation with Application Traces
+### Correlation with application traces
 
 The SDK integrates with your application's existing traces:
 
@@ -764,7 +764,7 @@ $result = $client->check(
 ); // This becomes a child of $parentSpan
 ```
 
-### Distributed Tracing Across Services
+### Distributed tracing Across Services
 
 When your authorization spans multiple services:
 
@@ -789,7 +789,7 @@ $allowed = $client->check(
 );
 ```
 
-### Metrics-Only Mode
+### Metrics-only mode
 
 If you only want metrics without distributed tracing:
 
@@ -806,7 +806,7 @@ $meterProvider = new MeterProvider([
 $telemetry = TelemetryFactory::create('my-service');
 ```
 
-### Custom Sampling Strategies
+### Custom sampling Strategies
 
 For high-traffic applications, implement custom sampling:
 
@@ -824,9 +824,9 @@ $tracerProvider = new TracerProvider([
 ], sampler: $customSampler);
 ```
 
-## Advanced Monitoring Patterns
+## Advanced monitoring Patterns
 
-### Circuit Breaker Monitoring
+### Circuit breaker Monitoring
 
 Monitor and alert on circuit breaker state changes:
 
@@ -913,9 +913,9 @@ final class SLAEventListener
 }
 ```
 
-## Testing Advanced Observability
+## Testing advanced Observability
 
-### Unit Testing Event Listeners
+### Unit testing Event Listeners
 
 ```php
 use PHPUnit\Framework\TestCase;
@@ -942,7 +942,7 @@ class SecurityEventListenerTest extends TestCase
 }
 ```
 
-### Integration Testing with Telemetry
+### Integration testing with Telemetry
 
 ```php
 class TelemetryIntegrationTest extends TestCase

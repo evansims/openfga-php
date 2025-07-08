@@ -50,7 +50,7 @@ Organize your assertions logically and keep them maintainable:
 
 Integrate assertion testing into your deployment pipeline to catch permission regressions before they reach production.
 
-### GitHub Actions Example
+### GitHub actions example
 
 ```yaml
 # .github/workflows/authorization-tests.yml
@@ -98,11 +98,11 @@ jobs:
           FGA_API_URL: http://localhost:8080
 ```
 
-### Test Runner Script
+### Test runner script
 
 [Snippet](../../examples/snippets/assertions-test-runner.php)
 
-### Model Assertions File Example
+### Model assertions file example
 
 [Snippet](../../examples/snippets/assertions-model-file.php)
 

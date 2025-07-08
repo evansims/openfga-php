@@ -38,7 +38,7 @@ Use the SDK's `dsl` [helper](../Features/Helpers.md) to create a model, then use
 
 [Snippet](../../examples/snippets/models-dsl.php#dsl)
 
-Save that returned `$modelId` — you'll need it for future API calls.
+Save that returned `$modelId`—you'll need it for future API calls.
 
 ## Common patterns
 
@@ -114,7 +114,7 @@ type document
     define viewer: [user, group#member] or owner
 ```
 
-The `group#member` syntax means "users who are members of the group".
+The `group#member` syntax means "users who are members of the group."
 
 ## Working with conditions
 
@@ -238,7 +238,7 @@ Alternatively you can call the Client `listAuthorizationModels` method directly:
 
 [Snippet](../../examples/snippets/models-list-all.php#specific)
 
-## Troubleshooting Common Issues
+## Troubleshooting common issues
 
 ### "My permissions aren't working as expected"
 
@@ -258,6 +258,6 @@ Alternatively you can call the Client `listAuthorizationModels` method directly:
 - Check if you're [querying](Queries.md) with the right object/relation names
 - Use [`readTuples()`](Tuples.md#reading-existing-permissions) to see what permissions exist
 
-## What's Next?
+## What's next
 
 Once you've created your authorization model, it's crucial to test it thoroughly. The [Assertions guide](Assertions.md) shows you how to write comprehensive tests for your authorization models, ensuring they behave exactly as expected before deploying to production.

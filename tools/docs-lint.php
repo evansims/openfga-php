@@ -41,7 +41,6 @@ final class ValeLinter
         '.github/CODE_OF_CONDUCT.md',
         'CLAUDE.md',
         'docs/',
-        'src/',
     ];
 
     /**
@@ -337,6 +336,7 @@ final class ValeLinter
             'Headings.*Why use.*should use sentence-style', // Common documentation questions
             'Headings.*Laravel.*should use sentence-style', // Framework names
             'Headings.*Symfony.*should use sentence-style', // Framework names
+            'Headings.*GitHub actions.*should use sentence-style', // GitHub Actions is a proper noun
             'Headings.*Relationship Tuples.*should use sentence-style', // Technical concept titles
             'Headings.*Granting Permissions.*should use sentence-style', // Action-oriented titles
             'Headings.*Removing Permissions.*should use sentence-style', // Action-oriented titles
@@ -443,6 +443,7 @@ final class ValeLinter
             
             // Colons in technical contexts (type annotations, etc.)
             'Colons.*should be in lowercase.*: [A-Z]', // Type annotations like ": Type" are valid
+            'Google\\.Colons.*should be in lowercase', // Generic colons before capital letters
             
             // Auto- prefix terms that are correct in technical context
             'Auto.*don\'t hyphenate.*auto-detected', // "auto-detected" is correct technical term

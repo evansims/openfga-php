@@ -141,7 +141,7 @@ Our documentation follows these core principles:
 1. **README.md Structure:**
 
    - Start with a compelling one-paragraph summary of what the library does and why it exists
-   - Include a "Quick Start" section with the simplest possible working example
+   - Include a "Quickstart" section with the simplest possible working example
    - Progress to "Core Concepts" explaining fundamental patterns
    - Add "Advanced Usage" for complex scenarios
    - End with "Next Steps" linking to deeper documentation

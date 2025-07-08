@@ -41,7 +41,7 @@ composer require guzzlehttp/guzzle guzzlehttp/psr7
 
 You can choose different implementations based on your needs:
 
-#### Lightweight Option: Nyholm
+#### Lightweight option: Nyholm
 
 For a more lightweight solution:
 
@@ -81,9 +81,9 @@ composer require guzzlehttp/guzzle
 
 **Error:** `Your PHP version (8.x.x) does not satisfy requirements`
 
-**Solution:** Upgrade to PHP 8.3 or higher (e.g. `sudo apt update && sudo apt install php8.3` on Ubuntu or `brew install php@8.3` on macOS).
+**Solution:** Upgrade to PHP 8.3 or higher (for example `sudo apt update && sudo apt install php8.3` on Ubuntu or `brew install php@8.3` on macOS).
 
-### Memory Limit Exceeded
+### Memory limit exceeded
 
 **Error:** `Allowed memory size exhausted`
 
