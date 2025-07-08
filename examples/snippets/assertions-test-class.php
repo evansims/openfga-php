@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// intro
 use OpenFGA\Client;
 use OpenFGA\Models\{Assertion, AssertionTupleKey};
 

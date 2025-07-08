@@ -942,9 +942,9 @@ function model(AuthorizationModelInterface $model, ?ClientInterface $client = nu
  * Parameters can be omitted when using the context() helper, which provides
  * ambient values for client, store, and model.
  *
- * @param  string                                  $type             The object type to search for (e.g., 'document', 'folder')
- * @param  string                                  $relation         The relation to check (e.g., 'viewer', 'owner')
- * @param  string                                  $user             The user to check for (e.g., 'user:anne')
+ * @param  string                                  $type             The object type to search for (for example, 'document', 'folder')
+ * @param  string                                  $relation         The relation to check (for example, 'viewer', 'owner')
+ * @param  string                                  $user             The user to check for (for example, 'user:anne')
  * @param  ?ClientInterface                        $client           The OpenFGA client (optional if in context)
  * @param  StoreInterface|string|null              $store            The store to query (optional if in context)
  * @param  AuthorizationModelInterface|string|null $model            The authorization model to use (optional if in context)
@@ -1160,8 +1160,8 @@ function checks(
  * Parameters can be omitted when using the context() helper, which provides
  * ambient values for client, store, and model.
  *
- * @param  string                                           $object           The object to check relationships for (e.g., 'document:budget')
- * @param  string                                           $relation         The relationship to check (e.g., 'viewer', 'editor', 'owner')
+ * @param  string                                           $object           The object to check relationships for (for example, 'document:budget')
+ * @param  string                                           $relation         The relationship to check (for example, 'viewer', 'editor', 'owner')
  * @param  UserTypeFilterInterface|UserTypeFiltersInterface $filters          Filters for user types to include
  * @param  ?ClientInterface                                 $client           The OpenFGA client (optional if in context)
  * @param  StoreInterface|string|null                       $store            The store to query (optional if in context)
@@ -1255,8 +1255,8 @@ function users(
  * needing to write the full class name. UserTypeFilter is used to specify which
  * types of users should be included in authorization queries like listUsers.
  *
- * @param string      $type     The user type to filter by (e.g., 'user', 'group', 'organization')
- * @param string|null $relation Optional relation to filter by (e.g., 'member', 'admin', 'owner')
+ * @param string      $type     The user type to filter by (for example, 'user', 'group', 'organization')
+ * @param string|null $relation Optional relation to filter by (for example, 'member', 'admin', 'owner')
  *
  * @throws InvalidArgumentException If filter parameters are invalid
  * @throws ReflectionException      If exception location capture fails

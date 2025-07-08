@@ -39,16 +39,31 @@ final class OperationStartedEvent extends AbstractEvent
         return $this->context;
     }
 
+    /**
+     * Get the model ID for the operation.
+     *
+     * @return string|null The model ID or null if not applicable
+     */
     public function getModelId(): ?string
     {
         return $this->modelId;
     }
 
+    /**
+     * Get the OpenFGA operation name.
+     *
+     * @return string The operation name (for example, 'check', 'write', 'read')
+     */
     public function getOperation(): string
     {
         return $this->operation;
     }
 
+    /**
+     * Get the store ID for the operation.
+     *
+     * @return string|null The store ID or null if not applicable
+     */
     public function getStoreId(): ?string
     {
         return $this->storeId;

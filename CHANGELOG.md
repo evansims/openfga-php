@@ -133,7 +133,7 @@
 > Pride month brings colors, code brings inclusion,<br />
 > Language enum ends all confusion.<br />
 > Fixed loops and docs with care so bright,<br />
-> OpenFGA shines in rainbow light! 🏳️‍🌈✨_
+> OpenFGA shines in rainbow light. 🏳️‍🌈✨_
 
 ### Added
 

@@ -21,6 +21,9 @@ final class EventDispatcher implements EventDispatcherInterface
      */
     private array $listeners = [];
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function addListener(string $eventType, callable $listener): void
     {
@@ -31,6 +34,9 @@ final class EventDispatcher implements EventDispatcherInterface
         $this->listeners[$eventType][] = $listener;
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function dispatch(EventInterface $event): void
     {
@@ -50,6 +56,7 @@ final class EventDispatcher implements EventDispatcherInterface
     }
 
     /**
+     * @param string $eventType The event type to get listeners for
      * @return array<callable(object): void>
      */
     #[Override]
@@ -58,12 +65,18 @@ final class EventDispatcher implements EventDispatcherInterface
         return $this->listeners[$eventType] ?? [];
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function hasListeners(string $eventType): bool
     {
         return array_key_exists($eventType, $this->listeners) && [] !== $this->listeners[$eventType];
     }
 
+    /**
+     * @inheritDoc
+     */
     #[Override]
     public function removeListeners(string $eventType): void
     {

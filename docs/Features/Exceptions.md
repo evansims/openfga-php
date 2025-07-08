@@ -31,7 +31,7 @@ Our error handling philosophy is built on three core principles:
 2. **Type-safe over dynamic** - Use enums for error types, not string comparisons
 3. **Composable over nested** - Chain operations with Result methods, not try/catch blocks
 
-### Why Result Types?
+### Why result types
 
 Traditional exception handling has several drawbacks:
 
@@ -58,7 +58,7 @@ $result = $client->check(
 // The type system tells us this returns Result<CheckResponse, ClientThrowable>
 ```
 
-## Using the Result Type
+## Using the result type
 
 The `Result` type represents a successful value or a failure, and provides a rich API for handling both cases elegantly.
 
@@ -81,7 +81,7 @@ if ($result->failed()) {
 }
 ```
 
-### Chaining Operations
+### Chaining operations
 
 Result types support fluent chaining for elegant error handling:
 
@@ -115,7 +115,7 @@ $result = $client->check(/* ... */)
 $accessStatus = $result->unwrap(); // 'GRANTED', 'DENIED', or 'UNKNOWN'
 ```
 
-### Unwrapping Patterns
+### Unwrapping patterns
 
 There are several ways to extract values from Results:
 
@@ -133,7 +133,7 @@ $allowed = match(true) {
 };
 ```
 
-### Error Propagation
+### Error propagation
 
 Use `rethrow()` to convert Result failures back to exceptions when needed:
 
@@ -149,11 +149,11 @@ public function canUserRead(string $userId, string $documentId): bool
 }
 ```
 
-## Enum-Based Exception System
+## Enum-based exception system
 
 The SDK uses enum-backed exceptions for type-safe error handling. Each exception type extends from specific enum cases:
 
-### Exception Hierarchy
+### Exception hierarchy
 
 ```
 ClientThrowable (interface)
@@ -195,7 +195,7 @@ ClientThrowable (interface)
         └── CouldNotAddItems
 ```
 
-### When to Use Each Exception Type
+### When to use each exception type
 
 #### ClientException
 
@@ -275,11 +275,11 @@ if (!is_array($data)) {
 }
 ```
 
-## Pattern Matching with `match`
+## Pattern matching with `match`
 
 PHP 8.3's match expression provides elegant error handling:
 
-### Basic Pattern Matching
+### Basic pattern matching
 
 ```php
 $result = $client->check(/* ... */);
@@ -291,7 +291,7 @@ $accessLevel = match(true) {
 };
 ```
 
-### Matching on Exception Types
+### Matching on exception types
 
 ```php
 $result->failure(function ($error) {
@@ -304,7 +304,7 @@ $result->failure(function ($error) {
 });
 ```
 
-### Matching on Error Enums
+### Matching on error enums
 
 ```php
 $result->failure(function ($error) {
@@ -320,7 +320,7 @@ $result->failure(function ($error) {
 });
 ```
 
-### Exhaustive Matching
+### Exhaustive matching
 
 Use match for exhaustive error handling:
 
@@ -338,7 +338,7 @@ public function translateError(ClientException $error): string
 }
 ```
 
-### Benefits Over if/else
+### Benefits over if/else
 
 ```php
 // ❌ Verbose if/else chains
@@ -361,9 +361,9 @@ return match([$error::class, $error->kind ?? null]) {
 };
 ```
 
-## Anti-Patterns to Avoid
+## Anti-patterns to avoid
 
-### ❌ String Comparison
+### ❌ String comparison
 
 Never compare error messages as strings:
 
@@ -387,7 +387,7 @@ $result->failure(function ($error) {
 });
 ```
 
-### ❌ Catching Generic Exception
+### ❌ Catching generic exception
 
 Avoid catching overly broad exception types:
 
@@ -410,7 +410,7 @@ $client->check(/* ... */)
     });
 ```
 
-### ❌ Ignoring Result Types
+### ❌ Ignoring result types
 
 Never ignore the Result wrapper:
 
@@ -428,7 +428,7 @@ if ($result->succeeded()) {
 }
 ```
 
-### ❌ String-Based Error Handling
+### ❌ String-based error handling
 
 Avoid string-based error detection due to i18n:
 
@@ -445,18 +445,18 @@ if ($error instanceof AuthenticationException &&
 }
 ```
 
-## Internationalization (i18n) Support
+## Internationalization (i18n) support
 
 The OpenFGA PHP SDK fully supports internationalization of error messages. This means your application can display error messages in multiple languages without changing your error handling logic.
 
-### How i18n Works
+### How i18n works
 
 1. Error messages are defined in YAML translation files (`translations/messages.{locale}.yaml`)
 2. Exceptions use translation keys instead of hardcoded messages
 3. The Client's language setting determines which translations are used
 4. Error enum cases remain the same regardless of language
 
-### Setting the Language
+### Setting the language
 
 ```php
 use OpenFGA\Language;
@@ -471,7 +471,7 @@ $client = new Client(
 $client->setLanguage(Language::French); // Switch to French
 ```
 
-### Example: Same Error in Multiple Languages
+### Example: Same error in multiple languages
 
 This shows how the same error appears differently based on language context:
 
@@ -501,7 +501,7 @@ try {
 }
 ```
 
-### Type-Safe Error Handling With i18n
+### Type-safe error handling with i18n
 
 The enum-based approach ensures that error handling remains consistent regardless of language:
 
@@ -521,9 +521,9 @@ $result->failure(function ($error) {
 });
 ```
 
-## Code Examples
+## Code examples
 
-### Complete Error Handling Flow
+### Complete error handling flow
 
 Here's a real-world example showing proper error handling:
 
@@ -606,7 +606,7 @@ class AuthorizationService
 }
 ```
 
-### Testing Error Conditions
+### Testing error conditions
 
 ```php
 // Note: The following example assumes a testing environment like Pest or PHPUnit,
@@ -653,7 +653,7 @@ class AuthorizationServiceTest extends TestCase
 }
 ```
 
-## Best Practices Summary
+## Best practices summary
 
 1. **Always handle Result types** - Never call `unwrap()` without checking success first
 2. **Use enum comparisons** - Compare error types and kinds, not message strings

@@ -107,7 +107,7 @@ enum Language: string
      * Create a Language enum from a locale code string.
      *
      * Supports both underscore and hyphen separators for locale codes
-     * (e.g., "pt_BR" or "pt-BR" both map to PortugueseBrazilian).
+     * (for example, "pt_BR" or "pt-BR" both map to PortugueseBrazilian).
      *
      * @param  string    $locale The locale code to parse
      * @return self|null The matching Language enum or null if not found
@@ -217,7 +217,7 @@ enum Language: string
      * Get the locale code for this language.
      *
      * Returns the full locale identifier including any region
-     * specifier (e.g., "pt_BR" for Brazilian Portuguese).
+     * specifier (for example, "pt_BR" for Brazilian Portuguese).
      *
      * @return string The locale code
      */

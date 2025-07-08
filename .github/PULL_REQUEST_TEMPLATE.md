@@ -1,38 +1,20 @@
-# Pull Request
+## What's changing?
 
-## Summary
+<!-- A friendly one-liner about your changes -->
 
-<!-- What does this PR do in a sentence or two? -->
+Closes #<!-- issue number if applicable -->
 
-Fixes #<!-- issue number -->
+## Why?
 
-## Type
+<!-- The problem you're solving or feature you're adding -->
 
-<!-- Check all that apply -->
+## How to test
 
-- [ ] Bug fix (non-breaking)  
-- [ ] New feature (non-breaking)
-- [ ] Breaking change
-- [ ] Documentation update
-- [ ] Test improvement
-- [ ] Performance improvement
+<!-- Quick steps to verify your changes work -->
 
-## Implementation
+---
 
-<!-- Briefly explain your implementation -->
-
-## Testing
-
-<!-- How did you verify your changes? -->
-
-```php
-// Test case using PEST with PsrMock for HTTP mocking, if applicable
-```
-
-## Checklist
-
-- [ ] Added tests using PEST with PsrMock for HTTP mocking
-- [ ] Passing static analysis (PHPStan/Psalm)
-- [ ] Documentation updated (if needed)
-- [ ] Follows [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standards
-- [ ] Commit messages follow conventional commits format
+**Before merging:**
+- [ ] Tests pass (`composer test`)
+- [ ] Linters happy (`composer lint`)
+- [ ] Docs updated (if needed)

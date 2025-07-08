@@ -55,17 +55,17 @@ Get the metadata associated with this type definition. Metadata provides additio
 ### getRelations
 
 ```php
-public function getRelations(): ?OpenFGA\Models\Collections\TypeDefinitionRelationsInterface
+public function getRelations(): TypeDefinitionRelationsInterface|null
 
 ```
 
 Get the collection of relations defined for this type. Relations define the authorized relationships that can exist between objects of this type and other entities in the system.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L47)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L49)
 
 #### Returns
 
-[`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md) &#124; `null`
+[`TypeDefinitionRelationsInterface`](Models/Collections/TypeDefinitionRelationsInterface.md) &#124; `null` — The relations collection or null if no relations are defined
 
 ### getType
 
@@ -76,7 +76,7 @@ public function getType(): string
 
 Get the name of this type. The type name uniquely identifies this type definition within the authorization model. Common examples include &quot;user,&quot; &quot;document,&quot; &quot;folder,&quot; &quot;organization,&quot; etc.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L58)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L60)
 
 #### Returns
 
@@ -89,7 +89,7 @@ public function jsonSerialize(): array<string, mixed>
 
 ```
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L64)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Models/TypeDefinitionInterface.php#L66)
 
 #### Returns
 

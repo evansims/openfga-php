@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// intro
 use OpenFGA\Authentication\TokenAuthentication;
 use OpenFGA\Client;
 

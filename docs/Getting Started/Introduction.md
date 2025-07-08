@@ -6,7 +6,7 @@ This guide takes you through building your first authorization. You'll install t
 - An [OpenFGA](https://openfga.dev) server (local or remote)
 - [PSR-7](https://packagist.org/providers/psr/http-message-implementation), [PSR-17](https://packagist.org/providers/psr/http-factory-implementation) and [PSR-18](https://packagist.org/providers/psr/http-client-implementation) dependencies
 
-## Anatomy of Authorization
+## Anatomy of authorization
 
 Authorization with OpenFGA boils down to three things:
 
@@ -20,7 +20,7 @@ With those elements in place, you can then use [permission queries](../Essential
 
 ### 1. Start OpenFGA
 
-The quickest method is Docker — one command gets you up and running:
+The quickest method is Docker—one command gets you up and running:
 
 ```bash
 docker run -d -p 8080:8080 --name openfga openfga/openfga run
@@ -46,7 +46,7 @@ Begin integrating the SDK by initializing an SDK Client in your application:
 
 [Snippet](../../examples/snippets/introduction-quickstart.php#intro)
 
-In a production environment you'll want [authentication](Authentication.md) and [error handling](Results.md).
+In a production environment you'll want [authentication](Authentication.md) and [error handling](../Features/Results.md).
 
 #### 3.2. Create a Store
 

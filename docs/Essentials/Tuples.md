@@ -6,25 +6,25 @@ The examples in this guide assume you have the following setup:
 
 [Snippet](../../examples/snippets/tuples-setup.php)
 
-## Granting Permissions
+## Granting permissions
 
 Use the `write` helper to give someone access:
 
 [Snippet](../../examples/snippets/tuples-basic.php#write)
 
-## Removing Permissions
+## Removing permissions
 
 Use the `delete` helper to take away access:
 
 [Snippet](../../examples/snippets/tuples-basic.php#delete)
 
-## Bulk Operations
+## Bulk operations
 
 Use the `writes` helper to handle multiple permission changes in one transaction:
 
 [Snippet](../../examples/snippets/tuples-bulk.php#helper)
 
-## Reading Existing Permissions
+## Reading existing permissions
 
 Use the `read` [helper](../Features/Helpers.md) to check what permissions exist:
 
@@ -34,9 +34,9 @@ Alternatively, use the Client's `readTuples` method for more control:
 
 [Snippet](../../examples/snippets/tuples-reading.php#client)
 
-## Advanced Patterns
+## Advanced patterns
 
-### Conditional Tuples
+### Conditional tuples
 
 Use conditions to make permissions context-dependent:
 
@@ -44,13 +44,13 @@ Use conditions to make permissions context-dependent:
 
 [Snippet](../../examples/snippets/tuples-conditions.php#check)
 
-### Auditing Changes
+### Auditing changes
 
 Monitor permission changes over time for auditing:
 
 [Snippet](../../examples/snippets/tuples-auditing.php#auditing)
 
-### Working with Groups
+### Working with groups
 
 Use the `write` helper to grant permissions to groups instead of individual users:
 
@@ -60,18 +60,18 @@ Now Anne can edit the technical specs because she's a member of the engineering 
 
 For checking permissions and querying relationships, see [Queries](Queries.md).
 
-## Error Handling with Tuples
+## Error handling with tuples
 
 The SDK has a powerful enum-based exception handling system that allows you to handle errors in a type-safe way.
 
 [Snippet](../../examples/snippets/tuples-error-handling.php#error-handling)
 
-### Supporting Multiple Languages
+### Supporting multiple languages
 
 The error messages from tuple operations will automatically use the language configured in your client:
 
 [Snippet](../../examples/snippets/tuples-multilang.php)
 
-## What's Next?
+## What's next
 
 After writing tuples to grant permissions, you'll want to verify those permissions are working correctly. The [Queries](Queries.md) guide covers how to check permissions, list user access, and discover relationships using the tuples you've created.

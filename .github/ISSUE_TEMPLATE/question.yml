@@ -1,0 +1,38 @@
+name: Question
+description: Need help? Ask away!
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        👋 Got a question? You're in the right place!
+        
+        **Quick tip:** For general discussions, consider using [GitHub Discussions](https://github.com/evansims/openfga-php/discussions) instead!
+
+  - type: textarea
+    id: your-question
+    attributes:
+      label: Your question
+      description: What would you like to know?
+      placeholder: How do I...?
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-you-tried
+    attributes:
+      label: What I've tried
+      description: Show us what you've attempted (optional)
+      placeholder: |
+        ```php
+        // I tried this but...
+        ```
+      render: php
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        💬 **Remember:** The community is here to help! Be patient and kind.

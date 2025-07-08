@@ -8,15 +8,15 @@ All examples in this guide assume you have the following setup:
 
 With this setup established, the examples below focus on the concurrency features without repetitive boilerplate.
 
-## Quick Start
+## Quickstart
 
 Transform slow sequential operations into blazing-fast parallel executions with just a few configuration changes:
 
 [Snippet](../../examples/snippets/concurrency-parallel.php#parallelism)
 
-## Core Concepts
+## Core concepts
 
-### Why Concurrency Matters
+### Why concurrency matters
 
 When managing thousands or millions of authorization tuples, sequential processing becomes a bottleneck. The SDK's concurrency features let you:
 
@@ -25,11 +25,11 @@ When managing thousands or millions of authorization tuples, sequential processi
 - **Handle failures gracefully** without losing successful operations
 - **Scale efficiently** while respecting API rate limits
 
-### PHP Fibers: Modern Async Without the Complexity
+### PHP Fibers: Modern async without the complexity
 
 The SDK uses PHP 8.1+ Fibers to provide true concurrency without the complexity of promises or callbacks. Fibers allow cooperative multitasking where operations yield control when waiting for I/O, enabling other operations to proceed.
 
-## Bulk Write Operations
+## Bulk write operations
 
 Use the `writes` helper function or `writeTuples` method to process large sets of tuple operations efficiently:
 
@@ -37,15 +37,15 @@ Use the `writes` helper function or `writeTuples` method to process large sets o
 
 [Snippet](../../examples/snippets/concurrency-bulk-basic.php#api)
 
-### Configuration Options
+### Configuration options
 
 Fine-tune bulk write behavior for your specific needs:
 
 [Snippet](../../examples/snippets/concurrency-bulk-config.php#config)
 
-## Parallel Processing Patterns
+## Parallel processing patterns
 
-### Optimal Parallelism Levels
+### Optimal parallelism levels
 
 Choose parallelism based on your infrastructure and requirements:
 
@@ -80,9 +80,9 @@ $result = writes(
 );
 ```
 
-## Error Handling and Resilience
+## Error handling and resilience
 
-### Partial Success Handling
+### Partial success handling
 
 In non-transactional mode (which the `writes` helper defaults to) the SDK will continue processing even when some operations fail:
 
@@ -108,7 +108,7 @@ if ($result->hasErrors()) {
 }
 ```
 
-### Retry Strategies
+### Retry strategies
 
 Configure retry behavior for transient failures:
 
@@ -131,7 +131,7 @@ $result = writes(
 // - Third retry: 4 second delay
 ```
 
-## Integration with Async Frameworks
+## Integration with async frameworks
 
 ### Using with ReactPHP
 
@@ -197,9 +197,9 @@ Coroutine\run(function () use ($client, $storeId, $modelId, $tuplesToWrite) {
 });
 ```
 
-## Performance Optimization
+## Performance optimization
 
-### Chunk Size Optimization
+### Chunk size optimization
 
 Find the optimal chunk size for your use case:
 
@@ -247,7 +247,7 @@ $optimal = array_reduce(array_keys($results), function ($carry, $size) use ($res
 echo "Optimal chunk size: {$optimal} (throughput: {$results[$optimal]['throughput']} tuples/sec)\n";
 ```
 
-### Memory Management
+### Memory management
 
 Handle large datasets efficiently:
 
@@ -293,9 +293,9 @@ function processLargeTupleSet($client, $storeId, $modelId, $totalTuples) {
 }
 ```
 
-## Monitoring and Debugging
+## Monitoring and debugging
 
-### Performance Metrics
+### Performance metrics
 
 Track performance metrics for optimization:
 
@@ -337,7 +337,7 @@ echo "Memory usage: {$metrics['memory_mb']} MB\n";
 echo "Efficiency: " . ($metrics['efficiency'] * 100) . "%\n";
 ```
 
-### Debug Logging
+### Debug logging
 
 Enable detailed logging for troubleshooting:
 
@@ -368,9 +368,9 @@ class BatchLogger {
 }
 ```
 
-## Best Practices
+## Best practices
 
-### 1. Start Conservative, Scale Up
+### 1. Start conservative, scale up
 
 Begin with lower parallelism and increase based on monitoring:
 
@@ -387,7 +387,7 @@ $parallelism = 5;
 $parallelism = 10;
 ```
 
-### 2. Handle Rate Limits Gracefully
+### 2. Handle rate limits gracefully
 
 Implement backoff when hitting rate limits:
 
@@ -404,7 +404,7 @@ $result = writes(
 );
 ```
 
-### 3. Monitor Resource Usage
+### 3. Monitor resource usage
 
 Keep an eye on system resources:
 
@@ -431,7 +431,7 @@ echo "CPU load increase: " . ($cpuAfter - $cpuBefore) . "\n";
 echo "Memory increase: " . (($memAfter - $memBefore) / 1024 / 1024) . " MB\n";
 ```
 
-### 4. Use Appropriate Chunk Sizes
+### 4. Use appropriate chunk sizes
 
 Balance between API limits and efficiency:
 
@@ -439,7 +439,7 @@ Balance between API limits and efficiency:
 - **Medium chunks (50)**: Good balance for most use cases
 - **Large chunks (75-100)**: Maximum efficiency, higher latency per request
 
-### 5. Implement Circuit Breakers
+### 5. Implement circuit breakers
 
 Protect against cascading failures:
 

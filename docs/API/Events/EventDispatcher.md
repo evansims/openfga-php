@@ -46,7 +46,7 @@ public function addListener(string $eventType, callable $listener): void
 
 Register an event listener for a specific event type.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L25)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L28)
 
 #### Parameters
 
@@ -68,7 +68,7 @@ public function dispatch(OpenFGA\Events\EventInterface $event): void
 
 Dispatch an event to all registered listeners. Calls all listeners registered for the given event&#039;s type. If an event is stoppable and a listener stops propagation, remaining listeners will not be called.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L35)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L41)
 
 #### Parameters
 
@@ -89,7 +89,7 @@ public function getListeners(string $eventType): array<callable(object): void>
 
 Get all registered listeners for a specific event type.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L56)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L63)
 
 #### Parameters
 
@@ -110,7 +110,7 @@ public function hasListeners(string $eventType): bool
 
 Check if there are any listeners for a specific event type.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L62)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L72)
 
 #### Parameters
 
@@ -131,7 +131,7 @@ public function removeListeners(string $eventType): void
 
 Remove all listeners for a specific event type.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L68)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Events/EventDispatcher.php#L81)
 
 #### Parameters
 

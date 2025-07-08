@@ -51,7 +51,7 @@ public function current(): self
 
 Get the current ambient context.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L19)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L26)
 
 #### Returns
 
@@ -68,45 +68,45 @@ public function depth(): int
 
 Get the current nesting depth of contexts.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L24)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L33)
 
 #### Returns
 
-`int`
+`int` — The number of active contexts in the stack
 
 ### getClient
 
 *<small>Implements Context\ContextInterface</small>*
 
 ```php
-public function getClient(): ?OpenFGA\ClientInterface
+public function getClient(): ClientInterface|null
 
 ```
 
 Get the current client.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L29)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L40)
 
 #### Returns
 
-[`ClientInterface`](ClientInterface.md) &#124; `null`
+[`ClientInterface`](ClientInterface.md) &#124; `null` — The current client instance or null if not set
 
 ### getModel
 
 *<small>Implements Context\ContextInterface</small>*
 
 ```php
-public function getModel(): ?OpenFGA\Models\AuthorizationModelInterface|string|null
+public function getModel(): AuthorizationModelInterface|string|null
 
 ```
 
 Get the current authorization model.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L34)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L47)
 
 #### Returns
 
-[`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `null` &#124; `string` &#124; `null`
+[`AuthorizationModelInterface`](Models/AuthorizationModelInterface.md) &#124; `string` &#124; `null` — The current model instance, model ID, or null if not set
 
 ### getPrevious
 
@@ -119,7 +119,7 @@ public function getPrevious(): ?self
 
 Get the previous context in the stack.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L39)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L52)
 
 #### Returns
 
@@ -130,17 +130,17 @@ Get the previous context in the stack.
 *<small>Implements Context\ContextInterface</small>*
 
 ```php
-public function getStore(): ?OpenFGA\Models\StoreInterface|string|null
+public function getStore(): StoreInterface|string|null
 
 ```
 
 Get the current store.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L44)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L59)
 
 #### Returns
 
-[`StoreInterface`](Models/StoreInterface.md) &#124; `null` &#124; `string` &#124; `null`
+[`StoreInterface`](Models/StoreInterface.md) &#124; `string` &#124; `null` — The current store instance, store ID, or null if not set
 
 ### hasContext
 
@@ -153,11 +153,11 @@ public function hasContext(): bool
 
 Check if an ambient context is currently active.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L49)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L66)
 
 #### Returns
 
-`bool`
+`bool` — True if at least one context is active, false otherwise
 
 ### with
 
@@ -175,7 +175,7 @@ public function with(
 
 Execute a callable within a new ambient context.
 
-[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L65)
+[View source](https://github.com/evansims/openfga-php/blob/main/src/Context/ContextInterface.php#L82)
 
 #### Parameters
 

@@ -1,0 +1,7 @@
+extends: substitution
+message: "Use 'quickstart' (one word) instead of '%s'"
+level: error
+ignorecase: true
+swap:
+  'quick start': 'quickstart'
+  'quick-start': 'quickstart'

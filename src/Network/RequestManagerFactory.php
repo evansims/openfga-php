@@ -17,6 +17,21 @@ use Psr\Http\Message\{RequestFactoryInterface, ResponseFactoryInterface, StreamF
  */
 final readonly class RequestManagerFactory
 {
+    /**
+     * Create a new RequestManagerFactory instance.
+     *
+     * @param string                          $url                  The base URL for API requests
+     * @param string|null                     $authorizationHeader  Optional authorization header value
+     * @param PsrHttpClientInterface|null     $httpClient          PSR-18 HTTP client implementation
+     * @param StreamFactoryInterface|null     $httpStreamFactory   PSR-17 stream factory
+     * @param RequestFactoryInterface|null    $httpRequestFactory  PSR-17 request factory
+     * @param ResponseFactoryInterface|null   $httpResponseFactory PSR-17 response factory
+     * @param TelemetryInterface|null         $telemetry           Telemetry provider for observability
+     * @param int                             $defaultMaxRetries   Default number of retry attempts
+     * @param HttpClientInterface|null        $httpClientWrapper   Custom HTTP client wrapper
+     * @param RetryStrategyInterface|null     $retryStrategy       Custom retry strategy implementation
+     * @param ConcurrentExecutorInterface|null $concurrentExecutor  Executor for concurrent operations
+     */
     public function __construct(
         private string $url,
         private ?string $authorizationHeader,
@@ -34,6 +49,8 @@ final readonly class RequestManagerFactory
 
     /**
      * Create a RequestManager for normal operations.
+     *
+     * @return RequestManager A RequestManager configured with default retry settings
      */
     public function create(): RequestManager
     {
@@ -54,6 +71,8 @@ final readonly class RequestManagerFactory
 
     /**
      * Create a RequestManager for batch operations (no HTTP retries).
+     *
+     * @return RequestManager A RequestManager configured with retries disabled
      */
     public function createForBatch(): RequestManager
     {
@@ -75,7 +94,9 @@ final readonly class RequestManagerFactory
     /**
      * Create a RequestManager with custom retry configuration.
      *
-     * @param int $maxRetries
+     * @param int $maxRetries Maximum number of retry attempts
+     *
+     * @return RequestManager A RequestManager configured with the specified retry limit
      */
     public function createWithRetries(int $maxRetries): RequestManager
     {

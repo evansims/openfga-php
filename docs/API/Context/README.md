@@ -8,7 +8,7 @@
 
 | Name | Description |
 |------|-------------|
-| [`ContextInterface`](./ContextInterface.md) |  |
+| [`ContextInterface`](./ContextInterface.md) | Manages ambient context for OpenFGA operations. This interface provides a way to manage and acces... |
 
 ## Classes
 
