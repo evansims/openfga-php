@@ -1,5 +1,5 @@
 # Multi-stage build for better caching and smaller final image
-FROM php:8.3.16-cli-alpine3.20@sha256:b9371f0249bc5e7d9dcb88b96590e21fc4dd5a599704f21468b91c28203a960a AS base
+FROM php:8.4.8-cli-alpine3.20@sha256:8d60c4303cfc7aad89ab800e9603096c8f630bcb552697401f4761caaec03cfb AS base
 
 # Install only required runtime dependencies
 RUN apk add --no-cache \
