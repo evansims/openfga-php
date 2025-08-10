@@ -33,7 +33,7 @@ RUN apk del $PHPIZE_DEPS \
     && rm -rf /tmp/* /var/cache/apk/*
 
 # Composer stage
-FROM composer:2.7 AS composer-stage
+FROM composer:2.8 AS composer-stage
 
 # Dependency installation stage
 FROM builder AS dependencies
