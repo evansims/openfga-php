@@ -49,7 +49,7 @@
     "nyholm/psr7": "^1.8",
     "open-telemetry/api": "^1.1",
     "open-telemetry/sdk": "^1.1",
-    "pestphp/pest": "^3",
+    "pestphp/pest": "^4",
     "phpmd/phpmd": "^2.15",
     "phpstan/phpstan": "^2",
     "phpstan/phpstan-strict-rules": "^2",
